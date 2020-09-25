@@ -5,6 +5,7 @@ ARG SENTRY_ENV=dev
 ARG SENTRY_RELEASE=default
 ARG BUILD_ENV=default
 ARG BASE_DOMAIN=default
+ARG SENTRY_AUTH_TOKEN=default
 
 RUN $(npm bin)/webpack --mode production \
   --env.SENTRY_ENV=${SENTRY_ENV} \
