@@ -1,20 +1,22 @@
 import React from "react";
 import { hot } from "react-hot-loader/root";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { LoginContainer } from "./containers/Login/LoginContainer";
+import { DashboardContainer } from "./containers/Dashboard/Dashboard";
+import { ThemeProvider } from "@material-ui/styles";
+import newTheme from "./sass/theme";
 
 function App() {
   return (
     <div>
-      <Router>
-        <Switch>
-          <Route
-            path="/"
-            component={() => {
-              return <div> Hello World! </div>;
-            }}
-          />
-        </Switch>
-      </Router>
+      <ThemeProvider theme={newTheme}>
+        <Router>
+          <Switch>
+            <Route path="/dashboard" component={DashboardContainer} />
+            <Route path="/" component={LoginContainer} />
+          </Switch>
+        </Router>
+      </ThemeProvider>
     </div>
   );
 }
