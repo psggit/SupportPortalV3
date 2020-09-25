@@ -105,6 +105,7 @@ module.exports = (env, argv) => {
         url: "https://sty.hipbar.com/",
         // sentry-cli configuration
         authToken: env.SENTRY_AUTH_TOKEN,
+        release: env.SENTRY_RELEASE,
         org: "hipbar",
         project: "support-web",
         // webpack specific configuration
