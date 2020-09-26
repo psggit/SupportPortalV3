@@ -9,6 +9,7 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { validateEmail } from "../../utils/validators";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -46,9 +47,18 @@ function Copyright() {
 const LoginComponent = (props) => {
   const classes = useStyles();
   const [email, setEmailAddress] = useState("");
+  const [isDisabled, setSubmitState] = useState(true);
 
   const handleChange = (event) => {
-    // console.log(event.target.value);
+
+    const validation = {
+	    fieldName: "Email",
+	    fieldValue: event.target.value,
+    };
+    const { status } = validateEmail(validation);
+
+    (!status) ? setSubmitState(false) : setSubmitState(true);
+
     setEmailAddress(event.target.value);
   };
 
@@ -79,6 +89,7 @@ const LoginComponent = (props) => {
             color="primary"
             className={classes.submit}
             onClick={() => props.sendLoginEmail(email)}
+	    disabled={isDisabled}
           >
             Send Login Email
           </Button>

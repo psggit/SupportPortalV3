@@ -35,6 +35,7 @@ export function validateNumberField({ fieldName, fieldValue }) {
 }
 
 export function validateEmail({ fieldName, fieldValue }) {
+
   if (fieldName === "Email" && fieldValue.trim().length === 0) {
     return {
       status: true,
