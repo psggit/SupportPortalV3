@@ -17,6 +17,8 @@ const useStyles = makeStyles(theme => ({
   ListItemRoot: {
     width: "100%",
     borderBottom: "1px solid #E5E5E5",
+    fontSize: 16,
+    color: "#606060"
   },
   ListItemTextRoot: {
     wordBreak: "break-word"

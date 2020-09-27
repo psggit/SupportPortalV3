@@ -29,6 +29,7 @@ const useStyles = makeStyles(theme => ({
   cardContent: {
     '& > div': {
       fontSize: 16,
+      color: "#606060",
       width: '100%',
       display: 'flex',
       padding: '12px 0',
