@@ -38,15 +38,6 @@ const useStyles = makeStyles(theme => ({
       '& .value': {
         width: "70%"
       }
-    },
-    '& > .note-section': {
-      borderBottom: '1px solid #E5E5E5',
-      '& .note-desc': {
-        width: "70%"
-      },
-      '& .note-value': {
-        width: "30%"
-      }
     }
   },
   cardActions: {

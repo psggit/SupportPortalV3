@@ -1,8 +1,11 @@
 import { connect } from 'react-redux';
 import { DeliveryAgentDetails } from './DeliveryAgentComponent';
+import {data} from './mockData';
 
-const mapStateToProps = () => {
-  return {};
+const mapStateToProps = (state) => {
+  return {
+    orderDetails: data
+  };
 };
 
 const mapDispatchToProps = () => {
