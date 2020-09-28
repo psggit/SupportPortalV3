@@ -1,0 +1,1 @@
+export { retailerReducer } from './reducer';

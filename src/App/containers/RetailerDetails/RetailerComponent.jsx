@@ -1,9 +1,9 @@
 import React from 'react';
-import DeliveryAgentDetailsCard from '../../components/card';
-import DeliveryNotesCard from '../../components/card';
+import RetailerDetailsCard from '../../components/card';
+import RetailerNotesCard from '../../components/card';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import {getDataList} from 'Utils/helpers';
+import { getDataList } from 'Utils/helpers';
 import List from "@material-ui/core/List";
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -35,7 +35,7 @@ const getTimestamp = (timestamp) => {
   return Moment(timestamp).format("D MMM h:mm A")
 }
 
-const renderAgentNotes = ({dataMap, keysToRender}) => {
+const renderRetailerNotes = ({ dataMap, keysToRender }) => {
   const data = getDataList(dataMap, keysToRender)
   const classes = useStyles();
   return (
@@ -64,16 +64,16 @@ const renderAgentNotes = ({dataMap, keysToRender}) => {
   )
 }
 
-const renderAgentDetails = () => {
+const renderRetailerDetails = () => {
   return (
     <React.Fragment>
       <div>
-        <div className="title">Agent ID</div>
-        <div className="value">123</div>
+        <div className="title">Retailer ID</div>
+        <div className="value">123456</div>
       </div>
       <div>
-        <div className="title">Agent Name</div>
-        <div className="value">Hello</div>
+        <div className="title">Retailer Name</div>
+        <div className="value">Tasmac</div>
       </div>
       <div>
         <div className="title">Mobile Number</div>
@@ -81,32 +81,32 @@ const renderAgentDetails = () => {
       </div>
       <div>
         <div className="title">City</div>
-        <div className="value">Chennia</div>
+        <div className="value">Chennai</div>
       </div>
       <div>
         <div className="title">Locality</div>
         <div className="value">Adayar</div>
       </div>
       <div>
-        <div className="title">Ageent Limit</div>
+        <div className="title">Retailer Limit</div>
         <div className="value">12</div>
       </div>
       <div>
-        <div className="title">Address</div>
+        <div className="title">Store Address</div>
         <div className="value">213123</div>
       </div>
     </React.Fragment>
   )
 }
 
-const DeliveryAgentDetails = (props) => {
+const RetailerDetails = (props) => {
   const classes = useStyles();
-  const deliveryAgentDetailsAction = [
-    <Button variant="outlined" color="primary">Unassign</Button>,
-    <Button variant="contained" color = "primary">Call</Button>
+  const retailerDetailsAction = [
+    <Button variant="outlined" color="primary">Change Retailer</Button>,
+    <Button variant="contained" color="primary">Call</Button>
   ];
 
-  const deliveryAgentNotesAction = [
+  const retailerNotesAction = [
     <Button variant="contained" color="primary">Add</Button>
   ];
 
@@ -114,23 +114,23 @@ const DeliveryAgentDetails = (props) => {
 
   return (
     <div className={classes.container}>
-      <DeliveryAgentDetailsCard
-        title="Delivery Agent Details"
-        actions={deliveryAgentDetailsAction}
+      <RetailerDetailsCard
+        title="Retailer Details"
+        actions={retailerDetailsAction}
       >
-        {renderAgentDetails()}
-      </DeliveryAgentDetailsCard>
-      <DeliveryNotesCard
-        title="Delivery Agent Notes"
-        actions={deliveryAgentNotesAction}
+        {renderRetailerDetails()}
+      </RetailerDetailsCard>
+      <RetailerNotesCard
+        title="Retailer Notes"
+        actions={retailerNotesAction}
       >
-        {renderAgentNotes({
-          dataMap: props.orderDetails.timing_details, 
+        {renderRetailerNotes({
+          dataMap: props.orderDetails.timing_details,
           keysToRender: keysToRenderInNotesCard
         })}
-      </DeliveryNotesCard>
+      </RetailerNotesCard>
     </div>
   );
 }
 
-export {DeliveryAgentDetails}
+export { RetailerDetails }
