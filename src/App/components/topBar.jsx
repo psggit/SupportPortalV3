@@ -4,6 +4,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import MenuDrawer from "./menuDrawer";
+import { logo } from "../assets/images/";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,10 +25,8 @@ export default function TopBar() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            Hipbar Support Portal
-          </Typography>
-          <MenuDrawer />
+	  <MenuDrawer />
+          <img src={logo} />
         </Toolbar>
       </AppBar>
     </div>

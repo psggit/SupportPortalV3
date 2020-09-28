@@ -1,6 +1,6 @@
 import { loginSuccess, loginFailed, loginProgress } from "./actions";
 import { loginAPI } from "../../../utils";
-import { createSession } from "../../../utils/session";
+import { createSession } from "../../../utils";
 
 const processResponse = () => {
   console.log("[processResponse]");
@@ -26,6 +26,7 @@ const onSuccess = (dispatch) => {
 const onError = (dispatch) => {
   return (err) => {
     console.log("[onError]", err);
+    createSession(null);
     dispatch(loginFailed());
   };
 };

@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import { menuIcon } from "../assets/images";
 
 const useStyles = makeStyles({
   list: {
@@ -59,7 +60,7 @@ export default function MenuDrawer() {
     <div>
       {["left"].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>Menu</Button>
+          <Button onClick={toggleDrawer(anchor, true)}><img src={menuIcon} /></Button>
           <Drawer
             anchor={anchor}
             open={state[anchor]}

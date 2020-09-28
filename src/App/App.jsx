@@ -5,6 +5,7 @@ import { LoginContainer } from "./containers/Login/LoginContainer";
 import { DashboardContainer } from "./containers/Dashboard/Dashboard";
 import { ThemeProvider } from "@material-ui/styles";
 import newTheme from "./sass/theme";
+import "./sass/app.scss";
 
 function App() {
   return (
