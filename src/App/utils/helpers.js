@@ -30,3 +30,15 @@ export function getPositionBasedOnContainer (el) {
     right: right
   }
 }
+
+export const getDataList = (dataMap, keysToRenderArray) => {
+  let newArray = [];
+  dataMap.map((item) => {
+    let newEntry;
+    keysToRenderArray.map((value, index) => {
+      newEntry = { ...newEntry, [value]: item[value] };
+    });
+    newArray.push(newEntry);
+  })
+  return newArray;
+}
