@@ -1,0 +1,1 @@
+export { CustomerSoaContainer } from './CustomerSoaContainer'
