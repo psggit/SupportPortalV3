@@ -1,8 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
-import React from "react";
+import React, { useState } from "react";
 import Table from "../../../components/table";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
+import Pagination from "../../../components/pagination";
+import {  getQueryParamByName, getQueryUri } from "../../../utils/helpers";
 
 const tableHeaders = [
   { label: "NOTE NO.", value: "order_id" },
@@ -14,9 +16,24 @@ const tableHeaders = [
 
 function RetailerNotesListComponent(props) {
 
+  const pageLimit = 10
+  const activePage = 1
+  // const activePage = getQueryParamByName("activePage") || 1
+
+  const [pageNo, setPageNo] = useState(activePage)
+  const [count, setCount] = useState(5)
+
   const classes = useStyles()
 
-  console.log("retailerNotes",props.RetailerNotes)
+const handlePageChange = (pageObj) => {
+  setPageNo(pageObj.activePage)
+  const queryParamsObj = {
+    activePage: pageObj.activePage,
+  }
+  history.pushState(queryParamsObj, `/order-details/notes${getQueryUri(queryParamsObj)}`)
+}
+
+console.log("[outsideFunction]",props.RetailerNotes.length)
 
   return (
     <div id="notes-list">
@@ -115,6 +132,16 @@ function RetailerNotesListComponent(props) {
                   })
             }
           </Table>
+          {/* {
+            props.RetailerNotes.length > 0 &&
+            <Pagination
+              activePage={parseInt(pageNo)}
+              itemsCountPerPage={parseInt(pageLimit)}
+              totalItemsCount={count}
+              pageRangeDisplayed={5}
+              setPage={handlePageChange}
+            />
+          }  */}
         </div>
       </div>
     </div>
