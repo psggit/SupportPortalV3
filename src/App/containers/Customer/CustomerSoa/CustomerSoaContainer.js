@@ -4,7 +4,7 @@ import { CustomerSOA } from './mockData';
 
 const mapStateToProps = (state) => {
   return {
-    CustomerSoaList: CustomerSOA.data
+    CustomerSoaList: CustomerSOA
   };
 };
 

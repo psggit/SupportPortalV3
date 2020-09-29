@@ -4,7 +4,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Table from '../../../components/table'
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
+import Pagination from '../../../components/pagination'
 import Moment from "moment"
+import { getOffsetUsingPageNo, getQueryParamByName, getQueryUri } from '../../../utils/helpers';
 
 const useStyles = makeStyles(theme => ({
   navBar: {
@@ -45,10 +47,21 @@ const tableHeaders = [
 ]
 
 function CustomerSoa(props) {
-  console.log("props..hy", props.CustomerSoaList)
+  console.log("props..hy", props.CustomerSoaList.data, props.CustomerSoaList.count)
   const classes = useStyles();
-
+  
+  const pageLimit = 2
+  const activePage = getQueryParamByName("activePage") || 1
   const [isLoading, setLoading] = useState(false)
+  const [pageNo, setPageNo] = useState(activePage)
+
+  const handlePageChange = (pageObj) => {
+    setPageNo(pageObj.activePage)
+    const queryParamsObj = {
+      activePage: pageObj.activePage,
+    }
+    history.pushState(queryParamsObj, "soa listing", `/soa/123${getQueryUri(queryParamsObj)}`)
+  }
 
   return (
     <div className={classes.formContainer}>
@@ -79,7 +92,7 @@ function CustomerSoa(props) {
       <div className={classes.table}>
         <Table tableHeaders={tableHeaders}>
           {
-            props.CustomerSoaList.map((data, index) => {
+            props.CustomerSoaList.data.map((data, index) => {
               return(
                 <TableRow>
                   <TableCell>{data.order_id}</TableCell>
@@ -93,6 +106,14 @@ function CustomerSoa(props) {
             })
           }
         </Table>
+        <Pagination
+          activePage={parseInt(pageNo)}
+          //itemsCountPerPage={parseInt(pageLimit)}
+          rowsPerPage={parseInt(pageLimit)}
+          count={props.CustomerSoaList.count}
+          setPage={handlePageChange}
+          color="primary"
+        />
       </div>
     </div>
   )
