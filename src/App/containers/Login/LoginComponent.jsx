@@ -49,22 +49,22 @@ const LoginComponent = (props) => {
   const classes = useStyles();
   const [email, setEmailAddress] = useState("");
   const [isDisabled, setSubmitState] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("hasura-id") ? true : false);
+  const [isLoggedIn] = useState(
+    localStorage.getItem("hasura-id") ? true : false
+  );
 
-
-	if(isLoggedIn){
-		return <Redirect to="/dashboard" />
-	}
+  if (isLoggedIn) {
+    return <Redirect to="/dashboard" />;
+  }
 
   const handleChange = (event) => {
-
     const validation = {
-	    fieldName: "Email",
-	    fieldValue: event.target.value,
+      fieldName: "Email",
+      fieldValue: event.target.value,
     };
     const { status } = validateEmail(validation);
 
-    (!status) ? setSubmitState(false) : setSubmitState(true);
+    !status ? setSubmitState(false) : setSubmitState(true);
 
     setEmailAddress(event.target.value);
   };
@@ -96,7 +96,7 @@ const LoginComponent = (props) => {
             color="primary"
             className={classes.submit}
             onClick={() => props.sendLoginEmail(email)}
-	    disabled={isDisabled}
+            disabled={isDisabled}
           >
             Send Login Email
           </Button>
@@ -119,6 +119,6 @@ const LoginComponent = (props) => {
 
 LoginComponent.propTypes = {
   sendLoginEmail: PropTypes.func,
-}
+};
 
 export { LoginComponent };

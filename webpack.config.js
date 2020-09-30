@@ -73,7 +73,7 @@ module.exports = (env, argv) => {
     devServer: {
       host: "0.0.0.0",
       contentBase: "./dist",
-      public: "support-local.hipbar-dev.com",
+      public: "supportv2-local.hipbar-dev.com",
       allowedHosts: ["*"],
       historyApiFallback: {
         index: "/",

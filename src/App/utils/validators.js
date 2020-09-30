@@ -4,11 +4,13 @@ const mobileNoRegex = /^[6789]\d{9}$/;
 export const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 export const hipbarEmailRegex = /(\W|^)[\w.+\-]*@hipbar\.com(\W|$)/;
 
-export function validateNumberField({ fieldName, fieldValue }) {
+export function validateNumberField({ fieldName, fieldValue, filterType }) {
   if (fieldValue && fieldValue.trim().length === 0) {
     return {
       status: true,
       value: `${fieldName} is required`,
+      fieldName: fieldName,
+      filterType: filterType,
     };
   } else if (
     fieldName === "Mobile Number" &&
@@ -17,6 +19,8 @@ export function validateNumberField({ fieldName, fieldValue }) {
     return {
       status: true,
       value: `Enter a valid 10 digit ${fieldName}`,
+      fieldName: fieldName,
+      filterType: filterType,
     };
   } else if (
     fieldName === "OTP" &&
@@ -25,17 +29,20 @@ export function validateNumberField({ fieldName, fieldValue }) {
     return {
       status: true,
       value: `Enter a valid ${fieldName}`,
+      fieldName: fieldName,
+      filterType: filterType,
     };
   }
 
   return {
     status: false,
+    filterType: "",
     value: "",
+    fieldName: "",
   };
 }
 
 export function validateEmail({ fieldName, fieldValue }) {
-
   if (fieldName === "Email" && fieldValue.trim().length === 0) {
     return {
       status: true,
