@@ -12,9 +12,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  boxContainer: {
-    margin: "0 auto",
-    marginTop: "40px",
+  actionContainer: {
+    padding: theme.spacing(2),
   },
   card: {
     padding: theme.spacing(2),
@@ -105,7 +104,7 @@ const DeliveryAgentCard = (props) => {
           }
         />
       </CardContent>
-      <CardActions>
+      <CardActions className={classes.actionContainer}>
         <Button
           variant="outlined"
           color="primary"

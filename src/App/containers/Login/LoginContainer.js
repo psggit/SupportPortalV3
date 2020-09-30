@@ -5,11 +5,13 @@ import { sendLoginEmail } from "./duck";
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.login.isAuthenticated,
-    loginProgress: state.login.loginProgress,
-    loginFailed: state.login.loginFailed,
-    loginSuccess: state.login.loginSuccess,
+    loginProgressStatus: state.login.loginProgressStatus,
+    loginFailedStatus: state.login.loginFailedStatus,
+    loginSuccessStatus: state.login.loginSuccessStatus,
+    successMsg: state.login.successMsg,
   }
 }
+
 const mapDispatchToProps = (dispatch) => {
   return {
     sendLoginEmail: (email) => dispatch(sendLoginEmail(email)),

@@ -128,7 +128,7 @@ const DashboardComponent = (props) => {
       },
       filter: payload[type],
     }
-    props.fetchOrderDetails("sendPayload ", sendPayload);
+    props.fetchOrderDetails(sendPayload);
     // console.dir(sendPayload);
   };
 

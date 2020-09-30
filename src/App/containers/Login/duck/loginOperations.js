@@ -3,8 +3,8 @@ import { loginAPI } from "../../../utils";
 import { createSession } from "../../../utils";
 
 const processResponse = () => {
-  console.log("[processResponse]");
   return (res) => {
+    console.log(res);
     if (res.status === 200) {
       return res.json();
     } else {
@@ -14,19 +14,16 @@ const processResponse = () => {
 };
 
 const onSuccess = (dispatch) => {
-  console.log("[onSuccess]");
   return (data) => {
-    console.log("data");
-    console.log(data);
     dispatch(loginSuccess(data));
-    createSession(data);
+    // createSession(data);
   };
 };
 
 const onError = (dispatch) => {
   return (err) => {
-    console.log("[onError]", err);
-    createSession(null);
+    console.log("[onError] email sent: ", err);
+    // createSession(null);
     dispatch(loginFailed());
   };
 };
@@ -47,12 +44,10 @@ const getRedirectURL = () => {
 };
 
 const sendLoginEmail = (email) => {
-  console.log("[sendLoginEmail]");
   let reqBody = {
     email_id: email,
     redirect_url: getRedirectURL(),
   };
-  console.log(reqBody);
   return (dispatch) => {
     dispatch(loginProgress());
     loginAPI(

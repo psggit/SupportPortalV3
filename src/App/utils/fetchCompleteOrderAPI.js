@@ -1,5 +1,6 @@
 // import { apiUrl } from "./config";
 const headers = {
+  // eslint-disable-next-line prettier/prettier
   "Accept": "application/json",
   "Content-Type": "application/json",
   "x-hasura-role": "support_admin",
@@ -13,7 +14,6 @@ const fetchCompleteOrderAPI = (reqBody, process, onSuccess, onError) => {
     method: "POST",
     headers: headers,
     credentials: "include",
-    mode: "cors",
     body: JSON.stringify(reqBody),
   })
     .then((res) => {
