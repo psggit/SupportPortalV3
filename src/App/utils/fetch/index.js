@@ -1,13 +1,13 @@
 /**
-* # Fetch
-* (module_name: Fetch)
-* The request library based on Fetch API
-* ======================================
-*/
+ * # Fetch
+ * (module_name: Fetch)
+ * The request library based on Fetch API
+ * ======================================
+ */
 
-import { GET, POST, PUT, PATCH, DELETE } from "./fetch"
-import * as Fetch from "./fetch"
+import { GET, POST, PUT, PATCH, DELETE } from "./fetch";
+import * as Fetch from "./fetch";
 
-export {GET, POST, PUT, PATCH, DELETE}
+export { GET, POST, PUT, PATCH, DELETE };
 
-export default Fetch
+export default Fetch;

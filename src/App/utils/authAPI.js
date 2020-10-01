@@ -1,12 +1,3 @@
-// import { apiUrl } from "./config";
-const headers = {
-  Accept: "application/json",
-  "Content-Type": "application/json",
-  "x-hasura-role": "support_admin",
-  "App-Name": "HipBar-Drinks",
-  "hasura-id": "515947",
-};
-
 const authAPI = () => {
   const URL = `https://auth.hipbar-dev.com/user/account/info`;
   const fetchOptions = {

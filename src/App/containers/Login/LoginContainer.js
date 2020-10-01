@@ -9,14 +9,14 @@ const mapStateToProps = (state) => {
     loginFailedStatus: state.login.loginFailedStatus,
     loginSuccessStatus: state.login.loginSuccessStatus,
     successMsg: state.login.successMsg,
-  }
-}
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
     sendLoginEmail: (email) => dispatch(sendLoginEmail(email)),
-  }
-}
+  };
+};
 const LoginContainer = connect(
   mapStateToProps,
   mapDispatchToProps

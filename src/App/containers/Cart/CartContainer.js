@@ -8,13 +8,15 @@ const mapStateToProps = (state) => {
     loginProgress: state.login.loginProgress,
     loginFailed: state.login.loginFailed,
     loginSuccess: state.login.loginSuccess,
-  }
-}
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchOrderDetails: (payload) => dispatch(fetchOrderDetails(payload)),
-  }
-}
+  };
+};
+
 const CartContainer = connect(
   mapStateToProps,
   mapDispatchToProps

@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 const otpRegex = /^\d{6}$/;
 const mobileNoRegex = /^[6789]\d{9}$/;
 //const emailRegex = /^(a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/

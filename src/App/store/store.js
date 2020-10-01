@@ -15,14 +15,3 @@ const store = configureStore({
 });
 
 export default store;
-
-// const store = configureStore({
-//     reducer: {
-//       login: loginReducer,
-//       dashboard: dashboardReducer,
-//       order: orderReducer,
-//       cart: cartReducer,
-//       deliveryAgent: deliveryAgentReducer,
-//       trackOrder: trackOrderReducer,
-//     },
-// });

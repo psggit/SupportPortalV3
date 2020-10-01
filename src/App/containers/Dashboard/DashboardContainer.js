@@ -8,13 +8,13 @@ const mapStateToProps = (state) => {
     fetchDetailsProgress: state.home.fetchDetailsProgress,
     fetchDetailsFail: state.home.fetchDetailsFail,
     fetchDetailsSuccess: state.home.fetchDetailsSuccess,
-  }
-}
+  };
+};
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchOrderDetails: (payload) => dispatch(fetchOrderDetails(payload)),
-  }
-}
+  };
+};
 const DashboardContainer = connect(
   mapStateToProps,
   mapDispatchToProps

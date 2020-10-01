@@ -21,7 +21,7 @@ const onSuccess = (dispatch) => {
 
 const onError = (dispatch) => {
   return (err) => {
-    dispatch(loginFailed());
+    dispatch(loginFailed(err));
   };
 };
 

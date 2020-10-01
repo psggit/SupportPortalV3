@@ -1,35 +1,30 @@
-const path = require("path")
-const webpack = require("webpack")
-const { CleanWebpackPlugin } = require("clean-webpack-plugin")
-const HtmlWebpackPlugin = require("html-webpack-plugin")
-const CompressionPlugin = require("compression-webpack-plugin")
+const path = require("path");
+const webpack = require("webpack");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = {
   entry: {
     app: "./src/index.js",
-    vendor: ["react", "react-dom"]
+    vendor: ["react", "react-dom"],
   },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ["babel-loader"]
+        use: ["babel-loader"],
       },
       {
         test: /\.css$/,
-        use: [
-          "style-loader",
-          "css-loader"
-        ]
+        use: ["style-loader", "css-loader"],
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: [
-          "file-loader"
-        ]
-      }
-    ]
+        use: ["file-loader"],
+      },
+    ],
   },
   resolve: {
     extensions: ["*", ".js", ".jsx"],
@@ -38,17 +33,19 @@ module.exports = {
       Container: path.resolve(__dirname, "./src/container"),
       Utils: path.resolve(__dirname, "./src/utils"),
       Sass: path.resolve(__dirname, "./src/sass"),
-      Constants: path.resolve(__dirname, "./src/constants")
-    }
+      Constants: path.resolve(__dirname, "./src/constants"),
+    },
   },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: "Output Management",
-      template: "./src/index.html"
+      template: "./src/index.html",
     }),
     new webpack.DefinePlugin({
-      "process.env.BASE_URL": JSON.stringify(process.env.BASE_URL || "hipbar-dev.com"),
+      "process.env.BASE_URL": JSON.stringify(
+        process.env.BASE_URL || "hipbar-dev.com"
+      ),
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
     }),
     new CompressionPlugin({
@@ -57,13 +54,13 @@ module.exports = {
       exclude: /node_modules/,
       algorithm: "gzip",
       threshold: 10240,
-      minRatio: 0.8
-    })
+      minRatio: 0.8,
+    }),
   ],
   output: {
     filename: "[name].[chunkhash].js",
     path: path.resolve(__dirname, "dist"),
-    publicPath: "/"
+    publicPath: "/",
   },
   optimization: {
     splitChunks: {
@@ -73,8 +70,8 @@ module.exports = {
       maxAsyncRequests: 5,
       maxInitialRequests: 3,
       automaticNameDelimiter: "~",
-      name: true
+      name: true,
     },
-    runtimeChunk: true
-  }
-}
+    runtimeChunk: true,
+  },
+};
