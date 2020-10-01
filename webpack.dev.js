@@ -53,7 +53,7 @@ module.exports = merge(common, {
       Container: path.resolve(__dirname, "./src/container"),
       Utils: path.resolve(__dirname, "./src/utils"),
       Sass: path.resolve(__dirname, "./src/sass"),
-      Constants: path.resolve(__dirname, "./src/constants")
-    }
+      Constants: path.resolve(__dirname, "./src/constants"),
+    },
   },
 });
