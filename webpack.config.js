@@ -6,6 +6,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const SentryWebpackPlugin = require("@sentry/webpack-plugin");
 
 module.exports = (env, argv) => {
   const ARGS_SENTRY_ENV = JSON.stringify(env.SENTRY_ENV || "local");
@@ -104,6 +105,18 @@ module.exports = (env, argv) => {
           process.env.BASE_URL || "hipbar-dev.com"
         ),
         "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+      }),
+      //Must always be the last plugin to run
+      new SentryWebpackPlugin({
+        url: "https://sty.hipbar.com/",
+        // sentry-cli configuration
+        authToken: env.SENTRY_AUTH_TOKEN,
+        release: env.SENTRY_RELEASE,
+        org: "hipbar",
+        project: "support-web",
+        // webpack specific configuration
+        include: ".",
+        ignore: ["node_modules", "webpack.config.js"],
       }),
     ],
     optimization: {
