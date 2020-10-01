@@ -13,6 +13,9 @@ const newTheme = createMuiTheme({
     fontFamily: font,
     body1: {
       fontSize: "16px",
+      ".MuiTableCell-head": {
+        fontWeight: 700,
+      },
     },
     h5: {
       fontWeight: 700,
@@ -20,9 +23,17 @@ const newTheme = createMuiTheme({
     button: {
       fontSize: "14px",
       textTransform: "none",
-      fontWeight: "bold",
-      "&.MuiButton-outlinedPrimary": {
-        border: "2px solid",
+      fontWeight: 700,
+    },
+  },
+  overrides: {
+    MuiTableCell: {
+      head: {
+        padding: "4px 8px",
+        backgroundColor: "#E5E5E5",
+        fontFamily: font,
+        fontWeight: 700,
+        height: "64px",
       },
     },
   },

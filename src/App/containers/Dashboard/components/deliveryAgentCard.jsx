@@ -72,7 +72,6 @@ const DeliveryAgentCard = (props) => {
               ? errorString.value
               : ""
           }
-          defaultValue={defValueDeliveryAgentNo}
           value={defValueDeliveryAgentNo}
           inputProps={{ maxLength: 10 }}
           onChange={(event) =>
@@ -91,7 +90,6 @@ const DeliveryAgentCard = (props) => {
           variant="outlined"
           size="small"
           label="Agent ID"
-          defaultValue={defValueDeliveryAgentId}
           value={defValueDeliveryAgentId}
           inputProps={{ maxLength: 16 }}
           onChange={(event) =>

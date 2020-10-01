@@ -7,8 +7,8 @@ const headers = {
   "hasura-id": "515947",
 };
 
-const authAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://hipbar-dev.com/user/account/info`;
+const authAPI = () => {
+  const URL = `https://auth.hipbar-dev.com/user/account/info`;
   const fetchOptions = {
     method: "get",
     credentials: "include",

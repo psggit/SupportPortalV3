@@ -99,8 +99,10 @@ module.exports = (env, argv) => {
         ARGS_SENTRY_RELEASE: ARGS_SENTRY_RELEASE,
         ARGS_BUILD_ENV: ARGS_BUILD_ENV,
         ARGS_BASE_DOMAIN: ARGS_BASE_DOMAIN,
-	ARGS_NODE_ENV: ARGS_NODE_ENV,
-	"process.env.BASE_URL": JSON.stringify(process.env.BASE_URL || "hipbar-dev.com"),
+        ARGS_NODE_ENV: ARGS_NODE_ENV,
+        "process.env.BASE_URL": JSON.stringify(
+          process.env.BASE_URL || "hipbar-dev.com"
+        ),
         "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
       }),
     ],

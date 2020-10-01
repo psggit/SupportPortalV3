@@ -47,7 +47,7 @@ export default function MenuDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["Issues", "User Manager", "Logout"].map((text) => (
+        {["Home", "Issues", "User Manager", "Logout"].map((text) => (
           <ListItem button key={text}>
             <ListItemText primary={text} />
           </ListItem>

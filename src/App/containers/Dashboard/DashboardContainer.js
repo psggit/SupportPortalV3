@@ -5,9 +5,9 @@ import { fetchOrderDetails } from "./duck";
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.login.isAuthenticated,
-    loginProgress: state.login.loginProgress,
-    loginFailed: state.login.loginFailed,
-    loginSuccess: state.login.loginSuccess,
+    fetchDetailsProgress: state.home.fetchDetailsProgress,
+    fetchDetailsFail: state.home.fetchDetailsFail,
+    fetchDetailsSuccess: state.home.fetchDetailsSuccess,
   }
 }
 const mapDispatchToProps = (dispatch) => {

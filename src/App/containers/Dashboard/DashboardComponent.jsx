@@ -5,11 +5,14 @@ import Container from "@material-ui/core/Container";
 import TopBar from "../../components/topBar";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
-// import { userAuthAPI } from "../../utils";
+import { useHistory } from "react-router-dom";
 import { validateNumberField } from "../../utils/validators";
 import { ConsumerCard } from "./components/consumerCard";
 import { RetailerCard } from "./components/retailerCard";
 import { DeliveryAgentCard } from "./components/deliveryAgentCard";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "16px",
     lineHeight: "22px",
   },
+  dialogPopup: {
+    textAlign: "center",
+  },
 }));
 
 const DashboardComponent = (props) => {
@@ -50,8 +56,9 @@ const DashboardComponent = (props) => {
     delivery_agent_details: {},
   });
   const [filterType, setFilterType] = useState("");
-  const [isFetchDisabled, setFetchState] = useState(false);
+  const [isFetchDisabled, setFetchState] = useState(true);
   const [isResetDisabled, setResetState] = useState(false);
+  const history = useHistory();
   const [errorString, setErrorMessage] = useState({
     status: false,
     fieldName: "",
@@ -79,7 +86,7 @@ const DashboardComponent = (props) => {
         fieldValue: "",
         filterType: "",
       });
-      setFetchState(false);
+      setFetchState(true);
     }
 
     let previousPayload = payload[filterType];
@@ -120,23 +127,33 @@ const DashboardComponent = (props) => {
   };
 
   const handleSubmit = (type) => {
-    console.log(payload, type);
     const sendPayload = {
       pagination: {
         limit: 25,
         offset: 0,
       },
       filter: payload[type],
-    }
+    };
     props.fetchOrderDetails(sendPayload);
-    // console.dir(sendPayload);
   };
 
-  console.log(props.orderData);
+  if (props.fetchDetailsSuccess) {
+    history.push("/order-details");
+  }
 
   return (
     <Container component="main">
       <TopBar />
+      {props.fetchDetailsProgress ? (
+        <Dialog className={classes.dialogPopup} open={open} maxWidth="sm">
+          <DialogTitle id="simple-dialog-title">Fetching data...</DialogTitle>
+          <Box pb={3}>
+            <CircularProgress />
+          </Box>
+        </Dialog>
+      ) : (
+        ""
+      )}
       <Box maxWidth="80%" className={classes.boxContainer}>
         <Grid container spacing={4}>
           <Grid item xs={4}>
@@ -184,6 +201,8 @@ const DashboardComponent = (props) => {
 DashboardComponent.propTypes = {
   fetchOrderDetails: PropTypes.func,
   orderData: PropTypes.object,
+  fetchDetailsSuccess: PropTypes.bool,
+  fetchDetailsProgress: PropTypes.bool,
 };
 
 export { DashboardComponent };

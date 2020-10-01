@@ -11,34 +11,36 @@ const initialValue = {
   orderId: null,
   fetchDetailsProgress: false,
   fetchDetailsFail: false,
-  fetchDetailsStatus: false,
+  fetchDetailsSuccess: false,
   errorMsg: "",
 };
 
 const homeReducer = createReducer(initialValue, {
-  [fetchOrderSuccess]: (state, payload) => ({
+  [fetchOrderSuccess]: (state, data) => ({
     ...state,
     fetchDetailsProgress: false,
     fetchDetailsFail: false,
-    fetchDetailsStatus: true,
+    fetchDetailsSuccess: true,
     errorMsg: "",
-    orderData: payload.data,
+    orderData: data.payload,
   }),
   [fetchOrderFailed]: (state) => ({
     ...state,
     fetchDetailsProgress: false,
     fetchDetailsFail: true,
-    fetchDetailsStatus: false,
+    fetchDetailsSuccess: false,
     errorMsg: "Something went wrong, please try again",
   }),
   [fetchOrderProgress]: (state) => ({
     ...state,
     fetchDetailsProgress: true,
   }),
-  [selectOrder]: (state, orderId) => ({
-    ...state,
-    orderId: orderId,
-  }),
+  [selectOrder]: (state, payload) => {
+    return {
+      ...state,
+      orderId: payload.payload,
+    };
+  },
 });
 
 export { homeReducer };

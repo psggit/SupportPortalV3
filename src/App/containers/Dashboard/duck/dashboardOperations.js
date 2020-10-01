@@ -6,7 +6,7 @@ import {
 import { fetchCompleteOrderAPI } from "../../../utils";
 
 const processResponse = () => {
-  console.log("[processResponse]");
+  // console.log("[processResponse]");
   return (res) => {
     if (res.status === 200) {
       return res.json();

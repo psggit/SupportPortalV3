@@ -4,7 +4,6 @@ import { createSession } from "../../../utils";
 
 const processResponse = () => {
   return (res) => {
-    console.log(res);
     if (res.status === 200) {
       return res.json();
     } else {
@@ -16,14 +15,12 @@ const processResponse = () => {
 const onSuccess = (dispatch) => {
   return (data) => {
     dispatch(loginSuccess(data));
-    // createSession(data);
+    createSession(data);
   };
 };
 
 const onError = (dispatch) => {
   return (err) => {
-    console.log("[onError] email sent: ", err);
-    // createSession(null);
     dispatch(loginFailed());
   };
 };
@@ -33,13 +30,12 @@ const getRedirectURL = () => {
   switch (process.env.NODE_ENV) {
     case "local":
       return (redirectURL =
-        "http://support-local.hipbar-dev.com:8001/home/dashboard");
+        "http://support-local.hipbar-dev.com:8080/dashboard");
     case "development":
-      return (redirectURL = "https://ts-support.hipbar-dev.com/home/dashboard");
+      return (redirectURL = "https://ts-support.hipbar-dev.com/dashboard");
     case "production":
-      return (redirectURL = "https://support.hipbar.com/home/dashboard");
+      return (redirectURL = "https://support.hipbar.com/dashboard");
   }
-  console.log(redirectURL);
   return redirectURL;
 };
 

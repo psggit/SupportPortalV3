@@ -54,6 +54,11 @@ const LoginComponent = (props) => {
     localStorage.getItem("hasura-id") ? true : false
   );
 
+  useEffect(() => {
+    // console.log("[APP]");
+    // authAPI();
+  }, [])
+
   if (isLoggedIn) {
     // return <Redirect to="/dashboard" />;
   }

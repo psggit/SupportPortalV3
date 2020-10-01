@@ -15,10 +15,7 @@ const loginAPI = (reqBody, process, onSuccess, onError) => {
     headers: headers,
     body: JSON.stringify(reqBody),
   })
-    .then((res) => {
-      console.log("[loginAPI]", res);
-      process(res);
-    })
+    .then((res) => process(res))
     .then((data) => onSuccess(data))
     .catch((err) => onError(err));
 };

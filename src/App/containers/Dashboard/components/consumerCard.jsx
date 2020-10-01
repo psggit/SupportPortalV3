@@ -53,10 +53,10 @@ const ConsumerCard = (props) => {
     defValueOrderNo = props.payload.consumer["order_id"];
   }
 
-  if (!("customer_id" in props.payload.consumer)) {
+  if (!("consumer_id" in props.payload.consumer)) {
     defValueCustomerId = "";
   } else {
-    defValueCustomerId = props.payload.consumer["customer_id"];
+    defValueCustomerId = props.payload.consumer["consumer_id"];
   }
 
   return (
@@ -77,7 +77,6 @@ const ConsumerCard = (props) => {
               ? errorString.value
               : ""
           }
-          defaultValue={defValueCustomerNo}
           value={defValueCustomerNo}
           inputProps={{ maxLength: 10 }}
           onChange={(event) =>
@@ -96,7 +95,6 @@ const ConsumerCard = (props) => {
           variant="outlined"
           size="small"
           label="Order ID"
-          defaultValue={defValueOrderNo}
           value={defValueOrderNo}
           inputProps={{ maxLength: 16 }}
           onChange={(event) =>
@@ -110,11 +108,10 @@ const ConsumerCard = (props) => {
           variant="outlined"
           size="small"
           label="Customer ID"
-          defaultValue={defValueCustomerId}
           value={defValueCustomerId}
           inputProps={{ maxLength: 10 }}
           onChange={(event) =>
-            props.handleChange(event, "customer-id", "consumer", "customer_id")
+            props.handleChange(event, "consumer-id", "consumer", "consumer_id")
           }
         />
       </CardContent>
