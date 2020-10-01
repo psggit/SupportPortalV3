@@ -39,17 +39,17 @@ const useStyles = makeStyles(theme => ({
 
 const tableHeaders = [
   { label: "ORDER ID", value: "order_id" },
-  { label: "TYPE", value: "type" },
-  { label: "AMOUNT", value: "amount" },
-  { label: "OPENING BALANCE", value: "opening_balance" },
-  { label: "CLOSING BALANCE", value: "closing_balance" },
+  { label: "TRANSACTION TYPE", value: "transaction_type" },
+  { label: "TRANSACTION AMOUNT", value: "transaction_amount" },
+  { label: "CARD NUMBER AND VALUE", value: "card_number_and_value" },
+  { label: "TRANSACTION STATUS", value: "transaction_status" },
   { label: "CREATED AT", value: "created_at" },
 ]
 
-function CustomerSoa(props) {
-  console.log("props..hy", props.CustomerSoaList.data, props.CustomerSoaList.count)
+function CustomerGiftSoa(props) {
+  console.log("props..hy", props.CustomerGiftSoaList.data, props.CustomerGiftSoaList.count)
   const classes = useStyles();
-  
+
   const pageLimit = 2
   const activePage = getQueryParamByName("activePage") || 1
   const [isLoading, setLoading] = useState(false)
@@ -92,14 +92,14 @@ function CustomerSoa(props) {
       <div className={classes.table}>
         <Table tableHeaders={tableHeaders}>
           {
-            props.CustomerSoaList.data.map((data, index) => {
-              return(
+            props.CustomerGiftSoaList.data.map((data, index) => {
+              return (
                 <TableRow>
                   <TableCell>{data.order_id}</TableCell>
-                  <TableCell>{data.type}</TableCell>
-                  <TableCell>{data.amount}</TableCell>
-                  <TableCell>{data.opening_balance}</TableCell>
-                  <TableCell>{data.closing_balance}</TableCell>
+                  <TableCell>{data.transaction_type}</TableCell>
+                  <TableCell>{data.transaction_amount}</TableCell>
+                  <TableCell>{data.card_number_and_value}</TableCell>
+                  <TableCell>{data.transaction_status}</TableCell>
                   <TableCell align="left">{Moment(data.created_at).format("DD/MM/YYYY h:mm A")}</TableCell>
                 </TableRow>
               )
@@ -110,7 +110,7 @@ function CustomerSoa(props) {
           activePage={parseInt(pageNo)}
           //itemsCountPerPage={parseInt(pageLimit)}
           rowsPerPage={parseInt(pageLimit)}
-          count={props.CustomerSoaList.count}
+          count={props.CustomerGiftSoaList.count}
           setPage={handlePageChange}
           color="primary"
         />
@@ -119,5 +119,5 @@ function CustomerSoa(props) {
   )
 }
 
-export { CustomerSoa }
+export { CustomerGiftSoa }
 

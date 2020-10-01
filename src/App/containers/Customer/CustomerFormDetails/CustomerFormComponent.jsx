@@ -1,7 +1,20 @@
 import React, { useState } from "react"
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Moment from "moment"
+import { green } from '@material-ui/core/colors';
+import Radio from '@material-ui/core/Radio';
+
+const BlueRadio = withStyles({
+  root: {
+    color: '#0086AD',
+    '&$checked': {
+      color: '#0086AD',
+    },
+  },
+  checked: {},
+})((props) => <Radio color="default" {...props} />);
 
 const useStyles = makeStyles(theme => ({
  formContainer: {},
@@ -32,7 +45,7 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 'bold',
   },
   section2: {
-    width: '40%',
+    width: '60%',
     paddingLeft: '50px'
   },
   generalForm: {
@@ -45,6 +58,9 @@ const useStyles = makeStyles(theme => ({
   textField: {
     marginBottom: '16px',
     backgroundColor: '#fff'
+  },
+  radioGroup: {
+    display: 'flex',
   }
 
 }));
@@ -61,6 +77,20 @@ function CustomerForm(){
   const [hipbarWalletBalance, setHipbarWalletBalance] = useState("")
   const [giftWalletBalance, setGiftWalletBalance] = useState("")
 
+  const handleReset = () => {
+    setCustomerName("")
+    setMobileNumber("")
+    setEmail("")
+    setDob("")
+    setSignupDate("")
+    setKycLevel("")
+    setHipbarWalletBalance("")
+    setGiftWalletBalance("")
+  }
+
+  const handleSave = () => {
+    console.log("value", mobileNumber,customerName,email,dob,signupDate,kycLevel,hipbarWalletBalance,giftWalletBalance)
+  }
 
   return(
     <div className={classes.formContainer}>
@@ -100,6 +130,44 @@ function CustomerForm(){
               value={customerName}
               onChange={(e) => setCustomerName(e.target.value)}
             />
+          </div>
+        </div>
+
+        <div className={classes.generalForm}>
+          <div className={classes.label}>
+            <p>Gender</p>
+          </div>
+          <div className={classes.radioGroup}> 
+            <div >
+              <label>Female</label>
+              <BlueRadio
+              // checked={selectedValue === 'c'}
+              // onChange={handleChange}
+              // value="c"
+              // name="radio-button-demo"
+              // inputProps={{ 'aria-label': 'C' }}
+              />
+            </div>
+            <div>
+              <label>Male</label>
+              <BlueRadio
+              // checked={selectedValue === 'c'}
+              // onChange={handleChange}
+              // value="c"
+              // name="radio-button-demo"
+              // inputProps={{ 'aria-label': 'C' }}
+              />
+            </div>
+            <div>
+              <label>Not Spacified</label>
+              <BlueRadio
+              // checked={selectedValue === 'c'}
+              // onChange={handleChange}
+              // value="c"
+              // name="radio-button-demo"
+              // inputProps={{ 'aria-label': 'C' }}
+              />
+            </div>
           </div>
         </div>
 
@@ -211,8 +279,8 @@ function CustomerForm(){
         </div>
 
         <div>
-          <Button>Reset</Button>
-          <Button>Save</Button>
+          <Button onClick={handleReset}>Reset</Button>
+          <Button onClick={handleSave}>Save</Button>
         </div>
       </div>
     </div>

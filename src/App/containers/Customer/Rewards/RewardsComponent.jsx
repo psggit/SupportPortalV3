@@ -39,17 +39,21 @@ const useStyles = makeStyles(theme => ({
 
 const tableHeaders = [
   { label: "ORDER ID", value: "order_id" },
-  { label: "TYPE", value: "type" },
+  { label: "RETAILER NAME", value: "retailer_name" },
+  { label: "REWARD ID", value: "reward_id" },
+  { label: "REWARD SOURCE", value: "reward_source" },
   { label: "AMOUNT", value: "amount" },
-  { label: "OPENING BALANCE", value: "opening_balance" },
-  { label: "CLOSING BALANCE", value: "closing_balance" },
+  { label: "PROMOCODE", value: "promocode" },
+  { label: "BANK RRN", value: "bank_rrn" },
+  { label: "FAILURE REASON", value: "failure_reason" },
   { label: "CREATED AT", value: "created_at" },
+  { label: "STATUS", value: "status" },
 ]
 
-function CustomerSoa(props) {
-  console.log("props..hy", props.CustomerSoaList.data, props.CustomerSoaList.count)
+function Rewards(props) {
+  console.log("props..hy", props.rewardsList.data, props.rewardsList.count)
   const classes = useStyles();
-  
+
   const pageLimit = 2
   const activePage = getQueryParamByName("activePage") || 1
   const [isLoading, setLoading] = useState(false)
@@ -92,15 +96,19 @@ function CustomerSoa(props) {
       <div className={classes.table}>
         <Table tableHeaders={tableHeaders}>
           {
-            props.CustomerSoaList.data.map((data, index) => {
-              return(
+            props.rewardsList.data.map((data, index) => {
+              return (
                 <TableRow>
                   <TableCell>{data.order_id}</TableCell>
-                  <TableCell>{data.type}</TableCell>
+                  <TableCell>{data.retailer_name}</TableCell>
+                  <TableCell>{data.reward_id}</TableCell>
+                  <TableCell>{data.reward_source}</TableCell>
                   <TableCell>{data.amount}</TableCell>
-                  <TableCell>{data.opening_balance}</TableCell>
-                  <TableCell>{data.closing_balance}</TableCell>
+                  <TableCell>{data.promocode}</TableCell>
+                  <TableCell>{data.bank_rrn}</TableCell>
+                  <TableCell>{data.failure_reason}</TableCell>
                   <TableCell align="left">{Moment(data.created_at).format("DD/MM/YYYY h:mm A")}</TableCell>
+                  <TableCell>{data.status}</TableCell>
                 </TableRow>
               )
             })
@@ -110,7 +118,7 @@ function CustomerSoa(props) {
           activePage={parseInt(pageNo)}
           //itemsCountPerPage={parseInt(pageLimit)}
           rowsPerPage={parseInt(pageLimit)}
-          count={props.CustomerSoaList.count}
+          count={props.rewardsList.count}
           setPage={handlePageChange}
           color="primary"
         />
@@ -119,5 +127,5 @@ function CustomerSoa(props) {
   )
 }
 
-export { CustomerSoa }
+export { Rewards }
 
