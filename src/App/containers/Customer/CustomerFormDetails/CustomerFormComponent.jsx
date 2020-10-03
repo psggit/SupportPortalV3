@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 'bold',
   },
   section2: {
-    width: '60%',
+    width: '40%',
     paddingLeft: '50px'
   },
   generalForm: {
@@ -61,6 +61,21 @@ const useStyles = makeStyles(theme => ({
   },
   radioGroup: {
     display: 'flex',
+  },
+  button: {
+    color: "#FFFFFF",
+    backgroundColor: "#0086AD",
+    fontSize: "14px",
+    fontWeight: "bold",
+    lineHeight: "21px",
+    borderRadius: "4px",
+    marginLeft: "16px",
+    border: "1.6px solid #0086AD"
+  },
+  buttonContainer: {
+    marginLeft: '500px',
+    display:'flex',
+    paddingBottom: '20px'
   }
 
 }));
@@ -76,6 +91,11 @@ function CustomerForm(){
   const [kycLevel, setKycLevel] = useState("")
   const [hipbarWalletBalance, setHipbarWalletBalance] = useState("")
   const [giftWalletBalance, setGiftWalletBalance] = useState("")
+  const [selectedValue, setSelectedValue] = useState("");
+
+  const handleRadioChange = (event) => {
+    setSelectedValue(event.target.value);
+  };
 
   const handleReset = () => {
     setCustomerName("")
@@ -86,10 +106,12 @@ function CustomerForm(){
     setKycLevel("")
     setHipbarWalletBalance("")
     setGiftWalletBalance("")
+    setSelectedValue("")
   }
 
   const handleSave = () => {
     console.log("value", mobileNumber,customerName,email,dob,signupDate,kycLevel,hipbarWalletBalance,giftWalletBalance)
+    console.log("radio", selectedValue)
   }
 
   return(
@@ -129,6 +151,7 @@ function CustomerForm(){
               name="customerName"
               value={customerName}
               onChange={(e) => setCustomerName(e.target.value)}
+              size="small"
             />
           </div>
         </div>
@@ -141,31 +164,31 @@ function CustomerForm(){
             <div >
               <label>Female</label>
               <BlueRadio
-              // checked={selectedValue === 'c'}
-              // onChange={handleChange}
-              // value="c"
-              // name="radio-button-demo"
-              // inputProps={{ 'aria-label': 'C' }}
+              checked={selectedValue === 'female'}
+              onChange={handleRadioChange}
+              value="female"
+              name="radio-button-demo"
+              inputProps={{ 'aria-label': 'Female' }}
               />
             </div>
             <div>
               <label>Male</label>
               <BlueRadio
-              // checked={selectedValue === 'c'}
-              // onChange={handleChange}
-              // value="c"
-              // name="radio-button-demo"
-              // inputProps={{ 'aria-label': 'C' }}
+              checked={selectedValue === 'male'}
+              onChange={handleRadioChange}
+              value="male"
+              name="radio-button-demo"
+              inputProps={{ 'aria-label': 'Male' }}
               />
             </div>
             <div>
-              <label>Not Spacified</label>
+              <label>Not Specified</label>
               <BlueRadio
-              // checked={selectedValue === 'c'}
-              // onChange={handleChange}
-              // value="c"
-              // name="radio-button-demo"
-              // inputProps={{ 'aria-label': 'C' }}
+              checked={selectedValue === 'notSpecified'}
+              onChange={handleRadioChange}
+              value="notSpecified"
+              name="radio-button-demo"
+              inputProps={{ 'aria-label': 'Not Spacified' }}
               />
             </div>
           </div>
@@ -181,6 +204,7 @@ function CustomerForm(){
               variant="outlined"
               name="mobileNumber"
               value={mobileNumber}
+              size="small"
               onChange={(e) => setMobileNumber(e.target.value)}
             />
           </div>
@@ -196,6 +220,7 @@ function CustomerForm(){
               variant="outlined"
               name="email"
               value={email}
+              size="small"
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
@@ -212,6 +237,7 @@ function CustomerForm(){
               type="date"
               name="dob"
               value={dob}
+              size="small"
               onChange={(e) => setDob(e.target.value)}
             />
           </div>
@@ -228,6 +254,7 @@ function CustomerForm(){
               variant="outlined"
               name="signupDate"
               value={signupDate}
+              size="small"
               onChange={(e) => setSignupDate(e.target.value)}
             />
           </div>
@@ -243,6 +270,7 @@ function CustomerForm(){
               variant="outlined"
               name="kycLevel"
               value={kycLevel}
+              size="small"
               onChange={(e) => setKycLevel(e.target.value)}
             />
           </div>
@@ -258,6 +286,7 @@ function CustomerForm(){
               variant="outlined"
               name="hipbarWalletBalance"
               value={hipbarWalletBalance}
+              size="small"
               onChange={(e) => setHipbarWalletBalance(e.target.value)}
             />
           </div>
@@ -273,14 +302,15 @@ function CustomerForm(){
               variant="outlined"
               name="giftWalletBalance"
               value={giftWalletBalance}
+              size="small"
               onChange={(e) => setGiftWalletBalance(e.target.value)}
             />
           </div>
         </div>
 
-        <div>
-          <Button onClick={handleReset}>Reset</Button>
-          <Button onClick={handleSave}>Save</Button>
+        <div className={classes.buttonContainer}>
+          <Button className={classes.button} onClick={handleReset}>Reset</Button>
+          <Button className={classes.button} onClick={handleSave}>Save</Button>
         </div>
       </div>
     </div>
