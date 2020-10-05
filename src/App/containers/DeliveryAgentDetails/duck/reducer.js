@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 const initialState = {};
 
-const deliveryAgentReducer = createReducer(initialState, {});
+const daDetailsReducer = createReducer(initialState, {});
 
-export { deliveryAgentReducer };
+export { daDetailsReducer };

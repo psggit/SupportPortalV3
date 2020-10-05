@@ -1,1 +1,1 @@
-export { deliveryAgentReducer } from './reducer';
+export { daDetailsReducer } from './reducer';

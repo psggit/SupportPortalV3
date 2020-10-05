@@ -3,7 +3,7 @@ import DeliveryAgentDetailsCard from './components/card';
 import DeliveryNotesCard from './components/card';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import {getDataList} from 'Utils/helpers';
+// import {getDataList} from './../../utils/helpers';
 import List from "@material-ui/core/List";
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -35,7 +35,7 @@ const getTimestamp = (timestamp) => {
   return Moment(timestamp).format("D MMM h:mm A")
 }
 
-const renderAgentNotes = ({dataMap, keysToRender}) => {
+const renderAgentNotes = ({ dataMap, keysToRender }) => {
   const data = getDataList(dataMap, keysToRender)
   const classes = useStyles();
   return (
@@ -99,11 +99,11 @@ const renderAgentDetails = () => {
   )
 }
 
-const DeliveryAgentDetails = (props) => {
+const DANotes = (props) => {
   const classes = useStyles();
   const deliveryAgentDetailsAction = [
     <Button variant="outlined" color="primary">Unassign</Button>,
-    <Button variant="contained" color = "primary">Call</Button>
+    <Button variant="contained" color="primary">Call</Button>
   ];
 
   const deliveryAgentNotesAction = [
@@ -125,7 +125,7 @@ const DeliveryAgentDetails = (props) => {
         actions={deliveryAgentNotesAction}
       >
         {renderAgentNotes({
-          dataMap: props.orderDetails.timing_details, 
+          dataMap: props.orderDetails.timing_details,
           keysToRender: keysToRenderInNotesCard
         })}
       </DeliveryNotesCard>
@@ -133,4 +133,4 @@ const DeliveryAgentDetails = (props) => {
   );
 }
 
-export {DeliveryAgentDetails}
+export { DANotes }

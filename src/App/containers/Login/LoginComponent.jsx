@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -9,6 +10,8 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { validateEmail } from "../../utils/validators";
+import { authAPI } from "../../utils";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -46,11 +49,33 @@ function Copyright() {
 const LoginComponent = (props) => {
   const classes = useStyles();
   const [email, setEmailAddress] = useState("");
+  const [isDisabled, setSubmitState] = useState(true);
+  const [isLoggedIn] = useState(
+    localStorage.getItem("hasura-id") ? true : false
+  );
+
+  useEffect(() => {
+    // console.log("[APP]");
+    // authAPI();
+  }, [])
+
+  if (isLoggedIn) {
+    // return <Redirect to="/dashboard" />;
+  }
 
   const handleChange = (event) => {
-    // console.log(event.target.value);
+    const validation = {
+      fieldName: "Email",
+      fieldValue: event.target.value,
+    };
+    const { status } = validateEmail(validation);
+
+    !status ? setSubmitState(false) : setSubmitState(true);
+
     setEmailAddress(event.target.value);
   };
+
+  // console.log(props.loginSuccessStatus);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -79,6 +104,7 @@ const LoginComponent = (props) => {
             color="primary"
             className={classes.submit}
             onClick={() => props.sendLoginEmail(email)}
+            disabled={isDisabled}
           >
             Send Login Email
           </Button>
@@ -101,6 +127,10 @@ const LoginComponent = (props) => {
 
 LoginComponent.propTypes = {
   sendLoginEmail: PropTypes.func,
-}
+  loginProgressStatus: PropTypes.bool,
+  loginSuccessStatus: PropTypes.bool,
+  loginFailedStatus: PropTypes.bool,
+  successMsg: PropTypes.string,
+};
 
 export { LoginComponent };

@@ -6,15 +6,20 @@ const initialValue = {
   loginProgressStatus: false,
   loginFailedStatus: false,
   loginSuccessStatus: false,
+  errorMsg: "",
+  successMsg: "",
+  xHasuraRole: null,
+  hasuraId: null,
 };
 
 const loginReducer = createReducer(initialValue, {
-  [loginSuccess]: (state) => ({
+  [loginSuccess]: (state, payload) => ({
     ...state,
     isAuthenticated: true,
     loginProgressStatus: false,
     loginFailedStatus: false,
     loginSuccessStatus: true,
+    successMsg: payload.message,
     errorMsg: "",
   }),
   [loginFailed]: (state) => ({

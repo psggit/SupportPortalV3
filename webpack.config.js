@@ -6,12 +6,14 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const SentryWebpackPlugin = require("@sentry/webpack-plugin");
 
 module.exports = (env, argv) => {
   const ARGS_SENTRY_ENV = JSON.stringify(env.SENTRY_ENV || "local");
   const ARGS_SENTRY_RELEASE = JSON.stringify(env.SENTRY_RELEASE || "local");
   const ARGS_BUILD_ENV = JSON.stringify(env.BUILD_ENV || "local");
   const ARGS_BASE_DOMAIN = JSON.stringify(env.BASE_DOMAIN || "hipbar-dev.com");
+  const ARGS_NODE_ENV = JSON.stringify(env.NODE_ENV);
   const config = {
     entry: ["react-hot-loader/patch", "./src/index.js"],
     output: {
@@ -73,7 +75,7 @@ module.exports = (env, argv) => {
     devServer: {
       host: "0.0.0.0",
       contentBase: "./dist",
-      public: "fk-local.hipbar-dev.com",
+      public: "supportv2-local.hipbar-dev.com",
       allowedHosts: ["*"],
       historyApiFallback: {
         index: "/",
@@ -99,6 +101,23 @@ module.exports = (env, argv) => {
         ARGS_SENTRY_RELEASE: ARGS_SENTRY_RELEASE,
         ARGS_BUILD_ENV: ARGS_BUILD_ENV,
         ARGS_BASE_DOMAIN: ARGS_BASE_DOMAIN,
+        ARGS_NODE_ENV: ARGS_NODE_ENV,
+        "process.env.BASE_URL": JSON.stringify(
+          process.env.BASE_URL || "hipbar-dev.com"
+        ),
+        "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+      }),
+      //Must always be the last plugin to run
+      new SentryWebpackPlugin({
+        url: "https://sty.hipbar.com/",
+        // sentry-cli configuration
+        authToken: env.SENTRY_AUTH_TOKEN,
+        release: env.SENTRY_RELEASE,
+        org: "hipbar",
+        project: "support-web",
+        // webpack specific configuration
+        include: ".",
+        ignore: ["node_modules", "webpack.config.js"],
       }),
     ],
     optimization: {

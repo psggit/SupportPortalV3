@@ -1,0 +1,1 @@
+export { daNotesReducer } from './reducer';

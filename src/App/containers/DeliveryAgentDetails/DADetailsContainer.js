@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { DeliveryAgentDetails } from './DeliveryAgentComponent';
+import { DADetails } from './DADetailsComponent';
 import {data} from './mockData';
 
 const mapStateToProps = (state) => {
@@ -12,9 +12,9 @@ const mapDispatchToProps = () => {
   return {};
 };
 
-const DeliveryAgentContainer = connect(
+const DADetailsContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(DeliveryAgentDetails);
+)(DADetails);
 
-export { DeliveryAgentContainer };
+export { DADetailsContainer };
