@@ -6,7 +6,7 @@ import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import TopBar from "../../components/topBar";
 import { useHistory } from "react-router-dom";
-import {DADetailsContainer} from "./../DeliveryAgentDetails";
+import {DADetailsContainer} from "../DeliveryAgentDetails";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,7 +41,7 @@ const OrderInfoComponent = (props) => {
   const classes = useStyles();
   useEffect(() => {
     if (props.orderId === null) {
-      history.push("/order-info");
+      history.push("/dashboard");
     } else {
       props.fetchOrderInfo(props.orderId);
     }

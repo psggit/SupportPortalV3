@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import DeliveryAgentDetailsCard from './components/card';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import List from "@material-ui/core/List";
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import {getListOfDataObjects} from './../../utils/helpers';
+
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -28,23 +30,30 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const RenderAgentDetails = () => {
+const RenderAgentDetails = (props) => {
+
   const classes = useStyles();
   return (
     <React.Fragment>
       <List>
-        <ListItem classes={{ root: classes.ListItemRoot }}>
-          <ListItemText
-            primary="Agent ID"
-            className={classes.ListItemTextRoot}
-            classes={{ root: classes.ListItemTextLabel }}
-          />
-          <ListItemText
-            primary="123"
-            className={classes.ListItemTextRoot}
-            classes={{ root: classes.ListItemTextLabel }}
-          />
-        </ListItem>
+        {
+          props.deliveryAgentDetails.map((item, index) => {
+            return (
+              <ListItem classes={{ root: classes.ListItemRoot }}>
+                <ListItemText
+                  primary="Agent ID"
+                  className={classes.ListItemTextRoot}
+                  classes={{ root: classes.ListItemTextLabel }}
+                />
+                <ListItemText
+                  primary="123"
+                  className={classes.ListItemTextRoot}
+                  classes={{ root: classes.ListItemTextLabel }}
+                />
+              </ListItem>
+            )
+          })
+        }
       </List>
     </React.Fragment>
       // <div>
@@ -81,10 +90,20 @@ const RenderAgentDetails = () => {
 
 const DADetails = (props) => {
   const classes = useStyles();
+  let deliveryAgentDetails = [];
+  const keysToRender = ["delivery_agent_name", "delivery_agent_id"];
+
   const deliveryAgentDetailsAction = [
     <Button variant="outlined" color="primary">Unassign</Button>,
     <Button variant="contained" color = "primary">Call</Button>
   ];
+
+  useEffect(() => {
+    console.log("props in usee", props)
+    if (!props.isFetchingOrderDetails) {
+      deliveryAgentDetails = getListOfDataObjects(props.orderInfo, ["delivery_agent_name"])
+    }
+  }, [])
 
   return (
     <div className={classes.container}>
@@ -92,7 +111,7 @@ const DADetails = (props) => {
         title="Delivery Agent Details"
         actions={deliveryAgentDetailsAction}
       >
-        <RenderAgentDetails />
+        <RenderAgentDetails deliveryAgentDetails={deliveryAgentDetails} />
       </DeliveryAgentDetailsCard>
     </div>
   );
