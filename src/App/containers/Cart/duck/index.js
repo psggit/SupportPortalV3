@@ -1,2 +1,2 @@
-export { homeReducer } from "./reducer";
-export { fetchOrderDetails } from "./dashboardOperations";
+export { cartReducer } from "./reducer";
+export { fetchGenre } from "./cartOperations";

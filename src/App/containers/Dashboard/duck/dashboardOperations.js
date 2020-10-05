@@ -3,10 +3,9 @@ import {
   fetchOrderFailed,
   fetchOrderProgress,
 } from "./actions";
-import { fetchCompleteOrderAPI } from "../../../utils";
+import { completeOrderAPI } from "../../../utils";
 
 const processResponse = () => {
-  // console.log("[processResponse]");
   return (res) => {
     if (res.status === 200) {
       return res.json();
@@ -17,17 +16,13 @@ const processResponse = () => {
 };
 
 const onSuccess = (dispatch) => {
-  console.log("[onSuccess]");
   return (data) => {
-    console.log("data");
-    console.log(data);
     dispatch(fetchOrderSuccess(data));
   };
 };
 
 const onError = (dispatch) => {
   return (err) => {
-    console.log("[onError]", err);
     dispatch(fetchOrderFailed());
   };
 };
@@ -35,7 +30,7 @@ const onError = (dispatch) => {
 const fetchOrderDetails = (reqBody) => {
   return (dispatch) => {
     dispatch(fetchOrderProgress());
-    fetchCompleteOrderAPI(
+    completeOrderAPI(
       reqBody,
       processResponse(dispatch),
       onSuccess(dispatch),

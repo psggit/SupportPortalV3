@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 const DashboardComponent = (props) => {
   useEffect(() => {
-    console.log("DashboardComponent");
+    // console.log("DashboardComponent");
     // userAuthAPI(null, onProcess, onSuccess, onError);
   }, []);
   const classes = useStyles();

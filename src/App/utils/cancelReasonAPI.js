@@ -6,17 +6,17 @@ const headers = {
   "hasura-id": "515947",
 };
 
-const fetchOrderInfoAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://api.hipbar-dev.com/supportman/api/1/complete_order_details/${reqBody}`;
-  console.log(URL);
+const cancelReasonAPI = (reqBody, process, onSuccess, onError) => {
+  const URL = `https://api.hipbar-dev.com/supportman/api/1/cancel-reason`;
   fetch(URL, {
-    method: "GET",
+    method: "POST",
     headers: headers,
     credentials: "include",
+    body: JSON.stringify(reqBody),
   })
     .then((res) => process(res))
     .then((data) => onSuccess(data))
     .catch((err) => onError(err));
 };
 
-export { fetchOrderInfoAPI };
+export { cancelReasonAPI };

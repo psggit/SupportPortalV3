@@ -1,15 +1,19 @@
-// import { apiUrl } from "./config";
+// https://retailer.hipbar-dev.com/Api/stockandprice/listing/brands
+
+// Step 1:
+// list all genres
+// on click - hit above API to fetch all cart items
+
 const headers = {
-  // eslint-disable-next-line prettier/prettier
-  "Accept": "application/json",
+  Accept: "application/json",
   "Content-Type": "application/json",
   "x-hasura-role": "support_admin",
   "App-Name": "HipBar-Drinks",
   "hasura-id": "515947",
 };
 
-const URL = `https://api.hipbar-dev.com/deliveryman/api/1/fetch-order-details`;
-const fetchCompleteOrderAPI = (reqBody, process, onSuccess, onError) => {
+const genresAPI = (reqBody, process, onSuccess, onError) => {
+  const URL = `https://retailer.hipbar-dev.com/Api/stockandprice/listing/brands`;
   fetch(URL, {
     method: "POST",
     headers: headers,
@@ -21,4 +25,4 @@ const fetchCompleteOrderAPI = (reqBody, process, onSuccess, onError) => {
     .catch((err) => onError(err));
 };
 
-export { fetchCompleteOrderAPI };
+export { genresAPI };

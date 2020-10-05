@@ -1,7 +1,7 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 import "./app.scss";
 
-const font = "'Open Sans', sans-serif";
+const font = "Open Sans";
 
 const newTheme = createMuiTheme({
   palette: {
@@ -12,6 +12,7 @@ const newTheme = createMuiTheme({
   typography: {
     fontFamily: font,
     body1: {
+      fontFamily: font,
       fontSize: "16px",
       ".MuiTableCell-head": {
         fontWeight: 700,
@@ -19,6 +20,9 @@ const newTheme = createMuiTheme({
     },
     h5: {
       fontWeight: 700,
+    },
+    h4: {
+      fontWeight: 600,
     },
     button: {
       fontSize: "14px",

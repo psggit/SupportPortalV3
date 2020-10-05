@@ -3,19 +3,17 @@ import {
   fetchOrderSuccess,
   fetchOrderFailed,
   fetchOrderProgress,
-  selectOrder,
 } from "./actions";
 
 const initialValue = {
   orderData: null,
-  orderId: null,
   fetchDetailsProgress: false,
   fetchDetailsFail: false,
   fetchDetailsStatus: false,
   errorMsg: "",
 };
 
-const homeReducer = createReducer(initialValue, {
+const cartReducer = createReducer(initialValue, {
   [fetchOrderSuccess]: (state, payload) => ({
     ...state,
     fetchDetailsProgress: false,
@@ -35,10 +33,6 @@ const homeReducer = createReducer(initialValue, {
     ...state,
     fetchDetailsProgress: true,
   }),
-  [selectOrder]: (state, orderId) => ({
-    ...state,
-    orderId: orderId,
-  }),
 });
 
-export { homeReducer };
+export { cartReducer };
