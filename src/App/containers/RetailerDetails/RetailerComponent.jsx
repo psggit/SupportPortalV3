@@ -92,21 +92,6 @@ const renderRetailerNotes = ({ dataMap, keysToRender }) => {
 const renderRetailerDetails = (props) => {
   const retailerDetails = props.orderInfo;
 
-  const [showAddNoteDilog, setShowAddNoteDialog] = useState(false)
-  const [age, setAge] = useState('');
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
-
-  const mountAddNote = () => {
-    setShowAddNoteDialog(true)
-  }
-
-  const UnmountAddNote = () => {
-    setShowAddNoteDialog(false)
-  }
-
   console.log("renderRetailerDetails", retailerDetails,props.retailerDetails)
   return (
     <React.Fragment>
@@ -153,6 +138,22 @@ const RetailerDetails = (props) => {
   console.log("useEffect", props.orderInfo.retailer_id)
 
   const classes = useStyles();
+
+  const [showAddNoteDilog, setShowAddNoteDialog] = useState(false)
+  const [age, setAge] = useState('');
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
+
+  const mountAddNote = () => {
+    setShowAddNoteDialog(true)
+  }
+
+  const UnmountAddNote = () => {
+    setShowAddNoteDialog(false)
+  }
+  
   const retailerDetailsAction = [
     <Button variant="outlined" color="primary">Change Retailer</Button>,
     <Button variant="contained" color="primary">Call</Button>
