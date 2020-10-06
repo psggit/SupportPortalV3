@@ -105,11 +105,7 @@ const renderRetailerDetails = (props) => {
 
 const RetailerDetails = (props) => {
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      console.log("useEffect", props.orderInfo)
-    }, 5000)
-  }, [])
+  console.log("useEffect", props.orderInfo.retailer_id)
 
   const classes = useStyles();
   const retailerDetailsAction = [

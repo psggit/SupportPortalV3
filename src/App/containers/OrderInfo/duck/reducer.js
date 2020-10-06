@@ -22,12 +22,15 @@ const initialValue = {
 };
 
 const orderInfoReducer = createReducer(initialValue, {
-  [fetchOrderInfoProgress]: (state) => ({
+  [fetchOrderInfoProgress]: (state) => {
+    console.log("in progress")
+    return {
     ...state,
     fetchOrderInfoProgress: true,
     fetchOrderInfoFailure: false,
     fetchOrderInfoSuccess: false,
-  }),
+    }
+  },
   [fetchOrderInfoFailure]: (state) => ({
     ...state,
     fetchOrderInfoProgress: false,
@@ -36,6 +39,7 @@ const orderInfoReducer = createReducer(initialValue, {
     errorMsg: "Something went wrong, please try again",
   }),
   [fetchOrderInfoSuccess]: (state, data) => {
+    console.log("in success", data)
     return {
       ...state,
       orderInfo: data.payload.order_details,

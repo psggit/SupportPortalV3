@@ -116,7 +116,7 @@ import { fetchOrder, fetchCancelReason } from "../OrderInfo/duck";
 };*/
 
 const mapStateToProps = (state) => {
-  console.log("orderinfocontainer",state.orderInfo.orderInfo)
+  //console.log("orderinfocontainer",state.orderInfo.orderInfo)
   return {
     orderId: state.home.orderId,
     orderInfo: state.orderInfo,

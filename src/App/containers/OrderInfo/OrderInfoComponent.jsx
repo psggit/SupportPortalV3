@@ -61,7 +61,7 @@ const OrderInfoComponent = (props) => {
   }, []);
 
   let loading = props.fetchOrderInfoProgress;
-  console.log("orderInfo", props.orderInfo.delivery_agent_id)
+  console.log("orderInfo", props.orderInfo)
   if (loading) {
     return (
       <Box>
@@ -102,7 +102,7 @@ const OrderInfoComponent = (props) => {
             </Grid>
             <Grid container spacing={4}>
               <Grid item xs={12}>
-               <RetailerContainer {...props}/>
+               <RetailerContainer />
               </Grid>
             </Grid>
             <Grid container spacing={4}>
