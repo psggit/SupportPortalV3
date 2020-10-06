@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({  
   root: {
     padding: 24,
-    width: 492,
+    width: 520,
     '& .MuiCardHeader-root': {
       padding: 0
     },

@@ -11,7 +11,7 @@
     "clean": "rm dist/bundle.js",
     "build-dev": "echo \"Look at dockerfile \"",
     "build-prod": "echo \"Look at dockerfile \"",
-    "start": "BASE_URL=hipbar-dev.com webpack-dev-server --hot --mode development --env.NODE_ENV=dev",
+    "start": "BASE_URL=hipbar-dev.com NODE_ENV=local webpack-dev-server --config webpack.dev.js --history-api-fallback --disable-host-check",
     "test": "jest",
     "cy:run": "cypress run --record",
     "cy:ci": "start-server-and-test start http-get://localhost:8080 cy:run"
@@ -19,10 +19,14 @@
   "dependencies": {
     "@babel/runtime": "^7.10.5",
     "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
     "@react-google-maps/api": "^1.9.9",
     "@reduxjs/toolkit": "^1.4.0",
     "@sentry/react": "^5.19.0",
     "bootstrap": "^4.5.0",
+    "compression-webpack-plugin": "^6.0.2",
+    "moment": "^2.29.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.2.0",
     "react-dom": "^16.13.1",
@@ -30,7 +34,9 @@
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "webpack-merge": "^5.1.4",
+    "yarn": "^1.22.10"
   },
   "devDependencies": {
     "@babel/core": "^7.10.4",
@@ -38,6 +44,7 @@
     "@babel/preset-flow": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
     "@hot-loader/react-dom": "^16.13.0+4.12.20",
+    "@sentry/webpack-plugin": "^1.13.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.1.0",
     "babel-loader": "^8.1.0",
@@ -57,7 +64,7 @@
     "express": "^4.17.1",
     "file-loader": "^6.0.0",
     "flow-bin": "^0.129.0",
-    "html-webpack-plugin": "^4.3.0",
+    "html-webpack-plugin": "^4.5.0",
     "jest": "^26.1.0",
     "mini-css-extract-plugin": "^0.10.0",
     "moment": "^2.29.0",

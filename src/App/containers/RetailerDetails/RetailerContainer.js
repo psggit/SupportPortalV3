@@ -4,7 +4,9 @@ import { data } from './mockData';
 
 const mapStateToProps = (state) => {
   return {
-    orderDetails: data
+    orderDetails:data,
+    orderInfo: state.orderInfo,
+    retailerDetails: state.orderInfo,
   };
 };
 

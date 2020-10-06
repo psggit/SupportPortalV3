@@ -1,13 +1,13 @@
 // import { apiUrl } from "./config";
-
-const headers = { "Content-Type": "application/json" };
+const headers = {
+  Accept: "application/json",
+  "Content-Type": "application/json",
+};
 
 // const api = `/deliveryman/api/1/support/send-login-email`;
 // const URL = `https://${apiUrl}.${process.env.BASE_URL}${api}`;
-const URL = `https://api.hipbar-dev.com/supportman/api/1/send-login-email`;
-
 const loginAPI = (reqBody, process, onSuccess, onError) => {
-  console.log(reqBody);
+  const URL = `https://api.hipbar-dev.com/deliveryman/api/1/support/send-login-email`;
   fetch(URL, {
     method: "POST",
     headers: headers,
@@ -19,4 +19,3 @@ const loginAPI = (reqBody, process, onSuccess, onError) => {
 };
 
 export { loginAPI };
-

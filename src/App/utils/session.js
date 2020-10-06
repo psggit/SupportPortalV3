@@ -17,7 +17,7 @@ function getHasuraRole(data) {
     // product_team: 5,
     // delivery_support_person: 3,
     // user: 1
-  }
+  };
   let maxRole = rolesMap["support_person"];
   let xHasuraRole = "support_person";
   //console.log("roles", hasuraRoles)
@@ -37,7 +37,9 @@ function getHasuraId(data) {
 }
 
 export function createSession(data) {
-  console.log("hasure role", getHasuraRole(data));
+  // console.log("hasure role", getHasuraRole(data));
   localStorage.setItem("x-hasura-role", getHasuraRole(data));
   localStorage.setItem("hasura-id", getHasuraId(data));
+  // localStorage.setItem("hasura-id", 515947);
+  // localStorage.setItem("x-hasura-role", "support_admin");
 }

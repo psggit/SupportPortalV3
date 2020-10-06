@@ -1,15 +1,11 @@
 import { loginSuccess, loginFailed, loginProgress } from "./actions";
 import { loginAPI } from "../../../utils";
-import { createSession } from "../../../utils/session";
+import { createSession } from "../../../utils";
 
 const processResponse = () => {
-  console.log("[processResponse]");
   return (res) => {
-    if (res.ok) {
+    if (res.status === 200) {
       return res.json();
-    }
-    if (res.status === 400) {
-      throw new Error("invalid params");
     } else {
       throw new Error("Something went wrong, try again");
     }
@@ -17,10 +13,7 @@ const processResponse = () => {
 };
 
 const onSuccess = (dispatch) => {
-  console.log("[onSuccess]");
   return (data) => {
-    console.log("data");
-    console.log(data);
     dispatch(loginSuccess(data));
     createSession(data);
   };
@@ -28,16 +21,28 @@ const onSuccess = (dispatch) => {
 
 const onError = (dispatch) => {
   return (err) => {
-    console.log("[onError]", err);
     dispatch(loginFailed(err));
   };
 };
 
+const getRedirectURL = () => {
+  let redirectURL = "http://localhost:8080/dashboard";
+  switch (process.env.NODE_ENV) {
+    case "local":
+      return (redirectURL =
+        "http://support-local.hipbar-dev.com:8080/dashboard");
+    case "development":
+      return (redirectURL = "https://ts-support.hipbar-dev.com/dashboard");
+    case "production":
+      return (redirectURL = "https://support.hipbar.com/dashboard");
+  }
+  return redirectURL;
+};
+
 const sendLoginEmail = (email) => {
-  console.log("[sendLoginEmail]");
   let reqBody = {
     email_id: email,
-    redirect_url: "https://ts-support.hipbar-dev.com/home/dashboard",
+    redirect_url: getRedirectURL(),
   };
   return (dispatch) => {
     dispatch(loginProgress());

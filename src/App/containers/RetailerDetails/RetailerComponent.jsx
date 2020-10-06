@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import RetailerDetailsCard from '../../components/card';
 import RetailerNotesCard from '../../components/card';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import { getDataList } from 'Utils/helpers';
+import { getDataList } from '../../utils/helpers';
 import List from "@material-ui/core/List";
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Moment from 'moment';
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -64,12 +65,15 @@ const renderRetailerNotes = ({ dataMap, keysToRender }) => {
   )
 }
 
-const renderRetailerDetails = () => {
+const renderRetailerDetails = (props) => {
+  const retailerDetails = props.retailerDetails;
+
+  console.log("renderRetailerDetails", retailerDetails,props.retailerDetails)
   return (
     <React.Fragment>
       <div>
         <div className="title">Retailer ID</div>
-        <div className="value">123456</div>
+        {/* <div className="value">{retailerDetails.order_details.retailer_id ? `${retailerDetails.order_details.retailer_id}` : "-"}</div> */}
       </div>
       <div>
         <div className="title">Retailer Name</div>
@@ -100,6 +104,13 @@ const renderRetailerDetails = () => {
 }
 
 const RetailerDetails = (props) => {
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      console.log("useEffect", props.orderInfo)
+    }, 5000)
+  }, [])
+
   const classes = useStyles();
   const retailerDetailsAction = [
     <Button variant="outlined" color="primary">Change Retailer</Button>,
@@ -118,7 +129,7 @@ const RetailerDetails = (props) => {
         title="Retailer Details"
         actions={retailerDetailsAction}
       >
-        {renderRetailerDetails()}
+        {renderRetailerDetails(props)}
       </RetailerDetailsCard>
       <RetailerNotesCard
         title="Retailer Notes"
