@@ -117,7 +117,7 @@ const tempValue = {
 const mapStateToProps = (state) => {
   return {
     orderId: state.home.orderId,
-    orderInfo: tempValue.order_details,
+    orderInfo: state.orderInfo,
     cancelReasons: state.orderInfo.cancelReasons,
     fetchOrderInfoSuccess: state.orderInfo.fetchOrderInfoSuccess,
     fetchCancelReasonSuccess: state.orderInfo.fetchCancelReasonSuccess,

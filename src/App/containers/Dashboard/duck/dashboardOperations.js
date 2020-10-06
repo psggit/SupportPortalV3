@@ -23,7 +23,7 @@ const onSuccess = (dispatch) => {
 
 const onError = (dispatch) => {
   return (err) => {
-    dispatch(fetchOrderFailed());
+    dispatch(fetchOrderFailed(err));
   };
 };
 

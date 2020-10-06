@@ -69,7 +69,7 @@ const OrderDetailsCard = (props) => {
   };
   platform == "hb" ? (platform = "Hipbar Web") : (platform = "Flipkart");
   useEffect(() => {
-    // 
+    //
   }, []);
 
   const [open, setOpen] = useState(false);
@@ -84,8 +84,7 @@ const OrderDetailsCard = (props) => {
   };
 
   const handleCancel = () => {
-    //
-    handleClickOpen();
+    setOpen(false);
   };
 
   const handleDeliver = () => {};
@@ -136,6 +135,7 @@ const OrderDetailsCard = (props) => {
             className={classes.marginLeft}
             size="small"
             onClick={handleCancel}
+            disabled={!props.orderInfo.order_status_button}
           >
             Cancel Order
           </Button>
@@ -144,6 +144,7 @@ const OrderDetailsCard = (props) => {
             color="primary"
             size="small"
             onClick={handleDeliver}
+            disabled={!props.orderInfo.order_status_button}
           >
             Deliver Order
           </Button>
@@ -199,7 +200,9 @@ const OrderDetailsCard = (props) => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
+          {
+            "Do you want to cancel order? Select reason for cancelling order and click Confirm to proceed."
+          }
         </DialogTitle>
         <DialogContent>
           <RadioGroup
@@ -221,10 +224,20 @@ const OrderDetailsCard = (props) => {
           </RadioGroup>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button
+            onClick={handleCancel}
+            color="primary"
+            variant="outlined"
+            size="small"
+          >
             Confirm
           </Button>
-          <Button onClick={handleClose} color="primary" autoFocus>
+          <Button
+            onClick={handleClose}
+            color="primary"
+            variant="contained"
+            size="small"
+          >
             Close
           </Button>
         </DialogActions>

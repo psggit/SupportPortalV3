@@ -5,6 +5,7 @@ import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import TopBar from "../../components/topBar";
+
 import { useHistory } from "react-router-dom";
 import { CartContainer } from "../Cart/CartContainer";
 import { OrderDetailsCard } from "./components/orderDetailsCard";
@@ -40,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
 const OrderInfoComponent = (props) => {
   const history = useHistory();
   const classes = useStyles();
+ 
   useEffect(() => {
     if (props.orderId === null) {
       history.push("/dashboard");
@@ -54,6 +56,7 @@ const OrderInfoComponent = (props) => {
       props.fetchCancelReason(payload);
     }
   }, []);
+
 
   return (
     <Container component="main" className={classes.root}>
