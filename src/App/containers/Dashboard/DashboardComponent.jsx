@@ -156,10 +156,7 @@ const DashboardComponent = (props) => {
         ""
       )}
       {props.fetchDetailsFail && (
-        <ErrorMsg
-          show={true}
-          message="Something went wrong, try again later."
-        />
+        <ErrorMsg show={props.fetchDetailsFail} message={props.errorMsg} />
       )}
       <Box maxWidth="80%" className={classes.boxContainer}>
         <Grid container spacing={4}>
@@ -211,6 +208,7 @@ DashboardComponent.propTypes = {
   fetchDetailsSuccess: PropTypes.bool,
   fetchDetailsProgress: PropTypes.bool,
   fetchDetailsFail: PropTypes.bool,
+  errorMsg: PropTypes.string,
 };
 
 export { DashboardComponent };

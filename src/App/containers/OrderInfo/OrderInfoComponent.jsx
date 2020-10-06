@@ -41,22 +41,23 @@ const useStyles = makeStyles((theme) => ({
 const OrderInfoComponent = (props) => {
   const history = useHistory();
   const classes = useStyles();
- 
+  console.log(props);
+
   useEffect(() => {
     if (props.orderId === null) {
-      history.push("/dashboard");
+      // history.push("/dashboard");
     } else {
+      // let payload = {
+      //   order_id: props.orderInfo.order_id,
+      // };
       let payload = {
-        order_id: props.orderInfo.order_id,
-      };
-      payload = {
         order_id: "50011189094739",
       };
       props.fetchOrderInfo(props.orderId);
       props.fetchCancelReason(payload);
     }
   }, []);
-
+  console.log(props);
 
   return (
     <Container component="main" className={classes.root}>

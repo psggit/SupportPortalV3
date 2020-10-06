@@ -12,7 +12,7 @@ import { authAPI } from "./utils";
 
 function App() {
   useEffect(() => {
-    // console.log("[APP]");
+    console.log("[APP]");
     authAPI();
   }, []);
   return (
@@ -20,6 +20,7 @@ function App() {
       <ThemeProvider theme={newTheme}>
         <Router>
           <Switch>
+            <Route path="/order-details" component={OrderDetailsContainer} />
             <Route path="/order-details" component={OrderDetailsContainer} />
             <Route path="/order-info" component={OrderInfoContainer} />
             <Route path="/dashboard" component={DashboardContainer} />

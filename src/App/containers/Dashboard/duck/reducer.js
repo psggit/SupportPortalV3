@@ -19,7 +19,6 @@ const homeReducer = createReducer(initialValue, {
   [fetchOrderSuccess]: (state, data) => ({
     ...state,
     fetchDetailsProgress: false,
-    fetchDetailsFail: false,
     fetchDetailsSuccess: true,
     errorMsg: "",
     orderData: data.payload,
@@ -28,12 +27,13 @@ const homeReducer = createReducer(initialValue, {
     ...state,
     fetchDetailsProgress: false,
     fetchDetailsFail: true,
-    fetchDetailsSuccess: false,
     errorMsg: "Something went wrong, please try again",
   }),
   [fetchOrderProgress]: (state) => ({
     ...state,
     fetchDetailsProgress: true,
+    fetchDetailsFail: false,
+    fetchDetailsSuccess: false,
   }),
   [selectOrder]: (state, payload) => {
     return {
