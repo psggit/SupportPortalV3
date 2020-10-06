@@ -1,6 +1,6 @@
-import { fetchRetailerSuccess, fetchRetailerFailed, fetchRetailerNotesSuccess, fetchRetailerNotesFailed } from "./action";
-import { fetchRetailerDetailsAPI } from "../../../utils";
-import { createSession } from "../../../utils/session";
+import { fetchRetailerNotesSuccess, fetchRetailerNotesFailed, fetchRetailerNotesProgress } from "./action";
+// import { createSession } from "../../../utils";
+import { fetchRetailerNotesAPI } from '../../../utils/fetchRetailerNotesAPI';
 
 const processResponse = () => {
   console.log("[processResponse]");
@@ -21,25 +21,26 @@ const onSuccess = (dispatch) => {
   return (data) => {
     console.log("data");
     console.log(data);
-    dispatch(fetchRetailerSuccess(data));
-    createSession(data);
+    dispatch(fetchRetailerNotesSuccess(data));
+    // createSession(data);
   };
 };
 
 const onError = (dispatch) => {
   return (err) => {
     console.log("[onError]", err);
-    dispatch(fetchRetailerFailed(err));
+    dispatch(fetchRetailerNotesFailed(err));
   };
 };
 
-const sendRetailerId = (retailerId) => {
-  console.log("[sendLoginEmail]");
+const sendOrderId = (orderId) => {
   let reqBody = {
-    retailer_id: retailerId,
+    order_id: orderId,
+    type: "retailer",
   };
   return (dispatch) => {
-    fetchRetailerDetailsAPI(
+    dispatch(fetchRetailerNotesProgress());
+    fetchRetailerNotesAPI(
       reqBody,
       processResponse(dispatch),
       onSuccess(dispatch),
@@ -48,4 +49,4 @@ const sendRetailerId = (retailerId) => {
   };
 };
 
-export { sendRetailerId };
+export { sendOrderId };

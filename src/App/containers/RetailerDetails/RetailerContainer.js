@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { RetailerDetails } from './RetailerComponent';
+import { sendOrderId } from './duck/RetailerOperations';
 import { data } from './mockData';
 
 const mapStateToProps = (state) => {
@@ -10,8 +11,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = () => {
-  return {};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    sendOrderId: (orderId) => dispatch(sendOrderId(orderId)),
+  };
 };
 
 const RetailerContainer = connect(

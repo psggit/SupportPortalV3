@@ -9,8 +9,30 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Moment from 'moment';
 import PropTypes from "prop-types";
+import Dialog from '../../components/dialog';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 const useStyles = makeStyles(theme => ({
+  formRoot: {
+    padding: 24
+  },
+  formControlTextarea: {
+    width: "100%",
+    marginBottom: 24,
+    padding: 10
+  },
+  selectIssue: {
+    display: "flex",
+    paddingLeft: "24px",
+    color: "#606060"
+  },
+  formControl: {
+    marginLeft: "16px",
+    minWidth: 120,
+  },
   container: {
     display: 'flex',
     justifyContent: 'space-between'
@@ -37,8 +59,10 @@ const getTimestamp = (timestamp) => {
 }
 
 const renderRetailerNotes = ({ dataMap, keysToRender }) => {
+
   const data = getDataList(dataMap, keysToRender)
   const classes = useStyles();
+
   return (
     <React.Fragment>
       {
@@ -67,6 +91,21 @@ const renderRetailerNotes = ({ dataMap, keysToRender }) => {
 
 const renderRetailerDetails = (props) => {
   const retailerDetails = props.orderInfo;
+
+  const [showAddNoteDilog, setShowAddNoteDialog] = useState(false)
+  const [age, setAge] = useState('');
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
+
+  const mountAddNote = () => {
+    setShowAddNoteDialog(true)
+  }
+
+  const UnmountAddNote = () => {
+    setShowAddNoteDialog(false)
+  }
 
   console.log("renderRetailerDetails", retailerDetails,props.retailerDetails)
   return (
@@ -105,6 +144,12 @@ const renderRetailerDetails = (props) => {
 
 const RetailerDetails = (props) => {
 
+  const orderId = props.orderInfo.order_id
+
+  useEffect(() => {
+    props.sendOrderId(orderId)
+  })
+
   console.log("useEffect", props.orderInfo.retailer_id)
 
   const classes = useStyles();
@@ -114,8 +159,62 @@ const RetailerDetails = (props) => {
   ];
 
   const retailerNotesAction = [
-    <Button variant="contained" color="primary">Add</Button>
-  ];
+    <div>
+      <Button variant="contained" color="primary" onClick={mountAddNote}>
+        Add
+    </Button>,
+    {
+        showAddNoteDilog &&
+        <Dialog
+          title="ADD NOTE"
+          actions={[
+            <Button
+              variant="contained"
+              buttonStyle="secondary"
+              onClick={UnmountAddNote}
+            >
+              Cancel
+                </Button>,
+            <Button
+              variant="contained"
+            //onClick={commentUnmountModel}
+            >
+              Save
+                </Button>
+          ]}
+        >
+          <form>
+            <div className={classes.selectIssue}>
+              <div>Select Issue</div>
+              <div>
+                <FormControl className={classes.formControl}>
+                  <Select
+                    value={age}
+                    onChange={handleChange}
+                    displayEmpty
+                    className={classes.selectEmpty}
+                    inputProps={{ 'aria-label': 'Without label' }}
+                  >
+                    <MenuItem value={10}>Ten</MenuItem>
+                    <MenuItem value={20}>Twenty</MenuItem>
+                    <MenuItem value={30}>Thirty</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+            </div>
+            <div className={classes.formRoot}>
+              <TextareaAutosize
+                className={classes.formControlTextarea}
+                aria-label="minimum height"
+                rowsMin={7}
+                //onChange={handleCommentChange}
+                placeholder="Add note here"
+              />
+            </div>
+          </form>
+        </Dialog>
+      }
+    </div>  ];
 
   const keysToRenderInNotesCard = ["message", "display_value"];
 
