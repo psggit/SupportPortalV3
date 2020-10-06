@@ -9,6 +9,8 @@ import TopBar from "../../components/topBar";
 import { useHistory } from "react-router-dom";
 import { CartContainer } from "../Cart/CartContainer";
 import { OrderDetailsCard } from "./components/orderDetailsCard";
+import { CircularProgress } from "@material-ui/core";
+import { Backdrop } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,7 +59,19 @@ const OrderInfoComponent = (props) => {
       props.fetchCancelReason(payload);
     }
   }, []);
-  console.log(props);
+
+  let loading = props.fetchOrderInfoProgress;
+
+  // loading = true;
+  if (loading) {
+    return (
+      <Box>
+        <Backdrop open={true}>
+          <CircularProgress />
+        </Backdrop>
+      </Box>
+    );
+  }
 
   return (
     <Container component="main" className={classes.root}>
@@ -115,6 +129,8 @@ OrderInfoComponent.propTypes = {
   cancelReasons: PropTypes.object,
   fetchOrderInfoSuccess: PropTypes.bool,
   fetchCancelReasonSuccess: PropTypes.bool,
+  fetchOrderInfoProgress: PropTypes.bool,
+  fetchCancelReasonProgress: PropTypes.bool,
   orderId: PropTypes.any,
   orderInfo: PropTypes.object,
 };
