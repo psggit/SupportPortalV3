@@ -8,6 +8,7 @@ import { RetailerContainer } from "./containers/RetailerDetails";
 import { RetailerNotesListContainer } from "./containers/RetailerDetails/RetailerNotesList/RetailerNotesListContainer";
 import { ThemeProvider } from "@material-ui/styles";
 import newTheme from "./sass/theme";
+import { ChangeRetailerContainer } from "./containers/RetailerDetails/ChangeRetailer/ChangeRetailerContainer";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/order-details/123" component={DeliveryAgentContainer} />
             <Route path="/order-details/1234" component={RetailerContainer} />
             <Route path="/order-details/notes" component={RetailerNotesListContainer} />
+            <Route path="/order-details/change-retailer" component={ChangeRetailerContainer} />
             <Route path="/" component={LoginContainer} />
           </Switch>
         </Router>
