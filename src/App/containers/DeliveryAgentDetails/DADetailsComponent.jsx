@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import DeliveryAgentDetailsCard from './components/card';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -7,6 +7,12 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import {getListOfDataObjects} from './../../utils/helpers';
 
+const keysToRender = ["delivery_agent_id", "delivery_agent_name", "delivery_agent_contact_number"];
+const keyMap = {
+  "delivery_agent_id": "Agent ID",
+  "delivery_agent_name": "Agent Name",
+  "delivery_agent_contact_number": "Mobile Number"
+};
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -15,7 +21,7 @@ const useStyles = makeStyles(theme => ({
   },
   ListItemRoot: {
     width: "100%",
-    borderBottom: "1px solid #E5E5E5",
+    padding: 0,
     fontSize: 16,
     color: "#606060"
   },
@@ -31,7 +37,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const RenderAgentDetails = (props) => {
-
   const classes = useStyles();
   return (
     <React.Fragment>
@@ -41,12 +46,12 @@ const RenderAgentDetails = (props) => {
             return (
               <ListItem classes={{ root: classes.ListItemRoot }}>
                 <ListItemText
-                  primary="Agent ID"
+                  primary={keyMap[keysToRender[index]]}
                   className={classes.ListItemTextRoot}
                   classes={{ root: classes.ListItemTextLabel }}
                 />
                 <ListItemText
-                  primary="123"
+                  primary={item[keysToRender[index]] ? item[keysToRender[index]] : "-"}
                   className={classes.ListItemTextRoot}
                   classes={{ root: classes.ListItemTextLabel }}
                 />
@@ -56,58 +61,23 @@ const RenderAgentDetails = (props) => {
         }
       </List>
     </React.Fragment>
-      // <div>
-      //   <div className="title">Agent ID</div>
-      //   <div className="value">123</div>
-      // </div>
-      // <div>
-      //   <div className="title">Agent Name</div>
-      //   <div className="value">Hello</div>
-      // </div>
-      // <div>
-      //   <div className="title">Mobile Number</div>
-      //   <div className="value">7639626759</div>
-      // </div>
-      // <div>
-      //   <div className="title">City</div>
-      //   <div className="value">Chennia</div>
-      // </div>
-      // <div>
-      //   <div className="title">Locality</div>
-      //   <div className="value">Adayar</div>
-      // </div>
-      // <div>
-      //   <div className="title">Ageent Limit</div>
-      //   <div className="value">12</div>
-      // </div>
-      // <div>
-      //   <div className="title">Address</div>
-      //   <div className="value">213123</div>
-      // </div>
-    // </React.Fragment>
   )
 }
 
 const DADetails = (props) => {
-  const classes = useStyles();
-  let deliveryAgentDetails = [];
-  const keysToRender = ["delivery_agent_name", "delivery_agent_id"];
 
+  const classes = useStyles();
+  const [daDetailsData, setDADetailsData] = useState([])
+ 
   const deliveryAgentDetailsAction = [
     <Button variant="outlined" color="primary">Unassign</Button>,
     <Button variant="contained" color = "primary">Call</Button>
   ];
 
   useEffect(() => {
-    deliveryAgentDetails = getListOfDataObjects(props.orderInfo, ["delivery_agent_name"])
+    const deliveryAgentDetails = getListOfDataObjects(props.orderDetails, keysToRender)
+    setDADetailsData(deliveryAgentDetails)
   }, [])
-
-  // useEffect(() => {
-  //   console.log("props in usee", props)
-  //   if (!props.fetchOrderInfoProgress && props.orderInfo) {
-  //     deliveryAgentDetails = getListOfDataObjects(props.orderInfo, ["delivery_agent_name"])
-  //   }
-  // }, [props.orderInfo])
 
   return (
     <div className={classes.container}>
@@ -115,7 +85,7 @@ const DADetails = (props) => {
         title="Delivery Agent Details"
         actions={deliveryAgentDetailsAction}
       >
-        <RenderAgentDetails deliveryAgentDetails={deliveryAgentDetails} />
+        <RenderAgentDetails deliveryAgentDetails={daDetailsData} />
       </DeliveryAgentDetailsCard>
     </div>
   );
