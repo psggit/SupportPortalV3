@@ -1,1 +1,2 @@
-export {CustomerDetailContainer} from './CustomerDetailContainer'
+export { CustomerDetailContainer } from './CustomerDetailContainer';
+export { customerReducer } from './duck/reducer';

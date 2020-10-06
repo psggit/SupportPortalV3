@@ -1,8 +1,9 @@
-// /* eslint-disable prettier/prettier */
-// import { createAction } from "@reduxjs/toolkit";
+/* eslint-disable prettier/prettier */
+import { createAction } from "@reduxjs/toolkit";
 
-// const fetchCustomerNotesSuccessfull = createAction("fetchCustomerNotesSuccessfull");
-// const fetchCustomerNotesFailure = createAction("fetchCustomerNotesFailure");
-// const fetchCustomerNotesInProgress = createAction("fetchCustomerNotesInProgress");
+const fetchNotesSuccess = createAction("fetchNotesSuccess");
+const fetchNotesFailed = createAction("fetchNotesFailed");
+const fetchNotesProgress = createAction("fetchNotesProgress");
+//const selectOrder = createAction("selectOrder");
 
-// export { fetchCustomerNotesSuccessfull, fetchCustomerNotesFailure, fetchCustomerNotesInProgress };
+export { fetchNotesSuccess, fetchNotesFailed, fetchNotesProgress };

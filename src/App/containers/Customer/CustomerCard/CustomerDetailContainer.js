@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { CustomerDetails } from './CustomerDetailComponent'
 // import { fetchCustomerDetail } from './duck'
 import { data } from './mockData';
+import { sendOrderId } from "./duck/customerDetailOperation"
 
 const mapStateToProps = (state) => {
   // console.log("[customer-detail-container]", state.orderInfo.orderInfo)
@@ -12,9 +13,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = () => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    // fetchCustomerDetail: () => dispatch(fetchCustomerDetail()),
+    sendOrderId: (orderId) => dispatch(sendOrderId(orderId)),
   };
 };
 

@@ -91,13 +91,12 @@ const renderCustomerNotes = ({ dataMap, keysToRender }) => {
 const renderCustomerDetails = (props) => {
     //console.log("customer-card-data", props.orderInfo)
     const customerDetails = props.orderInfo
+    
+    const orderId = props.orderInfo.order_id
 
-  customer_address: "adult,38, Kamaraj Ave 2nd St, Venkatarathinam Nagar, Venkata Rathinam Nagar, Adyar, Chennai, Tamil Nadu 600020, India  LANDMARK:sdfsdasafd"
-  customer_contact_number: "8220677370"
-  customer_id: "515865"
-  customer_landmark: "sdfsdasafd"
-  customer_name: "Ravi"
-
+  useEffect(() => {
+    props.sendOrderId(orderId)
+  })
   
   return (
     <React.Fragment>
