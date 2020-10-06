@@ -99,11 +99,15 @@ const DADetails = (props) => {
   ];
 
   useEffect(() => {
-    console.log("props in usee", props)
-    if (!props.isFetchingOrderDetails) {
-      deliveryAgentDetails = getListOfDataObjects(props.orderInfo, ["delivery_agent_name"])
-    }
+    deliveryAgentDetails = getListOfDataObjects(props.orderInfo, ["delivery_agent_name"])
   }, [])
+
+  // useEffect(() => {
+  //   console.log("props in usee", props)
+  //   if (!props.fetchOrderInfoProgress && props.orderInfo) {
+  //     deliveryAgentDetails = getListOfDataObjects(props.orderInfo, ["delivery_agent_name"])
+  //   }
+  // }, [props.orderInfo])
 
   return (
     <div className={classes.container}>

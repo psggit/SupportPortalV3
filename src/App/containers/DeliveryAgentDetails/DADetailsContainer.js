@@ -3,10 +3,10 @@ import { DADetails } from './DADetailsComponent';
 import {data} from './mockData';
 
 const mapStateToProps = (state) => {
-  console.log("state", state)
+  console.log("state in da details", state)
   return {
     orderDetails: state.orderInfo.orderInfo,
-    fetchOrderInfoSuccess: state.orderInfo.fetchOrderInfoSuccess
+    fetchOrderInfoProgress: state.orderInfo.fetchOrderInfoProgress
   };
 };
 

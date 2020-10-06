@@ -20,14 +20,18 @@ const orderInfoReducer = createReducer(initialValue, {
     fetchOrderInfoFailure: false,
     fetchOrderInfoSuccess: false,
   }),
-  [fetchOrderInfoFailure]: (state) => ({
-    ...state,
-    fetchOrderInfoProgress: false,
-    fetchOrderInfoFailure: true,
-    fetchOrderInfoSuccess: false,
-    errorMsg: "Something went wrong, please try again",
-  }),
+  [fetchOrderInfoFailure]: (state) => {
+    console.log("data in success", state)
+    return {
+      ...state,
+      fetchOrderInfoProgress: false,
+      fetchOrderInfoFailure: true,
+      fetchOrderInfoSuccess: false,
+      errorMsg: "Something went wrong, please try again",
+    }
+  },
   [fetchOrderInfoSuccess]: (state, data) => {
+    console.log("data in success", data)
     return {
       ...state,
       orderInfo: data.payload.order_details,

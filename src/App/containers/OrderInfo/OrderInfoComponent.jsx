@@ -7,6 +7,8 @@ import Grid from "@material-ui/core/Grid";
 import TopBar from "../../components/topBar";
 import { useHistory } from "react-router-dom";
 import {DADetailsContainer} from "../DeliveryAgentDetails";
+import { CircularProgress } from "@material-ui/core";
+import { Backdrop } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,6 +53,19 @@ const OrderInfoComponent = (props) => {
     // console.clear();
     console.log("fetchedOrderInfo");
     console.log(props);
+  }
+
+  let loading = props.fetchOrderInfoProgress;
+  console.log("props in info", props)
+  // loading = true;
+  if (loading) {
+    return (
+      <Box>
+        <Backdrop open={true}>
+          <CircularProgress />
+        </Backdrop>
+      </Box>
+    );
   }
 
   return (

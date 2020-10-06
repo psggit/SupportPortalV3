@@ -1,19 +1,18 @@
 import { connect } from "react-redux";
 import { OrderInfoComponent } from "./OrderInfoComponent";
-import { fetchOrder, fetchOrderInfoProgress } from "../OrderInfo/duck";
+import { fetchOrder } from "../OrderInfo/duck";
 
 const mapStateToProps = (state) => {
   return {
     orderId: state.home.orderId,
     orderInfo: state.orderInfo.orderInfo,
-    fetchOrderInfoSuccess: state.orderInfo.fetchOrderInfoSuccess,
+    fetchOrderInfoProgress: state.orderInfo.fetchOrderInfoProgress
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchOrderInfo: (orderId) => dispatch(fetchOrder(orderId)),
-    fetchOrderInfoProgress: () => dispatch(fetchOrderInfoProgress())
+    fetchOrderInfo: (orderId) => dispatch(fetchOrder(orderId))
   };
 };
 
