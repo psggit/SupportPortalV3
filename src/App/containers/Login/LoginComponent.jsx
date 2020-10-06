@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { validateEmail } from "../../utils/validators";
+import { authAPI } from "../../utils";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -49,25 +50,32 @@ const LoginComponent = (props) => {
   const classes = useStyles();
   const [email, setEmailAddress] = useState("");
   const [isDisabled, setSubmitState] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("hasura-id") ? true : false);
+  const [isLoggedIn] = useState(
+    localStorage.getItem("hasura-id") ? true : false
+  );
 
+  useEffect(() => {
+    // console.log("[APP]");
+    // authAPI();
+  }, [])
 
-	if(isLoggedIn){
-		return <Redirect to="/dashboard" />
-	}
+  if (isLoggedIn) {
+    // return <Redirect to="/dashboard" />;
+  }
 
   const handleChange = (event) => {
-
     const validation = {
-	    fieldName: "Email",
-	    fieldValue: event.target.value,
+      fieldName: "Email",
+      fieldValue: event.target.value,
     };
     const { status } = validateEmail(validation);
 
-    (!status) ? setSubmitState(false) : setSubmitState(true);
+    !status ? setSubmitState(false) : setSubmitState(true);
 
     setEmailAddress(event.target.value);
   };
+
+  // console.log(props.loginSuccessStatus);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -96,7 +104,7 @@ const LoginComponent = (props) => {
             color="primary"
             className={classes.submit}
             onClick={() => props.sendLoginEmail(email)}
-	    disabled={isDisabled}
+            disabled={isDisabled}
           >
             Send Login Email
           </Button>
@@ -119,6 +127,10 @@ const LoginComponent = (props) => {
 
 LoginComponent.propTypes = {
   sendLoginEmail: PropTypes.func,
-}
+  loginProgressStatus: PropTypes.bool,
+  loginSuccessStatus: PropTypes.bool,
+  loginFailedStatus: PropTypes.bool,
+  successMsg: PropTypes.string,
+};
 
 export { LoginComponent };

@@ -3,7 +3,6 @@ import { loginAPI } from "../../../utils";
 import { createSession } from "../../../utils";
 
 const processResponse = () => {
-  console.log("[processResponse]");
   return (res) => {
     if (res.status === 200) {
       return res.json();
@@ -14,10 +13,7 @@ const processResponse = () => {
 };
 
 const onSuccess = (dispatch) => {
-  console.log("[onSuccess]");
   return (data) => {
-    console.log("data");
-    console.log(data);
     dispatch(loginSuccess(data));
     createSession(data);
   };
@@ -25,9 +21,7 @@ const onSuccess = (dispatch) => {
 
 const onError = (dispatch) => {
   return (err) => {
-    console.log("[onError]", err);
-    createSession(null);
-    dispatch(loginFailed());
+    dispatch(loginFailed(err));
   };
 };
 
@@ -36,23 +30,20 @@ const getRedirectURL = () => {
   switch (process.env.NODE_ENV) {
     case "local":
       return (redirectURL =
-        "http://support-local.hipbar-dev.com:8001/home/dashboard");
+        "http://support-local.hipbar-dev.com:8080/dashboard");
     case "development":
-      return (redirectURL = "https://ts-support.hipbar-dev.com/home/dashboard");
+      return (redirectURL = "https://ts-support.hipbar-dev.com/dashboard");
     case "production":
-      return (redirectURL = "https://support.hipbar.com/home/dashboard");
+      return (redirectURL = "https://support.hipbar.com/dashboard");
   }
-  console.log(redirectURL);
   return redirectURL;
 };
 
 const sendLoginEmail = (email) => {
-  console.log("[sendLoginEmail]");
   let reqBody = {
     email_id: email,
     redirect_url: getRedirectURL(),
   };
-  console.log(reqBody);
   return (dispatch) => {
     dispatch(loginProgress());
     loginAPI(

@@ -1,23 +1,19 @@
+import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
 import { loginReducer } from "../containers/Login";
+import { homeReducer } from "../containers/Dashboard";
+import { orderInfoReducer } from "../containers/OrderInfo";
+import { cartReducer } from "../containers/Cart";
 
 const store = configureStore({
-  reducer: {
+  reducer: combineReducers({
     login: loginReducer,
-  },
-  middleware: [thunk]
+    home: homeReducer,
+    orderInfo: orderInfoReducer,
+    cart: cartReducer,
+  }),
+  middleware: [thunk],
 });
 
 export default store;
-
-// const store = configureStore({
-//     reducer: {
-//       login: loginReducer,
-//       dashboard: dashboardReducer,
-//       order: orderReducer,
-//       cart: cartReducer,
-//       deliveryAgent: deliveryAgentReducer,
-//       trackOrder: trackOrderReducer,
-//     },
-// });

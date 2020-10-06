@@ -3,12 +3,10 @@
 [] Code splitting
 [] Unit tests
 [] E2E tests
+[] React tracing
 
 Step 1: Install Node Modules
 yarn install
 
 Step 2:
 yarn start
-
-Step 3:
-http://localhost:8080/
