@@ -5,16 +5,19 @@ import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import TopBar from "../../components/topBar";
+
 import { useHistory } from "react-router-dom";
+import { CartContainer } from "../Cart/CartContainer";
+import { OrderDetailsCard } from "./components/orderDetailsCard";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    fontFamily: theme.typography.body1,
   },
   boxContainer: {
     margin: "0 auto",
-    marginTop: "40px",
-    border: "1px solid",
+    fontFamily: theme.typography,
   },
   card: {
     padding: theme.spacing(2),
@@ -38,44 +41,65 @@ const useStyles = makeStyles((theme) => ({
 const OrderInfoComponent = (props) => {
   const history = useHistory();
   const classes = useStyles();
+ 
   useEffect(() => {
     if (props.orderId === null) {
       history.push("/dashboard");
     } else {
+      let payload = {
+        order_id: props.orderInfo.order_id,
+      };
+      payload = {
+        order_id: "50011189094739",
+      };
       props.fetchOrderInfo(props.orderId);
+      props.fetchCancelReason(payload);
     }
   }, []);
 
-  if (props.fetchOrderInfoSuccess) {
-    // console.clear();
-    console.log("fetchedOrderInfo");
-    console.log(props);
-  }
 
   return (
-    <Container component="main">
+    <Container component="main" className={classes.root}>
       <TopBar />
       <Box className={classes.boxContainer}>
-        <Grid container spacing={4}>
+        <Grid container>
           <Grid item xs={2}>
             <p>Order Tracking component</p>
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={10}>
             <Grid container spacing={4}>
-              <Grid item xs={6}>Cart</Grid>
-              <Grid item xs={6}>Order Details + Activity Log</Grid>
+              <Grid item xs={6}>
+                <CartContainer {...props} />
+              </Grid>
+              <Grid item xs={6}>
+                {props.fetchCancelReasonSuccess ? (
+                  <OrderDetailsCard {...props} />
+                ) : null}
+              </Grid>
             </Grid>
             <Grid container spacing={4}>
-              <Grid item xs={6}>Customer Details</Grid>
-              <Grid item xs={6}>Customer Notes</Grid>
+              <Grid item xs={6}>
+                Customer Details
+              </Grid>
+              <Grid item xs={6}>
+                Customer Notes
+              </Grid>
             </Grid>
             <Grid container spacing={4}>
-              <Grid item xs={6}>Retailer Details</Grid>
-              <Grid item xs={6}>Retailer Notes</Grid>
+              <Grid item xs={6}>
+                Retailer Details
+              </Grid>
+              <Grid item xs={6}>
+                Retailer Notes
+              </Grid>
             </Grid>
             <Grid container spacing={4}>
-              <Grid item xs={6}>Delivery Agent Details</Grid>
-              <Grid item xs={6}>Delivery Agent Notes</Grid>
+              <Grid item xs={6}>
+                Delivery Agent Details
+              </Grid>
+              <Grid item xs={6}>
+                Delivery Agent Notes
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
@@ -86,7 +110,10 @@ const OrderInfoComponent = (props) => {
 
 OrderInfoComponent.propTypes = {
   fetchOrderInfo: PropTypes.func,
+  fetchCancelReason: PropTypes.func,
+  cancelReasons: PropTypes.object,
   fetchOrderInfoSuccess: PropTypes.bool,
+  fetchCancelReasonSuccess: PropTypes.bool,
   orderId: PropTypes.any,
   orderInfo: PropTypes.object,
 };

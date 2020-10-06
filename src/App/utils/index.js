@@ -1,5 +1,7 @@
 export { loginAPI } from "./loginAPI";
 export { authAPI } from "./authAPI";
-export { fetchCompleteOrderAPI } from "./fetchCompleteOrderAPI";
-export { fetchOrderInfoAPI } from "./fetchOrderInfoAPI";
+export { completeOrderAPI } from "./completeOrderAPI";
+export { orderInfoAPI } from "./orderInfoAPI";
 export { createSession } from "./session";
+export { genresAPI } from "./genresAPI";
+export { cancelReasonAPI } from "./cancelReasonAPI";
