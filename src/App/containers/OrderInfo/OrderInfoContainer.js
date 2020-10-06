@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { OrderInfoComponent } from "./OrderInfoComponent";
 import { fetchOrder, fetchCancelReason } from "../OrderInfo/duck";
 
-const tempValue = {
+/*const tempValue = {
   order_details: {
     order_id: "5001262931859",
     order_date_and_time: "2020-09-30 13:10:38.629836 +0530 +0530",
@@ -112,7 +112,7 @@ const tempValue = {
     timing_details: [],
     consumer_upi: [{ name: "", upi_id: "hujhrfhkch@ybl", is_active: true }],
   },
-};
+};*/
 
 const mapStateToProps = (state) => {
   return {

@@ -119,7 +119,7 @@ const CartComponent = (props) => {
             >
               Confirm
             </Button>
-         </CardActions>
+          </CardActions>
         )}
       </CardContent>
     </Card>
