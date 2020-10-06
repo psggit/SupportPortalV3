@@ -1,2 +1,3 @@
-export { customerReducer } from "./reducer";
-export { fetchCustomerDetail } from "./customerDetailOperation"
+// export { customerReducer } from "./reducer";
+// export { fetchCustomerNotes } from "./customerDetailOperation";
+// export { CustomerDetailContainer } from "./../CustomerDetailContainer";

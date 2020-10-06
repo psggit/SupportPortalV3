@@ -9,7 +9,7 @@ import {
 } from "./actions";
 
 const initialValue = {
-  fetchOrderInfoProgress: false,
+  fetchOrderInfoProgress: true,
   fetchOrderInfoFailure: false,
   fetchOrderInfoSuccess: false,
   fetchCancelReasonProgress: false,
@@ -37,7 +37,7 @@ const orderInfoReducer = createReducer(initialValue, {
   [fetchOrderInfoSuccess]: (state, data) => {
     return {
       ...state,
-      orderInfo: data.payload,
+      orderInfo: data.payload.order_details,
       fetchOrderInfoProgress: false,
       fetchOrderInfoFailure: false,
       fetchOrderInfoSuccess: true,

@@ -11,6 +11,9 @@ import { CartContainer } from "../Cart/CartContainer";
 import { OrderDetailsCard } from "./components/orderDetailsCard";
 import { CustomerDetailContainer } from "../../containers/Customer/CustomerCard/CustomerDetailContainer";
 
+import { CircularProgress } from "@material-ui/core";
+import { Backdrop } from "@material-ui/core";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -58,7 +61,17 @@ const OrderInfoComponent = (props) => {
     }
   }, []);
 
-
+  let loading = props.fetchOrderInfoProgress;
+  console.log("props-value", props.orderInfo)
+  if (loading) {
+    return (
+      <Box>
+        <Backdrop open={true}>
+          <CircularProgress />
+        </Backdrop>
+      </Box>
+    );
+  }
   return (
     <Container component="main" className={classes.root}>
       <TopBar />
@@ -80,7 +93,7 @@ const OrderInfoComponent = (props) => {
             </Grid>
             <Grid container spacing={4}>
               <Grid item xs={12}>
-                <CustomerDetailContainer {...props} />
+                <CustomerDetailContainer />
               </Grid>
               {/* <Grid item xs={6}>
                 Customer Notes

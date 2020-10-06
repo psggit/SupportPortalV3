@@ -89,51 +89,62 @@ const renderCustomerNotes = ({ dataMap, keysToRender }) => {
 };
 
 const renderCustomerDetails = (props) => {
-    console.log("customer-card-data", props.orderInfo)
-    
+    //console.log("customer-card-data", props.orderInfo)
+    const customerDetails = props.orderInfo
+
+  customer_address: "adult,38, Kamaraj Ave 2nd St, Venkatarathinam Nagar, Venkata Rathinam Nagar, Adyar, Chennai, Tamil Nadu 600020, India  LANDMARK:sdfsdasafd"
+  customer_contact_number: "8220677370"
+  customer_id: "515865"
+  customer_landmark: "sdfsdasafd"
+  customer_name: "Ravi"
+
+  
   return (
     <React.Fragment>
       <div>
         <div className="title">Customer ID</div>
-        <div className="value">123</div>
+        <div className="value">{customerDetails.customer_id ? customerDetails.customer_id : "-"}</div>
       </div>
       <div>
         <div className="title">Customer Name</div>
-        <div className="value">Hello</div>
+        <div className="value">{customerDetails.customer_name ? customerDetails.customer_name : "-"}</div>
       </div>
       <div>
         <div className="title">Mobile Number</div>
-        <div className="value">7639626759</div>
+        <div className="value">{customerDetails.customer_contact_number ? customerDetails.customer_contact_number : "-"}</div>
       </div>
       <div>
         <div className="title">City</div>
-        <div className="value">Chennai</div>
+        <div className="value">{customerDetails.customer_city ? customerDetails.customer_city : "-"}</div>
       </div>
       <div>
         <div className="title">Date of Birth</div>
-        <div className="value">-</div>
+        <div className="value">{customerDetails.customer_dob ? customerDetails.customer_dob : "-"}</div>
       </div>
       <div>
         <div className="title">Signup Date</div>
-        <div className="value">-</div>
+        <div className="value">{customerDetails.customer_signup ? customerDetails.customer_signup : "-"}</div>
       </div>
       <div>
         <div className="title">KYC Level</div>
-        <div className="value">-</div>
+        <div className="value">{customerDetails.customer_kyc ? customerDetails.customer_kyc : "-"}</div>
       </div>
       <div>
         <div className="title">Landmark</div>
-        <div className="value">-</div>
+        <div className="value">{customerDetails.customer_landmark ? customerDetails.customer_landmark : "-"}</div>
       </div>
       <div>
         <div className="title">Delivery Address</div>
-        <div className="value">-</div>
+        <div className="value">{customerDetails.customer_address ? customerDetails.customer_address : "-"}</div>
       </div>
     </React.Fragment>
   );
 };
 
 const CustomerDetails = (props) => {
+
+  console.log("customerID", props.orderInfo.customer_id)
+
   const classes = useStyles();
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false)
   const [age, setAge] = useState('');
