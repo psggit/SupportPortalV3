@@ -1,7 +1,8 @@
+/* eslint-disable prettier/prettier */
 import { createAction } from "@reduxjs/toolkit";
 
-const fetchCustomerSuccessfull = createAction("fetchCustomerSuccessfull");
-const fetchCustomerFailure = createAction("fetchCustomerFailure");
-const fetchCustomerInProgress = createAction("fetchCustomerInProgress");
+const fetchCustomerNotesSuccessfull = createAction("fetchCustomerNotesSuccessfull");
+const fetchCustomerNotesFailure = createAction("fetchCustomerNotesFailure");
+const fetchCustomerNotesInProgress = createAction("fetchCustomerNotesInProgress");
 
-export { fetchCustomerSuccessfull, fetchCustomerFailure, fetchCustomerInProgress };
+export { fetchCustomerNotesSuccessfull, fetchCustomerNotesFailure, fetchCustomerNotesInProgress };

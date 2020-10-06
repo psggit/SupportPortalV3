@@ -3,7 +3,7 @@ const headers = {
   "Content-Type": "application/json",
   "x-hasura-role": "support_admin",
   "App-Name": "HipBar-Drinks",
-  "hasura-id": "515947",
+  "hasura-id": "515876",
 };
 
 const orderInfoAPI = (reqBody, process, onSuccess, onError) => {

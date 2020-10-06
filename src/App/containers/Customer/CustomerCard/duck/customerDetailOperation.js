@@ -1,8 +1,9 @@
 import {
-  fetchCustomerSuccessfull,
-  fetchCustomerFailure,
-  fetchCustomerInProgress,
+  fetchCustomerNotesSuccessfull,
+  fetchCustomerNotesFailure,
+  fetchCustomerNotesInProgress,
 } from "./actions";
+import {fetchNotesAPI} from "../../../../utils/fetchNotesAPI"
 
 
 const processResponse = () => {
@@ -19,13 +20,13 @@ const processResponse = () => {
 const onSuccess = (dispatch) => {
   console.log("[onSuccess]");
   return (data) => {
-    dispatch(fetchCustomerSuccessfull(data));
+    dispatch(fetchCustomerNotesSuccessfull(data));
   };
 };
 
 const onError = (dispatch) => {
   return (error) => {
-    dispatch(fetchCustomerFailure(error));
+    dispatch(fetchCustomerNotesFailure(error));
   };
 };
 
@@ -34,8 +35,8 @@ const fetchCustomerDetail = () => {
     order_id: '50011495496288'
   };
   return (dispatch) => {
-    dispatch(fetchCustomerInProgress);
-    loginAPI(
+    dispatch(fetchCustomerNotesInProgress);
+    fetchNotesAPI(
       reqBody,
       processResponse(dispatch),
       onSuccess(dispatch),

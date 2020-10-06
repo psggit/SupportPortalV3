@@ -63,6 +63,7 @@ const renderCustomerNotes = ({ dataMap, keysToRender }) => {
   const data = getDataList(dataMap, keysToRender);
   const classes = useStyles();
 
+
   return (
     <React.Fragment>
       {data.map((item, index) => {
@@ -88,10 +89,8 @@ const renderCustomerNotes = ({ dataMap, keysToRender }) => {
 };
 
 const renderCustomerDetails = (props) => {
-  useEffect(() => {
-    console.log("customer-card-data", props)
-  }, []);
-
+    console.log("customer-card-data", props.orderInfo)
+    
   return (
     <React.Fragment>
       <div>
@@ -227,7 +226,7 @@ const CustomerDetails = (props) => {
         title="Customer Details"
         actions={customerDetailsAction}
       >
-        {renderCustomerDetails()}
+        {renderCustomerDetails(props)}
       </CustomerDetailsCard>
       <CustomerNotesCard title="Customer Notes" actions={customerNotesAction}>
         {renderCustomerNotes({

@@ -65,7 +65,6 @@ const CartComponent = (props) => {
   useEffect(() => {
     // console.log("CartComponent");
     // console.dir(props);
-    console.log("cart-props", props)
   }, []);
   const classes = useStyles();
   const [modify, setModify] = useState(false);

@@ -44,7 +44,6 @@ const OrderInfoComponent = (props) => {
   const classes = useStyles();
  
   useEffect(() => {
-    console.log("proooops", props.orderInfo)
     if (props.orderId === null) {
       history.push("/dashboard");
     } else {

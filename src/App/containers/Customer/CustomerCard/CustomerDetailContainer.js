@@ -5,12 +5,11 @@ import { CustomerDetails } from './CustomerDetailComponent'
 import { data } from './mockData';
 
 const mapStateToProps = (state) => {
-  console.log("from store", state.home.orderData)
+  console.log("[customer-detail-container]", state.orderInfo.orderInfo)
   return {
     orderDetails: data,
-    orderInfo: state.orderInfo,
-    orderId: state.home.orderId,
-    orderData: state.home.orderData,
+    // orderInfo: state.orderInfo,
+    orderInfo: state.orderInfo.orderInfo,
   };
 };
 
