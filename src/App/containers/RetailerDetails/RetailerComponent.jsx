@@ -66,38 +66,38 @@ const renderRetailerNotes = ({ dataMap, keysToRender }) => {
 }
 
 const renderRetailerDetails = (props) => {
-  const retailerDetails = props.retailerDetails;
+  const retailerDetails = props.orderInfo;
 
   console.log("renderRetailerDetails", retailerDetails,props.retailerDetails)
   return (
     <React.Fragment>
       <div>
         <div className="title">Retailer ID</div>
-        {/* <div className="value">{retailerDetails.order_details.retailer_id ? `${retailerDetails.order_details.retailer_id}` : "-"}</div> */}
+        <div className="value">{retailerDetails.retailer_id ? `${retailerDetails.retailer_id}` : "-"}</div>
       </div>
       <div>
         <div className="title">Retailer Name</div>
-        <div className="value">Tasmac</div>
+        <div className="value">{retailerDetails.retailer_name ? `${retailerDetails.retailer_name}` : "-"}</div>
       </div>
       <div>
         <div className="title">Mobile Number</div>
-        <div className="value">7639626759</div>
+        <div className="value">{retailerDetails.retailer_contact_number ? `${retailerDetails.retailer_contact_number}` : "-"}</div>
       </div>
       <div>
         <div className="title">City</div>
-        <div className="value">Chennai</div>
+        <div className="value">{retailerDetails.retailer_city ? `${retailerDetails.retailer_city}` : "-"}</div>
       </div>
       <div>
         <div className="title">Locality</div>
-        <div className="value">Adayar</div>
+        <div className="value">{retailerDetails.retailer_locality ? `${retailerDetails.retailer_locality}` : "-"}</div>
       </div>
       <div>
         <div className="title">Retailer Limit</div>
-        <div className="value">12</div>
+        <div className="value">{retailerDetails.retailer_limit ? `${retailerDetails.retailer_limit}` : "-"}</div>
       </div>
       <div>
         <div className="title">Store Address</div>
-        <div className="value">213123</div>
+        <div className="value">{retailerDetails.retailer_address ? `${retailerDetails.retailer_address}` : "-"}</div>
       </div>
     </React.Fragment>
   )
