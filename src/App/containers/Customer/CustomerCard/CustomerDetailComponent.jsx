@@ -16,10 +16,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-import { CircularProgress } from "@material-ui/core";
-import { Backdrop } from "@material-ui/core";
-import Box from "@material-ui/core/Box";
-
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -114,7 +110,6 @@ const renderCustomerNotes = ({ dataMap, keysToRender }) => {
 };
 
 const renderCustomerDetails = (props) => {
-    //console.log("customer-card-data", props.orderInfo)
     const customerDetails = props.orderInfo
     const orderId = props.orderInfo.order_id
 
@@ -171,10 +166,6 @@ const renderCustomerDetails = (props) => {
 const CustomerDetails = (props) => {
 
   //console.log("customerID", props.orderInfo, props.notesData)
-  if(props.notesData !== null){
-    console.log("customerID", props.notesData.orderNotes.map((item) => item.notes))
-  }
-
   const classes = useStyles();
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false)
   const [selectedOption, setSelectedOption] = useState('');
@@ -272,19 +263,6 @@ const CustomerDetails = (props) => {
 
   const keysToRenderInNotesCard = ["message", "display_value"];
 
-  // const keysToRenderInNotesCard = ["notes", "created_at"];
-
-  // let loading = props.notesProgress;
-  // if (loading) {
-  //   return (
-  //     <Box>
-  //       <Backdrop open={true}>
-  //         <CircularProgress />
-  //       </Backdrop>
-  //     </Box>
-  //   );
-  // }
-
   return (
     <div className={classes.container}>
       <CustomerDetailsCard
@@ -294,7 +272,7 @@ const CustomerDetails = (props) => {
         {renderCustomerDetails(props)}
       </CustomerDetailsCard>
       <CustomerNotesCard title="Customer Notes" actions={customerNotesAction}>
-        {
+        {/* {
           props.notesData !== null ? 
           <div>
             {
@@ -302,29 +280,14 @@ const CustomerDetails = (props) => {
             }
           </div> : 
           <div>No records found</div>
-        }
-        {/* {renderCustomerNotes({
+        } */}
+        {renderCustomerNotes({
           dataMap: props.orderDetails.timing_details,
-          // dataMap: props.notesData !== null ? props.notesData.orderNotes : 'no record',
           keysToRender: keysToRenderInNotesCard,
-        })} */}
+        })}
       </CustomerNotesCard>
     </div>
   );
 };
 
 export { CustomerDetails };
-
-{/* <div>
-  {
-    props.notesData !== null ?
-      <CustomerNotesCard title="Customer Notes" actions={customerNotesAction}>
-        {renderCustomerNotes({
-          dataMap: props.notesData.orderNotes,
-          // dataMap: props.notesData !== null ? props.notesData.orderNotes : 'no record',
-          keysToRender: keysToRenderInNotesCard,
-        })}
-      </CustomerNotesCard> :
-      'no records found'
-  }
-</div> */}
