@@ -6,11 +6,15 @@ import { data } from './mockData';
 import { fetchConsumerNotes } from "./duck/customerDetailOperation"
 
 const mapStateToProps = (state) => {
-   console.log("[customer-detail-container]", state.notes.notesData)
+  if (state.notes.notesData !== null){
+    console.log("[customer-detail-container]", state.notes.notesData)
+  }
+   
   return {
     orderDetails: data,
     orderInfo: state.orderInfo.orderInfo,
-    notesData: state.notes.notesData
+    notesData: state.notes.notesData,
+    notesProgress: state.notes.notesProgress,
   };
 };
 

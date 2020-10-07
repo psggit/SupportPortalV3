@@ -8,21 +8,24 @@ import {
 
 const initialValue = {
   notesData: null,
-  notesProgress: true,
+  notesProgress: false,
   notesFail: false,
   notesSuccess: false,
   errorMsg: "",
 };
 
 const customerReducer = createReducer(initialValue, {
-  [fetchNotesSuccess]: (state, data) => ({
-    ...state,
-    notesProgress: false,
-    notesFail: false,
-    notesSuccess: true,
-    errorMsg: "",
-    notesData: data.payload.orderNotes,
-  }),
+  [fetchNotesSuccess]: (state, data) => {
+    console.log("Notesuccess", data)
+    return {
+      ...state,
+      notesProgress: false,
+      notesFail: false,
+      notesSuccess: true,
+      errorMsg: "",
+      notesData: data.payload,
+    }
+  },
   [fetchNotesFailed]: (state) => ({
     ...state,
     notesProgress: false,
@@ -30,12 +33,15 @@ const customerReducer = createReducer(initialValue, {
     notesSuccess: false,
     errorMsg: "Something went wrong, please try again",
   }),
-  [fetchNotesProgress]: (state) => ({
-    ...state,
-    notesProgress: true,
-    notesFail: false,
-    notesSuccess: false,
-  }),
+  [fetchNotesProgress]: (state) => {
+    console.log("notesprogress")
+    return {
+      ...state,
+      notesProgress: true,
+      notesFail: false,
+      notesSuccess: false,
+    }
+  },
 });
 
 export { customerReducer };
