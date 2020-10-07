@@ -30,7 +30,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 const OrderDetailsComponent = (props) => {
-  console.log("[orderDetailPage]", props.orderData)
   const history = useHistory();
   useEffect(() => {
     // props.selectOrder(50011333399945);

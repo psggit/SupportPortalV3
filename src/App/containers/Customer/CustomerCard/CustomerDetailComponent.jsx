@@ -53,6 +53,26 @@ const useStyles = makeStyles(theme => ({
     marginLeft: "16px",
     minWidth: 120,
   },
+  button: {
+    color: "#FFFFFF",
+    backgroundColor: "#0086AD",
+    fontSize: "14px",
+    fontWeight: "bold",
+    lineHeight: "21px",
+    borderRadius: "4px",
+    marginLeft: "16px",
+    border: "1.6px solid #0086AD"
+  },
+  buttonSecondary: {
+    color: "#0086AD",
+    backgroundColor: "#FFFFFF",
+    fontSize: "14px",
+    fontWeight: "bold",
+    lineHeight: "21px",
+    borderRadius: "4px",
+    marginLeft: "16px",
+    border: "1.6px solid #0086AD"
+  },
 }));
 
 const getTimestamp = (timestamp) => {
@@ -95,8 +115,8 @@ const renderCustomerDetails = (props) => {
     const orderId = props.orderInfo.order_id
 
   useEffect(() => {
-    props.sendOrderId(orderId)
-  })
+    props.fetchConsumerNotes(orderId)
+  },[])
   
   return (
     <React.Fragment>
@@ -142,14 +162,14 @@ const renderCustomerDetails = (props) => {
 
 const CustomerDetails = (props) => {
 
-  console.log("customerID", props.orderInfo.customer_id)
+  console.log("customerID", props.orderInfo, props.notesData)
 
   const classes = useStyles();
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false)
-  const [age, setAge] = useState('');
+  const [selectedOption, setSelectedOption] = useState('');
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  const handleSelectChange = (event) => {
+    setSelectedOption(event.target.value);
   };
 
   const mountAddNote = () => {
@@ -181,13 +201,14 @@ const CustomerDetails = (props) => {
           actions={[
             <Button
               variant="contained"
-              buttonStyle="secondary"
+              className={classes.buttonSecondary}
               onClick={UnmountAddNote}
             >
               Cancel
                 </Button>,
             <Button
               variant="contained"
+              className={classes.button}
             //onClick={commentUnmountModel}
             >
               Save
@@ -200,15 +221,15 @@ const CustomerDetails = (props) => {
               <div>
                 <FormControl className={classes.formControl}>
                   <Select
-                    value={age}
-                    onChange={handleChange}
+                    value={selectedOption}
+                    onChange={handleSelectChange}
                     displayEmpty
                     className={classes.selectEmpty}
                     inputProps={{ 'aria-label': 'Without label' }}
                   >
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
+                    <MenuItem value={10}>Issue 1</MenuItem>
+                    <MenuItem value={20}>Issue 2</MenuItem>
+                    <MenuItem value={30}>Issue 3</MenuItem>
                   </Select>
                 </FormControl>
               </div>
@@ -234,7 +255,7 @@ const CustomerDetails = (props) => {
     <div className={classes.container}>
       <CustomerDetailsCard
         title="Customer Details"
-        actions={customerDetailsAction}
+       // actions={customerDetailsAction}
       >
         {renderCustomerDetails(props)}
       </CustomerDetailsCard>

@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
       paddingBottom: 12,
       "& > span": {
         fontSize: 16,
-        fontWeight: 600,
+        fontWeight: "bold",
         textTransform: "uppercase",
       },
     },

@@ -1,4 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
+import { data } from "../mockData";
 import {
   fetchNotesSuccess,
   fetchNotesFailed,
@@ -15,13 +16,13 @@ const initialValue = {
 };
 
 const customerReducer = createReducer(initialValue, {
-  [fetchNotesSuccess]: (state, payload) => ({
+  [fetchNotesSuccess]: (state, data) => ({
     ...state,
     notesProgress: false,
     notesFail: false,
     notesSuccess: true,
     errorMsg: "",
-    notesData: payload.data,
+    notesData: data.payload.orderNotes,
   }),
   [fetchNotesFailed]: (state) => ({
     ...state,

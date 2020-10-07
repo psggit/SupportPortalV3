@@ -30,10 +30,10 @@ const onError = (dispatch) => {
   };
 };
 
-const sendOrderId = (orderId) => {
+const fetchConsumerNotes = (orderId) => {
   let reqBody = {
     order_id: orderId,
-    type: "customer",
+    type: "consumer",
   };
   return (dispatch) => {
     dispatch(fetchNotesProgress());
@@ -46,19 +46,4 @@ const sendOrderId = (orderId) => {
   };
 };
 
-// const fetchCustomerNotes = (reqBody) => {
-//   let reqBody = {
-//     order_id: '5001142475423'
-//   };
-//   return (dispatch) => {
-//     dispatch(fetchCustomerNotesInProgress());
-//     fetchNotesAPI(
-//       reqBody,
-//       processResponse(dispatch),
-//       onSuccess(dispatch),
-//       onError(dispatch)
-//     );
-//   };
-// };
-
-export { sendOrderId }
+export { fetchConsumerNotes }
