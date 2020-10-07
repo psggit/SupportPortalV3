@@ -3,7 +3,7 @@ import RetailerDetailsCard from '../../components/card';
 import RetailerNotesCard from '../../components/card';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import { getDataList } from '../../utils/helpers';
+import { getDataList, getListOfDataObjects } from '../../utils/helpers';
 import List from "@material-ui/core/List";
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -46,6 +46,11 @@ const useStyles = makeStyles(theme => ({
     fontSize: 16,
     color: "#606060"
   },
+  ListItem: {
+    width: "100%",
+    fontSize: 16,
+    color: "#606060"
+  },
   ListItemTextRoot: {
     wordBreak: "break-word"
   },
@@ -58,120 +63,124 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const getTimestamp = (timestamp) => {
-  return Moment(timestamp).format("D MMM h:mm A")
-}
-const keysToRender = ["message", "display_value"];
+  return Moment(timestamp).format("D MMM h:mm A");
+};
 
-const renderRetailerDetails = (props) => {
-  const retailerDetails = props.orderInfo;
-  return (
-    <React.Fragment>
-      <div>
-        <div className="title">Retailer ID</div>
-        <div className="value">{retailerDetails.retailer_id ? `${retailerDetails.retailer_id}` : "-"}</div>
-      </div>
-      <div>
-        <div className="title">Retailer Name</div>
-        <div className="value">{retailerDetails.retailer_name ? `${retailerDetails.retailer_name}` : "-"}</div>
-      </div>
-      <div>
-        <div className="title">Mobile Number</div>
-        <div className="value">{retailerDetails.retailer_contact_number ? `${retailerDetails.retailer_contact_number}` : "-"}</div>
-      </div>
-      <div>
-        <div className="title">City</div>
-        <div className="value">{retailerDetails.retailer_city ? `${retailerDetails.retailer_city}` : "-"}</div>
-      </div>
-      <div>
-        <div className="title">Locality</div>
-        <div className="value">{retailerDetails.retailer_locality ? `${retailerDetails.retailer_locality}` : "-"}</div>
-      </div>
-      <div>
-        <div className="title">Retailer Limit</div>
-        <div className="value">{retailerDetails.retailer_limit ? `${retailerDetails.retailer_limit}` : "-"}</div>
-      </div>
-      <div>
-        <div className="title">Store Address</div>
-        <div className="value">{retailerDetails.retailer_address ? `${retailerDetails.retailer_address}` : "-"}</div>
-      </div>
-    </React.Fragment>
-  )
-}
-
-const RenderRetailerNotes = ({dataMap}) => {
-
-  const data = getDataList(dataMap, keysToRender)
+const renderRetailerNotes = ({ dataMap, keysToRender }) => {
+  const data = getDataList(dataMap, keysToRender);
   const classes = useStyles();
 
   return (
     <React.Fragment>
-      {
-        data.map((item, index) => {
-          return (
-            <List>
-              <ListItem classes={{ root: classes.ListItemRoot }}>
+      {data.map((item, index) => {
+        return (
+          <List>
+            <ListItem classes={{ root: classes.ListItemRoot }}>
+              <ListItemText
+                primary={item[keysToRender[0]]}
+                className={classes.ListItemTextRoot}
+                classes={{ root: classes.ListItemTextLabel }}
+              />
+              <ListItemText
+                primary={getTimestamp(item[keysToRender[1]])}
+                className={classes.ListItemTextRoot}
+                classes={{ root: classes.ListItemTextValue }}
+              />
+            </ListItem>
+          </List>
+        );
+      })}
+    </React.Fragment>
+  );
+};
+
+const keysToRender = [
+  "retailer_id",
+  "retailer_name",
+  "retailer_contact_number",
+  "city",
+  "retailer_landmark",
+  "retailer_limit",
+  "retailer_address",
+];
+const keyMap = {
+  "retailer_id": "Retailer ID",
+  "retailer_name": "Retailer Name",
+  "retailer_contact_number": "Mobile Number",
+  "city": "City",
+  "retailer_landmark": "Landmark",
+  "retailer_limit": "Retailer Limit",
+  "retailer_address": "Store Address",
+};
+
+const RenderRetailerDetails = (props) => {
+  const classes = useStyles();
+  return (
+    <React.Fragment>
+      <List>
+        {
+          props.retailerDetails.map((item, index) => {
+            return (
+              <ListItem classes={{ root: classes.ListItem }}>
                 <ListItemText
-                  primary={item[keysToRender[0]]}
+                  primary={keyMap[keysToRender[index]]}
                   className={classes.ListItemTextRoot}
                   classes={{ root: classes.ListItemTextLabel }}
                 />
                 <ListItemText
-                  primary={getTimestamp(item[keysToRender[1]])}
+                  primary={item[keysToRender[index]] ? item[keysToRender[index]] : "-"}
                   className={classes.ListItemTextRoot}
-                  classes={{ root: classes.ListItemTextValue }}
+                  classes={{ root: classes.ListItemTextLabel }}
                 />
               </ListItem>
-            </List>
-          )
-        })
-      }
+            )
+          })
+        }
+      </List>
     </React.Fragment>
   )
 }
 
 const RetailerDetails = (props) => {
 
-  const orderId = props.orderInfo.order_id
-
   const classes = useStyles();
+  const [retailerDetailsData, setRetailerDetailsData] = useState([])
 
-  const [loading, setLoading] = useState(props.fetchProgress);
+  const orderId = props.orderInfo.order_id
 
   useEffect(() => {
     props.sendOrderId(orderId)
   }, [])
 
   useEffect(() => {
-    setLoading(props.fetchProgress)
-  }, [props.fetchProgress])
+    const retailerDetails = getListOfDataObjects(props.orderInfo, keysToRender)
+    setRetailerDetailsData(retailerDetails)
+  }, [])
 
-  if (loading) {
-    return <CircularProgress />;
-  }
+  const retailerAction = [
+    <Button variant="outlined" color="primary">Message</Button>,
+    <Button variant="contained" color="primary">Call</Button>
+  ];
 
   const retailerNotesAction = [
-    <Button variant="outlined" color="primary">Change Retailer</Button>,
-    <Button variant="contained" color="primary">Call</Button>
+    <Button variant="outlined" color="primary">Add</Button>,
   ];
-  
-  const retailerDetailsAction = [
-    <Button variant="outlined" color="primary">Change Retailer</Button>,
-    <Button variant="contained" color="primary">Call</Button>
-  ];
-  
+
+  const keysToRenderInNotesCard = ["message", "display_value"];
+
   return (
     <div className={classes.container}>
       <RetailerDetailsCard
         title="Retailer Details"
-        actions={retailerDetailsAction}
+        actions={retailerAction}
       >
-        {renderRetailerDetails(props)}
+        <RenderRetailerDetails retailerDetails={retailerDetailsData} />
       </RetailerDetailsCard>
-      <RetailerNotesCard
-        title="Retailer Notes"
-        actions={retailerNotesAction}
-      >
-        <RenderRetailerNotes dataMap={props.orderDetails.timing_details} />
+      <RetailerNotesCard title="Retailer Notes" actions={retailerNotesAction}>
+        {renderRetailerNotes({
+          dataMap: props.orderDetails.timing_details,
+          keysToRender: keysToRenderInNotesCard,
+        })}
       </RetailerNotesCard>
     </div>
   );
