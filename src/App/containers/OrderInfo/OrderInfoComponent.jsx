@@ -7,6 +7,7 @@ import Grid from "@material-ui/core/Grid";
 import TopBar from "../../components/topBar";
 import { useHistory } from "react-router-dom";
 import {DADetailsContainer} from "../DeliveryAgentDetails";
+import {DANotesContainer} from "../DeliveryAgentNotes";
 import { CircularProgress } from "@material-ui/core";
 import { Backdrop } from "@material-ui/core";
 
@@ -90,7 +91,7 @@ const OrderInfoComponent = (props) => {
             </Grid>
             <Grid container spacing={4}>
               <Grid item xs={6}><DADetailsContainer/></Grid>
-              <Grid item xs={6}><DADetailsContainer/></Grid>
+              <Grid item xs={6}><DANotesContainer /></Grid>
             </Grid>
           </Grid>
         </Grid>

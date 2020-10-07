@@ -1,13 +1,19 @@
 import { connect } from 'react-redux';
-import { DANotes } from './DANotesComponent';
-//import { data } from './mockData';
+import DANotes from './DANotesComponent';
+import {fetchDANotes} from './../DeliveryAgentNotes/duck';
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    orderId: state.home.orderId,
+    daNotes: state.daNotes.daNotes,
+    fetchDANotesProgress: state.daNotes.fetchDANotesProgress
+  };
 };
 
-const mapDispatchToProps = () => {
-  return {};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchDANotes: (payload) => dispatch(fetchDANotes(payload))
+  };
 };
 
 const DANotesContainer = connect(

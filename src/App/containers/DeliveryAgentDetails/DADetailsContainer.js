@@ -1,9 +1,7 @@
 import { connect } from 'react-redux';
-import { DADetails } from './DADetailsComponent';
-import {data} from './mockData';
+import DADetails from './DADetailsComponent';
 
 const mapStateToProps = (state) => {
-  console.log("state in da details", state)
   return {
     orderDetails: state.orderInfo.orderInfo,
     fetchOrderInfoProgress: state.orderInfo.fetchOrderInfoProgress

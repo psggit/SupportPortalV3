@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState } from 'react';
 import DeliveryAgentDetailsCard from './components/card';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -84,6 +84,7 @@ const DADetails = (props) => {
       <DeliveryAgentDetailsCard
         title="Delivery Agent Details"
         actions={deliveryAgentDetailsAction}
+        moreOption={false}
       >
         <RenderAgentDetails deliveryAgentDetails={daDetailsData} />
       </DeliveryAgentDetailsCard>
@@ -91,4 +92,4 @@ const DADetails = (props) => {
   );
 }
 
-export {DADetails}
+export default React.memo(DADetails);

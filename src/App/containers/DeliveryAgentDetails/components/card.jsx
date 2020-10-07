@@ -4,6 +4,9 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import { makeStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import ListItemText from '@material-ui/core/ListItemText';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 const useStyles = makeStyles(theme => ({  
   root: {
@@ -31,8 +34,8 @@ const useStyles = makeStyles(theme => ({
       fontSize: 16,
       color: "#606060",
       width: '100%',
-      display: 'flex',
-      padding: '12px 0',
+      // display: 'flex',
+      // padding: '12px 0',
       '& .title': {
         width: "30%"
       },
@@ -44,6 +47,17 @@ const useStyles = makeStyles(theme => ({
   cardActions: {
     display: 'flex',
     justifyContent: 'flex-end'
+  },
+  option: {
+    display: 'flex',
+    alignItems: 'center',
+    cursor: 'pointer',
+    '& .MuiListItemText-root ': {
+      color: "#0086AD"
+    },
+    '& button': {
+      paddingLeft: 8
+    }
   }
 }));
 
@@ -53,10 +67,28 @@ export default function CustomCard (props) {
 
   return (
     <Card className={classes.root}>
-      <CardHeader
-        className={classes.cardHeader}
-        title={title}
-      />
+      {
+        props.moreOption &&
+        <CardHeader
+          className={classes.cardHeader}
+          title={title}
+          action={
+            <div className={classes.option}>
+              <ListItemText primary="More" />
+              <IconButton aria-label="settings" color="primary" >
+                <ArrowForwardIosIcon color="primary" />
+              </IconButton>
+            </div>
+          }
+        />
+      }
+      {
+        !props.moreOption &&
+        <CardHeader
+          className={classes.cardHeader}
+          title={title}
+        />
+      }
       <CardContent className={classes.cardContent}>
         {children}
       </CardContent>
