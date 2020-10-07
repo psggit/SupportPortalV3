@@ -1,2 +1,2 @@
-export { homeReducer } from "./duck";
-export { DashboardContainer } from "./DashboardContainer";
+export { cartReducer } from "./duck";
+export { CartContainer } from "./CartContainer";
