@@ -60,42 +60,10 @@ const useStyles = makeStyles(theme => ({
 const getTimestamp = (timestamp) => {
   return Moment(timestamp).format("D MMM h:mm A")
 }
-
-const renderRetailerNotes = ({ dataMap, keysToRender }) => {
-
-  const data = getDataList(dataMap, keysToRender)
-  const classes = useStyles();
-
-  return (
-    <React.Fragment>
-      {
-        data.map((item, index) => {
-          return (
-            <List>
-              <ListItem classes={{ root: classes.ListItemRoot }}>
-                <ListItemText
-                  primary={item[keysToRender[0]]}
-                  className={classes.ListItemTextRoot}
-                  classes={{ root: classes.ListItemTextLabel }}
-                />
-                <ListItemText
-                  primary={getTimestamp(item[keysToRender[1]])}
-                  className={classes.ListItemTextRoot}
-                  classes={{ root: classes.ListItemTextValue }}
-                />
-              </ListItem>
-            </List>
-          )
-        })
-      }
-    </React.Fragment>
-  )
-}
+const keysToRender = ["message", "display_value"];
 
 const renderRetailerDetails = (props) => {
   const retailerDetails = props.orderInfo;
-
-  console.log("renderRetailerDetails", retailerDetails,props.retailerDetails)
   return (
     <React.Fragment>
       <div>
@@ -130,102 +98,66 @@ const renderRetailerDetails = (props) => {
   )
 }
 
+const RenderRetailerNotes = ({dataMap}) => {
+
+  const data = getDataList(dataMap, keysToRender)
+  const classes = useStyles();
+
+  return (
+    <React.Fragment>
+      {
+        data.map((item, index) => {
+          return (
+            <List>
+              <ListItem classes={{ root: classes.ListItemRoot }}>
+                <ListItemText
+                  primary={item[keysToRender[0]]}
+                  className={classes.ListItemTextRoot}
+                  classes={{ root: classes.ListItemTextLabel }}
+                />
+                <ListItemText
+                  primary={getTimestamp(item[keysToRender[1]])}
+                  className={classes.ListItemTextRoot}
+                  classes={{ root: classes.ListItemTextValue }}
+                />
+              </ListItem>
+            </List>
+          )
+        })
+      }
+    </React.Fragment>
+  )
+}
+
 const RetailerDetails = (props) => {
 
   const orderId = props.orderInfo.order_id
 
-  useEffect(() => {
-    props.sendOrderId(orderId)
-  },[])
-
   const classes = useStyles();
 
   const [loading, setLoading] = useState(props.fetchProgress);
+
+  useEffect(() => {
+    props.sendOrderId(orderId)
+  }, [])
+
+  useEffect(() => {
+    setLoading(props.fetchProgress)
+  }, [props.fetchProgress])
+
   if (loading) {
     return <CircularProgress />;
   }
 
-  console.log("useEffect", props)
-
-  const [showAddNoteDilog, setShowAddNoteDialog] = useState(false)
-  const [age, setAge] = useState('');
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
-
-  const mountAddNote = () => {
-    setShowAddNoteDialog(true)
-  }
-
-  const UnmountAddNote = () => {
-    setShowAddNoteDialog(false)
-  }
+  const retailerNotesAction = [
+    <Button variant="outlined" color="primary">Change Retailer</Button>,
+    <Button variant="contained" color="primary">Call</Button>
+  ];
   
   const retailerDetailsAction = [
     <Button variant="outlined" color="primary">Change Retailer</Button>,
     <Button variant="contained" color="primary">Call</Button>
   ];
-
-  const retailerNotesAction = [
-    <div>
-      <Button variant="contained" color="primary" onClick={mountAddNote}>
-        Add
-    </Button>,
-    {
-        showAddNoteDilog &&
-        <Dialog
-          title="ADD NOTE"
-          actions={[
-            <Button
-              variant="contained"
-              buttonStyle="secondary"
-              onClick={UnmountAddNote}
-            >
-              Cancel
-                </Button>,
-            <Button
-              variant="contained"
-            //onClick={commentUnmountModel}
-            >
-              Save
-                </Button>
-          ]}
-        >
-          <form>
-            <div className={classes.selectIssue}>
-              <div>Select Issue</div>
-              <div>
-                <FormControl className={classes.formControl}>
-                  <Select
-                    value={age}
-                    onChange={handleChange}
-                    displayEmpty
-                    className={classes.selectEmpty}
-                    inputProps={{ 'aria-label': 'Without label' }}
-                  >
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-            </div>
-            <div className={classes.formRoot}>
-              <TextareaAutosize
-                className={classes.formControlTextarea}
-                aria-label="minimum height"
-                rowsMin={7}
-                //onChange={handleCommentChange}
-                placeholder="Add note here"
-              />
-            </div>
-          </form>
-        </Dialog>
-      }
-    </div>  ];
-
-  const keysToRenderInNotesCard = ["message", "display_value"];
   
   return (
     <div className={classes.container}>
@@ -239,10 +171,7 @@ const RetailerDetails = (props) => {
         title="Retailer Notes"
         actions={retailerNotesAction}
       >
-        {renderRetailerNotes({
-          dataMap: props.orderDetails.timing_details,
-          keysToRender: keysToRenderInNotesCard
-        })}
+        <RenderRetailerNotes dataMap={props.orderDetails.timing_details} />
       </RetailerNotesCard>
     </div>
   );
@@ -256,4 +185,4 @@ RetailerDetails.propTypes = {
   orderInfo: PropTypes.any,
 };
 
-export { RetailerDetails }
+export {RetailerDetails}

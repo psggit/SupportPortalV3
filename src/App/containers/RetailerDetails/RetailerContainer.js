@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { RetailerDetails } from './RetailerComponent';
+import {RetailerDetails} from './RetailerComponent';
 import { sendOrderId } from './duck/RetailerOperations';
 import { data } from './mockData';
 
