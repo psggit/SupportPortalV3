@@ -14,6 +14,9 @@ import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Box from "@material-ui/core/Box";
+import { CircularProgress } from "@material-ui/core";
+import { Backdrop } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   formRoot: {
@@ -133,11 +136,13 @@ const RetailerDetails = (props) => {
 
   useEffect(() => {
     props.sendOrderId(orderId)
-  })
-
-  console.log("useEffect", props.orderInfo.retailer_id)
+  },[])
 
   const classes = useStyles();
+
+  let loading = props.fetchProgress;
+
+  console.log("useEffect", props)
 
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false)
   const [age, setAge] = useState('');
@@ -219,6 +224,16 @@ const RetailerDetails = (props) => {
 
   const keysToRenderInNotesCard = ["message", "display_value"];
 
+  if (loading) {
+    return (
+      <Box>
+        <Backdrop open={true}>
+          <CircularProgress />
+        </Backdrop>
+      </Box>
+    );
+  }
+  
   return (
     <div className={classes.container}>
       <RetailerDetailsCard

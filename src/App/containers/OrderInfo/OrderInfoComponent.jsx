@@ -61,7 +61,7 @@ const OrderInfoComponent = (props) => {
   }, []);
 
   let loading = props.fetchOrderInfoProgress;
-  console.log("orderInfo", props.orderInfo)
+  console.log("orderInfo", props.fetchOrderInfo)
   if (loading) {
     return (
       <Box>
@@ -71,7 +71,6 @@ const OrderInfoComponent = (props) => {
       </Box>
     );
   }
-
 
   return (
     <Container component="main" className={classes.root}>
