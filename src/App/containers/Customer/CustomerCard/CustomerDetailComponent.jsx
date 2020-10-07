@@ -111,11 +111,14 @@ const renderCustomerNotes = ({ dataMap, keysToRender }) => {
 const renderCustomerDetails = (props) => {
     //console.log("customer-card-data", props.orderInfo)
     const customerDetails = props.orderInfo
-    
     const orderId = props.orderInfo.order_id
 
   useEffect(() => {
-    props.fetchConsumerNotes(orderId)
+    const payload = {
+      order_id: orderId,
+      type: "consumer"
+    }
+    props.fetchConsumerNotes(payload)
   },[])
   
   return (
@@ -168,6 +171,11 @@ const CustomerDetails = (props) => {
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false)
   const [selectedOption, setSelectedOption] = useState('');
 
+  const handleSaveNotes = (e) => {
+    e.preventDefault()
+    console.log("save notes")
+  }
+
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
   };
@@ -209,7 +217,7 @@ const CustomerDetails = (props) => {
             <Button
               variant="contained"
               className={classes.button}
-            //onClick={commentUnmountModel}
+              onClick={handleSaveNotes}
             >
               Save
                 </Button>

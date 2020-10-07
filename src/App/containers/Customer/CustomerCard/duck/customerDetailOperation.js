@@ -30,11 +30,11 @@ const onError = (dispatch) => {
   };
 };
 
-const fetchConsumerNotes = (orderId) => {
-  let reqBody = {
-    order_id: orderId,
-    type: "consumer",
-  };
+const fetchConsumerNotes = (reqBody) => {
+  // let reqBody = {
+  //   order_id: orderId,
+  //   type: "consumer",
+  // };
   return (dispatch) => {
     dispatch(fetchNotesProgress());
     fetchNotesAPI(

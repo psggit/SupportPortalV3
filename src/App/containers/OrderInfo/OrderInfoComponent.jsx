@@ -62,7 +62,7 @@ const OrderInfoComponent = (props) => {
   }, []);
 
   let loading = props.fetchOrderInfoProgress;
-  console.log("props-value", props.orderInfo, props.notesData)
+  // console.log("props-value", props.orderInfo, props.notesData)
   if (loading) {
     return (
       <Box>

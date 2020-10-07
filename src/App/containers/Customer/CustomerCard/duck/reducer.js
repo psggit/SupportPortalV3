@@ -8,8 +8,7 @@ import {
 
 const initialValue = {
   notesData: null,
-  orderId: null,
-  notesProgress: false,
+  notesProgress: true,
   notesFail: false,
   notesSuccess: false,
   errorMsg: "",
@@ -34,6 +33,8 @@ const customerReducer = createReducer(initialValue, {
   [fetchNotesProgress]: (state) => ({
     ...state,
     notesProgress: true,
+    notesFail: false,
+    notesSuccess: false,
   }),
 });
 
