@@ -8,7 +8,7 @@ import {
 
 const initialValue = {
   notesData: null,
-  notesProgress: false,
+  notesProgress: true,
   notesFail: false,
   notesSuccess: false,
   errorMsg: "",
