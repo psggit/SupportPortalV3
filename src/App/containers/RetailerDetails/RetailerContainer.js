@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
     retailerDetails: state.orderInfo,
     retailerNotes: state.retailerNotes,
     fetchProgress: state.retailerNotes.fetchProgress,
+    fetchSuccess: state.retailerNotes.fetchSuccess,
   };
 };
 

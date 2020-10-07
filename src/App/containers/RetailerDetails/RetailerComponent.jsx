@@ -140,7 +140,10 @@ const RetailerDetails = (props) => {
 
   const classes = useStyles();
 
-  let loading = props.fetchProgress;
+  const [loading, setLoading] = useState(props.fetchProgress);
+  if (loading) {
+    return <CircularProgress />;
+  }
 
   console.log("useEffect", props)
 
@@ -223,16 +226,6 @@ const RetailerDetails = (props) => {
     </div>  ];
 
   const keysToRenderInNotesCard = ["message", "display_value"];
-
-  if (loading) {
-    return (
-      <Box>
-        <Backdrop open={true}>
-          <CircularProgress />
-        </Backdrop>
-      </Box>
-    );
-  }
   
   return (
     <div className={classes.container}>
@@ -254,5 +247,13 @@ const RetailerDetails = (props) => {
     </div>
   );
 }
+
+RetailerDetails.propTypes = {
+  fetchProgress: PropTypes.bool,
+  fetchSuccess: PropTypes.bool,
+  orderDetails: PropTypes.object,
+  sendOrderId: PropTypes.any,
+  orderInfo: PropTypes.any,
+};
 
 export { RetailerDetails }
