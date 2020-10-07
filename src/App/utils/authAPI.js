@@ -1,3 +1,5 @@
+import { createSession } from "./session";
+
 const authAPI = () => {
   const URL = `https://auth.hipbar-dev.com/user/account/info`;
   const fetchOptions = {
@@ -13,15 +15,12 @@ const authAPI = () => {
         console.log(
           `Looks like there was a problem. Status Code: ${response.status}`
         );
-        // if (location.pathname !== "/login") {
-        //   location.href = "/login";
-        // }
         return;
       }
       response.json().then((data) => {
-        console.log("[AUTH API]");
-        console.log(data);
-        // createSession(data);
+        // console.log("[AUTH API]");
+        // console.log(data);
+        createSession(data);
         // setIsLoggedIn(true);
         // if (!location.pathname.includes("home")) {
         //   location.href = "/home/dashboard";
