@@ -19,7 +19,6 @@ const processResponse = () => {
 const onSuccess = (dispatch) => {
   console.log("[onSuccess of fetchDANotes]");
   return (data) => {
-    console.log("data", data)
     dispatch(fetchDANotesSuccess(data));
   };
 };

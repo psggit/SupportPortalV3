@@ -16,7 +16,8 @@ const useStyles = makeStyles(theme => ({
       padding: 0
     },
     '& .MuiCardContent-root': {
-      padding: 0
+      padding: 0,
+      textAlign: "center"
     }
   },
   cardHeader: {

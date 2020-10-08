@@ -1,2 +1,2 @@
-export { daNotesReducer } from './reducer';
-export { fetchDANotes } from './DANotesOperation';
+export { daNotesReducer } from "./reducer";
+export { fetchDANotes } from "./DANotesOperation";

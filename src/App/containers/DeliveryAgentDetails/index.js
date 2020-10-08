@@ -1,2 +1,2 @@
-export { DADetailsContainer } from './DADetailsContainer';
-export { daDetailsReducer } from './duck';
+export { DADetailsContainer } from "./DADetailsContainer";
+export { daDetailsReducer } from "./duck";

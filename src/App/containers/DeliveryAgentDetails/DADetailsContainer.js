@@ -1,10 +1,10 @@
-import { connect } from 'react-redux';
-import DADetails from './DADetailsComponent';
+import { connect } from "react-redux";
+import DADetails from "./DADetailsComponent";
 
 const mapStateToProps = (state) => {
   return {
     orderDetails: state.orderInfo.orderInfo,
-    fetchOrderInfoProgress: state.orderInfo.fetchOrderInfoProgress
+    fetchOrderInfoProgress: state.orderInfo.fetchOrderInfoProgress,
   };
 };
 

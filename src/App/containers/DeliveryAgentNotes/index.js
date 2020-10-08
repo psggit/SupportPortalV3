@@ -1,2 +1,2 @@
-export { DANotesContainer } from './DANotesContainer';
-export { daNotesReducer } from './duck';
+export { DANotesContainer } from "./DANotesContainer";
+export { daNotesReducer } from "./duck";

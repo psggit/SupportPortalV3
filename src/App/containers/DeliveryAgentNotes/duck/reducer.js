@@ -1,4 +1,4 @@
-import { createReducer } from '@reduxjs/toolkit';
+import { createReducer } from "@reduxjs/toolkit";
 import {
   fetchDANotesProgress,
   fetchDANotesFailure,
@@ -15,7 +15,6 @@ const initialState = {
 
 const daNotesReducer = createReducer(initialState, {
   [fetchDANotesProgress]: (state) => {
-    console.log("notes in progress")
     return {
       ...state,
       fetchDANotesProgress: true,
@@ -26,7 +25,7 @@ const daNotesReducer = createReducer(initialState, {
   [fetchDANotesFailure]: (state) => {
     return {
       ...state,
-      fetchDANotesProgress: false,
+      fetchDANotesProgress: true,
       fetchDANotesFailure: true,
       fetchDANotesSuccess: false,
       errorMsg: "Something went wrong, please try again",
@@ -36,7 +35,7 @@ const daNotesReducer = createReducer(initialState, {
     return {
       ...state,
       daNotes: data.payload.orderNotes,
-      fetchDANotesProgress: false,
+      fetchDANotesProgress: true,
       fetchDANotesFailure: false,
       fetchDANotesSuccess: true,
       errorMsg: "",

@@ -1,1 +1,1 @@
-export { daDetailsReducer } from './reducer';
+export { daDetailsReducer } from "./reducer";
