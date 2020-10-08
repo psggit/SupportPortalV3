@@ -20,7 +20,7 @@ const daNotesReducer = createReducer(initialState, {
       fetchDANotesProgress: true,
       fetchDANotesFailure: false,
       fetchDANotesSuccess: false,
-    }
+    };
   },
   [fetchDANotesFailure]: (state) => {
     return {
@@ -29,7 +29,7 @@ const daNotesReducer = createReducer(initialState, {
       fetchDANotesFailure: true,
       fetchDANotesSuccess: false,
       errorMsg: "Something went wrong, please try again",
-    }
+    };
   },
   [fetchDANotesSuccess]: (state, data) => {
     return {

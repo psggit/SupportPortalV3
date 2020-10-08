@@ -5,8 +5,6 @@ import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import TopBar from "../../components/topBar";
-import { CircularProgress } from "@material-ui/core";
-import { Backdrop } from "@material-ui/core";
 
 import { useHistory } from "react-router-dom";
 
@@ -64,18 +62,6 @@ const OrderInfoComponent = (props) => {
       props.fetchCancelReason(payload);
     }
   }, []);
-
-  let loading = props.fetchOrderInfoProgress;
-  console.log("orderInfo", props);
-  if (loading) {
-    return (
-      <Box>
-        <Backdrop open={true}>
-          <CircularProgress />
-        </Backdrop>
-      </Box>
-    );
-  }
 
   let loading = props.fetchOrderInfoProgress;
   console.log("props", props.orderInfo)
