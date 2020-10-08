@@ -6,3 +6,4 @@ export { createSession } from "./session";
 export {fetchDANotesAPI} from "./fetchDANotesAPI";
 export { genresAPI } from "./genresAPI";
 export { cancelReasonAPI } from "./cancelReasonAPI";
+export { fetchRetailerNotesAPI } from "./fetchRetailerNotesAPI";

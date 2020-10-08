@@ -4,3 +4,4 @@ const initialState = {};
 const daDetailsReducer = createReducer(initialState, {});
 
 export { daDetailsReducer };
+
