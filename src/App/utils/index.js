@@ -5,4 +5,4 @@ export { orderInfoAPI } from "./orderInfoAPI";
 export { createSession } from "./session";
 export { genresAPI } from "./genresAPI";
 export { cancelReasonAPI } from "./cancelReasonAPI";
-export { fetchRetailerNotesAPI} from "./fetchRetailerNotesAPI";
+export { fetchRetailerNotesAPI } from "./fetchRetailerNotesAPI";

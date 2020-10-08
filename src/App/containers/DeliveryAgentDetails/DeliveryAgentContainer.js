@@ -1,10 +1,10 @@
-import { connect } from 'react-redux';
-import { DeliveryAgentDetails } from './DeliveryAgentComponent';
-import {data} from './mockData';
+import { connect } from "react-redux";
+import { DeliveryAgentDetails } from "./DeliveryAgentComponent";
+import {data} from "./mockData";
 
-const mapStateToProps = (state) => {
+const mapStateToProps = () => {
   return {
-    orderDetails: data
+    orderDetails: data,
   };
 };
 

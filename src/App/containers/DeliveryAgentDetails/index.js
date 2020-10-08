@@ -1,2 +1,2 @@
-export { DeliveryAgentContainer } from './DeliveryAgentContainer';
-export { deliveryAgentReducer } from './duck';
+export { DeliveryAgentContainer } from "./DeliveryAgentContainer";
+export { deliveryAgentReducer } from "./duck";

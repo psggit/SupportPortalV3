@@ -1,2 +1,2 @@
-export { retailerNotesReducer } from './reducer';
-export { RetailerContainer } from '../RetailerContainer';
+export { retailerNotesReducer } from "./reducer";
+export { RetailerContainer } from "../RetailerContainer";

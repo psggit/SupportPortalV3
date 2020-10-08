@@ -73,7 +73,7 @@ module.exports = (env, argv) => {
       extensions: [".js", ".jsx"],
       alias: {
         "react-dom": "@hot-loader/react-dom",
-        Utils: path.resolve(__dirname, "./src/App/utils")
+        Utils: path.resolve(__dirname, "./src/App/utils"),
       },
     },
     devServer: {
