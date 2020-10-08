@@ -17,12 +17,28 @@ module.exports = {
         use: ["babel-loader"],
       },
       {
+        test: /\.(ttf|eot|woff|woff2)$/,
+        use: {
+          loader: "file-loader",
+          options: {
+            name: "fonts/[name].[contenthash].[ext]",
+          },
+        },
+      },
+      {
         test: /\.css$/,
         use: ["style-loader", "css-loader"],
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: ["file-loader"],
+        use: [
+          {
+            loader: "svg-url-loader",
+            options: {
+              limit: 50000,
+            },
+          },
+        ],
       },
     ],
   },

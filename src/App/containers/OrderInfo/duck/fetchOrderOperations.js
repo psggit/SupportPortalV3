@@ -2,10 +2,13 @@ import {
   fetchOrderInfoProgress,
   fetchOrderInfoFailure,
   fetchOrderInfoSuccess,
+  fetchCancelReasonProgress,
+  fetchCancelReasonFailure,
+  fetchCancelReasonSuccess,
 } from "./actions";
 
 import { selectOrder } from "../../Dashboard/duck";
-import { fetchOrderInfoAPI } from "../../../utils";
+import { orderInfoAPI, cancelReasonAPI } from "../../../utils";
 
 const processResponse = () => {
   return (res) => {
@@ -18,9 +21,14 @@ const processResponse = () => {
 };
 
 const onSuccess = (dispatch) => {
-  console.log("[onSuccess of fetchCOmpleteOrder]");
   return (data) => {
     dispatch(fetchOrderInfoSuccess(data));
+  };
+};
+
+const onSuccessCancel = (dispatch) => {
+  return (data) => {
+    dispatch(fetchCancelReasonSuccess(data));
   };
 };
 
@@ -30,12 +38,17 @@ const onError = (dispatch) => {
   };
 };
 
+const onErrorCancel = (dispatch) => {
+  return (err) => {
+    dispatch(fetchCancelReasonFailure(err));
+  };
+};
+
 const fetchOrder = (payload) => {
-  console.log("[fetchOrder]");
   return (dispatch) => {
     dispatch(fetchOrderInfoProgress());
     dispatch(selectOrder(payload));
-    fetchOrderInfoAPI(
+    orderInfoAPI(
       payload,
       processResponse(dispatch),
       onSuccess(dispatch),
@@ -44,4 +57,16 @@ const fetchOrder = (payload) => {
   };
 };
 
-export { fetchOrder };
+const fetchCancelReason = (payload) => {
+  return (dispatch) => {
+    dispatch(fetchCancelReasonProgress());
+    cancelReasonAPI(
+      payload,
+      processResponse(dispatch),
+      onSuccessCancel(dispatch),
+      onErrorCancel(dispatch)
+    );
+  };
+};
+
+export { fetchOrder, fetchCancelReason };

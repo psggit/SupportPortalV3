@@ -13,7 +13,7 @@ import { authAPI } from "./utils";
 
 function App() {
   useEffect(() => {
-    console.log("[APP]");
+    // console.log("[APP]");
     authAPI();
   }, []);
   return (

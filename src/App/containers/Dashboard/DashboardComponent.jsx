@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import TopBar from "../../components/topBar";
+import ErrorMsg from "../../components/errorMsg";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import { useHistory } from "react-router-dom";
@@ -46,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
 const DashboardComponent = (props) => {
   useEffect(() => {
-    console.log("DashboardComponent");
+    // console.log("DashboardComponent");
     // userAuthAPI(null, onProcess, onSuccess, onError);
   }, []);
   const classes = useStyles();
@@ -154,6 +155,12 @@ const DashboardComponent = (props) => {
       ) : (
         ""
       )}
+      {props.fetchDetailsFail && (
+        <ErrorMsg
+          show={true}
+          message="Something went wrong, try again later."
+        />
+      )}
       <Box maxWidth="80%" className={classes.boxContainer}>
         <Grid container spacing={4}>
           <Grid item xs={4}>
@@ -203,6 +210,7 @@ DashboardComponent.propTypes = {
   orderData: PropTypes.object,
   fetchDetailsSuccess: PropTypes.bool,
   fetchDetailsProgress: PropTypes.bool,
+  fetchDetailsFail: PropTypes.bool,
 };
 
 export { DashboardComponent };
