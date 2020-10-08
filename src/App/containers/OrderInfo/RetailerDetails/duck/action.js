@@ -6,6 +6,6 @@ const fetchRetailerNotesProgress = createAction("fetchRetailerNotesProgress");
 
 export {
   fetchRetailerNotesSuccess,
-  fetchRetailerNotesFailed, 
-  fetchRetailerNotesProgress 
+  fetchRetailerNotesFailed,
+  fetchRetailerNotesProgress,
 };
