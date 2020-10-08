@@ -47,4 +47,4 @@ export const getDataList = (dataMap, keysToRenderArray) => {
     newArray.push(newEntry);
   });
   return newArray;
-}
+};
