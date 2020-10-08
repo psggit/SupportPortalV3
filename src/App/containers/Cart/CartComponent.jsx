@@ -63,8 +63,8 @@ const useStyles = makeStyles((theme) => ({
 
 const CartComponent = (props) => {
   useEffect(() => {
-    // console.log("CartComponent");
-    // console.dir(props);
+    console.log("CartComponent");
+    console.dir(props);
   }, []);
   const classes = useStyles();
   const [modify, setModify] = useState(false);
@@ -83,9 +83,7 @@ const CartComponent = (props) => {
   return (
     <Card className={classes.CartComponent} variant="outlined">
       <CardContent p={2}>
-        <Typography>
-          <h4>CART DETAILS</h4>
-        </Typography>
+        <Typography>CART DETAILS</Typography>
         <OrderSummary {...props} modify={modify} />
         {!modify && (
           <Box display="flex" flexDirection="row-reverse">

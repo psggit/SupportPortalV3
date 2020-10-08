@@ -117,8 +117,9 @@ const tempValue = {
 //orderInfo: state.orderInfo.order_details,
 
 const mapStateToProps = (state) => {
+  console.log("[mapping state in cart container]", state);
   return {
-    orderInfo: tempValue.order_details,
+    orderInfo: state.order.orderInfo.orderDetails,
     fetchGenreProgress: state.cart.fetchGenreProgress,
     fetchGenreFailed: state.cart.fetchGenreFailed,
     fetchGenreSuccess: state.cart.fetchGenreSuccess,

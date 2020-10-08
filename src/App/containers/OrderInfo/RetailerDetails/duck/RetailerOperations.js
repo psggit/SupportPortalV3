@@ -1,6 +1,10 @@
-import { fetchRetailerNotesSuccess, fetchRetailerNotesFailed, fetchRetailerNotesProgress } from "./action";
+import {
+  fetchRetailerNotesSuccess,
+  fetchRetailerNotesFailed,
+  fetchRetailerNotesProgress,
+} from "./action";
 // import { createSession } from "../../../utils";
-import { fetchRetailerNotesAPI } from '../../../utils/fetchRetailerNotesAPI';
+import { fetchRetailerNotesAPI } from "../../../../utils/fetchRetailerNotesAPI";
 
 const processResponse = () => {
   console.log("[processResponse]");
@@ -17,10 +21,8 @@ const processResponse = () => {
 };
 
 const onSuccess = (dispatch) => {
-  console.log("[onSuccess]");
   return (data) => {
-    console.log("data");
-    console.log(data);
+    console.log("[onSuccess] data", data);
     dispatch(fetchRetailerNotesSuccess(data));
     // createSession(data);
   };
@@ -33,7 +35,7 @@ const onError = (dispatch) => {
   };
 };
 
-const sendOrderId = (orderId) => {
+const fetchRetailerNotes = (orderId) => {
   let reqBody = {
     order_id: orderId,
     type: "retailer",
@@ -49,4 +51,4 @@ const sendOrderId = (orderId) => {
   };
 };
 
-export { sendOrderId };
+export { fetchRetailerNotes };

@@ -48,12 +48,3 @@ export const getDataList = (dataMap, keysToRenderArray) => {
   })
   return newArray;
 }
-
-export const getListOfDataObjects = (dataMap, keysToRenderArray) => {
-  let newArray = [];
-  keysToRenderArray.map((value, index) => {
-    const newEntry = { [value]: dataMap[value] };
-    newArray.push(newEntry);
-  });
-  return newArray;
-}

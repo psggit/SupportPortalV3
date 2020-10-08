@@ -1,1 +1,0 @@
-export { RetailerNotesListContainer } from './RetailerNotesListContainer';
