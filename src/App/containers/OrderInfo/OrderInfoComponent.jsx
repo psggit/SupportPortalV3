@@ -5,10 +5,13 @@ import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import TopBar from "../../components/topBar";
+import { CircularProgress } from "@material-ui/core";
+import { Backdrop } from "@material-ui/core";
 
 import { useHistory } from "react-router-dom";
 import { CartContainer } from "../Cart/CartContainer";
 import { OrderDetailsCard } from "./components/orderDetailsCard";
+import { RetailerContainer } from "./RetailerDetails/RetailerContainer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 const OrderInfoComponent = (props) => {
   const history = useHistory();
   const classes = useStyles();
- 
+
   useEffect(() => {
     if (props.orderId === null) {
       history.push("/dashboard");
@@ -57,6 +60,17 @@ const OrderInfoComponent = (props) => {
     }
   }, []);
 
+  let loading = props.fetchOrderInfoProgress;
+  console.log("orderInfo", props);
+  if (loading) {
+    return (
+      <Box>
+        <Backdrop open={true}>
+          <CircularProgress />
+        </Backdrop>
+      </Box>
+    );
+  }
 
   return (
     <Container component="main" className={classes.root}>
@@ -69,12 +83,12 @@ const OrderInfoComponent = (props) => {
           <Grid item xs={10}>
             <Grid container spacing={4}>
               <Grid item xs={6}>
-                <CartContainer {...props} />
+              <CartContainer {...props} />
               </Grid>
               <Grid item xs={6}>
-                {props.fetchCancelReasonSuccess ? (
+                {/* {props.fetchCancelReasonSuccess ? (
                   <OrderDetailsCard {...props} />
-                ) : null}
+                ) : null} */}
               </Grid>
             </Grid>
             <Grid container spacing={4}>
@@ -86,11 +100,8 @@ const OrderInfoComponent = (props) => {
               </Grid>
             </Grid>
             <Grid container spacing={4}>
-              <Grid item xs={6}>
-                Retailer Details
-              </Grid>
-              <Grid item xs={6}>
-                Retailer Notes
+              <Grid item xs={12}>
+                <RetailerContainer />
               </Grid>
             </Grid>
             <Grid container spacing={4}>
@@ -116,6 +127,7 @@ OrderInfoComponent.propTypes = {
   fetchCancelReasonSuccess: PropTypes.bool,
   orderId: PropTypes.any,
   orderInfo: PropTypes.object,
+  fetchOrderInfoProgress: PropTypes.bool,
 };
 
 export { OrderInfoComponent };

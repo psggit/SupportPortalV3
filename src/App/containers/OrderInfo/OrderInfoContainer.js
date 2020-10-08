@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { OrderInfoComponent } from "./OrderInfoComponent";
 import { fetchOrder, fetchCancelReason } from "../OrderInfo/duck";
+// import { RetailerComponent } from "../RetailerDetails/RetailerComponent";
 
 /*const tempValue = {
   order_details: {
@@ -115,12 +116,14 @@ import { fetchOrder, fetchCancelReason } from "../OrderInfo/duck";
 };*/
 
 const mapStateToProps = (state) => {
+  console.log("orderinfocontainer", state);
   return {
     orderId: state.home.orderId,
-    orderInfo: state.orderInfo,
-    cancelReasons: state.orderInfo.cancelReasons,
-    fetchOrderInfoSuccess: state.orderInfo.fetchOrderInfoSuccess,
-    fetchCancelReasonSuccess: state.orderInfo.fetchCancelReasonSuccess,
+    orderInfo: state.order.orderInfo,
+    retailerDetails: state.order.retailerDetails,
+    fetchOrderInfoSuccess: state.order.orderInfo.fetchOrderInfoSuccess,
+    fetchOrderInfoProgress: state.order.orderInfo.fetchOrderInfoProgress,
+    fetchCancelReasonSuccess: state.order.orderInfo.fetchCancelReasonSuccess,
   };
 };
 

@@ -1,2 +1,2 @@
-export { loginReducer, sendLoginEmail } from "./duck";
+export { loginReducer } from "./duck";
 export { LoginContainer } from "./LoginContainer";
