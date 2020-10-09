@@ -51,6 +51,8 @@ const useStyles = makeStyles((theme) => ({
   },
   ListItemRow: {
     borderBottom: "1px solid #E5E5E5",
+    padding: "10px",
+
   },
 }));
 
@@ -68,9 +70,10 @@ export default function ActivityItem(props) {
 
   return (
     <CardContent>
-      <Typography variant="h5" className={classes.heading} gutterBottom>
+      {/* <Typography variant="h5" className={classes.heading} gutterBottom>
         ACTIVITY DETAILS
-      </Typography>
+      </Typography> */}
+
       {mapArray.map((value, index) => {
         let data = value;
         return (

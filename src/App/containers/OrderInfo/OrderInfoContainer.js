@@ -124,6 +124,7 @@ const mapStateToProps = (state) => {
     fetchOrderInfoSuccess: state.order.orderInfo.fetchOrderInfoSuccess,
     fetchOrderInfoProgress: state.order.orderInfo.fetchOrderInfoProgress,
     fetchCancelReasonSuccess: state.order.orderInfo.fetchCancelReasonSuccess,
+    customerDetails: state.order.customerDetails,
   };
 };
 

@@ -42,6 +42,7 @@ const orderInfoReducer = createReducer(initialValue, {
     console.log("in success", data);
     return {
       ...state,
+      orderInfo: data.payload.order_details,
       orderDetails: data.payload.order_details,
       retailerDetails: data.payload,
       fetchOrderInfoProgress: false,

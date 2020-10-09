@@ -5,7 +5,6 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-
 const useStyles = makeStyles((theme) => ({
   root: {
     fontFamily: theme.typography.fontFamily,
@@ -34,6 +33,8 @@ const useStyles = makeStyles((theme) => ({
       color: "#606060",
       width: "100%",
       display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
       padding: "12px 0",
       "& .title": {
         width: "30%",
@@ -48,17 +49,14 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end",
   },
 }));
-
 CustomCard.propTypes = {
   title: PropTypes.string,
   actions: PropTypes.array,
   children: PropTypes.any,
 };
-
 export default function CustomCard(props) {
   const { title, actions, children } = props;
   const classes = useStyles();
-
   return (
     <Card className={classes.root}>
       <CardHeader className={classes.cardHeader} title={title} />
