@@ -18,6 +18,7 @@ import { CircularProgress } from "@material-ui/core";
 import { Backdrop } from "@material-ui/core";
 import ActivityItem from "../../../components/activityItems";
 import { getListOfDataObjects } from "../../../utils/helpers";
+import Moment from "moment";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -67,10 +68,10 @@ const keysToRender = [
   "customer_id",
   "customer_name",
   "customer_contact_number",
-  "city",
-  "dob",
+  "customer_city",
+  "customer_dob",
   "signup_date",
-  "kyc_level",
+  "customer_kyc",
   "customer_landmark",
   "customer_address",
 ];
@@ -78,12 +79,16 @@ const keyMap = {
   customer_id: "Customer ID",
   customer_name: "Customer Name",
   customer_contact_number: "Mobile Number",
-  city: "City",
-  dob: "Date of Birth",
+  customer_city: "City",
+  customer_dob: "Date of Birth",
   signup_date: "Signup Date",
-  kyc_level: "KYC Level",
+  customer_kyc: "KYC Level",
   customer_landmark: "Landmark",
   customer_address: "Address",
+};
+
+const getTimestamp = (timestamp) => {
+  return Moment(timestamp).format("D MMM h:mm A");
 };
 
 const RenderCustomerDetails = (props) => {
