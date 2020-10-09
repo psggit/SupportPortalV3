@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { Notes } from "./NotesComponent";
 import { NotesList } from "./mockData";
 
-const mapStateToProps = (state) => {
+const mapStateToProps = () => {
   return {
     notes: NotesList,
   };

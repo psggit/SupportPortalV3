@@ -7,7 +7,6 @@ const orderReducer = combineReducers({
   orderInfo: orderInfoReducer,
   customer: customerReducer,
   retailer: retailerNotesReducer,
-
 });
 
 export { orderReducer };
