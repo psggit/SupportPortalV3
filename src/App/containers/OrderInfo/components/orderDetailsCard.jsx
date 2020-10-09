@@ -64,10 +64,11 @@ const useStyles = makeStyles((theme) => ({
 
 const OrderDetailsCard = (props) => {
   const classes = useStyles();
+
   let { platform, customer_address } = {
-    ...props.orderInfo,
+    ...props.order,
   };
-  platform == "hb" ? (platform = "Hipbar Web") : (platform = "Flipkart");
+  platform = platform === "hb" ? "Hipbar Web" : "Flipkart";
   useEffect(() => {
     //
   }, []);
@@ -108,7 +109,7 @@ const OrderDetailsCard = (props) => {
                   classes={{ root: classes.ListItemRootTitle }}
                 />
                 <ListItemText
-                  primary={props.platform}
+                  primary={platform}
                   className={classes.ListItemTextRoot}
                   classes={{ root: classes.ListItemTextRoot }}
                 />
@@ -135,7 +136,7 @@ const OrderDetailsCard = (props) => {
             className={classes.marginLeft}
             size="small"
             onClick={handleCancel}
-            disabled={!props.orderInfo.order_status_button}
+            disabled={!props.order.order_status_button}
           >
             Cancel Order
           </Button>
@@ -144,7 +145,7 @@ const OrderDetailsCard = (props) => {
             color="primary"
             size="small"
             onClick={handleDeliver}
-            disabled={!props.orderInfo.order_status_button}
+            disabled={!props.order.order_status_button}
           >
             Deliver Order
           </Button>
@@ -247,7 +248,7 @@ const OrderDetailsCard = (props) => {
 };
 
 OrderDetailsCard.propTypes = {
-  orderInfo: PropTypes.object,
+  order: PropTypes.object,
   platform: PropTypes.string,
   address: PropTypes.string,
   handleCancel: PropTypes.func,

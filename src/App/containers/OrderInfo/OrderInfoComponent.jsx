@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Box from "@material-ui/core/Box";
+import { Box, Button } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import TopBar from "../../components/topBar";
 
 import { useHistory } from "react-router-dom";
 
-import {DADetailsContainer} from "../DeliveryAgentDetails";
-import {DANotesContainer} from "../DeliveryAgentNotes";
 import { CircularProgress } from "@material-ui/core";
 import { Backdrop } from "@material-ui/core";
 import { CartContainer } from "../Cart/CartContainer";
 import { OrderDetailsCard } from "./components/orderDetailsCard";
 import { RetailerContainer } from "./RetailerDetails/RetailerContainer";
+import { DeliveryAgentContainer } from "./DeliveryAgent";
+import DialogComponent from "../../components/dialog";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,7 +53,7 @@ const OrderInfoComponent = (props) => {
       history.push("/dashboard");
     } else {
       let payload = {
-        order_id: props.orderInfo.order_id,
+        order_id: props.orderId,
       };
       payload = {
         order_id: "50011189094739",
@@ -64,7 +64,7 @@ const OrderInfoComponent = (props) => {
   }, []);
 
   let loading = props.fetchOrderInfoProgress;
-  console.log("props", props.orderInfo)
+  console.log("props", props);
   if (loading) {
     return (
       <Box>
@@ -75,9 +75,24 @@ const OrderInfoComponent = (props) => {
     );
   }
 
+  const dialogActions = [
+    <Button variant="contained" color="primary" size="small" key="closeDialog">
+      Cancel
+    </Button>,
+    <Button variant="contained" color="primary" size="small" key="createIssue">
+      Create Issue
+    </Button>,
+  ];
+
   return (
     <Container component="main" className={classes.root}>
       <TopBar />
+      <DialogComponent
+        title="ADD NEW ISSUE"
+        subtitle={`ORDER ID: ` + props.orderId}
+        actions={dialogActions}
+        open={false}
+      />
       <Box className={classes.boxContainer}>
         <Grid container>
           <Grid item xs={2}>
@@ -86,12 +101,13 @@ const OrderInfoComponent = (props) => {
           <Grid item xs={10}>
             <Grid container spacing={4}>
               <Grid item xs={6}>
-              <CartContainer {...props} />
+                <CartContainer {...props} />
               </Grid>
               <Grid item xs={6}>
-                {/* {props.fetchCancelReasonSuccess ? (
-                  <OrderDetailsCard {...props} />
-                ) : null} */}
+                {props.fetchCancelReasonSuccess &&
+                  props.fetchOrderInfoSuccess && (
+                    <OrderDetailsCard {...props} />
+                  )}
               </Grid>
             </Grid>
             <Grid container spacing={4}>
@@ -108,8 +124,9 @@ const OrderInfoComponent = (props) => {
               </Grid>
             </Grid>
             <Grid container spacing={4}>
-              <Grid item xs={6}><DADetailsContainer/></Grid>
-              <Grid item xs={6}><DANotesContainer /></Grid>
+              <Grid item xs={12}>
+                <DeliveryAgentContainer />
+              </Grid>
             </Grid>
           </Grid>
         </Grid>

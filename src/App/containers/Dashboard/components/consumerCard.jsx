@@ -68,7 +68,6 @@ const ConsumerCard = (props) => {
         <TextField
           fullWidth
           variant="outlined"
-          size="small"
           autoComplete="off"
           margin="normal"
           label="Mobile Number"
@@ -93,7 +92,6 @@ const ConsumerCard = (props) => {
           margin="normal"
           placeholder="Order ID"
           variant="outlined"
-          size="small"
           label="Order ID"
           value={defValueOrderNo}
           inputProps={{ maxLength: 16 }}
@@ -106,7 +104,6 @@ const ConsumerCard = (props) => {
           margin="normal"
           placeholder="Customer ID"
           variant="outlined"
-          size="small"
           label="Customer ID"
           value={defValueCustomerId}
           inputProps={{ maxLength: 10 }}
