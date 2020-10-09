@@ -67,8 +67,8 @@ const keysToRender = [
   "retailer_id",
   "retailer_name",
   "retailer_contact_number",
-  "city",
-  "retailer_landmark",
+  "retailer_city_name",
+  "retailer_locality",
   "retailer_limit",
   "retailer_address",
 ];
@@ -76,8 +76,8 @@ const keyMap = {
   "retailer_id": "Retailer ID",
   "retailer_name": "Retailer Name",
   "retailer_contact_number": "Mobile Number",
-  "city": "City",
-  "retailer_landmark": "Landmark",
+  "retailer_city_name": "City",
+  "retailer_locality": "Landmark",
   "retailer_limit": "Retailer Limit",
   "retailer_address": "Store Address",
 };
