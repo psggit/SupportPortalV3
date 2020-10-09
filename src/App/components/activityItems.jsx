@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   CardContent,
+  CardActions,
   Typography,
   ListItem,
   ListItemText,
@@ -52,24 +53,32 @@ const useStyles = makeStyles((theme) => ({
   ListItemRow: {
     borderBottom: "1px solid #E5E5E5",
   },
+  cardActions: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
 }));
 
 ActivityItem.propTypes = {
   arr: PropTypes.array,
   keysToRender: PropTypes.array,
+  actions: PropTypes.array,
+  title: PropTypes.string,
 };
 
 export default function ActivityItem(props) {
   const classes = useStyles();
   const mapArray = props.arr;
+  const title = props.title;
+  const actions = props.actions;
   const keysToRender = props.keysToRender;
-  console.log("[ActivityItem]", mapArray);
+  console.log("[ActivityItem]", mapArray, actions);
   console.log("[keysToRender]", keysToRender);
 
   return (
     <CardContent>
       <Typography variant="h5" className={classes.heading} gutterBottom>
-        ACTIVITY DETAILS
+        {title}
       </Typography>
       {mapArray.map((value, index) => {
         let data = value;
@@ -98,6 +107,13 @@ export default function ActivityItem(props) {
           </ListItem>
         );
       })}
+      {actions ? (
+        <CardActions className={classes.cardActions}>
+          {actions.map((item) => item)}
+        </CardActions>
+      ) : (
+        ""
+      )}
     </CardContent>
   );
 }

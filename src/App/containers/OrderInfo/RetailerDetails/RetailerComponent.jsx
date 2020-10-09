@@ -2,17 +2,19 @@ import React, { useEffect, useState } from "react";
 import RetailerDetailsCard from "../../../components/card";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
-import Moment from "moment";
 import PropTypes from "prop-types";
 import Dialog from "../../../components/dialog";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import { Box, Card } from "@material-ui/core";
+import { Card } from "@material-ui/core";
 import { CircularProgress } from "@material-ui/core";
-import { Backdrop } from "@material-ui/core";
 import ActivityItem from "../../../components/activityItems";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import { getListOfDataObjects } from "../../../utils/helpers";
 
 const useStyles = makeStyles(() => ({
   formRoot: {
@@ -45,6 +47,11 @@ const useStyles = makeStyles(() => ({
     fontSize: 16,
     color: "#606060",
   },
+  ListItem: {
+    width: "100%",
+    fontSize: 16,
+    color: "#606060",
+  },
   ListItemTextRoot: {
     wordBreak: "break-word",
   },
@@ -56,83 +63,66 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const getTimestamp = (timestamp) => {
-  return Moment(timestamp).format("D MMM h:mm A");
+const keysToRender = [
+  "retailer_id",
+  "retailer_name",
+  "retailer_contact_number",
+  "city",
+  "retailer_landmark",
+  "retailer_limit",
+  "retailer_address",
+];
+const keyMap = {
+  "retailer_id": "Retailer ID",
+  "retailer_name": "Retailer Name",
+  "retailer_contact_number": "Mobile Number",
+  "city": "City",
+  "retailer_landmark": "Landmark",
+  "retailer_limit": "Retailer Limit",
+  "retailer_address": "Store Address",
 };
 
-const renderRetailerDetails = (props) => {
-  const retailerDetails = props.orderInfo;
+const RenderRetailerDetails = (props) => {
+  const classes = useStyles();
   return (
     <React.Fragment>
-      <div>
-        <div className="title">Retailer ID</div>
-        <div className="value">
-          {retailerDetails.retailer_id ? `${retailerDetails.retailer_id}` : "-"}
-        </div>
-      </div>
-      <div>
-        <div className="title">Retailer Name</div>
-        <div className="value">
-          {retailerDetails.retailer_name
-            ? `${retailerDetails.retailer_name}`
-            : "-"}
-        </div>
-      </div>
-      <div>
-        <div className="title">Mobile Number</div>
-        <div className="value">
-          {retailerDetails.retailer_contact_number
-            ? `${retailerDetails.retailer_contact_number}`
-            : "-"}
-        </div>
-      </div>
-      <div>
-        <div className="title">City</div>
-        <div className="value">
-          {retailerDetails.retailer_city
-            ? `${retailerDetails.retailer_city}`
-            : "-"}
-        </div>
-      </div>
-      <div>
-        <div className="title">Locality</div>
-        <div className="value">
-          {retailerDetails.retailer_locality
-            ? `${retailerDetails.retailer_locality}`
-            : "-"}
-        </div>
-      </div>
-      <div>
-        <div className="title">Retailer Limit</div>
-        <div className="value">
-          {retailerDetails.retailer_limit
-            ? `${retailerDetails.retailer_limit}`
-            : "-"}
-        </div>
-      </div>
-      <div>
-        <div className="title">Store Address</div>
-        <div className="value">
-          {retailerDetails.retailer_address
-            ? `${retailerDetails.retailer_address}`
-            : "-"}
-        </div>
-      </div>
+      <List>
+        {props.retailerDetails.map((item, index) => {
+          return (
+            // eslint-disable-next-line react/jsx-key
+            <ListItem classes={{ root: classes.ListItem }}>
+              <ListItemText
+                primary={keyMap[keysToRender[index]]}
+                className={classes.ListItemTextRoot}
+                classes={{ root: classes.ListItemTextLabel }}
+              />
+              <ListItemText
+                primary={
+                  item[keysToRender[index]] ? item[keysToRender[index]] : "-"
+                }
+                className={classes.ListItemTextRoot}
+                classes={{ root: classes.ListItemTextLabel }}
+              />
+            </ListItem>
+          );
+        })}
+      </List>
     </React.Fragment>
   );
 };
 
 const RetailerDetails = (props) => {
-  console.log("[RetailerDetails]");
-  // const orderId = props.orderInfo.order_id;
-
+  const [retailerDetailsData, setRetailerDetailsData] = useState([]);
   useEffect(() => {
     props.fetchRetailerNotes(props.orderInfo.order_id);
   }, []);
 
-  const classes = useStyles();
+  useEffect(() => {
+    const retailerDetails = getListOfDataObjects(props.orderInfo, keysToRender);
+    setRetailerDetailsData(retailerDetails);
+  }, []);
 
-  console.log("useEffect", props);
+  const classes = useStyles();
 
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
   const [age, setAge] = useState("");
@@ -149,15 +139,15 @@ const RetailerDetails = (props) => {
     setShowAddNoteDialog(false);
   };
 
-  const retailerDetailsAction = [
+  const retailerAction = [
     // eslint-disable-next-line react/jsx-key
     <Button variant="outlined" color="primary">
       Change Retailer
     </Button>,
     // eslint-disable-next-line react/jsx-key
-    <Button variant="contained" color="primary">
-      Call
-    </Button>,
+    // <Button variant="contained" color="primary">
+    //   Call
+    // </Button>,
   ];
 
   const retailerNotesAction = [
@@ -166,7 +156,6 @@ const RetailerDetails = (props) => {
       <Button variant="contained" color="primary" onClick={mountAddNote}>
         Add
       </Button>
-      ,
       {showAddNoteDilog && (
         <Dialog
           title="ADD NOTE"
@@ -224,7 +213,6 @@ const RetailerDetails = (props) => {
 
   const keysToRenderInNotesCard = ["notes", "created_at"];
 
-
   if (props.fetchSuccess) {
     console.log("[RetailerComponent]");
     console.log(props.retailerNotes);
@@ -232,17 +220,16 @@ const RetailerDetails = (props) => {
 
   return (
     <div className={classes.container}>
-      <RetailerDetailsCard
-        title="Retailer Details"
-        actions={retailerDetailsAction}
-      >
-        {renderRetailerDetails(props)}
+      <RetailerDetailsCard title="Retailer Details" actions={retailerAction}>
+        <RenderRetailerDetails retailerDetails={retailerDetailsData} />
       </RetailerDetailsCard>
-      <Card className={classes.card} variant="outlined">
+      <Card className={classes.card} title="Retailer Notes" variant="outlined">
         {props.fetchSuccess && (
           <ActivityItem
             arr={props.retailerNotes.orderNotes}
             keysToRender={keysToRenderInNotesCard}
+            title={"Retailer Notes"}
+            actions={retailerNotesAction}
           />
         )}
         {props.fetchProgress && <CircularProgress />}
