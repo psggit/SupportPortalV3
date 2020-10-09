@@ -9,6 +9,13 @@ const useStyles = makeStyles(theme => ({
   root: {
     padding: 24,
     height: "fit-content",
+import PropTypes from "prop-types";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    fontFamily: theme.typography.fontFamily,
+    padding: 24,
+
     width: 520,
     "& .MuiCardHeader-root": {
       padding: 0,
@@ -35,11 +42,13 @@ const useStyles = makeStyles(theme => ({
       display: "flex",
       justifyContent: "space-between",
       flexDirection: "column",
+
       padding: "12px 0",
       "& .title": {
         width: "30%",
       },
       "& .subtitle": { border: "3px solid" },
+
       "& .value": {
         width: "70%",
       },
@@ -51,17 +60,19 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+CustomCard.propTypes = {
+  title: PropTypes.string,
+  actions: PropTypes.array,
+  children: PropTypes.any,
+};
+
 export default function CustomCard(props) {
-  const { title, actions, children, subtitle } = props;
+  const { title, actions, children } = props;
   const classes = useStyles();
 
   return (
     <Card className={classes.root}>
-      <CardHeader
-        className={classes.cardHeader}
-        title={title}
-        subtitle={subtitle}
-      />
+      <CardHeader className={classes.cardHeader} title={title} />
       <CardContent className={classes.cardContent}>{children}</CardContent>
       {actions ? (
         <CardActions className={classes.cardActions}>

@@ -1,19 +1,13 @@
-// https://retailer.hipbar-dev.com/Api/stockandprice/listing/brands
-
-// Step 1:
-// list all genres
-// on click - hit above API to fetch all cart items
-
 const headers = {
   Accept: "application/json",
   "Content-Type": "application/json",
   "x-hasura-role": "support_admin",
   "App-Name": "HipBar-Drinks",
-  "hasura-id": "515868",
+  "hasura-id": "515947",
 };
 
-const genresAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://retailer.hipbar-dev.com/Api/stockandprice/listing/brands`;
+const fetchRetailerNotesAPI = (reqBody, process, onSuccess, onError) => {
+  const URL = `https://api.hipbar-dev.com/supportman/api/1/notes/fetch`;
   fetch(URL, {
     method: "POST",
     headers: headers,
@@ -25,4 +19,4 @@ const genresAPI = (reqBody, process, onSuccess, onError) => {
     .catch((err) => onError(err));
 };
 
-export { genresAPI };
+export { fetchRetailerNotesAPI };

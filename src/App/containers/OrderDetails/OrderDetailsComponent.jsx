@@ -44,8 +44,8 @@ const OrderDetailsComponent = (props) => {
   const classes = useStyles();
   const [showData, setShowData] = useState(false);
   const [rows, setRowsData] = useState(null);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [page, setPage] = useState(0);
   const formatDate = (date) => {
     let formattedDate = Moment(date).format("D MMM h:mm A");
     return formattedDate;
