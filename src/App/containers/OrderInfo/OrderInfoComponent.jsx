@@ -9,8 +9,8 @@ import TopBar from "../../components/topBar";
 import { useHistory } from "react-router-dom";
 import { CartContainer } from "../Cart/CartContainer";
 import { OrderDetailsCard } from "./components/orderDetailsCard";
-import { CustomerDetailContainer } from "../../containers/Customer/CustomerCard/CustomerDetailContainer";
-
+// import { CustomerDetailContainer } from "../../containers/Customer/CustomerCard/CustomerDetailContainer";
+import { CustomerContainer } from "./CustomerDetails/CustomerContainer";
 import { CircularProgress } from "@material-ui/core";
 import { Backdrop } from "@material-ui/core";
 
@@ -86,14 +86,14 @@ const OrderInfoComponent = (props) => {
                 <CartContainer {...props} />
               </Grid>
               <Grid item xs={6}>
-                {props.fetchCancelReasonSuccess ? (
+                {/* {props.fetchCancelReasonSuccess ? (
                   <OrderDetailsCard {...props} />
-                ) : null}
+                ) : null} */}
               </Grid>
             </Grid>
             <Grid container spacing={4}>
               <Grid item xs={12}>
-                <CustomerDetailContainer />
+                <CustomerContainer />
               </Grid>
               {/* <Grid item xs={6}>
                 Customer Notes

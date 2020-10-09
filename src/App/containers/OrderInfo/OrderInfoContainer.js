@@ -118,11 +118,13 @@ const mapStateToProps = (state) => {
 
   return {
     orderId: state.home.orderId,
-    orderInfo: state.orderInfo,
-    cancelReasons: state.orderInfo.cancelReasons,
-    fetchOrderInfoSuccess: state.orderInfo.fetchOrderInfoSuccess,
-    fetchCancelReasonSuccess: state.orderInfo.fetchCancelReasonSuccess,
-    fetchOrderInfoProgress: state.orderInfo.fetchOrderInfoProgress,
+    orderInfo: state.order.orderInfo,
+    retailerDetails: state.order.retailerDetails,
+    fetchOrderInfoSuccess: state.order.orderInfo.fetchOrderInfoSuccess,
+    fetchOrderInfoProgress: state.order.orderInfo.fetchOrderInfoProgress,
+    fetchCancelReasonSuccess: state.order.orderInfo.fetchCancelReasonSuccess,
+    customerDetails: state.order.customerDetails,
+
   };
 };
 
