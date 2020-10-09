@@ -84,7 +84,7 @@ export default function ActivityItem(props) {
   const title = props.title;
   const actions = props.actions;
   const keysToRender = props.keysToRender;
-  console.log("[ActivityItem]", mapArray, actions);
+  console.log("[ActivityItem]", mapArray);
   console.log("[keysToRender]", keysToRender);
 
   return (
