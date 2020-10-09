@@ -33,6 +33,8 @@ const useStyles = makeStyles(theme => ({
       color: "#606060",
       width: "100%",
       display: "flex",
+      justifyContent: "space-between",
+      flexDirection: "column",
       padding: "12px 0",
       "& .title": {
         width: "30%",

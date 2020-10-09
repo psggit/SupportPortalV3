@@ -115,10 +115,10 @@ import { fetchOrder, fetchCancelReason } from "../OrderInfo/duck";
 };*/
 
 const mapStateToProps = (state) => {
-
+  console.log("order-info-container", state);
   return {
     orderId: state.home.orderId,
-    orderInfo: state.order.orderInfo,
+    orderInfo: state.order,
     retailerDetails: state.order.retailerDetails,
     fetchOrderInfoSuccess: state.order.orderInfo.fetchOrderInfoSuccess,
     fetchOrderInfoProgress: state.order.orderInfo.fetchOrderInfoProgress,

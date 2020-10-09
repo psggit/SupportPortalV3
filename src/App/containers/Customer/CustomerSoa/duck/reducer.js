@@ -8,7 +8,7 @@ import {
 const initialState = {
   //loading: false,
   CustomerSoaList: [],
-  message: ''
+  message: "",
 };
 
 const customerSOAReducer = createReducer(initialState, {

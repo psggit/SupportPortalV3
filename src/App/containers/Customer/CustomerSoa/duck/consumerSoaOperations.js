@@ -29,9 +29,7 @@ const onError = (dispatch) => {
 };
 
 const fetchCustomerSoaDetail = () => {
-  let reqBody = {
-   
-  };
+  let reqBody = {};
   return (dispatch) => {
     dispatch(fetchCustomerSoaInProgress);
     loginAPI(
@@ -43,4 +41,4 @@ const fetchCustomerSoaDetail = () => {
   };
 };
 
-export { fetchCustomerSoaDetail }
+export { fetchCustomerSoaDetail };

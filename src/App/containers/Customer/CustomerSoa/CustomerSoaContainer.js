@@ -1,10 +1,10 @@
-import { connect } from 'react-redux';
-import { CustomerSoa} from './CustomerSoaComponent'
-import { CustomerSOA } from './mockData';
+import { connect } from "react-redux";
+import { CustomerSoa } from "./CustomerSoaComponent";
+import { CustomerSOA } from "./mockData";
 
 const mapStateToProps = (state) => {
   return {
-    CustomerSoaList: CustomerSOA
+    CustomerSoaList: CustomerSOA,
   };
 };
 

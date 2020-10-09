@@ -1,1 +1,1 @@
-export {RewardsContainer} from './RewardsContainer'
+export { RewardsContainer } from "./RewardsContainer";

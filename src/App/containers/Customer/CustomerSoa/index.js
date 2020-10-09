@@ -1,1 +1,1 @@
-export { CustomerSoaContainer } from './CustomerSoaContainer'
+export { CustomerSoaContainer } from "./CustomerSoaContainer";

@@ -45,17 +45,17 @@ const useStyles = makeStyles(theme => ({
     width: "30%",
   },
   formRoot: {
-    padding: 24
+    padding: 24,
   },
   formControlTextarea: {
     width: "100%",
     marginBottom: 24,
-    padding: 10
+    padding: 10,
   },
   selectIssue: {
     display: "flex",
     paddingLeft: "24px",
-    color: "#606060"
+    color: "#606060",
   },
   formControl: {
     marginLeft: "16px",
@@ -75,15 +75,15 @@ const keysToRender = [
   "customer_address",
 ];
 const keyMap = {
-  "customer_id": "Customer ID",
-  "customer_name": "Customer Name",
-  "customer_contact_number": "Mobile Number",
-  "city": "City",
-  "dob": "Date of Birth",
-  "signup_date": "Signup Date",
-  "kyc_level": "KYC Level",
-  "customer_landmark": "Landmark",
-  "customer_address": "Address",
+  customer_id: "Customer ID",
+  customer_name: "Customer Name",
+  customer_contact_number: "Mobile Number",
+  city: "City",
+  dob: "Date of Birth",
+  signup_date: "Signup Date",
+  kyc_level: "KYC Level",
+  customer_landmark: "Landmark",
+  customer_address: "Address",
 };
 
 const RenderCustomerDetails = (props) => {
@@ -91,71 +91,79 @@ const RenderCustomerDetails = (props) => {
   return (
     <React.Fragment>
       <List>
-        {
-          props.customerDetails.map((item, index) => {
-            return (
-              <ListItem classes={{ root: classes.ListCustomerItem }}>
-                <ListItemText
-                  primary={keyMap[keysToRender[index]]}
-                  className={classes.ListItemTextRoot}
-                  classes={{ root: classes.ListItemTextLabel }}
-                />
-                <ListItemText
-                  primary={item[keysToRender[index]] ? item[keysToRender[index]] : "-"}
-                  className={classes.ListItemTextRoot}
-                  classes={{ root: classes.ListItemTextLabel }}
-                />
-              </ListItem>
-            )
-          })
-        }
+        {props.customerDetails.map((item, index) => {
+          return (
+            <ListItem classes={{ root: classes.ListCustomerItem }}>
+              <ListItemText
+                primary={keyMap[keysToRender[index]]}
+                className={classes.ListItemTextRoot}
+                classes={{ root: classes.ListItemTextLabel }}
+              />
+              <ListItemText
+                primary={
+                  item[keysToRender[index]] ? item[keysToRender[index]] : "-"
+                }
+                className={classes.ListItemTextRoot}
+                classes={{ root: classes.ListItemTextLabel }}
+              />
+            </ListItem>
+          );
+        })}
       </List>
     </React.Fragment>
-  )
-}
+  );
+};
 
 const CustomerDetails = (props) => {
-
   const classes = useStyles();
 
   const [customerDetailsData, setCustomerDetailsData] = useState([])
 
- // const orderId = props.orderInfo.order_id
-
-  // useEffect(() => {
-  //   const payload = {
-  //     order_id: props.orderInfo.order_id,
-  //     type: "consumer"
-  //   }
-  //   props.fetchConsumerNotes(payload)
-  // }, [])
+  useEffect(() => {
+    const payload = {
+      order_id: props.orderInfo.order_id,
+      type: "consumer",
+    };
+    props.fetchConsumerNotes(payload);
+  }, []);
 
   useEffect(() => {
-    const customerDetails = getListOfDataObjects(props.orderInfo, keysToRender)
-    setCustomerDetailsData(customerDetails)
-  }, [])
- 
+    const customerDetails = getListOfDataObjects(props.orderInfo, keysToRender);
+    setCustomerDetailsData(customerDetails);
+  }, []);
+
   const customerAction = [
-    <Button variant="outlined" color="primary">Message</Button>,
-    <Button variant="contained" color="primary"> Call </Button>
+    <Button variant="outlined" color="primary">
+      Message
+    </Button>,
+    <Button variant="contained" color="primary">
+      Call
+    </Button>,
   ];
 
-  // const customerNotesAction = [
-  //   <Button variant="outlined" color="primary">Add</Button>,
-  // ];
+  const customerNotesAction = [
+    <Button variant="outlined" color="primary">
+      Add
+    </Button>,
+  ];
 
-  // const keysToRenderInNotesCard = ["message", "display_value"];
+  const keysToRenderInNotesCard = ["notes", "created_at"];
 
   if (props.notesSuccess) {
     console.log("[CustomerComponent]");
     console.log(props.customerNotes);
   }
+
+  // if(arr === null){
+  //   return <p>No Notes Available</p>
+  // }
+
   return (
     <div className={classes.container}>
       <CustomerDetailsCard title="Customer Details" actions={customerAction}>
         <RenderCustomerDetails customerDetails={customerDetailsData} />
       </CustomerDetailsCard>
-      {/* <Card className={classes.card} variant="outlined">
+      <CustomerDetailsCard title="Customer Notes" actions={customerNotesAction}>
         {props.notesSuccess && (
           <ActivityItem
             arr={props.customerNotes.orderNotes}
@@ -164,7 +172,7 @@ const CustomerDetails = (props) => {
           />
         )}
         {props.notesProgress && <CircularProgress />}
-      </Card> */}
+      </CustomerDetailsCard>
     </div>
   );
 };

@@ -1,2 +1,2 @@
 export { customerSoaReducer } from "./reducer";
-export { fetchCustomerSoaDetail } from "./consumerSoaOperations"
+export { fetchCustomerSoaDetail } from "./consumerSoaOperations";

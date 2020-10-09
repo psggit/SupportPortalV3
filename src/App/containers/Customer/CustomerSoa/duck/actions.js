@@ -4,4 +4,8 @@ const fetchCustomerSoaSuccessfull = createAction("fetchCustomerSoaSuccessfull");
 const fetchCustomerSoaFailure = createAction("fetchCustomerSoaFailure");
 const fetchCustomerSoaInProgress = createAction("fetchCustomerSoaInProgress");
 
-export { fetchCustomerSoaSuccessfull, fetchCustomerSoaFailure, fetchCustomerSoaInProgress };
+export {
+  fetchCustomerSoaSuccessfull,
+  fetchCustomerSoaFailure,
+  fetchCustomerSoaInProgress,
+};
