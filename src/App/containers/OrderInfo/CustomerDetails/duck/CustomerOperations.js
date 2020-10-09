@@ -3,8 +3,7 @@ import {
   fetchNotesFailed,
   fetchNotesProgress,
 } from "./actions";
-import { fetchNotesAPI } from "../../../../utils/fetchNotesAPI"
-
+import { fetchNotesAPI } from "../../../../utils/fetchNotesAPI";
 
 const processResponse = () => {
   console.log("[processResponse]");
@@ -46,4 +45,4 @@ const fetchConsumerNotes = (reqBody) => {
   };
 };
 
-export { fetchConsumerNotes }
+export { fetchConsumerNotes };

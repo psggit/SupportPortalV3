@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { Rewards } from "./RewardsComponent";
 import { Reward } from "./mockData";
 
-const mapStateToProps = (state) => {
+const mapStateToProps = () => {
   return {
     rewardsList: Reward,
   };

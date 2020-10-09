@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { CustomerGiftSoa } from "./CustomerGiftSoaComponent";
 import { CustomerGiftSOA } from "./mockData";
 
-const mapStateToProps = (state) => {
+const mapStateToProps = () => {
   return {
     CustomerGiftSoaList: CustomerGiftSOA,
   };

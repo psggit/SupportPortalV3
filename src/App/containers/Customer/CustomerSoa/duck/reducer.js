@@ -25,7 +25,7 @@ const customerSOAReducer = createReducer(initialState, {
     ...state,
     CustomerSoaList: action.payload,
     message: action.payload.message,
-  })
+  }),
 });
 
 export { customerSOAReducer };
