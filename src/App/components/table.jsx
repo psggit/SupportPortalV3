@@ -13,12 +13,15 @@ const useStyles = makeStyles({
     minWidth: 650,
   },
   tableHeader: {
-    color: "#fafafa",
-    backgroundColor: "#616161"
+    color: "#010B13",
+    fontWeight: "bold",
+    backgroundColor: "#E5E5E5",
+    borderBottom: "2px solid #C7C7C7",
+    borderTop: "2px solid #C7C7C7"
   }
 })
 
-export default function table(props) {
+function table(props) {
   const classes = useStyles()
   return (
     <TableContainer>
@@ -42,3 +45,5 @@ table.propTypes = {
   children: PropTypes.node,
   tableHeaders: PropTypes.array
 }
+
+export default table

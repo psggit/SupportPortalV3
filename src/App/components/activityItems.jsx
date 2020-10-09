@@ -17,6 +17,12 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  card: {
+    marginTop: theme.spacing(4),
+  },
+  actionContainer: {
+    padding: theme.spacing(2),
+  },
   marginLeft: {
     marginLeft: "auto",
   },
@@ -31,6 +37,12 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     alignItems: "flex-start",
   },
+  ListItemRootTitle: {
+    width: "30%",
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#606060",
+  },
   ListItemTextRoot: {
     wordBreak: "break-word",
     color: "#606060",
@@ -40,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
   ListItemRow: {
     borderBottom: "1px solid #E5E5E5",
     padding: "10px",
+
   },
 }));
 
@@ -60,6 +73,7 @@ export default function ActivityItem(props) {
       {/* <Typography variant="h5" className={classes.heading} gutterBottom>
         ACTIVITY DETAILS
       </Typography> */}
+
       {mapArray.map((value, index) => {
         let data = value;
         return (
