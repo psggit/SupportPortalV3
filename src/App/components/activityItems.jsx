@@ -41,8 +41,8 @@ const useStyles = makeStyles((theme) => ({
   ListItemRootTitle: {
     width: "30%",
     fontSize: 16,
-    fontWeight: "bold",
     color: "#606060",
+    textAlign: "right",
   },
   ListItemTextRoot: {
     wordBreak: "break-word",
@@ -85,6 +85,8 @@ const useStyles = makeStyles((theme) => ({
 ActivityItem.propTypes = {
   arr: PropTypes.array,
   keysToRender: PropTypes.array,
+  click: PropTypes.any,
+  issueType: PropTypes.string,
 };
 
 export default function ActivityItem(props) {
@@ -93,8 +95,10 @@ export default function ActivityItem(props) {
   if (mapArray && mapArray.length > 3) {
     mapArray = mapArray.slice(0, 3);
   }
+  console.log(props);
   const keysToRender = props.keysToRender;
-  // console.log("[ActivityItem]", mapArray);
+  const type = props.issueType;
+  console.log("[ActivityItem]", props);
   // console.log("[keysToRender]", keysToRender);
   if (mapArray === null) {
     return (
@@ -118,7 +122,11 @@ export default function ActivityItem(props) {
           </ListItem>
         </CardContent>
         <CardActions className={classes.cardActions}>
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => props.click(type)}
+          >
             Add
           </Button>
         </CardActions>
@@ -147,11 +155,15 @@ export default function ActivityItem(props) {
                   keyValue == "created_at"
                     ? getTimestamp(data[keyValue])
                     : data[keyValue];
+                let listClass =
+                  keyValue == "created_at"
+                    ? classes.ListItemRootTitle
+                    : classes.ListItemTextRoot;
                 return (
                   <ListItemText
                     key={ind}
                     primary={primaryValue}
-                    className={classes.ListItemTextRoot}
+                    className={listClass}
                     classes={{ root: classes.ListItemTextValue }}
                   />
                 );
@@ -161,7 +173,11 @@ export default function ActivityItem(props) {
         })}
       </CardContent>
       <CardActions className={classes.cardActions}>
-        <Button variant="contained" color="primary">
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => props.click(type)}
+        >
           Add
         </Button>
       </CardActions>

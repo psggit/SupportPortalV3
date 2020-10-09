@@ -2,19 +2,10 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import RetailerDetailsCard from "../../../components/card";
-import Moment from "moment";
-import {
-  Button,
-  CircularProgress,
-  TextareaAutosize,
-  MenuItem,
-  FormControl,
-  Select,
-} from "@material-ui/core";
-import Dialog from "../../../components/dialog";
+import { Button, CircularProgress, Grid } from "@material-ui/core";
 import ActivityItem from "../../../components/activityItems";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   formRoot: {
     padding: 24,
   },
@@ -127,21 +118,6 @@ const RetailerDetails = (props) => {
 
   console.log("useEffect", props);
 
-  const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
-  const [age, setAge] = useState("");
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
-
-  const mountAddNote = () => {
-    setShowAddNoteDialog(true);
-  };
-
-  const UnmountAddNote = () => {
-    setShowAddNoteDialog(false);
-  };
-
   const retailerDetailsAction = [
     <Button variant="outlined" color="primary" key="changeRetailer">
       Change Retailer
@@ -159,23 +135,29 @@ const RetailerDetails = (props) => {
   }
 
   return (
-    <div className={classes.container}>
-      <RetailerDetailsCard
-        title="Retailer Details"
-        actions={retailerDetailsAction}
-      >
-        {renderRetailerDetails(props)}
-      </RetailerDetailsCard>
-      <>
-        {props.fetchSuccess && (
-          <ActivityItem
-            arr={props.retailerNotes.orderNotes}
-            keysToRender={keysToRenderInNotesCard}
-          />
-        )}
-        {props.fetchProgress && <CircularProgress />}
-      </>
-    </div>
+    <Grid container spacing={4}>
+      <Grid item xs={6}>
+        <RetailerDetailsCard
+          title="Retailer Details"
+          actions={retailerDetailsAction}
+        >
+          {renderRetailerDetails(props)}
+        </RetailerDetailsCard>
+      </Grid>
+      <Grid item xs={6}>
+        <>
+          {props.fetchSuccess && (
+            <ActivityItem
+              arr={props.retailerNotes.orderNotes}
+              keysToRender={keysToRenderInNotesCard}
+              issueType={"retalier"}
+              click={props.openDialog}
+            />
+          )}
+          {props.fetchProgress && <CircularProgress />}
+        </>
+      </Grid>
+    </Grid>
   );
 };
 
@@ -185,6 +167,7 @@ RetailerDetails.propTypes = {
   retailerNotes: PropTypes.object,
   fetchSuccess: PropTypes.bool,
   fetchProgress: PropTypes.bool,
+  openDialog: PropTypes.any,
 };
 
 export { RetailerDetails };

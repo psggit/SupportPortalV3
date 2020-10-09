@@ -4,6 +4,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
@@ -12,11 +13,11 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "normal",
     fontSize: "16px",
     lineHeight: "19px",
-    margin: "0",
+    margin: "0 0 20px",
   },
   dialogTitle: {
     fontWeight: "600",
-    marginBottom: 22,
+    marginBottom: 20,
     padding: 0,
     "& h2": {
       fontSize: 16,
@@ -28,11 +29,15 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     width: "100%",
   },
+  dialogFooter: {
+    padding: 0,
+    paddingTop: "24px",
+  },
 }));
 
 const DialogComponent = (props) => {
   const classes = useStyles();
-  const { title, subtitle, children, actions, open } = props;
+  const { title, subtitle, actions, open } = props;
   return (
     <Dialog
       open={open}
@@ -52,7 +57,15 @@ const DialogComponent = (props) => {
               {subtitle}
             </DialogContentText>
           )}
-          {children && children}
+          <TextField
+            id="outlined-textarea"
+            placeholder="Add note here"
+            multiline
+            rows={4}
+            variant="outlined"
+            size="small"
+            fullWidth
+          />
         </DialogContent>
         <DialogActions className={classes.dialogFooter}>
           {actions.map((item) => item)}

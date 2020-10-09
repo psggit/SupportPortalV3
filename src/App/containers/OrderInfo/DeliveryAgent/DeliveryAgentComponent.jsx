@@ -8,8 +8,7 @@ import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import { Card } from "@material-ui/core";
-import { CircularProgress } from "@material-ui/core";
+import { Grid, CircularProgress } from "@material-ui/core";
 import ActivityItem from "../../../components/activityItems";
 
 const useStyles = makeStyles(() => ({
@@ -213,23 +212,29 @@ const DeliveryAgentComponent = (props) => {
   }
 
   return (
-    <div className={classes.container}>
+    <Grid container spacing={4}>
+      <Grid item xs={6}>
       <DeliveryAgentDetailsCard
         title="DELIVERY AGENT DETAILS"
         actions={retailerDetailsAction}
       >
         {renderRetailerDetails(props)}
       </DeliveryAgentDetailsCard>
+      </Grid>
+      <Grid item xs={6}>
       <>
         {props.fetchSuccess && (
           <ActivityItem
             arr={props.deliveryAgentNotes.orderNotes}
             keysToRender={keysToRenderInNotesCard}
+            issueType={"delivery_agent"}
+            click={props.openDialog}
           />
         )}
         {props.fetchProgress && <CircularProgress />}
       </>
-    </div>
+      </Grid>
+    </Grid>
   );
 };
 
@@ -239,6 +244,7 @@ DeliveryAgentComponent.propTypes = {
   orderInfo: PropTypes.object,
   fetchSuccess: PropTypes.bool,
   fetchProgress: PropTypes.bool,
+  openDialog: PropTypes.any,
 };
 
 export { DeliveryAgentComponent };

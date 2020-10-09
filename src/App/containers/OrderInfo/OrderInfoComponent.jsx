@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -64,7 +64,8 @@ const OrderInfoComponent = (props) => {
   }, []);
 
   let loading = props.fetchOrderInfoProgress;
-  console.log("props", props);
+  const [issueType, setIssueType] = useState(null);
+  const [open, setOpen] = useState(false);
   if (loading) {
     return (
       <Box>
@@ -75,11 +76,28 @@ const OrderInfoComponent = (props) => {
     );
   }
 
+  // console.clear();
+  console.log("issueType >>>> ", issueType);
+
+  const openDialog = (type) => {
+    setIssueType(type);
+    if (type == null) {
+      setOpen(false);
+    } else {
+      setOpen(true);
+    }
+  };
+
   const dialogActions = [
-    <Button variant="contained" color="primary" size="small" key="closeDialog">
+    <Button
+      variant="outlined"
+      color="primary"
+      key="closeDialog"
+      onClick={() => openDialog(null)}
+    >
       Cancel
     </Button>,
-    <Button variant="contained" color="primary" size="small" key="createIssue">
+    <Button variant="contained" color="primary" key="createIssue">
       Create Issue
     </Button>,
   ];
@@ -89,16 +107,18 @@ const OrderInfoComponent = (props) => {
       <TopBar />
       <DialogComponent
         title="ADD NEW ISSUE"
-        subtitle={`ORDER ID: ` + props.orderId}
+        subtitle={`Order ID: ` + props.orderId}
         actions={dialogActions}
-        open={false}
+        issueType={issueType}
+        open={open}
+        openDialog={openDialog}
       />
       <Box className={classes.boxContainer}>
         <Grid container>
           <Grid item xs={2}>
             <p>Order Tracking component</p>
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={9}>
             <Grid container spacing={4}>
               <Grid item xs={6}>
                 <CartContainer {...props} />
@@ -120,14 +140,27 @@ const OrderInfoComponent = (props) => {
             </Grid>
             <Grid container spacing={4}>
               <Grid item xs={12}>
-                <RetailerContainer />
+                <RetailerContainer openDialog={openDialog} />
               </Grid>
             </Grid>
             <Grid container spacing={4}>
               <Grid item xs={12}>
-                <DeliveryAgentContainer />
+                <DeliveryAgentContainer openDialog={openDialog} />
               </Grid>
             </Grid>
+          </Grid>
+          <Grid item xs={1}>
+            <Box
+              display="flex"
+              alignItems="flex-end"
+              flexDirection="column"
+              border={1}
+            >
+              <Button color="primary">O</Button>
+              <Button>C</Button>
+              <Button>R</Button>
+              <Button>D</Button>
+            </Box>
           </Grid>
         </Grid>
       </Box>
