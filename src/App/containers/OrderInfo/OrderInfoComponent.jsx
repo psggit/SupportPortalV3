@@ -11,8 +11,6 @@ import { useHistory } from "react-router-dom";
 import { CartContainer } from "../Cart/CartContainer";
 import { OrderDetailsCard } from "./components/orderDetailsCard";
 import { CustomerContainer } from "./CustomerDetails/CustomerContainer";
-import { CircularProgress } from "@material-ui/core";
-import { Backdrop } from "@material-ui/core";
 import { RetailerContainer } from "./RetailerDetails/RetailerContainer";
 
 const useStyles = makeStyles((theme) => ({
@@ -85,7 +83,7 @@ const OrderInfoComponent = (props) => {
           <Grid item xs={10}>
             <Grid container spacing={4}>
               <Grid item xs={6}>
-              <CartContainer {...props} />
+                <CartContainer {...props} />
               </Grid>
               <Grid item xs={6}>
                 {/* {props.fetchCancelReasonSuccess ? (

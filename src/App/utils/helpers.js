@@ -41,30 +41,18 @@ export const getDataList = (dataMap, keysToRenderArray) => {
   let newArray = [];
   dataMap.map((item) => {
     let newEntry;
-    keysToRenderArray.map((value, index) => {
-      newEntry = { ...newEntry, [value]: item[value] };
-    });
-    newArray.push(newEntry);
-  })
-  return newArray;
-}
-
-export const getListOfDataObjects = (dataMap, keysToRenderArray) => {
-  let newArray = [];
-  keysToRenderArray.map((value, index) => {
-    const newEntry = { [value]: dataMap[value] };
-    newArray.push(newEntry);
-  });
-  return newArray;
-}
-
-export const getDataList = (dataMap, keysToRenderArray) => {
-  let newArray = [];
-  dataMap.map((item) => {
-    let newEntry;
     keysToRenderArray.map((value) => {
       newEntry = { ...newEntry, [value]: item[value] };
     });
+    newArray.push(newEntry);
+  });
+  return newArray;
+};
+
+export const getListOfDataObjects = (dataMap, keysToRenderArray) => {
+  let newArray = [];
+  keysToRenderArray.map((value) => {
+    const newEntry = { [value]: dataMap[value] };
     newArray.push(newEntry);
   });
   return newArray;

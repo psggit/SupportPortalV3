@@ -4,18 +4,11 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import { makeStyles } from "@material-ui/core/styles";
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    padding: 24,
-    height: "fit-content",
 import PropTypes from "prop-types";
-
 const useStyles = makeStyles((theme) => ({
   root: {
     fontFamily: theme.typography.fontFamily,
     padding: 24,
-
     width: 520,
     "& .MuiCardHeader-root": {
       padding: 0,
@@ -29,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom: 12,
       "& > span": {
         fontSize: 16,
-        fontWeight: "bold",
+        fontWeight: 600,
         textTransform: "uppercase",
       },
     },
@@ -40,15 +33,10 @@ const useStyles = makeStyles((theme) => ({
       color: "#606060",
       width: "100%",
       display: "flex",
-      justifyContent: "space-between",
-      flexDirection: "column",
-
       padding: "12px 0",
       "& .title": {
         width: "30%",
       },
-      "& .subtitle": { border: "3px solid" },
-
       "& .value": {
         width: "70%",
       },
@@ -59,17 +47,14 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end",
   },
 }));
-
 CustomCard.propTypes = {
   title: PropTypes.string,
   actions: PropTypes.array,
   children: PropTypes.any,
 };
-
 export default function CustomCard(props) {
   const { title, actions, children } = props;
   const classes = useStyles();
-
   return (
     <Card className={classes.root}>
       <CardHeader className={classes.cardHeader} title={title} />
