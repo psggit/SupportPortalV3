@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
+  Card,
   CardContent,
   CardActions,
   Typography,
@@ -15,6 +16,17 @@ const getTimestamp = (timestamp) => {
 };
 
 const useStyles = makeStyles((theme) => ({
+  rootCard: {
+    fontFamily: theme.typography.fontFamily,
+    padding: 24,
+    width: 520,
+    "& .MuiCardHeader-root": {
+      padding: 0,
+    },
+    "& .MuiCardContent-root": {
+      padding: 0,
+    },
+  },
   root: {
     flexGrow: 1,
   },
@@ -76,37 +88,39 @@ export default function ActivityItem(props) {
   console.log("[keysToRender]", keysToRender);
 
   return (
-    <CardContent>
-      <Typography variant="h5" className={classes.heading} gutterBottom>
-        {title}
-      </Typography>
-      {mapArray.map((value, index) => {
-        let data = value;
-        return (
-          <ListItem
-            dense
-            disableGutters
-            className={classes.ListItemRow}
-            classes={{ root: classes.ListItemRoot }}
-            key={index}
-          >
-            {keysToRender.map((keyValue, ind) => {
-              let primaryValue =
-                keyValue == "created_at"
-                  ? getTimestamp(data[keyValue])
-                  : data[keyValue];
-              return (
-                <ListItemText
-                  key={ind}
-                  primary={primaryValue}
-                  className={classes.ListItemTextRoot}
-                  classes={{ root: classes.ListItemTextValue }}
-                />
-              );
-            })}
-          </ListItem>
-        );
-      })}
+    <Card className={classes.rootCard}>
+      <CardContent>
+        <Typography variant="h5" className={classes.heading} gutterBottom>
+          {title}
+        </Typography>
+        {mapArray.map((value, index) => {
+          let data = value;
+          return (
+            <ListItem
+              dense
+              disableGutters
+              className={classes.ListItemRow}
+              classes={{ root: classes.ListItemRoot }}
+              key={index}
+            >
+              {keysToRender.map((keyValue, ind) => {
+                let primaryValue =
+                  keyValue == "created_at"
+                    ? getTimestamp(data[keyValue])
+                    : data[keyValue];
+                return (
+                  <ListItemText
+                    key={ind}
+                    primary={primaryValue}
+                    className={classes.ListItemTextRoot}
+                    classes={{ root: classes.ListItemTextValue }}
+                  />
+                );
+              })}
+            </ListItem>
+          );
+        })}
+      </CardContent>
       {actions ? (
         <CardActions className={classes.cardActions}>
           {actions.map((item) => item)}
@@ -114,6 +128,6 @@ export default function ActivityItem(props) {
       ) : (
         ""
       )}
-    </CardContent>
+    </Card>
   );
 }
