@@ -5,12 +5,13 @@ import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import TopBar from "../../components/topBar";
-
+import { CircularProgress } from "@material-ui/core";
+import { Backdrop } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { CartContainer } from "../Cart/CartContainer";
 import { OrderDetailsCard } from "./components/orderDetailsCard";
-import { CircularProgress } from "@material-ui/core";
-import { Backdrop } from "@material-ui/core";
+import { CustomerContainer } from "./CustomerDetails/CustomerContainer";
+import { RetailerContainer } from "./RetailerDetails/RetailerContainer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
 const OrderInfoComponent = (props) => {
   const history = useHistory();
   const classes = useStyles();
-  console.log(props);
 
   useEffect(() => {
     if (props.orderId === null) {
@@ -61,8 +61,8 @@ const OrderInfoComponent = (props) => {
   }, []);
 
   let loading = props.fetchOrderInfoProgress;
+  console.log("orderInfo", props);
 
-  // loading = true;
   if (loading) {
     return (
       <Box>
@@ -72,7 +72,6 @@ const OrderInfoComponent = (props) => {
       </Box>
     );
   }
-
   return (
     <Container component="main" className={classes.root}>
       <TopBar />
@@ -87,25 +86,22 @@ const OrderInfoComponent = (props) => {
                 <CartContainer {...props} />
               </Grid>
               <Grid item xs={6}>
-                {props.fetchCancelReasonSuccess ? (
+                {/* {props.fetchCancelReasonSuccess ? (
                   <OrderDetailsCard {...props} />
-                ) : null}
+                ) : null} */}
               </Grid>
             </Grid>
             <Grid container spacing={4}>
-              <Grid item xs={6}>
-                Customer Details
+              <Grid item xs={12}>
+                <CustomerContainer />
               </Grid>
-              <Grid item xs={6}>
+              {/* <Grid item xs={6}>
                 Customer Notes
-              </Grid>
+              </Grid> */}
             </Grid>
             <Grid container spacing={4}>
-              <Grid item xs={6}>
-                Retailer Details
-              </Grid>
-              <Grid item xs={6}>
-                Retailer Notes
+              <Grid item xs={12}>
+                <RetailerContainer />
               </Grid>
             </Grid>
             <Grid container spacing={4}>
@@ -133,6 +129,7 @@ OrderInfoComponent.propTypes = {
   fetchCancelReasonProgress: PropTypes.bool,
   orderId: PropTypes.any,
   orderInfo: PropTypes.object,
+  fetchOrderInfoProgress: PropTypes.bool,
 };
 
 export { OrderInfoComponent };
