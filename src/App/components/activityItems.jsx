@@ -81,6 +81,33 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "flex-end",
   },
+  cardHeader: {
+    "& .MuiCardHeader-content": {
+      paddingBottom: 12,
+      "& > span": {
+        fontSize: 16,
+        fontWeight: 600,
+        textTransform: "uppercase",
+      },
+    },
+  },
+  root: {
+    fontFamily: theme.typography.fontFamily,
+    padding: 24,
+    width: 520,
+    alignSelf: "baseline",
+    boxShadow: "none",
+    "& .MuiCardHeader-root": {
+      padding: 0,
+    },
+    "& .MuiCardContent-root": {
+      padding: 0,
+    },
+  },
+  cardActions: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
 }));
 
 ActivityItem.propTypes = {

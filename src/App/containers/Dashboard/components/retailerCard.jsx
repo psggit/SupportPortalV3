@@ -68,7 +68,6 @@ const RetailerCard = (props) => {
         <TextField
           fullWidth
           variant="outlined"
-          size="small"
           autoComplete="off"
           margin="normal"
           label="Mobile Number"

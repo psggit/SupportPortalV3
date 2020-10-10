@@ -1,25 +1,13 @@
 import React, { useEffect, useState } from "react";
-import RetailerDetailsCard from "../../../components/card";
-import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
-import Moment from "moment";
 import PropTypes from "prop-types";
-import Dialog from "../../../components/dialog";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import { Box, Card } from "@material-ui/core";
-import { CircularProgress } from "@material-ui/core";
-import { Backdrop } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import RetailerDetailsCard from "../../../components/card";
+import { Button, CircularProgress, Grid } from "@material-ui/core";
 import ActivityItem from "../../../components/activityItems";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   formRoot: {
     padding: 24,
-  },
-  card: {
-    width: 520,
   },
   formControlTextarea: {
     width: "100%",
@@ -55,10 +43,6 @@ const useStyles = makeStyles(() => ({
     width: "30%",
   },
 }));
-
-const getTimestamp = (timestamp) => {
-  return Moment(timestamp).format("D MMM h:mm A");
-};
 
 const renderRetailerDetails = (props) => {
   const retailerDetails = props.orderInfo;
@@ -134,96 +118,16 @@ const RetailerDetails = (props) => {
 
   console.log("useEffect", props);
 
-  const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
-  const [age, setAge] = useState("");
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
-
-  const mountAddNote = () => {
-    setShowAddNoteDialog(true);
-  };
-
-  const UnmountAddNote = () => {
-    setShowAddNoteDialog(false);
-  };
-
   const retailerDetailsAction = [
-    // eslint-disable-next-line react/jsx-key
-    <Button variant="outlined" color="primary">
+    <Button variant="outlined" color="primary" key="changeRetailer">
       Change Retailer
     </Button>,
-    // eslint-disable-next-line react/jsx-key
-    <Button variant="contained" color="primary">
+    <Button variant="contained" color="primary" key="callBtn">
       Call
     </Button>,
   ];
 
-  const retailerNotesAction = [
-    // eslint-disable-next-line react/jsx-key
-    <div>
-      <Button variant="contained" color="primary" onClick={mountAddNote}>
-        Add
-      </Button>
-      ,
-      {showAddNoteDilog && (
-        <Dialog
-          title="ADD NOTE"
-          actions={[
-            // eslint-disable-next-line react/jsx-key
-            <Button
-              variant="contained"
-              buttonStyle="secondary"
-              onClick={UnmountAddNote}
-            >
-              Cancel
-            </Button>,
-            // eslint-disable-next-line react/jsx-key
-            <Button
-              variant="contained"
-              //onClick={commentUnmountModel}
-            >
-              Save
-            </Button>,
-          ]}
-        >
-          <form>
-            <div className={classes.selectIssue}>
-              <div>Select Issue</div>
-              <div>
-                <FormControl className={classes.formControl}>
-                  <Select
-                    value={age}
-                    onChange={handleChange}
-                    displayEmpty
-                    className={classes.selectEmpty}
-                    inputProps={{ "aria-label": "Without label" }}
-                  >
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-            </div>
-            <div className={classes.formRoot}>
-              <TextareaAutosize
-                className={classes.formControlTextarea}
-                aria-label="minimum height"
-                rowsMin={7}
-                //onChange={handleCommentChange}
-                placeholder="Add note here"
-              />
-            </div>
-          </form>
-        </Dialog>
-      )}
-    </div>,
-  ];
-
   const keysToRenderInNotesCard = ["notes", "created_at"];
-
 
   if (props.fetchSuccess) {
     console.log("[RetailerComponent]");
@@ -231,23 +135,29 @@ const RetailerDetails = (props) => {
   }
 
   return (
-    <div className={classes.container}>
-      <RetailerDetailsCard
-        title="Retailer Details"
-        actions={retailerDetailsAction}
-      >
-        {renderRetailerDetails(props)}
-      </RetailerDetailsCard>
-      <Card className={classes.card} variant="outlined">
-        {props.fetchSuccess && (
-          <ActivityItem
-            arr={props.retailerNotes.orderNotes}
-            keysToRender={keysToRenderInNotesCard}
-          />
-        )}
-        {props.fetchProgress && <CircularProgress />}
-      </Card>
-    </div>
+    <Grid container spacing={4}>
+      <Grid item xs={6}>
+        <RetailerDetailsCard
+          title="Retailer Details"
+          actions={retailerDetailsAction}
+        >
+          {renderRetailerDetails(props)}
+        </RetailerDetailsCard>
+      </Grid>
+      <Grid item xs={6}>
+        <>
+          {props.fetchSuccess && (
+            <ActivityItem
+              arr={props.retailerNotes.orderNotes}
+              keysToRender={keysToRenderInNotesCard}
+              issueType={"retalier"}
+              click={props.openDialog}
+            />
+          )}
+          {props.fetchProgress && <CircularProgress />}
+        </>
+      </Grid>
+    </Grid>
   );
 };
 
@@ -257,6 +167,7 @@ RetailerDetails.propTypes = {
   retailerNotes: PropTypes.object,
   fetchSuccess: PropTypes.bool,
   fetchProgress: PropTypes.bool,
+  openDialog: PropTypes.any,
 };
 
 export { RetailerDetails };

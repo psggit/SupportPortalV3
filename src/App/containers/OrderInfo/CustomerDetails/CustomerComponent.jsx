@@ -8,19 +8,13 @@ import PropTypes from "prop-types";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import Dialog from "../../../components/dialog";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import { Box, Card } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { CircularProgress } from "@material-ui/core";
-import { Backdrop } from "@material-ui/core";
 import ActivityItem from "../../../components/activityItems";
 import { getListOfDataObjects } from "../../../utils/helpers";
 import Moment from "moment";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     justifyContent: "space-between",
@@ -122,7 +116,7 @@ const RenderCustomerDetails = (props) => {
 const CustomerDetails = (props) => {
   const classes = useStyles();
 
-  const [customerDetailsData, setCustomerDetailsData] = useState([])
+  const [customerDetailsData, setCustomerDetailsData] = useState([]);
 
   useEffect(() => {
     const payload = {
@@ -164,21 +158,27 @@ const CustomerDetails = (props) => {
   // }
 
   return (
-    <div className={classes.container}>
-      <CustomerDetailsCard title="Customer Details" actions={customerAction}>
-        <RenderCustomerDetails customerDetails={customerDetailsData} />
-      </CustomerDetailsCard>
-      <CustomerDetailsCard title="Customer Notes" actions={customerNotesAction}>
-        {props.notesSuccess && (
-          <ActivityItem
-            arr={props.customerNotes.orderNotes}
-            keysToRender={keysToRenderInNotesCard}
-            title={"Customer Notes"}
-          />
-        )}
-        {props.notesProgress && <CircularProgress />}
-      </CustomerDetailsCard>
-    </div>
+    <Grid container spacing={4}>
+      <Grid item xs={6}>
+        <CustomerDetailsCard title="Customer Details" actions={customerAction}>
+          <RenderCustomerDetails customerDetails={customerDetailsData} />
+        </CustomerDetailsCard>
+      </Grid>
+      <Grid item xs={6}>
+        <CustomerDetailsCard title="Customer Notes">
+          {props.notesSuccess && (
+            <ActivityItem
+              arr={props.customerNotes.orderNotes}
+              keysToRender={keysToRenderInNotesCard}
+              title={"Customer Notes"}
+              issueType={"customer"}
+              click={props.openDialog}
+            />
+          )}
+          {props.notesProgress && <CircularProgress />}
+        </CustomerDetailsCard>
+      </Grid>
+    </Grid>
   );
 };
 CustomerDetails.propTypes = {
@@ -187,5 +187,7 @@ CustomerDetails.propTypes = {
   customerNotes: PropTypes.object,
   notesSuccess: PropTypes.bool,
   notesProgress: PropTypes.bool,
+  openDialog: PropTypes.any,
+  customerDetails: PropTypes.any,
 };
 export { CustomerDetails };

@@ -37,6 +37,15 @@ export function getPositionBasedOnContainer(el) {
   };
 }
 
+export const getListOfDataObjects = (dataMap, keysToRenderArray) => {
+  let newArray = [];
+  keysToRenderArray.map((value) => {
+    const newEntry = { [value]: dataMap[value] };
+    newArray.push(newEntry);
+  });
+  return newArray;
+};
+
 export const getDataList = (dataMap, keysToRenderArray) => {
   let newArray = [];
   dataMap.map((item) => {
@@ -44,15 +53,6 @@ export const getDataList = (dataMap, keysToRenderArray) => {
     keysToRenderArray.map((value) => {
       newEntry = { ...newEntry, [value]: item[value] };
     });
-    newArray.push(newEntry);
-  });
-  return newArray;
-};
-
-export const getListOfDataObjects = (dataMap, keysToRenderArray) => {
-  let newArray = [];
-  keysToRenderArray.map((value) => {
-    const newEntry = { [value]: dataMap[value] };
     newArray.push(newEntry);
   });
   return newArray;
