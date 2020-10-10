@@ -5,13 +5,13 @@ import Container from "@material-ui/core/Container";
 import { Box, Button } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import TopBar from "../../components/topBar";
-
 import { useHistory } from "react-router-dom";
 
 import { CircularProgress } from "@material-ui/core";
 import { Backdrop } from "@material-ui/core";
 import { CartContainer } from "../Cart/CartContainer";
 import { OrderDetailsCard } from "./components/orderDetailsCard";
+import { CustomerContainer } from "./CustomerDetails/CustomerContainer";
 import { RetailerContainer } from "./RetailerDetails/RetailerContainer";
 import { DeliveryAgentContainer } from "./DeliveryAgent";
 import DialogComponent from "../../components/dialog";
@@ -131,12 +131,12 @@ const OrderInfoComponent = (props) => {
               </Grid>
             </Grid>
             <Grid container spacing={4}>
-              <Grid item xs={6}>
-                Customer Details
+              <Grid item xs={12}>
+                <CustomerContainer openDialog={openDialog} />
               </Grid>
-              <Grid item xs={6}>
+              {/* <Grid item xs={6}>
                 Customer Notes
-              </Grid>
+              </Grid> */}
             </Grid>
             <Grid container spacing={4}>
               <Grid item xs={12}>

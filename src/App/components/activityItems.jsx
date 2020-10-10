@@ -52,6 +52,8 @@ const useStyles = makeStyles((theme) => ({
   },
   ListItemRow: {
     borderBottom: "1px solid #E5E5E5",
+    padding: "10px",
+
   },
   cardHeader: {
     "& .MuiCardHeader-content": {
