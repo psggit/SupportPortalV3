@@ -29,7 +29,7 @@ const orderInfoReducer = createReducer(initialValue, {
       fetchOrderInfoFailure: true,
       fetchOrderInfoSuccess: false,
       errorMsg: "Something went wrong, please try again",
-    }
+    };
   },
   [fetchOrderInfoProgress]: (state) => {
     console.log("in progress");

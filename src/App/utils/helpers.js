@@ -33,18 +33,18 @@ export function getPositionBasedOnContainer(el) {
     top: top + containerScrollPos,
     bottom: bottom + containerScrollPos,
     left: left,
-    right: right
-  }
+    right: right,
+  };
 }
 
 export const getListOfDataObjects = (dataMap, keysToRenderArray) => {
   let newArray = [];
-  keysToRenderArray.map((value, index) => {
-    const newEntry = { [value]: dataMap[value]  };
+  keysToRenderArray.map((value) => {
+    const newEntry = { [value]: dataMap[value] };
     newArray.push(newEntry);
   });
   return newArray;
-}
+};
 
 export const getDataList = (dataMap, keysToRenderArray) => {
   let newArray = [];
