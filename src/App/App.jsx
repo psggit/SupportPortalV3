@@ -11,8 +11,7 @@ import "./sass/app.scss";
 import { authAPI } from "./utils";
 // import { CustomerDetailContainer } from './containers/Customer/CustomerCard'
 // import {CustomerForm} from './containers/Customer/CustomerFormDetails/CustomerFormComponent'
-// import { CustomerSoa } from './containers/Customer/CustomerSoa/CustomerSoaComponent'
-// import {CustomerSoaContainer} from './containers/Customer/CustomerSoa'
+import { CustomerSoaContainer } from "./containers/Customer/CustomerSoa";
 // import { CustomerGiftSoaContainer } from './containers/Customer/CustomerGiftSoa'
 // import {RewardsContainer} from './containers/Customer/Rewards'
 import { NotesContainer } from "./containers/Customer/Notes";
@@ -32,7 +31,7 @@ function App() {
             <Route path="/dashboard" component={DashboardContainer} />
             {/* <Route path="/customer/123" component={CustomerDetailContainer} /> */}
             {/* <Route path="/form/123" component={CustomerForm} /> */}
-            {/* <Route path="/soa/123" component={CustomerSoaContainer} /> */}
+            <Route path="/soa/123" component={CustomerSoaContainer} />
             {/* <Route path="/gift-soa/123" component={CustomerGiftSoaContainer} /> */}
             {/* <Route path="/rewards/123" component={RewardsContainer} /> */}
             <Route path="/notes/123" component={NotesContainer} />

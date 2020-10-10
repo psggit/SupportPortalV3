@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { OrderInfoComponent } from "./OrderInfoComponent";
 import { fetchOrder, fetchCancelReason } from "../OrderInfo/duck";
+import { CollectionsOutlined } from "@material-ui/icons";
 // import { RetailerComponent } from "../RetailerDetails/RetailerComponent";
 
 /*const tempValue = {
@@ -117,6 +118,8 @@ import { fetchOrder, fetchCancelReason } from "../OrderInfo/duck";
 
 const mapStateToProps = (state) => {
   console.log("orderinfocontainer", state);
+  console.log("[customer-Detail", state.order.customerDetails);
+  console.log("[retailer-Detail", state.order.retailerDetails);
   return {
     orderId: state.home.orderId,
     orderInfo: state.order.orderInfo,

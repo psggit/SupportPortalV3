@@ -6,26 +6,40 @@ import {
 } from "./actions";
 
 const initialState = {
-  //loading: false,
-  CustomerSoaList: [],
-  message: "",
+  customerSoaList: null,
+  soaProgress: false,
+  soaFail: false,
+  soaSuccess: false,
+  errorMsg: "",
 };
 
 const customerSOAReducer = createReducer(initialState, {
-  [fetchCustomerSoaInProgress]: (state) => ({
-    ...state,
-    message: null,
-  }),
+  [fetchCustomerSoaSuccessfull]: (state, data) => {
+    console.log("SOAsuccess", data);
+    return {
+      ...state,
+      soaProgress: false,
+      soaFail: false,
+      soaSuccess: true,
+      errorMsg: "",
+      customerSoaList: data.payload,
+    };
+  },
   [fetchCustomerSoaFailure]: (state) => ({
     ...state,
-    CustomerSoaList: [],
-    message: "Something went wrong, please try again",
+    soaProgress: false,
+    soaFail: true,
+    soaSuccess: false,
+    errorMsg: "Something went wrong, please try again",
   }),
-  [fetchCustomerSoaSuccessfull]: (state, action) => ({
-    ...state,
-    CustomerSoaList: action.payload,
-    message: action.payload.message,
-  }),
+  [fetchCustomerSoaInProgress]: (state) => {
+    console.log("soa-progress");
+    return {
+      ...state,
+      soaProgress: true,
+    };
+  },
 });
+
 
 export { customerSOAReducer };

@@ -7,3 +7,4 @@ export { genresAPI } from "./genresAPI";
 export { cancelReasonAPI } from "./cancelReasonAPI";
 export { fetchNotesAPI } from "./fetchNotesAPI";
 export { fetchRetailerNotesAPI } from "./fetchRetailerNotesAPI";
+export { consumerSoaAPI } from "./consumerSoaAPI";

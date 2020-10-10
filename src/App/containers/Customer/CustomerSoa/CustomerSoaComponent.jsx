@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "../../../components/table";
 import TableRow from "@material-ui/core/TableRow";
@@ -57,10 +57,19 @@ function CustomerSoa(props) {
   );
   const classes = useStyles();
 
-  const pageLimit = 2;
+  const pageLimit = 20;
   const activePage = getQueryParamByName("activePage") || 1;
   const [isLoading, setLoading] = useState(false);
   const [pageNo, setPageNo] = useState(activePage);
+
+  useEffect(() => {
+    const payload = {
+      consumer_id: "515871",
+      limit: 20,
+      offset: 0,
+    };
+    props.fetchCustomerSoaList(payload);
+  }, []);
 
   const handlePageChange = (pageObj) => {
     setPageNo(pageObj.activePage);
@@ -117,14 +126,14 @@ function CustomerSoa(props) {
             );
           })}
         </Table>
-        <Pagination
+        {/* <Pagination
           activePage={parseInt(pageNo)}
           //itemsCountPerPage={parseInt(pageLimit)}
           rowsPerPage={parseInt(pageLimit)}
           count={props.CustomerSoaList.count}
           setPage={handlePageChange}
           color="primary"
-        />
+        /> */}
       </div>
     </div>
   );
