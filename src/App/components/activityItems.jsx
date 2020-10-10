@@ -1,10 +1,14 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
+  Card,
   CardContent,
   Typography,
   ListItem,
   ListItemText,
+  CardHeader,
+  Button,
+  CardActions,
 } from "@material-ui/core";
 import PropTypes from "prop-types";
 import Moment from "moment";
@@ -14,9 +18,6 @@ const getTimestamp = (timestamp) => {
 };
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
   card: {
     marginTop: theme.spacing(4),
   },
@@ -40,8 +41,8 @@ const useStyles = makeStyles((theme) => ({
   ListItemRootTitle: {
     width: "30%",
     fontSize: 16,
-    fontWeight: "bold",
     color: "#606060",
+    textAlign: "right",
   },
   ListItemTextRoot: {
     wordBreak: "break-word",
@@ -54,53 +55,134 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px",
 
   },
+  cardHeader: {
+    "& .MuiCardHeader-content": {
+      paddingBottom: 12,
+      "& > span": {
+        fontSize: 16,
+        fontWeight: 600,
+        textTransform: "uppercase",
+      },
+    },
+  },
+  root: {
+    fontFamily: theme.typography.fontFamily,
+    padding: 24,
+    width: 520,
+    alignSelf: "baseline",
+    boxShadow: "none",
+    "& .MuiCardHeader-root": {
+      padding: 0,
+    },
+    "& .MuiCardContent-root": {
+      padding: 0,
+    },
+  },
+  cardActions: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
 }));
 
 ActivityItem.propTypes = {
   arr: PropTypes.array,
   keysToRender: PropTypes.array,
+  click: PropTypes.any,
+  issueType: PropTypes.string,
 };
 
 export default function ActivityItem(props) {
   const classes = useStyles();
-  const mapArray = props.arr;
+  let mapArray = props.arr;
+  if (mapArray && mapArray.length > 3) {
+    mapArray = mapArray.slice(0, 3);
+  }
+  console.log(props);
   const keysToRender = props.keysToRender;
-  console.log("[ActivityItem]", mapArray);
-  console.log("[keysToRender]", keysToRender);
-
-  return (
-    <CardContent>
-      {/* <Typography variant="h5" className={classes.heading} gutterBottom>
-        ACTIVITY DETAILS
-      </Typography> */}
-
-      {mapArray.map((value, index) => {
-        let data = value;
-        return (
+  const type = props.issueType;
+  console.log("[ActivityItem]", props);
+  // console.log("[keysToRender]", keysToRender);
+  if (mapArray === null) {
+    return (
+      <Card className={classes.root}>
+        <CardContent>
+          <CardHeader
+            className={classes.cardHeader}
+            title={"ACTIVITY DETAILS"}
+          />
           <ListItem
             dense
             disableGutters
             className={classes.ListItemRow}
             classes={{ root: classes.ListItemRoot }}
-            key={index}
           >
-            {keysToRender.map((keyValue, ind) => {
-              let primaryValue =
-                keyValue == "created_at"
-                  ? getTimestamp(data[keyValue])
-                  : data[keyValue];
-              return (
-                <ListItemText
-                  key={ind}
-                  primary={primaryValue}
-                  className={classes.ListItemTextRoot}
-                  classes={{ root: classes.ListItemTextValue }}
-                />
-              );
-            })}
+            <ListItemText
+              primary={"No data available"}
+              className={classes.ListItemTextRoot}
+              classes={{ root: classes.ListItemTextValue }}
+            />
           </ListItem>
-        );
-      })}
-    </CardContent>
+        </CardContent>
+        <CardActions className={classes.cardActions}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => props.click(type)}
+          >
+            Add
+          </Button>
+        </CardActions>
+      </Card>
+    );
+  }
+
+  return (
+    <Card className={classes.root}>
+      <CardContent>
+        <Typography variant="h5" className={classes.heading} gutterBottom>
+          ACTIVITY DETAILS
+        </Typography>
+        {mapArray.map((value, index) => {
+          let data = value;
+          return (
+            <ListItem
+              dense
+              disableGutters
+              className={classes.ListItemRow}
+              classes={{ root: classes.ListItemRoot }}
+              key={index}
+            >
+              {keysToRender.map((keyValue, ind) => {
+                let primaryValue =
+                  keyValue == "created_at"
+                    ? getTimestamp(data[keyValue])
+                    : data[keyValue];
+                let listClass =
+                  keyValue == "created_at"
+                    ? classes.ListItemRootTitle
+                    : classes.ListItemTextRoot;
+                return (
+                  <ListItemText
+                    key={ind}
+                    primary={primaryValue}
+                    className={listClass}
+                    classes={{ root: classes.ListItemTextValue }}
+                  />
+                );
+              })}
+            </ListItem>
+          );
+        })}
+      </CardContent>
+      <CardActions className={classes.cardActions}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => props.click(type)}
+        >
+          Add
+        </Button>
+      </CardActions>
+    </Card>
   );
 }

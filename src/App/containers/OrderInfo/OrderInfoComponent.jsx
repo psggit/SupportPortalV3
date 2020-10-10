@@ -2,16 +2,19 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Box from "@material-ui/core/Box";
+import { Box, Button } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import TopBar from "../../components/topBar";
+import { useHistory } from "react-router-dom";
+
 import { CircularProgress } from "@material-ui/core";
 import { Backdrop } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
 import { CartContainer } from "../Cart/CartContainer";
 import { OrderDetailsCard } from "./components/orderDetailsCard";
 import { CustomerContainer } from "./CustomerDetails/CustomerContainer";
 import { RetailerContainer } from "./RetailerDetails/RetailerContainer";
+import { DeliveryAgentContainer } from "./DeliveryAgent";
+import DialogComponent from "../../components/dialog";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,7 +53,7 @@ const OrderInfoComponent = (props) => {
       history.push("/dashboard");
     } else {
       let payload = {
-        order_id: props.orderInfo.order_id,
+        order_id: props.orderId,
       };
       payload = {
         order_id: "50011189094739",
@@ -61,8 +64,8 @@ const OrderInfoComponent = (props) => {
   }, []);
 
   let loading = props.fetchOrderInfoProgress;
-  console.log("orderInfo", props);
-
+  const [issueType, setIssueType] = useState(null);
+  const [open, setOpen] = useState(false);
   if (loading) {
     return (
       <Box>
@@ -72,28 +75,64 @@ const OrderInfoComponent = (props) => {
       </Box>
     );
   }
+
+  // console.clear();
+  console.log("issueType >>>> ", issueType);
+
+  const openDialog = (type) => {
+    setIssueType(type);
+    if (type == null) {
+      setOpen(false);
+    } else {
+      setOpen(true);
+    }
+  };
+
+  const dialogActions = [
+    <Button
+      variant="outlined"
+      color="primary"
+      key="closeDialog"
+      onClick={() => openDialog(null)}
+    >
+      Cancel
+    </Button>,
+    <Button variant="contained" color="primary" key="createIssue">
+      Create Issue
+    </Button>,
+  ];
+
   return (
     <Container component="main" className={classes.root}>
       <TopBar />
+      <DialogComponent
+        title="ADD NEW ISSUE"
+        subtitle={`Order ID: ` + props.orderId}
+        actions={dialogActions}
+        issueType={issueType}
+        open={open}
+        openDialog={openDialog}
+      />
       <Box className={classes.boxContainer}>
         <Grid container>
           <Grid item xs={2}>
             <p>Order Tracking component</p>
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={9}>
             <Grid container spacing={4}>
               <Grid item xs={6}>
                 <CartContainer {...props} />
               </Grid>
               <Grid item xs={6}>
-                {/* {props.fetchCancelReasonSuccess ? (
-                  <OrderDetailsCard {...props} />
-                ) : null} */}
+                {props.fetchCancelReasonSuccess &&
+                  props.fetchOrderInfoSuccess && (
+                    <OrderDetailsCard {...props} />
+                  )}
               </Grid>
             </Grid>
             <Grid container spacing={4}>
               <Grid item xs={12}>
-                <CustomerContainer />
+                <CustomerContainer openDialog={openDialog} />
               </Grid>
               {/* <Grid item xs={6}>
                 Customer Notes
@@ -101,17 +140,27 @@ const OrderInfoComponent = (props) => {
             </Grid>
             <Grid container spacing={4}>
               <Grid item xs={12}>
-                <RetailerContainer />
+                <RetailerContainer openDialog={openDialog} />
               </Grid>
             </Grid>
             <Grid container spacing={4}>
-              <Grid item xs={6}>
-                Delivery Agent Details
-              </Grid>
-              <Grid item xs={6}>
-                Delivery Agent Notes
+              <Grid item xs={12}>
+                <DeliveryAgentContainer openDialog={openDialog} />
               </Grid>
             </Grid>
+          </Grid>
+          <Grid item xs={1}>
+            <Box
+              display="flex"
+              alignItems="flex-end"
+              flexDirection="column"
+              border={1}
+            >
+              <Button color="primary">O</Button>
+              <Button>C</Button>
+              <Button>R</Button>
+              <Button>D</Button>
+            </Box>
           </Grid>
         </Grid>
       </Box>
