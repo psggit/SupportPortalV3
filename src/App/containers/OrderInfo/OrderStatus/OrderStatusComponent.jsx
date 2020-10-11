@@ -1,12 +1,13 @@
-import React from 'react';
-import Paper from '@material-ui/core/Paper';
+import React from "react";
+import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import StepContent from '@material-ui/core/StepContent';
-import Typography from '@material-ui/core/Typography';
-import Moment from 'moment';
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
+import StepContent from "@material-ui/core/StepContent";
+import Typography from "@material-ui/core/Typography";
+import Moment from "moment";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -112,6 +113,10 @@ const OrderStatus = (props) => {
       
     </Paper>
   )
+}
+
+OrderStatus.propTypes = {
+  orderInfo: PropTypes.array,
 }
 
 export {OrderStatus};

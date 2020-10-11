@@ -1,6 +1,5 @@
 import { connect } from "react-redux";
 import { OrderStatus } from "./OrderStatusComponent";
-import { propTypes } from "react-bootstrap/esm/Image";
 
 const mapStateToProps = (state) => {
   return {
@@ -9,7 +8,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = () => {
   return {};
 };
 
