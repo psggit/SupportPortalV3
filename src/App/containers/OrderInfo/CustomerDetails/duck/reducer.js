@@ -16,7 +16,6 @@ const initialValue = {
 
 const customerReducer = createReducer(initialValue, {
   [fetchNotesSuccess]: (state, data) => {
-    console.log("Notesuccess", data);
     return {
       ...state,
       notesProgress: false,

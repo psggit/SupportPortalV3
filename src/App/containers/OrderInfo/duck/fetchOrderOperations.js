@@ -5,10 +5,13 @@ import {
   fetchCancelReasonProgress,
   fetchCancelReasonFailure,
   fetchCancelReasonSuccess,
+  createNotesProgress,
+  createNotesFailure,
+  createNotesSuccess,
 } from "./actions";
 
 import { selectOrder } from "../../Dashboard/duck";
-import { orderInfoAPI, cancelReasonAPI } from "../../../utils";
+import { orderInfoAPI, cancelReasonAPI, createNotesAPI } from "../../../utils";
 
 const processResponse = () => {
   return (res) => {
@@ -69,4 +72,28 @@ const fetchCancelReason = (payload) => {
   };
 };
 
-export { fetchOrder, fetchCancelReason };
+const onSuccessNotes = (dispatch) => {
+  return (data) => {
+    dispatch(createNotesSuccess(data));
+  };
+};
+
+const onErrorNotes = (dispatch) => {
+  return (err) => {
+    dispatch(createNotesFailure(err));
+  };
+};
+
+const createNotes = (payload) => {
+  return (dispatch) => {
+    dispatch(createNotesProgress());
+    createNotesAPI(
+      payload,
+      processResponse(dispatch),
+      onSuccessNotes(dispatch),
+      onErrorNotes(dispatch)
+    );
+  };
+};
+
+export { fetchOrder, fetchCancelReason, createNotes };

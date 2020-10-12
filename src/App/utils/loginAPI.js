@@ -1,4 +1,5 @@
-// import { apiUrl } from "./config";
+import { apiUrl } from "./config";
+
 const headers = {
   Accept: "application/json",
   "Content-Type": "application/json",

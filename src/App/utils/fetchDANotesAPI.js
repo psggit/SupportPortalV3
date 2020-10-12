@@ -1,3 +1,5 @@
+import { apiUrl } from "./config";
+
 const headers = {
   Accept: "application/json",
   "Content-Type": "application/json",
@@ -7,7 +9,7 @@ const headers = {
 };
 
 const fetchDANotesAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://api.hipbar-dev.com/supportman/api/1/notes/fetch`;
+  const URL = `https://${apiUrl}/supportman/api/1/notes/fetch`;
   console.log(URL);
   fetch(URL, {
     method: "POST",

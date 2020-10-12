@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, createRef } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { validateAuth } from "./duck/authOperation";
@@ -22,10 +22,11 @@ import { NotesContainer } from "./containers/Customer/Notes";
 
 function App(props) {
   useEffect(() => {
+    // const node = this.wrapper.current;
     props.validateAuth();
   }, []);
-  console.log("[APP]");
-  console.log(props);
+  // console.log("[APP]");
+  // console.log(props);
 
   if (props.authenticateProgress) {
     return (

@@ -60,10 +60,10 @@ const useStyles = makeStyles((theme) => ({
 
 const CartComponent = (props) => {
   useEffect(() => {
-    console.log("CartComponent");
-    console.dir(props);
+    // console.log("CartComponent");
+    // console.dir(props);
     const reqBody = { order_id: props.order_id, limit: 3, offset: 0 };
-    props.fetchActivityLogs(reqBody);
+    // props.fetchActivityLogs(reqBody);
   }, []);
   const classes = useStyles();
   const [modify, setModify] = useState(false);

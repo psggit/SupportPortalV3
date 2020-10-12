@@ -16,7 +16,7 @@ Loading.propTypes = {
 export default function Loading(props) {
   const classes = useStyles();
   return (
-    <Dialog className={classes.dialogPopup} open={open} maxWidth="sm">
+    <Dialog className={classes.dialogPopup} open={true} maxWidth="sm">
       <DialogTitle id="simple-dialog-title">{props.message}</DialogTitle>
       <Box pb={3}>
         <CircularProgress color="primary" />

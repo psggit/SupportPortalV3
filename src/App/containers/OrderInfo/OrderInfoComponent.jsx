@@ -66,7 +66,9 @@ const OrderInfoComponent = (props) => {
 
   let loading = props.fetchOrderInfoProgress;
   const [issueType, setIssueType] = useState(null);
+  const [issueDesc, setIssueDesc] = useState("");
   const [open, setOpen] = useState(false);
+
   if (loading) {
     return <Loading message="Loading..." />;
   }
@@ -80,6 +82,19 @@ const OrderInfoComponent = (props) => {
     }
   };
 
+  const updateNotes = () => {
+    let payload = {
+      order_id: props.orderId,
+      type: issueType,
+      notes: issueDesc,
+    };
+    console.log(payload);
+    props.createNotes(payload);
+    setOpen(false);
+    props.fetchOrderInfo(props.orderId);
+    props.fetchCancelReason(payload);
+  };
+
   const dialogActions = [
     <Button
       variant="outlined"
@@ -89,7 +104,12 @@ const OrderInfoComponent = (props) => {
     >
       Cancel
     </Button>,
-    <Button variant="contained" color="primary" key="createIssue">
+    <Button
+      variant="contained"
+      color="primary"
+      key="createIssue"
+      onClick={() => updateNotes()}
+    >
       Create Issue
     </Button>,
   ];
@@ -97,14 +117,16 @@ const OrderInfoComponent = (props) => {
   return (
     <Container component="main" className={classes.root}>
       <TopBar />
-      <DialogComponent
-        title="ADD NEW ISSUE"
-        subtitle={`Order ID: ` + props.orderId}
-        actions={dialogActions}
-        issueType={issueType}
-        open={open}
-        openDialog={openDialog}
-      />
+      {open && (
+        <DialogComponent
+          title="ADD NEW ISSUE"
+          subtitle={`Order ID: ` + props.orderId}
+          actions={dialogActions}
+          issueDesc={issueDesc}
+          change={setIssueDesc}
+          openDialog={openDialog}
+        />
+      )}
       <Box className={classes.boxContainer}>
         <Grid container>
           <Grid item xs={2}>
@@ -167,6 +189,7 @@ OrderInfoComponent.propTypes = {
   fetchCancelReasonProgress: PropTypes.bool,
   orderId: PropTypes.any,
   orderInfo: PropTypes.object,
+  createNotes: PropTypes.func,
 };
 
 export { OrderInfoComponent };

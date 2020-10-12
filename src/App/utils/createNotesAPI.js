@@ -5,19 +5,20 @@ const headers = {
   "Content-Type": "application/json",
   "x-hasura-role": "support_admin",
   "App-Name": "HipBar-Drinks",
-  "hasura-id": "515876",
+  "hasura-id": "515947",
 };
 
-const orderInfoAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://${apiUrl}/supportman/api/1/complete_order_details/${reqBody}`;
+const createNotesAPI = (reqBody, process, onSuccess, onError) => {
+  const URL = `https://${apiUrl}/supportman/api/1/notes/create`;
   fetch(URL, {
-    method: "GET",
+    method: "POST",
     headers: headers,
     credentials: "include",
+    body: JSON.stringify(reqBody),
   })
     .then((res) => process(res))
     .then((data) => onSuccess(data))
     .catch((err) => onError(err));
 };
 
-export { orderInfoAPI };
+export { createNotesAPI };

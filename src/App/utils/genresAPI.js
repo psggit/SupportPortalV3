@@ -1,8 +1,4 @@
-// https://retailer.hipbar-dev.com/Api/stockandprice/listing/brands
-
-// Step 1:
-// list all genres
-// on click - hit above API to fetch all cart items
+// import { apiUrl } from "./config";
 
 const headers = {
   Accept: "application/json",

@@ -1,4 +1,5 @@
-// import { apiUrl } from "./config";
+import { apiUrl } from "./config";
+
 const headers = {
   // eslint-disable-next-line prettier/prettier
   "Accept": "application/json",
@@ -8,7 +9,7 @@ const headers = {
   "hasura-id": "515947",
 };
 
-const URL = `https://api.hipbar-dev.com/deliveryman/api/1/fetch-order-details`;
+const URL = `https://${apiUrl}/deliveryman/api/1/fetch-order-details`;
 const completeOrderAPI = (reqBody, process, onSuccess, onError) => {
   fetch(URL, {
     method: "POST",

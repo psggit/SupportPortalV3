@@ -1,8 +1,4 @@
-// https://api.hipbar-dev.com/supportman/api/1/notes/fetch
-
-// Step 1:
-// list all notes [Cudtomer, Retailer, DA]
-// on click - hit above API to fetch notes
+import { apiUrl } from "./config";
 
 const headers = {
   Accept: "application/json",
@@ -13,7 +9,7 @@ const headers = {
 };
 
 const fetchNotesAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://api.hipbar-dev.com/supportman/api/1/notes/fetch`;
+  const URL = `https://${apiUrl}/supportman/api/1/notes/fetch`;
   fetch(URL, {
     method: "POST",
     headers: headers,

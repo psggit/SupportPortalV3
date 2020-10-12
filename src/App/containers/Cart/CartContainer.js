@@ -3,7 +3,7 @@ import { CartComponent } from "./CartComponent";
 import { fetchGenre, fetchActivityLogs } from "./duck";
 
 const mapStateToProps = (state) => {
-  console.log("[mapping state in cart container]", state);
+  // console.log("[mapping state in cart container]", state);
   return {
     orderInfo: state.order.orderInfo.orderDetails,
     fetchGenreProgress: state.cart.fetchGenreProgress,

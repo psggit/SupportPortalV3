@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createRef } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
 const DashboardComponent = (props) => {
   useEffect(() => {
-    console.log("DashboardComponent");
+    // console.log("DashboardComponent");
     // userAuthAPI(null, onProcess, onSuccess, onError);
   }, []);
   const classes = useStyles();
@@ -63,6 +63,8 @@ const DashboardComponent = (props) => {
     fieldName: "",
     fieldValue: "",
   });
+
+  const reference = createRef();
 
   const handleChange = (event, validationType, filterType, payloadKey) => {
     //TODO:@Purva: OTP validation pending
@@ -147,7 +149,7 @@ const DashboardComponent = (props) => {
       {props.fetchDetailsFail && (
         <ErrorMsg show={props.fetchDetailsFail} message={props.errorMsg} />
       )}
-      <Box maxWidth="80%" className={classes.boxContainer}>
+      <Box maxWidth="80%" className={classes.boxContainer} ref={reference}>
         <Grid container spacing={4}>
           <Grid item xs={4}>
             <ConsumerCard

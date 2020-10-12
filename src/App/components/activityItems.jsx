@@ -51,7 +51,6 @@ const useStyles = makeStyles((theme) => ({
   },
   ListItemRow: {
     borderBottom: "1px solid #E5E5E5",
-    padding: "10px",
   },
   cardHeader: {
     "& .MuiCardHeader-content": {
@@ -108,7 +107,7 @@ export default function ActivityItem(props) {
           <CardHeader className={classes.cardHeader} title={props.title} />
           <ListItem
             dense
-            disableGutters
+            disableGutters={true}
             className={classes.ListItemRow}
             classes={{ root: classes.ListItemRoot }}
           >
@@ -141,7 +140,7 @@ export default function ActivityItem(props) {
           return (
             <ListItem
               dense
-              disableGutters
+              disableGutters={true}
               className={classes.ListItemRow}
               classes={{ root: classes.ListItemRoot }}
               key={index}

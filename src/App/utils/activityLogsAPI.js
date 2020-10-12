@@ -1,3 +1,5 @@
+import { apiUrl } from "./config";
+
 const headers = {
   Accept: "application/json",
   "Content-Type": "application/json",
@@ -5,8 +7,8 @@ const headers = {
 };
 
 const acitivityLogsAPI = (reqBody, process, onSuccess, onError) => {
-   console.log("[activityLogsAPI]", localStorage.getItem("x-hasura-role"));
-  const URL = `https://api.hipbar-dev.com/supportman/api/1/activitylogs`;
+  console.log("[activityLogsAPI]", localStorage.getItem("x-hasura-role"));
+  const URL = `https://${apiUrl}/supportman/api/1/activitylogs`;
   fetch(URL, {
     method: "POST",
     headers: headers,

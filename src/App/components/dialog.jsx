@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -8,7 +8,7 @@ import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   dialogBody: {
     fontWeight: "normal",
     fontSize: "16px",
@@ -37,10 +37,18 @@ const useStyles = makeStyles((theme) => ({
 
 const DialogComponent = (props) => {
   const classes = useStyles();
-  const { title, subtitle, actions, open } = props;
+  let { title, subtitle, actions, issueDesc, change } = props;
+  useEffect(() => {
+    console.log("componentDidMount");
+
+    return () => {
+      console.log("componentWillUnmount");
+      change("");
+    };
+  }, []);
   return (
     <Dialog
-      open={open}
+      open={true}
       key={0}
       // onClose={handleClose}
     >
@@ -64,7 +72,9 @@ const DialogComponent = (props) => {
             rows={4}
             variant="outlined"
             size="small"
+            value={issueDesc}
             fullWidth
+            onChange={(event) => change(event.target.value)}
           />
         </DialogContent>
         <DialogActions className={classes.dialogFooter}>
@@ -80,7 +90,8 @@ DialogComponent.propTypes = {
   subtitle: PropTypes.string,
   actions: PropTypes.array,
   children: PropTypes.any,
-  open: PropTypes.bool,
+  issueDesc: PropTypes.string,
+  change: PropTypes.any,
 };
 
 export default DialogComponent;

@@ -6,6 +6,9 @@ import {
   fetchCancelReasonProgress,
   fetchCancelReasonFailure,
   fetchCancelReasonSuccess,
+  createNotesProgress,
+  createNotesFailure,
+  createNotesSuccess,
 } from "./actions";
 
 const initialValue = {
@@ -15,6 +18,9 @@ const initialValue = {
   fetchCancelReasonProgress: false,
   fetchCancelReasonFailure: false,
   fetchCancelReasonSuccess: false,
+  createNotesProgress: false,
+  createNotesFailure: false,
+  createNotesSuccess: false,
   errorMsg: "",
   orderDetails: null,
   retailerDetails: null,
@@ -76,6 +82,28 @@ const orderInfoReducer = createReducer(initialValue, {
       fetchCancelReasonSuccess: true,
       errorMsg: "",
       cancelReasons: data.payload,
+    };
+  },
+  [createNotesProgress]: (state) => ({
+    ...state,
+    createNotesProgress: true,
+    createNotesFailure: false,
+    createNotesSuccess: false,
+  }),
+  [createNotesFailure]: (state, err) => ({
+    ...state,
+    createNotesProgress: false,
+    createNotesFailure: true,
+    createNotesSuccess: false,
+    errorMsg: err,
+  }),
+  [createNotesSuccess]: (state, data) => {
+    return {
+      ...state,
+      createNotesProgress: false,
+      createNotesFailure: false,
+      createNotesSuccess: true,
+      errorMsg: "",
     };
   },
 });

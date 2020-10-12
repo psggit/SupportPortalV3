@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import DeliveryAgentDetailsCard from "../../../components/orderInfoCard";
-import Button from "@material-ui/core/Button";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Grid, CircularProgress } from "@material-ui/core";
+import { Button, Grid, CircularProgress } from "@material-ui/core";
+import DeliveryAgentDetailsCard from "../../../components/orderInfoCard";
 import ActivityItem from "../../../components/activityItems";
 import { getListOfDataObjects } from "../../../utils/helpers";
 
@@ -24,15 +23,15 @@ const keyMap = {
 };
 
 const DeliveryAgentComponent = (props) => {
-  console.log("[DeliveryAgentComponent]");
-  // const orderId = props.orderInfo.order_id;
-  const [deliveryAgentDetailsData, setDeliveryAgentDetailsData] = useState([]);
+  const [data, setData] = useState([]);
 
-  // const classes = useStyles();
+  useEffect(() => {
+    const details = getListOfDataObjects(props.orderInfo, keysToRender);
+    setData(details);
+    props.fetchNotes(props.orderInfo.order_id);
+  }, []);
 
-  console.log("useEffect", props);
-
-  const retailerDetailsAction = [
+  const actionButtons = [
     <Button variant="outlined" color="primary" key="unassignBtn">
       Unassign
     </Button>,
@@ -40,27 +39,13 @@ const DeliveryAgentComponent = (props) => {
 
   const keysToRenderInNotesCard = ["notes", "created_at"];
 
-  if (props.fetchSuccess) {
-    console.log("[DeliveryAgentComponent]");
-    console.log(props.deliveryAgentNotes);
-    props.fetchDeliveryAgentNotes(props.orderInfo.order_id);
-    const deliveryAgentDetails = getListOfDataObjects(
-      props.orderInfo,
-      keysToRender
-    );
-    setDeliveryAgentDetailsData(deliveryAgentDetails);
-    console.clear();
-    console.log("[DeliveryAgentComponent]");
-    console.log(deliveryAgentDetailsData);
-  }
-
   return (
     <Grid container spacing={4}>
       <Grid item xs={6}>
         <DeliveryAgentDetailsCard
           title="Delivery Agent Details"
-          actions={retailerDetailsAction}
-          renderArray={deliveryAgentDetailsData}
+          actions={actionButtons}
+          renderArray={data}
           keyMap={keyMap}
           keysToRender={keysToRender}
         />
@@ -84,7 +69,7 @@ const DeliveryAgentComponent = (props) => {
 };
 
 DeliveryAgentComponent.propTypes = {
-  fetchDeliveryAgentNotes: PropTypes.func,
+  fetchNotes: PropTypes.func,
   deliveryAgentNotes: PropTypes.object,
   orderInfo: PropTypes.object,
   fetchSuccess: PropTypes.bool,

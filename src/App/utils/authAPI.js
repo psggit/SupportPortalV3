@@ -1,5 +1,7 @@
+import { authUrl } from "./config";
+
 const authAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://auth.hipbar-dev.com/user/account/info`;
+  const URL = `https://${authUrl}/user/account/info`;
   const fetchOptions = {
     method: "get",
     credentials: "include",
