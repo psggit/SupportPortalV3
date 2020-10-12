@@ -154,9 +154,9 @@ const CustomerDetails = (props) => {
   return (
     <Grid container spacing={4}>
       <Grid item xs={6}>
-        <CustomerDetailsCard title="Customer Details" actions={customerAction}>
+        {/* {<CustomerDetailsCard title="Customer Details" actions={customerAction}>
           <RenderCustomerDetails customerDetails={customerDetailsData} />
-        </CustomerDetailsCard>
+        </CustomerDetailsCard>} */}
       </Grid>
       <Grid item xs={6}>
         <>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import RetailerDetailsCard from "../../../components/card";
+import RetailerDetailsCard from "../../../components/orderInfoCard";
 import { Button, CircularProgress, Grid } from "@material-ui/core";
 import ActivityItem from "../../../components/activityItems";
 

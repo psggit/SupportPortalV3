@@ -1,61 +1,10 @@
-import React, { useEffect, useState } from "react";
-import DeliveryAgentDetailsCard from "../../../components/card";
+import React, { useState } from "react";
+import DeliveryAgentDetailsCard from "../../../components/orderInfoCard";
 import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-import Dialog from "../../../components/dialog";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
 import { Grid, CircularProgress } from "@material-ui/core";
 import ActivityItem from "../../../components/activityItems";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import { getListOfDataObjects } from "../../../utils/helpers";
-
-const useStyles = makeStyles(() => ({
-  formRoot: {
-    padding: 24,
-  },
-  card: {
-    width: 520,
-  },
-  formControlTextarea: {
-    width: "100%",
-    marginBottom: 24,
-    padding: 10,
-  },
-  selectIssue: {
-    display: "flex",
-    paddingLeft: "24px",
-    color: "#606060",
-  },
-  formControl: {
-    marginLeft: "16px",
-    minWidth: 120,
-  },
-  container: {
-    display: "flex",
-    justifyContent: "space-between",
-  },
-  ListItemRoot: {
-    width: "100%",
-    borderBottom: "1px solid #E5E5E5",
-    fontSize: 16,
-    color: "#606060",
-  },
-  ListItemTextRoot: {
-    wordBreak: "break-word",
-  },
-  ListItemTextLabel: {
-    width: "70%",
-  },
-  ListItemTextValue: {
-    width: "30%",
-  },
-}));
 
 const keysToRender = [
   "delivery_agent_id",
@@ -74,50 +23,12 @@ const keyMap = {
   delivery_agent_status: "Agent Limit",
 };
 
-const RenderDeliveryAgentDetails = (props) => {
-  const classes = useStyles();
-  return (
-    <React.Fragment>
-      <List>
-        {props.deliveryAgentDetails.map((item, index) => {
-          return (
-            <ListItem
-              key={index}
-              classes={{ root: classes.ListCustomerItem }}
-              disableGutters={true}
-            >
-              <ListItemText
-                primary={keyMap[keysToRender[index]]}
-                className={classes.ListItemTextRoot}
-                classes={{ root: classes.ListItemTextLabel }}
-              />
-              <ListItemText
-                primary={
-                  item[keysToRender[index]] ? item[keysToRender[index]] : "-"
-                }
-                className={classes.ListItemTextRoot}
-                classes={{ root: classes.ListItemTextLabel }}
-              />
-            </ListItem>
-          );
-        })}
-      </List>
-    </React.Fragment>
-  );
-};
-
 const DeliveryAgentComponent = (props) => {
   console.log("[DeliveryAgentComponent]");
   // const orderId = props.orderInfo.order_id;
   const [deliveryAgentDetailsData, setDeliveryAgentDetailsData] = useState([]);
 
-  useEffect(() => {
-    props.fetchDeliveryAgentNotes(props.orderInfo.order_id);
-    const customerDetails = getListOfDataObjects(props.orderInfo, keysToRender);
-    setDeliveryAgentDetailsData(customerDetails);
-  }, []);
-
-  const classes = useStyles();
+  // const classes = useStyles();
 
   console.log("useEffect", props);
 
@@ -132,6 +43,15 @@ const DeliveryAgentComponent = (props) => {
   if (props.fetchSuccess) {
     console.log("[DeliveryAgentComponent]");
     console.log(props.deliveryAgentNotes);
+    props.fetchDeliveryAgentNotes(props.orderInfo.order_id);
+    const deliveryAgentDetails = getListOfDataObjects(
+      props.orderInfo,
+      keysToRender
+    );
+    setDeliveryAgentDetailsData(deliveryAgentDetails);
+    console.clear();
+    console.log("[DeliveryAgentComponent]");
+    console.log(deliveryAgentDetailsData);
   }
 
   return (
@@ -140,11 +60,10 @@ const DeliveryAgentComponent = (props) => {
         <DeliveryAgentDetailsCard
           title="Delivery Agent Details"
           actions={retailerDetailsAction}
-        >
-          <RenderDeliveryAgentDetails
-            deliveryAgentDetails={deliveryAgentDetailsData}
-          />
-        </DeliveryAgentDetailsCard>
+          renderArray={deliveryAgentDetailsData}
+          keyMap={keyMap}
+          keysToRender={keysToRender}
+        />
       </Grid>
       <Grid item xs={6}>
         <>

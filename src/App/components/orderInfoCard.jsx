@@ -68,14 +68,42 @@ CustomCard.propTypes = {
   title: PropTypes.string,
   actions: PropTypes.array,
   children: PropTypes.any,
+  renderArray: PropTypes.array,
+  keysToRender: PropTypes.array,
+  keyMap: PropTypes.object,
 };
 export default function CustomCard(props) {
-  const { title, actions, children } = props;
+  const { title, actions, renderArray, keyMap, keysToRender } = props;
   const classes = useStyles();
   return (
     <Card className={classes.root}>
       <CardHeader className={classes.cardHeader} title={title} />
-      <CardContent className={classes.cardContent}>{children}</CardContent>
+      <CardContent className={classes.cardContent}>
+        <List>
+          {renderArray.map((item, index) => {
+            return (
+              <ListItem
+                key={index}
+                classes={{ root: classes.ListCustomerItem }}
+                disableGutters={true}
+              >
+                <ListItemText
+                  primary={keyMap[keysToRender[index]]}
+                  className={classes.ListItemTextRoot}
+                  classes={{ root: classes.ListItemTextLabel }}
+                />
+                <ListItemText
+                  primary={
+                    item[keysToRender[index]] ? item[keysToRender[index]] : "-"
+                  }
+                  className={classes.ListItemTextRoot}
+                  classes={{ root: classes.ListItemTextLabel }}
+                />
+              </ListItem>
+            );
+          })}
+        </List>
+      </CardContent>
       {actions ? (
         <CardActions className={classes.cardActions}>
           {actions.map((item) => item)}
