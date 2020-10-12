@@ -117,7 +117,7 @@ const CartComponent = (props) => {
 
   return (
     <>
-      <CartDetailsCard title="Customer Details" actions={actionButtons}>
+      <CartDetailsCard title="Cart Details" actions={actionButtons}>
         <OrderSummary {...props} modify={modify} />
       </CartDetailsCard>
     </>

@@ -10,6 +10,10 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { Grid, CircularProgress } from "@material-ui/core";
 import ActivityItem from "../../../components/activityItems";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import { getListOfDataObjects } from "../../../utils/helpers";
 
 const useStyles = makeStyles(() => ({
   formRoot: {
@@ -53,58 +57,51 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const renderRetailerDetails = (props) => {
-  const retailerDetails = props.orderInfo;
+const keysToRender = [
+  "delivery_agent_id",
+  "delivery_agent_name",
+  "delivery_agent_contact_number",
+  "delivery_agnet_city_name",
+  "delivery_agent_locality_name",
+  "delivery_agent_status",
+];
+const keyMap = {
+  delivery_agent_id: "Agent ID",
+  delivery_agent_name: "Agent Name",
+  delivery_agent_contact_number: "Mobile Number",
+  delivery_agnet_city_name: "City",
+  delivery_agent_locality_name: "Locality",
+  delivery_agent_status: "Agent Limit",
+};
+
+const RenderDeliveryAgentDetails = (props) => {
+  const classes = useStyles();
   return (
     <React.Fragment>
-      <div>
-        <div className="title">Agent ID</div>
-        <div className="value">
-          {retailerDetails.delivery_agent_id
-            ? `${retailerDetails.delivery_agent_id}`
-            : "-"}
-        </div>
-      </div>
-      <div>
-        <div className="title">Agent Name</div>
-        <div className="value">
-          {retailerDetails.delivery_agent_name
-            ? `${retailerDetails.delivery_agent_name}`
-            : "-"}
-        </div>
-      </div>
-      <div>
-        <div className="title">Mobile Number</div>
-        <div className="value">
-          {retailerDetails.delivery_agent_contact_number
-            ? `${retailerDetails.delivery_agent_contact_number}`
-            : "-"}
-        </div>
-      </div>
-      <div>
-        <div className="title">City</div>
-        <div className="value">
-          {retailerDetails.delivery_agnet_city_name
-            ? `${retailerDetails.delivery_agnet_city_name}`
-            : "-"}
-        </div>
-      </div>
-      <div>
-        <div className="title">Locality</div>
-        <div className="value">
-          {retailerDetails.delivery_agent_locality_name
-            ? `${retailerDetails.delivery_agent_locality_name}`
-            : "-"}
-        </div>
-      </div>
-      <div>
-        <div className="title">Agent Limit</div>
-        <div className="value">
-          {retailerDetails.delivery_agent_limit
-            ? `${retailerDetails.delivery_agent_limit}`
-            : "-"}
-        </div>
-      </div>
+      <List>
+        {props.deliveryAgentDetails.map((item, index) => {
+          return (
+            <ListItem
+              key={index}
+              classes={{ root: classes.ListCustomerItem }}
+              disableGutters={true}
+            >
+              <ListItemText
+                primary={keyMap[keysToRender[index]]}
+                className={classes.ListItemTextRoot}
+                classes={{ root: classes.ListItemTextLabel }}
+              />
+              <ListItemText
+                primary={
+                  item[keysToRender[index]] ? item[keysToRender[index]] : "-"
+                }
+                className={classes.ListItemTextRoot}
+                classes={{ root: classes.ListItemTextLabel }}
+              />
+            </ListItem>
+          );
+        })}
+      </List>
     </React.Fragment>
   );
 };
@@ -112,104 +109,28 @@ const renderRetailerDetails = (props) => {
 const DeliveryAgentComponent = (props) => {
   console.log("[DeliveryAgentComponent]");
   // const orderId = props.orderInfo.order_id;
+  const [deliveryAgentDetailsData, setDeliveryAgentDetailsData] = useState([]);
 
   useEffect(() => {
     props.fetchDeliveryAgentNotes(props.orderInfo.order_id);
+    const customerDetails = getListOfDataObjects(props.orderInfo, keysToRender);
+    setDeliveryAgentDetailsData(customerDetails);
   }, []);
 
   const classes = useStyles();
 
   console.log("useEffect", props);
 
-  const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
-  const [age, setAge] = useState("");
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
-
-  const mountAddNote = () => {
-    setShowAddNoteDialog(true);
-  };
-
-  const UnmountAddNote = () => {
-    setShowAddNoteDialog(false);
-  };
-
   const retailerDetailsAction = [
-    // eslint-disable-next-line react/jsx-key
-    <Button variant="outlined" color="primary">
+    <Button variant="outlined" color="primary" key="unassignBtn">
       Unassign
     </Button>,
-  ];
-
-  const deliveryNotesAction = [
-    // eslint-disable-next-line react/jsx-key
-    <div>
-      <Button variant="contained" color="primary" onClick={mountAddNote}>
-        Add
-      </Button>
-      ,
-      {showAddNoteDilog && (
-        <Dialog
-          title="ADD NOTE"
-          actions={[
-            // eslint-disable-next-line react/jsx-key
-            <Button
-              variant="contained"
-              buttonStyle="secondary"
-              onClick={UnmountAddNote}
-            >
-              Cancel
-            </Button>,
-            // eslint-disable-next-line react/jsx-key
-            <Button
-              variant="contained"
-
-              //onClick={commentUnmountModel}
-            >
-              Save
-            </Button>,
-          ]}
-        >
-          <form>
-            <div className={classes.selectIssue}>
-              <div>Select Issue</div>
-              <div>
-                <FormControl className={classes.formControl}>
-                  <Select
-                    value={age}
-                    onChange={handleChange}
-                    displayEmpty
-                    className={classes.selectEmpty}
-                    inputProps={{ "aria-label": "Without label" }}
-                  >
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-            </div>
-            <div className={classes.formRoot}>
-              <TextareaAutosize
-                className={classes.formControlTextarea}
-                aria-label="minimum height"
-                rowsMin={7}
-                //onChange={handleCommentChange}
-                placeholder="Add note here"
-              />
-            </div>
-          </form>
-        </Dialog>
-      )}
-    </div>,
   ];
 
   const keysToRenderInNotesCard = ["notes", "created_at"];
 
   if (props.fetchSuccess) {
-    console.log("[RetailerComponent]");
+    console.log("[DeliveryAgentComponent]");
     console.log(props.deliveryAgentNotes);
   }
 
@@ -217,10 +138,12 @@ const DeliveryAgentComponent = (props) => {
     <Grid container spacing={4}>
       <Grid item xs={6}>
         <DeliveryAgentDetailsCard
-          title="DELIVERY AGENT DETAILS"
+          title="Delivery Agent Details"
           actions={retailerDetailsAction}
         >
-          {renderRetailerDetails(props)}
+          <RenderDeliveryAgentDetails
+            deliveryAgentDetails={deliveryAgentDetailsData}
+          />
         </DeliveryAgentDetailsCard>
       </Grid>
       <Grid item xs={6}>

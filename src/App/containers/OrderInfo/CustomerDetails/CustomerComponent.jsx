@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/jsx-key */
 import React, { useEffect, useState } from "react";
 import CustomerDetailsCard from "../../../components/card";
 import Button from "@material-ui/core/Button";
@@ -12,9 +10,8 @@ import { Grid } from "@material-ui/core";
 import { CircularProgress } from "@material-ui/core";
 import ActivityItem from "../../../components/activityItems";
 import { getListOfDataObjects } from "../../../utils/helpers";
-import Moment from "moment";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   container: {
     display: "flex",
     justifyContent: "space-between",
@@ -81,10 +78,6 @@ const keyMap = {
   customer_address: "Address",
 };
 
-const getTimestamp = (timestamp) => {
-  return Moment(timestamp).format("D MMM h:mm A");
-};
-
 const RenderCustomerDetails = (props) => {
   const classes = useStyles();
   return (
@@ -92,11 +85,12 @@ const RenderCustomerDetails = (props) => {
       <List>
         {props.customerDetails.map((item, index) => {
           return (
-            <ListItem classes={{ root: classes.ListCustomerItem }}>
+            <ListItem key={index} classes={{ root: classes.ListCustomerItem }}>
               <ListItemText
                 primary={keyMap[keysToRender[index]]}
                 className={classes.ListItemTextRoot}
                 classes={{ root: classes.ListItemTextLabel }}
+                disableGutters={true}
               />
               <ListItemText
                 primary={
@@ -132,16 +126,16 @@ const CustomerDetails = (props) => {
   }, []);
 
   const customerAction = [
-    <Button variant="outlined" color="primary">
+    <Button variant="outlined" color="primary" key="messageBtn">
       Message
     </Button>,
-    <Button variant="contained" color="primary">
+    <Button variant="contained" color="primary" key="callBtn">
       Call
     </Button>,
   ];
 
   const customerNotesAction = [
-    <Button variant="outlined" color="primary">
+    <Button variant="outlined" color="primary" key="addBtn">
       Add
     </Button>,
   ];
