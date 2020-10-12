@@ -52,31 +52,37 @@ const tableHeaders = [
 function CustomerSoa(props) {
   console.log("[data-check-Customer-soa]", props.soaList)
   const classes = useStyles();
-  const pageLimit = 20;
-  const activePage = getQueryParamByName("activePage") || 1;
-  const [isLoading, setLoading] = useState(false);
-  const [pageNo, setPageNo] = useState(activePage);
+  // const pageLimit = 20;
+  // const activePage = getQueryParamByName("activePage") || 1;
+  // const [isLoading, setLoading] = useState(false);
+  // const [pageNo, setPageNo] = useState(activePage);
+
 
   useEffect(() => {
     const payload = {
-      consumer_id: "515864",
-      limit: 20,
+      consumer_id: props.customerId,
+      limit: 10,
       offset: 0,
     };
     props.fetchCustomerSoaList(payload);
   }, []);
 
-  const handlePageChange = (pageObj) => {
-    setPageNo(pageObj.activePage);
-    const queryParamsObj = {
-      activePage: pageObj.activePage,
-    };
-    history.pushState(
-      queryParamsObj,
-      "soa listing",
-      `/soa/123${getQueryUri(queryParamsObj)}`
-    );
-  };
+  // const handlePageChange = (pageObj) => {
+  //   setPageNo(pageObj.activePage);
+  //   const queryParamsObj = {
+  //     activePage: pageObj.activePage,
+  //   };
+  //   history.pushState(
+  //     queryParamsObj,
+  //     "soa listing",
+  //     `/soa ${getQueryUri(queryParamsObj)}`
+  //   );
+  // };
+
+  let loading = props.soaProgress;
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div className={classes.formContainer}>

@@ -8,6 +8,9 @@ const mapStateToProps = (state) => {
   return {
     CustomerSoaList: CustomerSOA,
     soaList: state.soa.customerSoaList,
+    customerId: state.order.orderInfo.customerId,
+    soaProgress: state.soa.soaProgress,
+    soaSuccess: state.soa.soaSuccess,
   };
 };
 

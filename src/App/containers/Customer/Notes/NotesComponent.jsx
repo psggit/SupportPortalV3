@@ -39,7 +39,7 @@ function Notes(props) {
 
   const handleSoa = (e) => {
     e.preventDefault()
-    location.href="/soa/123"
+    location.href="/soa"
   }
 
   const handleChange = (event) => {
@@ -59,7 +59,7 @@ function Notes(props) {
     const queryParamsObj = {
       activePage: pageObj.activePage,
     }
-    history.pushState(queryParamsObj, "soa listing", `/soa/123${getQueryUri(queryParamsObj)}`)
+    history.pushState(queryParamsObj, "soa listing", `/soa ${getQueryUri(queryParamsObj)}`)
   }
 
   return (

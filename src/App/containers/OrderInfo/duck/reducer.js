@@ -19,6 +19,7 @@ const initialValue = {
   orderDetails: null,
   retailerDetails: null,
   cancelReasons: null,
+  customerId: null,
 };
 
 const orderInfoReducer = createReducer(initialValue, {
@@ -44,6 +45,7 @@ const orderInfoReducer = createReducer(initialValue, {
       ...state,
       orderInfo: data.payload.order_details,
       orderDetails: data.payload.order_details,
+      customerId: data.payload.order_details.customer_id,
       retailerDetails: data.payload,
       fetchOrderInfoProgress: false,
       fetchOrderInfoFailure: false,

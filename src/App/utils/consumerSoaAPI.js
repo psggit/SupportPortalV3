@@ -7,7 +7,7 @@ const headers = {
 };
 
 const consumerSoaAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://customer.hipbar-dev.com/Api/consumer/soa/list/${reqBody}`;
+  const URL = `https://customer.hipbar-dev.com/Api/consumer/soa/list/${reqBody.consumer_id}`;
   fetch(URL, {
     method: "POST",
     headers: headers,

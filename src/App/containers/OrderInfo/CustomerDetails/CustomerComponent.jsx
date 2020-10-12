@@ -19,6 +19,7 @@ import { Backdrop } from "@material-ui/core";
 import ActivityItem from "../../../components/activityItems";
 import { getListOfDataObjects } from "../../../utils/helpers";
 import Moment from "moment";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -120,9 +121,14 @@ const RenderCustomerDetails = (props) => {
 };
 
 const CustomerDetails = (props) => {
+  const history = useHistory();
   const classes = useStyles();
 
   const [customerDetailsData, setCustomerDetailsData] = useState([]);
+
+  const handleChange = () => {
+    history.push("/soa");
+  };
 
   useEffect(() => {
     const payload = {
@@ -144,6 +150,9 @@ const CustomerDetails = (props) => {
     <Button variant="contained" color="primary">
       Call
     </Button>,
+    <Button variant="contained" color="primary" onClick={handleChange}>
+      more
+    </Button>,
   ];
 
   const customerNotesAction = [
@@ -158,10 +167,6 @@ const CustomerDetails = (props) => {
     // console.log("[CustomerComponent]");
     // console.log(props.customerNotes);
   }
-
-  // if(arr === null){
-  //   return <p>No Notes Available</p>
-  // }
 
   return (
     <div className={classes.container}>

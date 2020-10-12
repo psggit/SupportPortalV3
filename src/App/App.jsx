@@ -31,10 +31,10 @@ function App() {
             <Route path="/dashboard" component={DashboardContainer} />
             {/* <Route path="/customer/123" component={CustomerDetailContainer} /> */}
             <Route path="/form/123" component={CustomerForm} />
-            <Route path="/soa/123" component={CustomerSoaContainer} />
-            {/* <Route path="/gift-soa/123" component={CustomerGiftSoaContainer} /> */}
-            {/* <Route path="/rewards/123" component={RewardsContainer} /> */}
-            <Route path="/notes/123" component={NotesContainer} />
+            <Route path="/soa" component={CustomerSoaContainer} />
+            {/* <Route path="/gift-soa" component={CustomerGiftSoaContainer} /> */}
+            {/* <Route path="/rewards" component={RewardsContainer} /> */}
+            <Route path="/notes" component={NotesContainer} />
             <Route path="/" component={LoginContainer} />
           </Switch>
         </Router>

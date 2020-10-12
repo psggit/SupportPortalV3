@@ -69,7 +69,7 @@ function CustomerGiftSoa(props) {
     history.pushState(
       queryParamsObj,
       "soa listing",
-      `/soa/123${getQueryUri(queryParamsObj)}`
+      `/soa${getQueryUri(queryParamsObj)}`
     );
   };
 

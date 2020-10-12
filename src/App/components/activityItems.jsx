@@ -52,7 +52,6 @@ const useStyles = makeStyles((theme) => ({
   ListItemRow: {
     borderBottom: "1px solid #E5E5E5",
     padding: "10px",
-
   },
 }));
 
@@ -65,8 +64,8 @@ export default function ActivityItem(props) {
   const classes = useStyles();
   const mapArray = props.arr;
   const keysToRender = props.keysToRender;
-  console.log("[ActivityItem]", mapArray);
-  console.log("[keysToRender]", keysToRender);
+  // console.log("[ActivityItem]", mapArray);
+  // console.log("[keysToRender]", keysToRender);
 
   return (
     <CardContent>
