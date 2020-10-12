@@ -151,6 +151,7 @@ const RetailerDetails = (props) => {
               arr={props.retailerNotes.orderNotes}
               keysToRender={keysToRenderInNotesCard}
               issueType={"retalier"}
+              title={"Retailer Notes"}
               click={props.openDialog}
             />
           )}

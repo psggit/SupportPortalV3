@@ -70,6 +70,7 @@ const ConsumerCard = (props) => {
           variant="outlined"
           autoComplete="off"
           margin="normal"
+          size="small"
           label="Mobile Number"
           helperText={
             errorString.status && errorString.filterType == "consumer"
@@ -93,6 +94,7 @@ const ConsumerCard = (props) => {
           placeholder="Order ID"
           variant="outlined"
           label="Order ID"
+          size="small"
           value={defValueOrderNo}
           inputProps={{ maxLength: 16 }}
           onChange={(event) =>
@@ -102,6 +104,7 @@ const ConsumerCard = (props) => {
         <TextField
           fullWidth
           margin="normal"
+          size="small"
           placeholder="Customer ID"
           variant="outlined"
           label="Customer ID"

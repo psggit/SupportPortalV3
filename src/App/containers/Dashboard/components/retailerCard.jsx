@@ -70,13 +70,13 @@ const RetailerCard = (props) => {
           variant="outlined"
           autoComplete="off"
           margin="normal"
+          size="small"
           label="Mobile Number"
           helperText={
             errorString.status && errorString.filterType == "retailer_details"
               ? errorString.value
               : ""
           }
-          defaultValue={defValueCustomerNo}
           value={defValueCustomerNo}
           inputProps={{ maxLength: 10 }}
           onChange={(event) =>
@@ -95,7 +95,6 @@ const RetailerCard = (props) => {
           variant="outlined"
           size="small"
           label="Retailer ID"
-          defaultValue={defValueRetailerNo}
           value={defValueRetailerNo}
           inputProps={{ maxLength: 16 }}
           onChange={(event) =>
@@ -114,7 +113,6 @@ const RetailerCard = (props) => {
           variant="outlined"
           size="small"
           label="Store Code"
-          defaultValue={defValueRetailerCode}
           value={defValueRetailerCode}
           inputProps={{ maxLength: 10 }}
           onChange={(event) =>

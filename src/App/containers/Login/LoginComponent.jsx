@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -11,7 +10,6 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { validateEmail } from "../../utils/validators";
-import { authAPI } from "../../utils";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -57,7 +55,7 @@ const LoginComponent = (props) => {
   useEffect(() => {
     // console.log("[APP]");
     // authAPI();
-  }, [])
+  }, []);
 
   if (isLoggedIn) {
     // return <Redirect to="/dashboard" />;
@@ -110,10 +108,12 @@ const LoginComponent = (props) => {
           </Button>
           <Grid container>
             <Grid item xs>
-              Having trouble? Contact Support at{" "}
-              <Link href="mailto:support@hiipbar.com" variant="body2">
-                support@hipbar.com
-              </Link>
+              <Typography variant="body1" color="textSecondary" align="center">
+                Having trouble? Contact Support at{" "}
+                <Link href="mailto:support@hiipbar.com" variant="body2">
+                  support@hipbar.com
+                </Link>
+              </Typography>
             </Grid>
           </Grid>
         </div>

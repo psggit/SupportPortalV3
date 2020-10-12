@@ -11,9 +11,7 @@ import { validateNumberField } from "../../utils/validators";
 import { ConsumerCard } from "./components/consumerCard";
 import { RetailerCard } from "./components/retailerCard";
 import { DeliveryAgentCard } from "./components/deliveryAgentCard";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import Loading from "../../components/loading";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
 const DashboardComponent = (props) => {
   useEffect(() => {
-    // console.log("DashboardComponent");
+    console.log("DashboardComponent");
     // userAuthAPI(null, onProcess, onSuccess, onError);
   }, []);
   const classes = useStyles();
@@ -145,16 +143,7 @@ const DashboardComponent = (props) => {
   return (
     <Container component="main">
       <TopBar />
-      {props.fetchDetailsProgress ? (
-        <Dialog className={classes.dialogPopup} open={open} maxWidth="sm">
-          <DialogTitle id="simple-dialog-title">Fetching data...</DialogTitle>
-          <Box pb={3}>
-            <CircularProgress />
-          </Box>
-        </Dialog>
-      ) : (
-        ""
-      )}
+      {props.fetchDetailsProgress && <Loading message="Fetching data..." />}
       {props.fetchDetailsFail && (
         <ErrorMsg show={props.fetchDetailsFail} message={props.errorMsg} />
       )}

@@ -4,4 +4,15 @@ const loginSuccess = createAction("loginSuccess");
 const loginFailed = createAction("loginFailed");
 const loginProgress = createAction("loginProgress");
 
-export { loginSuccess, loginFailed, loginProgress };
+const authorizationProgress = createAction("authorizationProgress");
+const authorizationFailed = createAction("authorizationFailed");
+const authorizationSuccess = createAction("authorizationSuccess");
+
+export {
+  loginSuccess,
+  loginFailed,
+  loginProgress,
+  authorizationProgress,
+  authorizationFailed,
+  authorizationSuccess,
+};

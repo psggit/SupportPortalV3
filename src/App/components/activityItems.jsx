@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
   Card,
   CardContent,
-  Typography,
   ListItem,
   ListItemText,
   CardHeader,
@@ -81,33 +80,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "flex-end",
   },
-  cardHeader: {
-    "& .MuiCardHeader-content": {
-      paddingBottom: 12,
-      "& > span": {
-        fontSize: 16,
-        fontWeight: 600,
-        textTransform: "uppercase",
-      },
-    },
-  },
-  root: {
-    fontFamily: theme.typography.fontFamily,
-    padding: 24,
-    width: 520,
-    alignSelf: "baseline",
-    boxShadow: "none",
-    "& .MuiCardHeader-root": {
-      padding: 0,
-    },
-    "& .MuiCardContent-root": {
-      padding: 0,
-    },
-  },
-  cardActions: {
-    display: "flex",
-    justifyContent: "flex-end",
-  },
 }));
 
 ActivityItem.propTypes = {
@@ -115,6 +87,7 @@ ActivityItem.propTypes = {
   keysToRender: PropTypes.array,
   click: PropTypes.any,
   issueType: PropTypes.string,
+  title: PropTypes.string,
 };
 
 export default function ActivityItem(props) {
@@ -123,19 +96,16 @@ export default function ActivityItem(props) {
   if (mapArray && mapArray.length > 3) {
     mapArray = mapArray.slice(0, 3);
   }
-  console.log(props);
+  // console.log(props);
   const keysToRender = props.keysToRender;
   const type = props.issueType;
-  console.log("[ActivityItem]", props);
+  // console.log("[ActivityItem]", props);
   // console.log("[keysToRender]", keysToRender);
   if (mapArray === null) {
     return (
       <Card className={classes.root}>
         <CardContent>
-          <CardHeader
-            className={classes.cardHeader}
-            title={"ACTIVITY DETAILS"}
-          />
+          <CardHeader className={classes.cardHeader} title={props.title} />
           <ListItem
             dense
             disableGutters
@@ -165,9 +135,7 @@ export default function ActivityItem(props) {
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Typography variant="h5" className={classes.heading} gutterBottom>
-          ACTIVITY DETAILS
-        </Typography>
+        <CardHeader className={classes.cardHeader} title={props.title} />
         {mapArray.map((value, index) => {
           let data = value;
           return (

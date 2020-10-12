@@ -65,6 +65,7 @@ const DeliveryAgentCard = (props) => {
           variant="outlined"
           autoComplete="off"
           margin="normal"
+          size="small"
           label="Mobile Number"
           helperText={
             errorString.status && errorString.filterType == "delivery_agent_details"

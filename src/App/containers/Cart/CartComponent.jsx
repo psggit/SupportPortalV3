@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Box from "@material-ui/core/Box";
+import CartDetailsCard from "../../components/card";
 import { OrderSummary } from "../Cart/components/orderSummary";
 
-import { Button, Typography } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,6 +62,8 @@ const CartComponent = (props) => {
   useEffect(() => {
     console.log("CartComponent");
     console.dir(props);
+    const reqBody = { order_id: props.order_id, limit: 3, offset: 0 };
+    props.fetchActivityLogs(reqBody);
   }, []);
   const classes = useStyles();
   const [modify, setModify] = useState(false);
@@ -80,53 +79,55 @@ const CartComponent = (props) => {
     setModify(!modify);
   };
 
-  return (
-    <Card className={classes.CartComponent} variant="outlined">
-      <CardContent p={2}>
-        <Typography>CART DETAILS</Typography>
-        <OrderSummary {...props} modify={modify} />
-        {!modify && (
-          <Box display="flex" flexDirection="row-reverse">
-            <Button
-              variant="contained"
-              color="primary"
-              size="small"
-              onClick={handleModify}
-            >
-              Modify
-            </Button>
-          </Box>
-        )}
+  let actionButtons = [
+    <Button
+      variant="contained"
+      color="primary"
+      size="small"
+      onClick={handleModify}
+      key="modifyBtn"
+    >
+      Modify
+    </Button>,
+  ];
 
-        {modify && (
-          <CardActions className={classes.actionContainer}>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={handleCancel}
-              className={classes.marginLeft}
-              size="small"
-            >
-              Cancel
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleConfirm}
-              size="small"
-            >
-              Confirm
-            </Button>
-          </CardActions>
-        )}
-      </CardContent>
-    </Card>
+  if (modify) {
+    actionButtons = [
+      <Button
+        variant="outlined"
+        color="primary"
+        onClick={handleCancel}
+        className={classes.marginLeft}
+        size="small"
+        key="cancelBtn"
+      >
+        Cancel
+      </Button>,
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleConfirm}
+        size="small"
+        key="confirmBtn"
+      >
+        Confirm
+      </Button>,
+    ];
+  }
+
+  return (
+    <>
+      <CartDetailsCard title="Customer Details" actions={actionButtons}>
+        <OrderSummary {...props} modify={modify} />
+      </CartDetailsCard>
+    </>
   );
 };
 
 CartComponent.propTypes = {
-  fetchOrderDetails: PropTypes.func,
+  fetchActivityLogs: PropTypes.func,
   orderInfo: PropTypes.object,
+  order_id: PropTypes.string,
 };
 
 export { CartComponent };

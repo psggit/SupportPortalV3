@@ -6,15 +6,13 @@ import { Box, Button } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import TopBar from "../../components/topBar";
 import { useHistory } from "react-router-dom";
-
-import { CircularProgress } from "@material-ui/core";
-import { Backdrop } from "@material-ui/core";
 import { CartContainer } from "../Cart/CartContainer";
 import { OrderDetailsCard } from "./components/orderDetailsCard";
 import { CustomerContainer } from "./CustomerDetails/CustomerContainer";
 import { RetailerContainer } from "./RetailerDetails/RetailerContainer";
 import { DeliveryAgentContainer } from "./DeliveryAgent";
 import DialogComponent from "../../components/dialog";
+import Loading from "../../components/loading";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,6 +40,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "16px",
     lineHeight: "22px",
   },
+  marginTop: {
+    marginTop: "25px",
+  },
 }));
 
 const OrderInfoComponent = (props) => {
@@ -50,7 +51,7 @@ const OrderInfoComponent = (props) => {
 
   useEffect(() => {
     if (props.orderId === null) {
-      // history.push("/dashboard");
+      history.push("/dashboard");
     } else {
       // let payload = {
       //   order_id: props.orderInfo.order_id,
@@ -67,17 +68,8 @@ const OrderInfoComponent = (props) => {
   const [issueType, setIssueType] = useState(null);
   const [open, setOpen] = useState(false);
   if (loading) {
-    return (
-      <Box>
-        <Backdrop open={true}>
-          <CircularProgress />
-        </Backdrop>
-      </Box>
-    );
+    return <Loading message="Loading..." />;
   }
-
-  // console.clear();
-  console.log("issueType >>>> ", issueType);
 
   const openDialog = (type) => {
     setIssueType(type);
@@ -119,7 +111,7 @@ const OrderInfoComponent = (props) => {
             <p>Order Tracking component</p>
           </Grid>
           <Grid item xs={9}>
-            <Grid container spacing={4}>
+            <Grid container spacing={4} className={classes.marginTop}>
               <Grid item xs={6}>
                 <CartContainer {...props} />
               </Grid>
@@ -134,9 +126,6 @@ const OrderInfoComponent = (props) => {
               <Grid item xs={12}>
                 <CustomerContainer openDialog={openDialog} />
               </Grid>
-              {/* <Grid item xs={6}>
-                Customer Notes
-              </Grid> */}
             </Grid>
             <Grid container spacing={4}>
               <Grid item xs={12}>
@@ -178,7 +167,6 @@ OrderInfoComponent.propTypes = {
   fetchCancelReasonProgress: PropTypes.bool,
   orderId: PropTypes.any,
   orderInfo: PropTypes.object,
-  fetchOrderInfoProgress: PropTypes.bool,
 };
 
 export { OrderInfoComponent };

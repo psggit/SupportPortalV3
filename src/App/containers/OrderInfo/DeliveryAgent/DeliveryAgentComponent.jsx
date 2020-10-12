@@ -60,7 +60,9 @@ const renderRetailerDetails = (props) => {
       <div>
         <div className="title">Agent ID</div>
         <div className="value">
-          {retailerDetails.delivery_agent_id ? `${retailerDetails.delivery_agent_id}` : "-"}
+          {retailerDetails.delivery_agent_id
+            ? `${retailerDetails.delivery_agent_id}`
+            : "-"}
         </div>
       </div>
       <div>
@@ -214,25 +216,26 @@ const DeliveryAgentComponent = (props) => {
   return (
     <Grid container spacing={4}>
       <Grid item xs={6}>
-      <DeliveryAgentDetailsCard
-        title="DELIVERY AGENT DETAILS"
-        actions={retailerDetailsAction}
-      >
-        {renderRetailerDetails(props)}
-      </DeliveryAgentDetailsCard>
+        <DeliveryAgentDetailsCard
+          title="DELIVERY AGENT DETAILS"
+          actions={retailerDetailsAction}
+        >
+          {renderRetailerDetails(props)}
+        </DeliveryAgentDetailsCard>
       </Grid>
       <Grid item xs={6}>
-      <>
-        {props.fetchSuccess && (
-          <ActivityItem
-            arr={props.deliveryAgentNotes.orderNotes}
-            keysToRender={keysToRenderInNotesCard}
-            issueType={"delivery_agent"}
-            click={props.openDialog}
-          />
-        )}
-        {props.fetchProgress && <CircularProgress />}
-      </>
+        <>
+          {props.fetchSuccess && (
+            <ActivityItem
+              arr={props.deliveryAgentNotes.orderNotes}
+              keysToRender={keysToRenderInNotesCard}
+              title={"Delivery Agent Notes"}
+              issueType={"delivery_agent"}
+              click={props.openDialog}
+            />
+          )}
+          {props.fetchProgress && <CircularProgress />}
+        </>
       </Grid>
     </Grid>
   );

@@ -14,19 +14,18 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   Radio,
   RadioGroup,
   FormControlLabel,
+  CircularProgress,
 } from "@material-ui/core";
+
+import ActivityItem from "../../../components/activityItems";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-  },
-  card: {
-    marginTop: theme.spacing(4),
   },
   actionContainer: {
     padding: theme.spacing(2),
@@ -151,49 +150,18 @@ const OrderDetailsCard = (props) => {
           </Button>
         </CardActions>
       </Card>
-      <Card className={classes.card} variant="outlined">
-        <CardContent>
-          <Typography variant="h5" className={classes.heading} gutterBottom>
-            ACTIVITY DETAILS
-          </Typography>
-          <ListItem
-            dense
-            disableGutters
-            className={classes.ListItemRow}
-            classes={{ root: classes.ListItemRoot }}
-          >
-            <ListItemText
-              primary={customer_address}
-              className={classes.ListItemTextRoot}
-              classes={{ root: classes.ListItemTextRoot }}
-            />
-          </ListItem>
-          <ListItem
-            dense
-            disableGutters
-            className={classes.ListItemRow}
-            classes={{ root: classes.ListItemRoot }}
-          >
-            <ListItemText
-              primary={customer_address}
-              className={classes.ListItemTextRoot}
-              classes={{ root: classes.ListItemTextRoot }}
-            />
-          </ListItem>
-          <ListItem
-            dense
-            disableGutters
-            className={classes.ListItemRow}
-            classes={{ root: classes.ListItemRoot }}
-          >
-            <ListItemText
-              primary={customer_address}
-              className={classes.ListItemTextRoot}
-              classes={{ root: classes.ListItemTextRoot }}
-            />
-          </ListItem>
-        </CardContent>
-      </Card>
+      <>
+        {/* {props.notesSuccess && (
+          <ActivityItem
+            arr={props.customerNotes.orderNotes}
+            keysToRender={keysToRenderInNotesCard}
+            title={"Activity Details"}
+            issueType={"customer"}
+            click={props.openDialog}
+          />
+        )} */}
+        {/* {props.notesProgress && <CircularProgress />} */}
+      </>
       <Dialog
         open={open}
         onClose={handleClose}

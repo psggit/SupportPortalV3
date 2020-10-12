@@ -165,7 +165,7 @@ const CustomerDetails = (props) => {
         </CustomerDetailsCard>
       </Grid>
       <Grid item xs={6}>
-        <CustomerDetailsCard title="Customer Notes">
+        <>
           {props.notesSuccess && (
             <ActivityItem
               arr={props.customerNotes.orderNotes}
@@ -176,7 +176,7 @@ const CustomerDetails = (props) => {
             />
           )}
           {props.notesProgress && <CircularProgress />}
-        </CustomerDetailsCard>
+        </>
       </Grid>
     </Grid>
   );
