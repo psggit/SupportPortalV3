@@ -117,7 +117,7 @@ import { CollectionsOutlined } from "@material-ui/icons";
 };*/
 
 const mapStateToProps = (state) => {
-  console.log("orderinfocontainer", state, state.order.orderInfo.fetchOrderInfoSuccess, state.order.orderInfo.fetchOrderInfoProgress );
+  console.log("orderinfocontainer", state);
   return {
     orderId: state.home.orderId,
     orderInfo: state.order.orderInfo,
