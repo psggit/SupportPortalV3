@@ -97,7 +97,7 @@ const orderInfoReducer = createReducer(initialValue, {
     createNotesSuccess: false,
     errorMsg: err,
   }),
-  [createNotesSuccess]: (state, data) => {
+  [createNotesSuccess]: (state) => {
     return {
       ...state,
       createNotesProgress: false,
