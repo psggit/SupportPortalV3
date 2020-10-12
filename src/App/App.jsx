@@ -9,6 +9,7 @@ import { ThemeProvider } from "@material-ui/styles";
 import newTheme from "./sass/theme";
 import "./sass/app.scss";
 import { authAPI } from "./utils";
+import { ChangeRetailerContainer } from "./containers/Retailer/ChangeRetailer/ChangeRetailerContainer";
 
 function App() {
   useEffect(() => {
@@ -23,6 +24,10 @@ function App() {
             <Route path="/order-details" component={OrderDetailsContainer} />
             <Route path="/order-info" component={OrderInfoContainer} />
             <Route path="/dashboard" component={DashboardContainer} />
+            <Route
+              path="/change-retailer"
+              component={ChangeRetailerContainer}
+            />
             <Route path="/" component={LoginContainer} />
           </Switch>
         </Router>
