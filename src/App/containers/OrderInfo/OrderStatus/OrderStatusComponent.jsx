@@ -18,58 +18,58 @@ const useStyles = makeStyles((theme) => ({
       marginTop: -4,
       borderLeft: "1.6px solid #C7C7C7",
       paddingLeft: 16,
-      '& p': {
+      "& p": {
         padding: "16px 0 10px 0",
         fontSize: 12,
-        color: "#757575"
-      }
+        color: "#757575",
+      },
     },
     "& .MuiStepConnector-vertical": {
       padding: 0,
       marginLeft: 7,
-      borderLeft: "0.8px solid #C7C7C7"
+      borderLeft: "0.8px solid #C7C7C7",
     },
-    '& .MuiStepConnector-lineVertical': {
-      minHeight: 60
+    "& .MuiStepConnector-lineVertical": {
+      minHeight: 60,
     },
-    '& .MuiStepper-root': {
+    "& .MuiStepper-root": {
       padding: 0,
     },
-    '& .MuiStep-root': {
+    "& .MuiStep-root": {
       marginTop: -4,
     },
-    '& .MuiStepLabel-label.MuiStepLabel-active': {
+    "& .MuiStepLabel-label.MuiStepLabel-active": {
       color: "#010B13",
-      fontSize: 16
-    }
+      fontSize: 16,
+    },
   },
   progressLine: {
     height: 25,
     borderLeft: "1.6px solid #C7C7C7",
-    margin: "20px 0 0 7px"
+    margin: "20px 0 0 7px",
   },
   text: {
     fontSize: 16,
     fontWeight: "bold",
-    paddingBottom: 24
-  }
+    paddingBottom: 24,
+  },
 }));
 
 const useQontoStepIconStyles = makeStyles({
   root: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   circle: {
     width: 16,
     height: 16,
     borderRadius: "50%",
-    border: "2.4px solid #02B133"
-  }
+    border: "2.4px solid #02B133",
+  },
 });
 
-const QontoStepIcon =(props) => {
+const QontoStepIcon = (props) => {
   const classes = useQontoStepIconStyles();
 
   return (
@@ -77,25 +77,25 @@ const QontoStepIcon =(props) => {
       <div className={classes.circle} />
     </div>
   );
-}
+};
 
 const RenderStepper = (props) => {
   return (
-    <Stepper orientation="vertical" >
-      {
-        props.steps.map((item, index) => (
-          <Step key={`${item.order_status}${index}`} active={true}>
-            <StepLabel StepIconComponent={QontoStepIcon}>{item.order_status}</StepLabel>
-            <StepContent>
-              <Typography>{Moment(item.time).format("D MMM hh:mm A")}</Typography>
-              <Typography>{item.message}</Typography>
-            </StepContent>
-          </Step>
-        ))
-      }
+    <Stepper orientation="vertical">
+      {props.steps.map((item, index) => (
+        <Step key={`${item.order_status}${index}`} active={true}>
+          <StepLabel StepIconComponent={QontoStepIcon}>
+            {item.order_status}
+          </StepLabel>
+          <StepContent>
+            <Typography>{Moment(item.time).format("D MMM hh:mm A")}</Typography>
+            <Typography>{item.message}</Typography>
+          </StepContent>
+        </Step>
+      ))}
     </Stepper>
-  )
-}
+  );
+};
 
 const OrderStatus = (props) => {
   const classes = useStyles();
@@ -103,20 +103,18 @@ const OrderStatus = (props) => {
     <Paper className={classes.root}>
       <Typography className={classes.text}>ORDER STATUS</Typography>
       <Typography className={classes.text}>ETA:_</Typography>
-      {
-        props.orderInfo.length > 0 &&
+      {props.orderInfo.length > 0 && (
         <>
           <div className={classes.progressLine}></div>
           <RenderStepper steps={props.orderInfo} />
         </>
-      }
-      
+      )}
     </Paper>
-  )
-}
+  );
+};
 
 OrderStatus.propTypes = {
   orderInfo: PropTypes.array,
-}
+};
 
-export {OrderStatus};
+export { OrderStatus };

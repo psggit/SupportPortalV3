@@ -23,7 +23,7 @@ export default function TopBar() {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar disableGutters={true}>
           <MenuDrawer />
           <img src={logo} />
         </Toolbar>

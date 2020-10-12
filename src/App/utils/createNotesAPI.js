@@ -9,8 +9,8 @@ const headers = {
   "hasura-id": `${localStorage.getItem("hasura-id")}`,
 };
 
-const URL = `https://${apiUrl}/deliveryman/api/1/fetch-order-details`;
-const completeOrderAPI = (reqBody, process, onSuccess, onError) => {
+const createNotesAPI = (reqBody, process, onSuccess, onError) => {
+  const URL = `https://${apiUrl}/supportman/api/1/notes/create`;
   fetch(URL, {
     method: "POST",
     headers: headers,
@@ -22,4 +22,4 @@ const completeOrderAPI = (reqBody, process, onSuccess, onError) => {
     .catch((err) => onError(err));
 };
 
-export { completeOrderAPI };
+export { createNotesAPI };

@@ -33,7 +33,7 @@ const OrderDetailsComponent = (props) => {
   const history = useHistory();
   useEffect(() => {
     // props.selectOrder(50011333399945);
-    console.log("[order details component] ", props.orderData);
+    // console.log("[order details component] ", props.orderData);
     if (props.orderData === null) {
       history.push("/dashboard");
     } else {

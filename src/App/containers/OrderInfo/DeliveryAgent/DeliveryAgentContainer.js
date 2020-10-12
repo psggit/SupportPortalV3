@@ -14,8 +14,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchDeliveryAgentNotes: (orderId) =>
-      dispatch(fetchDeliveryAgentNotes(orderId)),
+    fetchNotes: (orderId) => dispatch(fetchDeliveryAgentNotes(orderId)),
   };
 };
 

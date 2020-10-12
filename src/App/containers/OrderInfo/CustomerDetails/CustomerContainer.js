@@ -1,26 +1,26 @@
 import { connect } from "react-redux";
-import { CustomerDetails } from "./CustomerComponent";
+import { ConsumerComponent } from "./CustomerComponent";
 import { fetchConsumerNotes } from "./duck/CustomerOperations";
 
 const mapStateToProps = (state) => {
-  console.log("mapStateToProps", state.order.orderInfo.orderInfo);
+  // console.log("mapStateToProps", state.order.orderInfo.orderInfo);
   return {
     orderInfo: state.order.orderInfo.orderInfo,
     customerNotes: state.order.customer.customerNotesData,
-    notesSuccess: state.order.customer.notesSuccess,
-    notesProgress: state.order.customer.notesProgress,
+    fetchSuccess: state.order.customer.notesSuccess,
+    fetchProgress: state.order.customer.notesProgress,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchConsumerNotes: (payload) => dispatch(fetchConsumerNotes(payload)),
+    fetchNotes: (payload) => dispatch(fetchConsumerNotes(payload)),
   };
 };
 
 const CustomerContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(CustomerDetails);
+)(ConsumerComponent);
 
 export { CustomerContainer };

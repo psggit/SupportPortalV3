@@ -6,16 +6,14 @@ import { Box, Button } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import TopBar from "../../components/topBar";
 import { useHistory } from "react-router-dom";
-
-import { CircularProgress } from "@material-ui/core";
-import { Backdrop } from "@material-ui/core";
 import { CartContainer } from "../Cart/CartContainer";
 import { OrderDetailsCard } from "./components/orderDetailsCard";
 import { CustomerContainer } from "./CustomerDetails/CustomerContainer";
 import { RetailerContainer } from "./RetailerDetails/RetailerContainer";
-import {OrderStatusContainer} from "./OrderStatus";
+import { OrderStatusContainer } from "./OrderStatus";
 import { DeliveryAgentContainer } from "./DeliveryAgent";
 import DialogComponent from "../../components/dialog";
+import Loading from "../../components/loading";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,8 +21,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: theme.typography.body1,
   },
   boxContainer: {
-    margin: "0 auto",
-    fontFamily: theme.typography,
+    fontFamily: theme.typography.body1,
   },
   card: {
     padding: theme.spacing(2),
@@ -43,6 +40,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "16px",
     lineHeight: "22px",
   },
+  marginTop: {
+    marginTop: "25px",
+  },
 }));
 
 const OrderInfoComponent = (props) => {
@@ -53,11 +53,11 @@ const OrderInfoComponent = (props) => {
     if (props.orderId === null) {
       history.push("/dashboard");
     } else {
+      // let payload = {
+      //   order_id: props.orderInfo.order_id,
+      // };
       let payload = {
         order_id: props.orderId,
-      };
-      payload = {
-        order_id: "50011189094739",
       };
       props.fetchOrderInfo(props.orderId);
       props.fetchCancelReason(payload);
@@ -66,19 +66,12 @@ const OrderInfoComponent = (props) => {
 
   let loading = props.fetchOrderInfoProgress;
   const [issueType, setIssueType] = useState(null);
+  const [issueDesc, setIssueDesc] = useState("");
   const [open, setOpen] = useState(false);
-  if (loading) {
-    return (
-      <Box>
-        <Backdrop open={true}>
-          <CircularProgress />
-        </Backdrop>
-      </Box>
-    );
-  }
 
-  // console.clear();
-  console.log("issueType >>>> ", issueType);
+  if (loading) {
+    return <Loading message="Loading..." />;
+  }
 
   const openDialog = (type) => {
     setIssueType(type);
@@ -87,6 +80,19 @@ const OrderInfoComponent = (props) => {
     } else {
       setOpen(true);
     }
+  };
+
+  const updateNotes = () => {
+    let payload = {
+      order_id: props.orderId,
+      type: issueType,
+      notes: issueDesc,
+    };
+    console.log(payload);
+    props.createNotes(payload);
+    setOpen(false);
+    props.fetchOrderInfo(props.orderId);
+    props.fetchCancelReason(payload);
   };
 
   const dialogActions = [
@@ -98,29 +104,36 @@ const OrderInfoComponent = (props) => {
     >
       Cancel
     </Button>,
-    <Button variant="contained" color="primary" key="createIssue">
+    <Button
+      variant="contained"
+      color="primary"
+      key="createIssue"
+      onClick={() => updateNotes()}
+    >
       Create Issue
     </Button>,
   ];
 
   return (
-    <Container component="main" className={classes.root}>
+    <div className={classes.root}>
       <TopBar />
-      <DialogComponent
-        title="ADD NEW ISSUE"
-        subtitle={`Order ID: ` + props.orderId}
-        actions={dialogActions}
-        issueType={issueType}
-        open={open}
-        openDialog={openDialog}
-      />
+      {open && (
+        <DialogComponent
+          title="ADD NEW ISSUE"
+          subtitle={`Order ID: ` + props.orderId}
+          actions={dialogActions}
+          issueDesc={issueDesc}
+          change={setIssueDesc}
+          openDialog={openDialog}
+        />
+      )}
       <Box className={classes.boxContainer}>
-        <Grid container xs={12}>
+        <Grid container xs={12} spacing={4}>
           <Grid item xs={3}>
             <OrderStatusContainer />
           </Grid>
           <Grid item xs={8}>
-            <Grid container spacing={4}>
+            <Grid container spacing={4} className={classes.marginTop}>
               <Grid item xs={6}>
                 <CartContainer {...props} />
               </Grid>
@@ -135,9 +148,6 @@ const OrderInfoComponent = (props) => {
               <Grid item xs={12}>
                 <CustomerContainer openDialog={openDialog} />
               </Grid>
-              {/* <Grid item xs={6}>
-                Customer Notes
-              </Grid> */}
             </Grid>
             <Grid container spacing={4}>
               <Grid item xs={12}>
@@ -165,7 +175,7 @@ const OrderInfoComponent = (props) => {
           </Grid>
         </Grid>
       </Box>
-    </Container>
+    </div>
   );
 };
 
@@ -175,9 +185,11 @@ OrderInfoComponent.propTypes = {
   cancelReasons: PropTypes.object,
   fetchOrderInfoSuccess: PropTypes.bool,
   fetchCancelReasonSuccess: PropTypes.bool,
+  fetchOrderInfoProgress: PropTypes.bool,
+  fetchCancelReasonProgress: PropTypes.bool,
   orderId: PropTypes.any,
   orderInfo: PropTypes.object,
-  fetchOrderInfoProgress: PropTypes.bool,
+  createNotes: PropTypes.func,
 };
 
 export { OrderInfoComponent };

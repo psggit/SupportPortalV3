@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createRef } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -11,9 +11,7 @@ import { validateNumberField } from "../../utils/validators";
 import { ConsumerCard } from "./components/consumerCard";
 import { RetailerCard } from "./components/retailerCard";
 import { DeliveryAgentCard } from "./components/deliveryAgentCard";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import Loading from "../../components/loading";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,6 +63,8 @@ const DashboardComponent = (props) => {
     fieldName: "",
     fieldValue: "",
   });
+
+  const reference = createRef();
 
   const handleChange = (event, validationType, filterType, payloadKey) => {
     //TODO:@Purva: OTP validation pending
@@ -145,23 +145,11 @@ const DashboardComponent = (props) => {
   return (
     <Container component="main">
       <TopBar />
-      {props.fetchDetailsProgress ? (
-        <Dialog className={classes.dialogPopup} open={open} maxWidth="sm">
-          <DialogTitle id="simple-dialog-title">Fetching data...</DialogTitle>
-          <Box pb={3}>
-            <CircularProgress />
-          </Box>
-        </Dialog>
-      ) : (
-        ""
-      )}
+      {props.fetchDetailsProgress && <Loading message="Fetching data..." />}
       {props.fetchDetailsFail && (
-        <ErrorMsg
-          show={true}
-          message="Something went wrong, try again later."
-        />
+        <ErrorMsg show={props.fetchDetailsFail} message={props.errorMsg} />
       )}
-      <Box maxWidth="80%" className={classes.boxContainer}>
+      <Box maxWidth="80%" className={classes.boxContainer} ref={reference}>
         <Grid container spacing={4}>
           <Grid item xs={4}>
             <ConsumerCard
@@ -211,6 +199,7 @@ DashboardComponent.propTypes = {
   fetchDetailsSuccess: PropTypes.bool,
   fetchDetailsProgress: PropTypes.bool,
   fetchDetailsFail: PropTypes.bool,
+  errorMsg: PropTypes.string,
 };
 
 export { DashboardComponent };

@@ -6,7 +6,6 @@ import {
 import { fetchNotesAPI } from "../../../../utils/fetchNotesAPI";
 
 const processResponse = () => {
-  console.log("[processResponse]");
   return (res) => {
     if (res.status === 200) {
       return res.json();
@@ -17,7 +16,6 @@ const processResponse = () => {
 };
 
 const onSuccess = (dispatch) => {
-  console.log("[onSuccess]");
   return (data) => {
     dispatch(fetchNotesSuccess(data));
   };
@@ -29,11 +27,11 @@ const onError = (dispatch) => {
   };
 };
 
-const fetchConsumerNotes = (reqBody) => {
-  // let reqBody = {
-  //   order_id: orderId,
-  //   type: "consumer",
-  // };
+const fetchConsumerNotes = (orderId) => {
+  let reqBody = {
+    order_id: orderId,
+    type: "customer",
+  };
   return (dispatch) => {
     dispatch(fetchNotesProgress());
     fetchNotesAPI(

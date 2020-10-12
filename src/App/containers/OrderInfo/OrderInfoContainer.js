@@ -1,10 +1,9 @@
 import { connect } from "react-redux";
 import { OrderInfoComponent } from "./OrderInfoComponent";
-import { fetchOrder, fetchCancelReason } from "../OrderInfo/duck";
-// import { RetailerComponent } from "../RetailerDetails/RetailerComponent";
+import { fetchOrder, fetchCancelReason, createNotes } from "../OrderInfo/duck";
 
 const mapStateToProps = (state) => {
-  console.log("orderinfocontainer", state);
+  // console.log("orderinfocontainer", state);
   return {
     orderId: state.home.orderId,
     order: state.order.orderInfo.orderDetails,
@@ -21,6 +20,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchOrderInfo: (orderId) => dispatch(fetchOrder(orderId)),
     fetchCancelReason: (orderId) => dispatch(fetchCancelReason(orderId)),
+    createNotes: (type) => dispatch(createNotes(type)),
   };
 };
 

@@ -2,8 +2,11 @@ import {
   fetchOrderSuccess,
   fetchOrderFailed,
   fetchOrderProgress,
+  fetchActivityLogsProgress,
+  fetchActivityLogsFailed,
+  fetchActivityLogsSuccess,
 } from "./actions";
-import { genresAPI } from "../../../utils";
+import { genresAPI, acitivityLogsAPI } from "../../../utils";
 
 const processResponse = () => {
   return (res) => {
@@ -39,4 +42,23 @@ const fetchGenre = (reqBody) => {
   };
 };
 
-export { fetchGenre };
+const onSuccessLogs = (dispatch) => {
+  return (data) => {
+    dispatch(fetchActivityLogsSuccess(data));
+  };
+};
+
+const onErrorLogs = (dispatch) => {
+  return (err) => {
+    dispatch(fetchActivityLogsFailed(err));
+  };
+};
+
+const fetchActivityLogs = (reqBody) => {
+  return (dispatch) => {
+    dispatch(fetchActivityLogsProgress());
+    acitivityLogsAPI(reqBody, processResponse, onSuccessLogs, onErrorLogs);
+  };
+};
+
+export { fetchGenre, fetchActivityLogs };

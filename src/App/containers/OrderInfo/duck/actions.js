@@ -8,6 +8,10 @@ const fetchCancelReasonProgress = createAction("fetchCancelReasonProgress");
 const fetchCancelReasonFailure = createAction("fetchCancelReasonFailure");
 const fetchCancelReasonSuccess = createAction("fetchCancelReasonSuccess");
 
+const createNotesProgress = createAction("createNotesProgress");
+const createNotesFailure = createAction("createNotesFailure");
+const createNotesSuccess = createAction("createNotesSuccess");
+
 export {
   fetchOrderInfoProgress,
   fetchOrderInfoFailure,
@@ -15,4 +19,7 @@ export {
   fetchCancelReasonProgress,
   fetchCancelReasonFailure,
   fetchCancelReasonSuccess,
+  createNotesProgress,
+  createNotesFailure,
+  createNotesSuccess,
 };

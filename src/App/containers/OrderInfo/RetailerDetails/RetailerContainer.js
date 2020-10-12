@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { RetailerDetails } from "./RetailerComponent";
+import { RetailerComponent } from "./RetailerComponent";
 import { fetchRetailerNotes } from "./duck/RetailerOperations";
 
 const mapStateToProps = (state) => {
@@ -14,13 +14,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchRetailerNotes: (orderId) => dispatch(fetchRetailerNotes(orderId)),
+    fetchNotes: (orderId) => dispatch(fetchRetailerNotes(orderId)),
   };
 };
 
 const RetailerContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(RetailerDetails);
+)(RetailerComponent);
 
 export { RetailerContainer };

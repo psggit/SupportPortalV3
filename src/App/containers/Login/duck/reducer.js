@@ -1,8 +1,18 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { loginProgress, loginFailed, loginSuccess } from "./actions";
+import {
+  loginProgress,
+  loginFailed,
+  loginSuccess,
+  authorizationFailed,
+  authorizationSuccess,
+  authorizationProgress,
+} from "./actions";
 
 const initialValue = {
   isAuthenticated: false,
+  authenticateProgress: false,
+  authenticateFailed: false,
+  authenticateSuccess: false,
   loginProgressStatus: false,
   loginFailedStatus: false,
   loginSuccessStatus: false,
@@ -34,6 +44,27 @@ const loginReducer = createReducer(initialValue, {
     ...state,
     isAuthenticated: false,
     loginProgressStatus: true,
+  }),
+  [authorizationFailed]: (state) => ({
+    ...state,
+    isAuthenticated: false,
+    authenticateProgress: false,
+    authenticateFailed: true,
+    authenticateSuccess: false,
+  }),
+  [authorizationSuccess]: (state) => ({
+    ...state,
+    isAuthenticated: true,
+    authenticateFailed: false,
+    authenticateProgress: false,
+    authenticateSuccess: true,
+  }),
+  [authorizationProgress]: (state) => ({
+    ...state,
+    isAuthenticated: false,
+    authenticateProgress: true,
+    authenticateFailed: false,
+    authenticateSuccess: false,
   }),
 });
 
