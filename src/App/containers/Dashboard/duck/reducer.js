@@ -36,6 +36,7 @@ const homeReducer = createReducer(initialValue, {
     fetchDetailsProgress: true,
   }),
   [selectOrder]: (state, payload) => {
+    console.log("[dashboard reducer]", payload.payload)
     return {
       ...state,
       orderId: payload.payload,

@@ -41,5 +41,4 @@ const customerSOAReducer = createReducer(initialState, {
   },
 });
 
-
 export { customerSOAReducer };

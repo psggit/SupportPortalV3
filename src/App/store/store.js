@@ -6,6 +6,7 @@ import { homeReducer } from "../containers/Dashboard";
 import { cartReducer } from "../containers/Cart";
 import { orderReducer } from "../containers/OrderInfo/reducer";
 import { customerSOAReducer } from "../containers/Customer/CustomerSoa";
+//import { customerUpdate } from "../containers/Customer/CustomerFormDetails";
 
 const store = configureStore({
   reducer: combineReducers({
@@ -14,6 +15,7 @@ const store = configureStore({
     order: orderReducer,
     cart: cartReducer,
     soa: customerSOAReducer,
+    //consumerUpdate: customerUpdate,
   }),
   middleware: [thunk],
 });

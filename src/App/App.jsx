@@ -10,7 +10,7 @@ import newTheme from "./sass/theme";
 import "./sass/app.scss";
 import { authAPI } from "./utils";
 // import { CustomerDetailContainer } from './containers/Customer/CustomerCard'
-// import {CustomerForm} from './containers/Customer/CustomerFormDetails/CustomerFormComponent'
+import { CustomerForm } from "./containers/Customer/CustomerFormDetails/CustomerFormComponent";
 import { CustomerSoaContainer } from "./containers/Customer/CustomerSoa";
 // import { CustomerGiftSoaContainer } from './containers/Customer/CustomerGiftSoa'
 // import {RewardsContainer} from './containers/Customer/Rewards'
@@ -30,7 +30,7 @@ function App() {
             <Route path="/order-info" component={OrderInfoContainer} />
             <Route path="/dashboard" component={DashboardContainer} />
             {/* <Route path="/customer/123" component={CustomerDetailContainer} /> */}
-            {/* <Route path="/form/123" component={CustomerForm} /> */}
+            <Route path="/form/123" component={CustomerForm} />
             <Route path="/soa/123" component={CustomerSoaContainer} />
             {/* <Route path="/gift-soa/123" component={CustomerGiftSoaContainer} /> */}
             {/* <Route path="/rewards/123" component={RewardsContainer} /> */}

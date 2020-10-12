@@ -7,8 +7,7 @@ const mapStateToProps = (state) => {
   console.log("[soaContainer]", state);
   return {
     CustomerSoaList: CustomerSOA,
-    soaList: state.soa.CustomerSoaList,
-    //orderInfo: state.orderInfo.orderInfo,
+    soaList: state.soa.customerSoaList,
   };
 };
 

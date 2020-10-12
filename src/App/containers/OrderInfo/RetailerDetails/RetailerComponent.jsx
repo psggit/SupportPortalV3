@@ -123,7 +123,7 @@ const renderRetailerDetails = (props) => {
 };
 
 const RetailerDetails = (props) => {
-  console.log("[RetailerDetails]");
+  //console.log("[RetailerDetails]");
   // const orderId = props.orderInfo.order_id;
 
   useEffect(() => {
@@ -132,7 +132,7 @@ const RetailerDetails = (props) => {
 
   const classes = useStyles();
 
-  console.log("useEffect", props);
+  //console.log("useEffect", props);
 
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
   const [age, setAge] = useState("");
@@ -226,8 +226,8 @@ const RetailerDetails = (props) => {
 
 
   if (props.fetchSuccess) {
-    console.log("[RetailerComponent]");
-    console.log(props.retailerNotes);
+    // console.log("[RetailerComponent]");
+    // console.log(props.retailerNotes);
   }
 
   return (

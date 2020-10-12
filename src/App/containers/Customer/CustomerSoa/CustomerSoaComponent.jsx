@@ -50,13 +50,8 @@ const tableHeaders = [
 ];
 
 function CustomerSoa(props) {
-  console.log(
-    "props..hy",
-    props.CustomerSoaList.data,
-    props.CustomerSoaList.count
-  );
+  console.log("[data-check-Customer-soa]", props.soaList)
   const classes = useStyles();
-
   const pageLimit = 20;
   const activePage = getQueryParamByName("activePage") || 1;
   const [isLoading, setLoading] = useState(false);
@@ -64,7 +59,7 @@ function CustomerSoa(props) {
 
   useEffect(() => {
     const payload = {
-      consumer_id: "515871",
+      consumer_id: "515864",
       limit: 20,
       offset: 0,
     };

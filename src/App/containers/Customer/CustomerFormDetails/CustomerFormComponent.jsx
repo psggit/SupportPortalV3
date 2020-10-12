@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CustomerForm() {
+function CustomerForm(props) {
   const classes = useStyles();
 
   const [customerName, setCustomerName] = useState("");
@@ -91,6 +91,16 @@ function CustomerForm() {
   const [hipbarWalletBalance, setHipbarWalletBalance] = useState("");
   const [giftWalletBalance, setGiftWalletBalance] = useState("");
   const [selectedValue, setSelectedValue] = useState("");
+
+  useEffect(() => {
+    const payload = {
+      consumer_id: "515863",
+      dob: dob,
+      gender: selectedValue,
+      name: customerName,
+    };
+    props.updateConsumer(payload);
+  }, []);
 
   const handleRadioChange = (event) => {
     setSelectedValue(event.target.value);

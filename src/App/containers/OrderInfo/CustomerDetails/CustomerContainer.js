@@ -3,7 +3,7 @@ import { CustomerDetails } from "./CustomerComponent";
 import { fetchConsumerNotes } from "./duck/CustomerOperations";
 
 const mapStateToProps = (state) => {
-  console.log("mapStateToProps", state.order.orderInfo.orderInfo);
+  //console.log("mapStateToProps", state.order.orderInfo.orderInfo);
   return {
     orderInfo: state.order.orderInfo.orderInfo,
     customerNotes: state.order.customer.customerNotesData,

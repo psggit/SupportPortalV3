@@ -122,7 +122,7 @@ const RenderCustomerDetails = (props) => {
 const CustomerDetails = (props) => {
   const classes = useStyles();
 
-  const [customerDetailsData, setCustomerDetailsData] = useState([])
+  const [customerDetailsData, setCustomerDetailsData] = useState([]);
 
   useEffect(() => {
     const payload = {
@@ -155,8 +155,8 @@ const CustomerDetails = (props) => {
   const keysToRenderInNotesCard = ["notes", "created_at"];
 
   if (props.notesSuccess) {
-    console.log("[CustomerComponent]");
-    console.log(props.customerNotes);
+    // console.log("[CustomerComponent]");
+    // console.log(props.customerNotes);
   }
 
   // if(arr === null){
