@@ -10,6 +10,7 @@ import { CartContainer } from "../Cart/CartContainer";
 import { OrderDetailsCard } from "./components/orderDetailsCard";
 import { CustomerContainer } from "./CustomerDetails/CustomerContainer";
 import { RetailerContainer } from "./RetailerDetails/RetailerContainer";
+import { OrderStatusContainer } from "./OrderStatus";
 import { DeliveryAgentContainer } from "./DeliveryAgent";
 import DialogComponent from "../../components/dialog";
 import Loading from "../../components/loading";
@@ -20,8 +21,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: theme.typography.body1,
   },
   boxContainer: {
-    margin: "0 auto",
-    fontFamily: theme.typography,
+    fontFamily: theme.typography.body1,
   },
   card: {
     padding: theme.spacing(2),
@@ -115,7 +115,7 @@ const OrderInfoComponent = (props) => {
   ];
 
   return (
-    <Container component="main" className={classes.root}>
+    <div className={classes.root}>
       <TopBar />
       {open && (
         <DialogComponent
@@ -128,11 +128,11 @@ const OrderInfoComponent = (props) => {
         />
       )}
       <Box className={classes.boxContainer}>
-        <Grid container>
-          <Grid item xs={2}>
-            <p>Order Tracking component</p>
+        <Grid container xs={12} spacing={4}>
+          <Grid item xs={3}>
+            <OrderStatusContainer />
           </Grid>
-          <Grid item xs={9}>
+          <Grid item xs={8}>
             <Grid container spacing={4} className={classes.marginTop}>
               <Grid item xs={6}>
                 <CartContainer {...props} />
@@ -175,7 +175,7 @@ const OrderInfoComponent = (props) => {
           </Grid>
         </Grid>
       </Box>
-    </Container>
+    </div>
   );
 };
 

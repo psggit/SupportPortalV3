@@ -62,8 +62,8 @@ const CartComponent = (props) => {
   useEffect(() => {
     // console.log("CartComponent");
     // console.dir(props);
-    const reqBody = { order_id: props.order_id, limit: 3, offset: 0 };
-    // props.fetchActivityLogs(reqBody);
+    const reqBody = { order_id: props.order.order_id, limit: 3, offset: 0 };
+    props.fetchActivityLogs(reqBody);
   }, []);
   const classes = useStyles();
   const [modify, setModify] = useState(false);
@@ -127,7 +127,7 @@ const CartComponent = (props) => {
 CartComponent.propTypes = {
   fetchActivityLogs: PropTypes.func,
   orderInfo: PropTypes.object,
-  order_id: PropTypes.string,
+  order: PropTypes.any,
 };
 
 export { CartComponent };

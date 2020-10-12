@@ -3,9 +3,9 @@
 const headers = {
   Accept: "application/json",
   "Content-Type": "application/json",
-  "x-hasura-role": "support_admin",
   "App-Name": "HipBar-Drinks",
-  "hasura-id": "515868",
+  "x-hasura-role": `${localStorage.getItem("x-hasura-role")}`,
+  "hasura-id": `${localStorage.getItem("hasura-id")}`,
 };
 
 const genresAPI = (reqBody, process, onSuccess, onError) => {

@@ -59,6 +59,9 @@ const useStyles = makeStyles((theme) => ({
   ListItemRow: {
     borderBottom: "1px solid #E5E5E5",
   },
+  card: {
+    boxShadow: "none",
+  },
 }));
 
 const OrderDetailsCard = (props) => {
@@ -94,7 +97,7 @@ const OrderDetailsCard = (props) => {
 
   return (
     <>
-      <Card className={classes.card} variant="outlined">
+      <Card className={classes.card}>
         <CardContent>
           <Typography variant="h5" className={classes.heading} gutterBottom>
             ORDER DETAILS

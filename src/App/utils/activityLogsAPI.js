@@ -3,7 +3,7 @@ import { apiUrl } from "./config";
 const headers = {
   Accept: "application/json",
   "Content-Type": "application/json",
-  "x-hasura-role": "support_admin",
+  "x-hasura-role": `${localStorage.getItem("x-hasura-role")}`,
 };
 
 const acitivityLogsAPI = (reqBody, process, onSuccess, onError) => {
