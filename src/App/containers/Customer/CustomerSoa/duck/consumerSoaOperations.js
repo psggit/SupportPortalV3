@@ -6,6 +6,7 @@ import {
 import { consumerSoaAPI } from "../../../../utils/consumerSoaAPI";
 
 const processResponse = () => {
+  console.clear();
   console.log("[processResponse]");
   return (res) => {
     if (res.status === 200) {
@@ -30,8 +31,10 @@ const onError = (dispatch) => {
 };
 
 const fetchCustomerSoaList = (reqBody) => {
+  console.clear();
+  console.clear("fetchCustomerSoaList");
   return (dispatch) => {
-    dispatch(fetchCustomerSoaInProgress);
+    dispatch(fetchCustomerSoaInProgress());
     consumerSoaAPI(
       reqBody,
       processResponse(dispatch),

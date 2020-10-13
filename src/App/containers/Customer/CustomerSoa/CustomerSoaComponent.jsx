@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-key */
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "../../../components/table";
 import TableRow from "@material-ui/core/TableRow";
@@ -50,13 +51,12 @@ const tableHeaders = [
 ];
 
 function CustomerSoa(props) {
-  console.log("[data-check-Customer-soa]", props.soaList)
+  console.log("[CustomerSoa]", props);
   const classes = useStyles();
   // const pageLimit = 20;
   // const activePage = getQueryParamByName("activePage") || 1;
   // const [isLoading, setLoading] = useState(false);
   // const [pageNo, setPageNo] = useState(activePage);
-
 
   useEffect(() => {
     const payload = {
@@ -112,32 +112,43 @@ function CustomerSoa(props) {
       </div>
       <div className={classes.table}>
         <Table tableHeaders={tableHeaders}>
-          {props.CustomerSoaList.data.map((data, index) => {
-            return (
-              <TableRow>
-                <TableCell>{data.order_id}</TableCell>
-                <TableCell>{data.type}</TableCell>
-                <TableCell>{data.amount}</TableCell>
-                <TableCell>{data.opening_balance}</TableCell>
-                <TableCell>{data.closing_balance}</TableCell>
-                <TableCell align="left">
-                  {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
-                </TableCell>
-              </TableRow>
-            );
-          })}
+          {props.soaSuccess &&
+            props.soaList.consumer_soa.map((data) => {
+              return (
+                <TableRow>
+                  <TableCell>{data.order_id}</TableCell>
+                  <TableCell>{data.type}</TableCell>
+                  <TableCell>{data.amount}</TableCell>
+                  <TableCell>{data.opening_balance}</TableCell>
+                  <TableCell>{data.closing_balance}</TableCell>
+                  <TableCell align="left">
+                    {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
         </Table>
         {/* <Pagination
-          activePage={parseInt(pageNo)}
-          //itemsCountPerPage={parseInt(pageLimit)}
-          rowsPerPage={parseInt(pageLimit)}
-          count={props.CustomerSoaList.count}
-          setPage={handlePageChange}
-          color="primary"
-        /> */}
+            activePage={parseInt(pageNo)}
+            //itemsCountPerPage={parseInt(pageLimit)}
+            rowsPerPage={parseInt(pageLimit)}
+            count={props.CustomerSoaList.count}
+            setPage={handlePageChange}
+            color="primary"
+          /> */}
       </div>
     </div>
   );
+  // }
 }
+
+CustomerSoa.propTypes = {
+  soaList: PropTypes.array,
+  CustomerSoaList: PropTypes.array,
+  fetchCustomerSoaList: PropTypes.any,
+  soaProgress: PropTypes.bool,
+  soaSuccess: PropTypes.bool,
+  customerId: PropTypes.any,
+};
 
 export { CustomerSoa };
