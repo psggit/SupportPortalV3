@@ -4,7 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
+import { Typography } from "@material-ui/core";
+
 import { CartItem } from "./cartItem";
 
 const useStyles = makeStyles((theme) => ({
@@ -43,6 +44,10 @@ const useStyles = makeStyles((theme) => ({
   ListItemTextValue: {
     width: "30%",
     textAlign: "right",
+  },
+  heading: {
+    fontSize: 16,
+    fontWeight: "700",
   },
   nested: {
     paddingLeft: theme.spacing(4),
@@ -95,10 +100,9 @@ const OrderDetails = (props) => {
     <Box>
       <List dense disablePadding>
         <ListItem dense disableGutters>
-          <ListItemText
-            primary={orderInfo.retailer_name}
-            className={classes.ListItemRootTitle}
-          />
+          <Typography variant="h5" className={classes.heading} gutterBottom>
+            {orderInfo.retailer_name}
+          </Typography>
         </ListItem>
         {cartItems.map((value) => {
           return <CartItem value={value} key={value.sku_id} />;

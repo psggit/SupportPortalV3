@@ -10,6 +10,7 @@ import newTheme from "./sass/theme";
 import "./sass/app.scss";
 import { authAPI } from "./utils";
 import { ChangeRetailerContainer } from "./containers/Retailer/ChangeRetailer/ChangeRetailerContainer";
+import { RetailerNotesContainer } from "./containers/Retailer/RetailerNotes/RetailerNotesContainer";
 
 function App() {
   useEffect(() => {
@@ -28,6 +29,7 @@ function App() {
               path="/change-retailer"
               component={ChangeRetailerContainer}
             />
+            <Route path="/retailer-notes" component={RetailerNotesContainer} />
             <Route path="/" component={LoginContainer} />
           </Switch>
         </Router>

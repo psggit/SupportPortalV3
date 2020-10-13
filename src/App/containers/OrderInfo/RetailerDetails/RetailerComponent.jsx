@@ -15,6 +15,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { getListOfDataObjects } from "../../../utils/helpers";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   formRoot: {
@@ -73,13 +74,13 @@ const keysToRender = [
   "retailer_address",
 ];
 const keyMap = {
-  "retailer_id": "Retailer ID",
-  "retailer_name": "Retailer Name",
-  "retailer_contact_number": "Mobile Number",
-  "retailer_city_name": "City",
-  "retailer_locality": "Landmark",
-  "retailer_limit": "Retailer Limit",
-  "retailer_address": "Store Address",
+  retailer_id: "Retailer ID",
+  retailer_name: "Retailer Name",
+  retailer_contact_number: "Mobile Number",
+  retailer_city_name: "City",
+  retailer_locality: "Landmark",
+  retailer_limit: "Retailer Limit",
+  retailer_address: "Store Address",
 };
 
 const RenderRetailerDetails = (props) => {
@@ -121,7 +122,7 @@ const RetailerDetails = (props) => {
     const retailerDetails = getListOfDataObjects(props.orderInfo, keysToRender);
     setRetailerDetailsData(retailerDetails);
   }, []);
-
+  const history = useHistory();
   const classes = useStyles();
 
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
@@ -129,6 +130,10 @@ const RetailerDetails = (props) => {
 
   const handleChange = (event) => {
     setAge(event.target.value);
+  };
+
+  const handleMore = () => {
+    history.push("/retailer-notes");
   };
 
   const mountAddNote = () => {
@@ -155,6 +160,9 @@ const RetailerDetails = (props) => {
     <div>
       <Button variant="contained" color="primary" onClick={mountAddNote}>
         Add
+      </Button>
+      <Button variant="contained" color="primary" onClick={handleMore}>
+        More
       </Button>
       {showAddNoteDilog && (
         <Dialog
