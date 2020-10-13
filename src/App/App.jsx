@@ -12,8 +12,8 @@ import { authAPI } from "./utils";
 // import { CustomerDetailContainer } from './containers/Customer/CustomerCard'
 import { CustomerForm } from "./containers/Customer/CustomerFormDetails/CustomerFormComponent";
 import { CustomerSoaContainer } from "./containers/Customer/CustomerSoa";
-// import { CustomerGiftSoaContainer } from './containers/Customer/CustomerGiftSoa'
-// import {RewardsContainer} from './containers/Customer/Rewards'
+import { CustomerGiftSoaContainer } from "./containers/Customer/CustomerGiftSoa";
+import { RewardsContainer } from "./containers/Customer/Rewards";
 import { NotesContainer } from "./containers/Customer/Notes";
 
 function App() {
@@ -32,8 +32,8 @@ function App() {
             {/* <Route path="/customer/123" component={CustomerDetailContainer} /> */}
             <Route path="/form/123" component={CustomerForm} />
             <Route path="/soa" component={CustomerSoaContainer} />
-            {/* <Route path="/gift-soa" component={CustomerGiftSoaContainer} /> */}
-            {/* <Route path="/rewards" component={RewardsContainer} /> */}
+            <Route path="/gift-soa" component={CustomerGiftSoaContainer} />
+            <Route path="/rewards" component={RewardsContainer} />
             <Route path="/notes" component={NotesContainer} />
             <Route path="/" component={LoginContainer} />
           </Switch>

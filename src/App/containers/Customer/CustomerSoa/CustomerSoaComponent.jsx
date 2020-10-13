@@ -12,6 +12,7 @@ import {
   getQueryParamByName,
   getQueryUri,
 } from "../../../utils/helpers";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   navBar: {
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const tableHeaders = [
+const soaTableHeaders = [
   { label: "ORDER ID", value: "order_id" },
   { label: "TYPE", value: "type" },
   { label: "AMOUNT", value: "amount" },
@@ -52,7 +53,10 @@ const tableHeaders = [
 
 function CustomerSoa(props) {
   console.log("[CustomerSoa]", props);
+
+  const history = useHistory();
   const classes = useStyles();
+
   // const pageLimit = 20;
   // const activePage = getQueryParamByName("activePage") || 1;
   // const [isLoading, setLoading] = useState(false);
@@ -79,6 +83,29 @@ function CustomerSoa(props) {
   //   );
   // };
 
+  const handleGiftSoaChange = () => {
+    console.log("gift-soa");
+    history.push("/gift-soa");
+  };
+
+  const handleRewardChange = () => {
+    console.log("rewards");
+    history.push("/rewards");
+  };
+
+  const handleSoaChange = () => {
+    console.log("soa");
+    history.push("/soa");
+  };
+
+  const handleNotesChange = () => {
+    history.push("/notes");
+  };
+
+  const handleBack = () => {
+    history.push("/order-details");
+  }
+
   let loading = props.soaProgress;
   if (loading) {
     return <p>Loading...</p>;
@@ -88,54 +115,67 @@ function CustomerSoa(props) {
     <div className={classes.formContainer}>
       <div className={classes.navBar}>
         <div className={classes.backButton}>
-          <div>Back</div>
+          <div onClick={handleBack}>Back</div>
         </div>
         <div className={classes.navContent}>
           <div>Customer Details</div>
         </div>
         <div className={classes.navContent}>
-          <div>SOA</div>
+          <div onClick={handleSoaChange}>SOA</div>
         </div>
         <div className={classes.navContent}>
-          <div>Gift Soa</div>
+          <div onClick={handleGiftSoaChange}>Gift Soa</div>
         </div>
         <div className={classes.navContent}>
-          <div>Rewards</div>
+          <div onClick={handleRewardChange}>Rewards</div>
         </div>
         <div className={classes.navContent}>
-          <div>Notes</div>
+          <div onClick={handleNotesChange}>Notes</div>
         </div>
       </div>
       <div className={classes.row1}>
-        <p>CUSTOMER ID: 123</p>
+        <p>CUSTOMER ID: {props.customerId}</p>
         <div>Search</div>
       </div>
       <div className={classes.table}>
-        <Table tableHeaders={tableHeaders}>
-          {props.soaSuccess &&
-            props.soaList.consumer_soa.map((data) => {
-              return (
-                <TableRow>
-                  <TableCell>{data.order_id}</TableCell>
-                  <TableCell>{data.type}</TableCell>
-                  <TableCell>{data.amount}</TableCell>
-                  <TableCell>{data.opening_balance}</TableCell>
-                  <TableCell>{data.closing_balance}</TableCell>
-                  <TableCell align="left">
-                    {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+        <Table tableHeaders={soaTableHeaders}>
+          {props.soaSuccess
+            ? props.soaList.consumer_soa.map((data) => {
+                return (
+                  <TableRow>
+                    <TableCell>{data.order_id}</TableCell>
+                    <TableCell>{data.type}</TableCell>
+                    <TableCell>{data.amount}</TableCell>
+                    <TableCell>{data.opening_balance}</TableCell>
+                    <TableCell>{data.closing_balance}</TableCell>
+                    <TableCell align="left">
+                      {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
+                    </TableCell>
+                  </TableRow>
+                );
+              })
+            : !props.soaSuccess && (
+                <tr>
+                  <td
+                    style={{ textAlign: "center", padding: "10px 0" }}
+                    colSpan="6"
+                  >
+                    <p style={{ fontWeight: "16px" }}>No records found</p>
+                  </td>
+                </tr>
+              )}
         </Table>
-        {/* <Pagination
+        {/* {
+          props.soaSuccess &&
+          <Pagination
             activePage={parseInt(pageNo)}
             //itemsCountPerPage={parseInt(pageLimit)}
             rowsPerPage={parseInt(pageLimit)}
-            count={props.CustomerSoaList.count}
+            count={props.soaList.consumer_soa.count}
             setPage={handlePageChange}
             color="primary"
-          /> */}
+          />
+        } */}
       </div>
     </div>
   );

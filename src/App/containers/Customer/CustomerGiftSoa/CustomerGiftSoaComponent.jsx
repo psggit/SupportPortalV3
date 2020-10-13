@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
 import Table from "../../../components/table";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
@@ -10,6 +11,8 @@ import {
   getQueryParamByName,
   getQueryUri,
 } from "../../../utils/helpers";
+import { useHistory } from "react-router-dom";
+import { CustomerSoaContainer } from "../CustomerSoa/CustomerSoaContainer";
 
 const useStyles = makeStyles((theme) => ({
   navBar: {
@@ -49,54 +52,83 @@ const tableHeaders = [
 ];
 
 function CustomerGiftSoa(props) {
-  console.log(
-    "props..hy",
-    props.CustomerGiftSoaList.data,
-    props.CustomerGiftSoaList.count
-  );
+
+  const history = useHistory();
   const classes = useStyles();
 
-  const pageLimit = 2;
-  const activePage = getQueryParamByName("activePage") || 1;
-  const [isLoading, setLoading] = useState(false);
-  const [pageNo, setPageNo] = useState(activePage);
-
-  const handlePageChange = (pageObj) => {
-    setPageNo(pageObj.activePage);
-    const queryParamsObj = {
-      activePage: pageObj.activePage,
+  useEffect(() => {
+    const payload = {
+      customer_contact_number: "9533285566",
+      limit: 10,
+      offset: 0,
     };
-    history.pushState(
-      queryParamsObj,
-      "soa listing",
-      `/soa${getQueryUri(queryParamsObj)}`
-    );
+    props.fetchGiftSoaList(payload);
+  }, []);
+
+  // const pageLimit = 2;
+  // const activePage = getQueryParamByName("activePage") || 1;
+  // const [isLoading, setLoading] = useState(false);
+  // const [pageNo, setPageNo] = useState(activePage);
+
+  // const handlePageChange = (pageObj) => {
+  //   setPageNo(pageObj.activePage);
+  //   const queryParamsObj = {
+  //     activePage: pageObj.activePage,
+  //   };
+  //   history.pushState(
+  //     queryParamsObj,
+  //     "soa listing",
+  //     `/soa${getQueryUri(queryParamsObj)}`
+  //   );
+  // };
+
+  const handleGiftSoaChange = () => {
+    console.log("gift-soa");
+    history.push("/gift-soa");
+  };
+
+  const handleRewardChange = () => {
+    console.log("rewards");
+    history.push("/rewards");
+  };
+
+  const handleSoaChange = () => {
+    console.log("soa");
+    history.push("/soa");
+  };
+
+  const handleBack = () => {
+    history.push("/order-details");
+  };
+
+  const handleNotes = () => {
+    history.push("/notes");
   };
 
   return (
     <div className={classes.formContainer}>
       <div className={classes.navBar}>
         <div className={classes.backButton}>
-          <div>Back</div>
+          <div onClick={handleBack}>Back</div>
         </div>
         <div className={classes.navContent}>
           <div>Customer Details</div>
         </div>
         <div className={classes.navContent}>
-          <div>SOA</div>
+          <div onClick={handleSoaChange}>SOA</div>
         </div>
         <div className={classes.navContent}>
-          <div>Gift Soa</div>
+          <div onClick={handleGiftSoaChange}>Gift Soa</div>
         </div>
         <div className={classes.navContent}>
-          <div>Rewards</div>
+          <div onClick={handleRewardChange}>Rewards</div>
         </div>
         <div className={classes.navContent}>
-          <div>Notes</div>
+          <div onClick={handleNotes}>Notes</div>
         </div>
       </div>
       <div className={classes.row1}>
-        <p>CUSTOMER ID: 123</p>
+        <p>CUSTOMER ID: {props.customerId}</p>
         <div>Search</div>
       </div>
       <div className={classes.table}>
@@ -117,17 +149,25 @@ function CustomerGiftSoa(props) {
             );
           })}
         </Table>
-        <Pagination
+        {/* <Pagination
           activePage={parseInt(pageNo)}
           //itemsCountPerPage={parseInt(pageLimit)}
           rowsPerPage={parseInt(pageLimit)}
           count={props.CustomerGiftSoaList.count}
           setPage={handlePageChange}
           color="primary"
-        />
+        /> */}
       </div>
     </div>
   );
 }
+
+CustomerGiftSoa.propTypes = {
+  customerId: PropTypes.any,
+  fetchGiftSoaList: PropTypes.func,
+  giftSoaList: PropTypes.array,
+  giftSoaSuccess: PropTypes.bool,
+  giftSoa: PropTypes.bool,
+};
 
 export { CustomerGiftSoa };

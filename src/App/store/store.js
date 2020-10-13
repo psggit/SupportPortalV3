@@ -6,6 +6,8 @@ import { homeReducer } from "../containers/Dashboard";
 import { cartReducer } from "../containers/Cart";
 import { orderReducer } from "../containers/OrderInfo/reducer";
 import { customerSOAReducer } from "../containers/Customer/CustomerSoa";
+import { customerGiftSOAReducer } from "../containers/Customer/CustomerGiftSoa";
+import { rewardsReducer } from "../containers/Customer/Rewards";
 //import { customerUpdate } from "../containers/Customer/CustomerFormDetails";
 
 const store = configureStore({
@@ -15,6 +17,8 @@ const store = configureStore({
     order: orderReducer,
     cart: cartReducer,
     soa: customerSOAReducer,
+    giftSoa: customerGiftSOAReducer,
+    rewards: rewardsReducer,
     //consumerUpdate: customerUpdate,
   }),
   middleware: [thunk],

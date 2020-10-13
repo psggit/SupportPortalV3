@@ -123,6 +123,7 @@ const mapStateToProps = (state) => {
     orderInfo: state.order.orderInfo,
     retailerDetails: state.order.retailerDetails,
     customerId: state.order.orderInfo.customerId,
+    customerContactNumber: state.order.orderInfo.customerContactNumber,
     fetchOrderInfoSuccess: state.order.orderInfo.fetchOrderInfoSuccess,
     fetchOrderInfoProgress: state.order.orderInfo.fetchOrderInfoProgress,
     fetchCancelReasonSuccess: state.order.orderInfo.fetchCancelReasonSuccess,

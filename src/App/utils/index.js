@@ -9,3 +9,5 @@ export { fetchNotesAPI } from "./fetchNotesAPI";
 export { fetchRetailerNotesAPI } from "./fetchRetailerNotesAPI";
 export { consumerSoaAPI } from "./consumerSoaAPI";
 export { consumerUpdateAPI } from "./consumerUpdateAPI";
+export { consumerGiftSoaAPI } from "./consumerGiftSoaAPI";
+export { consumerRewardsAPI } from "./consumerRewardsAPI";
