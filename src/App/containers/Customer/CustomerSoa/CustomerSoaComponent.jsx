@@ -6,6 +6,7 @@ import Table from "../../../components/table";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import Pagination from "../../../components/pagination";
+import Notification from "../../../components/notification";
 import Moment from "moment";
 import {
   getOffsetUsingPageNo,
@@ -61,6 +62,8 @@ function CustomerSoa(props) {
   // const activePage = getQueryParamByName("activePage") || 1;
   // const [isLoading, setLoading] = useState(false);
   // const [pageNo, setPageNo] = useState(activePage);
+  // const [isError, setError] = useState(false);
+  // const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const payload = {
@@ -71,6 +74,9 @@ function CustomerSoa(props) {
     props.fetchCustomerSoaList(payload);
   }, []);
 
+  useEffect(() => {
+    setErrorMessage("errrror");
+  }, []);
   // const handlePageChange = (pageObj) => {
   //   setPageNo(pageObj.activePage);
   //   const queryParamsObj = {
@@ -82,6 +88,14 @@ function CustomerSoa(props) {
   //     `/soa ${getQueryUri(queryParamsObj)}`
   //   );
   // };
+
+  // const handleClose = () => {
+  //   setError(false);
+  // };
+
+  const handleCustomerDetail = () => {
+    history.push("/customer-detail");
+  };
 
   const handleGiftSoaChange = () => {
     console.log("gift-soa");
@@ -104,7 +118,7 @@ function CustomerSoa(props) {
 
   const handleBack = () => {
     history.push("/order-details");
-  }
+  };
 
   let loading = props.soaProgress;
   if (loading) {
@@ -118,7 +132,7 @@ function CustomerSoa(props) {
           <div onClick={handleBack}>Back</div>
         </div>
         <div className={classes.navContent}>
-          <div>Customer Details</div>
+          <div onClick={handleCustomerDetail}>Customer Details</div>
         </div>
         <div className={classes.navContent}>
           <div onClick={handleSoaChange}>SOA</div>
@@ -174,6 +188,14 @@ function CustomerSoa(props) {
             count={props.soaList.consumer_soa.count}
             setPage={handlePageChange}
             color="primary"
+          />
+        } */}
+        {/* { isError &&
+          <Notification
+            message={errorMessage}
+            messageType="error"
+            open={isError}
+            handleClose={handleClose}
           />
         } */}
       </div>

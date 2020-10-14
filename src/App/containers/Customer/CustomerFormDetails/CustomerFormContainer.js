@@ -3,9 +3,10 @@ import { CustomerForm } from "./CustomerFormComponent";
 import { updateConsumer } from "./duck/formOperations";
 
 const mapStateToProps = (state) => {
-  console.log("[soaContainer]", state);
+  console.log("[FormContainer]", state.order.orderInfo.orderInfo);
   return {
-    updateConsumerData: CustomerSOA,
+    // updateConsumerData: CustomerSOA,
+    orderInfo: state.order.orderInfo.orderInfo,
   };
 };
 
@@ -20,4 +21,4 @@ const CustomerFormContainer = connect(
   mapDispatchToProps
 )(CustomerForm);
 
-export { CustomerFormContainer }
+export { CustomerFormContainer };

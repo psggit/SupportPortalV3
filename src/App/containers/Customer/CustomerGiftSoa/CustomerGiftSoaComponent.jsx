@@ -103,6 +103,10 @@ function CustomerGiftSoa(props) {
     history.push("/notes");
   };
 
+  const handleCustomerDetail = () => {
+    history.push("/customer-detail");
+  };
+
   return (
     <div className={classes.formContainer}>
       <div className={classes.navBar}>
@@ -110,7 +114,7 @@ function CustomerGiftSoa(props) {
           <div onClick={handleBack}>Back</div>
         </div>
         <div className={classes.navContent}>
-          <div>Customer Details</div>
+          <div onClick={handleCustomerDetail}>Customer Details</div>
         </div>
         <div className={classes.navContent}>
           <div onClick={handleSoaChange}>SOA</div>

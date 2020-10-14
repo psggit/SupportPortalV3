@@ -1,2 +1,2 @@
-export { customerUpdate } from "./reducer";
+export { customerUpdateReducer } from "./reducer";
 export { updateConsumer } from "./formOperations";

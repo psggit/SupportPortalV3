@@ -127,7 +127,7 @@ const CustomerDetails = (props) => {
   const [customerDetailsData, setCustomerDetailsData] = useState([]);
 
   const handleChange = () => {
-    history.push("/soa");
+    history.push("/customer-detail");
   };
 
   useEffect(() => {

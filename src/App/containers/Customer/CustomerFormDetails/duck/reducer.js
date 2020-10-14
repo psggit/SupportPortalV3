@@ -13,9 +13,9 @@ const initialState = {
   errorMsg: "",
 };
 
-const customerUpdate = createReducer(initialState, {
+const customerUpdateReducer = createReducer(initialState, {
   [consumerUpdateSuccess]: (state, data) => {
-    console.log("SOAsuccess", data);
+    console.log("form-success", data);
     return {
       ...state,
       updateProgress: false,
@@ -33,7 +33,7 @@ const customerUpdate = createReducer(initialState, {
     errorMsg: "Something went wrong, please try again",
   }),
   [consumerUpdateProgress]: (state) => {
-    console.log("soa-progress");
+    console.log("form-progress");
     return {
       ...state,
       updateProgress: true,
@@ -41,4 +41,4 @@ const customerUpdate = createReducer(initialState, {
   },
 });
 
-export { customerUpdate };
+export { customerUpdateReducer };

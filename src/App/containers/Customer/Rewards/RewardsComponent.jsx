@@ -92,6 +92,10 @@ function Rewards(props) {
     history.push("/gift-soa");
   };
 
+  const handleCustomerDetail = () => {
+    history.push("/customer-detail");
+  };
+
   const handleRewardChange = () => {
     console.log("rewards");
     history.push("/rewards");
@@ -114,7 +118,7 @@ function Rewards(props) {
           <div>Back</div>
         </div>
         <div className={classes.navContent}>
-          <div>Customer Details</div>
+          <div onClick={handleCustomerDetail}>Customer Details</div>
         </div>
         <div className={classes.navContent}>
           <div onClick={handleSoaChange}>SOA</div>
