@@ -9,8 +9,8 @@ import { ThemeProvider } from "@material-ui/styles";
 import newTheme from "./sass/theme";
 import "./sass/app.scss";
 import { authAPI } from "./utils";
-import { ChangeRetailerContainer } from "./containers/Retailer/ChangeRetailer/ChangeRetailerContainer";
 import { RetailerNotesContainer } from "./containers/Retailer/RetailerNotes/RetailerNotesContainer";
+import { ChangeRetailerContainer } from "./containers/Retailer/ChangeRetailer/ChangeRetailerContainer";
 
 function App() {
   useEffect(() => {
