@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
@@ -8,6 +9,7 @@ import Box from "@material-ui/core/Box";
 import { OrderDetails } from "./components/orderDetails";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import Dialog from "../../../components/dialog";
 
 import { Button, Typography } from "@material-ui/core";
 
@@ -70,6 +72,15 @@ const RetailerCardComponent = (props) => {
   }, []);
 
   const classes = useStyles();
+  const [mountDialog, setMountDialog] = useState(false);
+
+  const handleSelect = () => {
+    setMountDialog(true);
+  };
+
+  const handleCancel = () => {
+    setMountDialog(false);
+  };
 
   return (
     <Card className={classes.RetailerCardComponent} variant="outlined">
@@ -92,10 +103,43 @@ const RetailerCardComponent = (props) => {
           >
             Call
           </Button>
-          <Button variant="contained" color="primary" size="small">
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            onClick={handleSelect}
+          >
             Select
           </Button>
         </CardActions>
+        {mountDialog && (
+          <Dialog
+            title={"Change Retailer"}
+            actions={[
+              <Button
+                variant="outlined"
+                color="primary"
+                className={classes.marginLeft}
+                size="small"
+                onClick={handleCancel}
+              >
+                Cancel
+              </Button>,
+              <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                onClick={handleCancel}
+              >
+                Confirm
+              </Button>,
+            ]}
+          >
+            {
+              "Delivery Agent not mapped to retailer. Do you still want to change retailer?"
+            }
+          </Dialog>
+        )}
       </CardContent>
     </Card>
   );
