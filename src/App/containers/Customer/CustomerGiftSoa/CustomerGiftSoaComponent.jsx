@@ -12,7 +12,6 @@ import {
   getQueryUri,
 } from "../../../utils/helpers";
 import { useHistory } from "react-router-dom";
-import { CustomerSoaContainer } from "../CustomerSoa/CustomerSoaContainer";
 
 const useStyles = makeStyles((theme) => ({
   navBar: {
@@ -52,13 +51,12 @@ const tableHeaders = [
 ];
 
 function CustomerGiftSoa(props) {
-
   const history = useHistory();
   const classes = useStyles();
 
   useEffect(() => {
     const payload = {
-      customer_contact_number: "9533285566",
+      customer_contact_number: props.customerNumber,
       limit: 10,
       offset: 0,
     };
@@ -133,21 +131,35 @@ function CustomerGiftSoa(props) {
       </div>
       <div className={classes.table}>
         <Table tableHeaders={tableHeaders}>
-          {props.CustomerGiftSoaList.data.map((data, index) => {
-            return (
-              // eslint-disable-next-line react/jsx-key
-              <TableRow>
-                <TableCell>{data.order_id}</TableCell>
-                <TableCell>{data.transaction_type}</TableCell>
-                <TableCell>{data.transaction_amount}</TableCell>
-                <TableCell>{data.card_number_and_value}</TableCell>
-                <TableCell>{data.transaction_status}</TableCell>
-                <TableCell align="left">
-                  {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
-                </TableCell>
-              </TableRow>
-            );
-          })}
+          {props.giftSoaSuccess
+            ? props.giftSoaList.map((data) => {
+                return (
+                  // eslint-disable-next-line react/jsx-key
+                  <TableRow>
+                    <TableCell>{data.order_id}</TableCell>
+                    <TableCell>{data.TransactionType}</TableCell>
+                    <TableCell>{data.Amount}</TableCell>
+                    <TableCell>
+                      {data.CardNumber} And
+                      {data.CardAmount}
+                    </TableCell>
+                    <TableCell>{data.ResponseMessage}</TableCell>
+                    <TableCell align="left">
+                      {Moment(data.DateAtServer).format("DD/MM/YYYY h:mm A")}
+                    </TableCell>
+                  </TableRow>
+                );
+              })
+            : !props.giftSoaSuccess && (
+                <tr>
+                  <td
+                    style={{ textAlign: "center", padding: "10px 0" }}
+                    colSpan="6"
+                  >
+                    <p style={{ fontWeight: "16px" }}>No records found</p>
+                  </td>
+                </tr>
+              )}
         </Table>
         {/* <Pagination
           activePage={parseInt(pageNo)}
