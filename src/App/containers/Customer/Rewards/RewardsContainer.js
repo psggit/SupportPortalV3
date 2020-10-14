@@ -4,10 +4,9 @@ import { Reward } from "./mockData";
 import { fetchRewardsList } from "./duck";
 
 const mapStateToProps = (state) => {
-  console.log("[rewards]", state, state.order.orderInfo.customerId);
+  console.log("[rewards-container]", state);
   return {
-    rewardsList: Reward,
-    rewardlist: state.rewards.rewardsList,
+    rewardsList: state.rewards.rewardsList,
     customerId: state.order.orderInfo.customerId,
     rewardsProgress: state.rewards.rewardsProgress,
     rewardsSuccess: state.rewards.rewardsSuccess,

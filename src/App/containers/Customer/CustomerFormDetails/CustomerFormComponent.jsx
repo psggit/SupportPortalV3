@@ -243,7 +243,7 @@ function CustomerForm(props) {
             <TextField
               className={classes.textField}
               variant="outlined"
-              value={consumerDetail.custoter_email}
+              value={consumerDetail.customer_email}
               size="small"
               disabled
             />

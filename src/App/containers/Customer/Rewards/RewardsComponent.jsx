@@ -56,8 +56,7 @@ const tableHeaders = [
 ];
 
 function Rewards(props) {
-  console.log("[rewards]", props);
-  //console.log("props..hy", props.rewardsList.data, props.rewardsList.count);
+  console.log("[rewards]", props.customerId);
   const history = useHistory();
   const classes = useStyles();
 
@@ -68,7 +67,7 @@ function Rewards(props) {
 
   useEffect(() => {
     const payload = {
-      consumer_id: 515871,
+      consumer_id: parseInt(props.customerId),
       limit: 10,
       offset: 0,
     };
@@ -134,21 +133,21 @@ function Rewards(props) {
         </div>
       </div>
       <div className={classes.row1}>
-        <p>CUSTOMER ID: 123</p>
+        <p>CUSTOMER ID: {props.customerId}</p>
         <div>Search</div>
       </div>
       <div className={classes.table}>
         <Table tableHeaders={tableHeaders}>
           {props.rewardsSuccess
-            ? props.rewardList.rewards.map((data) => {
+            ? props.rewardsList.rewards.map((data) => {
                 return (
               <TableRow>
                     <TableCell>{data.order_id}</TableCell>
                     <TableCell>{data.retailer_name}</TableCell>
-                    <TableCell>{data.reward_id}</TableCell>
+                    <TableCell>{data.id}</TableCell>
                     <TableCell>{data.reward_source}</TableCell>
                     <TableCell>{data.amount}</TableCell>
-                    <TableCell>{data.promocode}</TableCell>
+                    <TableCell>{data.promo_code}</TableCell>
                     <TableCell>{data.bank_rrn}</TableCell>
                     <TableCell>{data.failure_reason}</TableCell>
                     <TableCell align="left">
@@ -175,7 +174,7 @@ function Rewards(props) {
 }
 
 Rewards.propTypes = {
-  rewardList: PropTypes.array,
+  rewardsList: PropTypes.array,
   rewardsProgress: PropTypes.bool,
   rewardsSuccess: PropTypes.bool,
   customerId: PropTypes.any,

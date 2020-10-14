@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Table from "../../../components/table";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-import Pagination from "../../../components/pagination";
+//import Pagination from "../../../components/pagination";
 import Notification from "../../../components/notification";
 import Moment from "moment";
 import {
@@ -14,6 +14,7 @@ import {
   getQueryUri,
 } from "../../../utils/helpers";
 import { useHistory } from "react-router-dom";
+//import Pagination from "@material-ui/lab/Pagination";
 
 const useStyles = makeStyles((theme) => ({
   navBar: {
@@ -58,7 +59,7 @@ function CustomerSoa(props) {
   const history = useHistory();
   const classes = useStyles();
 
-  // const pageLimit = 20;
+   const pageLimit = 20;
   // const activePage = getQueryParamByName("activePage") || 1;
   // const [isLoading, setLoading] = useState(false);
   // const [pageNo, setPageNo] = useState(activePage);
@@ -74,9 +75,9 @@ function CustomerSoa(props) {
     props.fetchCustomerSoaList(payload);
   }, []);
 
-  useEffect(() => {
-    setErrorMessage("errrror");
-  }, []);
+  // useEffect(() => {
+  //   setErrorMessage("errrror");
+  // }, []);
   // const handlePageChange = (pageObj) => {
   //   setPageNo(pageObj.activePage);
   //   const queryParamsObj = {
@@ -179,6 +180,10 @@ function CustomerSoa(props) {
                 </tr>
               )}
         </Table>
+        {/* {props.soaSuccess && (
+          <Pagination page={100} count={props.soaList.count} color="primary" />
+        )} */}
+
         {/* {
           props.soaSuccess &&
           <Pagination
