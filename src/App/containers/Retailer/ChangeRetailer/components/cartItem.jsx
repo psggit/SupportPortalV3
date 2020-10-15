@@ -80,6 +80,20 @@ const useStyles = makeStyles((theme) => ({
       marginTop: "30px",
     },
   },
+  counterAvailable: {
+    border: "1px solid #C7C7C7",
+    borderRadius: "12px",
+    textAlign: "center",
+    width: "56px",
+    color: "green",
+  },
+  counterUnAvailable: {
+    border: "1px solid #C7C7C7",
+    borderRadius: "12px",
+    textAlign: "center",
+    width: "56px",
+    color: "red",
+  },
   addComponentRight: {
     border: "1px solid #C7C7C7",
     borderRadius: "0 50% 50% 0",
@@ -100,20 +114,24 @@ const CartItem = (props) => {
   const value = props.value;
   return (
     <List>
-      <ListItem dense disableGutters>
+      <ListItem>
         <ListItemText
           className={classes.ListItems}
           primary={value.brand_name}
           secondary={`${value.volume} ML | ₹ ${value.sku_price}`}
         />
-        <Box className={classes.addComponentLeft}></Box>
-        <Box className={classes.addComponentCenter}>
-          <Typography>{value.ordered_count}</Typography>
-        </Box>
-        <Box className={classes.addComponentRight} />
-        {/* <Box className={classes.addComponentBottom}>
+        <div>
+          <Typography
+            className={
+              value.ordered_count === 1
+                ? classes.counterAvailable
+                : classes.counterUnAvailable
+            }
+          >
+            {value.ordered_count}
+          </Typography>
           <Typography>{"Available"}</Typography>
-        </Box> */}
+        </div>
       </ListItem>
     </List>
   );

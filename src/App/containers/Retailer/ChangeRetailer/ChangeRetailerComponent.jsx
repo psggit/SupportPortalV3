@@ -54,6 +54,7 @@ const ChangeRetailerComponent = () => {
   const classes = useStyles();
 
   const handleBack = () => {
+    location.href = "/dashboard";
     console.log("handleBack");
   };
 
