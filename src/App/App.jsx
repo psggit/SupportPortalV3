@@ -1,12 +1,15 @@
-import React, { useEffect, createRef } from "react";
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { validateAuth } from "./duck/authOperation";
 import { hot } from "react-hot-loader/root";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { LoginContainer } from "./containers/Login/LoginContainer";
-import { DashboardContainer } from "./containers/Dashboard/DashboardContainer";
+import { LoginContainer } from "./containers/Login";
+import { LogoutContainer } from "./containers/Logout";
+import { DashboardContainer } from "./containers/Dashboard";
 import { OrderDetailsContainer } from "./containers/OrderDetails";
+import { CartModificationContainer } from "./containers/CartModification";
 import { OrderInfoContainer } from "./containers/OrderInfo";
 import { ThemeProvider } from "@material-ui/styles";
 import Loading from "./components/loading";
@@ -21,12 +24,13 @@ import "./sass/app.scss";
 import { NotesContainer } from "./containers/Customer/Notes";
 
 function App(props) {
+  let history = useHistory();
   useEffect(() => {
+    // console.log(props);
+    // console.log(history);
     // const node = this.wrapper.current;
     props.validateAuth();
   }, []);
-  // console.log("[APP]");
-  // console.log(props);
 
   if (props.authenticateProgress) {
     return (
@@ -36,16 +40,25 @@ function App(props) {
     );
   }
 
+  let success = props.authenticateSuccess;
+  // console.log(props.authData);
+  // let success = true;
+
   return (
     <div>
-      {props.authenticateSuccess ? (
+      {success ? (
         <ThemeProvider theme={newTheme}>
           <Router>
             <Switch>
               <Route path="/order-details" component={OrderDetailsContainer} />
               <Route path="/order-info" component={OrderInfoContainer} />
-
               <Route path="/dashboard" component={DashboardContainer} />
+              <Route
+                path="/cart-modify"
+                component={CartModificationContainer}
+              />
+              {/* <Route path="/issues" component={IssuesContainer} />
+              <Route path="/users" component={UsersContainer} /> */}
 
               {/* <Route path="/customer/123" component={CustomerDetailContainer} /> */}
               {/* <Route path="/form/123" component={CustomerForm} /> */}
@@ -61,6 +74,7 @@ function App(props) {
         <ThemeProvider theme={newTheme}>
           <Router>
             <Switch>
+              <Route path="/logout" component={LogoutContainer} />
               <Route path="/" component={LoginContainer} />
             </Switch>
           </Router>
@@ -76,6 +90,7 @@ const mapStateToProps = (state) => {
     authenticateProgress: state.login.authenticateProgress,
     authenticateSuccess: state.login.authenticateSuccess,
     authenticateFailed: state.login.authenticateFailed,
+    authData: state.login.authData,
   };
 };
 
@@ -91,6 +106,7 @@ App.propTypes = {
   authenticateFailed: PropTypes.bool,
   authenticateSuccess: PropTypes.bool,
   validateAuth: PropTypes.func,
+  authData: PropTypes.any,
 };
 
 export default hot(connect(mapStateToProps, mapDispatchToProps)(App));

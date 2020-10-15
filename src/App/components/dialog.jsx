@@ -4,7 +4,6 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
@@ -37,12 +36,12 @@ const useStyles = makeStyles(() => ({
 
 const DialogComponent = (props) => {
   const classes = useStyles();
-  let { title, subtitle, actions, issueDesc, change } = props;
+  let { title, subtitle, actions, children, change } = props;
   useEffect(() => {
-    console.log("componentDidMount");
+    // console.log("componentDidMount");
 
     return () => {
-      console.log("componentWillUnmount");
+      // console.log("componentWillUnmount");
       change("");
     };
   }, []);
@@ -65,17 +64,7 @@ const DialogComponent = (props) => {
               {subtitle}
             </DialogContentText>
           )}
-          <TextField
-            id="outlined-textarea"
-            placeholder="Add note here"
-            multiline
-            rows={4}
-            variant="outlined"
-            size="small"
-            value={issueDesc}
-            fullWidth
-            onChange={(event) => change(event.target.value)}
-          />
+          {children}
         </DialogContent>
         <DialogActions className={classes.dialogFooter}>
           {actions.map((item) => item)}

@@ -15,21 +15,22 @@ const initialValue = {
   authenticateSuccess: false,
   loginProgressStatus: false,
   loginFailedStatus: false,
-  loginSuccessStatus: false,
+  loginSuccessStatus: null,
   errorMsg: "",
-  successMsg: "",
+  successMsg: null,
   xHasuraRole: null,
   hasuraId: null,
+  authData: null,
 };
 
 const loginReducer = createReducer(initialValue, {
-  [loginSuccess]: (state, payload) => ({
+  [loginSuccess]: (state, data) => ({
     ...state,
     isAuthenticated: true,
+    loginSuccessStatus: true,
     loginProgressStatus: false,
     loginFailedStatus: false,
-    loginSuccessStatus: true,
-    successMsg: payload.message,
+    successMsg: data.payload,
     errorMsg: "",
   }),
   [loginFailed]: (state) => ({
@@ -37,13 +38,13 @@ const loginReducer = createReducer(initialValue, {
     isAuthenticated: false,
     loginProgressStatus: false,
     loginFailedStatus: true,
-    loginSuccessStatus: false,
     errorMsg: "Something went wrong, please try again",
   }),
   [loginProgress]: (state) => ({
     ...state,
     isAuthenticated: false,
     loginProgressStatus: true,
+    loginSuccessStatus: false,
   }),
   [authorizationFailed]: (state) => ({
     ...state,
@@ -52,12 +53,13 @@ const loginReducer = createReducer(initialValue, {
     authenticateFailed: true,
     authenticateSuccess: false,
   }),
-  [authorizationSuccess]: (state) => ({
+  [authorizationSuccess]: (state, data) => ({
     ...state,
     isAuthenticated: true,
     authenticateFailed: false,
     authenticateProgress: false,
     authenticateSuccess: true,
+    authData: data.payload,
   }),
   [authorizationProgress]: (state) => ({
     ...state,

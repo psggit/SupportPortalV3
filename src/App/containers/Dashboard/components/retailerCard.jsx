@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
@@ -44,7 +44,8 @@ const RetailerCard = (props) => {
   if (!("retailer_contact_number" in props.payload.retailer_details)) {
     defValueCustomerNo = "";
   } else {
-    defValueCustomerNo = props.payload.retailer_details["retailer_contact_number"];
+    defValueCustomerNo =
+      props.payload.retailer_details["retailer_contact_number"];
   }
 
   if (!("retailer_id" in props.payload.retailer_details)) {
@@ -70,8 +71,8 @@ const RetailerCard = (props) => {
           variant="outlined"
           autoComplete="off"
           margin="normal"
-          size="small"
           label="Mobile Number"
+          size="small"
           helperText={
             errorString.status && errorString.filterType == "retailer_details"
               ? errorString.value
@@ -130,7 +131,6 @@ const RetailerCard = (props) => {
           variant="outlined"
           color="primary"
           className={classes.marginLeft}
-          size="small"
           onClick={() => props.reset("retailer_details")}
           disabled={
             props.filterType === "retailer_details" && props.isResetDisabled
@@ -141,7 +141,6 @@ const RetailerCard = (props) => {
         <Button
           variant="contained"
           color="primary"
-          size="small"
           disabled={
             errorString.filterType === "retailer_details" &&
             props.isFetchDisabled

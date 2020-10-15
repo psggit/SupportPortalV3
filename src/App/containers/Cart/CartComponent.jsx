@@ -60,10 +60,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CartComponent = (props) => {
   useEffect(() => {
-    // console.log("CartComponent");
-    // console.dir(props);
-    const reqBody = { order_id: props.order.order_id, limit: 3, offset: 0 };
-    props.fetchActivityLogs(reqBody);
+    console.log("Cart Component");
   }, []);
   const classes = useStyles();
   const [modify, setModify] = useState(false);
@@ -83,7 +80,6 @@ const CartComponent = (props) => {
     <Button
       variant="contained"
       color="primary"
-      size="small"
       onClick={handleModify}
       key="modifyBtn"
     >
@@ -98,7 +94,6 @@ const CartComponent = (props) => {
         color="primary"
         onClick={handleCancel}
         className={classes.marginLeft}
-        size="small"
         key="cancelBtn"
       >
         Cancel
@@ -107,7 +102,6 @@ const CartComponent = (props) => {
         variant="contained"
         color="primary"
         onClick={handleConfirm}
-        size="small"
         key="confirmBtn"
       >
         Confirm

@@ -10,3 +10,6 @@ export { fetchNotesAPI } from "./fetchNotesAPI";
 export { fetchRetailerNotesAPI } from "./fetchRetailerNotesAPI";
 export { acitivityLogsAPI } from "./activityLogsAPI";
 export { createNotesAPI } from "./createNotesAPI";
+export { assignWarehouseAPI } from "./assignWarehouseAPI";
+export { listDeliveryStatusAPI } from "./listDeliveryStatusAPI";
+export { callAPI } from "./callAPI";

@@ -3,7 +3,6 @@ import { RetailerComponent } from "./RetailerComponent";
 import { fetchRetailerNotes } from "./duck/RetailerOperations";
 
 const mapStateToProps = (state) => {
-  console.log("mapStateToProps", state);
   return {
     orderInfo: state.order.orderInfo.orderDetails,
     retailerNotes: state.order.retailer.retailerNotesData,

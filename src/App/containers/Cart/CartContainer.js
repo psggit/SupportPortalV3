@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { CartComponent } from "./CartComponent";
-import { fetchGenre, fetchActivityLogs } from "./duck";
+import { fetchGenre } from "./duck";
 
 const mapStateToProps = (state) => {
   // console.log("[mapping state in cart container]", state);
@@ -18,7 +18,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchGenre: (payload) => dispatch(fetchGenre(payload)),
-    fetchActivityLogs: (payload) => dispatch(fetchActivityLogs(payload)),
   };
 };
 

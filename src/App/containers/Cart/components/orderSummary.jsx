@@ -1,4 +1,5 @@
 import React, { useState, createRef } from "react";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
@@ -97,6 +98,7 @@ const useStyles = makeStyles((theme) => ({
 
 const OrderSummary = (props) => {
   const classes = useStyles();
+  const history = useHistory();
   const orderInfo = props.orderInfo;
   const [cartItems] = useState(orderInfo.cart_items);
   const [checked, setChecked] = useState([0]);
@@ -117,6 +119,7 @@ const OrderSummary = (props) => {
       limit: 20,
     };
     props.fetchGenre(payload);
+    history.push("/cart-modify");
   };
 
   const handleToggle = (value) => () => {
@@ -136,15 +139,10 @@ const OrderSummary = (props) => {
     <Box>
       <List dense disablePadding>
         <ListItem dense disableGutters>
-          <ListItemText
-            primary="Order Items"
-            className={classes.ListItemRootTitle}
-            classes={{ root: classes.ListItemRootTitle }}
-          />
+          <ListItemText primary="Order Items" />
           {props.modify && (
             <Button
               color="primary"
-              className={classes.addMorebutton}
               endIcon={<ChevronRightIcon />}
               onClick={handleClickAdd}
             >
@@ -159,9 +157,7 @@ const OrderSummary = (props) => {
         })}
       </List>
       <List disablePadding>
-        <ListItem dense disableGutters>
-          <OrderSummaryItem title="Order Summary" value={""} />
-        </ListItem>
+        <OrderSummaryItem title="Order Summary" value={""} />
         <OrderSummaryItem
           title="Order Total"
           value={orderInfo.revised_order_total}
@@ -175,7 +171,31 @@ const OrderSummary = (props) => {
           value={orderInfo.total_additional_fee}
           type="button"
         >
-          <OrderSummaryItem title="Taxes" value="Taxes charges" />
+          {orderInfo.fee_details_struct.map((value) => {
+            return (
+              <OrderSummaryItem
+                title={value.fee_title}
+                value={value.fee_value_without_taxes}
+                key={value.fee_type}
+              />
+            );
+          })}
+          {orderInfo.taxes && (
+            <>
+              <OrderSummaryItem
+                title={"CGST (" + orderInfo.cgst_percentage + "%)"}
+                value={orderInfo.taxes.cgst_total}
+              />
+              <OrderSummaryItem
+                title={"SGST (" + orderInfo.sgst_percentage + "%)"}
+                value={orderInfo.taxes.sgst_total}
+              />
+              <OrderSummaryItem
+                title={"IGST (" + orderInfo.igst_percentage + "%)"}
+                value={orderInfo.taxes.igst}
+              />
+            </>
+          )}
         </OrderSummaryItem>
       </List>
       <Divider />
@@ -189,7 +209,7 @@ const OrderSummary = (props) => {
           >
             <OrderSummaryItem
               title="HipBar Wallet:"
-              value={orderInfo.hipbar_wallet}
+              value={orderInfo.hipbar_wallet ? orderInfo.hipbar_wallet : "-"}
             />
             <OrderSummaryItem
               title="Gift Wallet:"
@@ -197,7 +217,14 @@ const OrderSummary = (props) => {
             />
           </OrderSummaryItem>
         </OrderSummaryItem>
-        <OrderSummaryItem title="UPI" value={"MISSING"} />
+        <OrderSummaryItem
+          title="UPI"
+          value={
+            orderInfo.consumer_upi.length === 1
+              ? orderInfo.consumer_upi[0].upi_id
+              : "-"
+          }
+        />
         <Divider />
         <OrderSummaryItem
           title="Difference in Order Amount"
@@ -210,17 +237,7 @@ const OrderSummary = (props) => {
             title="Additional Charges:"
             value={orderInfo.total_additional_fee}
             type="button"
-          >
-            {orderInfo.fee_details_struct.map((value) => {
-              return (
-                <OrderSummaryItem
-                  title={value.fee_title}
-                  value={value.fee_value_without_taxes}
-                  key={value.fee_type}
-                />
-              );
-            })}
-          </OrderSummaryItem>
+          ></OrderSummaryItem>
         </OrderSummaryItem>
         <Divider />
         <ListItem
@@ -298,7 +315,7 @@ const OrderSummary = (props) => {
             />
           </ListItem>
         </Collapse>
-        <OrderSummaryItem title="To Pay:" value={"CONFIRM"} />
+        <OrderSummaryItem title="To Pay:" value={orderInfo.payment_total} />
       </List>
     </Box>
   );

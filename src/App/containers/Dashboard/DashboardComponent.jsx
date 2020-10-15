@@ -11,6 +11,8 @@ import { validateNumberField } from "../../utils/validators";
 import { ConsumerCard } from "./components/consumerCard";
 import { RetailerCard } from "./components/retailerCard";
 import { DeliveryAgentCard } from "./components/deliveryAgentCard";
+import { PreponeDeliveryCard } from "./components/preponeCard";
+import { DeliveryOrderStatusCard } from "./components/deliveryOrderStatusCard";
 import Loading from "../../components/loading";
 
 const useStyles = makeStyles((theme) => ({
@@ -18,8 +20,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   boxContainer: {
-    margin: "0 auto",
-    marginTop: "40px",
+    margin: "40px auto",
   },
   card: {
     padding: theme.spacing(2),
@@ -45,14 +46,17 @@ const useStyles = makeStyles((theme) => ({
 
 const DashboardComponent = (props) => {
   useEffect(() => {
-    // console.log("DashboardComponent");
-    // userAuthAPI(null, onProcess, onSuccess, onError);
+    // console.log("useEffect", props);
+    props.fetchDeliveryStatus();
   }, []);
   const classes = useStyles();
   const [payload, setPayload] = useState({
     consumer: {},
     retailer_details: {},
     delivery_agent_details: {},
+    assignWarehouse: {},
+    orderStatus: {},
+    deliver_status: {},
   });
   const [filterType, setFilterType] = useState("");
   const [isFetchDisabled, setFetchState] = useState(true);
@@ -98,7 +102,21 @@ const DashboardComponent = (props) => {
           [payloadKey]: event.target.value,
         },
       };
-
+      setPayload({
+        ...payload,
+        ...updatedPayload,
+      });
+      setFilterType(filterType);
+      setResetState(false);
+    }
+    // console.log(event.target.value, filterType, payloadKey);
+    if (payloadKey == "delivery_status") {
+      // console.log("delivery_status");
+      let updatedPayload = {
+        [filterType]: {
+          [payloadKey]: event.target.value,
+        },
+      };
       setPayload({
         ...payload,
         ...updatedPayload,
@@ -128,29 +146,44 @@ const DashboardComponent = (props) => {
   };
 
   const handleSubmit = (type) => {
-    const sendPayload = {
+    let sendPayload = {
       pagination: {
         limit: 25,
         offset: 0,
       },
       filter: payload[type],
     };
-    props.fetchOrderDetails(sendPayload);
+    if (type === "assignWarehouse") {
+      sendPayload = sendPayload.filter;
+      props.preponeOrder(sendPayload);
+    } else {
+      // console.log(sendPayload);
+      props.fetchOrderDetails(sendPayload);
+    }
   };
 
   if (props.fetchDetailsSuccess) {
     history.push("/order-details");
   }
 
+  // console.log("deliveryStatus", props);
+
   return (
     <Container component="main">
       <TopBar />
       {props.fetchDetailsProgress && <Loading message="Fetching data..." />}
       {props.fetchDetailsFail && (
-        <ErrorMsg show={props.fetchDetailsFail} message={props.errorMsg} />
+        <ErrorMsg show={true} message={props.errorMsg} type={"error"} />
+      )}
+      {props.preponeOrderSuccess && (
+        <ErrorMsg
+          show={true}
+          message={props.successMsg.message}
+          type={"success"}
+        />
       )}
       <Box maxWidth="80%" className={classes.boxContainer} ref={reference}>
-        <Grid container spacing={4}>
+        <Grid container spacing={4} justify="center">
           <Grid item xs={4}>
             <ConsumerCard
               errorString={errorString}
@@ -187,6 +220,33 @@ const DashboardComponent = (props) => {
               filterType={filterType}
             />
           </Grid>
+          <Grid item xs={4}>
+            <PreponeDeliveryCard
+              errorString={errorString}
+              handleChange={handleChange}
+              isResetDisabled={isResetDisabled}
+              isFetchDisabled={isFetchDisabled}
+              handleSubmit={handleSubmit}
+              reset={reset}
+              payload={payload}
+              filterType={filterType}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            {props.fetchDeliverySuccess && (
+              <DeliveryOrderStatusCard
+                errorString={errorString}
+                handleChange={handleChange}
+                isResetDisabled={isResetDisabled}
+                isFetchDisabled={isFetchDisabled}
+                handleSubmit={handleSubmit}
+                reset={reset}
+                payload={payload}
+                filterType={filterType}
+                data={props.deliveryStatus}
+              />
+            )}
+          </Grid>
         </Grid>
       </Box>
     </Container>
@@ -195,11 +255,17 @@ const DashboardComponent = (props) => {
 
 DashboardComponent.propTypes = {
   fetchOrderDetails: PropTypes.func,
+  fetchDeliveryStatus: PropTypes.func,
+  preponeOrder: PropTypes.func,
   orderData: PropTypes.object,
   fetchDetailsSuccess: PropTypes.bool,
+  preponeOrderSuccess: PropTypes.bool,
   fetchDetailsProgress: PropTypes.bool,
   fetchDetailsFail: PropTypes.bool,
   errorMsg: PropTypes.string,
+  successMsg: PropTypes.string,
+  fetchDeliverySuccess: PropTypes.bool,
+  deliveryStatus: PropTypes.array,
 };
 
 export { DashboardComponent };

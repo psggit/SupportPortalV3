@@ -12,6 +12,14 @@ const createNotesProgress = createAction("createNotesProgress");
 const createNotesFailure = createAction("createNotesFailure");
 const createNotesSuccess = createAction("createNotesSuccess");
 
+const fetchActivityLogsProgress = createAction("fetchActivityLogsProgress");
+const fetchActivityLogsFailed = createAction("fetchActivityLogsFailed");
+const fetchActivityLogsSuccess = createAction("fetchActivityLogsSuccess");
+
+const connectCallProgress = createAction("connectCallProgress");
+const connectCallFailed = createAction("connectCallFailed");
+const connectCallSuccess = createAction("connectCallSuccess");
+
 export {
   fetchOrderInfoProgress,
   fetchOrderInfoFailure,
@@ -22,4 +30,10 @@ export {
   createNotesProgress,
   createNotesFailure,
   createNotesSuccess,
+  fetchActivityLogsProgress,
+  fetchActivityLogsFailed,
+  fetchActivityLogsSuccess,
+  connectCallProgress,
+  connectCallFailed,
+  connectCallSuccess,
 };

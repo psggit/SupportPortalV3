@@ -7,7 +7,7 @@ import {
 import { fetchRetailerNotesAPI } from "../../../../utils/fetchRetailerNotesAPI";
 
 const processResponse = () => {
-  console.log("[processResponse]");
+  // console.log("[processResponse]");
   return (res) => {
     if (res.ok) {
       return res.json();
@@ -22,7 +22,7 @@ const processResponse = () => {
 
 const onSuccess = (dispatch) => {
   return (data) => {
-    console.log("[onSuccess] data", data);
+    // console.log("[onSuccess] data", data);
     dispatch(fetchDeliveryAgentNotesSuccess(data));
     // createSession(data);
   };

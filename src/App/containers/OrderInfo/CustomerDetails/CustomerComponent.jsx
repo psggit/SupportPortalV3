@@ -38,8 +38,13 @@ const ConsumerComponent = (props) => {
   }, []);
 
   const actionButtons = [
-    <Button variant="outlined" color="primary" key="unassignBtn">
-      Unassign
+    <Button
+      variant="contained"
+      color="primary"
+      key="unassignBtn"
+      onClick={() => props.handleCall(props.orderInfo.customer_contact_number)}
+    >
+      Call
     </Button>,
   ];
 
@@ -81,6 +86,7 @@ ConsumerComponent.propTypes = {
   fetchSuccess: PropTypes.bool,
   fetchProgress: PropTypes.bool,
   openDialog: PropTypes.any,
+  handleCall: PropTypes.func,
 };
 
 export { ConsumerComponent };

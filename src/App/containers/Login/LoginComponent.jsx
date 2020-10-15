@@ -6,6 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
+import ErrorMsg from "../../components/errorMsg";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -51,15 +52,21 @@ const LoginComponent = (props) => {
   const [isLoggedIn] = useState(
     localStorage.getItem("hasura-id") ? true : false
   );
+  // let open = null;
+  const [successMsgData, setMsg] = useState("");
+  const [successState, setSuccessState] = useState("");
 
   useEffect(() => {
-    // console.log("[APP]");
-    // authAPI();
-  }, []);
-
-  if (isLoggedIn) {
-    // return <Redirect to="/dashboard" />;
-  }
+    // console.log("-- loginProgressStatus ", props.loginProgressStatus);
+    // console.log("-- ", props.loginSuccessStatus);
+    if (props.loginSuccessStatus) {
+      setMsg(props.successMsg.message);
+      setSuccessState(true);
+    } else {
+      setSuccessState(false);
+    }
+    // successMsgData = props.successMsg.message;
+  }, [props.loginSuccessStatus]);
 
   const handleChange = (event) => {
     const validation = {
@@ -73,7 +80,10 @@ const LoginComponent = (props) => {
     setEmailAddress(event.target.value);
   };
 
-  // console.log(props.loginSuccessStatus);
+  const sendEmail = () => {
+    props.sendLoginEmail(email);
+    setSubmitState(true);
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -101,13 +111,14 @@ const LoginComponent = (props) => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => props.sendLoginEmail(email)}
+            onClick={() => sendEmail()}
             disabled={isDisabled}
           >
             Send Login Email
           </Button>
+
           <Grid container>
-            <Grid item xs>
+            <Grid item xs={12}>
               <Typography variant="body1" color="textSecondary" align="center">
                 Having trouble? Contact Support at{" "}
                 <Link href="mailto:support@hiipbar.com" variant="body2">
@@ -118,9 +129,12 @@ const LoginComponent = (props) => {
           </Grid>
         </div>
       </div>
-      <Box mt={8}>
+      <Box mt={4}>
         <Copyright />
       </Box>
+      {successState && (
+        <ErrorMsg show={true} message={successMsgData} type="success" />
+      )}
     </Container>
   );
 };
@@ -130,7 +144,7 @@ LoginComponent.propTypes = {
   loginProgressStatus: PropTypes.bool,
   loginSuccessStatus: PropTypes.bool,
   loginFailedStatus: PropTypes.bool,
-  successMsg: PropTypes.string,
+  successMsg: PropTypes.any,
 };
 
 export { LoginComponent };

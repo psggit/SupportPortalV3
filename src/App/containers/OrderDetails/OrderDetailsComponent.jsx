@@ -32,8 +32,6 @@ const useStyles = makeStyles(() => ({
 const OrderDetailsComponent = (props) => {
   const history = useHistory();
   useEffect(() => {
-    // props.selectOrder(50011333399945);
-    // console.log("[order details component] ", props.orderData);
     if (props.orderData === null) {
       history.push("/dashboard");
     } else {
@@ -94,7 +92,6 @@ const OrderDetailsComponent = (props) => {
 
   const selectOrderId = (event, orderId) => {
     props.selectOrder(orderId);
-    console.log("selectOrderId ", orderId, props);
     history.push("/order-info");
   };
 
