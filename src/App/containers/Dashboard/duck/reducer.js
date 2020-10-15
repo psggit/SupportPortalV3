@@ -4,6 +4,12 @@ import {
   fetchOrderFailed,
   fetchOrderProgress,
   selectOrder,
+  preponeOrderSuccess,
+  preponeOrderFailed,
+  preponeOrderProgress,
+  fetchDeliverySuccess,
+  fetchDeliveryFailed,
+  fetchDeliveryProgress,
 } from "./actions";
 
 const initialValue = {
@@ -12,7 +18,15 @@ const initialValue = {
   fetchDetailsProgress: false,
   fetchDetailsFail: false,
   fetchDetailsSuccess: false,
+  preponeOrderProgress: false,
+  preponeOrderFailed: false,
+  preponeOrderSuccess: false,
+  fetchDeliverySuccess: false,
+  fetchDeliveryFailed: false,
+  fetchDeliveryProgress: false,
   errorMsg: "",
+  successMsg: "",
+  deliveryStatus: [],
 };
 
 const homeReducer = createReducer(initialValue, {
@@ -32,8 +46,8 @@ const homeReducer = createReducer(initialValue, {
   [fetchOrderProgress]: (state) => ({
     ...state,
     fetchDetailsProgress: true,
-    fetchDetailsFail: false,
     fetchDetailsSuccess: false,
+    fetchDetailsFail: false,
   }),
   [selectOrder]: (state, payload) => {
     return {
@@ -41,6 +55,45 @@ const homeReducer = createReducer(initialValue, {
       orderId: payload.payload,
     };
   },
+  [preponeOrderSuccess]: (state, data) => ({
+    ...state,
+    preponeOrderProgress: false,
+    preponeOrderSuccess: true,
+    errorMsg: "",
+    successMsg: data.payload,
+  }),
+  [preponeOrderFailed]: (state) => ({
+    ...state,
+    preponeOrderProgress: false,
+    preponeOrderFailed: true,
+    errorMsg: "Something went wrong, please try again",
+  }),
+  [preponeOrderProgress]: (state) => ({
+    ...state,
+    preponeOrderProgress: true,
+    preponeOrderSuccess: false,
+    preponeOrderFailed: false,
+  }),
+  [fetchDeliverySuccess]: (state, data) => ({
+    ...state,
+    fetchDeliveryProgress: false,
+    fetchDeliverySuccess: true,
+    fetchDeliveryFailed: false,
+    errorMsg: "",
+    deliveryStatus: data.payload.message,
+  }),
+  [fetchDeliveryFailed]: (state) => ({
+    ...state,
+    fetchDeliveryProgress: false,
+    fetchDeliveryFailed: true,
+    errorMsg: "Something went wrong, please try again",
+  }),
+  [fetchDeliveryProgress]: (state) => ({
+    ...state,
+    fetchDeliveryProgress: true,
+    fetchDeliverySuccess: false,
+    fetchDeliveryFailed: false,
+  }),
 });
 
 export { homeReducer };

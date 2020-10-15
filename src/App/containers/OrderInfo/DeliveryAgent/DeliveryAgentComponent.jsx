@@ -11,7 +11,7 @@ const keysToRender = [
   "delivery_agent_contact_number",
   "delivery_agnet_city_name",
   "delivery_agent_locality_name",
-  "delivery_agent_status",
+  "delivery_agent_limit",
 ];
 const keyMap = {
   delivery_agent_id: "Agent ID",
@@ -19,7 +19,7 @@ const keyMap = {
   delivery_agent_contact_number: "Mobile Number",
   delivery_agnet_city_name: "City",
   delivery_agent_locality_name: "Locality",
-  delivery_agent_status: "Agent Limit",
+  delivery_agent_limit: "Agent Limit",
 };
 
 const DeliveryAgentComponent = (props) => {
@@ -34,6 +34,16 @@ const DeliveryAgentComponent = (props) => {
   const actionButtons = [
     <Button variant="outlined" color="primary" key="unassignBtn">
       Unassign
+    </Button>,
+    <Button
+      variant="contained"
+      color="primary"
+      key="callBtn"
+      onClick={() =>
+        props.handleCall(props.orderInfo.delivery_agent_contact_number)
+      }
+    >
+      Call
     </Button>,
   ];
 
@@ -75,6 +85,7 @@ DeliveryAgentComponent.propTypes = {
   fetchSuccess: PropTypes.bool,
   fetchProgress: PropTypes.bool,
   openDialog: PropTypes.any,
+  handleCall: PropTypes.func,
 };
 
 export { DeliveryAgentComponent };

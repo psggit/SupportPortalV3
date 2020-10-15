@@ -68,10 +68,11 @@ const OrderStatus = (props) => {
   const classes = useStyles();
   return (
     <Paper className={classes.root}>
-      <Typography className={classes.text}>ORDER STATUS</Typography>
-      <Typography className={classes.text}>ETA:_</Typography>
-      {
-        props.orderInfo.length > 0 && (
+      <Typography className={classes.text}>
+        ORDER STATUS: {props.orderId}
+      </Typography>
+      <Typography className={classes.text}>ETA: -</Typography>
+      {props.orderInfo.length > 0 && (
         <>
           <Timeline className={classes.root}>
             <RenderTimeline steps={props.orderInfo} />
@@ -85,6 +86,7 @@ const OrderStatus = (props) => {
 
 OrderStatus.propTypes = {
   orderInfo: PropTypes.array,
+  orderId: PropTypes.any,
 };
 
 export { OrderStatus };

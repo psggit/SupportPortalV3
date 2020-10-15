@@ -33,7 +33,6 @@ const customerReducer = createReducer(initialValue, {
     errorMsg: "Something went wrong, please try again",
   }),
   [fetchNotesProgress]: (state) => {
-    console.log("notesprogress");
     return {
       ...state,
       notesProgress: true,

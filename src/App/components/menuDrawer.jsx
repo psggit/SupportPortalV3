@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import Button from "@material-ui/core/Button";
+import Link from "@material-ui/core/Link";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -37,6 +38,8 @@ export default function MenuDrawer() {
     setState({ ...state, [anchor]: open });
   };
 
+  const anchors = ["/dashboard", "/issues", "/users", "/logout"];
+
   const list = (anchor) => (
     <div
       className={clsx(classes.list, {
@@ -47,9 +50,11 @@ export default function MenuDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["Home", "Issues", "User Manager", "Logout"].map((text) => (
+        {["Home", "Issues", "User Manager", "Logout"].map((text, index) => (
           <ListItem button key={text}>
-            <ListItemText primary={text} />
+            <Link href={anchors[index]}>
+              <ListItemText primary={text} />
+            </Link>
           </ListItem>
         ))}
       </List>
@@ -60,7 +65,10 @@ export default function MenuDrawer() {
     <div>
       {["left"].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}><img src={menuIcon} /></Button>
+          <Button onClick={toggleDrawer(anchor, true)}>
+            {" "}
+            <img src={menuIcon} />
+          </Button>
           <Drawer
             anchor={anchor}
             open={state[anchor]}

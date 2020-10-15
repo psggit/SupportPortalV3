@@ -133,7 +133,7 @@ const CartItem = (props) => {
 };
 
 CartItem.propTypes = {
-  value: PropTypes.string,
+  value: PropTypes.any,
   modify: PropTypes.bool,
 };
 

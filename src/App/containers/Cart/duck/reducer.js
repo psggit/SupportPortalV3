@@ -3,9 +3,6 @@ import {
   fetchOrderSuccess,
   fetchOrderFailed,
   fetchOrderProgress,
-  fetchActivityLogsProgress,
-  fetchActivityLogsFailed,
-  fetchActivityLogsSuccess,
 } from "./actions";
 
 const initialValue = {
@@ -14,9 +11,6 @@ const initialValue = {
   fetchDetailsProgress: false,
   fetchDetailsFail: false,
   fetchDetailsStatus: false,
-  fetchActivityLogsProgress: false,
-  fetchActivityLogsFailed: false,
-  fetchActivityLogsSuccess: false,
   errorMsg: "",
 };
 
@@ -39,28 +33,6 @@ const cartReducer = createReducer(initialValue, {
   [fetchOrderProgress]: (state) => ({
     ...state,
     fetchDetailsProgress: true,
-  }),
-  [fetchActivityLogsProgress]: (state) => ({
-    ...state,
-    fetchActivityLogsProgress: true,
-    fetchActivityLogsFailed: false,
-    fetchActivityLogsSuccess: false,
-    errorMsg: "",
-  }),
-  [fetchActivityLogsFailed]: (state) => ({
-    ...state,
-    fetchActivityLogsProgress: false,
-    fetchActivityLogsFailed: true,
-    fetchActivityLogsSuccess: false,
-    errorMsg: "Something went wrong, please try again",
-  }),
-  [fetchActivityLogsSuccess]: (state, payload) => ({
-    ...state,
-    activityLog: payload.data,
-    fetchActivityLogsProgress: false,
-    fetchActivityLogsFailed: false,
-    fetchActivityLogsSuccess: true,
-    errorMsg: "",
   }),
 });
 

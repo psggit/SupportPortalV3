@@ -37,6 +37,14 @@ const RetailerComponent = (props) => {
     <Button variant="outlined" color="primary" key="unassignBtn">
       Unassign
     </Button>,
+    <Button
+      variant="contained"
+      color="primary"
+      key="callBtn"
+      onClick={() => props.handleCall(props.orderInfo.retailer_contact_number)}
+    >
+      Call
+    </Button>,
   ];
 
   const keysToRenderInNotesCard = ["notes", "created_at"];
@@ -77,6 +85,7 @@ RetailerComponent.propTypes = {
   fetchSuccess: PropTypes.bool,
   fetchProgress: PropTypes.bool,
   openDialog: PropTypes.any,
+  handleCall: PropTypes.func,
 };
 
 export { RetailerComponent };

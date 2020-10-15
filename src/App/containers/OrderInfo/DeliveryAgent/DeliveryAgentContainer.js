@@ -3,7 +3,6 @@ import { DeliveryAgentComponent } from "./DeliveryAgentComponent";
 import { fetchDeliveryAgentNotes } from "./duck/operations";
 
 const mapStateToProps = (state) => {
-  console.log("mapStateToProps", state);
   return {
     orderInfo: state.order.orderInfo.orderDetails,
     deliveryAgentNotes: state.order.deliveryAgent.deliveryAgentNotesData,

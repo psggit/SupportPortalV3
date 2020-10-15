@@ -25,7 +25,6 @@ const onSuccess = (dispatch) => {
 
 const onError = (dispatch) => {
   return (err) => {
-    console.log("onError");
     dispatch(authorizationFailed(err));
   };
 };

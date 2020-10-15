@@ -45,13 +45,15 @@ const DeliveryAgentCard = (props) => {
   ) {
     defValueDeliveryAgentNo = "";
   } else {
-    defValueDeliveryAgentNo = props.payload.delivery_agent_details["delivery_agent_contact_number"];
+    defValueDeliveryAgentNo =
+      props.payload.delivery_agent_details["delivery_agent_contact_number"];
   }
 
   if (!("delivery_agent_id" in props.payload.delivery_agent_details)) {
     defValueDeliveryAgentId = "";
   } else {
-    defValueDeliveryAgentId = props.payload.delivery_agent_details["delivery_agent_id"];
+    defValueDeliveryAgentId =
+      props.payload.delivery_agent_details["delivery_agent_id"];
   }
 
   return (
@@ -68,7 +70,8 @@ const DeliveryAgentCard = (props) => {
           size="small"
           label="Mobile Number"
           helperText={
-            errorString.status && errorString.filterType == "delivery_agent_details"
+            errorString.status &&
+            errorString.filterType == "delivery_agent_details"
               ? errorString.value
               : ""
           }
@@ -107,7 +110,6 @@ const DeliveryAgentCard = (props) => {
           variant="outlined"
           color="primary"
           className={classes.marginLeft}
-          size="small"
           onClick={() => props.reset("delivery_agent_details")}
           disabled={
             props.filterType === "delivery_agent_details" &&
@@ -119,7 +121,6 @@ const DeliveryAgentCard = (props) => {
         <Button
           variant="contained"
           color="primary"
-          size="small"
           disabled={
             errorString.filterType == "delivery_agent_details" &&
             props.isFetchDisabled

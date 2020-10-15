@@ -6,8 +6,8 @@ const headers = {
   "x-hasura-role": `${localStorage.getItem("x-hasura-role")}`,
 };
 
-const acitivityLogsAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://${apiUrl}/supportman/api/1/activitylogs`;
+const callAPI = (reqBody, process, onSuccess, onError) => {
+  const URL = `https://${apiUrl}/supportman/api/1/call`;
   fetch(URL, {
     method: "POST",
     headers: headers,
@@ -20,4 +20,4 @@ const acitivityLogsAPI = (reqBody, process, onSuccess, onError) => {
     .catch((err) => onError(err));
 };
 
-export { acitivityLogsAPI };
+export { callAPI };

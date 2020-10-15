@@ -120,7 +120,6 @@ const ConsumerCard = (props) => {
           variant="outlined"
           color="primary"
           className={classes.marginLeft}
-          size="small"
           onClick={() => props.reset("consumer")}
           disabled={props.filterType === "consumer" && props.isResetDisabled}
         >
@@ -129,7 +128,6 @@ const ConsumerCard = (props) => {
         <Button
           variant="contained"
           color="primary"
-          size="small"
           disabled={
             errorString.filterType == "consumer" && props.isFetchDisabled
           }
