@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -42,6 +43,8 @@ const useStyles = makeStyles((theme) => ({
   heading: {
     fontSize: "16px",
     lineHeight: "22px",
+    display: "flex",
+    justifyContent: "space-between",
   },
   ListItems: {
     color: "#010B13",
@@ -69,12 +72,16 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "flex-end",
   },
+  addMorebutton: {
+    width: "30%",
+  },
 }));
 
 ActivityItem.propTypes = {
   arr: PropTypes.array,
   keysToRender: PropTypes.array,
   actions: PropTypes.array,
+  subtitle: PropTypes.array,
   title: PropTypes.string,
 };
 
@@ -83,6 +90,7 @@ export default function ActivityItem(props) {
   const mapArray = props.arr;
   const title = props.title;
   const actions = props.actions;
+  const subtitle = props.subtitle;
   const keysToRender = props.keysToRender;
   console.log("[ActivityItem]", mapArray);
   console.log("[keysToRender]", keysToRender);
@@ -92,6 +100,13 @@ export default function ActivityItem(props) {
       <CardContent>
         <Typography variant="h5" className={classes.heading} gutterBottom>
           {title}
+          {subtitle ? (
+            <CardActions >
+              {subtitle.map((item) => item)}
+            </CardActions>
+          ) : (
+              ""
+            )}
         </Typography>
         {mapArray.map((value, index) => {
           let data = value;

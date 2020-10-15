@@ -16,6 +16,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { getListOfDataObjects } from "../../../utils/helpers";
 import { useHistory } from "react-router-dom";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
 const useStyles = makeStyles(() => ({
   formRoot: {
@@ -23,6 +24,7 @@ const useStyles = makeStyles(() => ({
   },
   card: {
     width: 520,
+    height: "fit-content",
   },
   formControlTextarea: {
     width: "100%",
@@ -149,10 +151,13 @@ const RetailerDetails = (props) => {
     <Button variant="outlined" color="primary">
       Change Retailer
     </Button>,
+  ];
+
+  const retailerNotes = [
     // eslint-disable-next-line react/jsx-key
-    // <Button variant="contained" color="primary">
-    //   Call
-    // </Button>,
+    <Button color="primary" endIcon={<ChevronRightIcon />} onClick={handleMore}>
+      Add more
+    </Button>,
   ];
 
   const retailerNotesAction = [
@@ -160,9 +165,6 @@ const RetailerDetails = (props) => {
     <div>
       <Button variant="contained" color="primary" onClick={mountAddNote}>
         Add
-      </Button>
-      <Button variant="contained" color="primary" onClick={handleMore}>
-        More
       </Button>
       {showAddNoteDilog && (
         <Dialog
@@ -238,6 +240,7 @@ const RetailerDetails = (props) => {
             keysToRender={keysToRenderInNotesCard}
             title={"Retailer Notes"}
             actions={retailerNotesAction}
+            subtitle={retailerNotes}
           />
         )}
         {props.fetchProgress && <CircularProgress />}

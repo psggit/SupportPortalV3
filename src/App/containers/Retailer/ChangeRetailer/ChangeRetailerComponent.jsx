@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -5,6 +6,8 @@ import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import TopBar from "../../../components/topBar";
 import { RetailerCardContainer } from "./RetailerCardContainer";
+import FullWidthTabs from "../../../components/menuBar";
+import { Tab } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,17 +53,23 @@ const useStyles = makeStyles((theme) => ({
 const ChangeRetailerComponent = () => {
   const classes = useStyles();
 
+  const handleBack = () => {
+    console.log("handleBack");
+  };
+
+  const handleRetailer = () => {
+    console.log("handleRetailer");
+  };
+
+  const menuLabels = [
+    <Tab label="Back" onClick={handleBack} />,
+    <Tab label="Change Retailer" onClick={handleRetailer} />,
+  ];
+
   return (
     <Container component="main" className={classes.root}>
       <TopBar />
-      <div className={classes.navBar}>
-        <div className={classes.backButton}>
-          <div>Back</div>
-        </div>
-        <div className={classes.navContent}>
-          <div>Change Retailer</div>
-        </div>
-      </div>
+      <FullWidthTabs labels={menuLabels} />
       <Box className={classes.boxContainer}>
         <Grid container spacing={4}>
           <Grid item xs={4}>

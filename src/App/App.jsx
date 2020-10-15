@@ -11,6 +11,7 @@ import "./sass/app.scss";
 import { authAPI } from "./utils";
 import { RetailerNotesContainer } from "./containers/Retailer/RetailerNotes/RetailerNotesContainer";
 import { ChangeRetailerContainer } from "./containers/Retailer/ChangeRetailer/ChangeRetailerContainer";
+import FullWidthTabs from "./components/menuBar";
 
 function App() {
   useEffect(() => {
@@ -30,6 +31,7 @@ function App() {
               component={ChangeRetailerContainer}
             />
             <Route path="/retailer-notes" component={RetailerNotesContainer} />
+            <Route path="/menubar" component={FullWidthTabs} />
             <Route path="/" component={LoginContainer} />
           </Switch>
         </Router>
