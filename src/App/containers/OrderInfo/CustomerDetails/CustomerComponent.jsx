@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-key */
 import React, { useEffect, useState } from "react";
@@ -8,18 +9,12 @@ import PropTypes from "prop-types";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import Dialog from "../../../components/dialog";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import { Box, Card } from "@material-ui/core";
 import { CircularProgress } from "@material-ui/core";
-import { Backdrop } from "@material-ui/core";
 import ActivityItem from "../../../components/activityItems";
 import { getListOfDataObjects } from "../../../utils/helpers";
 import Moment from "moment";
 import { useHistory } from "react-router-dom";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -63,6 +58,10 @@ const useStyles = makeStyles(theme => ({
     marginLeft: "16px",
     minWidth: 120,
   },
+  moreButton: {
+    marginLeft: "200px",
+    marginTop: "-35px",
+  }
 }));
 
 const keysToRender = [
@@ -130,6 +129,10 @@ const CustomerDetails = (props) => {
     history.push("/customer-detail");
   };
 
+  const handleNotesChange = () => {
+    history.push("/notes");
+  };
+
   useEffect(() => {
     const payload = {
       order_id: props.orderInfo.order_id,
@@ -150,15 +153,34 @@ const CustomerDetails = (props) => {
     <Button variant="contained" color="primary">
       Call
     </Button>,
-    <Button variant="contained" color="primary" onClick={handleChange}>
+  ];
+
+  const subheadAction = [
+    <Button
+      className={classes.moreButton}
+      color="primary"
+      endIcon={<ChevronRightIcon />}
+      onClick={handleChange}
+    >
+      more
+    </Button>,
+  ];
+
+  const subheadNotesAction = [
+    <Button
+      className={classes.moreButton}
+      color="primary"
+      endIcon={<ChevronRightIcon />}
+      onClick={handleNotesChange}
+    >
       more
     </Button>,
   ];
 
   const customerNotesAction = [
-    <Button variant="outlined" color="primary">
-      Add
-    </Button>,
+    // <Button variant="outlined" color="primary">
+    //   Add
+    // </Button>,
   ];
 
   const keysToRenderInNotesCard = ["notes", "created_at"];
@@ -170,15 +192,22 @@ const CustomerDetails = (props) => {
 
   return (
     <div className={classes.container}>
-      <CustomerDetailsCard title="Customer Details" actions={customerAction}>
+      <CustomerDetailsCard
+        title="Customer Details"
+        actions={customerAction}
+        subheader={subheadAction}
+      >
         <RenderCustomerDetails customerDetails={customerDetailsData} />
       </CustomerDetailsCard>
-      <CustomerDetailsCard title="Customer Notes" actions={customerNotesAction}>
+      <CustomerDetailsCard
+        title="Customer Notes"
+        actions={customerNotesAction}
+        subheader={subheadNotesAction}
+      >
         {props.notesSuccess && (
           <ActivityItem
             arr={props.customerNotes.orderNotes}
             keysToRender={keysToRenderInNotesCard}
-            title={"Customer Notes"}
           />
         )}
         {props.notesProgress && <CircularProgress />}

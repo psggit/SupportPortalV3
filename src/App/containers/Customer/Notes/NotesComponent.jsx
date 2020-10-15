@@ -17,6 +17,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Dialog from '../../../components/dialog'
 import { useHistory } from "react-router-dom";
+import Paper from "@material-ui/core/Paper";
 
 const tableHeaders = [
   { label: "NOTE NO", value: "note_no" },
@@ -124,9 +125,9 @@ function Notes(props) {
         <p>CUSTOMER ID: {props.customerId}</p>
         <div>
           <Button
-            className={classes.Button}
             variant="contained"
             onClick={mountAddNote}
+            color="primary"
           >
             Add Note
           </Button>
@@ -137,13 +138,14 @@ function Notes(props) {
               actions={[
                 <Button
                   variant="contained"
-                  buttonStyle="secondary"
+                  color="primary"
                   onClick={UnmountAddNote}
                 >
                   Cancel
                 </Button>,
                 <Button
-                  variant="contained"
+                  variant="outlined"
+                  color="primary"
                 //onClick={commentUnmountModel}
                 >
                   Save
@@ -184,6 +186,7 @@ function Notes(props) {
         </div>
       </div>
       <div className={classes.table}>
+        <Paper className={classes.paper}>
         <Table tableHeaders={tableHeaders}>
           {
             props.notesSuccess
@@ -209,6 +212,7 @@ function Notes(props) {
                 </tr>
             )}
         </Table>
+        </Paper>
         {/* <Pagination
           activePage={parseInt(pageNo)}
           //itemsCountPerPage={parseInt(pageLimit)}
@@ -256,7 +260,7 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 'bold',
   },
   table: {
-    padding: '0px 25px'
+    padding: '0px 80px'
   },
   formRoot: {
     padding: 24
@@ -275,16 +279,5 @@ const useStyles = makeStyles(theme => ({
     marginLeft: "16px",
     minWidth: 120,
   },
-  button: {
-    color: "#FFFFFF",
-    backgroundColor: "#0086AD",
-    fontSize: "14px",
-    fontWeight: "bold",
-    lineHeight: "21px",
-    borderRadius: "4px",
-    marginLeft: "16px",
-    border: "1.6px solid #0086AD"
-  },
-
 }));
 

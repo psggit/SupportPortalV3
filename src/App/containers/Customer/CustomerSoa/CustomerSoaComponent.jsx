@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Table from "../../../components/table";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-//import Pagination from "../../../components/pagination";
+import Pagination from "../../../components/pagination";
 import Notification from "../../../components/notification";
 import Moment from "moment";
 import {
@@ -15,6 +15,7 @@ import {
 } from "../../../utils/helpers";
 import { useHistory } from "react-router-dom";
 //import Pagination from "@material-ui/lab/Pagination";
+import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles((theme) => ({
   navBar: {
@@ -40,7 +41,10 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
   },
   table: {
-    padding: "0px 25px",
+    padding: "0px 80px",
+  },
+  paper: {
+    //padding: 24,
   },
 }));
 
@@ -54,30 +58,30 @@ const soaTableHeaders = [
 ];
 
 function CustomerSoa(props) {
-  console.log("[CustomerSoa]", props);
+  console.log("[CustomerSoa]", props.errorMsg);
 
   const history = useHistory();
   const classes = useStyles();
 
-   const pageLimit = 20;
-  // const activePage = getQueryParamByName("activePage") || 1;
-  // const [isLoading, setLoading] = useState(false);
-  // const [pageNo, setPageNo] = useState(activePage);
-  // const [isError, setError] = useState(false);
-  // const [errorMessage, setErrorMessage] = useState("");
+  const pageLimit = 10;
+  const activePage = getQueryParamByName("activePage") || 1;
+  const [pageNo, setPageNo] = useState(activePage);
+  //const [isError, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const payload = {
       consumer_id: props.customerId,
-      limit: 10,
-      offset: 0,
+      limit: pageLimit,
+      offset: (pageNo - 1) * parseInt(pageLimit),
     };
     props.fetchCustomerSoaList(payload);
   }, []);
 
-  // useEffect(() => {
-  //   setErrorMessage("errrror");
-  // }, []);
+  useEffect(() => {
+    setErrorMessage(props.soaFail);
+  }, [props.soaFail]);
+
   // const handlePageChange = (pageObj) => {
   //   setPageNo(pageObj.activePage);
   //   const queryParamsObj = {
@@ -90,9 +94,9 @@ function CustomerSoa(props) {
   //   );
   // };
 
-  // const handleClose = () => {
-  //   setError(false);
-  // };
+  const handleClose = () => {
+    setErrorMessage(false);
+  };
 
   const handleCustomerDetail = () => {
     history.push("/customer-detail");
@@ -153,60 +157,56 @@ function CustomerSoa(props) {
         <div>Search</div>
       </div>
       <div className={classes.table}>
-        <Table tableHeaders={soaTableHeaders}>
-          {props.soaSuccess
-            ? props.soaList.consumer_soa.map((data) => {
-                return (
-                  <TableRow>
-                    <TableCell>{data.order_id}</TableCell>
-                    <TableCell>{data.type}</TableCell>
-                    <TableCell>{data.amount}</TableCell>
-                    <TableCell>{data.opening_balance}</TableCell>
-                    <TableCell>{data.closing_balance}</TableCell>
-                    <TableCell align="left">
-                      {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
-                    </TableCell>
-                  </TableRow>
-                );
-              })
-            : !props.soaSuccess && (
-                <tr>
-                  <td
-                    style={{ textAlign: "center", padding: "10px 0" }}
-                    colSpan="6"
-                  >
-                    <p style={{ fontWeight: "16px" }}>No records found</p>
-                  </td>
-                </tr>
-              )}
-        </Table>
+        <Paper className={classes.paper}>
+          <Table tableHeaders={soaTableHeaders}>
+            {props.soaSuccess
+              ? props.soaList.consumer_soa.map((data) => {
+                  return (
+                    <TableRow>
+                      <TableCell>{data.order_id}</TableCell>
+                      <TableCell>{data.type}</TableCell>
+                      <TableCell>{data.amount}</TableCell>
+                      <TableCell>{data.opening_balance}</TableCell>
+                      <TableCell>{data.closing_balance}</TableCell>
+                      <TableCell align="left">
+                        {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              : !props.soaSuccess && (
+                  <tr>
+                    <td
+                      style={{ textAlign: "center", padding: "10px 0" }}
+                      colSpan="6"
+                    >
+                      <p style={{ fontWeight: "16px" }}>No records found</p>
+                    </td>
+                  </tr>
+                )}
+          </Table>
+        </Paper>
         {/* {props.soaSuccess && (
-          <Pagination page={100} count={props.soaList.count} color="primary" />
-        )} */}
-
-        {/* {
-          props.soaSuccess &&
           <Pagination
             activePage={parseInt(pageNo)}
             //itemsCountPerPage={parseInt(pageLimit)}
             rowsPerPage={parseInt(pageLimit)}
-            count={props.soaList.consumer_soa.count}
-            setPage={handlePageChange}
+            count={props.soaList.count}
+            //setPage={handlePageChange}
             color="primary"
           />
-        } */}
-        {/* { isError &&
+        )} */}
+        {errorMessage && (
           <Notification
-            message={errorMessage}
+            message={props.errorMsg}
             messageType="error"
-            open={isError}
+            open={errorMessage}
             handleClose={handleClose}
           />
-        } */}
+        )}
       </div>
     </div>
   );
-  // }
 }
 
 CustomerSoa.propTypes = {
@@ -215,7 +215,9 @@ CustomerSoa.propTypes = {
   fetchCustomerSoaList: PropTypes.any,
   soaProgress: PropTypes.bool,
   soaSuccess: PropTypes.bool,
+  soaFail: PropTypes.bool,
   customerId: PropTypes.any,
+  errorMsg: PropTypes.any,
 };
 
 export { CustomerSoa };

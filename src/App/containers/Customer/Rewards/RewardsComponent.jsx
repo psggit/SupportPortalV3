@@ -13,8 +13,9 @@ import {
   getQueryUri,
 } from "../../../utils/helpers";
 import { useHistory } from "react-router-dom";
+import Paper from "@material-ui/core/Paper";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   navBar: {
     display: "flex",
     alignItems: "center",
@@ -38,7 +39,7 @@ const useStyles = makeStyles(theme => ({
     fontWeight: "bold",
   },
   table: {
-    padding: "0px 25px",
+    padding: "0px 80px",
   },
 }));
 
@@ -137,37 +138,39 @@ function Rewards(props) {
         <div>Search</div>
       </div>
       <div className={classes.table}>
-        <Table tableHeaders={tableHeaders}>
-          {props.rewardsSuccess
-            ? props.rewardsList.rewards.map((data) => {
-                return (
-              <TableRow>
-                    <TableCell>{data.order_id}</TableCell>
-                    <TableCell>{data.retailer_name}</TableCell>
-                    <TableCell>{data.id}</TableCell>
-                    <TableCell>{data.reward_source}</TableCell>
-                    <TableCell>{data.amount}</TableCell>
-                    <TableCell>{data.promo_code}</TableCell>
-                    <TableCell>{data.bank_rrn}</TableCell>
-                    <TableCell>{data.failure_reason}</TableCell>
-                    <TableCell align="left">
-                      {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
-                    </TableCell>
-                    <TableCell>{data.status}</TableCell>
-                  </TableRow>
-                );
-              })
-            : !props.rewardsSuccess && (
-                <tr>
-                  <td
-                    style={{ textAlign: "center", padding: "10px 0" }}
-                    colSpan="6"
-                  >
-                    <p style={{ fontWeight: "16px" }}>No records found</p>
-                  </td>
-                </tr>
-              )}
-        </Table>
+        <Paper className={classes.paper}>
+          <Table tableHeaders={tableHeaders}>
+            {props.rewardsSuccess
+              ? props.rewardsList.rewards.map((data) => {
+                  return (
+                    <TableRow>
+                      <TableCell>{data.order_id}</TableCell>
+                      <TableCell>{data.retailer_name}</TableCell>
+                      <TableCell>{data.id}</TableCell>
+                      <TableCell>{data.reward_source}</TableCell>
+                      <TableCell>{data.amount}</TableCell>
+                      <TableCell>{data.promo_code}</TableCell>
+                      <TableCell>{data.bank_rrn}</TableCell>
+                      <TableCell>{data.failure_reason}</TableCell>
+                      <TableCell align="left">
+                        {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
+                      </TableCell>
+                      <TableCell>{data.status}</TableCell>
+                    </TableRow>
+                  );
+                })
+              : !props.rewardsSuccess && (
+                  <tr>
+                    <td
+                      style={{ textAlign: "center", padding: "10px 0" }}
+                      colSpan="6"
+                    >
+                      <p style={{ fontWeight: "16px" }}>No records found</p>
+                    </td>
+                  </tr>
+                )}
+          </Table>
+        </Paper>
       </div>
     </div>
   );

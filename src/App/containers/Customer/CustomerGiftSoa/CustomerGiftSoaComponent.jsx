@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Table from "../../../components/table";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-import Pagination from "../../../components/pagination";
+//import Pagination from "../../../components/pagination";
 import Moment from "moment";
 import {
   getOffsetUsingPageNo,
@@ -12,6 +12,7 @@ import {
   getQueryUri,
 } from "../../../utils/helpers";
 import { useHistory } from "react-router-dom";
+import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles((theme) => ({
   navBar: {
@@ -37,8 +38,9 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
   },
   table: {
-    padding: "0px 25px",
+    padding: "0px 80px",
   },
+  paper: {},
 }));
 
 const tableHeaders = [
@@ -134,37 +136,39 @@ function CustomerGiftSoa(props) {
         <div>Search</div>
       </div>
       <div className={classes.table}>
-        <Table tableHeaders={tableHeaders}>
-          {props.giftSoaSuccess
-            ? props.giftSoaList.map((data) => {
-                return (
-                  // eslint-disable-next-line react/jsx-key
-                  <TableRow>
-                    <TableCell>{data.order_id}</TableCell>
-                    <TableCell>{data.TransactionType}</TableCell>
-                    <TableCell>{data.Amount}</TableCell>
-                    <TableCell>
-                      {data.CardNumber} And
-                      {data.CardAmount}
-                    </TableCell>
-                    <TableCell>{data.ResponseMessage}</TableCell>
-                    <TableCell align="left">
-                      {Moment(data.DateAtServer).format("DD/MM/YYYY h:mm A")}
-                    </TableCell>
-                  </TableRow>
-                );
-              })
-            : !props.giftSoaSuccess && (
-                <tr>
-                  <td
-                    style={{ textAlign: "center", padding: "10px 0" }}
-                    colSpan="6"
-                  >
-                    <p style={{ fontWeight: "16px" }}>No records found</p>
-                  </td>
-                </tr>
-              )}
-        </Table>
+        <Paper className={classes.paper}>
+          <Table tableHeaders={tableHeaders}>
+            {props.giftSoaSuccess
+              ? props.giftSoaList.map((data) => {
+                  return (
+                    // eslint-disable-next-line react/jsx-key
+                    <TableRow>
+                      <TableCell>{data.OrderID}</TableCell>
+                      <TableCell>{data.TransactionType}</TableCell>
+                      <TableCell>{data.Amount}</TableCell>
+                      <TableCell>
+                        {data.CardNumber} And
+                        {data.CardAmount}
+                      </TableCell>
+                      <TableCell>{data.ResponseMessage}</TableCell>
+                      <TableCell align="left">
+                        {Moment(data.DateAtServer).format("DD/MM/YYYY h:mm A")}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              : !props.giftSoaSuccess && (
+                  <tr>
+                    <td
+                      style={{ textAlign: "center", padding: "10px 0" }}
+                      colSpan="6"
+                    >
+                      <p style={{ fontWeight: "16px" }}>No records found</p>
+                    </td>
+                  </tr>
+                )}
+          </Table>
+        </Paper>
         {/* <Pagination
           activePage={parseInt(pageNo)}
           //itemsCountPerPage={parseInt(pageLimit)}

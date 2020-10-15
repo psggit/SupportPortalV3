@@ -30,7 +30,7 @@ const customerSOAReducer = createReducer(initialState, {
     soaProgress: false,
     soaFail: true,
     soaSuccess: false,
-    errorMsg: "Something went wrong, please try again",
+    errorMsg: "Something went wrong! Please contact tech",
   }),
   [fetchCustomerSoaInProgress]: (state) => {
     console.log("soa-progress");
