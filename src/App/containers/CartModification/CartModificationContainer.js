@@ -9,9 +9,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    
-  };
+  console.log(dispatch);
+  return {};
 };
 
 const CartModificationContainer = connect(
