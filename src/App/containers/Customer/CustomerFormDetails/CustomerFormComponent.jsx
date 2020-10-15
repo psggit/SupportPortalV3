@@ -89,12 +89,16 @@ function CustomerForm(props) {
   const [customerName, setCustomerName] = useState("");
   const [dob, setDob] = useState("");
   const [selectedValue, setSelectedValue] = useState("");
+  const [signupDate, setSignupDate] = useState("");
 
   useEffect(() => {
+    console.log("dates", props.orderInfo.customer_dob, props.orderInfo )
     setConsumerDetail(props.orderInfo);
     setCustomerName(props.orderInfo.customer_name);
-    setDob(props.orderInfo.customer_dob);
-    setSelectedValue(props.orderInfo.customer_gender)
+    setDob(props.orderInfo.customer_dob.slice(0, 10));
+    setSelectedValue(props.orderInfo.customer_gender);
+    //setSignupDate(props.orderInfo.signup_date.slice(0, 10));
+    setSignupDate(Moment(props.orderInfo.signup_date).format("DD/MM/YYYY"));
   }, []);
 
   const handleRadioChange = (event) => {
@@ -276,7 +280,7 @@ function CustomerForm(props) {
               className={classes.textField}
               type="date"
               variant="outlined"
-              value={consumerDetail.signup_date}
+              value={signupDate}
               size="small"
               disabled
             />
