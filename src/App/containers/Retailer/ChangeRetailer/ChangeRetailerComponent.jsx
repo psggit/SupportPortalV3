@@ -8,6 +8,7 @@ import TopBar from "../../../components/topBar";
 import { RetailerCardContainer } from "./RetailerCardContainer";
 import FullWidthTabs from "../../../components/menuBar";
 import { Tab } from "@material-ui/core";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,7 +64,7 @@ const ChangeRetailerComponent = () => {
   };
 
   const menuLabels = [
-    <Tab label="Back" onClick={handleBack} />,
+    <Tab label={<ArrowBackIcon />} onClick={handleBack} />,
     <Tab label="Change Retailer" onClick={handleRetailer} />,
   ];
 
