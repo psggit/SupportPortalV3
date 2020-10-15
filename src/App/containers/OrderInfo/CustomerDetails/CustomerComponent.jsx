@@ -16,7 +16,7 @@ import Moment from "moment";
 import { useHistory } from "react-router-dom";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   container: {
     display: "flex",
     justifyContent: "space-between",
@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
   moreButton: {
     marginLeft: "350px",
     marginTop: "-35px",
-  },
+  }
 }));
 
 const keysToRender = [
@@ -108,7 +108,11 @@ const RenderCustomerDetails = (props) => {
               <ListItemText
                 //primary={getTimestamp(item[keysToRender[index]])}
                 primary={
-                  item[keysToRender[index]] ? item[keysToRender[index]] : "-"
+                  item[keysToRender[index]] === item[keysToRender[4]]
+                    ? getTimestamp(item[keysToRender[index]])
+                    : item[keysToRender[index]]
+                    ? item[keysToRender[index]]
+                    : "-"
                 }
                 className={classes.ListItemTextRoot}
                 classes={{ root: classes.ListItemTextLabel }}

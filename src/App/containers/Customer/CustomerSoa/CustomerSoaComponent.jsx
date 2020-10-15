@@ -187,7 +187,13 @@ function CustomerSoa(props) {
           </Table>
         </Paper>
         {props.soaSuccess && (
-          <Pagination page={1} count={props.soaList.count/pageLimit} color="primary" />
+          <div className={classes.root}>
+            <Pagination
+              count={props.soaList.count / 10}
+              variant="outlined"
+              color="primary"
+            />
+          </div>
         )}
         {/* {props.soaSuccess && (
           <Pagination
