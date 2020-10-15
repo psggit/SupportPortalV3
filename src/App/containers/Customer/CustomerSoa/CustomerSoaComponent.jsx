@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Table from "../../../components/table";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-import Pagination from "../../../components/pagination";
+//import Pagination from "../../../components/pagination";
 import Notification from "../../../components/notification";
 import Moment from "moment";
 import {
@@ -14,7 +14,7 @@ import {
   getQueryUri,
 } from "../../../utils/helpers";
 import { useHistory } from "react-router-dom";
-//import Pagination from "@material-ui/lab/Pagination";
+import Pagination from "@material-ui/lab/Pagination";
 import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles((theme) => ({
@@ -82,17 +82,17 @@ function CustomerSoa(props) {
     setErrorMessage(props.soaFail);
   }, [props.soaFail]);
 
-  // const handlePageChange = (pageObj) => {
-  //   setPageNo(pageObj.activePage);
-  //   const queryParamsObj = {
-  //     activePage: pageObj.activePage,
-  //   };
-  //   history.pushState(
-  //     queryParamsObj,
-  //     "soa listing",
-  //     `/soa ${getQueryUri(queryParamsObj)}`
-  //   );
-  // };
+  const handlePageChange = () => {
+    setPageNo(activePage);
+    // const queryParamsObj = {
+    //   activePage: pageObj.activePage,
+    // };
+    // history.pushState(
+    //   queryParamsObj,
+    //   "soa listing",
+    //   `/soa ${getQueryUri(queryParamsObj)}`
+    // );
+  };
 
   const handleClose = () => {
     setErrorMessage(false);
@@ -122,7 +122,7 @@ function CustomerSoa(props) {
   };
 
   const handleBack = () => {
-    history.push("/order-details");
+    history.push("/order-info");
   };
 
   let loading = props.soaProgress;
@@ -186,6 +186,9 @@ function CustomerSoa(props) {
                 )}
           </Table>
         </Paper>
+        {props.soaSuccess && (
+          <Pagination page={1} count={props.soaList.count/pageLimit} color="primary" />
+        )}
         {/* {props.soaSuccess && (
           <Pagination
             activePage={parseInt(pageNo)}

@@ -137,7 +137,7 @@ function CustomerForm(props) {
   };
 
   const handleBack = () => {
-    history.push("/order-details");
+    history.push("/order-info");
   };
 
   return (
