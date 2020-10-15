@@ -8,94 +8,61 @@ import StepContent from "@material-ui/core/StepContent";
 import Typography from "@material-ui/core/Typography";
 import Moment from "moment";
 import PropTypes from "prop-types";
+import Timeline from '@material-ui/lab/Timeline';
+import TimelineItem from '@material-ui/lab/TimelineItem';
+import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
+import TimelineConnector from '@material-ui/lab/TimelineConnector';
+import TimelineContent from '@material-ui/lab/TimelineContent';
+import TimelineDot from '@material-ui/lab/TimelineDot';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    alignItems: "baseline",
     width: "100%",
     padding: "24px 0 24px 24px",
-    "& .MuiStepContent-root": {
-      marginLeft: 7,
-      marginTop: -4,
-      borderLeft: "1.6px solid #C7C7C7",
-      paddingLeft: 16,
-      "& p": {
-        padding: "16px 0 10px 0",
-        fontSize: 12,
-        color: "#757575",
-      },
-    },
-    "& .MuiStepConnector-vertical": {
+    height: "100vh",
+    overflowY: "auto",
+
+    '& .MuiTimelineItem-missingOppositeContent:before': {
       padding: 0,
-      marginLeft: 7,
-      borderLeft: "0.8px solid #C7C7C7",
+      flex: 0
     },
-    "& .MuiStepConnector-lineVertical": {
-      minHeight: 60,
-    },
-    "& .MuiStepper-root": {
-      padding: 0,
-    },
-    "& .MuiStep-root": {
-      marginTop: -4,
-    },
-    "& .MuiStepLabel-label.MuiStepLabel-active": {
-      color: "#010B13",
-      fontSize: 16,
-    },
-  },
-  progressLine: {
-    height: 25,
-    borderLeft: "1.6px solid #C7C7C7",
-    margin: "20px 0 0 7px",
+    '& .MuiTimelineDot-root': {
+      width: 16,
+      height: 16,
+      borderColor: "#02B133"
+    }
   },
   text: {
     fontSize: 16,
     fontWeight: "bold",
     paddingBottom: 24,
   },
-}));
+}))
 
-const useQontoStepIconStyles = makeStyles({
-  root: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  circle: {
-    width: 16,
-    height: 16,
-    borderRadius: "50%",
-    border: "2.4px solid #02B133",
-  },
-});
-
-const QontoStepIcon = (props) => {
-  const classes = useQontoStepIconStyles();
-
+const RenderTimeline = (props) => {
   return (
-    <div className={classes.root}>
-      <div className={classes.circle} />
-    </div>
-  );
-};
-
-const RenderStepper = (props) => {
-  return (
-    <Stepper orientation="vertical">
-      {props.steps.map((item, index) => (
-        <Step key={`${item.order_status}${index}`} active={true}>
-          <StepLabel StepIconComponent={QontoStepIcon}>
-            {item.order_status}
-          </StepLabel>
-          <StepContent>
-            <Typography>{Moment(item.time).format("D MMM hh:mm A")}</Typography>
-            <Typography>{item.message}</Typography>
-          </StepContent>
-        </Step>
-      ))}
-    </Stepper>
-  );
-};
+  <>
+      {
+        props.steps.map((item, index) => {
+          return (
+            <TimelineItem>
+              <TimelineSeparator>
+                <TimelineDot variant="outlined"  />
+                {props.steps.length !== index + 1 ? <TimelineConnector /> : ''}
+              </TimelineSeparator>
+              <TimelineContent>
+                {item.order_status}
+                <Typography>{Moment(item.time).format("D MMM hh:mm A")}</Typography>
+                <Typography>{item.message}</Typography>
+              </TimelineContent>
+            </TimelineItem>
+          )
+        })
+      }
+    </>
+  )
+}
 
 const OrderStatus = (props) => {
   const classes = useStyles();
@@ -107,10 +74,12 @@ const OrderStatus = (props) => {
       <Typography className={classes.text}>ETA: -</Typography>
       {props.orderInfo.length > 0 && (
         <>
-          <div className={classes.progressLine}></div>
-          <RenderStepper steps={props.orderInfo} />
+          <Timeline className={classes.root}>
+            <RenderTimeline steps={props.orderInfo} />
+          </Timeline>  
         </>
-      )}
+        )
+      }
     </Paper>
   );
 };
