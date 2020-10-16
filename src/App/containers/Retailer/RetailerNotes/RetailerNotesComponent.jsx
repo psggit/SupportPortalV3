@@ -13,6 +13,7 @@ import {
   getQueryParamByName,
   getQueryUri,
 } from "../../../utils/helpers";
+import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles((theme) => ({
   navBar: {
@@ -101,32 +102,34 @@ function RetailerNotesComponent(props) {
         </div>
       </div>
       <div className={classes.table}>
-        <Table tableHeaders={tableHeaders}>
-          {props.notesSuccess
-            ? props.notesList.orderNotes.map((data) => {
-                return (
-                  <TableRow>
-                    <TableCell>{data.order_id}</TableCell>
-                    <TableCell>{data.type}</TableCell>
-                    <TableCell>{data.notes}</TableCell>
-                    <TableCell>{data.created_by}</TableCell>
-                    <TableCell align="left">
-                      {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
-                    </TableCell>
-                  </TableRow>
-                );
-              })
-            : !props.notesSuccess && (
-                <tr>
-                  <td
-                    style={{ textAlign: "center", padding: "10px 0" }}
-                    colSpan="6"
-                  >
-                    <p style={{ fontWeight: "16px" }}>No records found</p>
-                  </td>
-                </tr>
-              )}
-        </Table>
+        <Paper className={classes.paper}>
+          <Table tableHeaders={tableHeaders}>
+            {props.notesSuccess && props.notesList.orderNotes !== null
+              ? props.notesList.orderNotes.map((data) => {
+                  return (
+                    <TableRow>
+                      <TableCell>{data.order_id}</TableCell>
+                      <TableCell>{data.type}</TableCell>
+                      <TableCell>{data.notes}</TableCell>
+                      <TableCell>{data.created_by}</TableCell>
+                      <TableCell align="left">
+                        {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              : !props.notesSuccess && (
+                  <tr>
+                    <td
+                      style={{ textAlign: "center", padding: "10px 0" }}
+                      colSpan="6"
+                    >
+                      <p style={{ fontWeight: "16px" }}>No records found</p>
+                    </td>
+                  </tr>
+                )}
+          </Table>
+        </Paper>
         {/* {props.notesSuccess && (
           <Pagination
             activePage={parseInt(pageNo)}

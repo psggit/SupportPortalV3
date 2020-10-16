@@ -95,6 +95,43 @@ export default function ActivityItem(props) {
   console.log("[ActivityItem]", mapArray);
   console.log("[keysToRender]", keysToRender);
 
+  if(mapArray === null) {
+    return (
+      <Card className={classes.rootCard}>
+        <CardContent>
+          <Typography variant="h5" className={classes.heading} gutterBottom>
+            {title}
+            {subtitle ? (
+              <CardActions >
+                {subtitle.map((item) => item)}
+              </CardActions>
+            ) : (
+                ""
+              )}
+          </Typography>
+          <ListItem
+            dense
+            disableGutters={true}
+            className={classes.ListItemRow}
+            classes={{ root: classes.ListItemRoot }}
+          >
+            <ListItemText
+              primary={"No data available"}
+              className={classes.ListItemTextRoot}
+              classes={{ root: classes.ListItemTextValue }}
+            />
+          </ListItem>
+        </CardContent>
+        {actions ? (
+          <CardActions className={classes.cardActions}>
+            {actions.map((item) => item)}
+          </CardActions>
+        ) : (
+            ""
+          )}
+      </Card>
+    ) }
+    {
   return (
     <Card className={classes.rootCard}>
       <CardContent>
@@ -145,4 +182,5 @@ export default function ActivityItem(props) {
       )}
     </Card>
   );
+  } 
 }
