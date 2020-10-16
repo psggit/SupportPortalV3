@@ -1,9 +1,9 @@
 import {
-  fetchCustomerSoaSuccessfull,
-  fetchCustomerSoaFailure,
-  fetchCustomerSoaInProgress,
+  fetchRewardSuccess,
+  fetchRewardFailure,
+  fetchRewardProgress,
 } from "./actions";
-import { consumerSoaAPI } from "../../../../utils/consumerSoaAPI";
+import { consumerRewardsAPI } from "../../../../utils/consumerRewardsAPI";
 
 const processResponse = () => {
   console.clear();
@@ -20,22 +20,22 @@ const processResponse = () => {
 const onSuccess = (dispatch) => {
   console.log("[onSuccess]");
   return (data) => {
-    dispatch(fetchCustomerSoaSuccessfull(data));
+    dispatch(fetchRewardSuccess(data));
   };
 };
 
 const onError = (dispatch) => {
   return (error) => {
-    dispatch(fetchCustomerSoaFailure(error));
+    dispatch(fetchRewardFailure(error));
   };
 };
 
-const fetchCustomerSoaList = (reqBody) => {
+const fetchRewardsList = (reqBody) => {
   console.clear();
   console.clear("fetchCustomerSoaList");
   return (dispatch) => {
-    dispatch(fetchCustomerSoaInProgress());
-    consumerSoaAPI(
+    dispatch(fetchRewardProgress());
+    consumerRewardsAPI(
       reqBody,
       processResponse(dispatch),
       onSuccess(dispatch),
@@ -44,4 +44,4 @@ const fetchCustomerSoaList = (reqBody) => {
   };
 };
 
-export { fetchCustomerSoaList };
+export { fetchRewardsList };

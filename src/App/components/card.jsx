@@ -43,6 +43,10 @@ const useStyles = makeStyles((theme) => ({
       "& .value": {
         width: "70%",
       },
+      "& .subheader": {
+        //width: "30%",
+        color: "#0086AD",
+      },
     },
   },
   cardActions: {
@@ -67,13 +71,24 @@ CustomCard.propTypes = {
   title: PropTypes.string,
   actions: PropTypes.array,
   children: PropTypes.any,
+  subheader: PropTypes.any,
 };
 export default function CustomCard(props) {
-  const { title, actions, children } = props;
+  const { title, actions, children, subheader } = props;
   const classes = useStyles();
   return (
     <Card className={classes.root}>
-      <CardHeader className={classes.cardHeader} title={title} />
+      <CardHeader
+        className={classes.cardHeader}
+        title={title}
+        subheader={
+          subheader ? (
+            <CardActions>{subheader.map((item) => item)}</CardActions>
+          ) : (
+            ""
+          )
+        }
+      />
       <CardContent className={classes.cardContent}>{children}</CardContent>
       {actions ? (
         <CardActions className={classes.cardActions}>

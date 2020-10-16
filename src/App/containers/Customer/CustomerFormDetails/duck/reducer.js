@@ -1,40 +1,44 @@
-// const initialState = {
-//   edit: {
-//     status: null,
-//     data: null,
-//     changed: null,
-//   }
-// }
+import { createReducer } from "@reduxjs/toolkit";
+import {
+  consumerUpdateSuccess,
+  consumerUpdateFailed,
+  consumerUpdateProgress,
+} from "./actions";
 
-// function editReducer(state = initialState.edit, action) {
-//   switch (action.type) {
-//     case constants.ADD_CHANGE:
-//       const newForm = { ...state.data };
-//       newForm[action.fieldName] = action.fieldValue;
-//       return {
-//         ...state,
-//         changed: true,
-//         data: newForm,
-//       };
-//     case constants.SET_UP_EDIT_FORM:
-//       return {
-//         ...state,
-//         changed: false,
-//         data: action.form,
-//       };
-//     case constants.EDIT_FORM_PENDING:
-//       return {
-//         ...state,
-//         status: constants.EDIT_FORM_PENDING,
-//       };
-//     case constants.EDIT_FORM_SUCCESS:
-//       return {
-//         ...state,
-//         changed: false,
-//         data: action.form,
-//         status: constants.EDIT_FORM_SUCCESS,
-//       };
-//     default:
-//       return state;
-//   }
-// }
+const initialState = {
+  updateConsumerData: null,
+  updateProgress: false,
+  updateFail: false,
+  updateSuccess: false,
+  errorMsg: "",
+};
+
+const customerUpdateReducer = createReducer(initialState, {
+  [consumerUpdateSuccess]: (state, data) => {
+    console.log("form-success", data);
+    return {
+      ...state,
+      updateProgress: false,
+      updateFail: false,
+      updateSuccess: true,
+      errorMsg: "",
+      updateConsumerData: data.payload,
+    };
+  },
+  [consumerUpdateFailed]: (state) => ({
+    ...state,
+    updateProgress: false,
+    updateFail: true,
+    updateSuccess: false,
+    errorMsg: "Something went wrong, please try again",
+  }),
+  [consumerUpdateProgress]: (state) => {
+    console.log("form-progress");
+    return {
+      ...state,
+      updateProgress: true,
+    };
+  },
+});
+
+export { customerUpdateReducer };

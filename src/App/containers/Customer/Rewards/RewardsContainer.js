@@ -1,15 +1,21 @@
 import { connect } from "react-redux";
 import { Rewards } from "./RewardsComponent";
-import { Reward } from "./mockData";
+import { fetchRewardsList } from "./duck";
 
-const mapStateToProps = () => {
+const mapStateToProps = (state) => {
+  console.log("[rewards-container]", state);
   return {
-    rewardsList: Reward,
+    rewardsList: state.rewards.rewardsList,
+    customerId: state.order.orderInfo.customerId,
+    rewardsProgress: state.rewards.rewardsProgress,
+    rewardsSuccess: state.rewards.rewardsSuccess,
   };
 };
 
-const mapDispatchToProps = () => {
-  return {};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchRewardsList: (payload) => dispatch(fetchRewardsList(payload)),
+  };
 };
 
 const RewardsContainer = connect(mapStateToProps, mapDispatchToProps)(Rewards);

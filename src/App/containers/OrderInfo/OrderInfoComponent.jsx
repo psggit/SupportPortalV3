@@ -77,8 +77,14 @@ const OrderInfoComponent = (props) => {
   const [issueType, setIssueType] = useState(null);
   const [issueDesc, setIssueDesc] = useState("");
   const [open, setOpen] = useState(false);
-
+  const [activeSection, setActiveSection] = useState("");
   console.log("useEffect 2", props);
+
+  const handleScroll = (id) => {
+    setActiveSection(id);
+    const element = document.getElementById(id);
+    element.scrollIntoView({ block: "start", behavior: "smooth" });
+  };
 
   const openDialog = (type) => {
     setIssueType(type);
@@ -169,7 +175,7 @@ const OrderInfoComponent = (props) => {
               <Grid item xs={6}>
                 {props.fetchOrderInfoSuccess && <CartContainer {...props} />}
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={6} id="section1">
                 {props.fetchOrderInfoSuccess && (
                   <>
                     <OrderDetailsCard
@@ -180,7 +186,7 @@ const OrderInfoComponent = (props) => {
                 )}
               </Grid>
             </Grid>
-            <Grid container spacing={4}>
+            <Grid container spacing={4} id="section2">
               <Grid item xs={12}>
                 {props.fetchOrderInfoSuccess && (
                   <CustomerContainer
@@ -190,7 +196,7 @@ const OrderInfoComponent = (props) => {
                 )}
               </Grid>
             </Grid>
-            <Grid container spacing={4}>
+            <Grid container spacing={4} id="section3">
               <Grid item xs={12}>
                 {props.fetchOrderInfoSuccess && (
                   <RetailerContainer
@@ -200,7 +206,7 @@ const OrderInfoComponent = (props) => {
                 )}
               </Grid>
             </Grid>
-            <Grid container spacing={4}>
+            <Grid container spacing={4} id="section4">
               <Grid item xs={12}>
                 {props.fetchOrderInfoSuccess && (
                   <DeliveryAgentContainer
@@ -218,10 +224,38 @@ const OrderInfoComponent = (props) => {
               flexDirection="column"
               border={1}
             >
-              <Button color="primary">O</Button>
+              {/* <Button color="primary">O</Button>
               <Button>C</Button>
               <Button>R</Button>
-              <Button>D</Button>
+              <Button>D</Button> */}
+              <Button
+                title="Order Detail"
+                className={activeSection === "section1" ? "active" : null}
+                onClick={() => handleScroll("section1")}
+              >
+                O
+              </Button>
+              <Button
+                title="Customer"
+                className={activeSection === "section2" ? "active" : null}
+                onClick={() => handleScroll("section2")}
+              >
+                C
+              </Button>
+              <Button
+                title="Retailer"
+                className={activeSection === "section3" ? "active" : null}
+                onClick={() => handleScroll("section3")}
+              >
+                R
+              </Button>
+              <Button
+                title="Delivery Agent"
+                className={activeSection === "section4" ? "active" : null}
+                onClick={() => handleScroll("section4")}
+              >
+                D
+              </Button>
             </Box>
           </Grid>
         </Grid>
