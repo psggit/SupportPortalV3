@@ -82,17 +82,17 @@ function CustomerSoa(props) {
     setErrorMessage(props.soaFail);
   }, [props.soaFail]);
 
-  const handlePageChange = () => {
-    setPageNo(activePage);
-    // const queryParamsObj = {
-    //   activePage: pageObj.activePage,
-    // };
-    // history.pushState(
-    //   queryParamsObj,
-    //   "soa listing",
-    //   `/soa ${getQueryUri(queryParamsObj)}`
-    // );
-  };
+  // const handlePageChange = () => {
+  //   setPageNo(activePage);
+  //   // const queryParamsObj = {
+  //   //   activePage: pageObj.activePage,
+  //   // };
+  //   // history.pushState(
+  //   //   queryParamsObj,
+  //   //   "soa listing",
+  //   //   `/soa ${getQueryUri(queryParamsObj)}`
+  //   // );
+  // };
 
   const handleClose = () => {
     setErrorMessage(false);

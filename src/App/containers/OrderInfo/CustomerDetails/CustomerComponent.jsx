@@ -54,10 +54,10 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "16px",
     minWidth: 120,
   },
-  moreButton: {
-    marginLeft: "200px",
-    marginTop: "-40px",
-  },
+  // moreButton: {
+  //   marginLeft: "200px",
+  //   marginTop: "-40px",
+  // },
 }));
 
 const keysToRender = [
@@ -87,7 +87,7 @@ const CustomerDetails = (props) => {
   const history = useHistory();
   const classes = useStyles();
 
-  const [customerDetailsData, setCustomerDetailsData] = useState([]);
+  //const [customerDetailsData, setCustomerDetailsData] = useState([]);
 
   const handleChange = () => {
     history.push("/customer-detail");
@@ -117,14 +117,6 @@ const CustomerDetails = (props) => {
     >
       Call
     </Button>,
-    <Button
-      className={classes.moreButton}
-      color="primary"
-      endIcon={<ChevronRightIcon />}
-      onClick={handleChange}
-    >
-      more
-    </Button>,
   ];
 
   const subheadAction = [
@@ -147,12 +139,6 @@ const CustomerDetails = (props) => {
     >
       more
     </Button>,
-  ];
-
-  const customerNotesAction = [
-    // <Button variant="outlined" color="primary">
-    //   Add
-    // </Button>,
   ];
 
   const keysToRenderInNotesCard = ["notes", "created_at"];

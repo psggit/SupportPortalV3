@@ -5,14 +5,6 @@ import { fetchConsumerNotes } from "../../OrderInfo/CustomerDetails/duck/Custome
 
 const mapStateToProps = (state) => {
   console.log("[notes-mapStateToProps]", state);
-  console.log(
-    "success",
-    state.order.customer.notesSuccess,
-    "progress",
-    state.order.customer.notesProgress,
-    "fail",
-    state.order.customer.notesFail
-  );
   return {
     notes: NotesList,
     orderInfo: state.order.orderInfo.orderInfo,

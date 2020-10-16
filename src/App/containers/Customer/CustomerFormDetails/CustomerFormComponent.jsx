@@ -1,10 +1,10 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import Moment from "moment";
-import { green } from "@material-ui/core/colors";
 import Radio from "@material-ui/core/Radio";
+import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 
 const BlueRadio = withStyles({
@@ -65,14 +65,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
   button: {
-    color: "#FFFFFF",
-    backgroundColor: "#0086AD",
-    fontSize: "14px",
-    fontWeight: "bold",
-    lineHeight: "21px",
-    borderRadius: "4px",
     marginLeft: "16px",
-    border: "1.6px solid #0086AD",
   },
   buttonContainer: {
     marginLeft: "500px",
@@ -92,7 +85,6 @@ function CustomerForm(props) {
   const [signupDate, setSignupDate] = useState("");
 
   useEffect(() => {
-    console.log("dates", props.orderInfo.customer_dob, props.orderInfo )
     setConsumerDetail(props.orderInfo);
     setCustomerName(props.orderInfo.customer_name);
     setDob(props.orderInfo.customer_dob.slice(0, 10));
@@ -127,12 +119,10 @@ function CustomerForm(props) {
   };
 
   const handleRewardChange = () => {
-    console.log("rewards");
     history.push("/rewards");
   };
 
   const handleSoaChange = () => {
-    console.log("soa");
     history.push("/soa");
   };
 
@@ -333,10 +323,20 @@ function CustomerForm(props) {
         </div>
 
         <div className={classes.buttonContainer}>
-          <Button className={classes.button} onClick={handleReset}>
+          <Button
+            className={classes.button}
+            onClick={handleReset}
+            variant="outlined"
+            color="primary"
+          >
             Reset
           </Button>
-          <Button className={classes.button} onClick={handleSave}>
+          <Button
+            className={classes.button}
+            onClick={handleSave}
+            variant="contained"
+            color="primary"
+          >
             Save
           </Button>
         </div>
@@ -344,5 +344,10 @@ function CustomerForm(props) {
     </div>
   );
 }
+
+CustomerForm.prototype = {
+  orderInfo: PropTypes.object,
+  updateConsumer: PropTypes.func,
+};
 
 export { CustomerForm };

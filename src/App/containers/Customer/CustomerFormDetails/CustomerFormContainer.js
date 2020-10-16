@@ -5,7 +5,6 @@ import { updateConsumer } from "./duck/formOperations";
 const mapStateToProps = (state) => {
   console.log("[FormContainer]", state.order.orderInfo.orderInfo);
   return {
-    // updateConsumerData: CustomerSOA,
     orderInfo: state.order.orderInfo.orderInfo,
   };
 };

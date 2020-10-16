@@ -7,9 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Table from '../../../components/table'
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import Pagination from '../../../components/pagination'
 import Moment from "moment"
-import { getOffsetUsingPageNo, getQueryParamByName, getQueryUri } from '../../../utils/helpers';
 import Button from '@material-ui/core/Button';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -31,20 +29,15 @@ function Notes(props) {
   const history = useHistory();
   const classes = useStyles();
 
-  const pageLimit = 2
-  const activePage = getQueryParamByName("activePage") || 1
-  const [isLoading, setLoading] = useState(false)
-  const [pageNo, setPageNo] = useState(activePage)
+  // const pageLimit = 2
+  // const activePage = getQueryParamByName("activePage") || 1
+  // const [isLoading, setLoading] = useState(false)
+  // const [pageNo, setPageNo] = useState(activePage)
 
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false)
   const [age, setAge] = useState('');
 
   useEffect(() => {
-    // const payload = {
-    //   order_id: props.orderInfo.order_id,
-    //   type: "consumer",
-    // };
-    // props.fetchConsumerNotes(payload);
     props.fetchConsumerNotes(props.orderInfo.order_id);
   }, []);
 
@@ -233,6 +226,7 @@ Notes.propTypes = {
   notesProgress: PropTypes.bool,
   notesSuccess: PropTypes.bool,
   customerId: PropTypes.any,
+  orderInfo: PropTypes.object,
 };
 
 export { Notes }

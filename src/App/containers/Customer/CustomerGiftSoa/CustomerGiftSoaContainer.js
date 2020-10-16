@@ -1,6 +1,5 @@
 import { connect } from "react-redux";
 import { CustomerGiftSoa } from "./CustomerGiftSoaComponent";
-import { CustomerGiftSOA } from "./mockData";
 import { fetchGiftSoaList } from "./duck/giftSoaOperations";
 
 const mapStateToProps = (state) => {

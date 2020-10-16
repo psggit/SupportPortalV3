@@ -6,11 +6,6 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 //import Pagination from "../../../components/pagination";
 import Moment from "moment";
-import {
-  getOffsetUsingPageNo,
-  getQueryParamByName,
-  getQueryUri,
-} from "../../../utils/helpers";
 import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 

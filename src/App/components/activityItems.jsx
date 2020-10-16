@@ -55,6 +55,9 @@ const useStyles = makeStyles((theme) => ({
   cardHeader: {
     "& .MuiCardHeader-content": {
       paddingBottom: 12,
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
       "& > span": {
         fontSize: 16,
         fontWeight: 600,
@@ -145,7 +148,17 @@ export default function ActivityItem(props) {
   return (
     <Card className={classes.root}>
       <CardContent>
-        <CardHeader className={classes.cardHeader} title={props.title} />
+        <CardHeader
+          className={classes.cardHeader}
+          title={props.title}
+          subheader={
+            subheader ? (
+              <CardActions>{subheader.map((item) => item)}</CardActions>
+            ) : (
+              ""
+            )
+          }
+        />
         {mapArray.map((value, index) => {
           let data = value;
           return (

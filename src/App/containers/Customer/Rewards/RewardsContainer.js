@@ -1,6 +1,5 @@
 import { connect } from "react-redux";
 import { Rewards } from "./RewardsComponent";
-import { Reward } from "./mockData";
 import { fetchRewardsList } from "./duck";
 
 const mapStateToProps = (state) => {

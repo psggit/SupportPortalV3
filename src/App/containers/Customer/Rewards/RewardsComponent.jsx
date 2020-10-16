@@ -5,13 +5,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Table from "../../../components/table";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-import Pagination from "../../../components/pagination";
+// import Pagination from "../../../components/pagination";
 import Moment from "moment";
-import {
-  getOffsetUsingPageNo,
-  getQueryParamByName,
-  getQueryUri,
-} from "../../../utils/helpers";
 import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 
@@ -182,6 +177,7 @@ Rewards.propTypes = {
   rewardsProgress: PropTypes.bool,
   rewardsSuccess: PropTypes.bool,
   customerId: PropTypes.any,
+  fetchRewardsList: PropTypes.func,
 };
 
 export { Rewards };
