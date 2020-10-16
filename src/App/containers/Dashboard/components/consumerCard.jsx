@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
@@ -68,9 +68,9 @@ const ConsumerCard = (props) => {
         <TextField
           fullWidth
           variant="outlined"
-          size="small"
           autoComplete="off"
           margin="normal"
+          size="small"
           label="Mobile Number"
           helperText={
             errorString.status && errorString.filterType == "consumer"
@@ -93,8 +93,8 @@ const ConsumerCard = (props) => {
           margin="normal"
           placeholder="Order ID"
           variant="outlined"
-          size="small"
           label="Order ID"
+          size="small"
           value={defValueOrderNo}
           inputProps={{ maxLength: 16 }}
           onChange={(event) =>
@@ -104,9 +104,9 @@ const ConsumerCard = (props) => {
         <TextField
           fullWidth
           margin="normal"
+          size="small"
           placeholder="Customer ID"
           variant="outlined"
-          size="small"
           label="Customer ID"
           value={defValueCustomerId}
           inputProps={{ maxLength: 10 }}
@@ -120,7 +120,6 @@ const ConsumerCard = (props) => {
           variant="outlined"
           color="primary"
           className={classes.marginLeft}
-          size="small"
           onClick={() => props.reset("consumer")}
           disabled={props.filterType === "consumer" && props.isResetDisabled}
         >
@@ -129,7 +128,6 @@ const ConsumerCard = (props) => {
         <Button
           variant="contained"
           color="primary"
-          size="small"
           disabled={
             errorString.filterType == "consumer" && props.isFetchDisabled
           }

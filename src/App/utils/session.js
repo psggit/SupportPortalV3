@@ -37,9 +37,8 @@ function getHasuraId(data) {
 }
 
 export function createSession(data) {
-  // console.log("hasure role", getHasuraRole(data));
+  // console.log("[CREATE SESSION]");
+  // console.log(data);
   localStorage.setItem("x-hasura-role", getHasuraRole(data));
   localStorage.setItem("hasura-id", getHasuraId(data));
-  // localStorage.setItem("hasura-id", 515947);
-  // localStorage.setItem("x-hasura-role", "support_admin");
 }

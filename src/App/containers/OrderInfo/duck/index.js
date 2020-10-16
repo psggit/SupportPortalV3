@@ -1,2 +1,8 @@
-export { fetchOrder, fetchCancelReason } from "./fetchOrderOperations";
+export {
+  fetchOrder,
+  fetchCancelReason,
+  fetchActivityLogs,
+  createNotes,
+  connectCall,
+} from "./fetchOrderOperations";
 export { orderInfoReducer } from "./reducer";

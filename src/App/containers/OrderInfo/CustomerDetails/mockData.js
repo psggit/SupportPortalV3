@@ -4,7 +4,7 @@
 //   "partial_delivery": "false",
 //   "slot_time": "",
 //   "customer_name": "Purva",
-//   "customer_id": "516004",
+//   // "customer_id": "516004",
 //   "customer_contact_number": "853001723",
 //   "CustomerAddressID": "107504",
 //   "customer_address": "Adyar 103,10/14, Karpagam Garden 5th Cross St, Karpagam Gardens, Adyar, Chennai, Tamil Nadu 600020, India  LANDMARK:Near Adyar",

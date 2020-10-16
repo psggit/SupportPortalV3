@@ -1,12 +1,20 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import { Snackbar, Button, IconButton } from "@material-ui/core/";
+import { Snackbar, IconButton } from "@material-ui/core/";
+import MuiAlert from "@material-ui/lab/Alert";
 import CloseIcon from "@material-ui/icons/Close";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    maxWidth: 600,
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -19,11 +27,12 @@ const useStyles = makeStyles((theme) => ({
 ErrorMsg.propTypes = {
   show: PropTypes.bool,
   message: PropTypes.string,
+  type: PropTypes.string,
 };
 
 export default function ErrorMsg(props) {
   const classes = useStyles();
-  const { message, show } = props;
+  const { message, show, type } = props;
   const [open, setOpen] = useState(show);
 
   const handleClose = (event, reason) => {
@@ -37,18 +46,16 @@ export default function ErrorMsg(props) {
   return (
     <div className={classes.root}>
       <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "center",
         }}
-        open={open}
-        autoHideDuration={6000}
-        onClose={handleClose}
-        message={message}
         action={
           <React.Fragment>
             <IconButton
-              size="small"
               aria-label="close"
               color="inherit"
               onClick={handleClose}
@@ -57,9 +64,11 @@ export default function ErrorMsg(props) {
             </IconButton>
           </React.Fragment>
         }
-      />
+      >
+        <Alert onClose={handleClose} severity={type}>
+          {message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
-
-//<Button color="secondary" size="small" onClick={handleClose}>CLOSE</Button>

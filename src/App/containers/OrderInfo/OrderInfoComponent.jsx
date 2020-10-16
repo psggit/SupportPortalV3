@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import Box from "@material-ui/core/Box";
+import { Box, Button, TextareaAutosize } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import TopBar from "../../components/topBar";
-import { CircularProgress } from "@material-ui/core";
-import { Backdrop } from "@material-ui/core";
-
 import { useHistory } from "react-router-dom";
 import { CartContainer } from "../Cart/CartContainer";
 import { OrderDetailsCard } from "./components/orderDetailsCard";
+import { CustomerContainer } from "./CustomerDetails/CustomerContainer";
 import { RetailerContainer } from "./RetailerDetails/RetailerContainer";
+import { OrderStatusContainer } from "./OrderStatus";
+import { DeliveryAgentContainer } from "./DeliveryAgent";
+import DialogComponent from "../../components/dialog";
+import Loading from "../../components/loading";
+import ErrorMsg from "../../components/errorMsg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,8 +21,11 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: theme.typography.body1,
   },
   boxContainer: {
-    margin: "0 auto",
-    fontFamily: theme.typography,
+    fontFamily: theme.typography.body1,
+  },
+  containerBox: {
+    width: "100%",
+    margin: 0,
   },
   card: {
     padding: theme.spacing(2),
@@ -39,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "16px",
     lineHeight: "22px",
   },
+  marginTop: {
+    marginTop: "25px",
+  },
 }));
 
 const OrderInfoComponent = (props) => {
@@ -49,85 +57,198 @@ const OrderInfoComponent = (props) => {
     if (props.orderId === null) {
       history.push("/dashboard");
     } else {
-      let payload = {
-        order_id: props.orderInfo.order_id,
-      };
-      payload = {
-        order_id: "50011189094739",
-      };
       props.fetchOrderInfo(props.orderId);
-      props.fetchCancelReason(payload);
     }
   }, []);
 
+  useEffect(() => {
+    // console.log("order_status_button", props.order.order_status_button);
+    if (props.fetchOrderInfoSuccess) {
+      let payload = {
+        order_id: props.orderId,
+      };
+      props.fetchCancelReason(payload);
+      const reqBody = { order_id: props.orderId, limit: 3, offset: 0 };
+      props.fetchActivityLogs(reqBody);
+    }
+  }, [props.fetchOrderInfoSuccess]);
+
   let loading = props.fetchOrderInfoProgress;
-  console.log("orderInfo", props);
+  const [issueType, setIssueType] = useState(null);
+  const [issueDesc, setIssueDesc] = useState("");
+  const [open, setOpen] = useState(false);
+
+  console.log("useEffect 2", props);
+
+  const openDialog = (type) => {
+    setIssueType(type);
+    if (type == null) {
+      setOpen(false);
+    } else {
+      setOpen(true);
+    }
+  };
+
+  const handleCall = (to) => {
+    //to
+    //from
+    const payload = {
+      to: to,
+      from: props.from,
+    };
+    props.connectCall(payload);
+  };
+
+  const updateNotes = () => {
+    let payload = {
+      order_id: props.orderId,
+      type: issueType,
+      notes: issueDesc,
+    };
+    props.createNotes(payload);
+    setOpen(false);
+    props.fetchOrderInfo(props.orderId);
+    props.fetchCancelReason(payload);
+  };
+
+  const dialogActions = [
+    <Button
+      variant="outlined"
+      color="primary"
+      key="closeDialog"
+      onClick={() => openDialog(null)}
+    >
+      Cancel
+    </Button>,
+    <Button
+      variant="contained"
+      color="primary"
+      key="createIssue"
+      onClick={() => updateNotes()}
+    >
+      Save
+    </Button>,
+  ];
+
   if (loading) {
-    return (
-      <Box>
-        <Backdrop open={true}>
-          <CircularProgress />
-        </Backdrop>
-      </Box>
-    );
+    return <Loading message="Loading..." />;
   }
 
   return (
-    <Container component="main" className={classes.root}>
+    <div className={classes.root}>
       <TopBar />
+      {open && (
+        <DialogComponent
+          title="ADD NOTE"
+          subtitle={`Order ID: ` + props.orderId}
+          actions={dialogActions}
+          issueDesc={issueDesc}
+          change={setIssueDesc}
+          openDialog={openDialog}
+        >
+          <TextareaAutosize
+            id="outlined-textarea"
+            placeholder="Add note here"
+            multiline
+            rowsMax={4}
+            variant="outlined"
+            size="small"
+            value={issueDesc}
+            fullWidth
+            onChange={(event) => setIssueDesc(event.target.value)}
+          />
+        </DialogComponent>
+      )}
       <Box className={classes.boxContainer}>
-        <Grid container>
-          <Grid item xs={2}>
-            <p>Order Tracking component</p>
+        <Grid container spacing={4} className={classes.containerBox}>
+          <Grid item xs={3}>
+            {props.fetchOrderInfoSuccess && <OrderStatusContainer />}
           </Grid>
-          <Grid item xs={10}>
-            <Grid container spacing={4}>
+          <Grid item xs={8}>
+            <Grid container spacing={4} className={classes.marginTop}>
               <Grid item xs={6}>
-                <CartContainer {...props} />
+                {props.fetchOrderInfoSuccess && <CartContainer {...props} />}
               </Grid>
               <Grid item xs={6}>
-                {/* {props.fetchCancelReasonSuccess ? (
-                  <OrderDetailsCard {...props} />
-                ) : null} */}
-              </Grid>
-            </Grid>
-            <Grid container spacing={4}>
-              <Grid item xs={6}>
-                Customer Details
-              </Grid>
-              <Grid item xs={6}>
-                Customer Notes
+                {props.fetchOrderInfoSuccess && (
+                  <>
+                    <OrderDetailsCard
+                      {...props}
+                      buttonState={!props.order.order_status_button}
+                    />
+                  </>
+                )}
               </Grid>
             </Grid>
             <Grid container spacing={4}>
               <Grid item xs={12}>
-                <RetailerContainer />
+                {props.fetchOrderInfoSuccess && (
+                  <CustomerContainer
+                    openDialog={openDialog}
+                    handleCall={handleCall}
+                  />
+                )}
               </Grid>
             </Grid>
             <Grid container spacing={4}>
-              <Grid item xs={6}>
-                Delivery Agent Details
+              <Grid item xs={12}>
+                {props.fetchOrderInfoSuccess && (
+                  <RetailerContainer
+                    openDialog={openDialog}
+                    handleCall={handleCall}
+                  />
+                )}
               </Grid>
-              <Grid item xs={6}>
-                Delivery Agent Notes
+            </Grid>
+            <Grid container spacing={4}>
+              <Grid item xs={12}>
+                {props.fetchOrderInfoSuccess && (
+                  <DeliveryAgentContainer
+                    openDialog={openDialog}
+                    handleCall={handleCall}
+                  />
+                )}
               </Grid>
             </Grid>
           </Grid>
+          <Grid item xs={1}>
+            <Box
+              display="flex"
+              alignItems="flex-end"
+              flexDirection="column"
+              border={1}
+            >
+              <Button color="primary">O</Button>
+              <Button>C</Button>
+              <Button>R</Button>
+              <Button>D</Button>
+            </Box>
+          </Grid>
         </Grid>
       </Box>
-    </Container>
+      {props.connectCallSuccess && (
+        <ErrorMsg show={true} message={props.successMsg} type="success" />
+      )}
+    </div>
   );
 };
 
 OrderInfoComponent.propTypes = {
   fetchOrderInfo: PropTypes.func,
   fetchCancelReason: PropTypes.func,
+  fetchActivityLogs: PropTypes.func,
   cancelReasons: PropTypes.object,
   fetchOrderInfoSuccess: PropTypes.bool,
   fetchCancelReasonSuccess: PropTypes.bool,
-  orderId: PropTypes.any,
-  orderInfo: PropTypes.object,
   fetchOrderInfoProgress: PropTypes.bool,
+  fetchCancelReasonProgress: PropTypes.bool,
+  orderId: PropTypes.any,
+  order: PropTypes.object,
+  createNotes: PropTypes.func,
+  connectCall: PropTypes.func,
+  from: PropTypes.number,
+  connectCallSuccess: PropTypes.bool,
+  successMsg: PropTypes.string,
 };
 
 export { OrderInfoComponent };

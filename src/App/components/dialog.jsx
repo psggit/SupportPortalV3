@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -7,16 +7,16 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   dialogBody: {
     fontWeight: "normal",
     fontSize: "16px",
     lineHeight: "19px",
-    margin: "0",
+    margin: "0 0 20px",
   },
   dialogTitle: {
     fontWeight: "600",
-    marginBottom: 22,
+    marginBottom: 20,
     padding: 0,
     "& h2": {
       fontSize: 16,
@@ -28,11 +28,23 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     width: "100%",
   },
+  dialogFooter: {
+    padding: 0,
+    paddingTop: "24px",
+  },
 }));
 
 const DialogComponent = (props) => {
   const classes = useStyles();
-  const { title, subtitle, children, actions } = props;
+  let { title, subtitle, actions, children, change } = props;
+  useEffect(() => {
+    // console.log("componentDidMount");
+
+    return () => {
+      // console.log("componentWillUnmount");
+      change("");
+    };
+  }, []);
   return (
     <Dialog
       open={true}
@@ -52,7 +64,7 @@ const DialogComponent = (props) => {
               {subtitle}
             </DialogContentText>
           )}
-          {children && children}
+          {children}
         </DialogContent>
         <DialogActions className={classes.dialogFooter}>
           {actions.map((item) => item)}
@@ -66,6 +78,9 @@ DialogComponent.propTypes = {
   title: PropTypes.string,
   subtitle: PropTypes.string,
   actions: PropTypes.array,
+  children: PropTypes.any,
+  issueDesc: PropTypes.string,
+  change: PropTypes.any,
 };
 
 export default DialogComponent;

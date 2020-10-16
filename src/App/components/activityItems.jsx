@@ -4,10 +4,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
   Card,
   CardContent,
-  CardActions,
-  Typography,
   ListItem,
   ListItemText,
+  Button,
+  CardActions,
+  Typography
 } from "@material-ui/core";
 import PropTypes from "prop-types";
 import Moment from "moment";
@@ -17,20 +18,6 @@ const getTimestamp = (timestamp) => {
 };
 
 const useStyles = makeStyles((theme) => ({
-  rootCard: {
-    fontFamily: theme.typography.fontFamily,
-    padding: 24,
-    width: 520,
-    "& .MuiCardHeader-root": {
-      padding: 0,
-    },
-    "& .MuiCardContent-root": {
-      padding: 0,
-    },
-  },
-  root: {
-    flexGrow: 1,
-  },
   card: {
     marginTop: theme.spacing(4),
   },
@@ -55,9 +42,9 @@ const useStyles = makeStyles((theme) => ({
   },
   ListItemRootTitle: {
     width: "30%",
-    fontSize: 16,
-    fontWeight: "bold",
+    fontSize: 12,
     color: "#606060",
+    textAlign: "right",
   },
   ListItemTextRoot: {
     wordBreak: "break-word",
@@ -68,36 +55,50 @@ const useStyles = makeStyles((theme) => ({
   ListItemRow: {
     borderBottom: "1px solid #E5E5E5",
   },
+  root: {
+    fontFamily: theme.typography.fontFamily,
+    padding: 24,
+    alignSelf: "baseline",
+    boxShadow: "none",
+    "& .MuiCardHeader-root": {
+      padding: 0,
+    },
+    "& .MuiCardContent-root": {
+      padding: 0,
+    },
+    "& .MuiCardActions-root": {
+      padding: "8px 0",
+    },
+  },
   cardActions: {
     display: "flex",
     justifyContent: "flex-end",
-  },
-  addMorebutton: {
-    width: "30%",
   },
 }));
 
 ActivityItem.propTypes = {
   arr: PropTypes.array,
   keysToRender: PropTypes.array,
-  actions: PropTypes.array,
-  subtitle: PropTypes.array,
+  click: PropTypes.any,
+  issueType: PropTypes.string,
   title: PropTypes.string,
+  subtitle: PropTypes.array,
 };
 
 export default function ActivityItem(props) {
   const classes = useStyles();
-  const mapArray = props.arr;
-  const title = props.title;
-  const actions = props.actions;
-  const subtitle = props.subtitle;
+  let mapArray = props.arr;
+  if (mapArray && mapArray.length > 3) {
+    mapArray = mapArray.slice(0, 3);
+  }
   const keysToRender = props.keysToRender;
-  console.log("[ActivityItem]", mapArray);
-  console.log("[keysToRender]", keysToRender);
+  const type = props.issueType;
+  const subtitle = props.subtitle;
+  const title = props.title;
 
-  if(mapArray === null) {
+  if (mapArray === null) {
     return (
-      <Card className={classes.rootCard}>
+      <Card className={classes.root}>
         <CardContent>
           <Typography variant="h5" className={classes.heading} gutterBottom>
             {title}
@@ -122,18 +123,21 @@ export default function ActivityItem(props) {
             />
           </ListItem>
         </CardContent>
-        {actions ? (
-          <CardActions className={classes.cardActions}>
-            {actions.map((item) => item)}
-          </CardActions>
-        ) : (
-            ""
-          )}
+        <CardActions className={classes.cardActions}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => props.click(type)}
+          >
+            Add
+          </Button>
+        </CardActions>
       </Card>
-    ) }
-    {
+    );
+  }
+
   return (
-    <Card className={classes.rootCard}>
+    <Card className={classes.root}>
       <CardContent>
         <Typography variant="h5" className={classes.heading} gutterBottom>
           {title}
@@ -144,13 +148,13 @@ export default function ActivityItem(props) {
           ) : (
               ""
             )}
-        </Typography>
+        </Typography>    
         {mapArray.map((value, index) => {
           let data = value;
           return (
             <ListItem
               dense
-              disableGutters
+              disableGutters={true}
               className={classes.ListItemRow}
               classes={{ root: classes.ListItemRoot }}
               key={index}
@@ -160,11 +164,15 @@ export default function ActivityItem(props) {
                   keyValue == "created_at"
                     ? getTimestamp(data[keyValue])
                     : data[keyValue];
+                let listClass =
+                  keyValue == "created_at"
+                    ? classes.ListItemRootTitle
+                    : classes.ListItemTextRoot;
                 return (
                   <ListItemText
                     key={ind}
                     primary={primaryValue}
-                    className={classes.ListItemTextRoot}
+                    className={listClass}
                     classes={{ root: classes.ListItemTextValue }}
                   />
                 );
@@ -173,14 +181,15 @@ export default function ActivityItem(props) {
           );
         })}
       </CardContent>
-      {actions ? (
-        <CardActions className={classes.cardActions}>
-          {actions.map((item) => item)}
-        </CardActions>
-      ) : (
-        ""
-      )}
+      <CardActions className={classes.cardActions}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => props.click(type)}
+        >
+          Add
+        </Button>
+      </CardActions>
     </Card>
   );
-  } 
-}
+  };

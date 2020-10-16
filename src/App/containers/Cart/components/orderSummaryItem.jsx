@@ -32,9 +32,10 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
   ListItemRootTitle: {
-    width: "100%",
+    width: "auto",
     fontSize: 16,
     fontWeight: "bold",
+    flex: "none",
   },
   ListItemTextRoot: {
     wordBreak: "break-word",
@@ -146,38 +147,9 @@ const OrderSummaryItem = (props) => {
 
 OrderSummaryItem.propTypes = {
   title: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.any,
   type: PropTypes.string,
   children: PropTypes.any,
 };
 
 export { OrderSummaryItem };
-
-{
-  /* <ListItem
-          classes={{ root: classes.ListItemRoot }}
-          dense
-          disableGutters
-          button={true}
-          onClick={handleClick5}
-        >
-          <ListItemText
-            primary="Additional Charges:"
-            className={classes.ListItemTextRoot}
-            classes={{ root: classes.ListItemTextLabel }}
-          />
-          {open5 ? <ExpandLess /> : <ExpandMore />}
-          <ListItemText
-            primary={props.orderInfo.total_additional_fee}
-            className={classes.ListItemTextRoot}
-            classes={{ root: classes.ListItemTextValue }}
-          />
-        </ListItem>
-        <Collapse in={open5} timeout="auto" unmountOnExit>
-          <List classes={{ root: classes.ListItemRoot }} dense disableGutters>
-            <ListItem>
-              <ListItemText primary="Starred" />
-            </ListItem>
-          </List>
-        </Collapse> */
-}
