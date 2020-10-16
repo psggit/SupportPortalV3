@@ -32,8 +32,6 @@ const useStyles = makeStyles(() => ({
 const OrderDetailsComponent = (props) => {
   const history = useHistory();
   useEffect(() => {
-    // props.selectOrder(50011333399945);
-    // console.log("[order details component] ", props.orderData);
     if (props.orderData === null) {
       history.push("/dashboard");
     } else {
@@ -94,7 +92,6 @@ const OrderDetailsComponent = (props) => {
 
   const selectOrderId = (event, orderId) => {
     props.selectOrder(orderId);
-    console.log("selectOrderId ", orderId, props);
     history.push("/order-info");
   };
 
@@ -114,14 +111,14 @@ const OrderDetailsComponent = (props) => {
           <Table aria-label="order table" size="small">
             <TableHead>
               <TableRow>
-                <TableCell align="right">Order ID</TableCell>
-                <TableCell align="right">Date & Time</TableCell>
-                <TableCell align="right">Order Status</TableCell>
-                <TableCell align="right">Consumer ID</TableCell>
-                <TableCell align="right">Consumer Name</TableCell>
-                <TableCell align="right">Consumer Mobile</TableCell>
-                <TableCell align="right">Retailer ID</TableCell>
-                <TableCell align="right">Retailer Name</TableCell>
+                <TableCell align="center">Order ID</TableCell>
+                <TableCell align="center">Date & Time</TableCell>
+                <TableCell align="center">Order Status</TableCell>
+                <TableCell align="center">Consumer ID</TableCell>
+                <TableCell align="center">Consumer Name</TableCell>
+                <TableCell align="center">Consumer Mobile</TableCell>
+                <TableCell align="center">Retailer ID</TableCell>
+                <TableCell align="center">Retailer Name</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -129,7 +126,7 @@ const OrderDetailsComponent = (props) => {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => (
                   <TableRow key={row.order_id}>
-                    <TableCell align="right">
+                    <TableCell align="center">
                       <Button
                         onClick={(event) => selectOrderId(event, row.order_id)}
                         className={classes.btn}
@@ -137,17 +134,17 @@ const OrderDetailsComponent = (props) => {
                         {row.order_id}
                       </Button>
                     </TableCell>
-                    <TableCell align="right">
+                    <TableCell align="center">
                       {formatDate(row.date_and_time)}
                     </TableCell>
-                    <TableCell align="right">{row.order_status}</TableCell>
-                    <TableCell align="right">{row.consumer_id}</TableCell>
-                    <TableCell align="right">{row.consumer_name}</TableCell>
-                    <TableCell align="right">
+                    <TableCell align="center">{row.order_status}</TableCell>
+                    <TableCell align="center">{row.consumer_id}</TableCell>
+                    <TableCell align="center">{row.consumer_name}</TableCell>
+                    <TableCell align="center">
                       {row.consumer_contact_number}
                     </TableCell>
-                    <TableCell align="right">{row.retailer_id}</TableCell>
-                    <TableCell align="right">{row.retailer_name}</TableCell>
+                    <TableCell align="center">{row.retailer_id}</TableCell>
+                    <TableCell align="center">{row.retailer_name}</TableCell>
                   </TableRow>
                 ))}
             </TableBody>

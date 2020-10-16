@@ -2,21 +2,17 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-key */
 import React, { useEffect, useState } from "react";
-import CustomerDetailsCard from "../../../components/card";
-import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import { CircularProgress } from "@material-ui/core";
+import DetailsCard from "../../../components/orderInfoCard";
+import { Button, Grid, CircularProgress } from "@material-ui/core";
 import ActivityItem from "../../../components/activityItems";
 import { getListOfDataObjects } from "../../../utils/helpers";
-import Moment from "moment";
 import { useHistory } from "react-router-dom";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+// import CustomerDetailsCard from "../../../components/card";
+import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     justifyContent: "space-between",
@@ -61,7 +57,7 @@ const useStyles = makeStyles(theme => ({
   moreButton: {
     marginLeft: "350px",
     marginTop: "-35px",
-  }
+  },
 }));
 
 const keysToRender = [
@@ -87,43 +83,6 @@ const keyMap = {
   customer_address: "Address",
 };
 
-const getTimestamp = (timestamp) => {
-  console.log("time", timestamp);
-  return Moment(timestamp).format("DD/MM/YYYY");
-};
-
-const RenderCustomerDetails = (props) => {
-  const classes = useStyles();
-  return (
-    <React.Fragment>
-      <List>
-        {props.customerDetails.map((item, index) => {
-          return (
-            <ListItem classes={{ root: classes.ListCustomerItem }}>
-              <ListItemText
-                primary={keyMap[keysToRender[index]]}
-                className={classes.ListItemTextRoot}
-                classes={{ root: classes.ListItemTextLabel }}
-              />
-              <ListItemText
-                //primary={getTimestamp(item[keysToRender[index]])}
-                primary={
-                  item[keysToRender[index]] === item[keysToRender[4]]
-                    ? getTimestamp(item[keysToRender[index]])
-                    : item[keysToRender[index]]
-                    ? item[keysToRender[index]]
-                    : "-"
-                }
-                className={classes.ListItemTextRoot}
-                classes={{ root: classes.ListItemTextLabel }}
-              />
-            </ListItem>
-          );
-        })}
-      </List>
-    </React.Fragment>
-  );
-};
 
 const CustomerDetails = (props) => {
   const history = useHistory();
@@ -139,26 +98,34 @@ const CustomerDetails = (props) => {
     history.push("/notes");
   };
 
-  useEffect(() => {
-    const payload = {
-      order_id: props.orderInfo.order_id,
-      type: "consumer",
-    };
-    props.fetchConsumerNotes(payload);
-  }, []);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    const customerDetails = getListOfDataObjects(props.orderInfo, keysToRender);
-    setCustomerDetailsData(customerDetails);
+    const details = getListOfDataObjects(props.orderInfo, keysToRender);
+    setData(details);
+    props.fetchConsumerNotes(props.orderInfo.order_id);
   }, []);
 
   const customerAction = [
     <Button variant="outlined" color="primary">
       Message
     </Button>,
-    <Button variant="contained" color="primary">
+    <Button
+      variant="contained"
+      color="primary"
+      key="unassignBtn"
+      onClick={() => props.handleCall(props.orderInfo.customer_contact_number)}
+    >
       Call
     </Button>,
+    <Button
+    className={classes.moreButton}
+    color="primary"
+    endIcon={<ChevronRightIcon />}
+    onClick={handleChange}
+  >
+    more
+  </Button>,
   ];
 
   const subheadAction = [
@@ -197,35 +164,42 @@ const CustomerDetails = (props) => {
   }
 
   return (
-    <div className={classes.container}>
-      <CustomerDetailsCard
-        title="Customer Details"
-        actions={customerAction}
-        subheader={subheadAction}
-      >
-        <RenderCustomerDetails customerDetails={customerDetailsData} />
-      </CustomerDetailsCard>
-      <CustomerDetailsCard
-        title="Customer Notes"
-        actions={customerNotesAction}
-        subheader={subheadNotesAction}
-      >
-        {props.notesSuccess && (
-          <ActivityItem
-            arr={props.customerNotes.orderNotes}
-            keysToRender={keysToRenderInNotesCard}
-          />
-        )}
-        {props.notesProgress && <CircularProgress />}
-      </CustomerDetailsCard>
-    </div>
+    <Grid container spacing={4}>
+      <Grid item xs={6}>
+        <DetailsCard
+          title="CUSTOMER DETAILS"
+          actions={customerAction}
+          renderArray={data}
+          keyMap={keyMap}
+          keysToRender={keysToRender}
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <>
+          {props.fetchSuccess && (
+            <ActivityItem
+              arr={props.customerNotes.orderNotes}
+              keysToRender={keysToRenderInNotesCard}
+              title={"CUSTOMER NOTES"}
+              issueType={"customer"}
+              click={props.openDialog}
+            />
+          )}
+          {props.fetchProgress && <CircularProgress />}
+        </>
+      </Grid>
+    </Grid>
   );
 };
+
 CustomerDetails.propTypes = {
   fetchConsumerNotes: PropTypes.func,
-  orderInfo: PropTypes.object,
   customerNotes: PropTypes.object,
-  notesSuccess: PropTypes.bool,
-  notesProgress: PropTypes.bool,
+  orderInfo: PropTypes.object,
+  fetchSuccess: PropTypes.bool,
+  fetchProgress: PropTypes.bool,
+  openDialog: PropTypes.any,
+  handleCall: PropTypes.func,
 };
+
 export { CustomerDetails };

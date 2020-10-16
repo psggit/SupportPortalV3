@@ -5,14 +5,39 @@ import {
   fetchCancelReasonProgress,
   fetchCancelReasonFailure,
   fetchCancelReasonSuccess,
+  fetchActivityLogsProgress,
+  fetchActivityLogsFailed,
+  fetchActivityLogsSuccess,
+  createNotesProgress,
+  createNotesFailure,
+  createNotesSuccess,
+  connectCallProgress,
+  connectCallFailed,
+  connectCallSuccess,
 } from "./actions";
 
 import { selectOrder } from "../../Dashboard/duck";
-import { orderInfoAPI, cancelReasonAPI } from "../../../utils";
+import {
+  orderInfoAPI,
+  cancelReasonAPI,
+  acitivityLogsAPI,
+  createNotesAPI,
+  callAPI,
+} from "../../../utils";
 
 const processResponse = () => {
   return (res) => {
     if (res.status === 200) {
+      return res.json();
+    } else {
+      throw new Error("Something went wrong, try again");
+    }
+  };
+};
+
+const processResponseCall = () => {
+  return (res) => {
+    if (res.status === 204) {
       return res.json();
     } else {
       throw new Error("Something went wrong, try again");
@@ -69,4 +94,77 @@ const fetchCancelReason = (payload) => {
   };
 };
 
-export { fetchOrder, fetchCancelReason };
+const onSuccessNotes = (dispatch) => {
+  return (data) => {
+    dispatch(createNotesSuccess(data));
+  };
+};
+
+const onErrorNotes = (dispatch) => {
+  return (err) => {
+    dispatch(createNotesFailure(err));
+  };
+};
+
+const createNotes = (payload) => {
+  return (dispatch) => {
+    dispatch(createNotesProgress());
+    createNotesAPI(
+      payload,
+      processResponse(dispatch),
+      onSuccessNotes(dispatch),
+      onErrorNotes(dispatch)
+    );
+  };
+};
+
+const onSuccessLogs = (dispatch) => {
+  console.log("[onSuccessLogs]");
+  return (data) => {
+    dispatch(fetchActivityLogsSuccess(data));
+  };
+};
+
+const onErrorLogs = (dispatch) => {
+  return (err) => {
+    console.log("[onErrorLogs]", err);
+    dispatch(fetchActivityLogsFailed(err));
+  };
+};
+
+const fetchActivityLogs = (reqBody) => {
+  console.log("fetchActivityLogs");
+  return (dispatch) => {
+    dispatch(fetchActivityLogsProgress());
+    acitivityLogsAPI(reqBody, processResponse, onSuccessLogs, onErrorLogs);
+  };
+};
+
+const onSuccessCall = (dispatch) => {
+  return (data) => {
+    console.log("[onSuccessCall]");
+    dispatch(connectCallSuccess(data));
+  };
+};
+
+const onErrorCall = (dispatch) => {
+  return (err) => {
+    console.log("[onErrorCall]", err);
+    dispatch(connectCallFailed(err));
+  };
+};
+
+const connectCall = (reqBody) => {
+  return (dispatch) => {
+    dispatch(connectCallProgress());
+    callAPI(reqBody, processResponseCall, onSuccessCall, onErrorCall);
+  };
+};
+
+export {
+  fetchOrder,
+  fetchCancelReason,
+  fetchActivityLogs,
+  createNotes,
+  connectCall,
+};

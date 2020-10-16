@@ -1,3 +1,7 @@
 export { homeReducer } from "./reducer";
-export { fetchOrderDetails } from "./dashboardOperations";
+export {
+  fetchOrderDetails,
+  preponeOrder,
+  fetchDeliveryStatus,
+} from "./dashboardOperations";
 export { selectOrder } from "./actions";

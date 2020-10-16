@@ -4,12 +4,13 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import { makeStyles } from "@material-ui/core/styles";
+
 import PropTypes from "prop-types";
 const useStyles = makeStyles((theme) => ({
   root: {
     fontFamily: theme.typography.fontFamily,
     padding: 24,
-    width: 520,
+    boxShadow: "none",
     "& .MuiCardHeader-root": {
       padding: 0,
     },
@@ -52,7 +53,20 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "flex-end",
   },
+  ListCustomerItem: {
+    color: "#606060",
+  },
+  ListItemTextRoot: {
+    wordBreak: "break-word",
+  },
+  ListItemTextLabel: {
+    width: "70%",
+  },
+  ListItemTextValue: {
+    width: "30%",
+  },
 }));
+
 CustomCard.propTypes = {
   title: PropTypes.string,
   actions: PropTypes.array,
