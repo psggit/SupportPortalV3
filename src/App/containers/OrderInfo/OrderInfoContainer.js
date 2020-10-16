@@ -9,7 +9,7 @@ import {
 } from "../OrderInfo/duck";
 
 const mapStateToProps = (state) => {
-  // console.log("mapStateToProps", state);
+  console.log("mapStateToProps", state);
   return {
     orderId: state.home.orderId,
     order: state.order.orderInfo.orderDetails,

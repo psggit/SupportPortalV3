@@ -9,7 +9,7 @@ const headers = {
 };
 
 const genresAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://retailer.hipbar-dev.com/Api/stockandprice/listing/brands`;
+  const URL = `https://retailer.hipbar-dev.com/Api/stockandprice/listing/genres`;
   fetch(URL, {
     method: "POST",
     headers: headers,

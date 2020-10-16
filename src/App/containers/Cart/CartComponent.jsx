@@ -63,7 +63,7 @@ const CartComponent = (props) => {
     console.log("Cart Component");
   }, []);
   const classes = useStyles();
-  const [modify, setModify] = useState(false);
+  const [modify, setModify] = useState(true);
   const handleModify = () => {
     setModify(!modify);
   };

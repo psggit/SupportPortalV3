@@ -100,7 +100,7 @@ const OrderSummary = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const orderInfo = props.orderInfo;
-  const [cartItems] = useState(orderInfo.cart_items);
+  const [cartItems] = useState(props.products);
   const [checked, setChecked] = useState([0]);
   const ref = createRef();
   const [open, setOpen] = useState(false);
@@ -109,16 +109,6 @@ const OrderSummary = (props) => {
   };
 
   const handleClickAdd = () => {
-    const payload = {
-      city_id: 9,
-      state_id: 4,
-      retailer_id: 439,
-      genre_id: 6,
-      gps: "11.343048726648705,77.71711483597755",
-      offset: 0,
-      limit: 20,
-    };
-    props.fetchGenre(payload);
     history.push("/cart-modify");
   };
 
@@ -325,6 +315,7 @@ OrderSummary.propTypes = {
   orderInfo: PropTypes.object,
   fetchGenre: PropTypes.func,
   modify: PropTypes.bool,
+  products: PropTypes.array,
 };
 
 export { OrderSummary };

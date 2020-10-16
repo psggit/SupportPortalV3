@@ -41,8 +41,6 @@ function App(props) {
   }
 
   let success = props.authenticateSuccess;
-  // console.log(props.authData);
-  // let success = true;
 
   return (
     <div>
@@ -51,20 +49,15 @@ function App(props) {
           <Router>
             <Switch>
               <Route path="/order-details" component={OrderDetailsContainer} />
-              <Route path="/order-info" component={OrderInfoContainer} />
+              <Route
+                path="/order-info/:orderId"
+                component={OrderInfoContainer}
+              />
               <Route path="/dashboard" component={DashboardContainer} />
               <Route
                 path="/cart-modify"
                 component={CartModificationContainer}
               />
-              {/* <Route path="/issues" component={IssuesContainer} />
-              <Route path="/users" component={UsersContainer} /> */}
-
-              {/* <Route path="/customer/123" component={CustomerDetailContainer} /> */}
-              {/* <Route path="/form/123" component={CustomerForm} /> */}
-              {/* <Route path="/soa/123" component={CustomerSoaContainer} /> */}
-              {/* <Route path="/gift-soa/123" component={CustomerGiftSoaContainer} /> */}
-              {/* <Route path="/rewards/123" component={RewardsContainer} /> */}
               <Route path="/notes/123" component={NotesContainer} />
               <Route path="/" component={LoginContainer} />
             </Switch>

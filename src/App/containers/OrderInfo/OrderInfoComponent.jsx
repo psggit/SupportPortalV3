@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Button, TextareaAutosize } from "@material-ui/core";
+import { Box, Button, TextField } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import TopBar from "../../components/topBar";
 import { useHistory } from "react-router-dom";
@@ -52,12 +53,16 @@ const useStyles = makeStyles((theme) => ({
 const OrderInfoComponent = (props) => {
   const history = useHistory();
   const classes = useStyles();
+  let { orderId } = useParams();
+  // console.log("useParams ", orderId);
 
   useEffect(() => {
-    if (props.orderId === null) {
+    console.log(orderId);
+    // props.fetchOrderInfo(orderId);
+    if (orderId === null || orderId == "") {
       history.push("/dashboard");
     } else {
-      props.fetchOrderInfo(props.orderId);
+      props.fetchOrderInfo(orderId);
     }
   }, []);
 
@@ -65,10 +70,10 @@ const OrderInfoComponent = (props) => {
     // console.log("order_status_button", props.order.order_status_button);
     if (props.fetchOrderInfoSuccess) {
       let payload = {
-        order_id: props.orderId,
+        order_id: orderId,
       };
       props.fetchCancelReason(payload);
-      const reqBody = { order_id: props.orderId, limit: 3, offset: 0 };
+      const reqBody = { order_id: orderId, limit: 3, offset: 0 };
       props.fetchActivityLogs(reqBody);
     }
   }, [props.fetchOrderInfoSuccess]);
@@ -78,7 +83,7 @@ const OrderInfoComponent = (props) => {
   const [issueDesc, setIssueDesc] = useState("");
   const [open, setOpen] = useState(false);
 
-  console.log("useEffect 2", props);
+  // console.log("useEffect 2", props);
 
   const openDialog = (type) => {
     setIssueType(type);
@@ -101,13 +106,13 @@ const OrderInfoComponent = (props) => {
 
   const updateNotes = () => {
     let payload = {
-      order_id: props.orderId,
+      order_id: orderId,
       type: issueType,
       notes: issueDesc,
     };
     props.createNotes(payload);
     setOpen(false);
-    props.fetchOrderInfo(props.orderId);
+    props.fetchOrderInfo(orderId);
     props.fetchCancelReason(payload);
   };
 
@@ -140,17 +145,17 @@ const OrderInfoComponent = (props) => {
       {open && (
         <DialogComponent
           title="ADD NOTE"
-          subtitle={`Order ID: ` + props.orderId}
+          subtitle={`Order ID: ` + orderId}
           actions={dialogActions}
           issueDesc={issueDesc}
           change={setIssueDesc}
           openDialog={openDialog}
         >
-          <TextareaAutosize
+          <TextField
             id="outlined-textarea"
             placeholder="Add note here"
             multiline
-            rowsMax={4}
+            rows={4}
             variant="outlined"
             size="small"
             value={issueDesc}

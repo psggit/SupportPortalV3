@@ -65,6 +65,7 @@ const orderInfoReducer = createReducer(initialValue, {
       ...state,
       orderInfo: data.payload.order_details,
       orderDetails: data.payload.order_details,
+      products: data.payload.order_details.cart_items,
       customerId: data.payload.order_details.customer_id,
       retailerDetails: data.payload,
       fetchOrderInfoProgress: false,
