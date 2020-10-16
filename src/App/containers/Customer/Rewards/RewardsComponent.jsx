@@ -159,7 +159,8 @@ function Rewards(props) {
                     </TableRow>
                   );
                 })
-              : !props.rewardsSuccess && (
+              : props.rewardsSuccess &&
+                props.rewardsList.rewards.length === 0 && (
                   <tr>
                     <td
                       style={{ textAlign: "center", padding: "10px 0" }}

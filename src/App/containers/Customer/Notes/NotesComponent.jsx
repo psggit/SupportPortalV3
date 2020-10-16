@@ -40,11 +40,12 @@ function Notes(props) {
   const [age, setAge] = useState('');
 
   useEffect(() => {
-    const payload = {
-      order_id: props.orderInfo.order_id,
-      type: "consumer",
-    };
-    props.fetchConsumerNotes(payload);
+    // const payload = {
+    //   order_id: props.orderInfo.order_id,
+    //   type: "consumer",
+    // };
+    // props.fetchConsumerNotes(payload);
+    props.fetchConsumerNotes(props.orderInfo.order_id);
   }, []);
 
   const handleGiftSoaChange = () => {
@@ -189,7 +190,7 @@ function Notes(props) {
         <Paper className={classes.paper}>
         <Table tableHeaders={tableHeaders}>
           {
-            props.notesSuccess
+            props.notesSuccess && props.customerNotes.orderNotes !== null
             ? props.customerNotes.orderNotes.map((data) => {
               return (
                 <TableRow>
@@ -201,7 +202,7 @@ function Notes(props) {
                 </TableRow>
               )
             })
-            : !props.notesSuccess && (
+                : props.notesSuccess && props.customerNotes.orderNotes == null &&(
                 <tr>
                   <td
                     style={{ textAlign: "center", padding: "10px 0" }}

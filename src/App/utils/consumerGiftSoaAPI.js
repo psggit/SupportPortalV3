@@ -7,7 +7,7 @@ const headers = {
 };
 
 const consumerGiftSoaAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://orderman.hipbar-dev.com/admin/gifting/history/${reqBody.customer_contact_number}`;
+  const URL = `https://api.hipbar-dev.com/supportman/api/1/soa/gift/history/${reqBody.customer_contact_number}`;
   fetch(URL, {
     method: "GET",
     headers: headers,

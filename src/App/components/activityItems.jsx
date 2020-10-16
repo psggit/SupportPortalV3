@@ -89,9 +89,11 @@ ActivityItem.propTypes = {
   click: PropTypes.any,
   issueType: PropTypes.string,
   title: PropTypes.string,
+  subheader: PropTypes.any,
 };
 
 export default function ActivityItem(props) {
+  const { subheader, title } = props;
   const classes = useStyles();
   let mapArray = props.arr;
   if (mapArray && mapArray.length > 3) {
@@ -103,7 +105,17 @@ export default function ActivityItem(props) {
     return (
       <Card className={classes.root}>
         <CardContent>
-          <CardHeader className={classes.cardHeader} title={props.title} />
+          <CardHeader
+            className={classes.cardHeader}
+            title={title}
+            subheader={
+              subheader ? (
+                <CardActions>{subheader.map((item) => item)}</CardActions>
+              ) : (
+                ""
+              )
+            }
+          />
           <ListItem
             dense
             disableGutters={true}

@@ -55,8 +55,8 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 120,
   },
   moreButton: {
-    marginLeft: "350px",
-    marginTop: "-35px",
+    marginLeft: "200px",
+    marginTop: "-40px",
   },
 }));
 
@@ -66,7 +66,7 @@ const keysToRender = [
   "customer_contact_number",
   "customer_city",
   "customer_dob",
-  "signup_date",
+  "customer_sign_up_date",
   "customer_kyc",
   "customer_landmark",
   "customer_address",
@@ -77,12 +77,11 @@ const keyMap = {
   customer_contact_number: "Mobile Number",
   customer_city: "City",
   customer_dob: "Date of Birth",
-  signup_date: "Signup Date",
+  customer_sign_up_date: "Signup Date",
   customer_kyc: "KYC Level",
   customer_landmark: "Landmark",
   customer_address: "Address",
 };
-
 
 const CustomerDetails = (props) => {
   const history = useHistory();
@@ -119,13 +118,13 @@ const CustomerDetails = (props) => {
       Call
     </Button>,
     <Button
-    className={classes.moreButton}
-    color="primary"
-    endIcon={<ChevronRightIcon />}
-    onClick={handleChange}
-  >
-    more
-  </Button>,
+      className={classes.moreButton}
+      color="primary"
+      endIcon={<ChevronRightIcon />}
+      onClick={handleChange}
+    >
+      more
+    </Button>,
   ];
 
   const subheadAction = [
@@ -169,6 +168,7 @@ const CustomerDetails = (props) => {
         <DetailsCard
           title="CUSTOMER DETAILS"
           actions={customerAction}
+          subheader={subheadAction}
           renderArray={data}
           keyMap={keyMap}
           keysToRender={keysToRender}
@@ -181,6 +181,7 @@ const CustomerDetails = (props) => {
               arr={props.customerNotes.orderNotes}
               keysToRender={keysToRenderInNotesCard}
               title={"CUSTOMER NOTES"}
+              subheader={subheadNotesAction}
               issueType={"customer"}
               click={props.openDialog}
             />

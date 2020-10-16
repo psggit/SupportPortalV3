@@ -72,6 +72,7 @@ CustomCard.propTypes = {
   renderArray: PropTypes.array,
   keysToRender: PropTypes.array,
   keyMap: PropTypes.object,
+  subheader: PropTypes.any,
 };
 
 const getTimestamp = (timestamp) => {
@@ -80,11 +81,28 @@ const getTimestamp = (timestamp) => {
 };
 
 export default function CustomCard(props) {
-  const { title, actions, renderArray, keyMap, keysToRender } = props;
+  const {
+    title,
+    actions,
+    renderArray,
+    keyMap,
+    keysToRender,
+    subheader,
+  } = props;
   const classes = useStyles();
   return (
     <Card className={classes.root}>
-      <CardHeader className={classes.cardHeader} title={title} />
+      <CardHeader
+        className={classes.cardHeader}
+        title={title}
+        subheader={
+          subheader ? (
+            <CardActions>{subheader.map((item) => item)}</CardActions>
+          ) : (
+            ""
+          )
+        }
+      />
       <CardContent className={classes.cardContent}>
         <List>
           {renderArray.map((item, index) => {
@@ -102,10 +120,10 @@ export default function CustomCard(props) {
                 <ListItemText
                   primary={
                     item[keysToRender[index]] === item[keysToRender[4]]
-                    ? getTimestamp(item[keysToRender[index]])
+                      ? getTimestamp(item[keysToRender[index]])
                       : item[keysToRender[index]]
-                    ? item[keysToRender[index]]
-                    : "-"
+                      ? item[keysToRender[index]]
+                      : "-"
                   }
                   className={classes.ListItemTextRoot}
                   classes={{ root: classes.ListItemTextLabel }}

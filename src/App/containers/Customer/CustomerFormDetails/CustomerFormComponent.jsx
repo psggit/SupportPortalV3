@@ -97,8 +97,8 @@ function CustomerForm(props) {
     setCustomerName(props.orderInfo.customer_name);
     setDob(props.orderInfo.customer_dob.slice(0, 10));
     setSelectedValue(props.orderInfo.customer_gender);
-    //setSignupDate(props.orderInfo.signup_date.slice(0, 10));
-    setSignupDate(Moment(props.orderInfo.signup_date).format("DD/MM/YYYY"));
+    setSignupDate(props.orderInfo.customer_sign_up_date.slice(0, 10));
+    //setSignupDate(Moment(props.orderInfo.customer_sign_up_date).format("DD/MM/YYYY"));
   }, []);
 
   const handleRadioChange = (event) => {
