@@ -6,6 +6,10 @@ import { homeReducer } from "../containers/Dashboard";
 import { cartReducer } from "../containers/Cart";
 import { orderReducer } from "../containers/OrderInfo/reducer";
 import { retailerNotesListReducer } from "../containers/Retailer/RetailerNotes";
+import { customerSOAReducer } from "../containers/Customer/CustomerSoa";
+import { customerGiftSOAReducer } from "../containers/Customer/CustomerGiftSoa";
+import { rewardsReducer } from "../containers/Customer/Rewards";
+import { customerUpdateReducer } from "../containers/Customer/CustomerFormDetails";
 
 const store = configureStore({
   reducer: combineReducers({
@@ -14,6 +18,10 @@ const store = configureStore({
     order: orderReducer,
     cart: cartReducer,
     notes: retailerNotesListReducer,
+    soa: customerSOAReducer,
+    giftSoa: customerGiftSOAReducer,
+    rewards: rewardsReducer,
+    update: customerUpdateReducer,
   }),
   middleware: [thunk],
 });

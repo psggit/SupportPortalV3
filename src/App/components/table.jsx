@@ -45,5 +45,4 @@ table.propTypes = {
   children: PropTypes.node,
   tableHeaders: PropTypes.array,
 };
-
 export default table;

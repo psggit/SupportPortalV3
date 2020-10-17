@@ -1,9 +1,9 @@
 import {
-  fetchCustomerSoaSuccessfull,
-  fetchCustomerSoaFailure,
-  fetchCustomerSoaInProgress,
+  fetchGiftSoaSuccess,
+  fetchGiftSoaFailure,
+  fetchGiftSoaProgress,
 } from "./actions";
-import { consumerSoaAPI } from "../../../../utils/consumerSoaAPI";
+import { consumerGiftSoaAPI } from "../../../../utils/consumerGiftSoaAPI";
 
 const processResponse = () => {
   console.clear();
@@ -20,22 +20,22 @@ const processResponse = () => {
 const onSuccess = (dispatch) => {
   console.log("[onSuccess]");
   return (data) => {
-    dispatch(fetchCustomerSoaSuccessfull(data));
+    dispatch(fetchGiftSoaSuccess(data));
   };
 };
 
 const onError = (dispatch) => {
   return (error) => {
-    dispatch(fetchCustomerSoaFailure(error));
+    dispatch(fetchGiftSoaFailure(error));
   };
 };
 
-const fetchCustomerSoaList = (reqBody) => {
+const fetchGiftSoaList = (reqBody) => {
   console.clear();
   console.clear("fetchCustomerSoaList");
   return (dispatch) => {
-    dispatch(fetchCustomerSoaInProgress());
-    consumerSoaAPI(
+    dispatch(fetchGiftSoaProgress());
+    consumerGiftSoaAPI(
       reqBody,
       processResponse(dispatch),
       onSuccess(dispatch),
@@ -44,4 +44,4 @@ const fetchCustomerSoaList = (reqBody) => {
   };
 };
 
-export { fetchCustomerSoaList };
+export { fetchGiftSoaList };

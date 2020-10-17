@@ -1,12 +1,11 @@
 import {
-  fetchCustomerSoaSuccessfull,
-  fetchCustomerSoaFailure,
-  fetchCustomerSoaInProgress,
+  consumerUpdateSuccess,
+  consumerUpdateFailed,
+  consumerUpdateProgress,
 } from "./actions";
-import { consumerSoaAPI } from "../../../../utils/consumerSoaAPI";
+import { consumerUpdateAPI } from "../../../../utils/consumerUpdateAPI";
 
 const processResponse = () => {
-  console.clear();
   console.log("[processResponse]");
   return (res) => {
     if (res.status === 200) {
@@ -20,22 +19,20 @@ const processResponse = () => {
 const onSuccess = (dispatch) => {
   console.log("[onSuccess]");
   return (data) => {
-    dispatch(fetchCustomerSoaSuccessfull(data));
+    dispatch(consumerUpdateSuccess(data));
   };
 };
 
 const onError = (dispatch) => {
   return (error) => {
-    dispatch(fetchCustomerSoaFailure(error));
+    dispatch(consumerUpdateFailed(error));
   };
 };
 
-const fetchCustomerSoaList = (reqBody) => {
-  console.clear();
-  console.clear("fetchCustomerSoaList");
+const updateConsumer = (reqBody) => {
   return (dispatch) => {
-    dispatch(fetchCustomerSoaInProgress());
-    consumerSoaAPI(
+    dispatch(consumerUpdateProgress);
+    consumerUpdateAPI(
       reqBody,
       processResponse(dispatch),
       onSuccess(dispatch),
@@ -44,4 +41,4 @@ const fetchCustomerSoaList = (reqBody) => {
   };
 };
 
-export { fetchCustomerSoaList };
+export { updateConsumer };

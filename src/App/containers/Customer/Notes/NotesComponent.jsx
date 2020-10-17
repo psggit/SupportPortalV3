@@ -1,21 +1,21 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable prettier/prettier */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from "prop-types";
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '../../../components/table'
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import Pagination from '../../../components/pagination'
 import Moment from "moment"
-import { getOffsetUsingPageNo, getQueryParamByName, getQueryUri } from '../../../utils/helpers';
 import Button from '@material-ui/core/Button';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Dialog from '../../../components/dialog'
-
+import { useHistory } from "react-router-dom";
+import Paper from "@material-ui/core/Paper";
 
 const tableHeaders = [
   { label: "NOTE NO", value: "note_no" },
@@ -26,20 +26,46 @@ const tableHeaders = [
 ]
 
 function Notes(props) {
-  console.log("props..hy", props.notes.data, props.notes.count)
+  const history = useHistory();
   const classes = useStyles();
 
-  const pageLimit = 2
-  const activePage = getQueryParamByName("activePage") || 1
-  const [isLoading, setLoading] = useState(false)
-  const [pageNo, setPageNo] = useState(activePage)
+  // const pageLimit = 2
+  // const activePage = getQueryParamByName("activePage") || 1
+  // const [isLoading, setLoading] = useState(false)
+  // const [pageNo, setPageNo] = useState(activePage)
 
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false)
   const [age, setAge] = useState('');
 
-  const handleSoa = (e) => {
-    e.preventDefault()
-    location.href="/soa/123"
+  useEffect(() => {
+    props.fetchConsumerNotes(props.orderInfo.order_id);
+  }, []);
+
+  const handleGiftSoaChange = () => {
+    console.log("gift-soa");
+    history.push("/gift-soa");
+  };
+
+  const handleRewardChange = () => {
+    console.log("rewards");
+    history.push("/rewards");
+  };
+
+  const handleSoaChange = () => {
+    console.log("soa");
+    history.push("/soa");
+  };
+
+  const handleNotesChange = () => {
+    history.push("/notes");
+  }
+
+  const handleCustomerDetail = () => {
+    history.push("/customer-detail");
+  };
+
+  const handleBack = () => {
+    history.push("/order-details")
   }
 
   const handleChange = (event) => {
@@ -54,43 +80,48 @@ function Notes(props) {
     setShowAddNoteDialog(false)
   }
 
-  const handlePageChange = (pageObj) => {
-    setPageNo(pageObj.activePage)
-    const queryParamsObj = {
-      activePage: pageObj.activePage,
-    }
-    history.pushState(queryParamsObj, "soa listing", `/soa/123${getQueryUri(queryParamsObj)}`)
+  // const handlePageChange = (pageObj) => {
+  //   setPageNo(pageObj.activePage)
+  //   const queryParamsObj = {
+  //     activePage: pageObj.activePage,
+  //   }
+  //   history.pushState(queryParamsObj, "soa listing", `/soa ${getQueryUri(queryParamsObj)}`)
+  // }
+
+  let loading = props.notesProgress;
+  if (loading) {
+    return <p>Loading...</p>;
   }
 
   return (
     <div className={classes.formContainer}>
       <div className={classes.navBar}>
         <div className={classes.backButton}>
-          <div>Back</div>
+          <div onClick={handleBack}>Back</div>
         </div>
         <div className={classes.navContent}>
-          <div>Customer Details</div>
+          <div onClick={handleCustomerDetail}>Customer Details</div>
         </div>
         <div className={classes.navContent}>
-          <div onClick={handleSoa}>SOA</div>
+          <div onClick={handleSoaChange}>SOA</div>
         </div>
         <div className={classes.navContent}>
-          <div>Gift Soa</div>
+          <div onClick={handleGiftSoaChange}>Gift Soa</div>
         </div>
         <div className={classes.navContent}>
-          <div>Rewards</div>
+          <div onClick={handleRewardChange}>Rewards</div>
         </div>
         <div className={classes.navContent}>
-          <div>Notes</div>
+          <div onClick={handleNotesChange}>Notes</div>
         </div>
       </div>
       <div className={classes.row1}>
-        <p>CUSTOMER ID: 123</p>
+        <p>CUSTOMER ID: {props.customerId}</p>
         <div>
           <Button
-            className={classes.Button}
             variant="contained"
             onClick={mountAddNote}
+            color="primary"
           >
             Add Note
           </Button>
@@ -101,13 +132,14 @@ function Notes(props) {
               actions={[
                 <Button
                   variant="contained"
-                  buttonStyle="secondary"
+                  color="primary"
                   onClick={UnmountAddNote}
                 >
                   Cancel
                 </Button>,
                 <Button
-                  variant="contained"
+                  variant="outlined"
+                  color="primary"
                 //onClick={commentUnmountModel}
                 >
                   Save
@@ -148,33 +180,54 @@ function Notes(props) {
         </div>
       </div>
       <div className={classes.table}>
+        <Paper className={classes.paper}>
         <Table tableHeaders={tableHeaders}>
           {
-            props.notes.data.map((data, index) => {
+            props.notesSuccess && props.customerNotes.orderNotes !== null
+            ? props.customerNotes.orderNotes.map((data) => {
               return (
                 <TableRow>
-                  <TableCell>{data.note_no}</TableCell>
-                  <TableCell>{data.note_type}</TableCell>
-                  <TableCell>{data.desc}</TableCell>
-                  <TableCell align="left">{Moment(data.created_by).format("DD/MM/YYYY h:mm A")}</TableCell>
+                  <TableCell>{data.order_id}</TableCell>
+                  <TableCell>{data.type}</TableCell>
+                  <TableCell>{data.notes}</TableCell>
+                  <TableCell align="left">{data.created_by}</TableCell>
                   <TableCell align="left">{Moment(data.created_at).format("DD/MM/YYYY h:mm A")}</TableCell>
                 </TableRow>
               )
             })
-          }
+                : props.notesSuccess && props.customerNotes.orderNotes == null &&(
+                <tr>
+                  <td
+                    style={{ textAlign: "center", padding: "10px 0" }}
+                    colSpan="6"
+                  >
+                    <p style={{ fontWeight: "16px" }}>No records found</p>
+                  </td>
+                </tr>
+            )}
         </Table>
-        <Pagination
+        </Paper>
+        {/* <Pagination
           activePage={parseInt(pageNo)}
           //itemsCountPerPage={parseInt(pageLimit)}
           rowsPerPage={parseInt(pageLimit)}
           count={props.notes.count}
           setPage={handlePageChange}
           color="primary"
-        />
+        /> */}
       </div>
     </div>
   )
 }
+
+Notes.propTypes = {
+  customerNotes: PropTypes.array,
+  fetchConsumerNotes: PropTypes.any,
+  notesProgress: PropTypes.bool,
+  notesSuccess: PropTypes.bool,
+  customerId: PropTypes.any,
+  orderInfo: PropTypes.object,
+};
 
 export { Notes }
 
@@ -202,7 +255,7 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 'bold',
   },
   table: {
-    padding: '0px 25px'
+    padding: '0px 80px'
   },
   formRoot: {
     padding: 24
@@ -221,16 +274,5 @@ const useStyles = makeStyles(theme => ({
     marginLeft: "16px",
     minWidth: 120,
   },
-  button: {
-    color: "#FFFFFF",
-    backgroundColor: "#0086AD",
-    fontSize: "14px",
-    fontWeight: "bold",
-    lineHeight: "21px",
-    borderRadius: "4px",
-    marginLeft: "16px",
-    border: "1.6px solid #0086AD"
-  },
-
 }));
 

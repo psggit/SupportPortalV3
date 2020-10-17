@@ -12,16 +12,16 @@ import { OrderDetailsContainer } from "./containers/OrderDetails";
 import { CartModificationContainer } from "./containers/CartModification";
 import { OrderInfoContainer } from "./containers/OrderInfo";
 import { ThemeProvider } from "@material-ui/styles";
+// import Loading from "./components/loading";
 import newTheme from "./sass/theme";
 import "./sass/app.scss";
 import { RetailerNotesContainer } from "./containers/Retailer/RetailerNotes/RetailerNotesContainer";
 import { ChangeRetailerContainer } from "./containers/Retailer/ChangeRetailer/ChangeRetailerContainer";
 // import { CustomerDetailContainer } from './containers/Customer/CustomerCard'
-// import {CustomerForm} from './containers/Customer/CustomerFormDetails/CustomerFormComponent'
-// import { CustomerSoa } from './containers/Customer/CustomerSoa/CustomerSoaComponent'
-// import {CustomerSoaContainer} from './containers/Customer/CustomerSoa'
-// import { CustomerGiftSoaContainer } from './containers/Customer/CustomerGiftSoa'
-// import {RewardsContainer} from './containers/Customer/Rewards'
+import { CustomerFormContainer } from "./containers/Customer/CustomerFormDetails";
+import { CustomerSoaContainer } from "./containers/Customer/CustomerSoa";
+import { CustomerGiftSoaContainer } from "./containers/Customer/CustomerGiftSoa";
+import { RewardsContainer } from "./containers/Customer/Rewards";
 import { NotesContainer } from "./containers/Customer/Notes";
 
 function App(props) {
@@ -48,14 +48,6 @@ function App(props) {
                 path="/cart-modify"
                 component={CartModificationContainer}
               />
-              {/* <Route path="/issues" component={IssuesContainer} />
-              <Route path="/users" component={UsersContainer} /> */}
-
-              {/* <Route path="/customer/123" component={CustomerDetailContainer} /> */}
-              {/* <Route path="/form/123" component={CustomerForm} /> */}
-              {/* <Route path="/soa/123" component={CustomerSoaContainer} /> */}
-              {/* <Route path="/gift-soa/123" component={CustomerGiftSoaContainer} /> */}
-              {/* <Route path="/rewards/123" component={RewardsContainer} /> */}
               <Route
                 path="/change-retailer"
                 component={ChangeRetailerContainer}
@@ -64,7 +56,14 @@ function App(props) {
                 path="/retailer-notes"
                 component={RetailerNotesContainer}
               />
-              <Route path="/notes/123" component={NotesContainer} />
+              <Route
+                path="/customer-detail"
+                component={CustomerFormContainer}
+              />
+              <Route path="/soa" component={CustomerSoaContainer} />
+              <Route path="/gift-soa" component={CustomerGiftSoaContainer} />
+              <Route path="/rewards" component={RewardsContainer} />
+              <Route path="/notes" component={NotesContainer} />
               <Route path="/" component={LoginContainer} />
             </Switch>
           </Router>

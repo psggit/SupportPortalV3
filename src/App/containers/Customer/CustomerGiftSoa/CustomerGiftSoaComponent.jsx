@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
 import Table from "../../../components/table";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-import Pagination from "../../../components/pagination";
+//import Pagination from "../../../components/pagination";
 import Moment from "moment";
-import {
-  getOffsetUsingPageNo,
-  getQueryParamByName,
-  getQueryUri,
-} from "../../../utils/helpers";
+import { useHistory } from "react-router-dom";
+import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles((theme) => ({
   navBar: {
@@ -35,8 +33,9 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
   },
   table: {
-    padding: "0px 25px",
+    padding: "0px 80px",
   },
+  paper: {},
 }));
 
 const tableHeaders = [
@@ -49,85 +48,140 @@ const tableHeaders = [
 ];
 
 function CustomerGiftSoa(props) {
-  console.log(
-    "props..hy",
-    props.CustomerGiftSoaList.data,
-    props.CustomerGiftSoaList.count
-  );
+  const history = useHistory();
   const classes = useStyles();
 
-  const pageLimit = 2;
-  const activePage = getQueryParamByName("activePage") || 1;
-  const [isLoading, setLoading] = useState(false);
-  const [pageNo, setPageNo] = useState(activePage);
-
-  const handlePageChange = (pageObj) => {
-    setPageNo(pageObj.activePage);
-    const queryParamsObj = {
-      activePage: pageObj.activePage,
+  useEffect(() => {
+    const payload = {
+      customer_contact_number: props.customerNumber,
+      limit: 10,
+      offset: 0,
     };
-    history.pushState(
-      queryParamsObj,
-      "soa listing",
-      `/soa/123${getQueryUri(queryParamsObj)}`
-    );
+    props.fetchGiftSoaList(payload);
+  }, []);
+
+  // const pageLimit = 2;
+  // const activePage = getQueryParamByName("activePage") || 1;
+  // const [isLoading, setLoading] = useState(false);
+  // const [pageNo, setPageNo] = useState(activePage);
+
+  // const handlePageChange = (pageObj) => {
+  //   setPageNo(pageObj.activePage);
+  //   const queryParamsObj = {
+  //     activePage: pageObj.activePage,
+  //   };
+  //   history.pushState(
+  //     queryParamsObj,
+  //     "soa listing",
+  //     `/soa${getQueryUri(queryParamsObj)}`
+  //   );
+  // };
+
+  const handleGiftSoaChange = () => {
+    console.log("gift-soa");
+    history.push("/gift-soa");
+  };
+
+  const handleRewardChange = () => {
+    console.log("rewards");
+    history.push("/rewards");
+  };
+
+  const handleSoaChange = () => {
+    console.log("soa");
+    history.push("/soa");
+  };
+
+  const handleBack = () => {
+    history.push("/order-details");
+  };
+
+  const handleNotes = () => {
+    history.push("/notes");
+  };
+
+  const handleCustomerDetail = () => {
+    history.push("/customer-detail");
   };
 
   return (
     <div className={classes.formContainer}>
       <div className={classes.navBar}>
         <div className={classes.backButton}>
-          <div>Back</div>
+          <div onClick={handleBack}>Back</div>
         </div>
         <div className={classes.navContent}>
-          <div>Customer Details</div>
+          <div onClick={handleCustomerDetail}>Customer Details</div>
         </div>
         <div className={classes.navContent}>
-          <div>SOA</div>
+          <div onClick={handleSoaChange}>SOA</div>
         </div>
         <div className={classes.navContent}>
-          <div>Gift Soa</div>
+          <div onClick={handleGiftSoaChange}>Gift Soa</div>
         </div>
         <div className={classes.navContent}>
-          <div>Rewards</div>
+          <div onClick={handleRewardChange}>Rewards</div>
         </div>
         <div className={classes.navContent}>
-          <div>Notes</div>
+          <div onClick={handleNotes}>Notes</div>
         </div>
       </div>
       <div className={classes.row1}>
-        <p>CUSTOMER ID: 123</p>
+        <p>CUSTOMER ID: {props.customerId}</p>
         <div>Search</div>
       </div>
       <div className={classes.table}>
-        <Table tableHeaders={tableHeaders}>
-          {props.CustomerGiftSoaList.data.map((data, index) => {
-            return (
-              // eslint-disable-next-line react/jsx-key
-              <TableRow>
-                <TableCell>{data.order_id}</TableCell>
-                <TableCell>{data.transaction_type}</TableCell>
-                <TableCell>{data.transaction_amount}</TableCell>
-                <TableCell>{data.card_number_and_value}</TableCell>
-                <TableCell>{data.transaction_status}</TableCell>
-                <TableCell align="left">
-                  {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </Table>
-        <Pagination
+        <Paper className={classes.paper}>
+          <Table tableHeaders={tableHeaders}>
+            {props.giftSoaSuccess
+              ? props.giftSoaList.map((data) => {
+                  return (
+                    // eslint-disable-next-line react/jsx-key
+                    <TableRow>
+                      <TableCell>{data.reference_number}</TableCell>
+                      <TableCell>{data.transaction_type}</TableCell>
+                      <TableCell>{data.transaction_amount}</TableCell>
+                      <TableCell>{data.gift_cards_and_value}</TableCell>
+                      <TableCell>{data.ResponseMessage}</TableCell>
+                      <TableCell align="left">
+                        {Moment(data.date_at_server).format(
+                          "DD/MM/YYYY h:mm A"
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              : !props.giftSoaSuccess && (
+                  <tr>
+                    <td
+                      style={{ textAlign: "center", padding: "10px 0" }}
+                      colSpan="6"
+                    >
+                      <p style={{ fontWeight: "16px" }}>No records found</p>
+                    </td>
+                  </tr>
+                )}
+          </Table>
+        </Paper>
+        {/* <Pagination
           activePage={parseInt(pageNo)}
           //itemsCountPerPage={parseInt(pageLimit)}
           rowsPerPage={parseInt(pageLimit)}
           count={props.CustomerGiftSoaList.count}
           setPage={handlePageChange}
           color="primary"
-        />
+        /> */}
       </div>
     </div>
   );
 }
+
+CustomerGiftSoa.propTypes = {
+  customerId: PropTypes.any,
+  fetchGiftSoaList: PropTypes.func,
+  giftSoaList: PropTypes.array,
+  giftSoaSuccess: PropTypes.bool,
+  giftSoa: PropTypes.bool,
+};
 
 export { CustomerGiftSoa };
