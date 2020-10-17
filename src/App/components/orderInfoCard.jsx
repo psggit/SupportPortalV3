@@ -79,7 +79,6 @@ CustomCard.propTypes = {
 };
 
 const getTimestamp = (timestamp) => {
-  // console.log("time", timestamp);
   return Moment(timestamp).format("DD/MM/YYYY");
 };
 
@@ -93,6 +92,7 @@ export default function CustomCard(props) {
     subheader,
   } = props;
   const classes = useStyles();
+
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -123,6 +123,8 @@ export default function CustomCard(props) {
                 <ListItemText
                   primary={
                     item[keysToRender[index]] === item[keysToRender[4]]
+                      ? getTimestamp(item[keysToRender[index]])
+                      : item[keysToRender[index]] === item[keysToRender[5]]
                       ? getTimestamp(item[keysToRender[index]])
                       : item[keysToRender[index]]
                       ? item[keysToRender[index]]
