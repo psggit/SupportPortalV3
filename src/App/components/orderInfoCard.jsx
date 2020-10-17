@@ -71,12 +71,13 @@ CustomCard.propTypes = {
   renderArray: PropTypes.array,
   keysToRender: PropTypes.array,
   keyMap: PropTypes.object,
+  id: PropTypes.string,
 };
 export default function CustomCard(props) {
-  const { title, actions, renderArray, keyMap, keysToRender } = props;
+  const { title, actions, renderArray, keyMap, keysToRender, id } = props;
   const classes = useStyles();
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} id={id}>
       <CardHeader className={classes.cardHeader} title={title} />
       <CardContent className={classes.cardContent}>
         <List>

@@ -3,23 +3,109 @@ import {
   fetchGenreSuccess,
   fetchGenreFailed,
   fetchGenreProgress,
+  fetchBrandSuccess,
+  fetchBrandFailed,
+  fetchBrandProgress,
   addSkuToCart,
   removeSkuFromCart,
   updateFromCart,
 } from "./actions";
 
-import { addProduct, removeProduct } from "./cartOperations";
+declare type Product = {
+  skuId: number,
+  brandName: string,
+  brandId: number,
+  image: string,
+  price: number,
+  volume: number,
+  count: number,
+  available: boolean,
+  subText: string,
+};
 
-const initialValue = {
-  genreData: null,
-  brandData: null,
-  activityLog: null,
-  modifiedProducts: {},
-  modifySuccess: false,
-  fetchGenreProgress: false,
-  fetchGenreFail: false,
-  fetchGenreSuccess: false,
-  errorMsg: "",
+declare type Products = {
+  [skuId: string]: Product,
+};
+
+declare type Sku = {
+  retailerId: number,
+  retailerName: string,
+  retailerDescription: string,
+  sku_id: number,
+  brand_name: string,
+  logo_low_res_image: string,
+  brand_id: number,
+  price: number,
+  volume: number,
+  clearCart: boolean,
+};
+
+declare type State = {
+  cartProducts: Products,
+  modifySuccess: boolean,
+  fetchGenreProgress: boolean,
+  fetchGenreFail: boolean,
+  fetchGenreSuccess: boolean,
+  fetchBrandProgress: boolean,
+  fetchBrandProgress: boolean,
+  errorMsg: string,
+  pendingSku: Sku,
+};
+
+const initialValue = (): State => {
+  return {
+    genreData: null,
+    brandData: null,
+    activityLog: null,
+    cartProducts: {},
+    modifySuccess: false,
+    fetchGenreProgress: false,
+    fetchGenreFail: false,
+    fetchGenreSuccess: false,
+    fetchBrandProgress: false,
+    fetchBrandFail: false,
+    fetchBrandSuccess: false,
+    errorMsg: "",
+  };
+};
+
+const unAvailableProductText = "Product is not available";
+
+let getProductFromSku = (sku: Sku): Product => {
+  return {
+    sku_id: sku.sku_id,
+    brand_name: sku.brand_name,
+    brand_id: sku.brand_id,
+    price: sku.price,
+    volume: sku.volume,
+    ordered_count: 1,
+    available: true,
+    subText: unAvailableProductText,
+  };
+};
+
+let addProduct = (state: State, sku: sku): State => {
+  let prod = state.cartProducts[sku.sku_id.toString()];
+  if (prod === undefined) {
+    prod = getProductFromSku(sku);
+  } else {
+    prod.ordered_count += 1;
+  }
+  state.cartProducts[prod.sku_id.toString()] = prod;
+  return state;
+};
+
+let removeProduct = (state:State, sku: sku): State => {
+  let prod = state.cartProducts[sku.sku_id.toString()];
+  if (prod === undefined) {
+    return state;
+  } else {
+    prod.ordered_count -= 1;
+  }
+  if (prod.ordered_count === 0) {
+    delete state.cartProducts[prod.sku_id.toString()];
+  }
+  return state;
 };
 
 const cartModifyReducer = createReducer(initialValue, {
@@ -42,15 +128,36 @@ const cartModifyReducer = createReducer(initialValue, {
     ...state,
     fetchGenreProgress: true,
   }),
-  [addSkuToCart]: (state, sku) => {
-    return addProduct(state, sku);
+  [fetchBrandSuccess]: (state, data) => ({
+    ...state,
+    fetchBrandProgress: false,
+    fetchBrandFail: false,
+    fetchBrandSuccess: true,
+    errorMsg: "",
+    brandData: data.payload.brands,
+  }),
+  [fetchBrandFailed]: (state) => ({
+    ...state,
+    fetchBrandProgress: false,
+    fetchBrandFail: true,
+    fetchBrandSuccess: false,
+    errorMsg: "Something went wrong, please try again",
+  }),
+  [fetchBrandProgress]: (state) => ({
+    ...state,
+    fetchBrandFail: false,
+    fetchBrandSuccess: false,
+    fetchBrandProgress: true,
+  }),
+  [addSkuToCart]: (state: State, sku) => {
+    return void addProduct(state, sku.payload);
   },
   [removeSkuFromCart]: (state, sku) => {
-    return removeProduct(state, sku);
+    return removeProduct(state, sku.payload);
   },
   [updateFromCart]: (state, data) => ({
     ...state,
-    modifiedProducts: data.payload,
+    cartProducts: data.payload,
     modifySuccess: true,
   }),
 });

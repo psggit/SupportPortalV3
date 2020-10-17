@@ -1,2 +1,3 @@
 export { cartModifyReducer } from "./reducer";
-export { fetchGenre, setCart } from "./cartModifyOperations";
+export { fetchGenre, fetchBrand, setCart } from "./cartModifyOperations";
+export { addSkuToCart, removeSkuFromCart } from "./actions";

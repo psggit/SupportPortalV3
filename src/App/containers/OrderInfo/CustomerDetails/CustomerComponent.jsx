@@ -59,6 +59,7 @@ const ConsumerComponent = (props) => {
           renderArray={data}
           keyMap={keyMap}
           keysToRender={keysToRender}
+          id="customer-details"
         />
       </Grid>
       <Grid item xs={6}>

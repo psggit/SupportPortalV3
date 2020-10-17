@@ -1,18 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
-import { Button, Grid, List } from "@material-ui/core";
-// import AppBar from "@material-ui/core/AppBar";
-// import Tabs from "@material-ui/core/Tabs";
-// import Tab from "@material-ui/core/Tab";
+import { Button, Grid, List, LinearProgress } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import TopBar from "../../components/topBar";
-import { Link } from "@material-ui/core";
-// import { fetchGenre } from "./duck";
-import { listGenre, listBrand } from "../../mockDataResponse";
 import { CartItemComponent } from "./components/cartItem";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "underline",
   },
   newspaper: {
-    height: 400,
+    height: 380,
     overflowY: "auto",
     padding: 20,
   },
@@ -66,25 +61,13 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-// function a11yProps(index) {
-//   return {
-//     id: `simple-tab-${index}`,
-//     "aria-controls": `simple-tabpanel-${index}`,
-//   };
-// }
-
 const CartModificationComponent = (props) => {
   const classes = useStyles();
-  // const [value, setValue] = useState(0);
+  const history = useHistory();
   let products = props.products;
-
-  // const handleChange = (event, newValue) => {
-  //   setValue(newValue);
-  // };
-
   useEffect(() => {
-    console.log("cartModification orderData", props);
-    // let brandpayload = {"city_id":5,"state_id":4,"retailer_id":436,"genre_id":4,"gps":"13.00712998686621,80.25632254779339","offset":0,"limit":20}
+    // console.log("cartModification orderData", props);
+    //
     let payload = {
       city_id: 5,
       state_id: 4,
@@ -95,14 +78,52 @@ const CartModificationComponent = (props) => {
     props.fetchGenre(payload);
   }, []);
 
-  console.log(props);
+  useEffect(() => {
+    if (props.fetchGenreSuccess) {
+      let brandpayload = {
+        city_id: 5,
+        state_id: 4,
+        retailer_id: 436,
+        genre_id: props.genreData[0].id,
+        gps: "13.00712998686621,80.25632254779339",
+        offset: 0,
+        limit: 20,
+      };
+      props.fetchBrand(brandpayload);
+    }
+  }, [props.fetchGenreSuccess]);
+
+  const goBack = () => {
+    history.push("/order-info/" + props.orderId);
+  };
+
+  const addItems = () => {
+    //call fetch summary API
+  };
+
+  // console.log(props);
 
   const addItem = (event, value) => {
-    console.log("addItem", value);
+    // console.log("addItem", value);
+    props.addSkuToCart(value);
   };
 
   const removeItem = (event, value) => {
-    console.log("remvoveItem", value);
+    // console.log("remvoveItem", value);
+    props.removeSkuFromCart(value);
+  };
+
+  const handleGenre = (event, genreId) => {
+    let brandpayload = {
+      city_id: 5,
+      state_id: 4,
+      retailer_id: 436,
+      genre_id: genreId,
+      gps: "13.00712998686621,80.25632254779339",
+      offset: 0,
+      limit: 20,
+    };
+    props.fetchBrand(brandpayload);
   };
 
   return (
@@ -111,31 +132,63 @@ const CartModificationComponent = (props) => {
       <Box className={classes.boxContainer}>
         <Grid alignItems="baseline" container>
           <Grid item xs={1}>
-            <Link href={"/order-info/" + props.orderId}>
-              <Button color="primary" startIcon={<KeyboardBackspaceIcon />}>
-                Back
-              </Button>
-            </Link>
+            <Button
+              color="primary"
+              startIcon={<KeyboardBackspaceIcon />}
+              onClick={() => goBack()}
+            >
+              Back
+            </Button>
           </Grid>
           <Grid item xs={11}>
             <p>RETAILER NAME: {props.retailer_name}</p>
           </Grid>
         </Grid>
       </Box>
+      <Box>
+        <Grid item xs={12}>
+          {props.fetchGenreSuccess &&
+            props.genreData.map((value) => {
+              return (
+                <Button
+                  key={value.id}
+                  onClick={(event) => handleGenre(event, value.id)}
+                >
+                  {value.name}
+                </Button>
+              );
+            })}
+        </Grid>
+        {props.fetchBrandProgress && <LinearProgress />}
+      </Box>
       <Box mt={4}>
         <List className={classes.newspaper}>
-          {props.modifySuccess &&
-            Object.entries(listBrand.brands).map((k) => {
+          {props.fetchBrandSuccess &&
+            Object.entries(props.brandData).map((k) => {
               return (
                 <CartItemComponent
                   key={k[0]}
                   product={k[1]}
                   addItem={addItem}
                   removeItem={removeItem}
+                  cartProducts={props.cartProducts}
                 />
               );
             })}
         </List>
+      </Box>
+      <Box>
+        <Button
+          variant="outlined"
+          color="primary"
+          className={classes.marginLeft}
+          onClick={() => goBack()}
+        >
+          Cancel
+        </Button>
+        <Button variant="contained" color="primary" onClick={() => addItems()}>
+          Add Items
+        </Button>
       </Box>
     </Container>
   );
@@ -143,78 +196,21 @@ const CartModificationComponent = (props) => {
 
 CartModificationComponent.propTypes = {
   fetchGenre: PropTypes.func,
+  fetchBrand: PropTypes.func,
+  addSkuToCart: PropTypes.func,
+  removeSkuFromCart: PropTypes.func,
   setCart: PropTypes.func,
   orderId: PropTypes.any,
   orderData: PropTypes.object,
   retailer_name: PropTypes.string,
   fetchGenreSuccess: PropTypes.bool,
+  fetchBrandSuccess: PropTypes.bool,
+  fetchBrandProgress: PropTypes.bool,
   modifySuccess: PropTypes.bool,
   genreData: PropTypes.array,
+  brandData: PropTypes.array,
   products: PropTypes.array,
+  cartProducts: PropTypes.object,
 };
 
 export { CartModificationComponent };
-
-{
-  /* {<AppBar position="static">
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            variant="scrollable"
-            scrollButtons="auto"
-            aria-label="scrollable auto tabs example"
-          >
-            {props.fetchGenreSuccess &&
-              props.genreData.map((value, index) => {
-                return (
-                  <Tab
-                    label={value.name}
-                    key={value.id}
-                    {...a11yProps(index)}
-                  />
-                );
-              })}
-          </Tabs>
-        </AppBar>
-        <TabPanel value={value} index={0}>
-          Item One
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          Item Two
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          Item Three
-        </TabPanel>
-        <TabPanel value={value} index={3}>
-          Item Four
-        </TabPanel>
-        <TabPanel value={value} index={4}>
-          Item Five
-        </TabPanel>
-        <TabPanel value={value} index={5}>
-          Item Six
-        </TabPanel>
-        <TabPanel value={value} index={6}>
-          Item Seven
-        </TabPanel>
-        <TabPanel value={value} index={7}>
-          Item Five
-        </TabPanel>
-        <TabPanel value={value} index={8}>
-          Item Six
-        </TabPanel>
-        <TabPanel value={value} index={9}>
-          Item Seven
-        </TabPanel>
-        <TabPanel value={value} index={10}>
-          Item Three
-        </TabPanel>
-        <TabPanel value={value} index={11}>
-          Item Four
-        </TabPanel>
-        <TabPanel value={value} index={12}>
-          Item Five
-        </TabPanel>} */
-}

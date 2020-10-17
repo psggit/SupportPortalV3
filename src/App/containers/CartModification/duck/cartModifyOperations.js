@@ -2,9 +2,12 @@ import {
   fetchGenreSuccess,
   fetchGenreFailed,
   fetchGenreProgress,
+  fetchBrandSuccess,
+  fetchBrandFailed,
+  fetchBrandProgress,
   updateFromCart,
 } from "./actions";
-import { genresAPI } from "../../../utils";
+import { genresAPI, brandsAPI } from "../../../utils";
 
 const processResponse = () => {
   return (res) => {
@@ -40,6 +43,30 @@ const fetchGenre = (reqBody) => {
   };
 };
 
+const onSuccessBrand = (dispatch) => {
+  return (data) => {
+    dispatch(fetchBrandSuccess(data));
+  };
+};
+
+const onErrorBrand = (dispatch) => {
+  return (err) => {
+    dispatch(fetchBrandFailed(err));
+  };
+};
+
+const fetchBrand = (reqBody) => {
+  return (dispatch) => {
+    dispatch(fetchBrandProgress()),
+      brandsAPI(
+        reqBody,
+        processResponse(dispatch),
+        onSuccessBrand(dispatch),
+        onErrorBrand(dispatch)
+      );
+  };
+};
+
 const setCart = (products) => {
   return (dispatch) => {
     let newObj = {};
@@ -51,4 +78,4 @@ const setCart = (products) => {
   };
 };
 
-export { fetchGenre, setCart };
+export { fetchGenre, fetchBrand, setCart };

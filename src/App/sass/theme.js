@@ -18,6 +18,13 @@ const newTheme = createMuiTheme({
         fontWeight: 700,
       },
     },
+    body2: {
+      ".MuiTypography-root": {
+        ".MuiListItemText-secondary": {
+          color: "#606060",
+        },
+      },
+    },
     h5: {
       fontWeight: 700,
     },

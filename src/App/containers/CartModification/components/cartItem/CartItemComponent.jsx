@@ -29,21 +29,10 @@ const useStyles = makeStyles((theme) => ({
     float: "left",
     padding: "0 20px",
   },
+  ListItemText: {
+    marginTop: 15,
+  },
 }));
-
-function getSkuFromProduct(product) {
-  return {
-    // retailerId: retailer.id,
-    // retailerName: retailer.name,
-    // retailerDescription: retailer.description,
-    sku_id: product.sku_id,
-    brand_name: product.brand_name,
-    brand_id: product.brand_id,
-    sku_price: product.price,
-    volume: product.volume,
-    clearCart: false,
-  };
-}
 
 CartItemComponent.propTypes = {
   product: PropTypes.object,
@@ -51,6 +40,7 @@ CartItemComponent.propTypes = {
   removeItem: PropTypes.func,
   retailer: PropTypes.object,
   ordered_count: PropTypes.number,
+  cartProducts: PropTypes.object,
 };
 
 function CartItemComponent(props) {
@@ -59,17 +49,20 @@ function CartItemComponent(props) {
 
   return (
     <Box className={classes.cartItem}>
-      <ListItemText primary={product.brand_name} />
+      <ListItemText
+        primary={product.brand_name}
+        className={classes.ListItemText}
+      />
       {product.sku.map((value) => {
-        let sku = getSkuFromProduct(value);
         return (
           <CartItem
             ordered_count={ordered_count}
-            value={sku}
+            value={value}
             key={value.sku_id}
             modify={true}
             removeItem={removeItem}
             addItem={addItem}
+            cartProducts={props.cartProducts}
           />
         );
       })}

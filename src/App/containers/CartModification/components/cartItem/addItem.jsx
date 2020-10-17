@@ -1,11 +1,11 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
+import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
-import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import { AddItem } from "./addItem";
+import RemoveIcon from "@material-ui/icons/Remove";
+import AddIcon from "@material-ui/icons/Add";
+import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(4),
   },
   ListItems: {
-    color: "#606060",
+    color: "#010B13",
   },
   ListItemRoot: {
     width: "100%",
@@ -90,41 +90,72 @@ const useStyles = makeStyles((theme) => ({
   deleteButton: {
     padding: "7px 10px",
   },
+  cartCounter: {
+    backgroundColor: "#fff",
+    border: "1px solid #0086AD",
+    color: "#0086AD",
+    borderRadius: 20,
+    padding: 2,
+    cursor: "pointer",
+    "&::before": {
+      content: '"w"',
+      paddingLeft: 2,
+      color: "#fff",
+    },
+    "&::after": {
+      content: '"w"',
+      paddingRight: 2,
+      color: "#fff",
+    },
+  },
 }));
 
-const CartItem = (props) => {
+const AddItem = (props) => {
   const classes = useStyles();
-  const value = props.value;
+  const value = props.sku;
 
-  if (props)
+  let cartSku = props.cartProducts[value.sku_id];
+
+  if (cartSku === undefined) {
     return (
-      <ListItem dense disableGutters>
-        <ListItemText
-          className={classes.ListItems}
-          primary={""}
-          secondary={`${value.volume} ML | ₹ ${value.price}`}
-        />
-        <AddItem
-          sku={value}
-          cartProducts={props.cartProducts}
-          addItem={props.addItem}
-          removeItem={props.removeItem}
-        />
-        {props.modify && (
-          <IconButton
-            aria-label="delete"
-            color="primary"
-            className={classes.deleteButton}
-            onClick={() => props.removeItem()}
-          >
-            <DeleteOutlineIcon size="small" fontSize="small" />
-          </IconButton>
-        )}
-      </ListItem>
+      <div
+        className={classes.cartCounter}
+        onClick={(event) => props.addItem(event, value)}
+      >
+        ADD
+      </div>
     );
+  }
+
+  return (
+    <>
+      <Box className={classes.addComponentLeft}>
+        <IconButton
+          style={{ color: "#010B13" }}
+          onClick={(event) => props.removeItem(event, value)}
+        >
+          <RemoveIcon size="small" fontSize="small" />
+        </IconButton>
+      </Box>
+
+      <Box className={classes.addComponentCenter}>
+        <Typography>{cartSku.ordered_count}</Typography>
+      </Box>
+
+      <Box className={classes.addComponentRight}>
+        <IconButton
+          style={{ color: "#010B13" }}
+          onClick={(event) => props.addItem(event, value)}
+        >
+          <AddIcon size="small" fontSize="small" />
+        </IconButton>
+      </Box>
+    </>
+  );
 };
 
-CartItem.propTypes = {
+AddItem.propTypes = {
+  sku: PropTypes.object,
   value: PropTypes.any,
   modify: PropTypes.bool,
   addItem: PropTypes.func,
@@ -133,4 +164,4 @@ CartItem.propTypes = {
   cartProducts: PropTypes.object,
 };
 
-export { CartItem };
+export { AddItem };

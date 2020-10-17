@@ -10,9 +10,6 @@ const mapStateToProps = (state) => {
     fetchGenreProgress: state.cart.fetchGenreProgress,
     fetchGenreFailed: state.cart.fetchGenreFailed,
     fetchGenreSuccess: state.cart.fetchGenreSuccess,
-    fetchActivityLogsProgress: state.cart.fetchActivityLogsProgress,
-    fetchActivityLogsFailed: state.cart.fetchActivityLogsFailed,
-    fetchActivityLogsSuccess: state.cart.fetchActivityLogsSuccess,
   };
 };
 

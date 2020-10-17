@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Button, TextField } from "@material-ui/core";
+import { Box, Button, TextField, Link } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import TopBar from "../../components/topBar";
 import { useHistory } from "react-router-dom";
@@ -15,6 +15,7 @@ import { DeliveryAgentContainer } from "./DeliveryAgent";
 import DialogComponent from "../../components/dialog";
 import Loading from "../../components/loading";
 import ErrorMsg from "../../components/errorMsg";
+import { ActivityLogContainer } from "./ActivityLogs";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,7 +58,7 @@ const OrderInfoComponent = (props) => {
   // console.log("useParams ", orderId);
 
   useEffect(() => {
-    console.log(orderId);
+    // console.log(orderId);
     // props.fetchOrderInfo(orderId);
     if (orderId === null || orderId == "") {
       history.push("/dashboard");
@@ -67,14 +68,12 @@ const OrderInfoComponent = (props) => {
   }, []);
 
   useEffect(() => {
-    // console.log("order_status_button", props.order.order_status_button);
+    // console.log("order_status_button", orderId);
     if (props.fetchOrderInfoSuccess) {
       let payload = {
         order_id: orderId,
       };
       props.fetchCancelReason(payload);
-      const reqBody = { order_id: orderId, limit: 3, offset: 0 };
-      props.fetchActivityLogs(reqBody);
     }
   }, [props.fetchOrderInfoSuccess]);
 
@@ -139,6 +138,10 @@ const OrderInfoComponent = (props) => {
     return <Loading message="Loading..." />;
   }
 
+  if (props.fetchOrderInfoFailure) {
+    <ErrorMsg show={true} message={props.errorMsg} type={"error"} />;
+  }
+
   return (
     <div className={classes.root}>
       <TopBar />
@@ -183,6 +186,7 @@ const OrderInfoComponent = (props) => {
                     />
                   </>
                 )}
+                {props.fetchOrderInfoSuccess && <ActivityLogContainer />}
               </Grid>
             </Grid>
             <Grid container spacing={4}>
@@ -223,10 +227,10 @@ const OrderInfoComponent = (props) => {
               flexDirection="column"
               border={1}
             >
-              <Button color="primary">O</Button>
-              <Button>C</Button>
-              <Button>R</Button>
-              <Button>D</Button>
+              <Link href="#order-details">O</Link>
+              <Link href="#customer-details">C</Link>
+              <Link href="#retailer-details">R</Link>
+              <Link href="#deliveryAgent-details">D</Link>
             </Box>
           </Grid>
         </Grid>
@@ -241,9 +245,9 @@ const OrderInfoComponent = (props) => {
 OrderInfoComponent.propTypes = {
   fetchOrderInfo: PropTypes.func,
   fetchCancelReason: PropTypes.func,
-  fetchActivityLogs: PropTypes.func,
   cancelReasons: PropTypes.object,
   fetchOrderInfoSuccess: PropTypes.bool,
+  fetchOrderInfoFailure: PropTypes.bool,
   fetchCancelReasonSuccess: PropTypes.bool,
   fetchOrderInfoProgress: PropTypes.bool,
   fetchCancelReasonProgress: PropTypes.bool,
@@ -251,9 +255,11 @@ OrderInfoComponent.propTypes = {
   order: PropTypes.object,
   createNotes: PropTypes.func,
   connectCall: PropTypes.func,
-  from: PropTypes.number,
+  from: PropTypes.string,
   connectCallSuccess: PropTypes.bool,
   successMsg: PropTypes.string,
+  errorMsg: PropTypes.string,
+  activityLog: PropTypes.object,
 };
 
 export { OrderInfoComponent };

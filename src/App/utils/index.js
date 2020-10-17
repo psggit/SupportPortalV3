@@ -5,6 +5,7 @@ export { orderInfoAPI } from "./orderInfoAPI";
 export { createSession } from "./session";
 export { fetchDANotesAPI } from "./fetchDANotesAPI";
 export { genresAPI } from "./genresAPI";
+export { brandsAPI } from "./brandsAPI";
 export { cancelReasonAPI } from "./cancelReasonAPI";
 export { fetchNotesAPI } from "./fetchNotesAPI";
 export { fetchRetailerNotesAPI } from "./fetchRetailerNotesAPI";
