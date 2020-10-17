@@ -5,6 +5,7 @@ import { loginReducer } from "../containers/Login";
 import { homeReducer } from "../containers/Dashboard";
 import { cartReducer } from "../containers/Cart";
 import { orderReducer } from "../containers/OrderInfo/reducer";
+import { retailerNotesListReducer } from "../containers/Retailer/RetailerNotes";
 import { customerSOAReducer } from "../containers/Customer/CustomerSoa";
 import { customerGiftSOAReducer } from "../containers/Customer/CustomerGiftSoa";
 import { rewardsReducer } from "../containers/Customer/Rewards";
@@ -16,6 +17,7 @@ const store = configureStore({
     home: homeReducer,
     order: orderReducer,
     cart: cartReducer,
+    notes: retailerNotesListReducer,
     soa: customerSOAReducer,
     giftSoa: customerGiftSOAReducer,
     rewards: rewardsReducer,

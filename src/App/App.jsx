@@ -15,6 +15,8 @@ import { ThemeProvider } from "@material-ui/styles";
 // import Loading from "./components/loading";
 import newTheme from "./sass/theme";
 import "./sass/app.scss";
+import { RetailerNotesContainer } from "./containers/Retailer/RetailerNotes/RetailerNotesContainer";
+import { ChangeRetailerContainer } from "./containers/Retailer/ChangeRetailer/ChangeRetailerContainer";
 // import { CustomerDetailContainer } from './containers/Customer/CustomerCard'
 import { CustomerFormContainer } from "./containers/Customer/CustomerFormDetails";
 import { CustomerSoaContainer } from "./containers/Customer/CustomerSoa";
@@ -32,8 +34,6 @@ function App(props) {
   }, []);
 
   let success = props.authenticateSuccess;
-  // console.log(props.authData);
-  // let success = true;
 
   return (
     <div>
@@ -47,6 +47,14 @@ function App(props) {
               <Route
                 path="/cart-modify"
                 component={CartModificationContainer}
+              />
+              <Route
+                path="/change-retailer"
+                component={ChangeRetailerContainer}
+              />
+              <Route
+                path="/retailer-notes"
+                component={RetailerNotesContainer}
               />
               <Route
                 path="/customer-detail"
