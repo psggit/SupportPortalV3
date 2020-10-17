@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import { OrderInfoComponent } from "./OrderInfoComponent";
+
 import {
   fetchOrder,
   fetchCancelReason,
@@ -12,10 +13,12 @@ const mapStateToProps = (state) => {
     orderId: state.home.orderId,
     order: state.order.orderInfo.orderDetails,
     retailerDetails: state.order.retailerDetails,
+    customerId: state.order.orderInfo.customerId,
+    customerContactNumber: state.order.orderInfo.customerContactNumber,
+    fetchOrderInfoSuccess: state.order.orderInfo.fetchOrderInfoSuccess,
     fetchOrderInfoProgress: state.order.orderInfo.fetchOrderInfoProgress,
     fetchOrderInfoFailure: state.order.orderInfo.fetchOrderInfoFailure,
     cancelReasons: state.order.orderInfo.cancelReasons,
-    fetchOrderInfoSuccess: state.order.orderInfo.fetchOrderInfoSuccess,
     fetchCancelReasonSuccess: state.order.orderInfo.fetchCancelReasonSuccess,
     fetchCancelReasonFailure: state.order.orderInfo.fetchCancelReasonFailure,
     customerDetails: state.order.customerDetails,

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Button, TextField, Link } from "@material-ui/core";
+import { Box, Button, TextField } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import TopBar from "../../components/topBar";
 import { useHistory } from "react-router-dom";
@@ -55,11 +55,8 @@ const OrderInfoComponent = (props) => {
   const history = useHistory();
   const classes = useStyles();
   let { orderId } = useParams();
-  // console.log("useParams ", orderId);
 
   useEffect(() => {
-    // console.log(orderId);
-    // props.fetchOrderInfo(orderId);
     if (orderId === null || orderId == "") {
       history.push("/dashboard");
     } else {
@@ -68,7 +65,6 @@ const OrderInfoComponent = (props) => {
   }, []);
 
   useEffect(() => {
-    // console.log("order_status_button", orderId);
     if (props.fetchOrderInfoSuccess) {
       let payload = {
         order_id: orderId,
@@ -82,7 +78,13 @@ const OrderInfoComponent = (props) => {
   const [issueDesc, setIssueDesc] = useState("");
   const [open, setOpen] = useState(false);
 
-  // console.log("useEffect 2", props);
+  const [activeSection, setActiveSection] = useState("");
+
+  const handleScroll = (id) => {
+    setActiveSection(id);
+    const element = document.getElementById(id);
+    element.scrollIntoView({ block: "start", behavior: "smooth" });
+  };
 
   const openDialog = (type) => {
     setIssueType(type);
@@ -177,7 +179,7 @@ const OrderInfoComponent = (props) => {
               <Grid item xs={6}>
                 {props.fetchOrderInfoSuccess && <CartContainer {...props} />}
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={6} id="section1">
                 {props.fetchOrderInfoSuccess && (
                   <>
                     <OrderDetailsCard
@@ -189,7 +191,7 @@ const OrderInfoComponent = (props) => {
                 {props.fetchOrderInfoSuccess && <ActivityLogContainer />}
               </Grid>
             </Grid>
-            <Grid container spacing={4}>
+            <Grid container spacing={4} id="section2">
               <Grid item xs={12}>
                 {props.fetchOrderInfoSuccess && (
                   <CustomerContainer
@@ -199,7 +201,7 @@ const OrderInfoComponent = (props) => {
                 )}
               </Grid>
             </Grid>
-            <Grid container spacing={4}>
+            <Grid container spacing={4} id="section3">
               <Grid item xs={12}>
                 {props.fetchOrderInfoSuccess && (
                   <RetailerContainer
@@ -209,7 +211,7 @@ const OrderInfoComponent = (props) => {
                 )}
               </Grid>
             </Grid>
-            <Grid container spacing={4}>
+            <Grid container spacing={4} id="section4">
               <Grid item xs={12}>
                 {props.fetchOrderInfoSuccess && (
                   <DeliveryAgentContainer
@@ -227,10 +229,34 @@ const OrderInfoComponent = (props) => {
               flexDirection="column"
               border={1}
             >
-              <Link href="#order-details">O</Link>
-              <Link href="#customer-details">C</Link>
-              <Link href="#retailer-details">R</Link>
-              <Link href="#deliveryAgent-details">D</Link>
+              <Button
+                title="Order Detail"
+                className={activeSection === "section1" ? "active" : null}
+                onClick={() => handleScroll("section1")}
+              >
+                O
+              </Button>
+              <Button
+                title="Customer"
+                className={activeSection === "section2" ? "active" : null}
+                onClick={() => handleScroll("section2")}
+              >
+                C
+              </Button>
+              <Button
+                title="Retailer"
+                className={activeSection === "section3" ? "active" : null}
+                onClick={() => handleScroll("section3")}
+              >
+                R
+              </Button>
+              <Button
+                title="Delivery Agent"
+                className={activeSection === "section4" ? "active" : null}
+                onClick={() => handleScroll("section4")}
+              >
+                D
+              </Button>
             </Box>
           </Grid>
         </Grid>

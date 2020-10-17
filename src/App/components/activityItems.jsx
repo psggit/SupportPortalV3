@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -5,9 +6,9 @@ import {
   CardContent,
   ListItem,
   ListItemText,
-  CardHeader,
   Button,
   CardActions,
+  Typography
 } from "@material-ui/core";
 import PropTypes from "prop-types";
 import Moment from "moment";
@@ -29,6 +30,8 @@ const useStyles = makeStyles((theme) => ({
   heading: {
     fontSize: "16px",
     lineHeight: "22px",
+    display: "flex",
+    justifyContent: "space-between",
   },
   ListItems: {
     color: "#010B13",
@@ -51,16 +54,6 @@ const useStyles = makeStyles((theme) => ({
   },
   ListItemRow: {
     borderBottom: "1px solid #E5E5E5",
-  },
-  cardHeader: {
-    "& .MuiCardHeader-content": {
-      paddingBottom: 12,
-      "& > span": {
-        fontSize: 16,
-        fontWeight: 600,
-        textTransform: "uppercase",
-      },
-    },
   },
   root: {
     fontFamily: theme.typography.fontFamily,
@@ -89,6 +82,7 @@ ActivityItem.propTypes = {
   click: PropTypes.any,
   issueType: PropTypes.string,
   title: PropTypes.string,
+  subtitle: PropTypes.array,
 };
 
 export default function ActivityItem(props) {
@@ -99,11 +93,23 @@ export default function ActivityItem(props) {
   }
   const keysToRender = props.keysToRender;
   const type = props.issueType;
+  const subtitle = props.subtitle;
+  const title = props.title;
+
   if (mapArray === null) {
     return (
       <Card className={classes.root}>
         <CardContent>
-          <CardHeader className={classes.cardHeader} title={props.title} />
+          <Typography variant="h5" className={classes.heading} gutterBottom>
+            {title}
+            {subtitle ? (
+              <CardActions >
+                {subtitle.map((item) => item)}
+              </CardActions>
+            ) : (
+                ""
+              )}
+          </Typography>
           <ListItem
             dense
             disableGutters={true}
@@ -133,7 +139,16 @@ export default function ActivityItem(props) {
   return (
     <Card className={classes.root}>
       <CardContent>
-        <CardHeader className={classes.cardHeader} title={props.title} />
+        <Typography variant="h5" className={classes.heading} gutterBottom>
+          {title}
+          {subtitle ? (
+            <CardActions >
+              {subtitle.map((item) => item)}
+            </CardActions>
+          ) : (
+              ""
+            )}
+        </Typography>    
         {mapArray.map((value, index) => {
           let data = value;
           return (
@@ -177,4 +192,4 @@ export default function ActivityItem(props) {
       </CardActions>
     </Card>
   );
-}
+  };

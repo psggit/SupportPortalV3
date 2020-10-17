@@ -5,6 +5,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import { makeStyles } from "@material-ui/core/styles";
 import { List, ListItem, ListItemText } from "@material-ui/core";
+import Moment from "moment";
 
 import PropTypes from "prop-types";
 const useStyles = makeStyles((theme) => ({
@@ -22,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
   cardHeader: {
     "& .MuiCardHeader-content": {
       paddingBottom: 12,
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
       "& > span": {
         fontSize: 16,
         fontWeight: 600,
@@ -71,14 +75,41 @@ CustomCard.propTypes = {
   renderArray: PropTypes.array,
   keysToRender: PropTypes.array,
   keyMap: PropTypes.object,
+
   id: PropTypes.string,
+
+  subheader: PropTypes.any,
 };
+
+const getTimestamp = (timestamp) => {
+  // console.log("time", timestamp);
+  return Moment(timestamp).format("DD/MM/YYYY");
+};
+
 export default function CustomCard(props) {
-  const { title, actions, renderArray, keyMap, keysToRender, id } = props;
+  const {
+    title,
+    actions,
+    renderArray,
+    keyMap,
+    keysToRender,
+    subheader,
+  } = props;
   const classes = useStyles();
   return (
-    <Card className={classes.root} id={id}>
-      <CardHeader className={classes.cardHeader} title={title} />
+    <Card className={classes.root}>
+      <CardHeader
+        className={classes.cardHeader}
+        title={title}
+        subheader={
+          subheader ? (
+            <CardActions>{subheader.map((item) => item)}</CardActions>
+          ) : (
+            ""
+          )
+        }
+      />
+
       <CardContent className={classes.cardContent}>
         <List>
           {renderArray.map((item, index) => {
@@ -95,7 +126,11 @@ export default function CustomCard(props) {
                 />
                 <ListItemText
                   primary={
-                    item[keysToRender[index]] ? item[keysToRender[index]] : "-"
+                    item[keysToRender[index]] === item[keysToRender[4]]
+                      ? getTimestamp(item[keysToRender[index]])
+                      : item[keysToRender[index]]
+                      ? item[keysToRender[index]]
+                      : "-"
                   }
                   className={classes.ListItemTextRoot}
                   classes={{ root: classes.ListItemTextLabel }}

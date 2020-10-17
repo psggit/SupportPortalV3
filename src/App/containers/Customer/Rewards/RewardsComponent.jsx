@@ -1,18 +1,16 @@
 /* eslint-disable react/jsx-key */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "../../../components/table";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-import Pagination from "../../../components/pagination";
+// import Pagination from "../../../components/pagination";
 import Moment from "moment";
-import {
-  getOffsetUsingPageNo,
-  getQueryParamByName,
-  getQueryUri,
-} from "../../../utils/helpers";
+import { useHistory } from "react-router-dom";
+import Paper from "@material-ui/core/Paper";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   navBar: {
     display: "flex",
     alignItems: "center",
@@ -36,7 +34,7 @@ const useStyles = makeStyles(theme => ({
     fontWeight: "bold",
   },
   table: {
-    padding: "0px 25px",
+    padding: "0px 80px",
   },
 }));
 
@@ -54,25 +52,59 @@ const tableHeaders = [
 ];
 
 function Rewards(props) {
-  console.log("props..hy", props.rewardsList.data, props.rewardsList.count);
+  console.log("[rewards]", props.customerId);
+  const history = useHistory();
   const classes = useStyles();
 
-  const pageLimit = 2;
-  const activePage = getQueryParamByName("activePage") || 1;
-  const [isLoading, setLoading] = useState(false);
-  const [pageNo, setPageNo] = useState(activePage);
+  // const pageLimit = 2;
+  // const activePage = getQueryParamByName("activePage") || 1;
+  // const [isLoading, setLoading] = useState(false);
+  // const [pageNo, setPageNo] = useState(activePage);
 
-  const handlePageChange = (pageObj) => {
-    setPageNo(pageObj.activePage);
-    const queryParamsObj = {
-      activePage: pageObj.activePage,
+  useEffect(() => {
+    const payload = {
+      consumer_id: parseInt(props.customerId),
+      limit: 10,
+      offset: 0,
     };
-    history.pushState(
-      queryParamsObj,
-      "soa listing",
-      `/soa/123${getQueryUri(queryParamsObj)}`
-    );
+    props.fetchRewardsList(payload);
+  }, []);
+
+  // const handlePageChange = (pageObj) => {
+  //   setPageNo(pageObj.activePage);
+  //   const queryParamsObj = {
+  //     activePage: pageObj.activePage,
+  //   };
+  //   history.pushState(
+  //     queryParamsObj,
+  //     "soa listing",
+  //     `/soa ${getQueryUri(queryParamsObj)}`
+  //   );
+  // };
+
+  const handleGiftSoaChange = () => {
+    console.log("gift-soa");
+    history.push("/gift-soa");
   };
+
+  const handleCustomerDetail = () => {
+    history.push("/customer-detail");
+  };
+
+  const handleRewardChange = () => {
+    console.log("rewards");
+    history.push("/rewards");
+  };
+
+  const handleSoaChange = () => {
+    console.log("soa");
+    history.push("/soa");
+  };
+
+  let loading = props.rewardsProgress;
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div className={classes.formContainer}>
@@ -81,57 +113,71 @@ function Rewards(props) {
           <div>Back</div>
         </div>
         <div className={classes.navContent}>
-          <div>Customer Details</div>
+          <div onClick={handleCustomerDetail}>Customer Details</div>
         </div>
         <div className={classes.navContent}>
-          <div>SOA</div>
+          <div onClick={handleSoaChange}>SOA</div>
         </div>
         <div className={classes.navContent}>
-          <div>Gift Soa</div>
+          <div onClick={handleGiftSoaChange}>Gift Soa</div>
         </div>
         <div className={classes.navContent}>
-          <div>Rewards</div>
+          <div onClick={handleRewardChange}>Rewards</div>
         </div>
         <div className={classes.navContent}>
           <div>Notes</div>
         </div>
       </div>
       <div className={classes.row1}>
-        <p>CUSTOMER ID: 123</p>
+        <p>CUSTOMER ID: {props.customerId}</p>
         <div>Search</div>
       </div>
       <div className={classes.table}>
-        <Table tableHeaders={tableHeaders}>
-          {props.rewardsList.data.map((data, index) => {
-            return (
-              <TableRow>
-                <TableCell>{data.order_id}</TableCell>
-                <TableCell>{data.retailer_name}</TableCell>
-                <TableCell>{data.reward_id}</TableCell>
-                <TableCell>{data.reward_source}</TableCell>
-                <TableCell>{data.amount}</TableCell>
-                <TableCell>{data.promocode}</TableCell>
-                <TableCell>{data.bank_rrn}</TableCell>
-                <TableCell>{data.failure_reason}</TableCell>
-                <TableCell align="left">
-                  {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
-                </TableCell>
-                <TableCell>{data.status}</TableCell>
-              </TableRow>
-            );
-          })}
-        </Table>
-        <Pagination
-          activePage={parseInt(pageNo)}
-          //itemsCountPerPage={parseInt(pageLimit)}
-          rowsPerPage={parseInt(pageLimit)}
-          count={props.rewardsList.count}
-          setPage={handlePageChange}
-          color="primary"
-        />
+        <Paper className={classes.paper}>
+          <Table tableHeaders={tableHeaders}>
+            {props.rewardsSuccess
+              ? props.rewardsList.rewards.map((data) => {
+                  return (
+                    <TableRow>
+                      <TableCell>{data.order_id}</TableCell>
+                      <TableCell>{data.retailer_name}</TableCell>
+                      <TableCell>{data.id}</TableCell>
+                      <TableCell>{data.reward_source}</TableCell>
+                      <TableCell>{data.amount}</TableCell>
+                      <TableCell>{data.promo_code}</TableCell>
+                      <TableCell>{data.bank_rrn}</TableCell>
+                      <TableCell>{data.failure_reason}</TableCell>
+                      <TableCell align="left">
+                        {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
+                      </TableCell>
+                      <TableCell>{data.status}</TableCell>
+                    </TableRow>
+                  );
+                })
+              : props.rewardsSuccess &&
+                props.rewardsList.rewards.length === 0 && (
+                  <tr>
+                    <td
+                      style={{ textAlign: "center", padding: "10px 0" }}
+                      colSpan="6"
+                    >
+                      <p style={{ fontWeight: "16px" }}>No records found</p>
+                    </td>
+                  </tr>
+                )}
+          </Table>
+        </Paper>
       </div>
     </div>
   );
 }
+
+Rewards.propTypes = {
+  rewardsList: PropTypes.array,
+  rewardsProgress: PropTypes.bool,
+  rewardsSuccess: PropTypes.bool,
+  customerId: PropTypes.any,
+  fetchRewardsList: PropTypes.func,
+};
 
 export { Rewards };

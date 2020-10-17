@@ -15,16 +15,16 @@ import { ThemeProvider } from "@material-ui/styles";
 import Loading from "./components/loading";
 import newTheme from "./sass/theme";
 import "./sass/app.scss";
+import { RetailerNotesContainer } from "./containers/Retailer/RetailerNotes/RetailerNotesContainer";
+import { ChangeRetailerContainer } from "./containers/Retailer/ChangeRetailer/ChangeRetailerContainer";
 // import { CustomerDetailContainer } from './containers/Customer/CustomerCard'
-// import {CustomerForm} from './containers/Customer/CustomerFormDetails/CustomerFormComponent'
-// import { CustomerSoa } from './containers/Customer/CustomerSoa/CustomerSoaComponent'
-// import {CustomerSoaContainer} from './containers/Customer/CustomerSoa'
-// import { CustomerGiftSoaContainer } from './containers/Customer/CustomerGiftSoa'
-// import {RewardsContainer} from './containers/Customer/Rewards'
+import { CustomerFormContainer } from "./containers/Customer/CustomerFormDetails";
+import { CustomerSoaContainer } from "./containers/Customer/CustomerSoa";
+import { CustomerGiftSoaContainer } from "./containers/Customer/CustomerGiftSoa";
+import { RewardsContainer } from "./containers/Customer/Rewards";
 import { NotesContainer } from "./containers/Customer/Notes";
 
 function App(props) {
-  let history = useHistory();
   useEffect(() => {
     // console.log(props);
     // console.log(history);
@@ -32,6 +32,7 @@ function App(props) {
     props.validateAuth();
   }, []);
 
+  let success = props.authenticateSuccess;
   if (props.authenticateProgress) {
     return (
       <ThemeProvider theme={newTheme}>
@@ -39,8 +40,6 @@ function App(props) {
       </ThemeProvider>
     );
   }
-
-  let success = props.authenticateSuccess;
 
   return (
     <div>
@@ -58,7 +57,24 @@ function App(props) {
                 path="/cart-modify"
                 component={CartModificationContainer}
               />
-              <Route path="/notes/123" component={NotesContainer} />
+
+              <Route
+                path="/change-retailer"
+                component={ChangeRetailerContainer}
+              />
+              <Route
+                path="/retailer-notes"
+                component={RetailerNotesContainer}
+              />
+              <Route
+                path="/customer-detail"
+                component={CustomerFormContainer}
+              />
+              <Route path="/soa" component={CustomerSoaContainer} />
+              <Route path="/gift-soa" component={CustomerGiftSoaContainer} />
+              <Route path="/rewards" component={RewardsContainer} />
+              <Route path="/notes" component={NotesContainer} />
+
               <Route path="/" component={LoginContainer} />
             </Switch>
           </Router>

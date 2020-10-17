@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+/* eslint-disable react/prop-types */
+import React, { useState, useEffect } from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import Moment from "moment";
-import { green } from "@material-ui/core/colors";
 import Radio from "@material-ui/core/Radio";
+import PropTypes from "prop-types";
+import { useHistory } from "react-router-dom";
 
 const BlueRadio = withStyles({
   root: {
@@ -58,19 +59,13 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     marginBottom: "16px",
     backgroundColor: "#fff",
+    width: "220px",
   },
   radioGroup: {
     display: "flex",
   },
   button: {
-    color: "#FFFFFF",
-    backgroundColor: "#0086AD",
-    fontSize: "14px",
-    fontWeight: "bold",
-    lineHeight: "21px",
-    borderRadius: "4px",
     marginLeft: "16px",
-    border: "1.6px solid #0086AD",
   },
   buttonContainer: {
     marginLeft: "500px",
@@ -79,18 +74,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CustomerForm() {
+function CustomerForm(props) {
+  const history = useHistory();
   const classes = useStyles();
-
+  const [consumerDetail, setConsumerDetail] = useState("");
+  console.log("useffect", consumerDetail);
   const [customerName, setCustomerName] = useState("");
-  const [mobileNumber, setMobileNumber] = useState("");
-  const [email, setEmail] = useState("");
   const [dob, setDob] = useState("");
-  const [signupDate, setSignupDate] = useState("");
-  const [kycLevel, setKycLevel] = useState("");
-  const [hipbarWalletBalance, setHipbarWalletBalance] = useState("");
-  const [giftWalletBalance, setGiftWalletBalance] = useState("");
   const [selectedValue, setSelectedValue] = useState("");
+  const [signupDate, setSignupDate] = useState("");
+
+  useEffect(() => {
+    setConsumerDetail(props.orderInfo);
+    setCustomerName(props.orderInfo.customer_name);
+    setDob(props.orderInfo.customer_dob.slice(0, 10));
+    setSelectedValue(props.orderInfo.customer_gender);
+    setSignupDate(props.orderInfo.customer_sign_up_date.slice(0, 10));
+    //setSignupDate(Moment(props.orderInfo.customer_sign_up_date).format("DD/MM/YYYY"));
+  }, []);
 
   const handleRadioChange = (event) => {
     setSelectedValue(event.target.value);
@@ -98,55 +99,65 @@ function CustomerForm() {
 
   const handleReset = () => {
     setCustomerName("");
-    setMobileNumber("");
-    setEmail("");
     setDob("");
-    setSignupDate("");
-    setKycLevel("");
-    setHipbarWalletBalance("");
-    setGiftWalletBalance("");
     setSelectedValue("");
   };
 
   const handleSave = () => {
-    console.log(
-      "value",
-      mobileNumber,
-      customerName,
-      email,
-      dob,
-      signupDate,
-      kycLevel,
-      hipbarWalletBalance,
-      giftWalletBalance
-    );
-    console.log("radio", selectedValue);
+    const payload = {
+      consumer_id: parseInt(props.orderInfo.customer_id),
+      dob: dob,
+      gender: selectedValue,
+      name: customerName,
+    };
+    props.updateConsumer(payload);
+  };
+
+  const handleGiftSoaChange = () => {
+    console.log("gift-soa");
+    history.push("/gift-soa");
+  };
+
+  const handleRewardChange = () => {
+    history.push("/rewards");
+  };
+
+  const handleSoaChange = () => {
+    history.push("/soa");
+  };
+
+  const handleNotesChange = () => {
+    history.push("/notes");
+  };
+
+  const handleBack = () => {
+    history.push("/order-info");
   };
 
   return (
     <div className={classes.formContainer}>
       <div className={classes.navBar}>
         <div className={classes.backButton}>
-          <div>Back</div>
+          <div onClick={handleBack}>Back</div>
         </div>
         <div className={classes.navContent}>
           <div>Customer Details</div>
         </div>
         <div className={classes.navContent}>
-          <div>SOA</div>
+          <div onClick={handleSoaChange}>SOA</div>
         </div>
         <div className={classes.navContent}>
-          <div>Gift Soa</div>
+          <div onClick={handleGiftSoaChange}>Gift Soa</div>
         </div>
         <div className={classes.navContent}>
-          <div>Rewards</div>
+          <div onClick={handleRewardChange}>Rewards</div>
         </div>
         <div className={classes.navContent}>
-          <div>Notes</div>
+          <div onClick={handleNotesChange}>Notes</div>
         </div>
       </div>
       <div className={classes.section1}>
-        <p>CUSTOMER ID: 123</p>
+        <p>CUSTOMER ID: {props.orderInfo.customer_id}</p>
       </div>
       <div className={classes.section2}>
         <div className={classes.generalForm}>
@@ -211,10 +222,9 @@ function CustomerForm() {
             <TextField
               className={classes.textField}
               variant="outlined"
-              name="mobileNumber"
-              value={mobileNumber}
+              value={consumerDetail.customer_contact_number}
+              disabled
               size="small"
-              onChange={(e) => setMobileNumber(e.target.value)}
             />
           </div>
         </div>
@@ -227,10 +237,9 @@ function CustomerForm() {
             <TextField
               className={classes.textField}
               variant="outlined"
-              name="email"
-              value={email}
+              value={consumerDetail.customer_email}
               size="small"
-              onChange={(e) => setEmail(e.target.value)}
+              disabled
             />
           </div>
         </div>
@@ -261,10 +270,9 @@ function CustomerForm() {
               className={classes.textField}
               type="date"
               variant="outlined"
-              name="signupDate"
               value={signupDate}
               size="small"
-              onChange={(e) => setSignupDate(e.target.value)}
+              disabled
             />
           </div>
         </div>
@@ -277,10 +285,9 @@ function CustomerForm() {
             <TextField
               className={classes.textField}
               variant="outlined"
-              name="kycLevel"
-              value={kycLevel}
+              value={consumerDetail.customer_kyc}
               size="small"
-              onChange={(e) => setKycLevel(e.target.value)}
+              disabled
             />
           </div>
         </div>
@@ -293,10 +300,9 @@ function CustomerForm() {
             <TextField
               className={classes.textField}
               variant="outlined"
-              name="hipbarWalletBalance"
-              value={hipbarWalletBalance}
+              value={consumerDetail.hipbar_wallet}
               size="small"
-              onChange={(e) => setHipbarWalletBalance(e.target.value)}
+              disabled
             />
           </div>
         </div>
@@ -309,19 +315,28 @@ function CustomerForm() {
             <TextField
               className={classes.textField}
               variant="outlined"
-              name="giftWalletBalance"
-              value={giftWalletBalance}
+              value={consumerDetail.gift_wallet}
               size="small"
-              onChange={(e) => setGiftWalletBalance(e.target.value)}
+              disabled
             />
           </div>
         </div>
 
         <div className={classes.buttonContainer}>
-          <Button className={classes.button} onClick={handleReset}>
+          <Button
+            className={classes.button}
+            onClick={handleReset}
+            variant="outlined"
+            color="primary"
+          >
             Reset
           </Button>
-          <Button className={classes.button} onClick={handleSave}>
+          <Button
+            className={classes.button}
+            onClick={handleSave}
+            variant="contained"
+            color="primary"
+          >
             Save
           </Button>
         </div>
@@ -329,5 +344,10 @@ function CustomerForm() {
     </div>
   );
 }
+
+CustomerForm.prototype = {
+  orderInfo: PropTypes.object,
+  updateConsumer: PropTypes.func,
+};
 
 export { CustomerForm };
