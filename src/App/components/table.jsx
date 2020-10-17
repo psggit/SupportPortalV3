@@ -29,7 +29,9 @@ function table(props) {
         <TableHead>
           <TableRow>
             {props.tableHeaders.map((item, i) => (
-              <TableCell className={classes.tableHeader} align="left" key={i}>{item.label}</TableCell>
+              <TableCell className={classes.tableHeader} align="left" key={i}>
+                {item.label}
+              </TableCell>
             ))}
           </TableRow>
         </TableHead>

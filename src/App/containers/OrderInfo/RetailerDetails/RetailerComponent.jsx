@@ -4,12 +4,14 @@ import { Button, Grid, CircularProgress } from "@material-ui/core";
 import DetailsCard from "../../../components/orderInfoCard";
 import ActivityItem from "../../../components/activityItems";
 import { getListOfDataObjects } from "../../../utils/helpers";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import { useHistory } from "react-router-dom";
 
 const keysToRender = [
   "retailer_id",
   "retailer_name",
   "retailer_contact_number",
-  "retailer_city",
+  "retailer_city_name",
   "retailer_locality",
   "retailer_limit",
   "retailer_address",
@@ -18,13 +20,13 @@ const keyMap = {
   retailer_id: "Retailer ID",
   retailer_name: "Retailer Name",
   retailer_contact_number: "Mobile Number",
-  retailer_city: "City",
+  retailer_city_name: "City",
   retailer_locality: "Locality",
   retailer_limit: "Retailer Limit",
   retailer_address: "Store Address",
 };
 
-const RetailerComponent = (props) => {
+const RetailerDetails = (props) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -32,6 +34,12 @@ const RetailerComponent = (props) => {
     setData(details);
     props.fetchNotes(props.orderInfo.order_id);
   }, []);
+
+  const history = useHistory();
+
+  const handleMore = () => {
+    history.push("/retailer-notes");
+  };
 
   const actionButtons = [
     <Button variant="outlined" color="primary" key="unassignBtn">
@@ -44,6 +52,13 @@ const RetailerComponent = (props) => {
       onClick={() => props.handleCall(props.orderInfo.retailer_contact_number)}
     >
       Call
+    </Button>,
+  ];
+
+  const retailerNotes = [
+    // eslint-disable-next-line react/jsx-key
+    <Button color="primary" endIcon={<ChevronRightIcon />} onClick={handleMore}>
+      Add more
     </Button>,
   ];
 
@@ -67,6 +82,7 @@ const RetailerComponent = (props) => {
               arr={props.retailerNotes.orderNotes}
               keysToRender={keysToRenderInNotesCard}
               title={"RETAILER NOTES"}
+              subtitle={retailerNotes}
               issueType={"retailer"}
               click={props.openDialog}
             />
@@ -77,8 +93,7 @@ const RetailerComponent = (props) => {
     </Grid>
   );
 };
-
-RetailerComponent.propTypes = {
+RetailerDetails.propTypes = {
   fetchNotes: PropTypes.func,
   retailerNotes: PropTypes.object,
   orderInfo: PropTypes.object,
@@ -87,5 +102,4 @@ RetailerComponent.propTypes = {
   openDialog: PropTypes.any,
   handleCall: PropTypes.func,
 };
-
-export { RetailerComponent };
+export { RetailerDetails };
