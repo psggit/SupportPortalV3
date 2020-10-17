@@ -9,6 +9,8 @@ import TableCell from "@material-ui/core/TableCell";
 import Moment from "moment";
 import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
+import FullWidthTabs from "../../../components/menuBar";
+import { Tab } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   navBar: {
@@ -101,6 +103,23 @@ function Rewards(props) {
     history.push("/soa");
   };
 
+  const handleBack = () => {
+    history.push("/order-info");
+  };
+
+  const handleNotesChange = () => {
+    history.push("/notes");
+  };
+
+  const menuLabels = [
+    <Tab label="< Back" onClick={handleBack} />,
+    <Tab label="Customer Details" onClick={handleCustomerDetail} />,
+    <Tab label="SOA" onClick={handleSoaChange} />,
+    <Tab label="Gift SOA" onClick={handleGiftSoaChange} />,
+    <Tab label="Rewards" onClick={handleRewardChange} />,
+    <Tab label="Notes" onClick={handleNotesChange} />,
+  ];
+
   let loading = props.rewardsProgress;
   if (loading) {
     return <p>Loading...</p>;
@@ -108,7 +127,8 @@ function Rewards(props) {
 
   return (
     <div className={classes.formContainer}>
-      <div className={classes.navBar}>
+      <FullWidthTabs labels={menuLabels} />
+      {/* <div className={classes.navBar}>
         <div className={classes.backButton}>
           <div>Back</div>
         </div>
@@ -127,7 +147,7 @@ function Rewards(props) {
         <div className={classes.navContent}>
           <div>Notes</div>
         </div>
-      </div>
+      </div> */}
       <div className={classes.row1}>
         <p>CUSTOMER ID: {props.customerId}</p>
         <div>Search</div>
@@ -155,7 +175,7 @@ function Rewards(props) {
                   );
                 })
               : props.rewardsSuccess &&
-                props.rewardsList.rewards.length === 0 && (
+                props.rewardsList.rewards.length == null && (
                   <tr>
                     <td
                       style={{ textAlign: "center", padding: "10px 0" }}

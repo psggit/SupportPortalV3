@@ -16,6 +16,8 @@ import Select from '@material-ui/core/Select';
 import Dialog from '../../../components/dialog'
 import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
+import FullWidthTabs from "../../../components/menuBar";
+import { Tab } from "@material-ui/core";
 
 const tableHeaders = [
   { label: "NOTE NO", value: "note_no" },
@@ -80,6 +82,15 @@ function Notes(props) {
     setShowAddNoteDialog(false)
   }
 
+  const menuLabels = [
+    <Tab label="< Back" onClick={handleBack} />,
+    <Tab label="Customer Details" onClick={handleCustomerDetail} />,
+    <Tab label="SOA" onClick={handleSoaChange} />,
+    <Tab label="Gift SOA" onClick={handleGiftSoaChange} />,
+    <Tab label="Rewards" onClick={handleRewardChange} />,
+    <Tab label="Notes" onClick={handleNotesChange} />,
+  ];
+
   // const handlePageChange = (pageObj) => {
   //   setPageNo(pageObj.activePage)
   //   const queryParamsObj = {
@@ -95,7 +106,8 @@ function Notes(props) {
 
   return (
     <div className={classes.formContainer}>
-      <div className={classes.navBar}>
+      <FullWidthTabs labels={menuLabels} />
+      {/* <div className={classes.navBar}>
         <div className={classes.backButton}>
           <div onClick={handleBack}>Back</div>
         </div>
@@ -114,7 +126,7 @@ function Notes(props) {
         <div className={classes.navContent}>
           <div onClick={handleNotesChange}>Notes</div>
         </div>
-      </div>
+      </div> */}
       <div className={classes.row1}>
         <p>CUSTOMER ID: {props.customerId}</p>
         <div>
@@ -195,7 +207,7 @@ function Notes(props) {
                 </TableRow>
               )
             })
-                : props.notesSuccess && props.customerNotes.orderNotes == null &&(
+                : props.notesSuccess && (
                 <tr>
                   <td
                     style={{ textAlign: "center", padding: "10px 0" }}

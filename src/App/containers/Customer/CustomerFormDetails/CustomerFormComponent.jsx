@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
@@ -6,6 +7,8 @@ import Button from "@material-ui/core/Button";
 import Radio from "@material-ui/core/Radio";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
+import FullWidthTabs from "../../../components/menuBar";
+import { Tab } from "@material-ui/core";
 
 const BlueRadio = withStyles({
   root: {
@@ -134,10 +137,20 @@ function CustomerForm(props) {
     history.push("/order-info");
   };
 
+  const menuLabels = [
+    <Tab label="< Back" onClick={handleBack} />,
+    <Tab label="Customer Details" />,
+    <Tab label="SOA" onClick={handleSoaChange} />,
+    <Tab label="Gift SOA" onClick={handleGiftSoaChange} />,
+    <Tab label="Rewards" onClick={handleRewardChange} />,
+    <Tab label="Notes" onClick={handleNotesChange} />,
+  ];
+
   return (
     <div className={classes.formContainer}>
-      <div className={classes.navBar}>
-        <div className={classes.backButton}>
+      <FullWidthTabs labels={menuLabels} />
+      {/* <div className={classes.navBar}> */}
+        {/* <div className={classes.backButton}>
           <div onClick={handleBack}>Back</div>
         </div>
         <div className={classes.navContent}>
@@ -154,8 +167,8 @@ function CustomerForm(props) {
         </div>
         <div className={classes.navContent}>
           <div onClick={handleNotesChange}>Notes</div>
-        </div>
-      </div>
+        </div> */}
+      {/* </div> */}
       <div className={classes.section1}>
         <p>CUSTOMER ID: {props.orderInfo.customer_id}</p>
       </div>

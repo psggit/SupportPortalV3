@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
@@ -5,9 +6,12 @@ import Table from "../../../components/table";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 //import Pagination from "../../../components/pagination";
+import Notification from "../../../components/notification";
 import Moment from "moment";
 import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
+import FullWidthTabs from "../../../components/menuBar";
+import { Tab } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   navBar: {
@@ -65,6 +69,16 @@ function CustomerGiftSoa(props) {
   // const [isLoading, setLoading] = useState(false);
   // const [pageNo, setPageNo] = useState(activePage);
 
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    setErrorMessage(props.giftSoaFail);
+  }, [props.giftSoaFail]);
+
+  const handleClose = () => {
+    setErrorMessage(false);
+  };
+
   // const handlePageChange = (pageObj) => {
   //   setPageNo(pageObj.activePage);
   //   const queryParamsObj = {
@@ -96,7 +110,7 @@ function CustomerGiftSoa(props) {
     history.push("/order-details");
   };
 
-  const handleNotes = () => {
+  const handleNotesChange = () => {
     history.push("/notes");
   };
 
@@ -104,9 +118,19 @@ function CustomerGiftSoa(props) {
     history.push("/customer-detail");
   };
 
+  const menuLabels = [
+    <Tab label="< Back" onClick={handleBack} />,
+    <Tab label="Customer Details" onClick={handleCustomerDetail} />,
+    <Tab label="SOA" onClick={handleSoaChange} />,
+    <Tab label="Gift SOA" onClick={handleGiftSoaChange} />,
+    <Tab label="Rewards" onClick={handleRewardChange} />,
+    <Tab label="Notes" onClick={handleNotesChange} />,
+  ];
+
   return (
     <div className={classes.formContainer}>
-      <div className={classes.navBar}>
+      <FullWidthTabs labels={menuLabels} />
+      {/* <div className={classes.navBar}>
         <div className={classes.backButton}>
           <div onClick={handleBack}>Back</div>
         </div>
@@ -125,7 +149,7 @@ function CustomerGiftSoa(props) {
         <div className={classes.navContent}>
           <div onClick={handleNotes}>Notes</div>
         </div>
-      </div>
+      </div> */}
       <div className={classes.row1}>
         <p>CUSTOMER ID: {props.customerId}</p>
         <div>Search</div>
@@ -171,6 +195,14 @@ function CustomerGiftSoa(props) {
           setPage={handlePageChange}
           color="primary"
         /> */}
+        {errorMessage && (
+          <Notification
+            message={props.errorMsg}
+            messageType="error"
+            open={errorMessage}
+            handleClose={handleClose}
+          />
+        )}
       </div>
     </div>
   );
@@ -182,6 +214,8 @@ CustomerGiftSoa.propTypes = {
   giftSoaList: PropTypes.array,
   giftSoaSuccess: PropTypes.bool,
   giftSoa: PropTypes.bool,
+  errorMsg: PropTypes.any,
+  giftSoaFail: PropTypes.bool,
 };
 
 export { CustomerGiftSoa };

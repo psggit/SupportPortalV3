@@ -16,6 +16,8 @@ import {
 import { useHistory } from "react-router-dom";
 import Pagination from "@material-ui/lab/Pagination";
 import Paper from "@material-ui/core/Paper";
+import FullWidthTabs from "../../../components/menuBar";
+import { Tab } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   navBar: {
@@ -125,6 +127,15 @@ function CustomerSoa(props) {
     history.push("/order-info");
   };
 
+  const menuLabels = [
+    <Tab label="< Back" onClick={handleBack} />,
+    <Tab label="Customer Details" onClick={handleCustomerDetail} />,
+    <Tab label="SOA" onClick={handleSoaChange} />,
+    <Tab label="Gift SOA" onClick={handleGiftSoaChange} />,
+    <Tab label="Rewards" onClick={handleRewardChange} />,
+    <Tab label="Notes" onClick={handleNotesChange} />,
+  ];
+
   let loading = props.soaProgress;
   if (loading) {
     return <p>Loading...</p>;
@@ -132,7 +143,8 @@ function CustomerSoa(props) {
 
   return (
     <div className={classes.formContainer}>
-      <div className={classes.navBar}>
+      <FullWidthTabs labels={menuLabels} />
+      {/* <div className={classes.navBar}>
         <div className={classes.backButton}>
           <div onClick={handleBack}>Back</div>
         </div>
@@ -151,7 +163,7 @@ function CustomerSoa(props) {
         <div className={classes.navContent}>
           <div onClick={handleNotesChange}>Notes</div>
         </div>
-      </div>
+      </div> */}
       <div className={classes.row1}>
         <p>CUSTOMER ID: {props.customerId}</p>
         <div>Search</div>
