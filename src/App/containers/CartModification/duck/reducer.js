@@ -1,3 +1,5 @@
+/* eslint-disable flowtype/no-types-missing-file-annotation */
+/* eslint-disable no-undef */
 import { createReducer } from "@reduxjs/toolkit";
 import {
   fetchGenreSuccess,
