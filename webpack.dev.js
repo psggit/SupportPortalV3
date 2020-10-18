@@ -51,17 +51,6 @@ module.exports = merge(common, {
           },
         ],
       },
-      {
-        test: /\.svg$/,
-        use: [
-          {
-            loader: "svg-url-loader",
-            options: {
-              limit: 50000,
-            },
-          },
-        ],
-      },
     ],
   },
   resolve: {

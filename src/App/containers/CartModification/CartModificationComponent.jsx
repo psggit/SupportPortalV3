@@ -33,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
     overflowY: "auto",
     padding: 20,
   },
+  marginRight: {
+    marginRight: 10,
+  },
 }));
 
 function TabPanel(props) {
@@ -177,11 +180,11 @@ const CartModificationComponent = (props) => {
             })}
         </List>
       </Box>
-      <Box>
+      <Box m={1} display="flex" justifyContent="flex-end">
         <Button
           variant="outlined"
           color="primary"
-          className={classes.marginLeft}
+          className={classes.marginRight}
           onClick={() => goBack()}
         >
           Cancel

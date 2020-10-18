@@ -66,7 +66,6 @@ export default function MenuDrawer() {
       {["left"].map((anchor) => (
         <React.Fragment key={anchor}>
           <Button onClick={toggleDrawer(anchor, true)}>
-            {" "}
             <img src={menuIcon} />
           </Button>
           <Drawer
