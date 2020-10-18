@@ -97,7 +97,7 @@ let addProduct = (state: State, sku: sku): State => {
   return state;
 };
 
-let removeProduct = (state:State, sku: sku): State => {
+let removeProduct = (state: State, sku: sku): State => {
   let prod = state.cartProducts[sku.sku_id.toString()];
   if (prod === undefined) {
     return state;
