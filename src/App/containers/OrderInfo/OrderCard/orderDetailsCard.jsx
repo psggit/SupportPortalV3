@@ -10,16 +10,13 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Radio,
-  RadioGroup,
-  FormControlLabel,
+  InputLabel,
   FormControl,
   Select,
   MenuItem,
   Input,
   TextField,
 } from "@material-ui/core";
-
 import OrderCard from "../../../components/card";
 import { OrderSummaryItem } from "../../Cart/components/orderSummaryItem";
 import {
@@ -93,14 +90,18 @@ const OrderDetailsCard = (props) => {
 
   const [openCancel, setOpenCancel] = useState(false);
   const [openDeliver, setOpenDeliver] = useState(false);
-  const [value, setValue] = useState("female");
+  const [selectedValue, setValue] = useState("");
   const [completeBtnDisabled, setCompleteBtnDisabled] = useState(true);
   const [kycArray, setKycArray] = useState(["", "", "", ""]);
   const [dobArray, setDobArray] = useState(["", "", "", ""]);
 
   const handleClickOpen = (type) => {
     if (type == "cancel") {
-      setOpenCancel(true);
+      if (props.fetchCancelReasonFailure) {
+        props.handleError();
+      } else {
+        setOpenCancel(true);
+      }
     } else {
       setOpenDeliver(true);
     }
@@ -120,6 +121,19 @@ const OrderDetailsCard = (props) => {
   // const handleDeliver = () => {};
   const handleChange = (event) => {
     setValue(event.target.value);
+    console.log("handleCancel");
+    const payload = {
+      order_id: props.order.order_id,
+      restocking_charges: 50.5,
+      total_fee: 70.04,
+      cancellation_id: event.target.value,
+      retailer_id: props.order.retailer_id,
+      consumer_id: props.order.customer_id,
+      hipbar_wallet_amount: props.order.hipbar_wallet,
+      gift_wallet_amount: props.order.gift_wallet,
+    };
+    console.log("cancel");
+    console.log(payload);
   };
 
   const handleCompleteChange = (event, type, index) => {
@@ -142,6 +156,8 @@ const OrderDetailsCard = (props) => {
     // console.log(validate, validateValue, validateValue.length);
     setCompleteBtnDisabled(false);
   };
+
+  // console.log(props.fetchCancelReasonFailure);
 
   const actionButtons = [
     <Button
@@ -209,24 +225,31 @@ const OrderDetailsCard = (props) => {
           {`Do you want to cancel order? Select reason for cancelling order and click Confirm to proceed.`}
         </DialogTitle>
         <DialogContent>
-          <RadioGroup
-            aria-label="gender"
-            name="gender1"
-            value={value}
-            onChange={handleChange}
-          >
-            {props.fetchCancelReasonSuccess &&
-              props.cancelReasons.map((value) => {
-                return (
-                  <FormControlLabel
-                    key={value.id}
-                    value={value.id}
-                    control={<Radio />}
-                    label={value.reason}
-                  />
-                );
-              })}
-          </RadioGroup>
+          <FormControl className={classes.formControl}>
+            <InputLabel id="demo-simple-select-label">Select Reason</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              onChange={(event) => handleChange(event)}
+            >
+              {props.fetchCancelReasonSuccess &&
+                props.cancelReasons.map((value, index) => {
+                  if (selectedValue === value) {
+                    return (
+                      <MenuItem value={value.id} key={index} selected={true}>
+                        {value.reason}
+                      </MenuItem>
+                    );
+                  } else {
+                    return (
+                      <MenuItem value={value.id} key={index}>
+                        {value.reason}
+                      </MenuItem>
+                    );
+                  }
+                })}
+            </Select>
+          </FormControl>
           <OrderSummaryItem title="Cancellation charges" value={""} />
           <OrderSummaryItem
             title="Total Cancellation Charges:"
@@ -379,10 +402,12 @@ OrderDetailsCard.propTypes = {
   address: PropTypes.string,
   handleCancel: PropTypes.func,
   handleDeliver: PropTypes.func,
-  cancelReasons: PropTypes.array,
+  cancelReasons: PropTypes.object,
   buttonState: PropTypes.bool,
   fetchCancelReasonSuccess: PropTypes.bool,
+  fetchCancelReasonFailure: PropTypes.bool,
   fetchKYCDetailsSuccess: PropTypes.bool,
+  handleError: PropTypes.func,
 };
 
 export { OrderDetailsCard };

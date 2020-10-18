@@ -1,19 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
+import { Button, Grid, List, LinearProgress } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import TopBar from "../../components/topBar";
-import { Link } from "@material-ui/core";
-import { listGenre, listBrand } from "../../mockDataResponse";
+import { CartItemComponent } from "./components/cartItem";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    width: "100%",
+    backgroundColor: theme.palette.background.paper,
+  },
+  boxContainer: {
+    fontFamily: theme.typography.body1,
+    backgroundColor: "#fff",
+    padding: 15,
   },
   container: {
     display: "flex",
@@ -21,6 +27,14 @@ const useStyles = makeStyles(() => ({
   },
   btn: {
     textDecoration: "underline",
+  },
+  newspaper: {
+    height: 380,
+    overflowY: "auto",
+    padding: 20,
+  },
+  marginRight: {
+    marginRight: 10,
   },
 }));
 
@@ -31,8 +45,8 @@ function TabPanel(props) {
     <div
       role="tabpanel"
       hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
+      id={`scrollable-auto-tabpanel-${index}`}
+      aria-labelledby={`scrollable-auto-tab-${index}`}
       {...other}
     >
       {value === index && (
@@ -50,64 +64,156 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
-
 const CartModificationComponent = (props) => {
-  // const history = useHistory();
-  const [value, setValue] = useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const classes = useStyles();
+  const history = useHistory();
+  let products = props.products;
   useEffect(() => {
+    // console.log("cartModification orderData", props);
     //
-    console.log("cartModification orderData", props);
+    let payload = {
+      city_id: 5,
+      state_id: 4,
+      retailer_id: 436,
+      gps: "13.00712998686621,80.25632254779339",
+    };
+    props.setCart(products);
+    props.fetchGenre(payload);
   }, []);
+
+  useEffect(() => {
+    if (props.fetchGenreSuccess) {
+      let brandpayload = {
+        city_id: 5,
+        state_id: 4,
+        retailer_id: 436,
+        genre_id: props.genreData[0].id,
+        gps: "13.00712998686621,80.25632254779339",
+        offset: 0,
+        limit: 20,
+      };
+      props.fetchBrand(brandpayload);
+    }
+  }, [props.fetchGenreSuccess]);
+
+  const goBack = () => {
+    history.push("/order-info/" + props.orderId);
+  };
+
+  const addItems = () => {
+    //call fetch summary API
+  };
+
+  // console.log(props);
+
+  const addItem = (event, value) => {
+    // console.log("addItem", value);
+    props.addSkuToCart(value);
+  };
+
+  const removeItem = (event, value) => {
+    // console.log("remvoveItem", value);
+    props.removeSkuFromCart(value);
+  };
+
+  const handleGenre = (event, genreId) => {
+    let brandpayload = {
+      city_id: 5,
+      state_id: 4,
+      retailer_id: 436,
+      genre_id: genreId,
+      gps: "13.00712998686621,80.25632254779339",
+      offset: 0,
+      limit: 20,
+    };
+    props.fetchBrand(brandpayload);
+  };
 
   return (
     <Container component="main">
       <TopBar />
+      <Box className={classes.boxContainer}>
+        <Grid alignItems="baseline" container>
+          <Grid item xs={1}>
+            <Button
+              color="primary"
+              startIcon={<KeyboardBackspaceIcon />}
+              onClick={() => goBack()}
+            >
+              Back
+            </Button>
+          </Grid>
+          <Grid item xs={11}>
+            <p>RETAILER NAME: {props.retailer_name}</p>
+          </Grid>
+        </Grid>
+      </Box>
       <Box>
-          <Link href="/order-info">
-        Back
-      </Link>
-        <p>Back button + Retailer name</p>
+        <Grid item xs={12}>
+          {props.fetchGenreSuccess &&
+            props.genreData.map((value) => {
+              return (
+                <Button
+                  key={value.id}
+                  onClick={(event) => handleGenre(event, value.id)}
+                >
+                  {value.name}
+                </Button>
+              );
+            })}
+        </Grid>
+        {props.fetchBrandProgress && <LinearProgress />}
       </Box>
       <Box mt={4}>
-        <AppBar position="static">
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="simple tabs example"
-          >
-            <Tab label="Item One" {...a11yProps(0)} />
-            <Tab label="Item Two" {...a11yProps(1)} />
-            <Tab label="Item Three" {...a11yProps(2)} />
-          </Tabs>
-        </AppBar>
-        <TabPanel value={value} index={0}>
-          Item One
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          Item Two
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          Item Three
-        </TabPanel>
+        <List className={classes.newspaper}>
+          {props.fetchBrandSuccess &&
+            Object.entries(props.brandData).map((k) => {
+              return (
+                <CartItemComponent
+                  key={k[0]}
+                  product={k[1]}
+                  addItem={addItem}
+                  removeItem={removeItem}
+                  cartProducts={props.cartProducts}
+                />
+              );
+            })}
+        </List>
+      </Box>
+      <Box m={1} display="flex" justifyContent="flex-end">
+        <Button
+          variant="outlined"
+          color="primary"
+          className={classes.marginRight}
+          onClick={() => goBack()}
+        >
+          Cancel
+        </Button>
+        <Button variant="contained" color="primary" onClick={() => addItems()}>
+          Add Items
+        </Button>
       </Box>
     </Container>
   );
 };
 
 CartModificationComponent.propTypes = {
-  selectOrder: PropTypes.func,
+  fetchGenre: PropTypes.func,
+  fetchBrand: PropTypes.func,
+  addSkuToCart: PropTypes.func,
+  removeSkuFromCart: PropTypes.func,
+  setCart: PropTypes.func,
   orderId: PropTypes.any,
   orderData: PropTypes.object,
+  retailer_name: PropTypes.string,
+  fetchGenreSuccess: PropTypes.bool,
+  fetchBrandSuccess: PropTypes.bool,
+  fetchBrandProgress: PropTypes.bool,
+  modifySuccess: PropTypes.bool,
+  genreData: PropTypes.array,
+  brandData: PropTypes.array,
+  products: PropTypes.array,
+  cartProducts: PropTypes.object,
 };
 
 export { CartModificationComponent };

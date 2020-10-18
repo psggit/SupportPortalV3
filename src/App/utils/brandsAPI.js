@@ -8,8 +8,8 @@ const headers = {
   "hasura-id": `${localStorage.getItem("hasura-id")}`,
 };
 
-const genresAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://retailer.hipbar-dev.com/Api/stockandprice/listing/genres`;
+const brandsAPI = (reqBody, process, onSuccess, onError) => {
+  const URL = `https://retailer.hipbar-dev.com/Api/stockandprice/listing/brands`;
   fetch(URL, {
     method: "POST",
     headers: headers,
@@ -21,4 +21,4 @@ const genresAPI = (reqBody, process, onSuccess, onError) => {
     .catch((err) => onError(err));
 };
 
-export { genresAPI };
+export { brandsAPI };

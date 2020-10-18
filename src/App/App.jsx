@@ -12,7 +12,7 @@ import { OrderDetailsContainer } from "./containers/OrderDetails";
 import { CartModificationContainer } from "./containers/CartModification";
 import { OrderInfoContainer } from "./containers/OrderInfo";
 import { ThemeProvider } from "@material-ui/styles";
-// import Loading from "./components/loading";
+import Loading from "./components/loading";
 import newTheme from "./sass/theme";
 import "./sass/app.scss";
 import { RetailerNotesContainer } from "./containers/Retailer/RetailerNotes/RetailerNotesContainer";
@@ -25,7 +25,6 @@ import { RewardsContainer } from "./containers/Customer/Rewards";
 import { NotesContainer } from "./containers/Customer/Notes";
 
 function App(props) {
-  let history = useHistory();
   useEffect(() => {
     // console.log(props);
     // console.log(history);
@@ -34,6 +33,13 @@ function App(props) {
   }, []);
 
   let success = props.authenticateSuccess;
+  if (props.authenticateProgress) {
+    return (
+      <ThemeProvider theme={newTheme}>
+        <Loading message="Loading..." />
+      </ThemeProvider>
+    );
+  }
 
   return (
     <div>
@@ -42,12 +48,16 @@ function App(props) {
           <Router>
             <Switch>
               <Route path="/order-details" component={OrderDetailsContainer} />
-              <Route path="/order-info" component={OrderInfoContainer} />
+              <Route
+                path="/order-info/:orderId"
+                component={OrderInfoContainer}
+              />
               <Route path="/dashboard" component={DashboardContainer} />
               <Route
                 path="/cart-modify"
                 component={CartModificationContainer}
               />
+
               <Route
                 path="/change-retailer"
                 component={ChangeRetailerContainer}
@@ -64,6 +74,7 @@ function App(props) {
               <Route path="/gift-soa" component={CustomerGiftSoaContainer} />
               <Route path="/rewards" component={RewardsContainer} />
               <Route path="/notes" component={NotesContainer} />
+
               <Route path="/" component={LoginContainer} />
             </Switch>
           </Router>

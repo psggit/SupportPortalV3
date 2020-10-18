@@ -9,6 +9,11 @@ module.exports = {
     app: "./src/index.js",
     vendor: ["react", "react-dom"],
   },
+  output: {
+    filename: "[name].[chunkhash].js",
+    path: path.resolve(__dirname, "dist/"),
+    publicPath: "/",
+  },
   module: {
     rules: [
       {
@@ -30,12 +35,23 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.(png|svg|jpg|gif)$/,
+        test: /\.svg$/,
         use: [
           {
             loader: "svg-url-loader",
             options: {
               limit: 50000,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.png$/,
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              mimetype: "image/png",
             },
           },
         ],
@@ -50,6 +66,7 @@ module.exports = {
       Utils: path.resolve(__dirname, "./src/utils"),
       Sass: path.resolve(__dirname, "./src/sass"),
       Constants: path.resolve(__dirname, "./src/constants"),
+      Assets: path.resolve(__dirname, "./src/assets"),
     },
   },
   plugins: [
@@ -57,6 +74,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: "Output Management",
       template: "./src/index.html",
+      filename: "index.html",
     }),
     new webpack.DefinePlugin({
       "process.env.BASE_URL": JSON.stringify(
@@ -64,20 +82,7 @@ module.exports = {
       ),
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
     }),
-    new CompressionPlugin({
-      test: /\.js$|\.css$|\.html$/,
-      filename: "[path].gz[query]",
-      exclude: /node_modules/,
-      algorithm: "gzip",
-      threshold: 10240,
-      minRatio: 0.8,
-    }),
   ],
-  output: {
-    filename: "[name].[chunkhash].js",
-    path: path.resolve(__dirname, "dist"),
-    publicPath: "/",
-  },
   optimization: {
     splitChunks: {
       chunks: "async",

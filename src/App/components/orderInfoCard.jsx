@@ -75,6 +75,9 @@ CustomCard.propTypes = {
   renderArray: PropTypes.array,
   keysToRender: PropTypes.array,
   keyMap: PropTypes.object,
+
+  id: PropTypes.string,
+
   subheader: PropTypes.any,
 };
 
@@ -106,6 +109,7 @@ export default function CustomCard(props) {
           )
         }
       />
+
       <CardContent className={classes.cardContent}>
         <List>
           {renderArray.map((item, index) => {

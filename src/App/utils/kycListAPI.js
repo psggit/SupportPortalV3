@@ -1,4 +1,4 @@
-// import { apiUrl } from "./config";
+import { apiUrl } from "./config";
 
 const headers = {
   Accept: "application/json",
@@ -8,8 +8,8 @@ const headers = {
   "hasura-id": `${localStorage.getItem("hasura-id")}`,
 };
 
-const genresAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://retailer.hipbar-dev.com/Api/stockandprice/listing/genres`;
+const kycListAPI = (reqBody, process, onSuccess, onError) => {
+  const URL = `https://${apiUrl}/deliveryman/api/1/agent/kyc-list`;
   fetch(URL, {
     method: "POST",
     headers: headers,
@@ -21,4 +21,4 @@ const genresAPI = (reqBody, process, onSuccess, onError) => {
     .catch((err) => onError(err));
 };
 
-export { genresAPI };
+export { kycListAPI };

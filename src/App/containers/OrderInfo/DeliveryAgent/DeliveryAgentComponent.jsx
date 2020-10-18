@@ -58,6 +58,7 @@ const DeliveryAgentComponent = (props) => {
           renderArray={data}
           keyMap={keyMap}
           keysToRender={keysToRender}
+          id="deliveryAgent-details"
         />
       </Grid>
       <Grid item xs={6}>

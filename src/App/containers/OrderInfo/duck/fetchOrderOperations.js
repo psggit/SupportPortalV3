@@ -5,9 +5,6 @@ import {
   fetchCancelReasonProgress,
   fetchCancelReasonFailure,
   fetchCancelReasonSuccess,
-  fetchActivityLogsProgress,
-  fetchActivityLogsFailed,
-  fetchActivityLogsSuccess,
   createNotesProgress,
   createNotesFailure,
   createNotesSuccess,
@@ -20,7 +17,6 @@ import { selectOrder } from "../../Dashboard/duck";
 import {
   orderInfoAPI,
   cancelReasonAPI,
-  acitivityLogsAPI,
   createNotesAPI,
   callAPI,
 } from "../../../utils";
@@ -118,28 +114,6 @@ const createNotes = (payload) => {
   };
 };
 
-const onSuccessLogs = (dispatch) => {
-  console.log("[onSuccessLogs]");
-  return (data) => {
-    dispatch(fetchActivityLogsSuccess(data));
-  };
-};
-
-const onErrorLogs = (dispatch) => {
-  return (err) => {
-    console.log("[onErrorLogs]", err);
-    dispatch(fetchActivityLogsFailed(err));
-  };
-};
-
-const fetchActivityLogs = (reqBody) => {
-  console.log("fetchActivityLogs");
-  return (dispatch) => {
-    dispatch(fetchActivityLogsProgress());
-    acitivityLogsAPI(reqBody, processResponse, onSuccessLogs, onErrorLogs);
-  };
-};
-
 const onSuccessCall = (dispatch) => {
   return (data) => {
     console.log("[onSuccessCall]");
@@ -161,10 +135,4 @@ const connectCall = (reqBody) => {
   };
 };
 
-export {
-  fetchOrder,
-  fetchCancelReason,
-  fetchActivityLogs,
-  createNotes,
-  connectCall,
-};
+export { fetchOrder, fetchCancelReason, createNotes, connectCall };
