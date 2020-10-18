@@ -4,7 +4,7 @@ import { fetchLogData } from "./duck";
 
 const mapStateToProps = (state) => {
   // console.clear();
-  console.log("mapStateToProps", state);
+  // console.log("mapStateToProps", state);
   return {
     orderId: state.home.orderId,
     activityData: state.order.activityLog.activityData,

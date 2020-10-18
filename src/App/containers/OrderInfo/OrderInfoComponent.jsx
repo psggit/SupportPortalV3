@@ -7,7 +7,7 @@ import Grid from "@material-ui/core/Grid";
 import TopBar from "../../components/topBar";
 import { useHistory } from "react-router-dom";
 import { CartContainer } from "../Cart/CartContainer";
-import { OrderDetailsCard } from "./components/orderDetailsCard";
+import { OrderDetailsCard } from "./OrderCard/orderDetailsCard";
 import { CustomerContainer } from "./CustomerDetails/CustomerContainer";
 import { RetailerContainer } from "./RetailerDetails/RetailerContainer";
 import { OrderStatusContainer } from "./OrderStatus";
@@ -16,6 +16,8 @@ import DialogComponent from "../../components/dialog";
 import Loading from "../../components/loading";
 import ErrorMsg from "../../components/errorMsg";
 import { ActivityLogContainer } from "./ActivityLogs";
+import { IconButton } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -75,8 +77,11 @@ const OrderInfoComponent = (props) => {
 
   let loading = props.fetchOrderInfoProgress;
   const [issueType, setIssueType] = useState(null);
+  const [newIssueDesc, setNewIssueDesc] = useState("");
   const [issueDesc, setIssueDesc] = useState("");
   const [open, setOpen] = useState(false);
+  const [openIssueDialog, setOpenIssueDialog] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   const [activeSection, setActiveSection] = useState("");
 
@@ -84,6 +89,15 @@ const OrderInfoComponent = (props) => {
     setActiveSection(id);
     const element = document.getElementById(id);
     element.scrollIntoView({ block: "start", behavior: "smooth" });
+  };
+
+  const handleAddIssue = () => {
+    setOpenIssueDialog(!openIssueDialog);
+  };
+
+  const handleError = () => {
+    // alert("");
+    setShowError(!showError);
   };
 
   const openDialog = (type) => {
@@ -141,7 +155,7 @@ const OrderInfoComponent = (props) => {
   }
 
   if (props.fetchOrderInfoFailure) {
-    <ErrorMsg show={true} message={props.errorMsg} type={"error"} />;
+    return <ErrorMsg show={true} message={props.errorMsg} type={"error"} />;
   }
 
   return (
@@ -152,8 +166,6 @@ const OrderInfoComponent = (props) => {
           title="ADD NOTE"
           subtitle={`Order ID: ` + orderId}
           actions={dialogActions}
-          issueDesc={issueDesc}
-          change={setIssueDesc}
           openDialog={openDialog}
         >
           <TextField
@@ -166,6 +178,26 @@ const OrderInfoComponent = (props) => {
             value={issueDesc}
             fullWidth
             onChange={(event) => setIssueDesc(event.target.value)}
+          />
+        </DialogComponent>
+      )}
+      {openIssueDialog && (
+        <DialogComponent
+          title="ADD NEW ISSUE"
+          subtitle={`Order ID: ` + orderId}
+          actions={dialogActions}
+          openDialog={handleAddIssue}
+        >
+          <TextField
+            id="outlined-textarea"
+            placeholder="Add issue description"
+            multiline
+            rows={4}
+            variant="outlined"
+            size="small"
+            value={newIssueDesc}
+            fullWidth
+            onChange={(event) => setNewIssueDesc(event.target.value)}
           />
         </DialogComponent>
       )}
@@ -185,6 +217,7 @@ const OrderInfoComponent = (props) => {
                     <OrderDetailsCard
                       {...props}
                       buttonState={!props.order.order_status_button}
+                      handleError={handleError}
                     />
                   </>
                 )}
@@ -223,12 +256,7 @@ const OrderInfoComponent = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={1}>
-            <Box
-              display="flex"
-              alignItems="flex-end"
-              flexDirection="column"
-              border={1}
-            >
+            <Box display="flex" alignItems="flex-end" flexDirection="column">
               <Button
                 title="Order Detail"
                 className={activeSection === "section1" ? "active" : null}
@@ -257,12 +285,23 @@ const OrderInfoComponent = (props) => {
               >
                 D
               </Button>
+              <IconButton aria-label="add" onClick={() => handleAddIssue()}>
+                <AddIcon />
+              </IconButton>
             </Box>
           </Grid>
         </Grid>
       </Box>
       {props.connectCallSuccess && (
         <ErrorMsg show={true} message={props.successMsg} type="success" />
+      )}
+
+      {showError && (
+        <ErrorMsg
+          show={true}
+          message={"Cannot cancel at this stage."}
+          type="error"
+        />
       )}
     </div>
   );
@@ -277,6 +316,7 @@ OrderInfoComponent.propTypes = {
   fetchCancelReasonSuccess: PropTypes.bool,
   fetchOrderInfoProgress: PropTypes.bool,
   fetchCancelReasonProgress: PropTypes.bool,
+  fetchCancelReasonFailure: PropTypes.bool,
   orderId: PropTypes.any,
   order: PropTypes.object,
   createNotes: PropTypes.func,

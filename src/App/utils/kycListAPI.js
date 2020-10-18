@@ -8,8 +8,8 @@ const headers = {
   "hasura-id": `${localStorage.getItem("hasura-id")}`,
 };
 
-const cancelReasonAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://${apiUrl}/deliveryman/api/1/support/cancel-reason`;
+const kycListAPI = (reqBody, process, onSuccess, onError) => {
+  const URL = `https://${apiUrl}/deliveryman/api/1/agent/kyc-list`;
   fetch(URL, {
     method: "POST",
     headers: headers,
@@ -21,4 +21,4 @@ const cancelReasonAPI = (reqBody, process, onSuccess, onError) => {
     .catch((err) => onError(err));
 };
 
-export { cancelReasonAPI };
+export { kycListAPI };

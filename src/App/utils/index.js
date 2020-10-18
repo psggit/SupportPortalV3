@@ -18,3 +18,4 @@ export { createNotesAPI } from "./createNotesAPI";
 export { assignWarehouseAPI } from "./assignWarehouseAPI";
 export { listDeliveryStatusAPI } from "./listDeliveryStatusAPI";
 export { callAPI } from "./callAPI";
+export { kycListAPI } from "./kycListAPI";
