@@ -86,6 +86,7 @@ const RetailerDetails = (props) => {
               subtitle={retailerNotes}
               issueType={"retailer"}
               click={props.openDialog}
+              cardActions={true}
             />
           )}
           {props.fetchProgress && <CircularProgress />}

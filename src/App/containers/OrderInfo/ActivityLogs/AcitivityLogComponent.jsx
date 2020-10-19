@@ -14,6 +14,7 @@ const ActivityLogComponent = (props) => {
         arr={props.activityData.activity_details.activity}
         keysToRender={["notes", "created_at"]}
         title={"ACTIVITY LOGS"}
+        cardActions={false}
       />
     );
   } else {

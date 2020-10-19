@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
   },
   boxContainer: {
     fontFamily: theme.typography.body1.fontFamily,
-    marginTop: 60,
   },
   containerBox: {
     width: "100%",
@@ -284,7 +283,11 @@ const OrderInfoComponent = (props) => {
                     />
                   </>
                 )}
-                {props.fetchOrderInfoSuccess && <ActivityLogContainer />}
+                {props.fetchOrderInfoSuccess && (
+                  <Box mt={4}>
+                    <ActivityLogContainer />
+                  </Box>
+                )}
               </Grid>
             </Grid>
             <Grid container spacing={4} id="section2">
@@ -318,7 +321,7 @@ const OrderInfoComponent = (props) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item className={classes.fixedSideBar} boxShadow={1}>
+          <Grid item xs={1} boxShadow={1}>
             <Box display="flex" alignItems="flex-end" flexDirection="column">
               <Button
                 title="Order Detail"

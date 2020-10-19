@@ -82,6 +82,7 @@ ActivityItem.propTypes = {
   issueType: PropTypes.string,
   title: PropTypes.string,
   subtitle: PropTypes.array,
+  cardActions: PropTypes.bool,
 };
 
 export default function ActivityItem(props) {
@@ -94,6 +95,7 @@ export default function ActivityItem(props) {
   const type = props.issueType;
   const subtitle = props.subtitle;
   const title = props.title;
+  const cardActions = props.cardActions;
 
   if (mapArray === null) {
     return (
@@ -122,7 +124,7 @@ export default function ActivityItem(props) {
             />
           </ListItem>
         </CardContent>
-        <CardActions className={classes.cardActions}>
+        {cardActions && <CardActions className={classes.cardActions}>
           <Button
             variant="contained"
             color="primary"
@@ -130,7 +132,7 @@ export default function ActivityItem(props) {
           >
             Add
           </Button>
-        </CardActions>
+        </CardActions>}
       </Card>
     );
   }

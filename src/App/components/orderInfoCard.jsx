@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
   },
   cardHeader: {
     "& .MuiCardHeader-content": {
-      paddingBottom: 12,
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
@@ -29,6 +28,12 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 16,
         fontWeight: 600,
         textTransform: "uppercase",
+        padding: 0,
+      },
+      "& .MuiCardHeader-subheader": {
+        "& .MuiCardActions-root": {
+          padding: 0,
+        },
       },
     },
   },

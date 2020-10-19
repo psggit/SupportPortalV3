@@ -126,7 +126,7 @@ const CustomerDetails = (props) => {
       endIcon={<ChevronRightIcon />}
       onClick={handleChange}
     >
-      more
+      More
     </Button>,
   ];
 
@@ -137,7 +137,7 @@ const CustomerDetails = (props) => {
       endIcon={<ChevronRightIcon />}
       onClick={handleNotesChange}
     >
-      more
+      More
     </Button>,
   ];
 
@@ -171,6 +171,7 @@ const CustomerDetails = (props) => {
               subheader={subheadNotesAction}
               issueType={"customer"}
               click={props.openDialog}
+              cardActions={true}
             />
           )}
           {props.fetchProgress && <CircularProgress />}
