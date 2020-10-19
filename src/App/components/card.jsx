@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     fontFamily: theme.typography.fontFamily,
     padding: 24,
-    boxShadow: "none",
     "& .MuiCardHeader-root": {
       padding: 0,
     },
@@ -85,7 +84,7 @@ export default function CustomCard(props) {
           subheader ? (
             <CardActions>
               {subheader.map((item, index) => {
-                return (<div key={index}>{item}</div>);
+                return <div key={index}>{item}</div>;
               })}
             </CardActions>
           ) : (
@@ -97,7 +96,7 @@ export default function CustomCard(props) {
       {actions ? (
         <CardActions className={classes.cardActions}>
           {actions.map((item, index) => {
-            return (<div key={index}>{item}</div>);
+            return <div key={index}>{item}</div>;
           })}
         </CardActions>
       ) : (

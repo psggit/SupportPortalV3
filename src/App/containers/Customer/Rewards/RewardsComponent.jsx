@@ -9,6 +9,7 @@ import TableCell from "@material-ui/core/TableCell";
 import Moment from "moment";
 import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
+import TopBar from "../../../components/topBar";
 
 const useStyles = makeStyles((theme) => ({
   navBar: {
@@ -107,68 +108,71 @@ function Rewards(props) {
   }
 
   return (
-    <div className={classes.formContainer}>
-      <div className={classes.navBar}>
-        <div className={classes.backButton}>
-          <div>Back</div>
+    <>
+      <TopBar />
+      <div className={classes.formContainer}>
+        <div className={classes.navBar}>
+          <div className={classes.backButton}>
+            <div>Back</div>
+          </div>
+          <div className={classes.navContent}>
+            <div onClick={handleCustomerDetail}>Customer Details</div>
+          </div>
+          <div className={classes.navContent}>
+            <div onClick={handleSoaChange}>SOA</div>
+          </div>
+          <div className={classes.navContent}>
+            <div onClick={handleGiftSoaChange}>Gift Soa</div>
+          </div>
+          <div className={classes.navContent}>
+            <div onClick={handleRewardChange}>Rewards</div>
+          </div>
+          <div className={classes.navContent}>
+            <div>Notes</div>
+          </div>
         </div>
-        <div className={classes.navContent}>
-          <div onClick={handleCustomerDetail}>Customer Details</div>
+        <div className={classes.row1}>
+          <p>CUSTOMER ID: {props.customerId}</p>
+          <div>Search</div>
         </div>
-        <div className={classes.navContent}>
-          <div onClick={handleSoaChange}>SOA</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleGiftSoaChange}>Gift Soa</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleRewardChange}>Rewards</div>
-        </div>
-        <div className={classes.navContent}>
-          <div>Notes</div>
+        <div className={classes.table}>
+          <Paper className={classes.paper}>
+            <Table tableHeaders={tableHeaders}>
+              {props.rewardsSuccess
+                ? props.rewardsList.rewards.map((data) => {
+                    return (
+                      <TableRow>
+                        <TableCell>{data.order_id}</TableCell>
+                        <TableCell>{data.retailer_name}</TableCell>
+                        <TableCell>{data.id}</TableCell>
+                        <TableCell>{data.reward_source}</TableCell>
+                        <TableCell>{data.amount}</TableCell>
+                        <TableCell>{data.promo_code}</TableCell>
+                        <TableCell>{data.bank_rrn}</TableCell>
+                        <TableCell>{data.failure_reason}</TableCell>
+                        <TableCell align="left">
+                          {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
+                        </TableCell>
+                        <TableCell>{data.status}</TableCell>
+                      </TableRow>
+                    );
+                  })
+                : props.rewardsSuccess &&
+                  props.rewardsList.rewards.length === 0 && (
+                    <tr>
+                      <td
+                        style={{ textAlign: "center", padding: "10px 0" }}
+                        colSpan="6"
+                      >
+                        <p style={{ fontWeight: "16px" }}>No records found</p>
+                      </td>
+                    </tr>
+                  )}
+            </Table>
+          </Paper>
         </div>
       </div>
-      <div className={classes.row1}>
-        <p>CUSTOMER ID: {props.customerId}</p>
-        <div>Search</div>
-      </div>
-      <div className={classes.table}>
-        <Paper className={classes.paper}>
-          <Table tableHeaders={tableHeaders}>
-            {props.rewardsSuccess
-              ? props.rewardsList.rewards.map((data) => {
-                  return (
-                    <TableRow>
-                      <TableCell>{data.order_id}</TableCell>
-                      <TableCell>{data.retailer_name}</TableCell>
-                      <TableCell>{data.id}</TableCell>
-                      <TableCell>{data.reward_source}</TableCell>
-                      <TableCell>{data.amount}</TableCell>
-                      <TableCell>{data.promo_code}</TableCell>
-                      <TableCell>{data.bank_rrn}</TableCell>
-                      <TableCell>{data.failure_reason}</TableCell>
-                      <TableCell align="left">
-                        {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
-                      </TableCell>
-                      <TableCell>{data.status}</TableCell>
-                    </TableRow>
-                  );
-                })
-              : props.rewardsSuccess &&
-                props.rewardsList.rewards.length === 0 && (
-                  <tr>
-                    <td
-                      style={{ textAlign: "center", padding: "10px 0" }}
-                      colSpan="6"
-                    >
-                      <p style={{ fontWeight: "16px" }}>No records found</p>
-                    </td>
-                  </tr>
-                )}
-          </Table>
-        </Paper>
-      </div>
-    </div>
+    </>
   );
 }
 

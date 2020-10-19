@@ -16,16 +16,17 @@ import DialogComponent from "../../components/dialog";
 import Loading from "../../components/loading";
 import ErrorMsg from "../../components/errorMsg";
 import { ActivityLogContainer } from "./ActivityLogs";
-import { IconButton } from "@material-ui/core";
+import { Fab } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    fontFamily: theme.typography.body1,
+    fontFamily: theme.typography.body1.fontFamily,
   },
   boxContainer: {
-    fontFamily: theme.typography.body1,
+    fontFamily: theme.typography.body1.fontFamily,
+    marginTop: 60,
   },
   containerBox: {
     width: "100%",
@@ -48,8 +49,70 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "16px",
     lineHeight: "22px",
   },
-  marginTop: {
-    marginTop: "25px",
+  fixedSideBar: {
+    backgroundColor: "#fff",
+    height: "100%",
+    position: "fixed",
+    right: 0,
+  },
+  fabBtn: {
+    marginTop: 150,
+  },
+  sideNavBtnO: {
+    backgroundColor: theme.palette.primary.main,
+    color: "#fff",
+    height: 32,
+    width: 32,
+    minWidth: 32,
+    margin: 5,
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: theme.palette.primary.main,
+      textDecoration: "underline",
+      color: "#fff",
+    },
+  },
+  sideNavBtnC: {
+    backgroundColor: "#FB337A",
+    color: "#fff",
+    height: 32,
+    width: 32,
+    minWidth: 32,
+    margin: 5,
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: "#FB337A",
+      textDecoration: "underline",
+      color: "#fff",
+    },
+  },
+  sideNavBtnR: {
+    backgroundColor: "#F4A60B",
+    color: "#fff",
+    height: 32,
+    width: 32,
+    minWidth: 32,
+    margin: 5,
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: "#F4A60B",
+      textDecoration: "underline",
+      color: "#fff",
+    },
+  },
+  sideNavBtnD: {
+    backgroundColor: "#1B4987",
+    color: "#fff",
+    height: 32,
+    width: 32,
+    minWidth: 32,
+    margin: 5,
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: "#1B4987",
+      textDecoration: "underline",
+      color: "#fff",
+    },
   },
 }));
 
@@ -207,7 +270,7 @@ const OrderInfoComponent = (props) => {
             {props.fetchOrderInfoSuccess && <OrderStatusContainer />}
           </Grid>
           <Grid item xs={8}>
-            <Grid container spacing={4} className={classes.marginTop}>
+            <Grid container spacing={4}>
               <Grid item xs={6}>
                 {props.fetchOrderInfoSuccess && <CartContainer {...props} />}
               </Grid>
@@ -255,11 +318,12 @@ const OrderInfoComponent = (props) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={1}>
+          <Grid item className={classes.fixedSideBar} boxShadow={1}>
             <Box display="flex" alignItems="flex-end" flexDirection="column">
               <Button
                 title="Order Detail"
                 className={activeSection === "section1" ? "active" : null}
+                classes={{ root: classes.sideNavBtnO }}
                 onClick={() => handleScroll("section1")}
               >
                 O
@@ -267,6 +331,7 @@ const OrderInfoComponent = (props) => {
               <Button
                 title="Customer"
                 className={activeSection === "section2" ? "active" : null}
+                classes={{ root: classes.sideNavBtnC }}
                 onClick={() => handleScroll("section2")}
               >
                 C
@@ -274,6 +339,7 @@ const OrderInfoComponent = (props) => {
               <Button
                 title="Retailer"
                 className={activeSection === "section3" ? "active" : null}
+                classes={{ root: classes.sideNavBtnR }}
                 onClick={() => handleScroll("section3")}
               >
                 R
@@ -281,13 +347,22 @@ const OrderInfoComponent = (props) => {
               <Button
                 title="Delivery Agent"
                 className={activeSection === "section4" ? "active" : null}
+                classes={{ root: classes.sideNavBtnD }}
                 onClick={() => handleScroll("section4")}
               >
                 D
               </Button>
-              <IconButton aria-label="add" onClick={() => handleAddIssue()}>
-                <AddIcon />
-              </IconButton>
+              <Box>
+                <Fab
+                  size="small"
+                  color="primary"
+                  className={classes.fabBtn}
+                  aria-label="add"
+                  onClick={() => handleAddIssue()}
+                >
+                  <AddIcon />
+                </Fab>
+              </Box>
             </Box>
           </Grid>
         </Grid>

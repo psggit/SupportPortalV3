@@ -8,6 +8,7 @@ import TableCell from "@material-ui/core/TableCell";
 import Moment from "moment";
 import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
+import TopBar from "../../../components/topBar";
 
 const useStyles = makeStyles((theme) => ({
   navBar: {
@@ -105,65 +106,67 @@ function CustomerGiftSoa(props) {
   };
 
   return (
-    <div className={classes.formContainer}>
-      <div className={classes.navBar}>
-        <div className={classes.backButton}>
-          <div onClick={handleBack}>Back</div>
+    <>
+      <TopBar />
+      <div className={classes.formContainer}>
+        <div className={classes.navBar}>
+          <div className={classes.backButton}>
+            <div onClick={handleBack}>Back</div>
+          </div>
+          <div className={classes.navContent}>
+            <div onClick={handleCustomerDetail}>Customer Details</div>
+          </div>
+          <div className={classes.navContent}>
+            <div onClick={handleSoaChange}>SOA</div>
+          </div>
+          <div className={classes.navContent}>
+            <div onClick={handleGiftSoaChange}>Gift Soa</div>
+          </div>
+          <div className={classes.navContent}>
+            <div onClick={handleRewardChange}>Rewards</div>
+          </div>
+          <div className={classes.navContent}>
+            <div onClick={handleNotes}>Notes</div>
+          </div>
         </div>
-        <div className={classes.navContent}>
-          <div onClick={handleCustomerDetail}>Customer Details</div>
+        <div className={classes.row1}>
+          <p>CUSTOMER ID: {props.customerId}</p>
+          <div>Search</div>
         </div>
-        <div className={classes.navContent}>
-          <div onClick={handleSoaChange}>SOA</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleGiftSoaChange}>Gift Soa</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleRewardChange}>Rewards</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleNotes}>Notes</div>
-        </div>
-      </div>
-      <div className={classes.row1}>
-        <p>CUSTOMER ID: {props.customerId}</p>
-        <div>Search</div>
-      </div>
-      <div className={classes.table}>
-        <Paper className={classes.paper}>
-          <Table tableHeaders={tableHeaders}>
-            {props.giftSoaSuccess
-              ? props.giftSoaList.map((data) => {
-                  return (
-                    // eslint-disable-next-line react/jsx-key
-                    <TableRow>
-                      <TableCell>{data.reference_number}</TableCell>
-                      <TableCell>{data.transaction_type}</TableCell>
-                      <TableCell>{data.transaction_amount}</TableCell>
-                      <TableCell>{data.gift_cards_and_value}</TableCell>
-                      <TableCell>{data.ResponseMessage}</TableCell>
-                      <TableCell align="left">
-                        {Moment(data.date_at_server).format(
-                          "DD/MM/YYYY h:mm A"
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })
-              : !props.giftSoaSuccess && (
-                  <tr>
-                    <td
-                      style={{ textAlign: "center", padding: "10px 0" }}
-                      colSpan="6"
-                    >
-                      <p style={{ fontWeight: "16px" }}>No records found</p>
-                    </td>
-                  </tr>
-                )}
-          </Table>
-        </Paper>
-        {/* <Pagination
+        <div className={classes.table}>
+          <Paper className={classes.paper}>
+            <Table tableHeaders={tableHeaders}>
+              {props.giftSoaSuccess
+                ? props.giftSoaList.map((data) => {
+                    return (
+                      // eslint-disable-next-line react/jsx-key
+                      <TableRow>
+                        <TableCell>{data.reference_number}</TableCell>
+                        <TableCell>{data.transaction_type}</TableCell>
+                        <TableCell>{data.transaction_amount}</TableCell>
+                        <TableCell>{data.gift_cards_and_value}</TableCell>
+                        <TableCell>{data.ResponseMessage}</TableCell>
+                        <TableCell align="left">
+                          {Moment(data.date_at_server).format(
+                            "DD/MM/YYYY h:mm A"
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
+                : !props.giftSoaSuccess && (
+                    <tr>
+                      <td
+                        style={{ textAlign: "center", padding: "10px 0" }}
+                        colSpan="6"
+                      >
+                        <p style={{ fontWeight: "16px" }}>No records found</p>
+                      </td>
+                    </tr>
+                  )}
+            </Table>
+          </Paper>
+          {/* <Pagination
           activePage={parseInt(pageNo)}
           //itemsCountPerPage={parseInt(pageLimit)}
           rowsPerPage={parseInt(pageLimit)}
@@ -171,8 +174,9 @@ function CustomerGiftSoa(props) {
           setPage={handlePageChange}
           color="primary"
         /> */}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

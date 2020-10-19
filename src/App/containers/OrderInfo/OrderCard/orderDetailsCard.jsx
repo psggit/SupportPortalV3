@@ -125,7 +125,7 @@ const OrderDetailsCard = (props) => {
     const payload = {
       order_id: props.order.order_id,
       restocking_charges: 50.5,
-      total_fee: 70.04,
+      total_fee: props.order.total_fee,
       cancellation_id: event.target.value,
       retailer_id: props.order.retailer_id,
       consumer_id: props.order.customer_id,

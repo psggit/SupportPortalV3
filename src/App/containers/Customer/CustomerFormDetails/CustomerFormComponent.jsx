@@ -5,7 +5,10 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Radio from "@material-ui/core/Radio";
 import PropTypes from "prop-types";
+import TopBar from "../../../components/topBar";
 import { useHistory } from "react-router-dom";
+import FullWidthTabs from "../../../components/menuBar";
+import { Tab } from "@material-ui/core";
 
 const BlueRadio = withStyles({
   root: {
@@ -131,217 +134,210 @@ function CustomerForm(props) {
   };
 
   const handleBack = () => {
-    history.push("/order-info");
+    history.push("/order-info/" + props.orderInfo.order_id);
   };
 
+  const menuLabels = [
+    <Tab label="< Back" onClick={handleBack} key="backBtn" />,
+    <Tab label="Customer Details" key="customerBtn" />,
+    <Tab label="SOA" onClick={handleSoaChange} key="soaBtn" />,
+    <Tab label="Gift SOA" onClick={handleGiftSoaChange} key="giftBtn" />,
+    <Tab label="Rewards" onClick={handleRewardChange} key="rewardsBtn" />,
+    <Tab label="Notes" onClick={handleNotesChange} key="notesBtn"/>,
+  ];
+
   return (
-    <div className={classes.formContainer}>
-      <div className={classes.navBar}>
-        <div className={classes.backButton}>
-          <div onClick={handleBack}>Back</div>
+    <>
+      <TopBar />
+      <div className={classes.formContainer}>
+        <FullWidthTabs labels={menuLabels} />
+        <div className={classes.section1}>
+          <p>CUSTOMER ID: {props.orderInfo.customer_id}</p>
         </div>
-        <div className={classes.navContent}>
-          <div>Customer Details</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleSoaChange}>SOA</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleGiftSoaChange}>Gift Soa</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleRewardChange}>Rewards</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleNotesChange}>Notes</div>
-        </div>
-      </div>
-      <div className={classes.section1}>
-        <p>CUSTOMER ID: {props.orderInfo.customer_id}</p>
-      </div>
-      <div className={classes.section2}>
-        <div className={classes.generalForm}>
-          <div className={classes.label}>
-            <p>Customer Name</p>
-          </div>
-          <div>
-            <TextField
-              className={classes.textField}
-              variant="outlined"
-              name="customerName"
-              value={customerName}
-              onChange={(e) => setCustomerName(e.target.value)}
-              size="small"
-            />
-          </div>
-        </div>
-
-        <div className={classes.generalForm}>
-          <div className={classes.label}>
-            <p>Gender</p>
-          </div>
-          <div className={classes.radioGroup}>
-            <div>
-              <label>Female</label>
-              <BlueRadio
-                checked={selectedValue === "female"}
-                onChange={handleRadioChange}
-                value="female"
-                name="radio-button-demo"
-                inputProps={{ "aria-label": "Female" }}
-              />
+        <div className={classes.section2}>
+          <div className={classes.generalForm}>
+            <div className={classes.label}>
+              <p>Customer Name</p>
             </div>
             <div>
-              <label>Male</label>
-              <BlueRadio
-                checked={selectedValue === "male"}
-                onChange={handleRadioChange}
-                value="male"
-                name="radio-button-demo"
-                inputProps={{ "aria-label": "Male" }}
-              />
-            </div>
-            <div>
-              <label>Not Specified</label>
-              <BlueRadio
-                checked={selectedValue === "notSpecified"}
-                onChange={handleRadioChange}
-                value="notSpecified"
-                name="radio-button-demo"
-                inputProps={{ "aria-label": "Not Spacified" }}
+              <TextField
+                className={classes.textField}
+                variant="outlined"
+                name="customerName"
+                value={customerName}
+                onChange={(e) => setCustomerName(e.target.value)}
+                size="small"
               />
             </div>
           </div>
-        </div>
 
-        <div className={classes.generalForm}>
-          <div className={classes.label}>
-            <p>Mobile Number</p>
+          <div className={classes.generalForm}>
+            <div className={classes.label}>
+              <p>Gender</p>
+            </div>
+            <div className={classes.radioGroup}>
+              <div>
+                <label>Female</label>
+                <BlueRadio
+                  checked={selectedValue === "female"}
+                  onChange={handleRadioChange}
+                  value="female"
+                  name="radio-button-demo"
+                  inputProps={{ "aria-label": "Female" }}
+                />
+              </div>
+              <div>
+                <label>Male</label>
+                <BlueRadio
+                  checked={selectedValue === "male"}
+                  onChange={handleRadioChange}
+                  value="male"
+                  name="radio-button-demo"
+                  inputProps={{ "aria-label": "Male" }}
+                />
+              </div>
+              <div>
+                <label>Not Specified</label>
+                <BlueRadio
+                  checked={selectedValue === "notSpecified"}
+                  onChange={handleRadioChange}
+                  value="notSpecified"
+                  name="radio-button-demo"
+                  inputProps={{ "aria-label": "Not Spacified" }}
+                />
+              </div>
+            </div>
           </div>
-          <div>
-            <TextField
-              className={classes.textField}
+
+          <div className={classes.generalForm}>
+            <div className={classes.label}>
+              <p>Mobile Number</p>
+            </div>
+            <div>
+              <TextField
+                className={classes.textField}
+                variant="outlined"
+                value={consumerDetail.customer_contact_number}
+                disabled
+                size="small"
+              />
+            </div>
+          </div>
+
+          <div className={classes.generalForm}>
+            <div className={classes.label}>
+              <p>Email</p>
+            </div>
+            <div>
+              <TextField
+                className={classes.textField}
+                variant="outlined"
+                value={consumerDetail.customer_email}
+                size="small"
+                disabled
+              />
+            </div>
+          </div>
+
+          <div className={classes.generalForm}>
+            <div className={classes.label}>
+              <p>Date of Birth</p>
+            </div>
+            <div>
+              <TextField
+                className={classes.textField}
+                variant="outlined"
+                type="date"
+                name="dob"
+                value={dob}
+                size="small"
+                onChange={(e) => setDob(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className={classes.generalForm}>
+            <div className={classes.label}>
+              <p>Signup Date</p>
+            </div>
+            <div>
+              <TextField
+                className={classes.textField}
+                type="date"
+                variant="outlined"
+                value={signupDate}
+                size="small"
+                disabled
+              />
+            </div>
+          </div>
+
+          <div className={classes.generalForm}>
+            <div className={classes.label}>
+              <p>KYC Level</p>
+            </div>
+            <div>
+              <TextField
+                className={classes.textField}
+                variant="outlined"
+                value={consumerDetail.customer_kyc}
+                size="small"
+                disabled
+              />
+            </div>
+          </div>
+
+          <div className={classes.generalForm}>
+            <div className={classes.label}>
+              <p>HipBar Wallet Balance</p>
+            </div>
+            <div>
+              <TextField
+                className={classes.textField}
+                variant="outlined"
+                value={consumerDetail.hipbar_wallet}
+                size="small"
+                disabled
+              />
+            </div>
+          </div>
+
+          <div className={classes.generalForm}>
+            <div className={classes.label}>
+              <p>Gift Wallet Balance</p>
+            </div>
+            <div>
+              <TextField
+                className={classes.textField}
+                variant="outlined"
+                value={consumerDetail.gift_wallet}
+                size="small"
+                disabled
+              />
+            </div>
+          </div>
+
+          <div className={classes.buttonContainer}>
+            <Button
+              className={classes.button}
+              onClick={handleReset}
               variant="outlined"
-              value={consumerDetail.customer_contact_number}
-              disabled
-              size="small"
-            />
+              color="primary"
+            >
+              Reset
+            </Button>
+            <Button
+              className={classes.button}
+              onClick={handleSave}
+              variant="contained"
+              color="primary"
+            >
+              Save
+            </Button>
           </div>
-        </div>
-
-        <div className={classes.generalForm}>
-          <div className={classes.label}>
-            <p>Email</p>
-          </div>
-          <div>
-            <TextField
-              className={classes.textField}
-              variant="outlined"
-              value={consumerDetail.customer_email}
-              size="small"
-              disabled
-            />
-          </div>
-        </div>
-
-        <div className={classes.generalForm}>
-          <div className={classes.label}>
-            <p>Date of Birth</p>
-          </div>
-          <div>
-            <TextField
-              className={classes.textField}
-              variant="outlined"
-              type="date"
-              name="dob"
-              value={dob}
-              size="small"
-              onChange={(e) => setDob(e.target.value)}
-            />
-          </div>
-        </div>
-
-        <div className={classes.generalForm}>
-          <div className={classes.label}>
-            <p>Signup Date</p>
-          </div>
-          <div>
-            <TextField
-              className={classes.textField}
-              type="date"
-              variant="outlined"
-              value={signupDate}
-              size="small"
-              disabled
-            />
-          </div>
-        </div>
-
-        <div className={classes.generalForm}>
-          <div className={classes.label}>
-            <p>KYC Level</p>
-          </div>
-          <div>
-            <TextField
-              className={classes.textField}
-              variant="outlined"
-              value={consumerDetail.customer_kyc}
-              size="small"
-              disabled
-            />
-          </div>
-        </div>
-
-        <div className={classes.generalForm}>
-          <div className={classes.label}>
-            <p>HipBar Wallet Balance</p>
-          </div>
-          <div>
-            <TextField
-              className={classes.textField}
-              variant="outlined"
-              value={consumerDetail.hipbar_wallet}
-              size="small"
-              disabled
-            />
-          </div>
-        </div>
-
-        <div className={classes.generalForm}>
-          <div className={classes.label}>
-            <p>Gift Wallet Balance</p>
-          </div>
-          <div>
-            <TextField
-              className={classes.textField}
-              variant="outlined"
-              value={consumerDetail.gift_wallet}
-              size="small"
-              disabled
-            />
-          </div>
-        </div>
-
-        <div className={classes.buttonContainer}>
-          <Button
-            className={classes.button}
-            onClick={handleReset}
-            variant="outlined"
-            color="primary"
-          >
-            Reset
-          </Button>
-          <Button
-            className={classes.button}
-            onClick={handleSave}
-            variant="contained"
-            color="primary"
-          >
-            Save
-          </Button>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

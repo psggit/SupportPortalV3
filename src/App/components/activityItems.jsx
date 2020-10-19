@@ -59,7 +59,6 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: theme.typography.fontFamily,
     padding: 24,
     alignSelf: "baseline",
-    boxShadow: "none",
     "& .MuiCardHeader-root": {
       padding: 0,
     },
@@ -101,7 +100,7 @@ export default function ActivityItem(props) {
       <Card className={classes.root}>
         <CardContent>
           <Typography variant="h5" className={classes.heading} gutterBottom>
-            {title}
+            {title.toUpperCase()}
             {subtitle ? (
               <CardActions >
                 {subtitle.map((item) => item)}

@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     fontFamily: theme.typography.fontFamily,
     padding: 24,
-    boxShadow: "none",
     "& .MuiCardHeader-root": {
       padding: 0,
     },

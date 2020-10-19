@@ -6,6 +6,7 @@ import Table from "../../../components/table";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 //import Pagination from "../../../components/pagination";
+import TopBar from "../../../components/topBar";
 import Notification from "../../../components/notification";
 import Moment from "moment";
 import {
@@ -131,71 +132,73 @@ function CustomerSoa(props) {
   }
 
   return (
-    <div className={classes.formContainer}>
-      <div className={classes.navBar}>
-        <div className={classes.backButton}>
-          <div onClick={handleBack}>Back</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleCustomerDetail}>Customer Details</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleSoaChange}>SOA</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleGiftSoaChange}>Gift Soa</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleRewardChange}>Rewards</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleNotesChange}>Notes</div>
-        </div>
-      </div>
-      <div className={classes.row1}>
-        <p>CUSTOMER ID: {props.customerId}</p>
-        <div>Search</div>
-      </div>
-      <div className={classes.table}>
-        <Paper className={classes.paper}>
-          <Table tableHeaders={soaTableHeaders}>
-            {props.soaSuccess
-              ? props.soaList.consumer_soa.map((data) => {
-                  return (
-                    <TableRow>
-                      <TableCell>{data.order_id}</TableCell>
-                      <TableCell>{data.type}</TableCell>
-                      <TableCell>{data.amount}</TableCell>
-                      <TableCell>{data.opening_balance}</TableCell>
-                      <TableCell>{data.closing_balance}</TableCell>
-                      <TableCell align="left">
-                        {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })
-              : !props.soaSuccess && (
-                  <tr>
-                    <td
-                      style={{ textAlign: "center", padding: "10px 0" }}
-                      colSpan="6"
-                    >
-                      <p style={{ fontWeight: "16px" }}>No records found</p>
-                    </td>
-                  </tr>
-                )}
-          </Table>
-        </Paper>
-        {props.soaSuccess && (
-          <div className={classes.root}>
-            <Pagination
-              count={props.soaList.count / 10}
-              variant="outlined"
-              color="primary"
-            />
+    <>
+      <TopBar />
+      <div className={classes.formContainer}>
+        <div className={classes.navBar}>
+          <div className={classes.backButton}>
+            <div onClick={handleBack}>Back</div>
           </div>
-        )}
-        {/* {props.soaSuccess && (
+          <div className={classes.navContent}>
+            <div onClick={handleCustomerDetail}>Customer Details</div>
+          </div>
+          <div className={classes.navContent}>
+            <div onClick={handleSoaChange}>SOA</div>
+          </div>
+          <div className={classes.navContent}>
+            <div onClick={handleGiftSoaChange}>Gift Soa</div>
+          </div>
+          <div className={classes.navContent}>
+            <div onClick={handleRewardChange}>Rewards</div>
+          </div>
+          <div className={classes.navContent}>
+            <div onClick={handleNotesChange}>Notes</div>
+          </div>
+        </div>
+        <div className={classes.row1}>
+          <p>CUSTOMER ID: {props.customerId}</p>
+          <div>Search</div>
+        </div>
+        <div className={classes.table}>
+          <Paper className={classes.paper}>
+            <Table tableHeaders={soaTableHeaders}>
+              {props.soaSuccess
+                ? props.soaList.consumer_soa.map((data) => {
+                    return (
+                      <TableRow>
+                        <TableCell>{data.order_id}</TableCell>
+                        <TableCell>{data.type}</TableCell>
+                        <TableCell>{data.amount}</TableCell>
+                        <TableCell>{data.opening_balance}</TableCell>
+                        <TableCell>{data.closing_balance}</TableCell>
+                        <TableCell align="left">
+                          {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
+                : !props.soaSuccess && (
+                    <tr>
+                      <td
+                        style={{ textAlign: "center", padding: "10px 0" }}
+                        colSpan="6"
+                      >
+                        <p style={{ fontWeight: "16px" }}>No records found</p>
+                      </td>
+                    </tr>
+                  )}
+            </Table>
+          </Paper>
+          {props.soaSuccess && (
+            <div className={classes.root}>
+              <Pagination
+                count={props.soaList.count / 10}
+                variant="outlined"
+                color="primary"
+              />
+            </div>
+          )}
+          {/* {props.soaSuccess && (
           <Pagination
             activePage={parseInt(pageNo)}
             //itemsCountPerPage={parseInt(pageLimit)}
@@ -205,16 +208,17 @@ function CustomerSoa(props) {
             color="primary"
           />
         )} */}
-        {errorMessage && (
-          <Notification
-            message={props.errorMsg}
-            messageType="error"
-            open={errorMessage}
-            handleClose={handleClose}
-          />
-        )}
+          {errorMessage && (
+            <Notification
+              message={props.errorMsg}
+              messageType="error"
+              open={errorMessage}
+              handleClose={handleClose}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

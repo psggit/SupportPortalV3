@@ -16,6 +16,7 @@ import Select from '@material-ui/core/Select';
 import Dialog from '../../../components/dialog'
 import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
+import TopBar from "../../../components/topBar";
 
 const tableHeaders = [
   { label: "NOTE NO", value: "note_no" },
@@ -94,6 +95,8 @@ function Notes(props) {
   }
 
   return (
+    <>
+    <TopBar />
     <div className={classes.formContainer}>
       <div className={classes.navBar}>
         <div className={classes.backButton}>
@@ -217,6 +220,7 @@ function Notes(props) {
         /> */}
       </div>
     </div>
+    </>
   )
 }
 
