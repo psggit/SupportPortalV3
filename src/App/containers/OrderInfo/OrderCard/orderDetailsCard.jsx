@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
 
 const OrderDetailsCard = (props) => {
   const classes = useStyles();
-
+  console.log("OrderDetailsCard",props);
   //TODOS:@Purva - clean up mock data
   // fetchKYCDetailsSuccess - should be returned from KYC details
   const fetchKYCDetailsSuccess = true;
@@ -124,8 +124,8 @@ const OrderDetailsCard = (props) => {
     console.log("handleCancel");
     const payload = {
       order_id: props.order.order_id,
-      restocking_charges: 50.5,
-      total_fee: 70.04,
+      restocking_charges: props.order.restocking_charges,
+      total_fee: props.order.total_fee,
       cancellation_id: event.target.value,
       retailer_id: props.order.retailer_id,
       consumer_id: props.order.customer_id,
@@ -134,6 +134,21 @@ const OrderDetailsCard = (props) => {
     };
     console.log("cancel");
     console.log(payload);
+  };
+
+  const handleCancelOrder = () => {
+    const payload = {
+      order_id: props.order.order_id,
+      restocking_charges: props.order.restocking_charges,
+      total_fee: props.order.total_fee,
+      cancellation_id: selectedValue,
+      retailer_id: props.order.retailer_id,
+      consumer_id: props.order.customer_id,
+      hipbar_wallet_amount: props.order.hipbar_wallet,
+      gift_wallet_amount: props.order.gift_wallet,
+    };
+    console.log("handleCancelOrder", payload);
+    props.cancelOrder(payload);
   };
 
   const handleCompleteChange = (event, type, index) => {
@@ -264,7 +279,11 @@ const OrderDetailsCard = (props) => {
           <OrderSummaryItem title="Gift Wallet:" value={"₹ 3000"} />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancel} color="primary" variant="outlined">
+          <Button
+            onClick={handleCancelOrder}
+            color="primary"
+            variant="outlined"
+          >
             Confirm
           </Button>
           <Button onClick={handleClose} color="primary" variant="contained">
@@ -408,6 +427,7 @@ OrderDetailsCard.propTypes = {
   fetchCancelReasonFailure: PropTypes.bool,
   fetchKYCDetailsSuccess: PropTypes.bool,
   handleError: PropTypes.func,
+  cancelOrder: PropTypes.func,
 };
 
 export { OrderDetailsCard };

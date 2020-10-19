@@ -8,6 +8,10 @@ const fetchKycListSuccess = createAction("fetchKycListSuccess");
 const fetchKycListFailed = createAction("fetchKycListFailed");
 const fetchKycListProgress = createAction("fetchKycListProgress");
 
+const cancelOrderProgress = createAction("cancelOrderProgress");
+const cancelOrderFailure = createAction("cancelOrderFailure");
+const cancelOrderSuccess = createAction("cancelOrderSuccess");
+
 const fetchCancellationSummarySuccess = createAction(
   "fetchCancellationSummarySuccess"
 );
@@ -28,4 +32,7 @@ export {
   fetchCancelReasonsSuccess,
   fetchCancelReasonsFailed,
   fetchCancelReasonsProgress,
+  cancelOrderProgress,
+  cancelOrderFailure,
+  cancelOrderSuccess,
 };

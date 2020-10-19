@@ -1,25 +1,24 @@
 import { connect } from "react-redux";
-import { RetailerDetails } from "./RetailerComponent";
-import { fetchRetailerNotes } from "./duck/RetailerOperations";
+import { OrderDetailsCard } from "./orderDetailsCard";
+import { cancelOrder } from "./duck/operations";
 
 const mapStateToProps = (state) => {
   return {
-    orderInfo: state.order.orderInfo.orderDetails,
-    retailerNotes: state.order.retailer.retailerNotesData,
-    fetchSuccess: state.order.retailer.fetchSuccess,
-    fetchProgress: state.order.retailer.fetchProgress,
+    cancelOrderSuccess: state.order.orderInfo.cancelOrderSuccess,
+    cancelOrderFailure: state.order.orderInfo.cancelOrderFailure,
+    cancelOrderProgress: state.order.orderInfo.cancelOrderProgress,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchNotes: (orderId) => dispatch(fetchRetailerNotes(orderId)),
+    cancelOrder: (payload) => dispatch(cancelOrder(payload)),
   };
 };
 
-const RetailerContainer = connect(
+const orderDetailsContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(RetailerDetails);
+)(OrderDetailsCard);
 
-export { RetailerContainer };
+export { orderDetailsContainer };

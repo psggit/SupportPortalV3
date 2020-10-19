@@ -10,6 +10,9 @@ import {
   fetchCancelReasonsSuccess,
   fetchCancelReasonsFailed,
   fetchCancelReasonsProgress,
+  cancelOrderProgress,
+  cancelOrderFailure,
+  cancelOrderSuccess,
 } from "./actions";
 
 const initialValue = {
@@ -25,6 +28,10 @@ const initialValue = {
   fetchCancelReasonsSuccess: false,
   fetchCancelReasonsFailed: false,
   fetchCancelReasonsProgress: false,
+  cancelOrderData: null,
+  cancelOrderProgress: false,
+  cancelOrderFailure: false,
+  cancelOrderSuccess: false,
   errorMsg: "",
 };
 const orderDataReducer = createReducer(initialValue, {
@@ -46,6 +53,25 @@ const orderDataReducer = createReducer(initialValue, {
   [fetchCancelReasonsProgress]: (state) => ({
     ...state,
     fetchProgress: true,
+  }),
+  [cancelOrderSuccess]: (state, data) => ({
+    ...state,
+    cancelOrderData: data.payload,
+    cancelOrderSuccess: true,
+    cancelOrderFailure: false,
+    cancelOrderProgress: false,
+    errorMsg: "",
+  }),
+  [cancelOrderFailure]: (state) => ({
+    ...state,
+    cancelOrderSuccess: false,
+    cancelOrderFailure: true,
+    cancelOrderProgress: false,
+    errorMsg: "Something went wrong Please try again!",
+  }),
+  [cancelOrderProgress]: (state) => ({
+    ...state,
+    cancelOrderProgress: true,
   }),
 });
 export { orderDataReducer };
