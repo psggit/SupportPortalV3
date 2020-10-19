@@ -16,6 +16,7 @@ const mapStateToProps = (state) => {
     fetchSuccess: state.order.deliveryAgent.fetchSuccess,
     fetchProgress: state.order.deliveryAgent.fetchProgress,
     daListSuccess: state.order.deliveryAgent.daListSuccess,
+    daListProgress: state.order.deliveryAgent.daListProgress,
     daListFail: state.order.deliveryAgent.daListFail,
     unassignDASuccess: state.order.deliveryAgent.unassignDASuccess,
     unassignDAFail: state.order.deliveryAgent.unassignDAFail,

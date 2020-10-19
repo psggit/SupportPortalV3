@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles"
+import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import { Button, Grid, CircularProgress } from "@material-ui/core";
 import DeliveryAgentDetailsCard from "../../../components/orderInfoCard";
@@ -8,7 +8,8 @@ import ActivityItem from "../../../components/activityItems";
 import { getListOfDataObjects } from "../../../utils/helpers";
 import Notification from "../../../components/notification";
 import Dialog from "../../../components/dialog";
-import Select from "@material-ui/core/Select";
+//import Select from "@material-ui/core/Select";
+import { Select, MenuItem } from "@material-ui/core";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 
 const keysToRender = [
@@ -33,7 +34,7 @@ const DeliveryAgentComponent = (props) => {
 
   const [data, setData] = useState([]);
   const [deliveryAgentList, setDeliveryAgentList] = useState([]);
-  const [deliveryAgentIdx, setDeliveryAgentIdx] = useState(0);
+  const [deliveryAgentIdx, setDeliveryAgentIdx] = useState("");
   const [showDialogBox, setShowDialogBox] = useState(false);
   const [showUnassignDADialog, setShowUnassignDADialog] = useState(false);
   const [message, setMessage] = useState("");
@@ -45,11 +46,10 @@ const DeliveryAgentComponent = (props) => {
 
   useEffect(() => {
     console.log("hellooo..");
-    {
-      props.daListSuccess && setDeliveryAgentList(props.daList.data)
+    if (props.daListSuccess) {
+      setDeliveryAgentList(props.daList.data);
     }
-    //props.fetchDAList(props.orderInfo.retailer_id, props.orderInfo.order_id);
-  }, []);
+  }, [props.daListSuccess]);
 
   useEffect(() => {
     const details = getListOfDataObjects(props.orderInfo, keysToRender);
@@ -94,12 +94,12 @@ const DeliveryAgentComponent = (props) => {
   const handleReserveOrder = () => {
     const payload = {
       order_id: props.orderInfo.order_id,
-      retailer_id: props.orderInfo.retailer_id,
+      retailer_id: parseInt(props.orderInfo.retailer_id),
       retailer_name: props.orderInfo.retailer_name,
-      warehouse_id: props.orderInfo.warehouse_id,
+      warehouse_id: parseInt(props.orderInfo.warehouse_id),
       delivery_status: props.orderInfo.delivery_status,
-      assigned_delivery_agent: props.orderInfo.delivery_agent_id,
-      reserved_for_da_id: "515870",
+      assigned_delivery_agent: parseInt(props.orderInfo.delivery_agent_id),
+      reserved_for_da_id: parseInt(deliveryAgentIdx),
       cancellation_reason: cancelReasonNote,
     };
     props.reserveDeliveryAgent(payload);
@@ -156,18 +156,27 @@ const DeliveryAgentComponent = (props) => {
         >
           <div>
             <label>Delivery Agent List</label>
+
             <Select
               native
               className={classes.formControl}
-              //onChange={handleChange}
+              onChange={(e) => handleChange(e)}
             >
               {props.daListSuccess &&
-                props.daList.data.map((item, index) => {
-                  return (
-                    <option key={index} value={index}>
-                      {item.name} - {item.id}
-                    </option>
-                  );
+                props.daList.data.map((value, index) => {
+                  if (deliveryAgentIdx === value) {
+                    return (
+                      <option value={value.id} key={index} selected={true}>
+                        {value.name}-{value.id}
+                      </option>
+                    );
+                  } else {
+                    return (
+                      <option value={value.id} key={index}>
+                        {value.name}-{value.id}
+                      </option>
+                    );
+                  }
                 })}
             </Select>
           </div>
@@ -210,6 +219,11 @@ const DeliveryAgentComponent = (props) => {
   ];
 
   const keysToRenderInNotesCard = ["notes", "created_at"];
+
+  // let loading = props.daListProgress;
+  // if (loading) {
+  //   return <p>Loading...</p>;
+  // }
 
   return (
     <Grid container spacing={4}>
@@ -263,7 +277,7 @@ DeliveryAgentComponent.propTypes = {
   fetchDAList: PropTypes.func,
 };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   formRoot: {
     padding: 36,
   },
