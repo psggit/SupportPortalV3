@@ -37,14 +37,14 @@ const useStyles = makeStyles(() => ({
 const DialogComponent = (props) => {
   const classes = useStyles();
   let { title, subtitle, actions, children, change } = props;
-  useEffect(() => {
-    // console.log("componentDidMount");
+  // useEffect(() => {
+  //   // console.log("componentDidMount");
 
-    return () => {
-      // console.log("componentWillUnmount");
-      change("");
-    };
-  }, []);
+  //   return () => {
+  //     // console.log("componentWillUnmount");
+  //     change("");
+  //   };
+  // }, []);
   return (
     <Dialog
       open={true}

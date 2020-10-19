@@ -1,19 +1,40 @@
 import { connect } from "react-redux";
 import { DeliveryAgentComponent } from "./DeliveryAgentComponent";
-import { fetchDeliveryAgentNotes } from "./duck/operations";
+import {
+  fetchDeliveryAgentNotes,
+  fetchDAList,
+  unassignDeliveryAgent,
+  reserveDeliveryAgent,
+} from "./duck/operations";
 
 const mapStateToProps = (state) => {
+  console.log("[DA-container]", state);
   return {
     orderInfo: state.order.orderInfo.orderDetails,
     deliveryAgentNotes: state.order.deliveryAgent.deliveryAgentNotesData,
+    daList: state.order.deliveryAgent.deliveryAgentList,
     fetchSuccess: state.order.deliveryAgent.fetchSuccess,
     fetchProgress: state.order.deliveryAgent.fetchProgress,
+    daListSuccess: state.order.deliveryAgent.daListSuccess,
+    daListFail: state.order.deliveryAgent.daListFail,
+    unassignDASuccess: state.order.deliveryAgent.unassignDASuccess,
+    unassignDAFail: state.order.deliveryAgent.unassignDAFail,
+    successMsg: state.order.deliveryAgent.successMsg,
+    errorMsg: state.order.deliveryAgent.errorMsg,
+    message: state.order.deliveryAgent.message,
+    reserveDaSuccess: state.order.deliveryAgent.reserveDaSuccess,
+    reserveDaFail: state.order.deliveryAgent.reserveDaFail,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchNotes: (orderId) => dispatch(fetchDeliveryAgentNotes(orderId)),
+    unassignDeliveryAgent: (orderId) =>
+      dispatch(unassignDeliveryAgent(orderId)),
+    fetchDAList: (orderId, retailerId) =>
+      dispatch(fetchDAList(orderId, retailerId)),
+    reserveDeliveryAgent: (payload) => dispatch(reserveDeliveryAgent(payload)),
   };
 };
 

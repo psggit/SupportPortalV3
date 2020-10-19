@@ -19,3 +19,6 @@ export { assignWarehouseAPI } from "./assignWarehouseAPI";
 export { listDeliveryStatusAPI } from "./listDeliveryStatusAPI";
 export { callAPI } from "./callAPI";
 export { kycListAPI } from "./kycListAPI";
+export { daListAPI } from "./daListAPI";
+export { unassignDaAPI } from "./unassignDaAPI";
+export { reserveOrderAPI } from "./reserveOrderAPI";
