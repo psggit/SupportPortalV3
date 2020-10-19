@@ -16,9 +16,9 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const orderDetailsContainer = connect(
+const OrderDetailsContainer = connect(
   mapStateToProps,
   mapDispatchToProps
 )(OrderDetailsCard);
 
-export { orderDetailsContainer };
+export { OrderDetailsContainer };
