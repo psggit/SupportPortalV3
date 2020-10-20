@@ -75,14 +75,11 @@ CustomCard.propTypes = {
   renderArray: PropTypes.array,
   keysToRender: PropTypes.array,
   keyMap: PropTypes.object,
-
   id: PropTypes.string,
-
   subheader: PropTypes.any,
 };
 
 const getTimestamp = (timestamp) => {
-  // console.log("time", timestamp);
   return Moment(timestamp).format("DD/MM/YYYY");
 };
 

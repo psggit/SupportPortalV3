@@ -9,7 +9,6 @@ import { getListOfDataObjects } from "../../../utils/helpers";
 import Notification from "../../../components/notification";
 import Dialog from "../../../components/dialog";
 import { Select, MenuItem, InputLabel, FormControl } from "@material-ui/core";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import TextField from "@material-ui/core/TextField";
 
 const keysToRender = [
@@ -121,6 +120,7 @@ const DeliveryAgentComponent = (props) => {
     <Button
       variant="outlined"
       color="primary"
+      key="reserveOrder"
       onClick={mountDialogBox}
       disabled={!props.orderInfo.order_status_button}
     >
@@ -281,6 +281,7 @@ DeliveryAgentComponent.propTypes = {
   reserveDaSuccess: PropTypes.bool,
   message: PropTypes.any,
   daList: PropTypes.object,
+  unassignDASuccess: PropTypes.bool,
 };
 
 const useStyles = makeStyles((theme) => ({
