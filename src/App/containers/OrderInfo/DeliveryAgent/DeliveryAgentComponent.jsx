@@ -9,7 +9,7 @@ import { getListOfDataObjects } from "../../../utils/helpers";
 import Notification from "../../../components/notification";
 import Dialog from "../../../components/dialog";
 //import Select from "@material-ui/core/Select";
-import { Select, MenuItem } from "@material-ui/core";
+import { Select, MenuItem, InputLabel, FormControl } from "@material-ui/core";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 
 const keysToRender = [
@@ -33,7 +33,7 @@ const DeliveryAgentComponent = (props) => {
   const classes = useStyles();
 
   const [data, setData] = useState([]);
-  const [deliveryAgentIdx, setDeliveryAgentIdx] = useState("");
+  const [selectedValue, setValue] = useState("");
   const [showDialogBox, setShowDialogBox] = useState(false);
   const [showUnassignDADialog, setShowUnassignDADialog] = useState(false);
   const [message, setMessage] = useState("");
@@ -60,7 +60,7 @@ const DeliveryAgentComponent = (props) => {
   };
 
   const handleChange = (e) => {
-    setDeliveryAgentIdx(e.target.value);
+    setValue(e.target.value);
   };
 
   const mountDialogBox = () => {
@@ -93,7 +93,7 @@ const DeliveryAgentComponent = (props) => {
       warehouse_id: parseInt(props.orderInfo.warehouse_id),
       delivery_status: props.orderInfo.delivery_status,
       assigned_delivery_agent: parseInt(props.orderInfo.delivery_agent_id),
-      reserved_for_da_id: parseInt(deliveryAgentIdx),
+      reserved_for_da_id: parseInt(selectedValue),
       cancellation_reason: cancelReasonNote,
     };
     props.reserveDeliveryAgent(payload);
@@ -150,32 +150,33 @@ const DeliveryAgentComponent = (props) => {
             </Button>,
           ]}
         >
-          <div>
-            <label>Delivery Agent List</label>
+          <FormControl className={classes.formControl}>
+            <InputLabel id="demo-simple-select-label">
+              Delivery Agent List
+            </InputLabel>
             <Select
-              native
-              className={classes.formControl}
-              onChange={(e) => handleChange(e)}
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              className={classes.selectBox}
+              onChange={(event) => handleChange(event)}
             >
               {props.daListSuccess &&
                 props.daList.data.map((value, index) => {
-                  if (deliveryAgentIdx === value) {
+                  if (selectedValue === value) {
                     return (
-                      <option value={value.id} key={index} selected={true}>
+                      <MenuItem value={value.id} key={index} selected={true}>
                         {value.name}-{value.id}
-                      </option>
+                      </MenuItem>
                     );
                   } else {
                     return (
-                      <option value={value.id} key={index}>
+                      <MenuItem value={value.id} key={index}>
                         {value.name}-{value.id}
-                      </option>
+                      </MenuItem>
                     );
                   }
                 })}
             </Select>
-          </div>
-          <div>
             <TextareaAutosize
               className={classes.formControlTextarea}
               aria-label="minimum height"
@@ -183,7 +184,7 @@ const DeliveryAgentComponent = (props) => {
               onChange={handleTextAreaChange}
               placeholder="Enter your notes"
             />
-          </div>
+          </FormControl>
         </Dialog>
       )}
     </div>,
@@ -268,6 +269,7 @@ DeliveryAgentComponent.propTypes = {
   unassignDAFail: PropTypes.bool,
   reserveDaFail: PropTypes.bool,
   reserveDaSuccess: PropTypes.bool,
+  message: PropTypes.any,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -275,14 +277,17 @@ const useStyles = makeStyles((theme) => ({
     padding: 36,
   },
   formControl: {
-    width: "100%",
-    marginBottom: 24,
+    margin: theme.spacing(1),
+    minWidth: 200,
   },
   formControlTextarea: {
     width: "100%",
     marginBottom: 24,
     padding: 10,
   },
+  selectBox: {
+    paddingBottom: "20px",
+  }
 }));
 
 export { DeliveryAgentComponent };
