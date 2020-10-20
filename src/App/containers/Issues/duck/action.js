@@ -19,5 +19,5 @@ export {
   assignIssueFailed,
   resolveIssueInProgress,
   resolveIssueSuccess,
-  resolveIssueFailed
+  resolveIssueFailed,
 };

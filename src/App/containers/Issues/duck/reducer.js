@@ -8,7 +8,7 @@ import {
   assignIssueFailed,
   resolveIssueInProgress,
   resolveIssueSuccess,
-  resolveIssueFailed
+  resolveIssueFailed,
 } from "./action";
 
 const initialState = {
@@ -21,7 +21,7 @@ const initialState = {
   resolveIssueInProgress: false,
   resolveIssueSuccess: false,
   resolveIssueFailed: false,
-  issueList: null
+  issueList: null,
 };
 
 const issuesReducer = createReducer(initialState, {
@@ -35,16 +35,15 @@ const issuesReducer = createReducer(initialState, {
     ...state,
     fetchIssuesInProgress: false,
     fetchIssuesFailed: true,
-    fetchIssuesSuccess: false
+    fetchIssuesSuccess: false,
   }),
   [fetchIssuesSuccess]: (state, data) => {
-    console.log("in success", data.payload)
     return ({
       ...state,
       fetchIssuesInProgress: false,
       fetchIssuesFailed: false,
       fetchIssuesSuccess: true,
-      issueList: data.payload
+      issueList: data.payload,
     })
   },
   [assignIssueInProgress]: (state) => {
@@ -52,7 +51,7 @@ const issuesReducer = createReducer(initialState, {
       ...state,
       assignIssueInProgress: true,
       assignIssueFailed: false,
-      assignIssueSuccess: false
+      assignIssueSuccess: false,
     }
   },
   [assignIssueSuccess]: (state) => {
@@ -60,7 +59,7 @@ const issuesReducer = createReducer(initialState, {
       ...state,
       assignIssueInProgress: false,
       assignIssueFailed: false,
-      assignIssueSuccess: true
+      assignIssueSuccess: true,
     }
   },
   [assignIssueFailed]: (state) => {
@@ -68,7 +67,7 @@ const issuesReducer = createReducer(initialState, {
       ...state,
       assignIssueInProgress: false,
       assignIssueFailed: true,
-      assignIssueSuccess: false
+      assignIssueSuccess: false,
     }
   },
   [resolveIssueInProgress]: (state) => {
@@ -76,7 +75,7 @@ const issuesReducer = createReducer(initialState, {
       ...state,
       resolveIssueInProgress: true,
       resolveIssueFailed: false,
-      resolveIssueSuccess: false
+      resolveIssueSuccess: false,
     }
   },
   [resolveIssueSuccess]: (state) => {
@@ -84,7 +83,7 @@ const issuesReducer = createReducer(initialState, {
       ...state,
       resolveIssueInProgress: false,
       resolveIssueFailed: false,
-      resolveIssueSuccess: true
+      resolveIssueSuccess: true,
     }
   },
   [resolveIssueFailed]: (state) => {
@@ -92,7 +91,7 @@ const issuesReducer = createReducer(initialState, {
       ...state,
       resolveIssueInProgress: false,
       resolveIssueFailed: true,
-      resolveIssueSuccess: false
+      resolveIssueSuccess: false,
     }
   },
 });

@@ -7,7 +7,7 @@ import {
   assignIssueFailed,
   resolveIssueInProgress,
   resolveIssueSuccess,
-  resolveIssueFailed
+  resolveIssueFailed,
 } from "./action";
 // import { createSession } from "../../../utils";
 import { fetchIssuesAPI } from "../../../utils/fetchIssuesAPI";
