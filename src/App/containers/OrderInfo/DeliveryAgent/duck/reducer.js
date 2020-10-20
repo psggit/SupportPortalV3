@@ -85,7 +85,6 @@ const deliveryAgentReducer = createReducer(initialValue, {
     unassignDASuccess: false,
     unassignDAFail: true,
     unassignDAProgress: false,
-    //message: data.payload.message,
     message: "No delivery agent has been assigned to the order yet.",
     errorMsg: error.payload,
   }),
@@ -99,6 +98,7 @@ const deliveryAgentReducer = createReducer(initialValue, {
     reserveDAFail: false,
     reserveDAProgress: false,
     message: data.payload.message,
+    errorMsg: data.payload,
   }),
   [fetchReserveDAFailed]: (state, data) => ({
     ...state,
