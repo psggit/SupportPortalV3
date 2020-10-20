@@ -8,9 +8,17 @@ const fetchKycListSuccess = createAction("fetchKycListSuccess");
 const fetchKycListFailed = createAction("fetchKycListFailed");
 const fetchKycListProgress = createAction("fetchKycListProgress");
 
+const fetchDeliverOrderSuccess = createAction("fetchDeliverOrderSuccess");
+const fetchDeliverOrderFailed = createAction("fetchDeliverOrderFailed");
+const fetchDeliverOrderProgress = createAction("fetchDeliverOrderProgress");
+
 const cancelOrderProgress = createAction("cancelOrderProgress");
 const cancelOrderFailure = createAction("cancelOrderFailure");
 const cancelOrderSuccess = createAction("cancelOrderSuccess");
+
+const deliverOrderProgress = createAction("deliverOrderProgress");
+const deliverOrderFailed = createAction("deliverOrderFailed");
+const deliverOrderSuccess = createAction("deliverOrderSuccess");
 
 const fetchCancellationSummarySuccess = createAction(
   "fetchCancellationSummarySuccess"
@@ -35,4 +43,10 @@ export {
   cancelOrderProgress,
   cancelOrderFailure,
   cancelOrderSuccess,
+  fetchDeliverOrderProgress,
+  fetchDeliverOrderSuccess,
+  fetchDeliverOrderFailed,
+  deliverOrderProgress,
+  deliverOrderFailed,
+  deliverOrderSuccess,
 };

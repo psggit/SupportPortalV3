@@ -20,3 +20,5 @@ export { listDeliveryStatusAPI } from "./listDeliveryStatusAPI";
 export { callAPI } from "./callAPI";
 export { kycListAPI } from "./kycListAPI";
 export { cancelOrderAPI } from "./cancelOrderAPI";
+export { deliverOrderReasonAPI } from "./deliverOrderReasonAPI";
+export { deliverOrderAPI } from "./deliverOrderAPI";
