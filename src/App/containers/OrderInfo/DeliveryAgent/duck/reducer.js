@@ -15,7 +15,6 @@ const initialValue = {
 };
 const deliveryAgentReducer = createReducer(initialValue, {
   [fetchDeliveryAgentNotesSuccess]: (state, data) => {
-    console.log("da notes data", data.payload)
     return {
       ...state,
       deliveryAgentNotesData: data.payload,
@@ -23,7 +22,7 @@ const deliveryAgentReducer = createReducer(initialValue, {
       fetchFailed: false,
       fetchProgress: false,
       errorMsg: "",
-    }
+    };
   },
   [fetchDeliveryAgentNotesFailed]: (state) => ({
     ...state,

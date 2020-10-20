@@ -38,13 +38,13 @@ const issuesReducer = createReducer(initialState, {
     fetchIssuesSuccess: false,
   }),
   [fetchIssuesSuccess]: (state, data) => {
-    return ({
+    return {
       ...state,
       fetchIssuesInProgress: false,
       fetchIssuesFailed: false,
       fetchIssuesSuccess: true,
       issueList: data.payload,
-    })
+    };
   },
   [assignIssueInProgress]: (state) => {
     return {
@@ -52,7 +52,7 @@ const issuesReducer = createReducer(initialState, {
       assignIssueInProgress: true,
       assignIssueFailed: false,
       assignIssueSuccess: false,
-    }
+    };
   },
   [assignIssueSuccess]: (state) => {
     return {
@@ -60,7 +60,7 @@ const issuesReducer = createReducer(initialState, {
       assignIssueInProgress: false,
       assignIssueFailed: false,
       assignIssueSuccess: true,
-    }
+    };
   },
   [assignIssueFailed]: (state) => {
     return {
@@ -68,7 +68,7 @@ const issuesReducer = createReducer(initialState, {
       assignIssueInProgress: false,
       assignIssueFailed: true,
       assignIssueSuccess: false,
-    }
+    };
   },
   [resolveIssueInProgress]: (state) => {
     return {
@@ -76,7 +76,7 @@ const issuesReducer = createReducer(initialState, {
       resolveIssueInProgress: true,
       resolveIssueFailed: false,
       resolveIssueSuccess: false,
-    }
+    };
   },
   [resolveIssueSuccess]: (state) => {
     return {
@@ -84,7 +84,7 @@ const issuesReducer = createReducer(initialState, {
       resolveIssueInProgress: false,
       resolveIssueFailed: false,
       resolveIssueSuccess: true,
-    }
+    };
   },
   [resolveIssueFailed]: (state) => {
     return {
@@ -92,7 +92,7 @@ const issuesReducer = createReducer(initialState, {
       resolveIssueInProgress: false,
       resolveIssueFailed: true,
       resolveIssueSuccess: false,
-    }
+    };
   },
 });
 

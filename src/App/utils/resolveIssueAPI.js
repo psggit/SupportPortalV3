@@ -15,7 +15,7 @@ const resolveIssueAPI = (reqBody, process, onSuccess, onError) => {
   fetch(URL, {
     method: "GET",
     headers: headers,
-    credentials: "include"
+    credentials: "include",
   })
     .then((res) => process(res))
     .then((data) => onSuccess(data))

@@ -25,7 +25,7 @@ const store = configureStore({
     giftSoa: customerGiftSOAReducer,
     rewards: rewardsReducer,
     update: customerUpdateReducer,
-    issues: issuesReducer
+    issues: issuesReducer,
   }),
   middleware: [thunk],
 });
