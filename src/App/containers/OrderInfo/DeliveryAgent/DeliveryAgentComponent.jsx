@@ -8,7 +8,6 @@ import ActivityItem from "../../../components/activityItems";
 import { getListOfDataObjects } from "../../../utils/helpers";
 import Notification from "../../../components/notification";
 import Dialog from "../../../components/dialog";
-//import Select from "@material-ui/core/Select";
 import { Select, MenuItem, InputLabel, FormControl } from "@material-ui/core";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 
@@ -41,9 +40,17 @@ const DeliveryAgentComponent = (props) => {
 
   useEffect(() => {
     setMessage(
-      props.unassignDAFail || props.reserveDaFail || props.reserveDaSuccess
+      props.unassignDAFail ||
+        props.unassignDASuccess ||
+        props.reserveDaFail ||
+        props.reserveDaSuccess
     );
-  }, [props.unassignDAFail, props.reserveDaFail, props.reserveDaSuccess]);
+  }, [
+    props.unassignDAFail,
+    props.unassignDASuccess,
+    props.reserveDaFail,
+    props.reserveDaSuccess,
+  ]);
 
   useEffect(() => {
     const details = getListOfDataObjects(props.orderInfo, keysToRender);
@@ -270,6 +277,7 @@ DeliveryAgentComponent.propTypes = {
   reserveDaFail: PropTypes.bool,
   reserveDaSuccess: PropTypes.bool,
   message: PropTypes.any,
+  daList: PropTypes.object,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -287,7 +295,7 @@ const useStyles = makeStyles((theme) => ({
   },
   selectBox: {
     paddingBottom: "20px",
-  }
+  },
 }));
 
 export { DeliveryAgentComponent };

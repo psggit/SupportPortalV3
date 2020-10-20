@@ -80,12 +80,14 @@ const deliveryAgentReducer = createReducer(initialValue, {
     unassignDAProgress: false,
     message: data.payload.message,
   }),
-  [fetchUnassignDAFailed]: (state, data) => ({
+  [fetchUnassignDAFailed]: (state, error) => ({
     ...state,
     unassignDASuccess: false,
     unassignDAFail: true,
     unassignDAProgress: false,
-    message: data.payload.message,
+    //message: data.payload.message,
+    message: "No delivery agent has been assigned to the order yet.",
+    errorMsg: error.payload,
   }),
   [fetchUnassignDAProgress]: (state) => ({
     ...state,
@@ -96,7 +98,6 @@ const deliveryAgentReducer = createReducer(initialValue, {
     reserveDaSuccess: true,
     reserveDAFail: false,
     reserveDAProgress: false,
-    errorMsg: "",
     message: data.payload.message,
   }),
   [fetchReserveDAFailed]: (state, data) => ({
