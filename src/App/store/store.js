@@ -3,6 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
 import { loginReducer } from "../containers/Login";
 import { homeReducer } from "../containers/Dashboard";
+import { issuesReducer } from "../containers/Issues";
 import { cartReducer } from "../containers/Cart";
 import { orderReducer } from "../containers/OrderInfo/reducer";
 import { cartModifyReducer } from "../containers/CartModification";
@@ -24,6 +25,7 @@ const store = configureStore({
     giftSoa: customerGiftSOAReducer,
     rewards: rewardsReducer,
     update: customerUpdateReducer,
+    issues: issuesReducer
   }),
   middleware: [thunk],
 });

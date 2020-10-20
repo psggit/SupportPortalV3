@@ -22,7 +22,7 @@ const processResponse = () => {
 
 const onSuccess = (dispatch) => {
   return (data) => {
-    // console.log("[onSuccess] data", data);
+    console.log("[onSuccess] data", data);
     dispatch(fetchDeliveryAgentNotesSuccess(data));
     // createSession(data);
   };
