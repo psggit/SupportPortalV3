@@ -402,7 +402,7 @@ OrderDetailsCard.propTypes = {
   address: PropTypes.string,
   handleCancel: PropTypes.func,
   handleDeliver: PropTypes.func,
-  cancelReasons: PropTypes.object,
+  cancelReasons: PropTypes.array,
   buttonState: PropTypes.bool,
   fetchCancelReasonSuccess: PropTypes.bool,
   fetchCancelReasonFailure: PropTypes.bool,

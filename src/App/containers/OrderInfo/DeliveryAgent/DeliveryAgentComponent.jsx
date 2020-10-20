@@ -10,6 +10,7 @@ import Notification from "../../../components/notification";
 import Dialog from "../../../components/dialog";
 import { Select, MenuItem, InputLabel, FormControl } from "@material-ui/core";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import TextField from "@material-ui/core/TextField";
 
 const keysToRender = [
   "delivery_agent_id",
@@ -62,7 +63,7 @@ const DeliveryAgentComponent = (props) => {
     setMessage(false);
   };
 
-  const handleTextAreaChange = (e) => {
+  const handleTextChange = (e) => {
     setCancelReasonNote(e.target.value);
   };
 
@@ -120,7 +121,6 @@ const DeliveryAgentComponent = (props) => {
     <Button
       variant="outlined"
       color="primary"
-      key="unassignBtn"
       onClick={mountDialogBox}
       disabled={!props.orderInfo.order_status_button}
     >
@@ -184,12 +184,15 @@ const DeliveryAgentComponent = (props) => {
                   }
                 })}
             </Select>
-            <TextareaAutosize
-              className={classes.formControlTextarea}
-              aria-label="minimum height"
-              rowsMin={3}
-              onChange={handleTextAreaChange}
-              placeholder="Enter your notes"
+            <TextField
+              onChange={handleTextChange}
+              rows={7}
+              fullWidth
+              variant="outlined"
+              autoComplete="off"
+              margin="normal"
+              size="small"
+              placeholder="Add cancel reason"
             />
           </FormControl>
         </Dialog>
@@ -289,12 +292,12 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 200,
   },
   formControlTextarea: {
-    width: "100%",
-    marginBottom: 24,
-    padding: 10,
+    // width: "170%",
+    // marginBottom: 24,
+    // marginTop: 20,
   },
   selectBox: {
-    paddingBottom: "20px",
+    //paddingBottom: "20px",
   },
 }));
 

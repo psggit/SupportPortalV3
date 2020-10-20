@@ -310,7 +310,7 @@ const OrderInfoComponent = (props) => {
 OrderInfoComponent.propTypes = {
   fetchOrderInfo: PropTypes.func,
   fetchCancelReason: PropTypes.func,
-  cancelReasons: PropTypes.object,
+  cancelReasons: PropTypes.array,
   fetchOrderInfoSuccess: PropTypes.bool,
   fetchOrderInfoFailure: PropTypes.bool,
   fetchCancelReasonSuccess: PropTypes.bool,
