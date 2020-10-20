@@ -1,6 +1,10 @@
 import { connect } from "react-redux";
 import { IssuesComponent } from "./IssuesComponent";
-import { fetchIssues, assignOrderIssue, resolveOrderIssue } from "./duck/operations";
+import { 
+  fetchIssues, 
+  assignOrderIssue, 
+  resolveOrderIssue 
+} from "./duck/operations";
 
 const mapStateToProps = (state) => {
   return {
