@@ -33,7 +33,6 @@ const DeliveryAgentComponent = (props) => {
   const classes = useStyles();
 
   const [data, setData] = useState([]);
-  const [deliveryAgentList, setDeliveryAgentList] = useState([]);
   const [deliveryAgentIdx, setDeliveryAgentIdx] = useState("");
   const [showDialogBox, setShowDialogBox] = useState(false);
   const [showUnassignDADialog, setShowUnassignDADialog] = useState(false);
@@ -41,15 +40,10 @@ const DeliveryAgentComponent = (props) => {
   const [cancelReasonNote, setCancelReasonNote] = useState("");
 
   useEffect(() => {
-    setMessage(props.unassignDAFail);
-  }, [props.unassignDAFail]);
-
-  useEffect(() => {
-    console.log("hellooo..");
-    if (props.daListSuccess) {
-      setDeliveryAgentList(props.daList.data);
-    }
-  }, [props.daListSuccess]);
+    setMessage(
+      props.unassignDAFail || props.reserveDaFail || props.reserveDaSuccess
+    );
+  }, [props.unassignDAFail, props.reserveDaFail, props.reserveDaSuccess]);
 
   useEffect(() => {
     const details = getListOfDataObjects(props.orderInfo, keysToRender);
@@ -112,6 +106,7 @@ const DeliveryAgentComponent = (props) => {
       color="primary"
       key="unassignBtn"
       onClick={mountUnassignDA}
+      disabled={!props.orderInfo.order_status_button}
     >
       Unassign
     </Button>,
@@ -120,6 +115,7 @@ const DeliveryAgentComponent = (props) => {
       color="primary"
       key="unassignBtn"
       onClick={mountDialogBox}
+      disabled={!props.orderInfo.order_status_button}
     >
       Reserve Order
     </Button>,
@@ -156,7 +152,6 @@ const DeliveryAgentComponent = (props) => {
         >
           <div>
             <label>Delivery Agent List</label>
-
             <Select
               native
               className={classes.formControl}
@@ -220,11 +215,6 @@ const DeliveryAgentComponent = (props) => {
 
   const keysToRenderInNotesCard = ["notes", "created_at"];
 
-  // let loading = props.daListProgress;
-  // if (loading) {
-  //   return <p>Loading...</p>;
-  // }
-
   return (
     <Grid container spacing={4}>
       <Grid item xs={6}>
@@ -253,7 +243,7 @@ const DeliveryAgentComponent = (props) => {
       </Grid>
       {message && (
         <Notification
-          message={props.errorMsg}
+          message={props.message}
           messageType="info"
           open={message}
           handleClose={handleClose}
@@ -275,6 +265,9 @@ DeliveryAgentComponent.propTypes = {
   unassignDeliveryAgent: PropTypes.func,
   reserveDeliveryAgent: PropTypes.func,
   fetchDAList: PropTypes.func,
+  unassignDAFail: PropTypes.bool,
+  reserveDaFail: PropTypes.bool,
+  reserveDaSuccess: PropTypes.bool,
 };
 
 const useStyles = makeStyles((theme) => ({
