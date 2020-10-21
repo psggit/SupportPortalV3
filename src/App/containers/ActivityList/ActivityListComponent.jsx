@@ -63,7 +63,7 @@ function ActivityListComponent(props) {
 
   useEffect(() => {
     const reqBody = {
-      order_id: `${props.orderId}`,
+      order_id: `${props.orderId.orderDetails.order_id}`,
       limit: rowsPerPage,
       offset: page * rowsPerPage,
     };
@@ -77,7 +77,7 @@ function ActivityListComponent(props) {
 
   useEffect(() => {
     if (props.notesSuccess) {
-      if (props.acitivityLog !== null) {
+      if (props.acitivityLog.activityLogs.activity_details.activity !== null) {
         loopData(props.acitivityLog.activityLogs.activity_details.activity);
         setShowData(true);
       } else {

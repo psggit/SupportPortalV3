@@ -1,10 +1,6 @@
 import React from "react";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
-import StepContent from "@material-ui/core/StepContent";
 import Typography from "@material-ui/core/Typography";
 import Moment from "moment";
 import PropTypes from "prop-types";
@@ -15,7 +11,7 @@ import TimelineConnector from "@material-ui/lab/TimelineConnector";
 import TimelineContent from "@material-ui/lab/TimelineContent";
 import TimelineDot from "@material-ui/lab/TimelineDot";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     alignItems: "baseline",
     width: "100%",
@@ -62,6 +58,10 @@ const RenderTimeline = (props) => {
   );
 };
 
+RenderTimeline.propTypes = {
+  steps: PropTypes.array,
+};
+
 const OrderStatus = (props) => {
   const classes = useStyles();
   return (
@@ -69,7 +69,9 @@ const OrderStatus = (props) => {
       <Typography className={classes.text} variant="h4">
         ORDER ID: {props.orderId}
       </Typography>
-      <Typography className={classes.text} variant="body2">ETA: -</Typography>
+      <Typography className={classes.text} variant="body2">
+        ETA: -
+      </Typography>
       {props.orderInfo.length > 0 && (
         <>
           <Timeline>
@@ -84,6 +86,7 @@ const OrderStatus = (props) => {
 OrderStatus.propTypes = {
   orderInfo: PropTypes.array,
   orderId: PropTypes.any,
+  steps: PropTypes.array,
 };
 
 export { OrderStatus };

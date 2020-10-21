@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { LoginContainer } from "./containers/Login";
 import { LogoutContainer } from "./containers/Logout";
 import { DashboardContainer } from "./containers/Dashboard";
+import { IssuesContainer } from "./containers/Issues";
 import { OrderDetailsContainer } from "./containers/OrderDetails";
 import { CartModificationContainer } from "./containers/CartModification";
 import { OrderInfoContainer } from "./containers/OrderInfo";
@@ -76,6 +77,8 @@ function App(props) {
               <Route path="/gift-soa" component={CustomerGiftSoaContainer} />
               <Route path="/rewards" component={RewardsContainer} />
               <Route path="/notes" component={NotesContainer} />
+
+              <Route path="/issues" component={IssuesContainer} />
 
               <Route path="/" component={LoginContainer} />
             </Switch>

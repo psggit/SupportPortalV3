@@ -1,15 +1,17 @@
 import { apiUrl } from "./config";
 
 const headers = {
-  Accept: "application/json",
+  // eslint-disable-next-line prettier/prettier
+  "Accept": "application/json",
   "Content-Type": "application/json",
   "App-Name": "HipBar-Drinks",
   "x-hasura-role": `${localStorage.getItem("x-hasura-role")}`,
   "hasura-id": `${localStorage.getItem("hasura-id")}`,
 };
 
-const kycListAPI = (process, onSuccess, onError) => {
-  const URL = `https://${apiUrl}/deliveryman/api/1/agent/kyc-list`;
+const assignIssueAPI = (reqBody, process, onSuccess, onError) => {
+  const URL = ` https://${apiUrl}/supportman/api/1/issue/assignmanual/${reqBody.orderId}/${reqBody.issueId}/${reqBody.supportPersonId}`;
+  console.log(URL);
   fetch(URL, {
     method: "GET",
     headers: headers,
@@ -20,4 +22,4 @@ const kycListAPI = (process, onSuccess, onError) => {
     .catch((err) => onError(err));
 };
 
-export { kycListAPI };
+export { assignIssueAPI };

@@ -7,12 +7,10 @@ import TopBar from "../../../components/topBar";
 import Notification from "../../../components/notification";
 import Moment from "moment";
 import { getQueryParamByName } from "../../../utils/helpers";
-import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import FullWidthTabs from "../../../components/customerMenuBar";
 import {
   Table,
-  Container,
   Box,
   TableHead,
   TableContainer,
@@ -21,7 +19,7 @@ import {
 } from "@material-ui/core";
 import Loading from "../../../components/loading";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   navBar: {
     display: "flex",
     alignItems: "center",
@@ -72,8 +70,8 @@ const createData = ({
 
 function CustomerSoa(props) {
   const classes = useStyles();
-  const pageLimit = 10;
   const activePage = getQueryParamByName("activePage") || 1;
+  // eslint-disable-next-line no-unused-vars
   const [pageNo, setPageNo] = useState(activePage);
   const [showData, setShowData] = useState(false);
   const [rows, setRowsData] = useState(null);

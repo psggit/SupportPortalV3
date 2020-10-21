@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -10,7 +9,6 @@ import {
   ListItemText,
   Button,
   CardActions,
-  Typography
 } from "@material-ui/core";
 import PropTypes from "prop-types";
 import Moment from "moment";
@@ -120,16 +118,16 @@ export default function ActivityItem(props) {
     return (
       <Card className={classes.root}>
         <Box className={classes.header}>
-        <CardHeader title={titleText} className={classes.cardHeader} />
-        {subtitle ? (
+          <CardHeader title={titleText} className={classes.cardHeader} />
+          {subtitle ? (
             <CardActions className={classes.addBtn}>
               {subtitle.map((item) => item)}
             </CardActions>
           ) : (
-              ""
-            )}
+            ""
+          )}
         </Box>
-        <CardContent>          
+        <CardContent>
           <ListItem
             dense
             disableGutters={true}
@@ -143,15 +141,17 @@ export default function ActivityItem(props) {
             />
           </ListItem>
         </CardContent>
-        {cardActions && <CardActions className={classes.cardActions}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => props.click(type)}
-          >
-            Add
-          </Button>
-        </CardActions>}
+        {cardActions && (
+          <CardActions className={classes.cardActions}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => props.click(type)}
+            >
+              Add
+            </Button>
+          </CardActions>
+        )}
       </Card>
     );
   }
@@ -160,14 +160,14 @@ export default function ActivityItem(props) {
     <Card className={classes.root}>
       <CardContent>
         <Box className={classes.header}>
-        <CardHeader title={titleText} className={classes.cardHeader} />
-        {subtitle ? (
+          <CardHeader title={titleText} className={classes.cardHeader} />
+          {subtitle ? (
             <CardActions className={classes.addBtn}>
               {subtitle.map((item) => item)}
             </CardActions>
           ) : (
-              ""
-            )}
+            ""
+          )}
         </Box>
         {mapArray.map((value, index) => {
           let data = value;
@@ -201,15 +201,17 @@ export default function ActivityItem(props) {
           );
         })}
       </CardContent>
-      {cardActions && <CardActions className={classes.cardActions}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => props.click(type)}
-        >
-          Add
-        </Button>
-      </CardActions>}
+      {cardActions && (
+        <CardActions className={classes.cardActions}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => props.click(type)}
+          >
+            Add
+          </Button>
+        </CardActions>
+      )}
     </Card>
   );
-  };
+}

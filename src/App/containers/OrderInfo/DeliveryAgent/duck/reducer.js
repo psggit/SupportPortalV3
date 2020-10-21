@@ -3,6 +3,15 @@ import {
   fetchDeliveryAgentNotesSuccess,
   fetchDeliveryAgentNotesFailed,
   fetchDeliveryAgentNotesProgress,
+  fetchDeliveryAgentListSuccess,
+  fetchDeliveryAgentListFailed,
+  fetchDeliveryAgentListProgress,
+  fetchUnassignDASuccess,
+  fetchUnassignDAFailed,
+  fetchUnassignDAProgress,
+  fetchReserveDASuccess,
+  fetchReserveDAFailed,
+  fetchReserveDAProgress,
 } from "./action";
 
 const initialValue = {
@@ -12,16 +21,30 @@ const initialValue = {
   fetchFailed: false,
   fetchProgress: false,
   errorMsg: "",
+  deliveryAgentList: null,
+  daListSuccess: false,
+  daListFail: false,
+  daListProgress: false,
+  successMsg: "",
+  unassignDASuccess: false,
+  unassignDAFail: false,
+  unassignDAProgress: false,
+  message: "",
+  reserveDaSuccess: false,
+  reserveDaFail: false,
+  reserveDaProgress: false,
 };
 const deliveryAgentReducer = createReducer(initialValue, {
-  [fetchDeliveryAgentNotesSuccess]: (state, data) => ({
-    ...state,
-    deliveryAgentNotesData: data.payload,
-    fetchSuccess: true,
-    fetchFailed: false,
-    fetchProgress: false,
-    errorMsg: "",
-  }),
+  [fetchDeliveryAgentNotesSuccess]: (state, data) => {
+    return {
+      ...state,
+      deliveryAgentNotesData: data.payload,
+      fetchSuccess: true,
+      fetchFailed: false,
+      fetchProgress: false,
+      errorMsg: "",
+    };
+  },
   [fetchDeliveryAgentNotesFailed]: (state) => ({
     ...state,
     fetchSuccess: false,
@@ -32,6 +55,63 @@ const deliveryAgentReducer = createReducer(initialValue, {
   [fetchDeliveryAgentNotesProgress]: (state) => ({
     ...state,
     fetchProgress: true,
+  }),
+  [fetchDeliveryAgentListSuccess]: (state, data) => ({
+    ...state,
+    deliveryAgentList: data.payload,
+    daListSuccess: true,
+    daListFail: false,
+    daListProgress: false,
+    message: data.payload.message,
+  }),
+  [fetchDeliveryAgentListFailed]: (state, data) => ({
+    ...state,
+    daListSuccess: false,
+    daListFail: true,
+    daListProgress: false,
+    message: data.payload.message,
+  }),
+  [fetchDeliveryAgentListProgress]: (state) => ({
+    ...state,
+    daListProgress: true,
+  }),
+  [fetchUnassignDASuccess]: (state, data) => ({
+    ...state,
+    unassignDASuccess: true,
+    unassignDAFail: false,
+    unassignDAProgress: false,
+    message: data.payload.message,
+  }),
+  [fetchUnassignDAFailed]: (state, error) => ({
+    ...state,
+    unassignDASuccess: false,
+    unassignDAFail: true,
+    unassignDAProgress: false,
+    message: "No delivery agent has been assigned to the order yet.",
+    errorMsg: error.payload,
+  }),
+  [fetchUnassignDAProgress]: (state) => ({
+    ...state,
+    unassignDAProgress: true,
+  }),
+  [fetchReserveDASuccess]: (state, data) => ({
+    ...state,
+    reserveDaSuccess: true,
+    reserveDAFail: false,
+    reserveDAProgress: false,
+    message: data.payload.message,
+    errorMsg: data.payload,
+  }),
+  [fetchReserveDAFailed]: (state, data) => ({
+    ...state,
+    reserveDaSuccess: false,
+    reserveDAFail: true,
+    reserveDAProgress: false,
+    message: data.payload.message,
+  }),
+  [fetchReserveDAProgress]: (state) => ({
+    ...state,
+    reserveDAProgress: true,
   }),
 });
 export { deliveryAgentReducer };
