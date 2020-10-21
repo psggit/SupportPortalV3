@@ -58,7 +58,22 @@ const RetailerDetails = (props) => {
   const retailerNotes = [
     // eslint-disable-next-line react/jsx-key
     <Button color="primary" endIcon={<ChevronRightIcon />} onClick={handleMore}>
-      Add more
+      More
+    </Button>,
+  ];
+
+  const handleChange = () => {
+    history.push("/change-retailer");
+  };
+
+  const subheadAction = [
+    <Button
+      color="primary"
+      endIcon={<ChevronRightIcon />}
+      onClick={handleChange}
+      key="moreBtn"
+    >
+      More
     </Button>,
   ];
 
@@ -70,6 +85,7 @@ const RetailerDetails = (props) => {
         <DetailsCard
           title="RETAILER DETAILS"
           actions={actionButtons}
+          subheader={subheadAction}
           renderArray={data}
           keyMap={keyMap}
           keysToRender={keysToRender}
@@ -86,6 +102,7 @@ const RetailerDetails = (props) => {
               subtitle={retailerNotes}
               issueType={"retailer"}
               click={props.openDialog}
+              cardActions={true}
             />
           )}
           {props.fetchProgress && <CircularProgress />}

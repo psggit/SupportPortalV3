@@ -247,6 +247,7 @@ const DeliveryAgentComponent = (props) => {
               title={"Delivery Agent Notes"}
               issueType={"delivery_agent"}
               click={props.openDialog}
+              cardActions={true}
             />
           )}
           {props.fetchProgress && <CircularProgress />}

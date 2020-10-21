@@ -1,13 +1,12 @@
 import {
-  fetchNotesSuccessfull,
-  fetchNotesFailure,
-  fetchNotesInProgress,
+  fetchActLogsSuccessfull,
+  fetchActLogsFailure,
+  fetchActLogsInProgress,
 } from "./action";
-import { fetchRetailerNotesAPI } from "../../../../utils/fetchRetailerNotesAPI";
+import { acitivityLogsAPI } from "../../../utils";
 
 const processResponse = () => {
-  // console.clear();
-  // console.log("[processResponse]");
+  console.log("[processResponse]");
   return (res) => {
     if (res.status === 200) {
       return res.json();
@@ -20,22 +19,20 @@ const processResponse = () => {
 const onSuccess = (dispatch) => {
   console.log("[onSuccess]");
   return (data) => {
-    dispatch(fetchNotesSuccessfull(data));
+    dispatch(fetchActLogsSuccessfull(data));
   };
 };
 
 const onError = (dispatch) => {
   return (error) => {
-    dispatch(fetchNotesFailure(error));
+    dispatch(fetchActLogsFailure(error));
   };
 };
 
-const fetchRetailerNotesList = (reqBody) => {
-  console.clear();
-  console.log("fetchRetailerNotesList");
+const fetchActLogsList = (reqBody) => {
   return (dispatch) => {
-    dispatch(fetchNotesInProgress());
-    fetchRetailerNotesAPI(
+    dispatch(fetchActLogsInProgress());
+    acitivityLogsAPI(
       reqBody,
       processResponse(dispatch),
       onSuccess(dispatch),
@@ -44,4 +41,4 @@ const fetchRetailerNotesList = (reqBody) => {
   };
 };
 
-export { fetchRetailerNotesList };
+export { fetchActLogsList };

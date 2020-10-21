@@ -91,6 +91,7 @@ const CustomerDetails = (props) => {
 
   const handleChange = () => {
     history.push("/customer-detail");
+    // history.push("/soa");
   };
 
   const handleNotesChange = () => {
@@ -126,7 +127,7 @@ const CustomerDetails = (props) => {
       endIcon={<ChevronRightIcon />}
       onClick={handleChange}
     >
-      more
+      More
     </Button>,
   ];
 
@@ -137,7 +138,7 @@ const CustomerDetails = (props) => {
       endIcon={<ChevronRightIcon />}
       onClick={handleNotesChange}
     >
-      more
+      More
     </Button>,
   ];
 
@@ -168,9 +169,9 @@ const CustomerDetails = (props) => {
               arr={props.customerNotes.orderNotes}
               keysToRender={keysToRenderInNotesCard}
               title={"CUSTOMER NOTES"}
-              subheader={subheadNotesAction}
               issueType={"customer"}
               click={props.openDialog}
+              cardActions={true}
             />
           )}
           {props.fetchProgress && <CircularProgress />}

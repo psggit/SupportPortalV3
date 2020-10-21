@@ -49,7 +49,7 @@ const PreponeDeliveryCard = (props) => {
   }
 
   return (
-    <Card className={classes.root} variant="outlined">
+    <Card className={classes.root}>
       <CardContent>
         <Typography variant="h5" className={classes.heading} gutterBottom>
           PREPONE ORDER DELIVERY

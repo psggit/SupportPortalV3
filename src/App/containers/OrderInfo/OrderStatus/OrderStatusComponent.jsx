@@ -1,10 +1,6 @@
 import React from "react";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
-import StepContent from "@material-ui/core/StepContent";
 import Typography from "@material-ui/core/Typography";
 import Moment from "moment";
 import PropTypes from "prop-types";
@@ -15,14 +11,13 @@ import TimelineConnector from "@material-ui/lab/TimelineConnector";
 import TimelineContent from "@material-ui/lab/TimelineContent";
 import TimelineDot from "@material-ui/lab/TimelineDot";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     alignItems: "baseline",
     width: "100%",
-    padding: "24px 0 24px 24px",
+    padding: 24,
     height: "100vh",
     overflowY: "auto",
-
     "& .MuiTimelineItem-missingOppositeContent:before": {
       padding: 0,
       flex: 0,
@@ -35,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
   },
   text: {
     fontSize: 16,
-    fontWeight: "bold",
     paddingBottom: 24,
   },
 }));
@@ -45,18 +39,17 @@ const RenderTimeline = (props) => {
     <>
       {props.steps.map((item, index) => {
         return (
-          // eslint-disable-next-line react/jsx-key
           <TimelineItem key={index}>
             <TimelineSeparator>
               <TimelineDot variant="outlined" />
               {props.steps.length !== index + 1 ? <TimelineConnector /> : ""}
             </TimelineSeparator>
             <TimelineContent>
-              {item.order_status}
-              <Typography>
-                {Moment(item.time).format("D MMM hh:mm A")}
+              <Typography>{item.order_status}</Typography>
+              <Typography variant="subtitle1">
+                {Moment(item.time).format("D MMM hh:mm A")} <br />
+                {item.message}
               </Typography>
-              <Typography>{item.message}</Typography>
             </TimelineContent>
           </TimelineItem>
         );
@@ -65,17 +58,23 @@ const RenderTimeline = (props) => {
   );
 };
 
+RenderTimeline.propTypes = {
+  steps: PropTypes.array,
+};
+
 const OrderStatus = (props) => {
   const classes = useStyles();
   return (
     <Paper className={classes.root}>
-      <Typography className={classes.text}>
-        ORDER STATUS: {props.orderId}
+      <Typography className={classes.text} variant="h4">
+        ORDER ID: {props.orderId}
       </Typography>
-      <Typography className={classes.text}>ETA: -</Typography>
+      <Typography className={classes.text} variant="body2">
+        ETA: -
+      </Typography>
       {props.orderInfo.length > 0 && (
         <>
-          <Timeline className={classes.root}>
+          <Timeline>
             <RenderTimeline steps={props.orderInfo} />
           </Timeline>
         </>
@@ -87,6 +86,7 @@ const OrderStatus = (props) => {
 OrderStatus.propTypes = {
   orderInfo: PropTypes.array,
   orderId: PropTypes.any,
+  steps: PropTypes.array,
 };
 
 export { OrderStatus };

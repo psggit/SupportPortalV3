@@ -24,6 +24,7 @@ import { CustomerSoaContainer } from "./containers/Customer/CustomerSoa";
 import { CustomerGiftSoaContainer } from "./containers/Customer/CustomerGiftSoa";
 import { RewardsContainer } from "./containers/Customer/Rewards";
 import { NotesContainer } from "./containers/Customer/Notes";
+import { ActivityListContainer } from "./containers/ActivityList";
 
 function App(props) {
   useEffect(() => {
@@ -58,6 +59,7 @@ function App(props) {
                 path="/cart-modify"
                 component={CartModificationContainer}
               />
+              <Route path="/activity-list" component={ActivityListContainer} />
 
               <Route
                 path="/change-retailer"

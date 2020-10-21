@@ -6,7 +6,7 @@ import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import TopBar from "../../../components/topBar";
 import { RetailerCardContainer } from "./RetailerCardContainer";
-import FullWidthTabs from "../../../components/menuBar";
+import FullWidthTabs from "../../../components/customerMenuBar";
 import { Tab } from "@material-ui/core";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
@@ -51,27 +51,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ChangeRetailerComponent = () => {
+const ChangeRetailerComponent = (props) => {
   const classes = useStyles();
-
-  const handleBack = () => {
-    location.href = "/dashboard";
-    console.log("handleBack");
-  };
 
   const handleRetailer = () => {
     console.log("handleRetailer");
   };
 
   const menuLabels = [
-    <Tab label={<ArrowBackIcon />} onClick={handleBack} />,
-    <Tab label="Change Retailer" onClick={handleRetailer} />,
+    <Tab
+      label="Change Retailer"
+      key={"retailerBtn"}
+      onClick={handleRetailer}
+    />,
   ];
 
   return (
     <Container component="main" className={classes.root}>
       <TopBar />
-      <FullWidthTabs labels={menuLabels} />
       <Box className={classes.boxContainer}>
         <Grid container spacing={4}>
           <Grid item xs={4}>

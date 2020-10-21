@@ -19,6 +19,7 @@ const newTheme = createMuiTheme({
       },
     },
     body2: {
+      color: "#606060",
       ".MuiTypography-root": {
         ".MuiListItemText-secondary": {
           color: "#606060",
@@ -35,6 +36,11 @@ const newTheme = createMuiTheme({
       fontSize: "14px",
       textTransform: "none",
       fontWeight: 700,
+    },
+    subtitle1: {
+      color: "#606060",
+      fontSize: 12,
+      lineHeight: "2.2em",
     },
   },
   overrides: {
