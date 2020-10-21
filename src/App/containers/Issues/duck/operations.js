@@ -138,4 +138,9 @@ const fetchSupportPersonList = () => {
   };
 };
 
-export { fetchIssues, assignOrderIssue, resolveOrderIssue, fetchSupportPersonList };
+export {
+  fetchIssues,
+  assignOrderIssue,
+  resolveOrderIssue,
+  fetchSupportPersonList,
+};
