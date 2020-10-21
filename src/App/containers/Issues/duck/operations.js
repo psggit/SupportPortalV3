@@ -10,7 +10,7 @@ import {
   resolveIssueFailed,
   fetchSupportPersonListInProgress,
   fetchSupportPersonListSuccess,
-  fetchSupportPersonListFailed
+  fetchSupportPersonListFailed,
 } from "./action";
 // import { createSession } from "../../../utils";
 import { fetchIssuesAPI } from "../../../utils/fetchIssuesAPI";

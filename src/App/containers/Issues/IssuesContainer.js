@@ -4,11 +4,10 @@ import {
   fetchIssues, 
   assignOrderIssue, 
   resolveOrderIssue,
-  fetchSupportPersonList 
+  fetchSupportPersonList,
 } from "./duck/operations";
 
 const mapStateToProps = (state) => {
-  console.log("state", state.issues)
   return {
     issueList: state.issues.issueList,
     supportPersonList: state.issues.supportPersonList,
@@ -27,7 +26,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchIssueList: () => dispatch(fetchIssues()),
     assignIssue: (orderId) => dispatch(assignOrderIssue(orderId)),
     resolveIssue: (orderId) => dispatch(resolveOrderIssue(orderId)),
-    fetchSupportPerson: () => dispatch(fetchSupportPersonList())
+    fetchSupportPerson: () => dispatch(fetchSupportPersonList()),
   };
 };
 
