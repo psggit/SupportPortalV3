@@ -6,9 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Radio from "@material-ui/core/Radio";
 import PropTypes from "prop-types";
-import { useHistory } from "react-router-dom";
-import FullWidthTabs from "../../../components/menuBar";
-import { Tab } from "@material-ui/core";
+import HorizontalBar from "../horizontalBar";
 
 const BlueRadio = withStyles({
   root: {
@@ -78,7 +76,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function CustomerForm(props) {
-  const history = useHistory();
   const classes = useStyles();
   const [consumerDetail, setConsumerDetail] = useState("");
   console.log("useffect", consumerDetail);
@@ -116,59 +113,9 @@ function CustomerForm(props) {
     props.updateConsumer(payload);
   };
 
-  const handleGiftSoaChange = () => {
-    console.log("gift-soa");
-    history.push("/gift-soa");
-  };
-
-  const handleRewardChange = () => {
-    history.push("/rewards");
-  };
-
-  const handleSoaChange = () => {
-    history.push("/soa");
-  };
-
-  const handleNotesChange = () => {
-    history.push("/notes");
-  };
-
-  const handleBack = () => {
-    history.push("/order-info");
-  };
-
-  const menuLabels = [
-    <Tab label="< Back" onClick={handleBack} />,
-    <Tab label="Customer Details" />,
-    <Tab label="SOA" onClick={handleSoaChange} />,
-    <Tab label="Gift SOA" onClick={handleGiftSoaChange} />,
-    <Tab label="Rewards" onClick={handleRewardChange} />,
-    <Tab label="Notes" onClick={handleNotesChange} />,
-  ];
-
   return (
     <div className={classes.formContainer}>
-      <FullWidthTabs labels={menuLabels} />
-      {/* <div className={classes.navBar}> */}
-        {/* <div className={classes.backButton}>
-          <div onClick={handleBack}>Back</div>
-        </div>
-        <div className={classes.navContent}>
-          <div>Customer Details</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleSoaChange}>SOA</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleGiftSoaChange}>Gift Soa</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleRewardChange}>Rewards</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleNotesChange}>Notes</div>
-        </div> */}
-      {/* </div> */}
+      <HorizontalBar />
       <div className={classes.section1}>
         <p>CUSTOMER ID: {props.orderInfo.customer_id}</p>
       </div>
