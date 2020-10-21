@@ -37,7 +37,6 @@ const useStyles = makeStyles(() => ({
 const DialogComponent = (props) => {
   const classes = useStyles();
   let { title, subtitle, actions, children, change } = props;
-
   return (
     <Dialog
       open={true}

@@ -7,7 +7,7 @@ import Grid from "@material-ui/core/Grid";
 import TopBar from "../../components/topBar";
 import { useHistory } from "react-router-dom";
 import { CartContainer } from "../Cart/CartContainer";
-import { OrderDetailsCard } from "./OrderCard/orderDetailsCard";
+import { OrderDetailsContainer } from "./OrderCard/OrderDetailsContainer";
 import { CustomerContainer } from "./CustomerDetails/CustomerContainer";
 import { RetailerContainer } from "./RetailerDetails/RetailerContainer";
 import { OrderStatusContainer } from "./OrderStatus";
@@ -214,8 +214,8 @@ const OrderInfoComponent = (props) => {
               <Grid item xs={6} id="section1">
                 {props.fetchOrderInfoSuccess && (
                   <>
-                    <OrderDetailsCard
-                      {...props}
+                    <OrderDetailsContainer
+                     {...props}
                       buttonState={!props.order.order_status_button}
                       handleError={handleError}
                     />
@@ -310,7 +310,7 @@ const OrderInfoComponent = (props) => {
 OrderInfoComponent.propTypes = {
   fetchOrderInfo: PropTypes.func,
   fetchCancelReason: PropTypes.func,
-  cancelReasons: PropTypes.object,
+  cancelReasons: PropTypes.array,
   fetchOrderInfoSuccess: PropTypes.bool,
   fetchOrderInfoFailure: PropTypes.bool,
   fetchCancelReasonSuccess: PropTypes.bool,

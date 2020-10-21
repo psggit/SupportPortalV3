@@ -1,15 +1,14 @@
-import { apiUrl } from "./config";
-
 const headers = {
   Accept: "application/json",
   "Content-Type": "application/json",
+  "x-hasura-role": "support_admin",
   "App-Name": "HipBar-Drinks",
-  "x-hasura-role": `${localStorage.getItem("x-hasura-role")}`,
-  "hasura-id": `${localStorage.getItem("hasura-id")}`,
+  "hasura-id": "515876",
 };
 
-const kycListAPI = (process, onSuccess, onError) => {
-  const URL = `https://${apiUrl}/deliveryman/api/1/agent/kyc-list`;
+const unassignDaAPI = (reqBody, process, onSuccess, onError) => {
+  const URL = `https://api.hipbar-dev.com/supportman/api/1/deliveryagent/unassign/${reqBody.order_id}`;
+
   fetch(URL, {
     method: "GET",
     headers: headers,
@@ -20,4 +19,4 @@ const kycListAPI = (process, onSuccess, onError) => {
     .catch((err) => onError(err));
 };
 
-export { kycListAPI };
+export { unassignDaAPI };
