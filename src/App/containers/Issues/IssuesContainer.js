@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
 import { IssuesComponent } from "./IssuesComponent";
-import { 
-  fetchIssues, 
-  assignOrderIssue, 
+import {
+  fetchIssues,
+  assignOrderIssue,
   resolveOrderIssue,
   fetchSupportPersonList,
 } from "./duck/operations";

@@ -1,55 +1,50 @@
-import React, {useEffect, useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
+import React, { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
 import { Box } from "@material-ui/core";
 import TopBar from "../../components/topBar";
-import { Typography } from '@material-ui/core';
-import Dialog from '../../components/dialog';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import { Typography } from "@material-ui/core";
+import Dialog from "../../components/dialog";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 import Moment from "moment";
 import Loading from "./../../components/loading";
-import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
+import ListItemText from "@material-ui/core/ListItemText";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
-import { resolveIcon } from "./../../assets/images/index"
+import { resolveIcon } from "./../../assets/images/index";
 // import {
 //   Dialog,
 //   DialogActions,
 //   DialogTitle
 // } from "@material-ui/core";
 import { deepOrange, deepPurple } from "@material-ui/core/colors";
-import TablePagination from '@material-ui/core/TablePagination';
-import {
-  getOffsetUsingPageNo,
-  getQueryParamByName,
-  getQueryUri,
-} from "../../utils/helpers";
+import TablePagination from "@material-ui/core/TablePagination";
+import { getQueryParamByName, getQueryUri } from "../../utils/helpers";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     overflowY: "hidden",
     "& .MuiIconButton-root.disabled": {
-      cursor: "not-allowed"
-    }
+      cursor: "not-allowed",
+    },
   },
   section1: {
     padding: 24,
-    height:  `calc(100vh - 64px)`,
+    height: `calc(100vh - 64px)`,
     boxShadow: "unset",
     borderRadius: 0,
   },
   typography: {
-    fontSize: 18
+    fontSize: 18,
   },
   section2: {
     padding: "64px 108px 0 108px",
-    overflowY: "scroll"
+    overflowY: "scroll",
   },
   paper: {
     marginBottom: 16,
@@ -57,50 +52,50 @@ const useStyles = makeStyles((theme) => ({
     //textAlign: 'center'
   },
   grid: {
-    alignItems: "center"
+    alignItems: "center",
   },
   title: {
     fontSize: 16,
-    color: "#0086AD"
+    color: "#0086AD",
   },
   subtitle: {
     fontSize: 14,
-    color: "#606060"
+    color: "#606060",
   },
   dateStyle: {
     fontSize: 12,
-    color: "#696969"
+    color: "#696969",
   },
   buttonStyke: {
-    fontSize: 14
+    fontSize: 14,
   },
   avatarContainer: {
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
   },
   avatar: {
-    marginRight: 12
+    marginRight: 12,
   },
   orange: {
     color: theme.palette.getContrastText(deepOrange[500]),
-    backgroundColor: deepOrange[500]
+    backgroundColor: deepOrange[500],
   },
   purple: {
     color: theme.palette.getContrastText(deepPurple[500]),
-    backgroundColor: deepPurple[500]
+    backgroundColor: deepPurple[500],
   },
   resolveIcon: {
     width: 28,
-    height: 32
+    height: 32,
   },
   resolveContainer: {
-    cursor: "pointer"
+    cursor: "pointer",
   },
   selectIssue: {
     display: "flex",
     alignItems: "center",
     color: "#606060",
-    fontSize: 16
+    fontSize: 16,
   },
   formControl: {
     marginLeft: "16px",
@@ -129,81 +124,90 @@ const RenderIssues = (props) => {
   const [activePage, setActivePage] = useState(pageSize);
 
   useEffect(() => {
-    props.fetchSupportPerson()
-  }, [])
+    props.fetchSupportPerson();
+  }, []);
 
   useEffect(() => {
     if (!props.fetchSupportPersonListInProgress) {
-      setSupportPersonId(props.supportPersonList.support_person[0].id)
+      setSupportPersonId(props.supportPersonList.support_person[0].id);
     }
-  }, [props.fetchSupportPersonListInProgress])
+  }, [props.fetchSupportPersonListInProgress]);
 
   useEffect(() => {
-    setData(issuesList.slice(activePage * pageLimit, parseInt(pageLimit) + parseInt(activePage * pageLimit)))
-  }, [activePage, pageLimit])
+    setData(
+      issuesList.slice(
+        activePage * pageLimit,
+        parseInt(pageLimit) + parseInt(activePage * pageLimit)
+      )
+    );
+  }, [activePage, pageLimit]);
 
-  const unmountConfirmationDialog = () => {setShowDialog(false);}
+  const unmountConfirmationDialog = () => {
+    setShowDialog(false);
+  };
 
-  const mountConfirmationDialog = () => {setShowDialog(true);}
+  const mountConfirmationDialog = () => {
+    setShowDialog(true);
+  };
 
   const checkIsLetter = (str) => {
     return str.length === 1 && str.match(/[a-z]/i);
-  }
+  };
 
   const handleConfirmation = () => {
     let payload;
-  
+
     if (assignIssue) {
       payload = {
         orderId: orderId,
         issueId: issueId,
-        supportPersonId: supportPersonId
-      }
+        supportPersonId: supportPersonId,
+      };
       props.assignIssue(payload);
     } else {
       payload = {
-        orderId: orderId
+        orderId: orderId,
       };
       props.resolveIssue(payload);
     }
 
     unmountConfirmationDialog();
-  }
+  };
 
-  const handleResolveIssue = (e, issue) => { 
+  const handleResolveIssue = (e, issue) => {
     setResolveIssue(true);
     setOrderId(issue.order_id);
     setIssueId(issue.id);
     mountConfirmationDialog();
-  }
+  };
 
-  const handleAssignIssue = (e, issue) => { 
-    setAssignIssue(true); 
+  const handleAssignIssue = (e, issue) => {
+    setAssignIssue(true);
     setOrderId(issue.order_id);
     setIssueId(issue.id);
-    mountConfirmationDialog(); 
-  }
+    mountConfirmationDialog();
+  };
 
   const handleChangePage = (e, pageNo) => {
     setActivePage(pageNo);
     const queryParamsObj = {
       activePage: pageNo,
-      pageSize: pageLimit
+      pageSize: pageLimit,
     };
     history.pushState(
       queryParamsObj,
       "issues listing",
       `/issues${getQueryUri(queryParamsObj)}`
     );
-  }
+  };
 
   const handleChangeRowsPerPage = (event) => {
     setPageLimit(event.target.value);
-    if(parseInt(activePage) !== 0) setActivePage(0);
+    if (parseInt(activePage) !== 0) setActivePage(0);
 
     const queryParamsObj = {
       activePage: parseInt(activePage) !== 0 ? 0 : activePage,
-      pageSize: event.target.value
+      pageSize: event.target.value,
     };
 
     history.pushState(
@@ -211,67 +215,86 @@ const RenderIssues = (props) => {
       "issues listing",
       `/issues${getQueryUri(queryParamsObj)}`
     );
-  }
+  };
 
   const handleSupportPersonChange = (event) => {
-    console.log("id", event.target.value)
-    setSupportPersonId(event.target.value)
-  }
+    console.log("id", event.target.value);
+    setSupportPersonId(event.target.value);
+  };
 
   return (
     <>
-      {
-        data.map((issue, index) => {
-          const avatarColor = classes[colors[Math.floor(Math.random() * colors.length)]]
-          return (
-            <Paper className={classes.paper} key={`${issue.order_id}+${index}`}>
-              <Grid container item xs={12} classes={{root: classes.grid}}>
-                <Grid item xs={2}>
-                  <ListItemText className={classes.title} primary={issue.order_id} />
-                </Grid>
-                <Grid item xs={2}>
-                  <ListItemText className={classes.subtitle} primary={issue.reason} />
-                </Grid>
-                <Grid item xs={3}>
-                  <div className={classes.avatarContainer}>
-                    <Avatar classes={{ root: classes.avatar }} className={avatarColor}>
-                      {checkIsLetter(issue.assigned_to_name.charAt(0)) ? issue.assigned_to_name.charAt(0).toUpperCase() : ""}
-                    </Avatar>
-                    <ListItemText className={classes.subtitle} primary={issue.assigned_to_name} />
-                  </div>
-                </Grid>
-                <Grid item xs={2}>
-                  <ListItemText 
-                    className={classes.dateStyle} 
-                    primary={`${Moment(issue.issue_raised_time).format("D MMM")} at ${Moment(issue.issue_raised_time).format("hh:mm A")}`} 
-                  />
-                </Grid>
-                <Grid item xs={2}>
-                  <Button 
-                    variant="contained" 
-                    color="primary" 
-                    className={classes.buttonStyle} 
-                    onClick={(e) => handleAssignIssue(e, issue)}
-                    disabled={!issue.to_show_resolve || props.assignIssueInProgress}
-                  >
-                    ASSIGN TO
-                  </Button>
-                </Grid>
-                <Grid item xs={1}>
-                  <IconButton 
-                    edge="end" 
-                    aria-label="delete" 
-                    onClick={(e) => handleResolveIssue(e, issue)} 
-                    disabled={!issue.to_show_resolve || props.resolveIssueInProgress}
-                  >
-                    <img src={resolveIcon} className={classes.resolveIcon} />
-                  </IconButton>
-                </Grid>
+      {data.map((issue, index) => {
+        const avatarColor =
+          classes[colors[Math.floor(Math.random() * colors.length)]];
+        return (
+          <Paper className={classes.paper} key={`${issue.order_id}+${index}`}>
+            <Grid container item xs={12} classes={{ root: classes.grid }}>
+              <Grid item xs={2}>
+                <ListItemText
+                  className={classes.title}
+                  primary={issue.order_id}
+                />
               </Grid>
-            </Paper>
-          )
-        })
-      }
+              <Grid item xs={2}>
+                <ListItemText
+                  className={classes.subtitle}
+                  primary={issue.reason}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <div className={classes.avatarContainer}>
+                  <Avatar
+                    classes={{ root: classes.avatar }}
+                    className={avatarColor}
+                  >
+                    {checkIsLetter(issue.assigned_to_name.charAt(0))
+                      ? issue.assigned_to_name.charAt(0).toUpperCase()
+                      : ""}
+                  </Avatar>
+                  <ListItemText
+                    className={classes.subtitle}
+                    primary={issue.assigned_to_name}
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={2}>
+                <ListItemText
+                  className={classes.dateStyle}
+                  primary={`${Moment(issue.issue_raised_time).format(
+                    "D MMM"
+                  )} at ${Moment(issue.issue_raised_time).format("hh:mm A")}`}
+                />
+              </Grid>
+              <Grid item xs={2}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.buttonStyle}
+                  onClick={(e) => handleAssignIssue(e, issue)}
+                  disabled={
+                    !issue.to_show_resolve || props.assignIssueInProgress
+                  }
+                >
+                  ASSIGN TO
+                </Button>
+              </Grid>
+              <Grid item xs={1}>
+                <IconButton
+                  edge="end"
+                  aria-label="delete"
+                  onClick={(e) => handleResolveIssue(e, issue)}
+                  disabled={
+                    !issue.to_show_resolve || props.resolveIssueInProgress
+                  }
+                >
+                  <img src={resolveIcon} className={classes.resolveIcon} />
+                </IconButton>
+              </Grid>
+            </Grid>
+          </Paper>
+        );
+      })}
       {
         <TablePagination
           component="div"
@@ -282,17 +305,24 @@ const RenderIssues = (props) => {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       }
-      {
-        showDialog &&
+      {showDialog && (
         <Dialog
           title={resolveIssue ? `RESOLVE ISSUE` : `REASSIGN ISSUE`}
           actions={[
-            <Button onClick={() => unmountConfirmationDialog()} color="primary" variant="outlined">
+            <Button
+              onClick={() => unmountConfirmationDialog()}
+              color="primary"
+              variant="outlined"
+            >
               Cancel
             </Button>,
-            <Button onClick={() => handleConfirmation()} color="primary" variant="contained">
+            <Button
+              onClick={() => handleConfirmation()}
+              color="primary"
+              variant="contained"
+            >
               Confirm
-            </Button>
+            </Button>,
           ]}
         >
           <form>
@@ -306,36 +336,39 @@ const RenderIssues = (props) => {
                     displayEmpty
                     className={classes.selectEmpty}
                   >
-                    {
-                      !props.fetchSupportPersonListInProgress && props.supportPersonList.support_person.map((item) => {
-                        return <MenuItem value={item.id} key={item.id}>{item.username}</MenuItem>
-                      })
-                    }
+                    {!props.fetchSupportPersonListInProgress &&
+                      props.supportPersonList.support_person.map((item) => {
+                        return (
+                          <MenuItem value={item.id} key={item.id}>
+                            {item.username}
+                          </MenuItem>
+                        );
+                      })}
                   </Select>
                 </FormControl>
               </div>
             </div>
           </form>
         </Dialog>
-      }
+      )}
     </>
-  )
-}
+  );
+};
 
 const IssuesComponent = (props) => {
   const classes = useStyles();
 
   useEffect(() => {
-    props.fetchIssueList()
-  }, []); 
+    props.fetchIssueList();
+  }, []);
 
   useEffect(() => {
     if (props.assignIssueSuccess || props.resolveIssueSuccess) {
       location.reload();
     }
-  }, [props.assignIssueSuccess, props.resolveIssueSuccess])
+  }, [props.assignIssueSuccess, props.resolveIssueSuccess]);
 
-  if(props.fetchIssuesInProgress) {
+  if (props.fetchIssuesInProgress) {
     return <Loading message="Loading Issues..." />;
   }
 
@@ -346,23 +379,24 @@ const IssuesComponent = (props) => {
         <Grid container item xs={12}>
           <Grid item xs={2}>
             <Paper className={classes.section1}>
-              <Typography classes={{root: classes.typography}}>ISSUES</Typography>
+              <Typography classes={{ root: classes.typography }}>
+                ISSUES
+              </Typography>
             </Paper>
           </Grid>
           <Grid item xs={10}>
             <div className={classes.section2}>
-              {
-                !props.fetchIssuesInProgress &&
+              {!props.fetchIssuesInProgress && (
                 <>
                   <RenderIssues {...props} />
                 </>
-              }
+              )}
             </div>
           </Grid>
         </Grid>
       </Box>
     </div>
-  )
-}
+  );
+};
 
-export {IssuesComponent}
+export { IssuesComponent };
