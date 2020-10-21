@@ -1,13 +1,23 @@
 import {
-  fetchRetailerNotesSuccess,
-  fetchRetailerNotesFailed,
-  fetchRetailerNotesProgress,
-} from "./action";
-// import { createSession } from "../../../utils";
-import { fetchRetailerNotesAPI } from "../../../../utils/fetchRetailerNotesAPI";
+  cancelOrderProgress,
+  cancelOrderFailure,
+  cancelOrderSuccess,
+  fetchKycListFailed,
+  fetchKycListProgress,
+  fetchKycListSuccess,
+  fetchDeliverOrderFailed,
+  fetchDeliverOrderSuccess,
+  fetchDeliverOrderProgress,
+  deliverOrderProgress,
+  deliverOrderFailed,
+  deliverOrderSuccess,
+} from "./actions";
+import { cancelOrderAPI } from "../../../../utils/cancelOrderAPI";
+import { deliverOrderReasonAPI } from "../../../../utils/deliverOrderReasonAPI";
+import { kycListAPI } from "../../../../utils/kycListAPI";
+import { deliverOrderAPI } from "../../../../utils/deliverOrderAPI";
 
 const processResponse = () => {
-  // console.log("[processResponse]");
   return (res) => {
     if (res.ok) {
       return res.json();
@@ -20,35 +30,99 @@ const processResponse = () => {
   };
 };
 
-const onSuccess = (dispatch) => {
+const onSuccessCancelOrder = (dispatch) => {
   return (data) => {
-    // console.log("[onSuccess] data", data);
-    dispatch(fetchRetailerNotesSuccess(data));
-    // createSession(data);
+    dispatch(cancelOrderSuccess(data));
   };
 };
 
-const onError = (dispatch) => {
+const onSuccessDeliver = (dispatch) => {
+  return (data) => {
+    dispatch(fetchDeliverOrderSuccess(data));
+  };
+};
+
+const onSuccessKyc = (dispatch) => {
+  return (data) => {
+    dispatch(fetchKycListSuccess(data));
+  };
+};
+
+const onSuccessDeliverOrder = (dispatch) => {
+  return (data) => {
+    dispatch(deliverOrderSuccess(data));
+  };
+};
+
+const onErrorCancelOrder = (dispatch) => {
   return (err) => {
-    // console.log("[onError]", err);
-    dispatch(fetchRetailerNotesFailed(err));
+    dispatch(cancelOrderFailure(err));
   };
 };
 
-const fetchRetailerNotes = (orderId) => {
-  let reqBody = {
-    order_id: orderId,
-    type: "retailer",
+const onErrorDeliver = (dispatch) => {
+  return (err) => {
+    dispatch(fetchDeliverOrderFailed(err));
   };
+};
+
+const onErrorKyc = (dispatch) => {
+  return (err) => {
+    dispatch(fetchKycListFailed(err));
+  };
+};
+
+const onErrorDeliverOrder = (dispatch) => {
+  return (err) => {
+    dispatch(deliverOrderFailed(err));
+  };
+};
+
+const cancelOrder = (payload) => {
   return (dispatch) => {
-    dispatch(fetchRetailerNotesProgress());
-    fetchRetailerNotesAPI(
-      reqBody,
+    dispatch(cancelOrderProgress());
+    cancelOrderAPI(
+      payload,
       processResponse(dispatch),
-      onSuccess(dispatch),
-      onError(dispatch)
+      onSuccessCancelOrder(dispatch),
+      onErrorCancelOrder(dispatch)
     );
   };
 };
 
-export { fetchRetailerNotes };
+const deliverOrderReasons = (payload) => {
+  return (dispatch) => {
+    dispatch(fetchDeliverOrderProgress());
+    deliverOrderReasonAPI(
+      payload,
+      processResponse(dispatch),
+      onSuccessDeliver(dispatch),
+      onErrorDeliver(dispatch)
+    );
+  };
+};
+
+const fetchKycList = () => {
+  return (dispatch) => {
+    dispatch(fetchKycListProgress());
+    kycListAPI(
+      processResponse(dispatch),
+      onSuccessKyc(dispatch),
+      onErrorKyc(dispatch)
+    );
+  };
+};
+
+const deliverOrder = (payload) => {
+  return (dispatch) => {
+    dispatch(deliverOrderProgress());
+    deliverOrderAPI(
+      payload,
+      processResponse(dispatch),
+      onSuccessDeliverOrder(dispatch),
+      onErrorDeliverOrder(dispatch)
+    );
+  };
+};
+
+export { cancelOrder, deliverOrderReasons, fetchKycList, deliverOrder };
