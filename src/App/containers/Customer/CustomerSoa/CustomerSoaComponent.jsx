@@ -160,9 +160,9 @@ function CustomerSoa(props) {
         <Paper className={classes.paper}>
           <Table tableHeaders={soaTableHeaders}>
             {props.soaSuccess
-              ? props.soaList.consumer_soa.map((data) => {
+              ? props.soaList.consumer_soa.map((data, index) => {
                   return (
-                    <TableRow>
+                    <TableRow key={index}>
                       <TableCell>{data.order_id}</TableCell>
                       <TableCell>{data.type}</TableCell>
                       <TableCell>{data.amount}</TableCell>
@@ -219,7 +219,7 @@ function CustomerSoa(props) {
 }
 
 CustomerSoa.propTypes = {
-  soaList: PropTypes.array,
+  soaList: PropTypes.object,
   CustomerSoaList: PropTypes.array,
   fetchCustomerSoaList: PropTypes.any,
   soaProgress: PropTypes.bool,

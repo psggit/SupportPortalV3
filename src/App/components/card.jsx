@@ -85,7 +85,7 @@ export default function CustomCard(props) {
           subheader ? (
             <CardActions>
               {subheader.map((item, index) => {
-                return (<div key={index}>{item}</div>);
+                return <div key={index}>{item}</div>;
               })}
             </CardActions>
           ) : (
@@ -97,7 +97,7 @@ export default function CustomCard(props) {
       {actions ? (
         <CardActions className={classes.cardActions}>
           {actions.map((item, index) => {
-            return (<div key={index}>{item}</div>);
+            return <div key={index}>{item}</div>;
           })}
         </CardActions>
       ) : (

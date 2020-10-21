@@ -104,7 +104,7 @@ export default function ActivityItem(props) {
             {title}
             {subtitle ? (
               <CardActions >
-                {subtitle.map((item) => item)}
+                {subtitle.map((item, index) => { return <div key={index}>{item}</div>})}
               </CardActions>
             ) : (
                 ""
@@ -143,7 +143,7 @@ export default function ActivityItem(props) {
           {title}
           {subtitle ? (
             <CardActions >
-              {subtitle.map((item) => item)}
+              {subtitle.map((item, index) => { return <div key={index}>{item}</div>} )}
             </CardActions>
           ) : (
               ""
