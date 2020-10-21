@@ -8,10 +8,8 @@ import TableCell from "@material-ui/core/TableCell";
 //import Pagination from "../../../components/pagination";
 import Notification from "../../../components/notification";
 import Moment from "moment";
-import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
-import FullWidthTabs from "../../../components/menuBar";
-import { Tab } from "@material-ui/core";
+import HorizontalBar from "./../horizontalBar";
 
 const useStyles = makeStyles((theme) => ({
   navBar: {
@@ -52,7 +50,6 @@ const tableHeaders = [
 ];
 
 function CustomerGiftSoa(props) {
-  const history = useHistory();
   const classes = useStyles();
 
   useEffect(() => {
@@ -91,65 +88,9 @@ function CustomerGiftSoa(props) {
   //   );
   // };
 
-  const handleGiftSoaChange = () => {
-    console.log("gift-soa");
-    history.push("/gift-soa");
-  };
-
-  const handleRewardChange = () => {
-    console.log("rewards");
-    history.push("/rewards");
-  };
-
-  const handleSoaChange = () => {
-    console.log("soa");
-    history.push("/soa");
-  };
-
-  const handleBack = () => {
-    history.push("/order-details");
-  };
-
-  const handleNotesChange = () => {
-    history.push("/notes");
-  };
-
-  const handleCustomerDetail = () => {
-    history.push("/customer-detail");
-  };
-
-  const menuLabels = [
-    <Tab label="< Back" onClick={handleBack} />,
-    <Tab label="Customer Details" onClick={handleCustomerDetail} />,
-    <Tab label="SOA" onClick={handleSoaChange} />,
-    <Tab label="Gift SOA" onClick={handleGiftSoaChange} />,
-    <Tab label="Rewards" onClick={handleRewardChange} />,
-    <Tab label="Notes" onClick={handleNotesChange} />,
-  ];
-
   return (
     <div className={classes.formContainer}>
-      <FullWidthTabs labels={menuLabels} />
-      {/* <div className={classes.navBar}>
-        <div className={classes.backButton}>
-          <div onClick={handleBack}>Back</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleCustomerDetail}>Customer Details</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleSoaChange}>SOA</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleGiftSoaChange}>Gift Soa</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleRewardChange}>Rewards</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleNotes}>Notes</div>
-        </div>
-      </div> */}
+      <HorizontalBar />
       <div className={classes.row1}>
         <p>CUSTOMER ID: {props.customerId}</p>
         <div>Search</div>
@@ -158,10 +99,10 @@ function CustomerGiftSoa(props) {
         <Paper className={classes.paper}>
           <Table tableHeaders={tableHeaders}>
             {props.giftSoaSuccess
-              ? props.giftSoaList.map((data) => {
+              ? props.giftSoaList.map((data, index) => {
                   return (
                     // eslint-disable-next-line react/jsx-key
-                    <TableRow>
+                    <TableRow key={index}>
                       <TableCell>{data.reference_number}</TableCell>
                       <TableCell>{data.transaction_type}</TableCell>
                       <TableCell>{data.transaction_amount}</TableCell>

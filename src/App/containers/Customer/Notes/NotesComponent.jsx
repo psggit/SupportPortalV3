@@ -14,10 +14,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Dialog from '../../../components/dialog'
-import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
-import FullWidthTabs from "../../../components/menuBar";
-import { Tab } from "@material-ui/core";
+import HorizontalBar from "./../horizontalBar";
+
 
 const tableHeaders = [
   { label: "NOTE NO", value: "note_no" },
@@ -28,7 +27,6 @@ const tableHeaders = [
 ]
 
 function Notes(props) {
-  const history = useHistory();
   const classes = useStyles();
 
   // const pageLimit = 2
@@ -43,33 +41,6 @@ function Notes(props) {
     props.fetchConsumerNotes(props.orderInfo.order_id);
   }, []);
 
-  const handleGiftSoaChange = () => {
-    console.log("gift-soa");
-    history.push("/gift-soa");
-  };
-
-  const handleRewardChange = () => {
-    console.log("rewards");
-    history.push("/rewards");
-  };
-
-  const handleSoaChange = () => {
-    console.log("soa");
-    history.push("/soa");
-  };
-
-  const handleNotesChange = () => {
-    history.push("/notes");
-  }
-
-  const handleCustomerDetail = () => {
-    history.push("/customer-detail");
-  };
-
-  const handleBack = () => {
-    history.push("/order-details")
-  }
-
   const handleChange = (event) => {
     setAge(event.target.value);
   };
@@ -82,14 +53,6 @@ function Notes(props) {
     setShowAddNoteDialog(false)
   }
 
-  const menuLabels = [
-    <Tab label="< Back" onClick={handleBack} />,
-    <Tab label="Customer Details" onClick={handleCustomerDetail} />,
-    <Tab label="SOA" onClick={handleSoaChange} />,
-    <Tab label="Gift SOA" onClick={handleGiftSoaChange} />,
-    <Tab label="Rewards" onClick={handleRewardChange} />,
-    <Tab label="Notes" onClick={handleNotesChange} />,
-  ];
 
   // const handlePageChange = (pageObj) => {
   //   setPageNo(pageObj.activePage)
@@ -106,27 +69,7 @@ function Notes(props) {
 
   return (
     <div className={classes.formContainer}>
-      <FullWidthTabs labels={menuLabels} />
-      {/* <div className={classes.navBar}>
-        <div className={classes.backButton}>
-          <div onClick={handleBack}>Back</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleCustomerDetail}>Customer Details</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleSoaChange}>SOA</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleGiftSoaChange}>Gift Soa</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleRewardChange}>Rewards</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleNotesChange}>Notes</div>
-        </div>
-      </div> */}
+      <HorizontalBar />
       <div className={classes.row1}>
         <p>CUSTOMER ID: {props.customerId}</p>
         <div>
@@ -196,9 +139,9 @@ function Notes(props) {
         <Table tableHeaders={tableHeaders}>
           {
             props.notesSuccess && props.customerNotes.orderNotes !== null
-            ? props.customerNotes.orderNotes.map((data) => {
+            ? props.customerNotes.orderNotes.map((data, index) => {
               return (
-                <TableRow>
+                <TableRow key={index}>
                   <TableCell>{data.order_id}</TableCell>
                   <TableCell>{data.type}</TableCell>
                   <TableCell>{data.notes}</TableCell>
@@ -233,7 +176,7 @@ function Notes(props) {
 }
 
 Notes.propTypes = {
-  customerNotes: PropTypes.array,
+  customerNotes: PropTypes.object,
   fetchConsumerNotes: PropTypes.any,
   notesProgress: PropTypes.bool,
   notesSuccess: PropTypes.bool,

@@ -13,11 +13,9 @@ import {
   getQueryParamByName,
   getQueryUri,
 } from "../../../utils/helpers";
-import { useHistory } from "react-router-dom";
 import Pagination from "@material-ui/lab/Pagination";
 import Paper from "@material-ui/core/Paper";
-import FullWidthTabs from "../../../components/menuBar";
-import { Tab } from "@material-ui/core";
+import HorizontalBar from "./../horizontalBar";
 
 const useStyles = makeStyles((theme) => ({
   navBar: {
@@ -62,7 +60,6 @@ const soaTableHeaders = [
 function CustomerSoa(props) {
   console.log("[CustomerSoa]", props.errorMsg);
 
-  const history = useHistory();
   const classes = useStyles();
 
   const pageLimit = 10;
@@ -100,42 +97,6 @@ function CustomerSoa(props) {
     setErrorMessage(false);
   };
 
-  const handleCustomerDetail = () => {
-    history.push("/customer-detail");
-  };
-
-  const handleGiftSoaChange = () => {
-    console.log("gift-soa");
-    history.push("/gift-soa");
-  };
-
-  const handleRewardChange = () => {
-    console.log("rewards");
-    history.push("/rewards");
-  };
-
-  const handleSoaChange = () => {
-    console.log("soa");
-    history.push("/soa");
-  };
-
-  const handleNotesChange = () => {
-    history.push("/notes");
-  };
-
-  const handleBack = () => {
-    history.push("/order-info");
-  };
-
-  const menuLabels = [
-    <Tab label="< Back" onClick={handleBack} />,
-    <Tab label="Customer Details" onClick={handleCustomerDetail} />,
-    <Tab label="SOA" onClick={handleSoaChange} />,
-    <Tab label="Gift SOA" onClick={handleGiftSoaChange} />,
-    <Tab label="Rewards" onClick={handleRewardChange} />,
-    <Tab label="Notes" onClick={handleNotesChange} />,
-  ];
-
   let loading = props.soaProgress;
   if (loading) {
     return <p>Loading...</p>;
@@ -143,27 +104,7 @@ function CustomerSoa(props) {
 
   return (
     <div className={classes.formContainer}>
-      <FullWidthTabs labels={menuLabels} />
-      {/* <div className={classes.navBar}>
-        <div className={classes.backButton}>
-          <div onClick={handleBack}>Back</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleCustomerDetail}>Customer Details</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleSoaChange}>SOA</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleGiftSoaChange}>Gift Soa</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleRewardChange}>Rewards</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleNotesChange}>Notes</div>
-        </div>
-      </div> */}
+      <HorizontalBar />
       <div className={classes.row1}>
         <p>CUSTOMER ID: {props.customerId}</p>
         <div>Search</div>
@@ -172,9 +113,9 @@ function CustomerSoa(props) {
         <Paper className={classes.paper}>
           <Table tableHeaders={soaTableHeaders}>
             {props.soaSuccess
-              ? props.soaList.consumer_soa.map((data) => {
+              ? props.soaList.consumer_soa.map((data, index) => {
                   return (
-                    <TableRow>
+                    <TableRow key={index}>
                       <TableCell>{data.order_id}</TableCell>
                       <TableCell>{data.type}</TableCell>
                       <TableCell>{data.amount}</TableCell>
@@ -231,7 +172,7 @@ function CustomerSoa(props) {
 }
 
 CustomerSoa.propTypes = {
-  soaList: PropTypes.array,
+  soaList: PropTypes.object,
   CustomerSoaList: PropTypes.array,
   fetchCustomerSoaList: PropTypes.any,
   soaProgress: PropTypes.bool,

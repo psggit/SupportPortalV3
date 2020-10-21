@@ -7,10 +7,8 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 // import Pagination from "../../../components/pagination";
 import Moment from "moment";
-import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
-import FullWidthTabs from "../../../components/menuBar";
-import { Tab } from "@material-ui/core";
+import HorizontalBar from "./../horizontalBar";
 
 const useStyles = makeStyles((theme) => ({
   navBar: {
@@ -55,7 +53,6 @@ const tableHeaders = [
 
 function Rewards(props) {
   console.log("[rewards]", props.customerId);
-  const history = useHistory();
   const classes = useStyles();
 
   // const pageLimit = 2;
@@ -84,42 +81,6 @@ function Rewards(props) {
   //   );
   // };
 
-  const handleGiftSoaChange = () => {
-    console.log("gift-soa");
-    history.push("/gift-soa");
-  };
-
-  const handleCustomerDetail = () => {
-    history.push("/customer-detail");
-  };
-
-  const handleRewardChange = () => {
-    console.log("rewards");
-    history.push("/rewards");
-  };
-
-  const handleSoaChange = () => {
-    console.log("soa");
-    history.push("/soa");
-  };
-
-  const handleBack = () => {
-    history.push("/order-info");
-  };
-
-  const handleNotesChange = () => {
-    history.push("/notes");
-  };
-
-  const menuLabels = [
-    <Tab label="< Back" onClick={handleBack} />,
-    <Tab label="Customer Details" onClick={handleCustomerDetail} />,
-    <Tab label="SOA" onClick={handleSoaChange} />,
-    <Tab label="Gift SOA" onClick={handleGiftSoaChange} />,
-    <Tab label="Rewards" onClick={handleRewardChange} />,
-    <Tab label="Notes" onClick={handleNotesChange} />,
-  ];
-
   let loading = props.rewardsProgress;
   if (loading) {
     return <p>Loading...</p>;
@@ -127,27 +88,7 @@ function Rewards(props) {
 
   return (
     <div className={classes.formContainer}>
-      <FullWidthTabs labels={menuLabels} />
-      {/* <div className={classes.navBar}>
-        <div className={classes.backButton}>
-          <div>Back</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleCustomerDetail}>Customer Details</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleSoaChange}>SOA</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleGiftSoaChange}>Gift Soa</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleRewardChange}>Rewards</div>
-        </div>
-        <div className={classes.navContent}>
-          <div>Notes</div>
-        </div>
-      </div> */}
+      <HorizontalBar />
       <div className={classes.row1}>
         <p>CUSTOMER ID: {props.customerId}</p>
         <div>Search</div>
@@ -156,9 +97,9 @@ function Rewards(props) {
         <Paper className={classes.paper}>
           <Table tableHeaders={tableHeaders}>
             {props.rewardsSuccess
-              ? props.rewardsList.rewards.map((data) => {
+              ? props.rewardsList.rewards.map((data, index) => {
                   return (
-                    <TableRow>
+                    <TableRow key={index}>
                       <TableCell>{data.order_id}</TableCell>
                       <TableCell>{data.retailer_name}</TableCell>
                       <TableCell>{data.id}</TableCell>
@@ -193,7 +134,7 @@ function Rewards(props) {
 }
 
 Rewards.propTypes = {
-  rewardsList: PropTypes.array,
+  rewardsList: PropTypes.object,
   rewardsProgress: PropTypes.bool,
   rewardsSuccess: PropTypes.bool,
   customerId: PropTypes.any,
