@@ -36,13 +36,13 @@ const useStyles = makeStyles(() => ({
 
 const DialogComponent = (props) => {
   const classes = useStyles();
-  let { title, subtitle, actions, children, change } = props;
+  let { title, subtitle, actions, children } = props;
   useEffect(() => {
     // console.log("componentDidMount");
 
     return () => {
       // console.log("componentWillUnmount");
-      change("");
+      // change("");
     };
   }, []);
   return (
@@ -80,7 +80,6 @@ DialogComponent.propTypes = {
   actions: PropTypes.array,
   children: PropTypes.any,
   issueDesc: PropTypes.string,
-  change: PropTypes.any,
 };
 
 export default DialogComponent;

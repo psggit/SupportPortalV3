@@ -6,6 +6,7 @@ import { fetchCustomerSoaList } from "./duck/consumerSoaOperations";
 const mapStateToProps = (state) => {
   console.log("[soaContainer]", state);
   return {
+    orderInfo: state.order.orderInfo.orderInfo,
     CustomerSoaList: CustomerSOA,
     soaList: state.soa.customerSoaList,
     customerId: state.order.orderInfo.customerId,

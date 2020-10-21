@@ -2,7 +2,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
+  Box,
   Card,
+  CardHeader,
   CardContent,
   ListItem,
   ListItemText,
@@ -100,17 +102,22 @@ export default function ActivityItem(props) {
   if (mapArray === null) {
     return (
       <Card className={classes.root}>
-        <CardContent>
-          <Typography variant="h5" className={classes.heading} gutterBottom>
+        <CardHeader>
             {title.toUpperCase()}
-            {subtitle ? (
+
+          <Box>
+          {subtitle ? (
               <CardActions >
-                {subtitle.map((item) => item)}
+                {subtitle.map((item, ind) => {
+                  return <div key={ind}>{item}</div>;
+                })}
               </CardActions>
             ) : (
                 ""
               )}
-          </Typography>
+          </Box>
+          </CardHeader>
+        <CardContent>          
           <ListItem
             dense
             disableGutters={true}
@@ -182,7 +189,7 @@ export default function ActivityItem(props) {
           );
         })}
       </CardContent>
-      <CardActions className={classes.cardActions}>
+      {cardActions && <CardActions className={classes.cardActions}>
         <Button
           variant="contained"
           color="primary"
@@ -190,7 +197,7 @@ export default function ActivityItem(props) {
         >
           Add
         </Button>
-      </CardActions>
+      </CardActions>}
     </Card>
   );
   };

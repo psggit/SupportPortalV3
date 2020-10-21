@@ -6,9 +6,10 @@ import Button from "@material-ui/core/Button";
 import Radio from "@material-ui/core/Radio";
 import PropTypes from "prop-types";
 import TopBar from "../../../components/topBar";
+import { FormControlLabel, RadioGroup } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import FullWidthTabs from "../../../components/menuBar";
-import { Tab } from "@material-ui/core";
+import { Grid, Tab } from "@material-ui/core";
 
 const BlueRadio = withStyles({
   root: {
@@ -25,8 +26,16 @@ const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
       margin: theme.spacing(1),
-      width: "25ch",
     },
+  },
+  radioGrp: {
+    flexDirection: "row",
+    paddingBottom: 10,
+  },
+  section2: {
+    width: "100%",
+    margin: 0,
+    padding: theme.spacing(2),
   },
   navBar: {
     display: "flex",
@@ -47,14 +56,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "16px",
     color: "#696969",
     fontWeight: "bold",
-  },
-  section2: {
-    width: "40%",
-    paddingLeft: "50px",
-  },
-  generalForm: {
-    display: "flex",
-    justifyContent: "space-between",
   },
   label: {
     alignSelf: "center",
@@ -84,19 +85,21 @@ function CustomerForm(props) {
   console.log("useffect", consumerDetail);
   const [customerName, setCustomerName] = useState("");
   const [dob, setDob] = useState("");
-  const [selectedValue, setSelectedValue] = useState("");
+  const [value, setSelectedValue] = useState("not-specified");
   const [signupDate, setSignupDate] = useState("");
 
   useEffect(() => {
     setConsumerDetail(props.orderInfo);
     setCustomerName(props.orderInfo.customer_name);
     setDob(props.orderInfo.customer_dob.slice(0, 10));
-    setSelectedValue(props.orderInfo.customer_gender);
+    if (props.orderInfo.customer_gender.length !== 0) {
+      setSelectedValue(props.orderInfo.customer_gender);
+    }
     setSignupDate(props.orderInfo.customer_sign_up_date.slice(0, 10));
     //setSignupDate(Moment(props.orderInfo.customer_sign_up_date).format("DD/MM/YYYY"));
   }, []);
 
-  const handleRadioChange = (event) => {
+  const handleChange = (event) => {
     setSelectedValue(event.target.value);
   };
 
@@ -110,140 +113,108 @@ function CustomerForm(props) {
     const payload = {
       consumer_id: parseInt(props.orderInfo.customer_id),
       dob: dob,
-      gender: selectedValue,
+      gender: value,
       name: customerName,
     };
     props.updateConsumer(payload);
   };
 
-  const handleGiftSoaChange = () => {
-    console.log("gift-soa");
-    history.push("/gift-soa");
-  };
-
-  const handleRewardChange = () => {
-    history.push("/rewards");
-  };
-
-  const handleSoaChange = () => {
-    history.push("/soa");
-  };
-
-  const handleNotesChange = () => {
-    history.push("/notes");
-  };
-
-  const handleBack = () => {
-    history.push("/order-info/" + props.orderInfo.order_id);
-  };
-
-  const menuLabels = [
-    <Tab label="< Back" onClick={handleBack} key="backBtn" />,
-    <Tab label="Customer Details" key="customerBtn" />,
-    <Tab label="SOA" onClick={handleSoaChange} key="soaBtn" />,
-    <Tab label="Gift SOA" onClick={handleGiftSoaChange} key="giftBtn" />,
-    <Tab label="Rewards" onClick={handleRewardChange} key="rewardsBtn" />,
-    <Tab label="Notes" onClick={handleNotesChange} key="notesBtn"/>,
-  ];
+  // let loading = props.soaProgress;
+  // if (loading) {
+  //   return <Loading message="Loading..." />;
+  // }
 
   return (
     <>
       <TopBar />
       <div className={classes.formContainer}>
-        <FullWidthTabs labels={menuLabels} />
+        <FullWidthTabs value={0} orderId={props.orderInfo.order_id} />
         <div className={classes.section1}>
           <p>CUSTOMER ID: {props.orderInfo.customer_id}</p>
         </div>
-        <div className={classes.section2}>
-          <div className={classes.generalForm}>
-            <div className={classes.label}>
+        <Grid container className={classes.section2}>
+          <Grid container spacing={2} className={classes.generalForm}>
+            <Grid item xs={3} className={classes.label}>
               <p>Customer Name</p>
-            </div>
-            <div>
+            </Grid>
+            <Grid item xs={9}>
               <TextField
                 className={classes.textField}
                 variant="outlined"
                 name="customerName"
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
+                fullWidth
                 size="small"
               />
-            </div>
-          </div>
+            </Grid>
+          </Grid>
 
-          <div className={classes.generalForm}>
-            <div className={classes.label}>
+          <Grid container spacing={2} className={classes.generalForm}>
+            <Grid item xs={3} className={classes.label}>
               <p>Gender</p>
-            </div>
-            <div className={classes.radioGroup}>
-              <div>
-                <label>Female</label>
-                <BlueRadio
-                  checked={selectedValue === "female"}
-                  onChange={handleRadioChange}
-                  value="female"
-                  name="radio-button-demo"
-                  inputProps={{ "aria-label": "Female" }}
-                />
-              </div>
-              <div>
-                <label>Male</label>
-                <BlueRadio
-                  checked={selectedValue === "male"}
-                  onChange={handleRadioChange}
-                  value="male"
-                  name="radio-button-demo"
-                  inputProps={{ "aria-label": "Male" }}
-                />
-              </div>
-              <div>
-                <label>Not Specified</label>
-                <BlueRadio
-                  checked={selectedValue === "notSpecified"}
-                  onChange={handleRadioChange}
-                  value="notSpecified"
-                  name="radio-button-demo"
-                  inputProps={{ "aria-label": "Not Spacified" }}
-                />
-              </div>
-            </div>
-          </div>
+            </Grid>
+            <RadioGroup
+              name="gender1"
+              value={value}
+              onChange={handleChange}
+              className={classes.radioGrp}
+            >
+              <FormControlLabel
+                value="female"
+                control={<BlueRadio />}
+                label="Female"
+              />
+              <FormControlLabel
+                value="male"
+                control={<BlueRadio />}
+                label="Male"
+              />
+              <FormControlLabel
+                value="not-specified"
+                control={<BlueRadio />}
+                label="Not Specified"
+              />
+            </RadioGroup>
+          </Grid>
 
-          <div className={classes.generalForm}>
-            <div className={classes.label}>
+          <Grid container spacing={2} className={classes.generalForm}>
+            <Grid item xs={3} className={classes.label}>
               <p>Mobile Number</p>
-            </div>
-            <div>
+            </Grid>
+            <Grid item xs={9}>
               <TextField
                 className={classes.textField}
                 variant="outlined"
                 value={consumerDetail.customer_contact_number}
                 disabled
+                fullWidth
                 size="small"
               />
-            </div>
-          </div>
+            </Grid>
+          </Grid>
 
-          <div className={classes.generalForm}>
-            <div className={classes.label}>
+          <Grid container spacing={2} className={classes.generalForm}>
+            <Grid item xs={3} className={classes.label}>
               <p>Email</p>
-            </div>
-            <div>
+            </Grid>
+            <Grid item xs={9}>
               <TextField
                 className={classes.textField}
                 variant="outlined"
                 value={consumerDetail.customer_email}
                 size="small"
+                fullWidth
                 disabled
               />
-            </div>
-          </div>
+            </Grid>
+          </Grid>
 
-          <div className={classes.generalForm}>
-            <div className={classes.label}>
+          <Grid container spacing={2} className={classes.generalForm}>
+            <Grid item xs={3} className={classes.label}>
               <p>Date of Birth</p>
-            </div>
-            <div>
+            </Grid>
+            <Grid item xs={9}>
               <TextField
                 className={classes.textField}
                 variant="outlined"
@@ -251,47 +222,50 @@ function CustomerForm(props) {
                 name="dob"
                 value={dob}
                 size="small"
+                fullWidth
                 onChange={(e) => setDob(e.target.value)}
               />
-            </div>
-          </div>
+            </Grid>
+          </Grid>
 
-          <div className={classes.generalForm}>
-            <div className={classes.label}>
+          <Grid container spacing={2} className={classes.generalForm}>
+            <Grid item xs={3} className={classes.label}>
               <p>Signup Date</p>
-            </div>
-            <div>
+            </Grid>
+            <Grid item xs={9}>
               <TextField
                 className={classes.textField}
                 type="date"
                 variant="outlined"
                 value={signupDate}
                 size="small"
+                fullWidth
                 disabled
               />
-            </div>
-          </div>
+            </Grid>
+          </Grid>
 
-          <div className={classes.generalForm}>
-            <div className={classes.label}>
+          <Grid container spacing={2} className={classes.generalForm}>
+            <Grid item xs={3} className={classes.label}>
               <p>KYC Level</p>
-            </div>
-            <div>
+            </Grid>
+            <Grid item xs={9}>
               <TextField
                 className={classes.textField}
                 variant="outlined"
                 value={consumerDetail.customer_kyc}
                 size="small"
+                fullWidth
                 disabled
               />
-            </div>
-          </div>
+            </Grid>
+          </Grid>
 
-          <div className={classes.generalForm}>
-            <div className={classes.label}>
+          <Grid container spacing={2} className={classes.generalForm}>
+            <Grid item xs={3} className={classes.label}>
               <p>HipBar Wallet Balance</p>
-            </div>
-            <div>
+            </Grid>
+            <Grid item xs={9}>
               <TextField
                 className={classes.textField}
                 variant="outlined"
@@ -299,14 +273,14 @@ function CustomerForm(props) {
                 size="small"
                 disabled
               />
-            </div>
-          </div>
+            </Grid>
+          </Grid>
 
-          <div className={classes.generalForm}>
-            <div className={classes.label}>
+          <Grid container spacing={2} className={classes.generalForm}>
+            <Grid item xs={3} className={classes.label}>
               <p>Gift Wallet Balance</p>
-            </div>
-            <div>
+            </Grid>
+            <Grid item xs={9}>
               <TextField
                 className={classes.textField}
                 variant="outlined"
@@ -314,8 +288,8 @@ function CustomerForm(props) {
                 size="small"
                 disabled
               />
-            </div>
-          </div>
+            </Grid>
+          </Grid>
 
           <div className={classes.buttonContainer}>
             <Button
@@ -328,14 +302,14 @@ function CustomerForm(props) {
             </Button>
             <Button
               className={classes.button}
-              onClick={handleSave}
+              onClick={() => handleSave()}
               variant="contained"
               color="primary"
             >
               Save
             </Button>
           </div>
-        </div>
+        </Grid>
       </div>
     </>
   );

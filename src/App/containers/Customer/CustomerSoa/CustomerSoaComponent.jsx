@@ -1,22 +1,25 @@
-/* eslint-disable react/jsx-key */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "../../../components/table";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-//import Pagination from "../../../components/pagination";
 import TopBar from "../../../components/topBar";
 import Notification from "../../../components/notification";
 import Moment from "moment";
-import {
-  getOffsetUsingPageNo,
-  getQueryParamByName,
-  getQueryUri,
-} from "../../../utils/helpers";
+import { getQueryParamByName } from "../../../utils/helpers";
 import { useHistory } from "react-router-dom";
-import Pagination from "@material-ui/lab/Pagination";
 import Paper from "@material-ui/core/Paper";
+import FullWidthTabs from "../../../components/menuBar";
+import {
+  Table,
+  Container,
+  Box,
+  TableHead,
+  TableContainer,
+  TableBody,
+  TablePagination,
+} from "@material-ui/core";
+import Loading from "../../../components/loading";
 
 const useStyles = makeStyles((theme) => ({
   navBar: {
@@ -49,174 +52,156 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const soaTableHeaders = [
-  { label: "ORDER ID", value: "order_id" },
-  { label: "TYPE", value: "type" },
-  { label: "AMOUNT", value: "amount" },
-  { label: "OPENING BALANCE", value: "opening_balance" },
-  { label: "CLOSING BALANCE", value: "closing_balance" },
-  { label: "CREATED AT", value: "created_at" },
-];
+const createData = ({
+  order_id,
+  type,
+  amount,
+  opening_balance,
+  closing_balance,
+  created_at,
+}) => {
+  return {
+    order_id,
+    type,
+    amount,
+    opening_balance,
+    closing_balance,
+    created_at,
+  };
+};
 
 function CustomerSoa(props) {
-  console.log("[CustomerSoa]", props.errorMsg);
-
-  const history = useHistory();
-  const classes = useStyles();
-
-  const pageLimit = 10;
-  const activePage = getQueryParamByName("activePage") || 1;
-  const [pageNo, setPageNo] = useState(activePage);
-  //const [isError, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-
   useEffect(() => {
     const payload = {
       consumer_id: props.customerId,
       limit: pageLimit,
       offset: (pageNo - 1) * parseInt(pageLimit),
     };
+    console.log("payload", payload);
     props.fetchCustomerSoaList(payload);
   }, []);
+
+  const classes = useStyles();
+  const pageLimit = 10;
+  const activePage = getQueryParamByName("activePage") || 1;
+  const [pageNo, setPageNo] = useState(activePage);
+  const [showData, setShowData] = useState(false);
+  const [rows, setRowsData] = useState(null);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [page, setPage] = useState(0);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    if (props.soaSuccess) {
+      if (props.soaList.consumer_soa !== null) {
+        loopData(props.soaList.consumer_soa);
+        setShowData(true);
+      } else {
+        setShowData(false);
+      }
+    }
+  }, [props.soaSuccess]);
 
   useEffect(() => {
     setErrorMessage(props.soaFail);
   }, [props.soaFail]);
 
-  // const handlePageChange = () => {
-  //   setPageNo(activePage);
-  //   // const queryParamsObj = {
-  //   //   activePage: pageObj.activePage,
-  //   // };
-  //   // history.pushState(
-  //   //   queryParamsObj,
-  //   //   "soa listing",
-  //   //   `/soa ${getQueryUri(queryParamsObj)}`
-  //   // );
-  // };
-
   const handleClose = () => {
     setErrorMessage(false);
   };
 
-  const handleCustomerDetail = () => {
-    history.push("/customer-detail");
+  const filledRows = [];
+  const loopData = (data) => {
+    data.map((value) => {
+      filledRows.push(createData(value));
+    });
+    setRowsData(filledRows);
   };
 
-  const handleGiftSoaChange = () => {
-    console.log("gift-soa");
-    history.push("/gift-soa");
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
   };
 
-  const handleRewardChange = () => {
-    console.log("rewards");
-    history.push("/rewards");
-  };
-
-  const handleSoaChange = () => {
-    console.log("soa");
-    history.push("/soa");
-  };
-
-  const handleNotesChange = () => {
-    history.push("/notes");
-  };
-
-  const handleBack = () => {
-    history.push("/order-info");
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   let loading = props.soaProgress;
   if (loading) {
-    return <p>Loading...</p>;
+    return <Loading message="Loading..." />;
   }
 
   return (
     <>
       <TopBar />
       <div className={classes.formContainer}>
-        <div className={classes.navBar}>
-          <div className={classes.backButton}>
-            <div onClick={handleBack}>Back</div>
-          </div>
-          <div className={classes.navContent}>
-            <div onClick={handleCustomerDetail}>Customer Details</div>
-          </div>
-          <div className={classes.navContent}>
-            <div onClick={handleSoaChange}>SOA</div>
-          </div>
-          <div className={classes.navContent}>
-            <div onClick={handleGiftSoaChange}>Gift Soa</div>
-          </div>
-          <div className={classes.navContent}>
-            <div onClick={handleRewardChange}>Rewards</div>
-          </div>
-          <div className={classes.navContent}>
-            <div onClick={handleNotesChange}>Notes</div>
-          </div>
-        </div>
+        <FullWidthTabs value={1} orderId={props.orderInfo.order_id} />
         <div className={classes.row1}>
           <p>CUSTOMER ID: {props.customerId}</p>
           <div>Search</div>
         </div>
-        <div className={classes.table}>
-          <Paper className={classes.paper}>
-            <Table tableHeaders={soaTableHeaders}>
-              {props.soaSuccess
-                ? props.soaList.consumer_soa.map((data) => {
-                    return (
-                      <TableRow>
-                        <TableCell>{data.order_id}</TableCell>
-                        <TableCell>{data.type}</TableCell>
-                        <TableCell>{data.amount}</TableCell>
-                        <TableCell>{data.opening_balance}</TableCell>
-                        <TableCell>{data.closing_balance}</TableCell>
-                        <TableCell align="left">
-                          {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })
-                : !props.soaSuccess && (
-                    <tr>
-                      <td
-                        style={{ textAlign: "center", padding: "10px 0" }}
-                        colSpan="6"
-                      >
-                        <p style={{ fontWeight: "16px" }}>No records found</p>
-                      </td>
-                    </tr>
-                  )}
+        <Box width="90%" mx="auto" mt={4}>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center">ORDER ID</TableCell>
+                  <TableCell align="center">TYPE</TableCell>
+                  <TableCell align="center">AMOUNT</TableCell>
+                  <TableCell align="center">OPENING BALANCE</TableCell>
+                  <TableCell align="center">CLOSING BALANCE</TableCell>
+                  <TableCell align="center">CREATED AT</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {showData &&
+                  rows
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((data, ind) => {
+                      return (
+                        <TableRow key={ind}>
+                          <TableCell>{data.order_id}</TableCell>
+                          <TableCell>{data.type}</TableCell>
+                          <TableCell>{data.amount}</TableCell>
+                          <TableCell>{data.opening_balance}</TableCell>
+                          <TableCell>{data.closing_balance}</TableCell>
+                          <TableCell align="left">
+                            {Moment(data.created_at).format(
+                              "DD/MM/YYYY h:mm A"
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+              </TableBody>
             </Table>
-          </Paper>
-          {props.soaSuccess && (
-            <div className={classes.root}>
-              <Pagination
-                count={props.soaList.count / 10}
-                variant="outlined"
-                color="primary"
+            {showData && (
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25]}
+                component="div"
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
               />
-            </div>
+            )}
+          </TableContainer>
+          {!showData && (
+            <Container>
+              <p>No data available</p>
+            </Container>
           )}
-          {/* {props.soaSuccess && (
-          <Pagination
-            activePage={parseInt(pageNo)}
-            //itemsCountPerPage={parseInt(pageLimit)}
-            rowsPerPage={parseInt(pageLimit)}
-            count={props.soaList.count}
-            //setPage={handlePageChange}
-            color="primary"
+        </Box>
+        {errorMessage && (
+          <Notification
+            message={props.errorMsg}
+            messageType="error"
+            open={errorMessage}
+            handleClose={handleClose}
           />
-        )} */}
-          {errorMessage && (
-            <Notification
-              message={props.errorMsg}
-              messageType="error"
-              open={errorMessage}
-              handleClose={handleClose}
-            />
-          )}
-        </div>
+        )}
       </div>
     </>
   );
@@ -224,6 +209,7 @@ function CustomerSoa(props) {
 
 CustomerSoa.propTypes = {
   soaList: PropTypes.array,
+  orderInfo: PropTypes.object,
   CustomerSoaList: PropTypes.array,
   fetchCustomerSoaList: PropTypes.any,
   soaProgress: PropTypes.bool,

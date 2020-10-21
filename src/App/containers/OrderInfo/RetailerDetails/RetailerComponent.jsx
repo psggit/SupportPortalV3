@@ -62,6 +62,21 @@ const RetailerDetails = (props) => {
     </Button>,
   ];
 
+  const handleChange = () => {
+    history.push("/change-retailer");
+  };
+
+  const subheadAction = [
+    <Button
+      color="primary"
+      endIcon={<ChevronRightIcon />}
+      onClick={handleChange}
+      key="moreBtn"
+    >
+      More
+    </Button>,
+  ];
+
   const keysToRenderInNotesCard = ["notes", "created_at"];
 
   return (
@@ -70,6 +85,7 @@ const RetailerDetails = (props) => {
         <DetailsCard
           title="RETAILER DETAILS"
           actions={actionButtons}
+          subheader={subheadAction}
           renderArray={data}
           keyMap={keyMap}
           keysToRender={keysToRender}

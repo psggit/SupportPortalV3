@@ -11,6 +11,7 @@ import { customerSOAReducer } from "../containers/Customer/CustomerSoa";
 import { customerGiftSOAReducer } from "../containers/Customer/CustomerGiftSoa";
 import { rewardsReducer } from "../containers/Customer/Rewards";
 import { customerUpdateReducer } from "../containers/Customer/CustomerFormDetails";
+import { acitivityListReducer } from "../containers/ActivityList";
 
 const store = configureStore({
   reducer: combineReducers({
@@ -24,6 +25,7 @@ const store = configureStore({
     giftSoa: customerGiftSOAReducer,
     rewards: rewardsReducer,
     update: customerUpdateReducer,
+    acitivityLog: acitivityListReducer,
   }),
   middleware: [thunk],
 });

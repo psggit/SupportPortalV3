@@ -1,12 +1,38 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import ActivityItem from "../../../components/activityItems";
+import { Button } from "@material-ui/core";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+}));
 
 const ActivityLogComponent = (props) => {
+  const classes = useStyles();
   useEffect(() => {
     const reqBody = { order_id: props.orderId, limit: 5, offset: 0 };
     props.fetchLogData(reqBody);
   }, []);
+
+  const handleChange = () => {
+    history.push("/activity-list");
+  };
+
+  const subheadAction = [
+    <Button
+      color="primary"
+      endIcon={<ChevronRightIcon />}
+      onClick={handleChange}
+      key="moreBtn"
+    >
+      More
+    </Button>,
+  ];
 
   if (props.fetchLogSuccess) {
     return (
@@ -15,6 +41,7 @@ const ActivityLogComponent = (props) => {
         keysToRender={["notes", "created_at"]}
         title={"ACTIVITY LOGS"}
         cardActions={false}
+        subtitle={subheadAction}
       />
     );
   } else {

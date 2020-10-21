@@ -168,7 +168,6 @@ const CustomerDetails = (props) => {
               arr={props.customerNotes.orderNotes}
               keysToRender={keysToRenderInNotesCard}
               title={"CUSTOMER NOTES"}
-              subheader={subheadNotesAction}
               issueType={"customer"}
               click={props.openDialog}
               cardActions={true}
