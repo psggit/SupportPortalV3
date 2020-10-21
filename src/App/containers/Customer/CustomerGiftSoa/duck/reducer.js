@@ -37,6 +37,7 @@ const customerGiftSOAReducer = createReducer(initialState, {
     return {
       ...state,
       giftSoaProgress: true,
+      giftSoaSuccess: false,
     };
   },
 });

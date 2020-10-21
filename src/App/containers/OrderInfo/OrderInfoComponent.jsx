@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Button, TextField } from "@material-ui/core";
+import { Box, Button, Paper, TextField } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import TopBar from "../../components/topBar";
 import { useHistory } from "react-router-dom";
@@ -49,10 +49,12 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: "22px",
   },
   fixedSideBar: {
-    backgroundColor: "#fff",
     height: "100%",
     position: "fixed",
     right: 0,
+    top: 60,
+    padding: 10,
+    paddingTop: 20,
   },
   fabBtn: {
     marginTop: 150,
@@ -60,9 +62,10 @@ const useStyles = makeStyles((theme) => ({
   sideNavBtnO: {
     backgroundColor: theme.palette.primary.main,
     color: "#fff",
-    height: 32,
-    width: 32,
-    minWidth: 32,
+    height: 24,
+    width: 24,
+    minWidth: 24,
+    fontSize: 18,
     margin: 5,
     cursor: "pointer",
     "&:hover": {
@@ -74,9 +77,10 @@ const useStyles = makeStyles((theme) => ({
   sideNavBtnC: {
     backgroundColor: "#FB337A",
     color: "#fff",
-    height: 32,
-    width: 32,
-    minWidth: 32,
+    height: 24,
+    width: 24,
+    minWidth: 24,
+    fontSize: 18,
     margin: 5,
     cursor: "pointer",
     "&:hover": {
@@ -88,9 +92,10 @@ const useStyles = makeStyles((theme) => ({
   sideNavBtnR: {
     backgroundColor: "#F4A60B",
     color: "#fff",
-    height: 32,
-    width: 32,
-    minWidth: 32,
+    height: 24,
+    width: 24,
+    minWidth: 24,
+    fontSize: 18,
     margin: 5,
     cursor: "pointer",
     "&:hover": {
@@ -102,9 +107,10 @@ const useStyles = makeStyles((theme) => ({
   sideNavBtnD: {
     backgroundColor: "#1B4987",
     color: "#fff",
-    height: 32,
-    width: 32,
-    minWidth: 32,
+    height: 24,
+    width: 24,
+    minWidth: 24,
+    fontSize: 18,
     margin: 5,
     cursor: "pointer",
     "&:hover": {
@@ -212,6 +218,25 @@ const OrderInfoComponent = (props) => {
     </Button>,
   ];
 
+  const dialogActionsIssue = [
+    <Button
+      variant="outlined"
+      color="primary"
+      key="closeDialog"
+      onClick={() => handleAddIssue()}
+    >
+      Cancel
+    </Button>,
+    <Button
+      variant="contained"
+      color="primary"
+      key="createIssue"
+      onClick={() => updateNotes()}
+    >
+      Save
+    </Button>,
+  ];
+
   if (loading) {
     return <Loading message="Loading..." />;
   }
@@ -247,7 +272,7 @@ const OrderInfoComponent = (props) => {
         <DialogComponent
           title="ADD NEW ISSUE"
           subtitle={`Order ID: ` + orderId}
-          actions={dialogActions}
+          actions={dialogActionsIssue}
           openDialog={handleAddIssue}
         >
           <TextField
@@ -322,51 +347,53 @@ const OrderInfoComponent = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={1} boxShadow={1}>
-            <Box display="flex" alignItems="flex-end" flexDirection="column">
-              <Button
-                title="Order Detail"
-                className={activeSection === "section1" ? "active" : null}
-                classes={{ root: classes.sideNavBtnO }}
-                onClick={() => handleScroll("section1")}
-              >
-                O
-              </Button>
-              <Button
-                title="Customer"
-                className={activeSection === "section2" ? "active" : null}
-                classes={{ root: classes.sideNavBtnC }}
-                onClick={() => handleScroll("section2")}
-              >
-                C
-              </Button>
-              <Button
-                title="Retailer"
-                className={activeSection === "section3" ? "active" : null}
-                classes={{ root: classes.sideNavBtnR }}
-                onClick={() => handleScroll("section3")}
-              >
-                R
-              </Button>
-              <Button
-                title="Delivery Agent"
-                className={activeSection === "section4" ? "active" : null}
-                classes={{ root: classes.sideNavBtnD }}
-                onClick={() => handleScroll("section4")}
-              >
-                D
-              </Button>
-              <Box>
-                <Fab
-                  size="small"
-                  color="primary"
-                  className={classes.fabBtn}
-                  aria-label="add"
-                  onClick={() => handleAddIssue()}
+            <Paper elevation={4} className={classes.fixedSideBar}>
+              <Box display="flex" alignItems="flex-end" flexDirection="column">
+                <Button
+                  title="Order Detail"
+                  className={activeSection === "section1" ? "active" : null}
+                  classes={{ root: classes.sideNavBtnO }}
+                  onClick={() => handleScroll("section1")}
                 >
-                  <AddIcon />
-                </Fab>
+                  O
+                </Button>
+                <Button
+                  title="Customer"
+                  className={activeSection === "section2" ? "active" : null}
+                  classes={{ root: classes.sideNavBtnC }}
+                  onClick={() => handleScroll("section2")}
+                >
+                  C
+                </Button>
+                <Button
+                  title="Retailer"
+                  className={activeSection === "section3" ? "active" : null}
+                  classes={{ root: classes.sideNavBtnR }}
+                  onClick={() => handleScroll("section3")}
+                >
+                  R
+                </Button>
+                <Button
+                  title="Delivery Agent"
+                  className={activeSection === "section4" ? "active" : null}
+                  classes={{ root: classes.sideNavBtnD }}
+                  onClick={() => handleScroll("section4")}
+                >
+                  D
+                </Button>
+                <Box>
+                  <Fab
+                    size="small"
+                    color="primary"
+                    className={classes.fabBtn}
+                    aria-label="add"
+                    onClick={() => handleAddIssue()}
+                  >
+                    <AddIcon />
+                  </Fab>
+                </Box>
               </Box>
-            </Box>
+            </Paper>
           </Grid>
         </Grid>
       </Box>

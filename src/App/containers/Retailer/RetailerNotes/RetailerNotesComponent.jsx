@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Table from "../../../components/table";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-// import Pagination from "../../../components/pagination";
+import SimpleMenuBar from "../../../components/simpleMenuBar";
 import Moment from "moment";
 import Button from "@material-ui/core/Button";
 import {
@@ -85,14 +85,9 @@ function RetailerNotesComponent(props) {
 
   return (
     <div className={classes.formContainer}>
-      <div className={classes.navBar}>
-        <div className={classes.backButton}>
-          <div>Back</div>
-        </div>
-        <div className={classes.navContent}>
-          <div>Change Retailer</div>
-        </div>
-      </div>
+      <SimpleMenuBar orderId={props.orderId.order_id}>
+        {props.notesSuccess && <p>CHANGE RETAILER</p>}
+      </SimpleMenuBar>
       <div className={classes.row1}>
         <p>CUSTOMER ID: {"1234567"}</p>
         <div>

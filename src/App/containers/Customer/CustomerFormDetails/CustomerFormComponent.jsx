@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import TopBar from "../../../components/topBar";
 import { FormControlLabel, RadioGroup } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import FullWidthTabs from "../../../components/menuBar";
+import FullWidthTabs from "../../../components/customerMenuBar";
 import { Grid, Tab } from "@material-ui/core";
 
 const BlueRadio = withStyles({
@@ -82,7 +82,7 @@ function CustomerForm(props) {
   const history = useHistory();
   const classes = useStyles();
   const [consumerDetail, setConsumerDetail] = useState("");
-  console.log("useffect", consumerDetail);
+  // console.log("useffect", consumerDetail);
   const [customerName, setCustomerName] = useState("");
   const [dob, setDob] = useState("");
   const [value, setSelectedValue] = useState("not-specified");

@@ -9,7 +9,7 @@ import Moment from "moment";
 import { getQueryParamByName } from "../../../utils/helpers";
 import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
-import FullWidthTabs from "../../../components/menuBar";
+import FullWidthTabs from "../../../components/customerMenuBar";
 import {
   Table,
   Container,
@@ -71,16 +71,6 @@ const createData = ({
 };
 
 function CustomerSoa(props) {
-  useEffect(() => {
-    const payload = {
-      consumer_id: props.customerId,
-      limit: pageLimit,
-      offset: (pageNo - 1) * parseInt(pageLimit),
-    };
-    console.log("payload", payload);
-    props.fetchCustomerSoaList(payload);
-  }, []);
-
   const classes = useStyles();
   const pageLimit = 10;
   const activePage = getQueryParamByName("activePage") || 1;
@@ -91,9 +81,22 @@ function CustomerSoa(props) {
   const [page, setPage] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
 
+  // page * rowsPerPage + rowsPerPage
+
+  useEffect(() => {
+    const payload = {
+      consumer_id: props.customerId,
+      limit: rowsPerPage,
+      offset: page * rowsPerPage,
+    };
+    props.fetchCustomerSoaList(payload);
+  }, [rowsPerPage, page]);
+
   useEffect(() => {
     if (props.soaSuccess) {
       if (props.soaList.consumer_soa !== null) {
+        // console.clear();
+        console.log(props.soaList.consumer_soa);
         loopData(props.soaList.consumer_soa);
         setShowData(true);
       } else {
@@ -115,7 +118,7 @@ function CustomerSoa(props) {
     data.map((value) => {
       filledRows.push(createData(value));
     });
-    setRowsData(filledRows);
+    setRowsData(data);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -123,7 +126,7 @@ function CustomerSoa(props) {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(parseInt(event.target.value));
     setPage(0);
   };
 
@@ -156,24 +159,20 @@ function CustomerSoa(props) {
               </TableHead>
               <TableBody>
                 {showData &&
-                  rows
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((data, ind) => {
-                      return (
-                        <TableRow key={ind}>
-                          <TableCell>{data.order_id}</TableCell>
-                          <TableCell>{data.type}</TableCell>
-                          <TableCell>{data.amount}</TableCell>
-                          <TableCell>{data.opening_balance}</TableCell>
-                          <TableCell>{data.closing_balance}</TableCell>
-                          <TableCell align="left">
-                            {Moment(data.created_at).format(
-                              "DD/MM/YYYY h:mm A"
-                            )}
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
+                  rows.map((data, ind) => {
+                    return (
+                      <TableRow key={ind}>
+                        <TableCell>{data.order_id}</TableCell>
+                        <TableCell>{data.type}</TableCell>
+                        <TableCell>{data.amount}</TableCell>
+                        <TableCell>{data.opening_balance}</TableCell>
+                        <TableCell>{data.closing_balance}</TableCell>
+                        <TableCell align="left">
+                          {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
                 {!showData && (
                   <TableRow>
                     <TableCell colSpan={10} align="center">
@@ -187,7 +186,7 @@ function CustomerSoa(props) {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
-                count={rows.length}
+                count={props.soaList.count}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onChangePage={handleChangePage}

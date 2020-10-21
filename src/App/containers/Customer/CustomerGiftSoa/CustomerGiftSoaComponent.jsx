@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
@@ -8,7 +9,7 @@ import Moment from "moment";
 import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import TopBar from "../../../components/topBar";
-import FullWidthTabs from "../../../components/menuBar";
+import FullWidthTabs from "../../../components/customerMenuBar";
 import {
   TableContainer,
   Table,
@@ -17,6 +18,37 @@ import {
   TableHead,
 } from "@material-ui/core";
 import Loading from "../../../components/loading";
+
+const useStyles = makeStyles((theme) => ({
+  navBar: {
+    display: "flex",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    padding: "24px",
+    color: "#696969",
+    fontWeight: "bold",
+    fontSize: "14px",
+    lineHeight: "21px",
+  },
+  navContent: {
+    marginLeft: "22px",
+  },
+  row1: {
+    display: "flex",
+    justifyContent: "space-between",
+    padding: "34px 24px",
+    letterSpacing: "0.012em",
+    fontSize: "16px",
+    color: "#696969",
+    fontWeight: "bold",
+  },
+  table: {
+    padding: "0px 80px",
+  },
+  paper: {
+    //padding: 24,
+  },
+}));
 
 const createData = ({
   reference_number,
@@ -37,7 +69,7 @@ const createData = ({
 };
 
 function CustomerGiftSoa(props) {
-  const history = useHistory();
+  const classes = useStyles();
   const [showData, setShowData] = useState(false);
   const [rows, setRowsData] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -47,11 +79,11 @@ function CustomerGiftSoa(props) {
   useEffect(() => {
     const payload = {
       customer_contact_number: props.customerNumber,
-      limit: 10,
-      offset: 0,
+      limit: rowsPerPage,
+      offset: page * rowsPerPage,
     };
     props.fetchGiftSoaList(payload);
-  }, []);
+  }, [rowsPerPage, page]);
 
   useEffect(() => {
     if (props.giftSoaSuccess) {
@@ -100,10 +132,10 @@ function CustomerGiftSoa(props) {
     <>
       <TopBar />
       <FullWidthTabs value={2} orderId={props.orderInfo.order_id} />
-      <Box>
+      <div className={classes.row1}>
         <p>CUSTOMER ID: {props.customerId}</p>
         <div>Search</div>
-      </Box>
+      </div>
       <Box width="90%" mx="auto" mt={4}>
         <TableContainer component={Paper}>
           <Table>
@@ -119,25 +151,23 @@ function CustomerGiftSoa(props) {
             </TableHead>
             <TableBody>
               {showData &&
-                rows
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((data) => {
-                    return (
-                      // eslint-disable-next-line react/jsx-key
-                      <TableRow>
-                        <TableCell>{data.reference_number}</TableCell>
-                        <TableCell>{data.transaction_type}</TableCell>
-                        <TableCell>{data.transaction_amount}</TableCell>
-                        <TableCell>{data.gift_cards_and_value}</TableCell>
-                        <TableCell>{data.ResponseMessage}</TableCell>
-                        <TableCell align="left">
-                          {Moment(data.date_at_server).format(
-                            "DD/MM/YYYY h:mm A"
-                          )}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
+                rows.map((data) => {
+                  return (
+                    // eslint-disable-next-line react/jsx-key
+                    <TableRow>
+                      <TableCell>{data.reference_number}</TableCell>
+                      <TableCell>{data.transaction_type}</TableCell>
+                      <TableCell>{data.transaction_amount}</TableCell>
+                      <TableCell>{data.gift_cards_and_value}</TableCell>
+                      <TableCell>{data.ResponseMessage}</TableCell>
+                      <TableCell align="left">
+                        {Moment(data.date_at_server).format(
+                          "DD/MM/YYYY h:mm A"
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               {!showData && (
                 <TableRow>
                   <TableCell colSpan={10} align="center">

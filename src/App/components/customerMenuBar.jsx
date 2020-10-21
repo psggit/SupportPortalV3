@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     cursor: "pointer",
     color: theme.palette.primary.main,
+    height: 64,
   },
 }));
 
@@ -37,7 +38,6 @@ export default function FullWidthTabs(props) {
   };
 
   const handleGiftSoaChange = () => {
-    console.log("gift-soa");
     history.push("/gift-soa");
   };
 
@@ -60,7 +60,7 @@ export default function FullWidthTabs(props) {
   return (
     <div>
       <AppBar position="static" className={classes.root}>
-        <Grid alignItems="baseline" container>
+        <Grid alignItems="center" className={classes.root} container>
           <Grid item xs={1}>
             <Button
               color="primary"
@@ -78,11 +78,23 @@ export default function FullWidthTabs(props) {
               textColor="primary"
               aria-label="full width tabs example"
             >
-              <Tab label="Customer Details" key="customerBtn" onClick={handleCustomerDetails}/>
-              <Tab label="SOA" key="soaBtn" onClick={handleSoaChange}/>,
-              <Tab label="Gift SOA" key="giftBtn" onClick={handleGiftSoaChange}/>
-              <Tab label="Rewards" key="rewardsBtn" onClick={handleRewardChange}/>
-              <Tab label="Notes" key="notesBtn" onClick={handleNotesChange}/>
+              <Tab
+                label="Customer Details"
+                key="customerBtn"
+                onClick={handleCustomerDetails}
+              />
+              <Tab label="SOA" key="soaBtn" onClick={handleSoaChange} />,
+              <Tab
+                label="Gift SOA"
+                key="giftBtn"
+                onClick={handleGiftSoaChange}
+              />
+              <Tab
+                label="Rewards"
+                key="rewardsBtn"
+                onClick={handleRewardChange}
+              />
+              <Tab label="Notes" key="notesBtn" onClick={handleNotesChange} />
             </Tabs>
           </Grid>
         </Grid>

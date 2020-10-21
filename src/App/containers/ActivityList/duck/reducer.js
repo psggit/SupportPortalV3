@@ -1,12 +1,12 @@
 import { createReducer } from "@reduxjs/toolkit";
 import {
-  fetchNotesSuccessfull,
-  fetchNotesFailure,
-  fetchNotesInProgress,
+  fetchActLogsSuccessfull,
+  fetchActLogsFailure,
+  fetchActLogsInProgress,
 } from "./action";
 
 const initialState = {
-  retailerNotesList: null,
+  activityLogs: null,
   notesProgress: false,
   notesFail: false,
   notesSuccess: false,
@@ -14,7 +14,7 @@ const initialState = {
 };
 
 const acitivityListReducer = createReducer(initialState, {
-  [fetchNotesSuccessfull]: (state, data) => {
+  [fetchActLogsSuccessfull]: (state, data) => {
     console.log("retailerNotesListSuccess", data);
     return {
       ...state,
@@ -25,18 +25,18 @@ const acitivityListReducer = createReducer(initialState, {
       activityLogs: data.payload,
     };
   },
-  [fetchNotesFailure]: (state) => ({
+  [fetchActLogsFailure]: (state) => ({
     ...state,
     notesProgress: false,
     notesFail: true,
     notesSuccess: false,
     errorMsg: "Something went wrong, please try again",
   }),
-  [fetchNotesInProgress]: (state) => {
-    console.log("retailerNotes");
+  [fetchActLogsInProgress]: (state) => {
     return {
       ...state,
       notesProgress: true,
+      notesSuccess: false,
     };
   },
 });

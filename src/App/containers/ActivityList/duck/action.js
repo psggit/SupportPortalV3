@@ -1,7 +1,7 @@
 import { createAction } from "@reduxjs/toolkit";
 
-const fetchNotesSuccessfull = createAction("fetchNotesSuccessfull");
-const fetchNotesFailure = createAction("fetchNotesFailure");
-const fetchNotesInProgress = createAction("fetchNotesInProgress");
+const fetchActLogsSuccessfull = createAction("fetchActLogsSuccessfull");
+const fetchActLogsFailure = createAction("fetchActLogsFailure");
+const fetchActLogsInProgress = createAction("fetchActLogsInProgress");
 
-export { fetchNotesSuccessfull, fetchNotesFailure, fetchNotesInProgress };
+export { fetchActLogsSuccessfull, fetchActLogsFailure, fetchActLogsInProgress };

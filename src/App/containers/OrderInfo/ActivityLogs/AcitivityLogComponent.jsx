@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import ActivityItem from "../../../components/activityItems";
 import { Button } from "@material-ui/core";
@@ -14,8 +15,9 @@ const useStyles = makeStyles((theme) => ({
 
 const ActivityLogComponent = (props) => {
   const classes = useStyles();
+  const history = useHistory();
   useEffect(() => {
-    const reqBody = { order_id: props.orderId, limit: 5, offset: 0 };
+    const reqBody = { order_id: props.orderId, limit: 3, offset: 0 };
     props.fetchLogData(reqBody);
   }, []);
 

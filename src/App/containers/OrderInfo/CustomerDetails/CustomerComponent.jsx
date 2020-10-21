@@ -91,6 +91,7 @@ const CustomerDetails = (props) => {
 
   const handleChange = () => {
     history.push("/customer-detail");
+    // history.push("/soa");
   };
 
   const handleNotesChange = () => {

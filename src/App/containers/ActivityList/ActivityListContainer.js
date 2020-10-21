@@ -1,22 +1,22 @@
 import { connect } from "react-redux";
 import { ActivityListComponent } from "./ActivityListComponent";
 // import { retailerNotes } from "./mockData";
-import { fetchRetailerNotesList } from "./duck";
+import { fetchActLogsList } from "./duck";
 
 const mapStateToProps = (state) => {
-  console.log("[soaContainer]", state);
+  console.log("[activityLogs]", state);
   return {
-    notesList: state.acitivityLog.retailerNotesList,
-    orderId: state.order.orderInfo.orderDetails,
-    notesProgress: state.notes.notesProgress,
-    notesSuccess: state.notes.notesSuccess,
+    acitivityLog: state.acitivityLog,
+    orderId: state.order.orderInfo.orderDetails.order_id,
+      // order_id: "50011546022614",
+    notesProgress: state.acitivityLog.notesProgress,
+    notesSuccess: state.acitivityLog.notesSuccess,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchRetailerNotesList: (payload) =>
-      dispatch(fetchRetailerNotesList(payload)),
+    fetchActLogsList: (payload) => dispatch(fetchActLogsList(payload)),
   };
 };
 
