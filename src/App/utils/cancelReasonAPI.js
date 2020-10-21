@@ -9,7 +9,7 @@ const headers = {
 };
 
 const cancelReasonAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://${apiUrl}/deliveryman/api/1/support/cancel-reason`;
+  const URL = `https://${apiUrl}/supportman/api/1/cancel-reason`;
   fetch(URL, {
     method: "POST",
     headers: headers,

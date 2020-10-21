@@ -1,2 +1,2 @@
 export { orderDataReducer } from "./reducer";
-// export { RetailerContainer } from "../RetailerContainer";
+export { OrderDetailsContainer } from "../OrderDetailsContainer";
