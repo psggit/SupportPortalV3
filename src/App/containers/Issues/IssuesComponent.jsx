@@ -5,6 +5,10 @@ import Grid from '@material-ui/core/Grid';
 import { Box } from "@material-ui/core";
 import TopBar from "../../components/topBar";
 import { Typography } from '@material-ui/core';
+import Dialog from '../../components/dialog';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import Moment from "moment";
 import Loading from "./../../components/loading";
 import ListItemText from '@material-ui/core/ListItemText';
@@ -12,17 +16,27 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import {
-  Dialog,
-  DialogActions,
-  DialogTitle
-} from "@material-ui/core";
+import { resolveIcon } from "./../../assets/images/index"
+// import {
+//   Dialog,
+//   DialogActions,
+//   DialogTitle
+// } from "@material-ui/core";
 import { deepOrange, deepPurple } from "@material-ui/core/colors";
+import TablePagination from '@material-ui/core/TablePagination';
+import {
+  getOffsetUsingPageNo,
+  getQueryParamByName,
+  getQueryUri,
+} from "../../utils/helpers";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    overflowY: "hidden"
+    overflowY: "hidden",
+    "& .MuiIconButton-root.disabled": {
+      cursor: "not-allowed"
+    }
   },
   section1: {
     padding: 24,
@@ -74,17 +88,59 @@ const useStyles = makeStyles((theme) => ({
   purple: {
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500]
-  }
+  },
+  resolveIcon: {
+    width: 28,
+    height: 32
+  },
+  resolveContainer: {
+    cursor: "pointer"
+  },
+  selectIssue: {
+    display: "flex",
+    alignItems: "center",
+    color: "#606060",
+    fontSize: 16
+  },
+  formControl: {
+    marginLeft: "16px",
+    minWidth: 120,
+  },
 }));
 
 const RenderIssues = (props) => {
   const classes = useStyles();
   const colors = ["purple", "orange"];
+  const issuesList = props.issueList.issues;
 
   const [showDialog, setShowDialog] = useState(false);
   const [assignIssue, setAssignIssue] = useState(false);
   const [resolveIssue, setResolveIssue] = useState(false);
   const [orderId, setOrderId] = useState("");
+  const [supportPersonId, setSupportPersonId] = useState();
+  const [issueId, setIssueId] = useState();
+  const [data, setData] = useState([]);
+
+  const PAGE_OPTIONS = [10, 20, 30];
+  const currentPage = getQueryParamByName("pageSize") || PAGE_OPTIONS[0];
+  const pageSize = getQueryParamByName("activePage") || 0;
+
+  const [pageLimit, setPageLimit] = useState(currentPage);
+  const [activePage, setActivePage] = useState(pageSize);
+
+  useEffect(() => {
+    props.fetchSupportPerson()
+  }, [])
+
+  useEffect(() => {
+    if (!props.fetchSupportPersonListInProgress) {
+      setSupportPersonId(props.supportPersonList.support_person[0].id)
+    }
+  }, [props.fetchSupportPersonListInProgress])
+
+  useEffect(() => {
+    setData(issuesList.slice(activePage * pageLimit, parseInt(pageLimit) + parseInt(activePage * pageLimit)))
+  }, [activePage, pageLimit])
 
   const unmountConfirmationDialog = () => {setShowDialog(false);}
 
@@ -95,12 +151,21 @@ const RenderIssues = (props) => {
   }
 
   const handleConfirmation = () => {
-    const payload = {
-      orderId: orderId
-    };
+    let payload;
   
-    if (assignIssue) props.assignIssue(payload);
-    else props.resolveIssue(payload);
+    if (assignIssue) {
+      payload = {
+        orderId: orderId,
+        issueId: issueId,
+        supportPersonId: supportPersonId
+      }
+      props.assignIssue(payload);
+    } else {
+      payload = {
+        orderId: orderId
+      };
+      props.resolveIssue(payload);
+    }
 
     unmountConfirmationDialog();
   }
@@ -108,19 +173,55 @@ const RenderIssues = (props) => {
   const handleResolveIssue = (e, issue) => { 
     setResolveIssue(true);
     setOrderId(issue.order_id);
+    setIssueId(issue.id);
     mountConfirmationDialog();
   }
 
   const handleAssignIssue = (e, issue) => { 
     setAssignIssue(true); 
     setOrderId(issue.order_id);
+    setIssueId(issue.id);
     mountConfirmationDialog(); 
+  }
+
+  const handleChangePage = (e, pageNo) => {
+    setActivePage(pageNo);
+    const queryParamsObj = {
+      activePage: pageNo,
+      pageSize: pageLimit
+    };
+    history.pushState(
+      queryParamsObj,
+      "issues listing",
+      `/issues${getQueryUri(queryParamsObj)}`
+    );
+  }
+
+  const handleChangeRowsPerPage = (event) => {
+    setPageLimit(event.target.value);
+    if(parseInt(activePage) !== 0) setActivePage(0);
+
+    const queryParamsObj = {
+      activePage: parseInt(activePage) !== 0 ? 0 : activePage,
+      pageSize: event.target.value
+    };
+
+    history.pushState(
+      queryParamsObj,
+      "issues listing",
+      `/issues${getQueryUri(queryParamsObj)}`
+    );
+  }
+
+  const handleSupportPersonChange = (event) => {
+    console.log("id", event.target.value)
+    setSupportPersonId(event.target.value)
   }
 
   return (
     <>
       {
-        props.issueList.issues.map((issue, index) => {
+        data.map((issue, index) => {
           const avatarColor = classes[colors[Math.floor(Math.random() * colors.length)]]
           return (
             <Paper className={classes.paper} key={`${issue.order_id}+${index}`}>
@@ -142,7 +243,7 @@ const RenderIssues = (props) => {
                 <Grid item xs={2}>
                   <ListItemText 
                     className={classes.dateStyle} 
-                    primary={`${Moment(issue.assigned_time).format("D MMM")} at ${Moment(issue.assigned_time).format("hh:mm A")}`} 
+                    primary={`${Moment(issue.issue_raised_time).format("D MMM")} at ${Moment(issue.issue_raised_time).format("hh:mm A")}`} 
                   />
                 </Grid>
                 <Grid item xs={2}>
@@ -163,7 +264,7 @@ const RenderIssues = (props) => {
                     onClick={(e) => handleResolveIssue(e, issue)} 
                     disabled={!issue.to_show_resolve || props.resolveIssueInProgress}
                   >
-                    <DeleteIcon />
+                    <img src={resolveIcon} className={classes.resolveIcon} />
                   </IconButton>
                 </Grid>
               </Grid>
@@ -172,24 +273,49 @@ const RenderIssues = (props) => {
         })
       }
       {
+        <TablePagination
+          component="div"
+          count={props.issueList.issues.length}
+          page={parseInt(activePage)}
+          onChangePage={handleChangePage}
+          rowsPerPage={parseInt(pageLimit)}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
+      }
+      {
         showDialog &&
         <Dialog
-          open={showDialog}
-          onClose={()=> unmountConfirmationDialog()}
-        >
-          <DialogTitle>
-            {
-              resolveIssue ? `Do ypu want to resolve issue?` : `Do you want to assign issue?`
-            }
-          </DialogTitle>
-          <DialogActions>
-            <Button onClick={() => handleConfirmation()} color="primary" variant="outlined">
+          title={resolveIssue ? `RESOLVE ISSUE` : `REASSIGN ISSUE`}
+          actions={[
+            <Button onClick={() => unmountConfirmationDialog()} color="primary" variant="outlined">
+              Cancel
+            </Button>,
+            <Button onClick={() => handleConfirmation()} color="primary" variant="contained">
               Confirm
             </Button>
-            <Button onClick={() => unmountConfirmationDialog()} color="primary" variant="contained">
-              Close
-            </Button>
-          </DialogActions>
+          ]}
+        >
+          <form>
+            <div className={classes.selectIssue}>
+              <div>Select support personel</div>
+              <div>
+                <FormControl className={classes.formControl}>
+                  <Select
+                    value={supportPersonId}
+                    onChange={handleSupportPersonChange}
+                    displayEmpty
+                    className={classes.selectEmpty}
+                  >
+                    {
+                      !props.fetchSupportPersonListInProgress && props.supportPersonList.support_person.map((item) => {
+                        return <MenuItem value={item.id} key={item.id}>{item.username}</MenuItem>
+                      })
+                    }
+                  </Select>
+                </FormControl>
+              </div>
+            </div>
+          </form>
         </Dialog>
       }
     </>
@@ -227,7 +353,9 @@ const IssuesComponent = (props) => {
             <div className={classes.section2}>
               {
                 !props.fetchIssuesInProgress &&
-                <RenderIssues {...props} />
+                <>
+                  <RenderIssues {...props} />
+                </>
               }
             </div>
           </Grid>

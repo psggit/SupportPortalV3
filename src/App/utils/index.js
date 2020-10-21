@@ -7,6 +7,7 @@ export { fetchDANotesAPI } from "./fetchDANotesAPI";
 export { fetchIssuesAPI } from "./fetchIssuesAPI";
 export { resolveIssueAPI } from "./resolveIssueAPI";
 export { assignIssueAPI } from "./assignIssueAPI";
+export { supportPersonListAPI } from "./supportPersonListAPI";
 export { genresAPI } from "./genresAPI";
 export { brandsAPI } from "./brandsAPI";
 export { cancelReasonAPI } from "./cancelReasonAPI";

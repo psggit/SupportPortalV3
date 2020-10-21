@@ -9,6 +9,9 @@ const assignIssueFailed = createAction("assignIssueFailed");
 const resolveIssueInProgress = createAction("resolveIssueInProgress");
 const resolveIssueSuccess = createAction("resolveIssueSuccess");
 const resolveIssueFailed = createAction("resolveIssueFailed");
+const fetchSupportPersonListInProgress = createAction("fetchSupportPersonListInProgress");
+const fetchSupportPersonListSuccess = createAction("fetchSupportPersonListSuccess");
+const fetchSupportPersonListFailed = createAction("fetchSupportPersonListFailed");
 
 export {
   fetchIssuesSuccess,
@@ -20,4 +23,7 @@ export {
   resolveIssueInProgress,
   resolveIssueSuccess,
   resolveIssueFailed,
+  fetchSupportPersonListInProgress,
+  fetchSupportPersonListSuccess,
+  fetchSupportPersonListFailed
 };

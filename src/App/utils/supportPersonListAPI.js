@@ -9,8 +9,8 @@ const headers = {
   "hasura-id": `${localStorage.getItem("hasura-id")}`,
 };
 
-const assignIssueAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = ` https://${apiUrl}/supportman/api/1/issue/assignmanual/${reqBody.orderId}/${reqBody.issueId}/${reqBody.supportPersonId}`;
+const supportPersonListAPI = (process, onSuccess, onError) => {
+  const URL = ` https://${apiUrl}/deliveryman/api/1/support/list/supportperson`;
   console.log(URL);
   fetch(URL, {
     method: "GET",
@@ -22,4 +22,4 @@ const assignIssueAPI = (reqBody, process, onSuccess, onError) => {
     .catch((err) => onError(err));
 };
 
-export { assignIssueAPI };
+export { supportPersonListAPI };

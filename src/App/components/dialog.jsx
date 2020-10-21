@@ -37,21 +37,14 @@ const useStyles = makeStyles(() => ({
 const DialogComponent = (props) => {
   const classes = useStyles();
   let { title, subtitle, actions, children, change } = props;
-  useEffect(() => {
-    // console.log("componentDidMount");
 
-    return () => {
-      // console.log("componentWillUnmount");
-      change("");
-    };
-  }, []);
   return (
     <Dialog
       open={true}
       key={0}
       // onClose={handleClose}
     >
-      <div style={{ width: "492px", padding: "24px" }}>
+      <div style={{minWidth: "320px", maxWidth: "600px", padding: "24px" }} >
         <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>
           {title}
         </DialogTitle>

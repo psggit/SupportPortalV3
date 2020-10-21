@@ -8,11 +8,15 @@ import {
   resolveIssueInProgress,
   resolveIssueSuccess,
   resolveIssueFailed,
+  fetchSupportPersonListInProgress,
+  fetchSupportPersonListSuccess,
+  fetchSupportPersonListFailed
 } from "./action";
 // import { createSession } from "../../../utils";
 import { fetchIssuesAPI } from "../../../utils/fetchIssuesAPI";
 import { assignIssueAPI } from "../../../utils/assignIssueAPI";
-import { resolveIssueAPI } from "../../../utils";
+import { resolveIssueAPI } from "../../../utils/resolveIssueAPI";
+import { supportPersonListAPI } from "./../../../utils/supportPersonListAPI";
 
 const processResponse = () => {
   // console.log("[processResponse]");
@@ -83,7 +87,7 @@ const assignOrderIssue = (payload) => {
 
 const onResolveIssueSuccess = (dispatch) => {
   return (data) => {
-    // console.log("[onSuccess] data", data);
+    //console.log("[onSuccess] data", data);
     dispatch(resolveIssueSuccess(data));
     // createSession(data);
   };
@@ -108,4 +112,30 @@ const resolveOrderIssue = (payload) => {
   };
 };
 
-export { fetchIssues, assignOrderIssue, resolveOrderIssue };
+const onFetchSupportListSuccess = (dispatch) => {
+  return (data) => {
+    //console.log("[onSuccess] data", data);
+    dispatch(fetchSupportPersonListSuccess(data));
+    // createSession(data);
+  };
+};
+
+const onFetchSupportListError = (dispatch) => {
+  return (err) => {
+    console.log("[onError]", err);
+    dispatch(fetchSupportPersonListFailed(err));
+  };
+};
+
+const fetchSupportPersonList = (payload) => {
+  return (dispatch) => {
+    dispatch(fetchSupportPersonListInProgress());
+    supportPersonListAPI(
+      processResponse(dispatch),
+      onFetchSupportListSuccess(dispatch),
+      onFetchSupportListError(dispatch)
+    );
+  };
+};
+
+export { fetchIssues, assignOrderIssue, resolveOrderIssue, fetchSupportPersonList };

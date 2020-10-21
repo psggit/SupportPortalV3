@@ -9,6 +9,9 @@ import {
   resolveIssueInProgress,
   resolveIssueSuccess,
   resolveIssueFailed,
+  fetchSupportPersonListInProgress,
+  fetchSupportPersonListSuccess,
+  fetchSupportPersonListFailed
 } from "./action";
 
 const initialState = {
@@ -21,7 +24,11 @@ const initialState = {
   resolveIssueInProgress: false,
   resolveIssueSuccess: false,
   resolveIssueFailed: false,
+  fetchSupportPersonListInProgress: true,
+  fetchSupportPersonListSuccess: false,
+  fetchSupportPersonListFailed: false,
   issueList: null,
+  supportPersonList: null
 };
 
 const issuesReducer = createReducer(initialState, {
@@ -92,6 +99,31 @@ const issuesReducer = createReducer(initialState, {
       resolveIssueInProgress: false,
       resolveIssueFailed: true,
       resolveIssueSuccess: false,
+    };
+  },
+  [fetchSupportPersonListInProgress]: (state) => {
+    return {
+      ...state,
+      fetchSupportPersonListInProgress: true,
+      fetchSupportPersonListFailed: false,
+      fetchSupportPersonListSuccess: false,
+    };
+  },
+  [fetchSupportPersonListSuccess]: (state, data) => {
+    return {
+      ...state,
+      fetchSupportPersonListInProgress: false,
+      fetchSupportPersonListFailed: false,
+      fetchSupportPersonListSuccess: true,
+      supportPersonList: data.payload
+    };
+  },
+  [fetchSupportPersonListFailed]: (state) => {
+    return {
+      ...state,
+      fetchSupportPersonListInProgress: false,
+      fetchSupportPersonListFailed: true,
+      fetchSupportPersonListSuccess: false,
     };
   },
 });

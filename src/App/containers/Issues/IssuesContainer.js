@@ -3,12 +3,16 @@ import { IssuesComponent } from "./IssuesComponent";
 import { 
   fetchIssues, 
   assignOrderIssue, 
-  resolveOrderIssue 
+  resolveOrderIssue,
+  fetchSupportPersonList 
 } from "./duck/operations";
 
 const mapStateToProps = (state) => {
+  console.log("state", state.issues)
   return {
     issueList: state.issues.issueList,
+    supportPersonList: state.issues.supportPersonList,
+    fetchSupportPersonListInProgress: state.issues.fetchSupportPersonListInProgress,
     fetchIssuesSuccess: state.issues.fetchIssuesSuccess,
     fetchIssuesInProgress: state.issues.fetchIssuesInProgress,
     assignIssueInProgress: state.issues.assignIssueInProgress,
@@ -23,6 +27,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchIssueList: () => dispatch(fetchIssues()),
     assignIssue: (orderId) => dispatch(assignOrderIssue(orderId)),
     resolveIssue: (orderId) => dispatch(resolveOrderIssue(orderId)),
+    fetchSupportPerson: () => dispatch(fetchSupportPersonList())
   };
 };
 
