@@ -174,6 +174,13 @@ function CustomerSoa(props) {
                         </TableRow>
                       );
                     })}
+                {!showData && (
+                  <TableRow>
+                    <TableCell colSpan={10} align="center">
+                      No data available
+                    </TableCell>
+                  </TableRow>
+                )}
               </TableBody>
             </Table>
             {showData && (
@@ -188,11 +195,6 @@ function CustomerSoa(props) {
               />
             )}
           </TableContainer>
-          {!showData && (
-            <Container>
-              <p>No data available</p>
-            </Container>
-          )}
         </Box>
         {errorMessage && (
           <Notification

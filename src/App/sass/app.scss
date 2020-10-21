@@ -22,6 +22,27 @@ body {
   color: #f44336 !important;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: none;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #E5E5E5;
+  border-radius: 15px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #E5E5E5;
+  border-radius: 15px;
+}
+
 /*@font-face {
   font-family: "Open Sans";
   src: url("../assets/fonts/OpenSans-Regular.ttf");

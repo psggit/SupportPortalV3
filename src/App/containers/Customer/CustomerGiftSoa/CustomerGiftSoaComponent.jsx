@@ -138,6 +138,13 @@ function CustomerGiftSoa(props) {
                       </TableRow>
                     );
                   })}
+              {!showData && (
+                <TableRow>
+                  <TableCell colSpan={10} align="center">
+                    No data available
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
           {showData && (
@@ -152,11 +159,6 @@ function CustomerGiftSoa(props) {
             />
           )}
         </TableContainer>
-        {!showData && (
-          <Container>
-            <p>No data available</p>
-          </Container>
-        )}
       </Box>
     </>
   );

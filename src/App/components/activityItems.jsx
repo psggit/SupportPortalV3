@@ -23,6 +23,15 @@ const useStyles = makeStyles((theme) => ({
   card: {
     marginTop: theme.spacing(4),
   },
+  cardHeader: {
+    "& .MuiCardHeader-content": {
+      "& > span": {
+        fontSize: 16,
+        fontWeight: 600,
+        textTransform: "uppercase",
+      },
+    },
+  },
   actionContainer: {
     padding: theme.spacing(2),
   },
@@ -43,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "flex-start",
   },
   ListItemRootTitle: {
-    width: "30%",
+    width: "40%",
     fontSize: 12,
     color: "#606060",
     textAlign: "right",
@@ -67,13 +76,21 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiCardContent-root": {
       padding: 0,
     },
-    "& .MuiCardActions-root": {
-      padding: "8px 0",
-    },
+  },
+  addBtn: {
+    padding: 0,
   },
   cardActions: {
     display: "flex",
     justifyContent: "flex-end",
+    paddingTop: 24,
+  },
+  header: {
+    display: "flex",
+    width: "100%",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingBottom: 12,
   },
 }));
 
@@ -96,27 +113,22 @@ export default function ActivityItem(props) {
   const keysToRender = props.keysToRender;
   const type = props.issueType;
   const subtitle = props.subtitle;
-  const title = props.title;
+  const titleText = props.title;
   const cardActions = props.cardActions;
 
   if (mapArray === null) {
     return (
       <Card className={classes.root}>
-        <CardHeader>
-            {title.toUpperCase()}
-
-          <Box>
-          {subtitle ? (
-              <CardActions >
-                {subtitle.map((item, ind) => {
-                  return <div key={ind}>{item}</div>;
-                })}
-              </CardActions>
-            ) : (
-                ""
-              )}
-          </Box>
-          </CardHeader>
+        <Box className={classes.header}>
+        <CardHeader title={titleText} className={classes.cardHeader} />
+        {subtitle ? (
+            <CardActions className={classes.addBtn}>
+              {subtitle.map((item) => item)}
+            </CardActions>
+          ) : (
+              ""
+            )}
+        </Box>
         <CardContent>          
           <ListItem
             dense
@@ -147,16 +159,16 @@ export default function ActivityItem(props) {
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Typography variant="h5" className={classes.heading} gutterBottom>
-          {title}
-          {subtitle ? (
-            <CardActions >
+        <Box className={classes.header}>
+        <CardHeader title={titleText} className={classes.cardHeader} />
+        {subtitle ? (
+            <CardActions className={classes.addBtn}>
               {subtitle.map((item) => item)}
             </CardActions>
           ) : (
               ""
             )}
-        </Typography>    
+        </Box>
         {mapArray.map((value, index) => {
           let data = value;
           return (

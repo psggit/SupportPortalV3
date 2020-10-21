@@ -58,7 +58,7 @@ const RetailerDetails = (props) => {
   const retailerNotes = [
     // eslint-disable-next-line react/jsx-key
     <Button color="primary" endIcon={<ChevronRightIcon />} onClick={handleMore}>
-      Add more
+      More
     </Button>,
   ];
 

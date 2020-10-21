@@ -19,7 +19,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     alignItems: "baseline",
     width: "100%",
-    padding: "24px 0 24px 24px",
+    padding: 24,
+    height: "100vh",
+    overflowY: "auto",
     "& .MuiTimelineItem-missingOppositeContent:before": {
       padding: 0,
       flex: 0,
@@ -64,8 +66,8 @@ const OrderStatus = (props) => {
   const classes = useStyles();
   return (
     <Paper className={classes.root}>
-      <Typography className={classes.text} variant="h5">
-        ORDER STATUS: {props.orderId}
+      <Typography className={classes.text} variant="h4">
+        ORDER ID: {props.orderId}
       </Typography>
       <Typography className={classes.text} variant="body2">ETA: -</Typography>
       {props.orderInfo.length > 0 && (
