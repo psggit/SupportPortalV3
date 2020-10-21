@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -10,22 +10,16 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Radio,
-  RadioGroup,
-  FormControlLabel,
+  InputLabel,
   FormControl,
   Select,
   MenuItem,
   Input,
   TextField,
 } from "@material-ui/core";
-
 import OrderCard from "../../../components/card";
 import { OrderSummaryItem } from "../../Cart/components/orderSummaryItem";
-import {
-  kycDetailsMockData,
-  deliveryOrderReasons,
-} from "../../../mockDataResponse";
+import { fetchDeliverOrderSuccess, fetchKycListSuccess } from "./duck/actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -82,9 +76,15 @@ const useStyles = makeStyles((theme) => ({
 const OrderDetailsCard = (props) => {
   const classes = useStyles();
 
+  useEffect(() => {
+    const payload = {
+      city_id: props.order.city_id.toString(),
+    };
+    props.deliverOrderReasons(payload);
+    props.fetchKycList();
+  }, []);
   //TODOS:@Purva - clean up mock data
   // fetchKYCDetailsSuccess - should be returned from KYC details
-  const fetchKYCDetailsSuccess = true;
 
   let { platform, customer_address } = {
     ...props.order,
@@ -93,14 +93,21 @@ const OrderDetailsCard = (props) => {
 
   const [openCancel, setOpenCancel] = useState(false);
   const [openDeliver, setOpenDeliver] = useState(false);
-  const [value, setValue] = useState("female");
+  const [selectedValue, setValue] = useState("");
   const [completeBtnDisabled, setCompleteBtnDisabled] = useState(true);
   const [kycArray, setKycArray] = useState(["", "", "", ""]);
   const [dobArray, setDobArray] = useState(["", "", "", ""]);
+  const [kyc, setKyc] = useState("");
+  const [reasonIdx, setReasonIdx] = useState("");
+  const [notes, setNotes] = useState("");
 
   const handleClickOpen = (type) => {
     if (type == "cancel") {
-      setOpenCancel(true);
+      if (props.fetchCancelReasonFailure) {
+        props.handleError();
+      } else {
+        setOpenCancel(true);
+      }
     } else {
       setOpenDeliver(true);
     }
@@ -112,14 +119,59 @@ const OrderDetailsCard = (props) => {
   };
 
   const handleCancel = () => {
-    //call function in props
     setOpenCancel(false);
     setOpenDeliver(false);
   };
 
-  // const handleDeliver = () => {};
   const handleChange = (event) => {
     setValue(event.target.value);
+  };
+
+  const handleKycChange = (event) => {
+    setKyc(event.target.value);
+  };
+
+  const handleReasonChange = (event) => {
+    setReasonIdx(event.target.value);
+  };
+
+  const handleNotes = (event) => {
+    setNotes(event.target.value);
+  };
+
+  const handleDeliver = () => {
+    const payload = {
+      order_id: props.order.order_id,
+      id_proof: kyc,
+      slot_id: "",
+      digits: kycArray.toString().split(",").join(""),
+      year_of_birth: dobArray.toString().split(",").join(""),
+      reason_for_completion: parseInt(reasonIdx),
+      note_type: "order",
+      note: notes,
+    };
+    props.deliverOrder(payload);
+    setOpenDeliver(false);
+  };
+
+  const handleCancelOrder = () => {
+    const payload = {
+      order_id: props.order.order_id,
+      restocking_charges: parseInt(props.order.restocking_charges),
+      total_fee: parseInt(props.order.total_fee),
+      cancellation_id: parseInt(selectedValue),
+      retailer_id: parseInt(props.order.retailer_id),
+      consumer_id: parseInt(props.order.customer_id),
+      hipbar_wallet_amount:
+        props.order.hipbar_wallet === ""
+          ? 0
+          : parseFloat(props.order.hipbar_wallet.split(" ")[1]),
+      gift_wallet_amount:
+        props.order.gift_wallet === ""
+          ? 0
+          : parseFloat(props.order.gift_wallet.split(" ")[1]),
+    };
+    props.cancelOrder(payload);
   };
 
   const handleCompleteChange = (event, type, index) => {
@@ -135,11 +187,6 @@ const OrderDetailsCard = (props) => {
         setDobArray(newArray);
       }
     }
-
-    console.log(kycArray);
-    // let validate = false;
-    // let validateValue = kycArray.filter((element) => element === "");
-    // console.log(validate, validateValue, validateValue.length);
     setCompleteBtnDisabled(false);
   };
 
@@ -209,39 +256,66 @@ const OrderDetailsCard = (props) => {
           {`Do you want to cancel order? Select reason for cancelling order and click Confirm to proceed.`}
         </DialogTitle>
         <DialogContent>
-          <RadioGroup
-            aria-label="gender"
-            name="gender1"
-            value={value}
-            onChange={handleChange}
-          >
-            {props.fetchCancelReasonSuccess &&
-              props.cancelReasons.map((value) => {
-                return (
-                  <FormControlLabel
-                    key={value.id}
-                    value={value.id}
-                    control={<Radio />}
-                    label={value.reason}
-                  />
-                );
-              })}
-          </RadioGroup>
-          <OrderSummaryItem title="Cancellation charges" value={""} />
-          <OrderSummaryItem
-            title="Total Cancellation Charges:"
-            value={"₹ 2000"}
-            type="button"
-          >
-            <OrderSummaryItem title="Taxes" value="Taxes charges" />
-          </OrderSummaryItem>
-          <OrderSummaryItem title="Refund Amount" value={""} />
-          <OrderSummaryItem title="Wallet:" value={"₹ 2000"} />
-          <OrderSummaryItem title="HipBar Wallet:" value={"₹ 2000"} />
-          <OrderSummaryItem title="Gift Wallet:" value={"₹ 3000"} />
+          <FormControl className={classes.formControl}>
+            <InputLabel id="demo-simple-select-label">Select Reason</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              onChange={(event) => handleChange(event)}
+            >
+              {props.fetchCancelReasonSuccess &&
+                props.cancelReasons.map((value, index) => {
+                  if (selectedValue === value) {
+                    return (
+                      <MenuItem value={value.id} key={index} selected={true}>
+                        {value.reason}
+                      </MenuItem>
+                    );
+                  } else {
+                    return (
+                      <MenuItem value={value.id} key={index}>
+                        {value.reason}
+                      </MenuItem>
+                    );
+                  }
+                })}
+            </Select>
+          </FormControl>
+          {props.cancelOrderSuccess && (
+            <div>
+              <OrderSummaryItem
+                title="Cancellation charges"
+                // value={props.cancelOrderData.total_cancellation_charges}
+              />
+              <OrderSummaryItem
+                title="Total Cancellation Charges:"
+                value={props.cancelOrderData.total_cancellation_charges}
+                type="button"
+              >
+                <OrderSummaryItem title="Taxes" value="Taxes charges" />
+              </OrderSummaryItem>
+              <OrderSummaryItem title="Refund Amount" />
+              <OrderSummaryItem
+                title="Wallet:"
+                value={props.cancelOrderData.refund_amount.wallet}
+              />
+              <OrderSummaryItem
+                title="HipBar Wallet:"
+                value={props.cancelOrderData.refund_amount.hipbar_wallet}
+              />
+              <OrderSummaryItem
+                title="Gift Wallet:"
+                value={props.cancelOrderData.refund_amount.gift_wallet}
+              />
+            </div>
+          )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancel} color="primary" variant="outlined">
+          <Button
+            onClick={handleCancelOrder}
+            color="primary"
+            variant="outlined"
+          >
             Confirm
           </Button>
           <Button onClick={handleClose} color="primary" variant="contained">
@@ -271,11 +345,15 @@ const OrderDetailsCard = (props) => {
               />
 
               <FormControl className={classes.formControl}>
-                <Select id="demo-simple-select">
-                  {fetchKYCDetailsSuccess &&
-                    kycDetailsMockData.map((value, index) => {
+                <Select
+                  id="demo-simple-select"
+                  onChange={(event) => handleKycChange(event)}
+                >
+                  {fetchKycListSuccess &&
+                    props.kycListData !== null &&
+                    props.kycListData.map((value, index) => {
                       return (
-                        <MenuItem value={value.id} key={index}>
+                        <MenuItem value={value.description} key={index}>
                           {value.description}
                         </MenuItem>
                       );
@@ -331,9 +409,13 @@ const OrderDetailsCard = (props) => {
                 classes={{ root: classes.ListItemTextRoot }}
               />
               <FormControl className={classes.formControl}>
-                <Select id="demo-simple-select">
-                  {fetchKYCDetailsSuccess &&
-                    deliveryOrderReasons.map((value, index) => {
+                <Select
+                  id="demo-simple-select"
+                  onChange={(event) => handleReasonChange(event)}
+                >
+                  {fetchDeliverOrderSuccess &&
+                    props.deliverOrderData !== null &&
+                    props.deliverOrderData.map((value, index) => {
                       return (
                         <MenuItem value={value.id} key={index}>
                           {value.reason}
@@ -353,6 +435,7 @@ const OrderDetailsCard = (props) => {
             margin="normal"
             size="small"
             placeholder="Add note here"
+            onChange={(event) => handleNotes(event)}
           />
         </DialogContent>
         <DialogActions>
@@ -360,7 +443,7 @@ const OrderDetailsCard = (props) => {
             Cancel
           </Button>
           <Button
-            onClick={handleClose}
+            onClick={handleDeliver}
             color="primary"
             variant="contained"
             disabled={completeBtnDisabled}
@@ -379,10 +462,22 @@ OrderDetailsCard.propTypes = {
   address: PropTypes.string,
   handleCancel: PropTypes.func,
   handleDeliver: PropTypes.func,
-  cancelReasons: PropTypes.array,
+  cancelReasons: PropTypes.object,
+  deliverOrderData: PropTypes.object,
+  kycListData: PropTypes.object,
   buttonState: PropTypes.bool,
   fetchCancelReasonSuccess: PropTypes.bool,
-  fetchKYCDetailsSuccess: PropTypes.bool,
+  fetchCancelReasonFailure: PropTypes.bool,
+  fetchKycListSuccess: PropTypes.bool,
+  fetchKycListProgress: PropTypes.bool,
+  fetchDeliverOrderSuccess: PropTypes.bool,
+  handleError: PropTypes.func,
+  cancelOrder: PropTypes.func,
+  deliverOrderReasons: PropTypes.func,
+  fetchKycList: PropTypes.func,
+  deliverOrder: PropTypes.func,
+  cancelOrderData: PropTypes.object,
+  cancelOrderSuccess: PropTypes.bool,
 };
 
 export { OrderDetailsCard };

@@ -111,7 +111,11 @@ const CartComponent = (props) => {
 
   return (
     <>
-      <CartDetailsCard title="Cart Details" actions={actionButtons}>
+      <CartDetailsCard
+        title="Cart Details"
+        actions={actionButtons}
+        id="order-details"
+      >
         <OrderSummary {...props} modify={modify} />
       </CartDetailsCard>
     </>
@@ -119,7 +123,6 @@ const CartComponent = (props) => {
 };
 
 CartComponent.propTypes = {
-  fetchActivityLogs: PropTypes.func,
   orderInfo: PropTypes.object,
   order: PropTypes.any,
 };

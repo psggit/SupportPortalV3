@@ -7,7 +7,6 @@ import {
 
 const initialValue = {
   orderData: null,
-  activityLog: null,
   fetchDetailsProgress: false,
   fetchDetailsFail: false,
   fetchDetailsStatus: false,

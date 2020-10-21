@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -92,7 +93,7 @@ const OrderDetailsComponent = (props) => {
 
   const selectOrderId = (event, orderId) => {
     props.selectOrder(orderId);
-    history.push("/order-info");
+    history.push(`/order-info/${orderId}`);
   };
 
   if (!showData) {
