@@ -8,16 +8,17 @@ const headers = {
   "hasura-id": `${localStorage.getItem("hasura-id")}`,
 };
 
-const kycListAPI = (process, onSuccess, onError) => {
-  const URL = `https://${apiUrl}/deliveryman/api/1/agent/kyc-list`;
+const deliverOrderAPI = (reqBody, process, onSuccess, onError) => {
+  const URL = `https://${apiUrl}/supportman/api/1/deliver_order`;
   fetch(URL, {
-    method: "GET",
+    method: "POST",
     headers: headers,
     credentials: "include",
+    body: JSON.stringify(reqBody),
   })
     .then((res) => process(res))
     .then((data) => onSuccess(data))
     .catch((err) => onError(err));
 };
 
-export { kycListAPI };
+export { deliverOrderAPI };

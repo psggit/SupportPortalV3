@@ -10,8 +10,35 @@ const fetchDeliveryAgentNotesProgress = createAction(
   "fetchDeliveryAgentNotesProgress"
 );
 
+const fetchDeliveryAgentListSuccess = createAction(
+  "fetchDeliveryAgentListSuccess"
+);
+const fetchDeliveryAgentListFailed = createAction(
+  "fetchDeliveryAgentListFailed"
+);
+const fetchDeliveryAgentListProgress = createAction(
+  "fetchDeliveryAgentListProgress"
+);
+
+const fetchUnassignDASuccess = createAction("fetchUnassignDASuccess");
+const fetchUnassignDAFailed = createAction("fetchUnassignDAFailed");
+const fetchUnassignDAProgress = createAction("fetchUnassignDAProgress");
+
+const fetchReserveDASuccess = createAction("fetchReserveDASuccess");
+const fetchReserveDAFailed = createAction("fetchReserveDAFailed");
+const fetchReserveDAProgress = createAction("fetchReserveDAProgress");
+
 export {
   fetchDeliveryAgentNotesSuccess,
   fetchDeliveryAgentNotesFailed,
   fetchDeliveryAgentNotesProgress,
+  fetchDeliveryAgentListSuccess,
+  fetchDeliveryAgentListFailed,
+  fetchDeliveryAgentListProgress,
+  fetchUnassignDASuccess,
+  fetchUnassignDAFailed,
+  fetchUnassignDAProgress,
+  fetchReserveDASuccess,
+  fetchReserveDAFailed,
+  fetchReserveDAProgress,
 };

@@ -8,12 +8,12 @@ import StepContent from "@material-ui/core/StepContent";
 import Typography from "@material-ui/core/Typography";
 import Moment from "moment";
 import PropTypes from "prop-types";
-import Timeline from '@material-ui/lab/Timeline';
-import TimelineItem from '@material-ui/lab/TimelineItem';
-import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
-import TimelineConnector from '@material-ui/lab/TimelineConnector';
-import TimelineContent from '@material-ui/lab/TimelineContent';
-import TimelineDot from '@material-ui/lab/TimelineDot';
+import Timeline from "@material-ui/lab/Timeline";
+import TimelineItem from "@material-ui/lab/TimelineItem";
+import TimelineSeparator from "@material-ui/lab/TimelineSeparator";
+import TimelineConnector from "@material-ui/lab/TimelineConnector";
+import TimelineContent from "@material-ui/lab/TimelineContent";
+import TimelineDot from "@material-ui/lab/TimelineDot";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,46 +23,47 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
     overflowY: "auto",
 
-    '& .MuiTimelineItem-missingOppositeContent:before': {
+    "& .MuiTimelineItem-missingOppositeContent:before": {
       padding: 0,
-      flex: 0
+      flex: 0,
     },
-    '& .MuiTimelineDot-root': {
+    "& .MuiTimelineDot-root": {
       width: 16,
       height: 16,
-      borderColor: "#02B133"
-    }
+      borderColor: "#02B133",
+    },
   },
   text: {
     fontSize: 16,
     fontWeight: "bold",
     paddingBottom: 24,
   },
-}))
+}));
 
 const RenderTimeline = (props) => {
   return (
-  <>
-      {
-        props.steps.map((item, index) => {
-          return (
-            <TimelineItem>
-              <TimelineSeparator>
-                <TimelineDot variant="outlined"  />
-                {props.steps.length !== index + 1 ? <TimelineConnector /> : ''}
-              </TimelineSeparator>
-              <TimelineContent>
-                {item.order_status}
-                <Typography>{Moment(item.time).format("D MMM hh:mm A")}</Typography>
-                <Typography>{item.message}</Typography>
-              </TimelineContent>
-            </TimelineItem>
-          )
-        })
-      }
+    <>
+      {props.steps.map((item, index) => {
+        return (
+          // eslint-disable-next-line react/jsx-key
+          <TimelineItem key={index}>
+            <TimelineSeparator>
+              <TimelineDot variant="outlined" />
+              {props.steps.length !== index + 1 ? <TimelineConnector /> : ""}
+            </TimelineSeparator>
+            <TimelineContent>
+              {item.order_status}
+              <Typography>
+                {Moment(item.time).format("D MMM hh:mm A")}
+              </Typography>
+              <Typography>{item.message}</Typography>
+            </TimelineContent>
+          </TimelineItem>
+        );
+      })}
     </>
-  )
-}
+  );
+};
 
 const OrderStatus = (props) => {
   const classes = useStyles();
@@ -76,10 +77,9 @@ const OrderStatus = (props) => {
         <>
           <Timeline className={classes.root}>
             <RenderTimeline steps={props.orderInfo} />
-          </Timeline>  
+          </Timeline>
         </>
-        )
-      }
+      )}
     </Paper>
   );
 };

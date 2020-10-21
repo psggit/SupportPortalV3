@@ -75,14 +75,11 @@ CustomCard.propTypes = {
   renderArray: PropTypes.array,
   keysToRender: PropTypes.array,
   keyMap: PropTypes.object,
-
   id: PropTypes.string,
-
   subheader: PropTypes.any,
 };
 
 const getTimestamp = (timestamp) => {
-  // console.log("time", timestamp);
   return Moment(timestamp).format("DD/MM/YYYY");
 };
 
@@ -103,13 +100,16 @@ export default function CustomCard(props) {
         title={title}
         subheader={
           subheader ? (
-            <CardActions>{subheader.map((item) => item)}</CardActions>
+            <CardActions>
+              {subheader.map((item, index) => {
+                return <div key={index}>{item}</div>;
+              })}
+            </CardActions>
           ) : (
             ""
           )
         }
       />
-
       <CardContent className={classes.cardContent}>
         <List>
           {renderArray.map((item, index) => {
@@ -142,7 +142,9 @@ export default function CustomCard(props) {
       </CardContent>
       {actions ? (
         <CardActions className={classes.cardActions}>
-          {actions.map((item) => item)}
+          {actions.map((item, index) => {
+            return <div key={index}>{item}</div>;
+          })}
         </CardActions>
       ) : (
         ""
