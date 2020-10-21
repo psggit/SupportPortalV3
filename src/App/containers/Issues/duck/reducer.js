@@ -11,7 +11,7 @@ import {
   resolveIssueFailed,
   fetchSupportPersonListInProgress,
   fetchSupportPersonListSuccess,
-  fetchSupportPersonListFailed
+  fetchSupportPersonListFailed,
 } from "./action";
 
 const initialState = {
@@ -28,7 +28,7 @@ const initialState = {
   fetchSupportPersonListSuccess: false,
   fetchSupportPersonListFailed: false,
   issueList: null,
-  supportPersonList: null
+  supportPersonList: null,
 };
 
 const issuesReducer = createReducer(initialState, {
@@ -115,7 +115,7 @@ const issuesReducer = createReducer(initialState, {
       fetchSupportPersonListInProgress: false,
       fetchSupportPersonListFailed: false,
       fetchSupportPersonListSuccess: true,
-      supportPersonList: data.payload
+      supportPersonList: data.payload,
     };
   },
   [fetchSupportPersonListFailed]: (state) => {

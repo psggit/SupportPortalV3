@@ -127,7 +127,7 @@ const onFetchSupportListError = (dispatch) => {
   };
 };
 
-const fetchSupportPersonList = (payload) => {
+const fetchSupportPersonList = () => {
   return (dispatch) => {
     dispatch(fetchSupportPersonListInProgress());
     supportPersonListAPI(
