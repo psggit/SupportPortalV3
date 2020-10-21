@@ -26,11 +26,8 @@ const store = configureStore({
     giftSoa: customerGiftSOAReducer,
     rewards: rewardsReducer,
     update: customerUpdateReducer,
-
     acitivityLog: acitivityListReducer,
-
     issues: issuesReducer,
-
   }),
   middleware: [thunk],
 });
