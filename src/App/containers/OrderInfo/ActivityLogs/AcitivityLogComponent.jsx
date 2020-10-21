@@ -4,17 +4,9 @@ import PropTypes from "prop-types";
 import ActivityItem from "../../../components/activityItems";
 import { Button } from "@material-ui/core";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import { makeStyles } from "@material-ui/core/styles";
-
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: "flex",
-    justifyContent: "space-between",
-  },
-}));
 
 const ActivityLogComponent = (props) => {
-  const classes = useStyles();
+  // const classes = useStyles();
   const history = useHistory();
   useEffect(() => {
     const reqBody = { order_id: props.orderId, limit: 3, offset: 0 };

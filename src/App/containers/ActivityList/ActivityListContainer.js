@@ -8,7 +8,7 @@ const mapStateToProps = (state) => {
   return {
     acitivityLog: state.acitivityLog,
     orderId: state.order.orderInfo,
-      // order_id: "50011546022614",
+    // order_id: "50011546022614",
     notesProgress: state.acitivityLog.notesProgress,
     notesSuccess: state.acitivityLog.notesSuccess,
   };
