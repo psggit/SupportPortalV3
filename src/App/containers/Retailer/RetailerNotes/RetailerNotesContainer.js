@@ -10,6 +10,7 @@ const mapStateToProps = (state) => {
     orderId: state.order.orderInfo.orderDetails,
     notesProgress: state.notes.notesProgress,
     notesSuccess: state.notes.notesSuccess,
+    orderInfo: state.order.orderInfo.orderDetails,
   };
 };
 
