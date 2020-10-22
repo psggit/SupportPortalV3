@@ -89,7 +89,9 @@ const RetailerCardComponent = (props) => {
         <ListItem dense disableGutters>
           <ListItemText primary={"Free Agent/ Total Delivery Agents"} />
           <Box>
-            <Typography>{"2/10"}</Typography>
+            <Typography>
+              {props.freeDa}/{props.totalDa}
+            </Typography>
           </Box>
 
           <Box className={classes.addComponentRight} />
@@ -148,6 +150,8 @@ const RetailerCardComponent = (props) => {
 RetailerCardComponent.propTypes = {
   fetchOrderDetails: PropTypes.func,
   orderInfo: PropTypes.object,
+  totalDa: PropTypes.string,
+  freeDa: PropTypes.string,
 };
 
 export { RetailerCardComponent };

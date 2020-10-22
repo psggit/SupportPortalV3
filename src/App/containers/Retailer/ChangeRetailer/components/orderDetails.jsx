@@ -106,7 +106,13 @@ const OrderDetails = (props) => {
           </Typography>
         </ListItem>
         {cartItem.map((value) => {
-          return <CartItem value={value} key={value.sku_id} />;
+          return (
+            <CartItem
+              value={value}
+              key={value.sku_id}
+              listRetailerData={props.listRetailerData}
+            />
+          );
         })}
       </List>
     </Box>

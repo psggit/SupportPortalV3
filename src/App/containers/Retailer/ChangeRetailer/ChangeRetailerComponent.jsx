@@ -90,7 +90,11 @@ const ChangeRetailerComponent = (props) => {
           {props.listRetailerSuccess &&
             props.listRetailerData.da_info.map((value) => (
               <Grid item xs={4}>
-                <RetailerCardContainer retailerName={value.retailer_name} />
+                <RetailerCardContainer
+                  retailerName={value.retailer_name}
+                  totalDa={value.total_da}
+                  freeDa={value.free_da}
+                />
               </Grid>
             ))}
         </Grid>

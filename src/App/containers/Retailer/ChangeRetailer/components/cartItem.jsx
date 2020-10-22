@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-import Box from "@material-ui/core/Box";
 import { List, Typography } from "@material-ui/core";
 
 import ListItem from "@material-ui/core/ListItem";
@@ -80,19 +79,20 @@ const useStyles = makeStyles((theme) => ({
       marginTop: "30px",
     },
   },
-  counterAvailable: {
+  counter: {
     border: "1px solid #C7C7C7",
     borderRadius: "12px",
     textAlign: "center",
     width: "56px",
-    color: "green",
+    color: "#010B13",
   },
   counterUnAvailable: {
-    border: "1px solid #C7C7C7",
-    borderRadius: "12px",
     textAlign: "center",
-    width: "56px",
-    color: "red",
+    color: "#FF1212",
+  },
+  counterAvailable: {
+    textAlign: "center",
+    color: "#02B133",
   },
   addComponentRight: {
     border: "1px solid #C7C7C7",
@@ -112,6 +112,7 @@ const useStyles = makeStyles((theme) => ({
 const CartItem = (props) => {
   const classes = useStyles();
   const value = props.value;
+  console.log("CartItem", props.listRetailerData);
   return (
     <List>
       <ListItem>
@@ -121,16 +122,18 @@ const CartItem = (props) => {
           secondary={`${value.volume} ML | ₹ ${value.sku_price}`}
         />
         <div>
-          <Typography
-            className={
-              value.ordered_count === 1
-                ? classes.counterAvailable
-                : classes.counterUnAvailable
-            }
-          >
+          <Typography className={classes.counter}>
             {value.ordered_count}
           </Typography>
-          <Typography>{"Available"}</Typography>
+          {props.listRetailerData.sku.retailer_sku_details === null ? (
+            <Typography className={classes.counterUnAvailable}>
+              {"Not Available"}
+            </Typography>
+          ) : (
+            <Typography className={classes.counterAvailable}>
+              {"Available"}
+            </Typography>
+          )}
         </div>
       </ListItem>
     </List>
@@ -139,6 +142,7 @@ const CartItem = (props) => {
 
 CartItem.propTypes = {
   value: PropTypes.string,
+  listRetailerData: PropTypes.object,
 };
 
 export { CartItem };
