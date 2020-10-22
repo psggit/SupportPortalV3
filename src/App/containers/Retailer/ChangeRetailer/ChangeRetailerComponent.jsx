@@ -88,9 +88,9 @@ const ChangeRetailerComponent = (props) => {
       <Box className={classes.boxContainer}>
         <Grid container spacing={4}>
           {props.listRetailerSuccess &&
-            props.listRetailerData.da_info.map(() => (
+            props.listRetailerData.da_info.map((value) => (
               <Grid item xs={4}>
-                <RetailerCardContainer />
+                <RetailerCardContainer retailerName={value.retailer_name} />
               </Grid>
             ))}
         </Grid>

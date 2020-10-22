@@ -94,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
 const OrderDetails = (props) => {
   const classes = useStyles();
   const cartItem = props.orderInfo.cart_items;
-
+  console.clear();
   console.log("orderDetail.jsx", props);
 
   return (
@@ -102,7 +102,7 @@ const OrderDetails = (props) => {
       <List dense disablePadding>
         <ListItem dense disableGutters>
           <Typography variant="h5" className={classes.heading} gutterBottom>
-            TASMAC
+            {props.retailerName}
           </Typography>
         </ListItem>
         {cartItem.map((value) => {
@@ -117,6 +117,7 @@ OrderDetails.propTypes = {
   orderInfo: PropTypes.object,
   cartDetails: PropTypes.array,
   listRetailerData: PropTypes.object,
+  retailerName: PropTypes.string,
 };
 
 export { OrderDetails };

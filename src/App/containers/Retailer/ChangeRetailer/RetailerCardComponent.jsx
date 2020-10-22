@@ -67,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
 
 const RetailerCardComponent = (props) => {
   useEffect(() => {
+    // console.clear();
     console.dir(props);
   }, []);
 
