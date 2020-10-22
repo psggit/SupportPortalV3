@@ -43,7 +43,7 @@ const DialogComponent = (props) => {
       key={0}
       // onClose={handleClose}
     >
-      <div style={{ minWidth: "320px", maxWidth: "600px", padding: "24px" }}>
+      <div style={{ minWidth: "540px", maxWidth: "600px", padding: "24px" }}>
         <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>
           {title}
         </DialogTitle>

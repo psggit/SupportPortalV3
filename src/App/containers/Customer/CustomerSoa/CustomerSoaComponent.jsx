@@ -8,7 +8,7 @@ import Notification from "../../../components/notification";
 import Moment from "moment";
 import { getQueryParamByName } from "../../../utils/helpers";
 import Paper from "@material-ui/core/Paper";
-import FullWidthTabs from "../../../components/customerMenuBar";
+import FullWidthTabs from "../customerMenuBar";
 import {
   Table,
   Box,

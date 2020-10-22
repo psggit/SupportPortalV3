@@ -14,6 +14,7 @@ import {
   getQueryUri,
 } from "../../../utils/helpers";
 import Paper from "@material-ui/core/Paper";
+import TopBar from "../../../components/topBar";
 
 const useStyles = makeStyles((theme) => ({
   navBar: {
@@ -85,6 +86,7 @@ function RetailerNotesComponent(props) {
 
   return (
     <div className={classes.formContainer}>
+      <TopBar />
       <SimpleMenuBar orderId={props.orderId.order_id}>
         {props.notesSuccess && <p>CHANGE RETAILER</p>}
       </SimpleMenuBar>

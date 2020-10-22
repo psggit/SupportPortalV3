@@ -9,7 +9,7 @@ import Moment from "moment";
 import { getQueryParamByName } from "../../../utils/helpers";
 import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
-import FullWidthTabs from "../../../components/customerMenuBar";
+import FullWidthTabs from "../customerMenuBar";
 import {
   Table,
   Container,

@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import TopBar from "../../../components/topBar";
 import { FormControlLabel, RadioGroup } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import FullWidthTabs from "../../../components/customerMenuBar";
+import FullWidthTabs from "../customerMenuBar";
 import { Grid, Tab } from "@material-ui/core";
 
 const BlueRadio = withStyles({
