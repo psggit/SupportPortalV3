@@ -14,7 +14,7 @@ import Dialog from "../../../components/dialog";
 import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import TopBar from "../../../components/topBar";
-import FullWidthTabs from "../../../components/customerMenuBar";
+import FullWidthTabs from "../customerMenuBar";
 import { Tab } from "@material-ui/core";
 import Loading from "../../../components/loading";
 

@@ -82,7 +82,7 @@ const CartComponent = (props) => {
       color="primary"
       onClick={handleModify}
       key="modifyBtn"
-      disabled={true}
+      disabled={false}
     >
       Modify
     </Button>,

@@ -42,8 +42,8 @@ const RetailerDetails = (props) => {
   };
 
   const actionButtons = [
-    <Button variant="outlined" color="primary" key="unassignBtn">
-      Unassign
+    <Button variant="outlined" color="primary" key="changeRetailerBtn">
+      Change Retailer
     </Button>,
     <Button
       variant="contained"
@@ -85,7 +85,6 @@ const RetailerDetails = (props) => {
         <DetailsCard
           title="RETAILER DETAILS"
           actions={actionButtons}
-          subheader={subheadAction}
           renderArray={data}
           keyMap={keyMap}
           keysToRender={keysToRender}
