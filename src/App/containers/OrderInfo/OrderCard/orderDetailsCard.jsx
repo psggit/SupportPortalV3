@@ -94,6 +94,7 @@ const OrderDetailsCard = (props) => {
   const [openCancel, setOpenCancel] = useState(false);
   const [openDeliver, setOpenDeliver] = useState(false);
   const [selectedValue, setValue] = useState("");
+  const [cancellationSummary, setCancellationSummary] = useState(false);
   const [completeBtnDisabled, setCompleteBtnDisabled] = useState(true);
   const [kycArray, setKycArray] = useState(["", "", "", ""]);
   const [dobArray, setDobArray] = useState(["", "", "", ""]);
@@ -114,17 +115,25 @@ const OrderDetailsCard = (props) => {
   };
 
   const handleClose = () => {
-    setOpenCancel(false);
-    setOpenDeliver(false);
+    unmountConfirmationDialog();
+    // setOpenCancel(false);
+    // setOpenDeliver(false);
   };
 
   const handleCancel = () => {
+    unmountConfirmationDialog();
+  };
+
+  const unmountConfirmationDialog = () => {
+    setValue("");
+    setCancellationSummary(false);
     setOpenCancel(false);
     setOpenDeliver(false);
   };
 
   const handleChange = (event) => {
     setValue(event.target.value);
+    setCancellationSummary(true);
     const payload = {
       order_id: props.order.order_id,
       restocking_charges: parseInt(props.order.restocking_charges),
@@ -289,7 +298,7 @@ const OrderDetailsCard = (props) => {
                 })}
             </Select>
           </FormControl>
-          {props.fetchCancellationSummarySuccess && (
+          {props.fetchCancellationSummarySuccess && cancellationSummary && (
             <div>
               <OrderSummaryItem
                 title="Cancellation charges"
