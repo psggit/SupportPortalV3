@@ -2,8 +2,12 @@ import {
   fetchOrderSuccess,
   fetchOrderFailed,
   fetchOrderProgress,
+  listRetailerSuccess,
+  listRetailerFailed,
+  listRetailerProgress,
 } from "./action";
 import { genresAPI } from "../../../../utils";
+import { listRetailerAPI } from "../../../../utils/listRetailerAPI";
 
 const processResponse = () => {
   return (res) => {
@@ -21,9 +25,21 @@ const onSuccess = (dispatch) => {
   };
 };
 
+const onSuccessListRetailer = (dispatch) => {
+  return (data) => {
+    dispatch(listRetailerSuccess(data));
+  };
+};
+
 const onError = (dispatch) => {
   return () => {
     dispatch(fetchOrderFailed());
+  };
+};
+
+const onErrorListRetailer = (dispatch) => {
+  return () => {
+    dispatch(listRetailerFailed());
   };
 };
 
@@ -39,4 +55,16 @@ const fetchGenre = (reqBody) => {
   };
 };
 
-export { fetchGenre };
+const listRetailer = (reqBody) => {
+  return (dispatch) => {
+    dispatch(listRetailerProgress());
+    listRetailerAPI(
+      reqBody,
+      processResponse(dispatch),
+      onSuccessListRetailer(dispatch),
+      onErrorListRetailer(dispatch)
+    );
+  };
+};
+
+export { fetchGenre, listRetailer };

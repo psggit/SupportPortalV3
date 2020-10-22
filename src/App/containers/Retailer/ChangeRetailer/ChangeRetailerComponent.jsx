@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-key */
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
@@ -51,8 +52,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ChangeRetailerComponent = () => {
+const ChangeRetailerComponent = (props) => {
   const classes = useStyles();
+
+  useEffect(() => {
+    const payload = {
+      sku_ids: [1297],
+      retailer_id: parseInt(props.orderDetails.retailer_id),
+      state_id: props.orderDetails.state_id,
+    };
+    console.log("useEffect", payload, props.orderDetails);
+    props.listRetailer(payload);
+  }, []);
 
   const handleBack = () => {
     location.href = "/dashboard";
@@ -84,6 +95,15 @@ const ChangeRetailerComponent = () => {
       </Box>
     </Container>
   );
+};
+
+ChangeRetailerComponent.propTypes = {
+  listRetailerData: PropTypes.object,
+  listRetailer: PropTypes.func,
+  listRetailerSuccess: PropTypes.bool,
+  listRetailerFailed: PropTypes.bool,
+  listRetailerProgres: PropTypes.bool,
+  orderDetails: PropTypes.object,
 };
 
 export { ChangeRetailerComponent };
