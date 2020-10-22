@@ -7,6 +7,7 @@ import {
   createNotes,
   connectCall,
   fetchIssueTypes,
+  submitIssue,
 } from "../OrderInfo/duck";
 
 const mapStateToProps = (state) => {
@@ -30,6 +31,8 @@ const mapStateToProps = (state) => {
     fetchIssueTypesSuccess: state.order.orderInfo.fetchIssueTypesSuccess,
     fetchIssueTypesProgress: state.order.orderInfo.fetchIssueTypesProgress,
     fetchIssueTypesFailed: state.order.orderInfo.fetchIssueTypesFailed,
+    issueTypes: state.order.orderInfo.issueTypes,
+    submitIssueSuccess: state.order.orderInfo.submitIssueSuccess,
   };
 };
 
@@ -39,7 +42,8 @@ const mapDispatchToProps = (dispatch) => {
     fetchCancelReason: (orderId) => dispatch(fetchCancelReason(orderId)),
     createNotes: (type) => dispatch(createNotes(type)),
     connectCall: (payload) => dispatch(connectCall(payload)),
-    fetchIssueTypes: (payload) => dispatch(fetchIssueTypes(payload)),
+    fetchIssueTypes: () => dispatch(fetchIssueTypes()),
+    submitIssue: (payload) => dispatch(submitIssue(payload)),
   };
 };
 

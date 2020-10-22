@@ -80,18 +80,14 @@ const createData = ({
 
 function Rewards(props) {
   const classes = useStyles();
+  const activePage = getQueryParamByName("activePage") || 1;
+  // eslint-disable-next-line no-unused-vars
+  const [pageNo, setPageNo] = useState(activePage);
   const [showData, setShowData] = useState(false);
   const [rows, setRowsData] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
-  const filledRows = [];
-  const loopData = (data) => {
-    data.map((value) => {
-      filledRows.push(createData(value));
-    });
-    setRowsData(filledRows);
-  };
 
   useEffect(() => {
     const payload = {
@@ -131,6 +127,14 @@ function Rewards(props) {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value));
     setPage(0);
+  };
+
+  const filledRows = [];
+  const loopData = (data) => {
+    data.map((value) => {
+      filledRows.push(createData(value));
+    });
+    setRowsData(data);
   };
 
   let loading = props.rewardsProgress;

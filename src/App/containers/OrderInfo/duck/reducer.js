@@ -15,6 +15,9 @@ import {
   fetchIssueTypesProgress,
   fetchIssueTypesFailed,
   fetchIssueTypesSuccess,
+  submitIssueProgress,
+  submitIssueFailed,
+  submitIssueSuccess,
 } from "./actions";
 
 const initialValue = {
@@ -33,6 +36,9 @@ const initialValue = {
   fetchIssueTypesProgress: false,
   fetchIssueTypesFailed: false,
   fetchIssueTypesSuccess: false,
+  submitIssueProgress: false,
+  submitIssueFailed: false,
+  submitIssueSuccess: false,
   errorMsg: "",
   successMsg: "",
   orderDetails: null,
@@ -158,16 +164,39 @@ const orderInfoReducer = createReducer(initialValue, {
     fetchIssueTypesSuccess: false,
     errorMsg: "Something went wrong, please try again",
   }),
-  [fetchIssueTypesSuccess]: (state, payload) => {
-    console.log(" ------------------------------ ");
+  [fetchIssueTypesSuccess]: (state, data) => {
     return {
       ...state,
-      issueTypes: payload,
+      issueTypes: data.payload,
       fetchIssueTypesProgress: false,
       fetchIssueTypesFailed: false,
       fetchIssueTypesSuccess: true,
       errorMsg: "",
-    }
+    };
+  },
+  [submitIssueProgress]: (state) => ({
+    ...state,
+    submitIssueProgress: true,
+    submitIssueFailed: false,
+    submitIssueSuccess: false,
+    errorMsg: "",
+  }),
+  [submitIssueFailed]: (state) => ({
+    ...state,
+    submitIssueProgress: false,
+    submitIssueFailed: true,
+    submitIssueSuccess: false,
+    errorMsg: "Something went wrong, please try again",
+  }),
+  [submitIssueSuccess]: (state, data) => {
+    return {
+      ...state,
+      submitIssueProgress: false,
+      submitIssueFailed: false,
+      submitIssueSuccess: true,
+      errorMsg: "",
+      successMsg: data.payload.message,
+    };
   },
 });
 

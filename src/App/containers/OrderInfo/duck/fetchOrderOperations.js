@@ -14,6 +14,9 @@ import {
   fetchIssueTypesProgress,
   fetchIssueTypesFailed,
   fetchIssueTypesSuccess,
+  submitIssueProgress,
+  submitIssueFailed,
+  submitIssueSuccess,
 } from "./actions";
 
 import { selectOrder } from "../../Dashboard/duck";
@@ -23,6 +26,7 @@ import {
   createNotesAPI,
   callAPI,
   listIssueAPI,
+  submitNewIssueAPI,
 } from "../../../utils";
 
 const processResponse = () => {
@@ -152,7 +156,7 @@ const onErrorIssueTypes = (dispatch) => {
   };
 };
 
-const fetchIssueTypes = (payload) => {
+const fetchIssueTypes = () => {
   return (dispatch) => {
     dispatch(fetchIssueTypesProgress());
     listIssueAPI(
@@ -164,10 +168,36 @@ const fetchIssueTypes = (payload) => {
   };
 };
 
+const onSuccessSubmitIssue = (dispatch) => {
+  return (data) => {
+    // console.log("onSuccessIssueTypes", data);
+    dispatch(submitIssueSuccess(data));
+  };
+};
+
+const onErrorSubmitIssue = (dispatch) => {
+  return (err) => {
+    dispatch(submitIssueFailed(err));
+  };
+};
+
+const submitIssue = (payload) => {
+  return (dispatch) => {
+    dispatch(submitIssueProgress());
+    submitNewIssueAPI(
+      payload,
+      processResponse(dispatch),
+      onSuccessSubmitIssue(dispatch),
+      onErrorSubmitIssue(dispatch)
+    );
+  };
+};
+
 export {
   fetchOrder,
   fetchCancelReason,
   createNotes,
   connectCall,
   fetchIssueTypes,
+  submitIssue,
 };
