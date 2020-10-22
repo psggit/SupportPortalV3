@@ -9,6 +9,8 @@ import Moment from "moment";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import TopBar from "../../../components/topBar";
+import { useHistory } from "react-router-dom";
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import {
   Table,
   Box,
@@ -17,6 +19,8 @@ import {
   TableBody,
   TablePagination,
 } from "@material-ui/core";
+import FullWidthTabs from "../../../components/menuBar";
+import { Tab } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   navBar: {
@@ -59,6 +63,8 @@ const createData = ({ order_id, type, notes, created_at, created_by }) => {
 function RetailerNotesComponent(props) {
   console.log("[RetailerNotesComponent]", props);
   const classes = useStyles();
+  const history = useHistory();
+
   const [rows, setRowsData] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
@@ -101,6 +107,23 @@ function RetailerNotesComponent(props) {
     setPage(0);
   };
 
+  const handleBack = () => {
+    history.push(`/order-info/${props.orderId.order_id}`);
+  };
+
+  const menuLabels = [
+    <Tab
+      label={
+        <Button color="primary" startIcon={<KeyboardBackspaceIcon />}>
+          {" "}
+          Back{" "}
+        </Button>
+      }
+      onClick={handleBack}
+    />,
+    <Tab label={<Button color="primary">Notes</Button>} />,
+  ];
+
   let loading = props.notesProgress;
   if (loading) {
     return <p>Loading...</p>;
@@ -110,9 +133,14 @@ function RetailerNotesComponent(props) {
     <>
       <div className={classes.formContainer}>
         <TopBar />
-        <SimpleMenuBar orderId={props.orderId.order_id}>
+        {/* <SimpleMenuBar orderId={props.orderId.order_id}>
           {props.notesSuccess && <p>CHANGE RETAILER</p>}
-        </SimpleMenuBar>
+        </SimpleMenuBar> */}
+        <FullWidthTabs
+          labels={menuLabels}
+          className={classes.horizontalBar}
+          value={1}
+        />
         <div className={classes.row1}>
           <p>CUSTOMER ID: {props.orderInfo.customer_id}</p>
           <div>

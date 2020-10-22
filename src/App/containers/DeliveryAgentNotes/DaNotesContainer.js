@@ -14,6 +14,8 @@ const mapStateToProps = (state) => {
     daList: state.order.deliveryAgent.deliveryAgentList,
     fetchSuccess: state.order.deliveryAgent.fetchSuccess,
     fetchProgress: state.order.deliveryAgent.fetchProgress,
+    fetchFail: state.order.deliveryAgent.fetchFail,
+    errorMsg: state.order.deliveryAgent.errorMsg,
   };
 };
 

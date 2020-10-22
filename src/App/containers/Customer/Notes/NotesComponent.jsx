@@ -6,6 +6,7 @@ import TableCell from "@material-ui/core/TableCell";
 import Moment from "moment";
 import Button from "@material-ui/core/Button";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import Notification from "../../../components/notification";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
@@ -58,6 +59,10 @@ function Notes(props) {
     }
   }, [props.notesSuccess]);
 
+  useEffect(() => {
+    setErrorMessage(props.notesFail);
+  }, [props.notesFail]);
+
   const filledRows = [];
   const loopData = (data) => {
     data.map((value) => {
@@ -85,6 +90,10 @@ function Notes(props) {
 
   const UnmountAddNote = () => {
     setShowAddNoteDialog(false);
+  };
+
+  const handleClose = () => {
+    setErrorMessage(false);
   };
 
   let loading = props.notesProgress;
@@ -207,6 +216,14 @@ function Notes(props) {
             )}
           </TableContainer>
         </Box>
+        {errorMessage && (
+          <Notification
+            message={props.errorMsg}
+            messageType="error"
+            open={errorMessage}
+            handleClose={handleClose}
+          />
+        )}
       </div>
     </>
   );
@@ -219,6 +236,7 @@ Notes.propTypes = {
   notesSuccess: PropTypes.bool,
   customerId: PropTypes.any,
   orderInfo: PropTypes.object,
+  notesFail: PropTypes.bool,
 };
 
 export { Notes };

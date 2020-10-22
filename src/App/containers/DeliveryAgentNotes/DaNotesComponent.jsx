@@ -1,12 +1,4 @@
 /* eslint-disable react/jsx-key */
-// import React from "react";
-
-// function DaNotes () {
-//   return <div>Helloo...</div>;
-// }
-
-// export { DaNotes };
-
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
@@ -22,6 +14,7 @@ import Dialog from "../../components/dialog";
 import Paper from "@material-ui/core/Paper";
 import TopBar from "../../components/topBar";
 import FullWidthTabs from "../../components/menuBar";
+import Notification from "../../components/notification";
 import { Tab } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import Loading from "../../components/loading";
@@ -33,6 +26,7 @@ import {
   TableContainer,
   TableBody,
   TablePagination,
+  Grid,
 } from "@material-ui/core";
 
 const createData = ({ order_id, type, notes, created_at, created_by }) => {
@@ -71,6 +65,10 @@ function DaNotes(props) {
     }
   }, [props.fetchSuccess]);
 
+  useEffect(() => {
+    setErrorMessage(props.fetchFail);
+  }, [props.fetchFail]);
+
   const filledRows = [];
   const loopData = (data) => {
     data.map((value) => {
@@ -100,13 +98,25 @@ function DaNotes(props) {
     setShowAddNoteDialog(false);
   };
 
+  const handleClose = () => {
+    setErrorMessage(false);
+  };
+
   const handleBack = () => {
     history.push(`/order-info/${props.orderInfo.order_id}`);
   };
 
   const menuLabels = [
-    <Tab label={<KeyboardBackspaceIcon />} onClick={handleBack} />,
-    <Tab label="Notes" />,
+    <Tab
+      label={
+        <Button color="primary" startIcon={<KeyboardBackspaceIcon />}>
+          {" "}
+          Back{" "}
+        </Button>
+      }
+      onClick={handleBack}
+    />,
+    <Tab label={<Button color="primary">Notes</Button>} />,
   ];
 
   let loading = props.fetchProgress;
@@ -118,7 +128,12 @@ function DaNotes(props) {
     <>
       <TopBar />
       <div className={classes.formContainer}>
-        <FullWidthTabs labels={menuLabels} />;
+        <FullWidthTabs
+          labels={menuLabels}
+          className={classes.horizontalBar}
+          value={1}
+        />
+        ;
         <div className={classes.row1}>
           <p>CUSTOMER ID: {props.orderInfo.customer_id}</p>
           <div>
@@ -141,7 +156,7 @@ function DaNotes(props) {
                     variant="outlined"
                     color="primary"
                     key="saveBtn"
-                  //onClick={commentUnmountModel}
+                    //onClick={commentUnmountModel}
                   >
                     Save
                   </Button>,
@@ -229,6 +244,14 @@ function DaNotes(props) {
             )}
           </TableContainer>
         </Box>
+        {errorMessage && (
+          <Notification
+            message={props.errorMsg}
+            messageType="error"
+            open={errorMessage}
+            handleClose={handleClose}
+          />
+        )}
       </div>
     </>
   );
@@ -241,6 +264,7 @@ DaNotes.propTypes = {
   fetchProgress: PropTypes.bool,
   fetchDeliveryAgentNotes: PropTypes.func,
   deliveryAgentNotes: PropTypes.array,
+  errorMsg: PropTypes.bool,
 };
 
 export { DaNotes };
@@ -288,5 +312,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "16px",
     minWidth: 120,
   },
+  horizontalBar: {
+    backgroundColor: "#FFFFFF",
+  }
 }));
-

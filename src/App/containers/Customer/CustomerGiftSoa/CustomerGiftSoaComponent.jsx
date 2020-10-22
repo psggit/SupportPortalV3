@@ -6,6 +6,7 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import { Box, TablePagination } from "@material-ui/core";
+import Notification from "../../../components/notification";
 import Moment from "moment";
 import Paper from "@material-ui/core/Paper";
 import TopBar from "../../../components/topBar";
@@ -200,6 +201,14 @@ function CustomerGiftSoa(props) {
           )}
         </TableContainer>
       </Box>
+      {errorMessage && (
+        <Notification
+          message={props.errorMsg}
+          messageType="error"
+          open={errorMessage}
+          handleClose={handleClose}
+        />
+      )}
     </>
   );
 }
