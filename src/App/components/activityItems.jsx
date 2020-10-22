@@ -122,7 +122,7 @@ export default function ActivityItem(props) {
           {subtitle ? (
             <CardActions className={classes.addBtn}>
               {subtitle.map((item, ind) => (
-                <div key={ind}>item</div>
+                <div key={ind}>{item}</div>
               ))}
             </CardActions>
           ) : (
@@ -166,7 +166,7 @@ export default function ActivityItem(props) {
           {subtitle ? (
             <CardActions className={classes.addBtn}>
               {subtitle.map((item, ind) => (
-                <div key={ind}>item</div>
+                <div key={ind}>{item}</div>
               ))}
             </CardActions>
           ) : (

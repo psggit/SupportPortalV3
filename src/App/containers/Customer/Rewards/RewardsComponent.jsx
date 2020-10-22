@@ -58,7 +58,7 @@ const createData = ({
   reward_id,
   reward_source,
   amount,
-  promocode,
+  promo_code,
   bank_rrn,
   failure_reason,
   created_at,
@@ -70,7 +70,7 @@ const createData = ({
     reward_id,
     reward_source,
     amount,
-    promocode,
+    promo_code,
     bank_rrn,
     failure_reason,
     created_at,
@@ -79,29 +79,35 @@ const createData = ({
 };
 
 function Rewards(props) {
-  useEffect(() => {
-    const payload = {
-      consumer_id: parseInt(props.customerId),
-      limit: 10,
-      offset: 0,
-    };
-    console.log("payload", payload);
-    props.fetchRewardsList(payload);
-  }, []);
-
   const classes = useStyles();
-  const pageLimit = 10;
-  const activePage = getQueryParamByName("activePage") || 1;
-  const [pageNo, setPageNo] = useState(activePage);
   const [showData, setShowData] = useState(false);
   const [rows, setRowsData] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
+  const filledRows = [];
+  const loopData = (data) => {
+    data.map((value) => {
+      filledRows.push(createData(value));
+    });
+    setRowsData(filledRows);
+  };
+
+  useEffect(() => {
+    const payload = {
+      consumer_id: parseInt(props.customerId),
+      limit: rowsPerPage,
+      offset: page * rowsPerPage,
+    };
+    props.fetchRewardsList(payload);
+  }, [rowsPerPage, page]);
 
   useEffect(() => {
     if (props.rewardsSuccess) {
-      if (props.rewardsList.rewards !== null && props.rewardsList.rewards > 0) {
+      if (
+        props.rewardsList.rewards !== null &&
+        props.rewardsList.rewards.length > 0
+      ) {
         loopData(props.rewardsList.rewards);
         setShowData(true);
       } else {
@@ -118,20 +124,12 @@ function Rewards(props) {
     setErrorMessage(false);
   };
 
-  const filledRows = [];
-  const loopData = (data) => {
-    data.map((value) => {
-      filledRows.push(createData(value));
-    });
-    setRowsData(filledRows);
-  };
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(parseInt(event.target.value));
     setPage(0);
   };
 
@@ -168,30 +166,29 @@ function Rewards(props) {
               </TableHead>
               <TableBody>
                 {showData &&
-                  rows
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((data, ind) => {
-                      return (
-                        <TableRow key={ind}>
-                          <TableCell>{data.order_id}</TableCell>
-                          <TableCell>{data.retailer_name}</TableCell>
-                          <TableCell>{data.id}</TableCell>
-                          <TableCell>{data.reward_source}</TableCell>
-                          <TableCell>{data.amount}</TableCell>
-                          <TableCell>{data.promo_code}</TableCell>
-                          <TableCell>{data.bank_rrn}</TableCell>
-                          <TableCell>{data.failure_reason}</TableCell>
-                          <TableCell align="left">
-                            {Moment(data.created_at).format(
-                              "DD/MM/YYYY h:mm A"
-                            )}
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
+                  rows.map((data, ind) => {
+                    return (
+                      <TableRow key={ind}>
+                        <TableCell>{data.order_id}</TableCell>
+                        <TableCell>{data.retailer_name}</TableCell>
+                        <TableCell>{data.reward_id}</TableCell>
+                        <TableCell>{data.reward_source}</TableCell>
+                        <TableCell>{data.amount}</TableCell>
+                        <TableCell>{data.promo_code}</TableCell>
+                        <TableCell>{data.bank_rrn}</TableCell>
+                        <TableCell>{data.failure_reason}</TableCell>
+                        <TableCell align="left">
+                          {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
+                        </TableCell>
+                        <TableCell>{data.status}</TableCell>
+                      </TableRow>
+                    );
+                  })}
                 {!showData && (
                   <TableRow>
-                    <TableCell colSpan={10} align="center">No data available</TableCell>
+                    <TableCell colSpan={10} align="center">
+                      No data available
+                    </TableCell>
                   </TableRow>
                 )}
               </TableBody>
@@ -200,7 +197,7 @@ function Rewards(props) {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
-                count={rows.length}
+                count={props.rewardsList.count}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onChangePage={handleChangePage}
@@ -225,7 +222,7 @@ function Rewards(props) {
 Rewards.propTypes = {
   soaList: PropTypes.array,
   orderInfo: PropTypes.object,
-  rewardsList: PropTypes.array,
+  rewardsList: PropTypes.object,
   rewardsProgress: PropTypes.bool,
   rewardsSuccess: PropTypes.bool,
   rewardsFail: PropTypes.bool,
