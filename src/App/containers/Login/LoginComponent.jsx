@@ -6,6 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
+import { loginLogo } from "../../assets/images";
 import ErrorMsg from "../../components/errorMsg";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -19,9 +20,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+  title: {
+    marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(4),
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -89,8 +90,14 @@ const LoginComponent = (props) => {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
-          HIPBAR Support Portal
+        <img src={loginLogo} />
+        <Typography
+          className={classes.title}
+          component="h5"
+          variant="h5"
+          color="primary"
+        >
+          SUPPORT PORTAL
         </Typography>
         <div className={classes.form} noValidate>
           <TextField

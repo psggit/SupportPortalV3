@@ -6,9 +6,11 @@ import {
   fetchCancelReason,
   createNotes,
   connectCall,
+  fetchIssueTypes,
 } from "../OrderInfo/duck";
 
 const mapStateToProps = (state) => {
+  console.log(state.order);
   return {
     orderId: state.home.orderId,
     order: state.order.orderInfo.orderDetails,
@@ -25,6 +27,9 @@ const mapStateToProps = (state) => {
     from: state.login.authData.mobile,
     successMsg: state.order.orderInfo.successMsg,
     connectCallSuccess: state.order.orderInfo.connectCallSuccess,
+    fetchIssueTypesSuccess: state.order.orderInfo.fetchIssueTypesSuccess,
+    fetchIssueTypesProgress: state.order.orderInfo.fetchIssueTypesProgress,
+    fetchIssueTypesFailed: state.order.orderInfo.fetchIssueTypesFailed,
   };
 };
 
@@ -34,6 +39,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchCancelReason: (orderId) => dispatch(fetchCancelReason(orderId)),
     createNotes: (type) => dispatch(createNotes(type)),
     connectCall: (payload) => dispatch(connectCall(payload)),
+    fetchIssueTypes: (payload) => dispatch(fetchIssueTypes(payload)),
   };
 };
 

@@ -10,7 +10,7 @@ const headers = {
 };
 
 const supportPersonListAPI = (process, onSuccess, onError) => {
-  const URL = ` https://${apiUrl}/deliveryman/api/1/support/list/supportperson`;
+  const URL = ` https://${apiUrl}/supportman/api/1/list/supportperson`;
   console.log(URL);
   fetch(URL, {
     method: "GET",

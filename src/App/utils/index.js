@@ -29,3 +29,4 @@ export { reserveOrderAPI } from "./reserveOrderAPI";
 export { cancelOrderAPI } from "./cancelOrderAPI";
 export { deliverOrderReasonAPI } from "./deliverOrderReasonAPI";
 export { deliverOrderAPI } from "./deliverOrderAPI";
+export { listIssueAPI } from "./listIssueTypesAPI";

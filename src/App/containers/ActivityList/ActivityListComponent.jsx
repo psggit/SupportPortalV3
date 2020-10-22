@@ -63,7 +63,7 @@ function ActivityListComponent(props) {
 
   useEffect(() => {
     const reqBody = {
-      order_id: `${props.orderId.orderDetails.order_id}`,
+      order_id: `${props.orderData}`,
       limit: rowsPerPage,
       offset: page * rowsPerPage,
     };
@@ -111,8 +111,8 @@ function ActivityListComponent(props) {
   return (
     <div className={classes.formContainer}>
       <TopBar />
-      <SimpleMenuBar orderId={props.orderId}>
-        {props.notesSuccess && <p>ACTIVITY LOGS-ORDER ID: {props.orderId}</p>}
+      <SimpleMenuBar orderId={props.orderData}>
+        {props.notesSuccess && <p>ACTIVITY LOGS-ORDER ID: {props.orderData}</p>}
       </SimpleMenuBar>
       <Box className={classes.table} mt={4}>
         <TableContainer className={classes.TableContainer}>
@@ -170,7 +170,7 @@ ActivityListComponent.propTypes = {
   fetchActLogsList: PropTypes.any,
   notesProgress: PropTypes.bool,
   notesSuccess: PropTypes.bool,
-  orderId: PropTypes.any,
+  orderData: PropTypes.any,
 };
 
 export { ActivityListComponent };

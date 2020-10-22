@@ -10,7 +10,7 @@ const headers = {
 };
 
 const assignIssueAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = ` https://${apiUrl}/supportman/api/1/issue/assignmanual/${reqBody.orderId}/${reqBody.issueId}/${reqBody.supportPersonId}`;
+  const URL = ` https://${apiUrl}/deliveryman/api/1/support/issue/assignmanual/${reqBody.orderId}/${reqBody.issueId}/${reqBody.supportPersonId}`;
   console.log(URL);
   fetch(URL, {
     method: "GET",

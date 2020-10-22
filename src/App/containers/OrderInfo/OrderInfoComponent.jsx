@@ -140,6 +140,7 @@ const OrderInfoComponent = (props) => {
         order_id: orderId,
       };
       props.fetchCancelReason(payload);
+      props.fetchIssueTypes(null);
     }
   }, [props.fetchOrderInfoSuccess]);
 
@@ -346,7 +347,7 @@ const OrderInfoComponent = (props) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={1} boxShadow={1}>
+          <Grid item xs={1} boxshadow={1}>
             <Paper elevation={4} className={classes.fixedSideBar}>
               <Box display="flex" alignItems="flex-end" flexDirection="column">
                 <Button
@@ -415,6 +416,7 @@ const OrderInfoComponent = (props) => {
 OrderInfoComponent.propTypes = {
   fetchOrderInfo: PropTypes.func,
   fetchCancelReason: PropTypes.func,
+  fetchIssueTypes: PropTypes.func,
   cancelReasons: PropTypes.array,
   fetchOrderInfoSuccess: PropTypes.bool,
   fetchOrderInfoFailure: PropTypes.bool,

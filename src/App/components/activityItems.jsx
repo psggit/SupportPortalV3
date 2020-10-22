@@ -121,7 +121,9 @@ export default function ActivityItem(props) {
           <CardHeader title={titleText} className={classes.cardHeader} />
           {subtitle ? (
             <CardActions className={classes.addBtn}>
-              {subtitle.map((item) => item)}
+              {subtitle.map((item, ind) => (
+                <div key={ind}>item</div>
+              ))}
             </CardActions>
           ) : (
             ""
@@ -163,7 +165,9 @@ export default function ActivityItem(props) {
           <CardHeader title={titleText} className={classes.cardHeader} />
           {subtitle ? (
             <CardActions className={classes.addBtn}>
-              {subtitle.map((item) => item)}
+              {subtitle.map((item, ind) => (
+                <div key={ind}>item</div>
+              ))}
             </CardActions>
           ) : (
             ""
@@ -190,7 +194,7 @@ export default function ActivityItem(props) {
                     : classes.ListItemTextRoot;
                 return (
                   <ListItemText
-                    key={ind}
+                    key={ind + "." + keyValue}
                     primary={primaryValue}
                     className={listClass}
                     classes={{ root: classes.ListItemTextValue }}

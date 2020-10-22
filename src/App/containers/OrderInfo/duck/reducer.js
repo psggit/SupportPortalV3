@@ -12,6 +12,9 @@ import {
   connectCallProgress,
   connectCallFailed,
   connectCallSuccess,
+  fetchIssueTypesProgress,
+  fetchIssueTypesFailed,
+  fetchIssueTypesSuccess,
 } from "./actions";
 
 const initialValue = {
@@ -27,6 +30,9 @@ const initialValue = {
   connectCallProgress: false,
   connectCallFailed: false,
   connectCallSuccess: false,
+  fetchIssueTypesProgress: false,
+  fetchIssueTypesFailed: false,
+  fetchIssueTypesSuccess: false,
   errorMsg: "",
   successMsg: "",
   orderDetails: null,
@@ -35,6 +41,7 @@ const initialValue = {
   customerId: null,
   customerContactNumber: null,
   activityLog: null,
+  issueTypes: null,
 };
 
 const orderInfoReducer = createReducer(initialValue, {
@@ -137,6 +144,31 @@ const orderInfoReducer = createReducer(initialValue, {
     connectCallSuccess: true,
     errorMsg: "",
   }),
+  [fetchIssueTypesProgress]: (state) => ({
+    ...state,
+    fetchIssueTypesProgress: true,
+    fetchIssueTypesFailed: false,
+    fetchIssueTypesSuccess: false,
+    errorMsg: "",
+  }),
+  [fetchIssueTypesFailed]: (state) => ({
+    ...state,
+    fetchIssueTypesProgress: false,
+    fetchIssueTypesFailed: true,
+    fetchIssueTypesSuccess: false,
+    errorMsg: "Something went wrong, please try again",
+  }),
+  [fetchIssueTypesSuccess]: (state, payload) => {
+    console.log(" ------------------------------ ");
+    return {
+      ...state,
+      issueTypes: payload,
+      fetchIssueTypesProgress: false,
+      fetchIssueTypesFailed: false,
+      fetchIssueTypesSuccess: true,
+      errorMsg: "",
+    }
+  },
 });
 
 export { orderInfoReducer };
