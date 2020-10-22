@@ -26,6 +26,7 @@ export { kycListAPI } from "./kycListAPI";
 export { daListAPI } from "./daListAPI";
 export { unassignDaAPI } from "./unassignDaAPI";
 export { reserveOrderAPI } from "./reserveOrderAPI";
-export { cancelOrderAPI } from "./cancelOrderAPI";
+export { cancelOrderSummaryAPI } from "./cancelOrderSummaryAPI";
 export { deliverOrderReasonAPI } from "./deliverOrderReasonAPI";
 export { deliverOrderAPI } from "./deliverOrderAPI";
+export { cancelOrderAPI } from "./cancelOrderAPI";
