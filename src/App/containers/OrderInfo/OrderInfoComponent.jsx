@@ -16,7 +16,13 @@ import DialogComponent from "../../components/dialog";
 import Loading from "../../components/loading";
 import ErrorMsg from "../../components/errorMsg";
 import { ActivityLogContainer } from "./ActivityLogs";
-import { Fab } from "@material-ui/core";
+import {
+  Fab,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles((theme) => ({
@@ -119,6 +125,13 @@ const useStyles = makeStyles((theme) => ({
       color: "#fff",
     },
   },
+  marginTop: {
+    marginTop: theme.spacing(3),
+  },
+  formControl: {
+    marginBottom: theme.spacing(2),
+    minWidth: 200,
+  },
 }));
 
 const OrderInfoComponent = (props) => {
@@ -140,10 +153,12 @@ const OrderInfoComponent = (props) => {
         order_id: orderId,
       };
       props.fetchCancelReason(payload);
+      props.fetchIssueTypes();
     }
   }, [props.fetchOrderInfoSuccess]);
 
   let loading = props.fetchOrderInfoProgress;
+  const [selectedValue, handleSelect] = useState("");
   const [issueType, setIssueType] = useState(null);
   const [newIssueDesc, setNewIssueDesc] = useState("");
   const [issueDesc, setIssueDesc] = useState("");
@@ -152,6 +167,10 @@ const OrderInfoComponent = (props) => {
   const [showError, setShowError] = useState(false);
 
   const [activeSection, setActiveSection] = useState("");
+
+  const handleSelectChange = (event) => {
+    handleSelect(event.target.value);
+  };
 
   const handleScroll = (id) => {
     setActiveSection(id);
@@ -199,6 +218,15 @@ const OrderInfoComponent = (props) => {
     props.fetchCancelReason(payload);
   };
 
+  const updateIssue = () => {
+    const payload = {
+      order_id: props.orderId,
+      reason: selectedValue,
+    };
+    props.submitIssue(payload);
+    handleAddIssue();
+  };
+
   const dialogActions = [
     <Button
       variant="outlined"
@@ -231,7 +259,7 @@ const OrderInfoComponent = (props) => {
       variant="contained"
       color="primary"
       key="createIssue"
-      onClick={() => updateNotes()}
+      onClick={() => updateIssue()}
     >
       Save
     </Button>,
@@ -242,7 +270,15 @@ const OrderInfoComponent = (props) => {
   }
 
   if (props.fetchOrderInfoFailure) {
-    return <ErrorMsg show={true} message={props.errorMsg} type={"error"} />;
+    return (
+      <ErrorMsg
+        show={true}
+        message={
+          props.errorMsg !== "" ? props.errorMsg : "Something went wrong"
+        }
+        type={"error"}
+      />
+    );
   }
 
   return (
@@ -275,6 +311,39 @@ const OrderInfoComponent = (props) => {
           actions={dialogActionsIssue}
           openDialog={handleAddIssue}
         >
+          {props.fetchOrderInfoSuccess && (
+            <FormControl className={classes.formControl}>
+              <InputLabel id="demo-simple-select-label">
+                Select Reason
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                onChange={(event) => handleSelectChange(event)}
+              >
+                {props.fetchOrderInfoSuccess &&
+                  props.issueTypes.issue_types.map((value) => {
+                    if (selectedValue === value) {
+                      return (
+                        <MenuItem
+                          value={value.issue_type}
+                          key={value.issue_id}
+                          selected={true}
+                        >
+                          {value.issue_label}
+                        </MenuItem>
+                      );
+                    } else {
+                      return (
+                        <MenuItem value={value.issue_type} key={value.issue_id}>
+                          {value.issue_label}
+                        </MenuItem>
+                      );
+                    }
+                  })}
+              </Select>
+            </FormControl>
+          )}
           <TextField
             id="outlined-textarea"
             placeholder="Add issue description"
@@ -315,7 +384,12 @@ const OrderInfoComponent = (props) => {
                 )}
               </Grid>
             </Grid>
-            <Grid container spacing={4} id="section2">
+            <Grid
+              container
+              spacing={4}
+              id="section2"
+              className={classes.marginTop}
+            >
               <Grid item xs={12}>
                 {props.fetchOrderInfoSuccess && (
                   <CustomerContainer
@@ -325,7 +399,12 @@ const OrderInfoComponent = (props) => {
                 )}
               </Grid>
             </Grid>
-            <Grid container spacing={4} id="section3">
+            <Grid
+              container
+              spacing={4}
+              id="section3"
+              className={classes.marginTop}
+            >
               <Grid item xs={12}>
                 {props.fetchOrderInfoSuccess && (
                   <RetailerContainer
@@ -335,7 +414,12 @@ const OrderInfoComponent = (props) => {
                 )}
               </Grid>
             </Grid>
-            <Grid container spacing={4} id="section4">
+            <Grid
+              container
+              spacing={4}
+              id="section4"
+              className={classes.marginTop}
+            >
               <Grid item xs={12}>
                 {props.fetchOrderInfoSuccess && (
                   <DeliveryAgentContainer
@@ -346,7 +430,7 @@ const OrderInfoComponent = (props) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={1} boxShadow={1}>
+          <Grid item xs={1} boxshadow={1}>
             <Paper elevation={4} className={classes.fixedSideBar}>
               <Box display="flex" alignItems="flex-end" flexDirection="column">
                 <Button
@@ -408,6 +492,9 @@ const OrderInfoComponent = (props) => {
           type="error"
         />
       )}
+      {props.submitIssueSuccess && (
+        <ErrorMsg show={true} message={props.successMsg} type="success" />
+      )}
     </div>
   );
 };
@@ -415,6 +502,7 @@ const OrderInfoComponent = (props) => {
 OrderInfoComponent.propTypes = {
   fetchOrderInfo: PropTypes.func,
   fetchCancelReason: PropTypes.func,
+  fetchIssueTypes: PropTypes.func,
   cancelReasons: PropTypes.array,
   fetchOrderInfoSuccess: PropTypes.bool,
   fetchOrderInfoFailure: PropTypes.bool,
@@ -431,6 +519,9 @@ OrderInfoComponent.propTypes = {
   successMsg: PropTypes.string,
   errorMsg: PropTypes.string,
   activityLog: PropTypes.object,
+  issueTypes: PropTypes.object,
+  submitIssue: PropTypes.func,
+  submitIssueSuccess: PropTypes.bool,
 };
 
 export { OrderInfoComponent };

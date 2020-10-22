@@ -9,17 +9,17 @@ const headers = {
   "hasura-id": `${localStorage.getItem("hasura-id")}`,
 };
 
-const resolveIssueAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = ` https://${apiUrl}/deliveryman/api/1/support/issue/markresolved/${reqBody.orderId}`;
-  console.log(URL);
+const submitNewIssueAPI = (reqBody, process, onSuccess, onError) => {
+  const URL = `https://${apiUrl}/supportman/api/1/issue/create`;
   fetch(URL, {
-    method: "GET",
+    method: "POST",
     headers: headers,
     credentials: "include",
+    body: JSON.stringify(reqBody),
   })
     .then((res) => process(res))
     .then((data) => onSuccess(data))
     .catch((err) => onError(err));
 };
 
-export { resolveIssueAPI };
+export { submitNewIssueAPI };

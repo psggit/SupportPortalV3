@@ -117,7 +117,7 @@ function CustomerGiftSoa(props) {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(parseInt(event.target.value));
     setPage(0);
   };
 
@@ -151,23 +151,25 @@ function CustomerGiftSoa(props) {
             </TableHead>
             <TableBody>
               {showData &&
-                rows.map((data) => {
-                  return (
-                    // eslint-disable-next-line react/jsx-key
-                    <TableRow>
-                      <TableCell>{data.reference_number}</TableCell>
-                      <TableCell>{data.transaction_type}</TableCell>
-                      <TableCell>{data.transaction_amount}</TableCell>
-                      <TableCell>{data.gift_cards_and_value}</TableCell>
-                      <TableCell>{data.ResponseMessage}</TableCell>
-                      <TableCell align="left">
-                        {Moment(data.date_at_server).format(
-                          "DD/MM/YYYY h:mm A"
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+                rows
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((data) => {
+                    return (
+                      // eslint-disable-next-line react/jsx-key
+                      <TableRow>
+                        <TableCell>{data.reference_number}</TableCell>
+                        <TableCell>{data.transaction_type}</TableCell>
+                        <TableCell>{data.transaction_amount}</TableCell>
+                        <TableCell>{data.gift_cards_and_value}</TableCell>
+                        <TableCell>{data.ResponseMessage}</TableCell>
+                        <TableCell align="left">
+                          {Moment(data.date_at_server).format(
+                            "DD/MM/YYYY h:mm A"
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
               {!showData && (
                 <TableRow>
                   <TableCell colSpan={10} align="center">

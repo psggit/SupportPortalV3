@@ -1,4 +1,4 @@
-// import { apiUrl } from "./config";
+import { stockPriceURL } from "./config";
 
 const headers = {
   Accept: "application/json",
@@ -9,7 +9,7 @@ const headers = {
 };
 
 const brandsAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://retailer.hipbar-dev.com/Api/stockandprice/listing/brands`;
+  const URL = `https://${stockPriceURL}/listing/brands`;
   fetch(URL, {
     method: "POST",
     headers: headers,

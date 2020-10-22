@@ -9,8 +9,8 @@ const headers = {
   "hasura-id": `${localStorage.getItem("hasura-id")}`,
 };
 
-const URL = `https://${apiUrl}/deliveryman/api/1/fetch-order-details`;
 const completeOrderAPI = (reqBody, process, onSuccess, onError) => {
+  const URL = `https://${apiUrl}/deliveryman/api/1/fetch-order-details`;
   fetch(URL, {
     method: "POST",
     headers: headers,
