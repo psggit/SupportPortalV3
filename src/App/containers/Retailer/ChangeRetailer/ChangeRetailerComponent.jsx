@@ -56,12 +56,12 @@ const ChangeRetailerComponent = (props) => {
   const classes = useStyles();
 
   useEffect(() => {
+    let skuId = props.orderDetails.cart_items.map((item) => item.sku_id);
     const payload = {
-      sku_ids: [1297],
+      sku_ids: skuId,
       retailer_id: parseInt(props.orderDetails.retailer_id),
-      state_id: props.orderDetails.state_id,
+      city_id: props.orderDetails.city_id,
     };
-    console.log("useEffect", payload, props.orderDetails);
     props.listRetailer(payload);
   }, []);
 
@@ -79,19 +79,26 @@ const ChangeRetailerComponent = (props) => {
     <Tab label="Change Retailer" onClick={handleRetailer} />,
   ];
 
+  console.log("ChangeRetailerCardComponent", props);
+
   return (
     <Container component="main" className={classes.root}>
       <TopBar />
       <FullWidthTabs labels={menuLabels} />
       <Box className={classes.boxContainer}>
         <Grid container spacing={4}>
-          <Grid item xs={4}>
-            <RetailerCardContainer />
-          </Grid>
-          <Grid item xs={4}>
-            <RetailerCardContainer />
-          </Grid>
+          {props.listRetailerSuccess &&
+            props.listRetailerData.da_info.map(() => (
+              <Grid item xs={4}>
+                <RetailerCardContainer />
+              </Grid>
+            ))}
         </Grid>
+        {/* <Grid container spacing={4}>
+          <Grid item xs={4}>
+            <RetailerCardContainer />
+          </Grid>
+        </Grid> */}
       </Box>
     </Container>
   );

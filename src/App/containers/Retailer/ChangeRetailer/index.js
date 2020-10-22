@@ -1,2 +1,2 @@
-export { cartReducer } from "./duck";
-export { RetailerCardContainer } from "./RetailerCardContainer";
+export { listRetailerReducer } from "./duck/reducer";
+export { ChangeRetailerContainer } from "./ChangeRetailerContainer";

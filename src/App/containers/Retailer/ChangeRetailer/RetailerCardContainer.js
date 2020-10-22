@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { RetailerCardComponent } from "./RetailerCardComponent";
-import { fetchGenre } from "./duck";
+// import { fetchGenre } from "./duck";
 
 const tempValue = {
   order_details: {
@@ -126,6 +126,7 @@ const mapStateToProps = (state) => {
     fetchGenreProgress: state.cart.fetchGenreProgress,
     fetchGenreFailed: state.cart.fetchGenreFailed,
     fetchGenreSuccess: state.cart.fetchGenreSuccess,
+    listRetailerData: state.listRetailer.listRetailerData,
   };
 };
 
