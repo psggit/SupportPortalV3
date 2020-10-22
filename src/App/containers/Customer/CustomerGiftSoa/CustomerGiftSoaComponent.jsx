@@ -155,12 +155,22 @@ function CustomerGiftSoa(props) {
                   return (
                     // eslint-disable-next-line react/jsx-key
                     <TableRow key={index}>
-                      <TableCell>{data.reference_number}</TableCell>
-                      <TableCell>{data.transaction_type}</TableCell>
-                      <TableCell>{data.transaction_amount}</TableCell>
-                      <TableCell>{data.gift_cards_and_value}</TableCell>
-                      <TableCell>{data.ResponseMessage}</TableCell>
-                      <TableCell align="left">
+                      <TableCell align="center">
+                        {data.reference_number}
+                      </TableCell>
+                      <TableCell align="center">
+                        {data.transaction_type}
+                      </TableCell>
+                      <TableCell align="center">
+                        {data.transaction_amount}
+                      </TableCell>
+                      <TableCell align="center">
+                        {data.gift_cards_and_value}
+                      </TableCell>
+                      <TableCell align="center">
+                        {data.ResponseMessage}
+                      </TableCell>
+                      <TableCell align="center">
                         {Moment(data.date_at_server).format(
                           "DD/MM/YYYY h:mm A"
                         )}

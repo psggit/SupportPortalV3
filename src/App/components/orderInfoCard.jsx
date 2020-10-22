@@ -130,6 +130,9 @@ export default function CustomCard(props) {
                   classes={{ root: classes.ListItemTextLabel }}
                 />
                 <ListItemText
+                  // primary={
+                  //   item[keysToRender[index]] ? item[keysToRender[index]] : "-"
+                  // }
                   primary={
                     item[keysToRender[index]] === item[keysToRender[4]]
                       ? getTimestamp(item[keysToRender[index]])

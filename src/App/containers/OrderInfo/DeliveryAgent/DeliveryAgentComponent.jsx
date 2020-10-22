@@ -203,6 +203,8 @@ const DeliveryAgentComponent = (props) => {
                 })}
             </Select>
             <TextField
+              id="outlined-textarea"
+              className={classes.textBox}
               onChange={handleTextChange}
               rows={7}
               fullWidth
@@ -311,6 +313,7 @@ const useStyles = makeStyles((theme) => ({
   selectBox: {
     width: "100%",
   },
+  textBox: {},
 }));
 
 export { DeliveryAgentComponent };

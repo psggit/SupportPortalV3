@@ -173,15 +173,23 @@ function Rewards(props) {
                     .map((data, ind) => {
                       return (
                         <TableRow key={ind}>
-                          <TableCell>{data.order_id}</TableCell>
-                          <TableCell>{data.retailer_name}</TableCell>
-                          <TableCell>{data.id}</TableCell>
-                          <TableCell>{data.reward_source}</TableCell>
-                          <TableCell>{data.amount}</TableCell>
-                          <TableCell>{data.promo_code}</TableCell>
-                          <TableCell>{data.bank_rrn}</TableCell>
-                          <TableCell>{data.failure_reason}</TableCell>
-                          <TableCell align="left">
+                          <TableCell align="center">{data.order_id}</TableCell>
+                          <TableCell align="center">
+                            {data.retailer_name}
+                          </TableCell>
+                          <TableCell align="center">{data.id}</TableCell>
+                          <TableCell align="center">
+                            {data.reward_source}
+                          </TableCell>
+                          <TableCell align="center">{data.amount}</TableCell>
+                          <TableCell align="center">
+                            {data.promo_code}
+                          </TableCell>
+                          <TableCell align="center">{data.bank_rrn}</TableCell>
+                          <TableCell align="center">
+                            {data.failure_reason}
+                          </TableCell>
+                          <TableCell align="center">
                             {Moment(data.created_at).format(
                               "DD/MM/YYYY h:mm A"
                             )}

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 // import React from "react";
 
 // function DaNotes () {
@@ -196,13 +197,13 @@ function DaNotes(props) {
                   rows.map((data, ind) => {
                     return (
                       <TableRow key={ind}>
-                        <TableCell>{data.order_id}</TableCell>
-                        <TableCell>{data.type}</TableCell>
-                        <TableCell>{data.notes}</TableCell>
-                        <TableCell align="left">
+                        <TableCell align="center">{data.order_id}</TableCell>
+                        <TableCell align="center">{data.type}</TableCell>
+                        <TableCell align="center">{data.notes}</TableCell>
+                        <TableCell align="center">
                           {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
                         </TableCell>
-                        <TableCell align="left">{data.created_by}</TableCell>
+                        <TableCell align="center">{data.created_by}</TableCell>
                       </TableRow>
                     );
                   })}
