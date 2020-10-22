@@ -1,3 +1,11 @@
+// import React from "react";
+
+// function DaNotes () {
+//   return <div>Helloo...</div>;
+// }
+
+// export { DaNotes };
+
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
@@ -9,11 +17,14 @@ import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import Dialog from "../../../components/dialog";
+import Dialog from "../../components/dialog";
 import Paper from "@material-ui/core/Paper";
-import TopBar from "../../../components/topBar";
-import FullWidthTabs from "../customerMenuBar";
-import Loading from "../../../components/loading";
+import TopBar from "../../components/topBar";
+import FullWidthTabs from "../../components/menuBar";
+import { Tab } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+import Loading from "../../components/loading";
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import {
   Table,
   Box,
@@ -33,8 +44,9 @@ const createData = ({ order_id, type, notes, created_at, created_by }) => {
   };
 };
 
-function Notes(props) {
+function DaNotes(props) {
   const classes = useStyles();
+  const history = useHistory();
   const [rows, setRowsData] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
@@ -44,19 +56,19 @@ function Notes(props) {
   const [age, setAge] = useState("");
 
   useEffect(() => {
-    props.fetchConsumerNotes(props.orderInfo.order_id);
+    props.fetchDeliveryAgentNotes(props.orderInfo.order_id);
   }, [rowsPerPage, page]);
 
   useEffect(() => {
-    if (props.notesSuccess) {
-      if (props.customerNotes.orderNotes !== null) {
-        loopData(props.customerNotes.orderNotes);
+    if (props.fetchSuccess) {
+      if (props.deliveryAgentNotes.orderNotes !== null) {
+        loopData(props.deliveryAgentNotes.orderNotes);
         setShowData(true);
       } else {
         setShowData(false);
       }
     }
-  }, [props.notesSuccess]);
+  }, [props.fetchSuccess]);
 
   const filledRows = [];
   const loopData = (data) => {
@@ -87,7 +99,16 @@ function Notes(props) {
     setShowAddNoteDialog(false);
   };
 
-  let loading = props.notesProgress;
+  const handleBack = () => {
+    history.push(`/order-info/${props.orderInfo.order_id}`);
+  };
+
+  const menuLabels = [
+    <Tab label={<KeyboardBackspaceIcon />} onClick={handleBack} />,
+    <Tab label="Notes" />,
+  ];
+
+  let loading = props.fetchProgress;
   if (loading) {
     return <Loading message="Loading..." />;
   }
@@ -96,9 +117,9 @@ function Notes(props) {
     <>
       <TopBar />
       <div className={classes.formContainer}>
-        <FullWidthTabs value={4} orderId={props.orderInfo.order_id} />
+        <FullWidthTabs labels={menuLabels} />;
         <div className={classes.row1}>
-          <p>CUSTOMER ID: {props.customerId}</p>
+          <p>CUSTOMER ID: {props.orderInfo.customer_id}</p>
           <div>
             <Button variant="contained" onClick={mountAddNote} color="primary">
               Add Note
@@ -119,7 +140,7 @@ function Notes(props) {
                     variant="outlined"
                     color="primary"
                     key="saveBtn"
-                    //onClick={commentUnmountModel}
+                  //onClick={commentUnmountModel}
                   >
                     Save
                   </Button>,
@@ -212,16 +233,16 @@ function Notes(props) {
   );
 }
 
-Notes.propTypes = {
-  customerNotes: PropTypes.object,
-  fetchConsumerNotes: PropTypes.any,
-  notesProgress: PropTypes.bool,
-  notesSuccess: PropTypes.bool,
+DaNotes.propTypes = {
   customerId: PropTypes.any,
   orderInfo: PropTypes.object,
+  fetchSuccess: PropTypes.bool,
+  fetchProgress: PropTypes.bool,
+  fetchDeliveryAgentNotes: PropTypes.func,
+  deliveryAgentNotes: PropTypes.array,
 };
 
-export { Notes };
+export { DaNotes };
 
 const useStyles = makeStyles((theme) => ({
   navBar: {
@@ -267,3 +288,4 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 120,
   },
 }));
+

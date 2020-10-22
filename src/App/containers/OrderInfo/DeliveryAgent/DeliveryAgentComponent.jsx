@@ -10,6 +10,8 @@ import Notification from "../../../components/notification";
 import Dialog from "../../../components/dialog";
 import { Select, MenuItem, InputLabel } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
+import { useHistory } from "react-router-dom";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
 const keysToRender = [
   "delivery_agent_id",
@@ -30,6 +32,7 @@ const keyMap = {
 
 const DeliveryAgentComponent = (props) => {
   const classes = useStyles();
+  const history = useHistory();
 
   const [data, setData] = useState([]);
   const [selectedValue, setValue] = useState("");
@@ -106,6 +109,21 @@ const DeliveryAgentComponent = (props) => {
     props.reserveDeliveryAgent(payload);
     setShowDialogBox(false);
   };
+
+  const handleNotesChange = () => {
+    history.push("/da-notes");
+  };
+
+  const subheadNotesAction = [
+    <Button
+      className={classes.moreButton}
+      color="primary"
+      endIcon={<ChevronRightIcon />}
+      onClick={handleNotesChange}
+    >
+      More
+    </Button>,
+  ];
 
   const actionButtons = [
     <Button
@@ -246,6 +264,7 @@ const DeliveryAgentComponent = (props) => {
               keysToRender={keysToRenderInNotesCard}
               title={"Delivery Agent Notes"}
               issueType={"delivery_agent"}
+              subtitle={subheadNotesAction}
               click={props.openDialog}
               cardActions={true}
             />
