@@ -151,7 +151,7 @@ function CustomerGiftSoa(props) {
             </TableHead>
             <TableBody>
               {showData &&
-                rows.map((data) => {
+                rows.map((data, index) => {
                   return (
                     // eslint-disable-next-line react/jsx-key
                     <TableRow key={index}>
@@ -181,7 +181,7 @@ function CustomerGiftSoa(props) {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={rows.length}
+              count={props.fetchGiftSoaList.count}
               rowsPerPage={rowsPerPage}
               page={page}
               onChangePage={handleChangePage}

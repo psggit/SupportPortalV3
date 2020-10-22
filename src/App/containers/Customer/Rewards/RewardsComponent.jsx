@@ -200,7 +200,7 @@ function Rewards(props) {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
-                count={rows.length}
+                count={props.rewardsList.rewards.count}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onChangePage={handleChangePage}
@@ -226,7 +226,6 @@ Rewards.propTypes = {
   rewardsList: PropTypes.object,
   soaList: PropTypes.array,
   orderInfo: PropTypes.object,
-  //rewardsList: PropTypes.array,
   rewardsProgress: PropTypes.bool,
   rewardsSuccess: PropTypes.bool,
   rewardsFail: PropTypes.bool,

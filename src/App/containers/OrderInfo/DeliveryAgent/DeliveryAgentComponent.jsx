@@ -8,7 +8,7 @@ import ActivityItem from "../../../components/activityItems";
 import { getListOfDataObjects } from "../../../utils/helpers";
 import Notification from "../../../components/notification";
 import Dialog from "../../../components/dialog";
-import { Select, MenuItem, InputLabel, FormControl } from "@material-ui/core";
+import { Select, MenuItem, InputLabel } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 
 const keysToRender = [
@@ -157,7 +157,7 @@ const DeliveryAgentComponent = (props) => {
             </Button>,
           ]}
         >
-          <FormControl className={classes.formControl}>
+          <>
             <InputLabel id="demo-simple-select-label">
               Delivery Agent List
             </InputLabel>
@@ -194,7 +194,7 @@ const DeliveryAgentComponent = (props) => {
               size="small"
               placeholder="Add cancel reason"
             />
-          </FormControl>
+          </>
         </Dialog>
       )}
     </div>,
@@ -289,17 +289,8 @@ const useStyles = makeStyles((theme) => ({
   formRoot: {
     padding: 36,
   },
-  formControl: {
-    margin: theme.spacing(1),
-    // minWidth: 200,
-  },
-  formControlTextarea: {
-    // width: "170%",
-    // marginBottom: 24,
-    // marginTop: 20,
-  },
   selectBox: {
-    //paddingBottom: "20px",
+    width: "100%",
   },
 }));
 
