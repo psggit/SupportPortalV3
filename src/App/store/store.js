@@ -3,6 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
 import { loginReducer } from "../containers/Login";
 import { homeReducer } from "../containers/Dashboard";
+import { issuesReducer } from "../containers/Issues";
 import { cartReducer } from "../containers/Cart";
 import { orderReducer } from "../containers/OrderInfo/reducer";
 import { cartModifyReducer } from "../containers/CartModification";
@@ -11,6 +12,7 @@ import { customerSOAReducer } from "../containers/Customer/CustomerSoa";
 import { customerGiftSOAReducer } from "../containers/Customer/CustomerGiftSoa";
 import { rewardsReducer } from "../containers/Customer/Rewards";
 import { customerUpdateReducer } from "../containers/Customer/CustomerFormDetails";
+import { acitivityListReducer } from "../containers/ActivityList";
 
 const store = configureStore({
   reducer: combineReducers({
@@ -24,6 +26,8 @@ const store = configureStore({
     giftSoa: customerGiftSOAReducer,
     rewards: rewardsReducer,
     update: customerUpdateReducer,
+    acitivityLog: acitivityListReducer,
+    issues: issuesReducer,
   }),
   middleware: [thunk],
 });

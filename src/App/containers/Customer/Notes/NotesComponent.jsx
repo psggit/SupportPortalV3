@@ -1,22 +1,22 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable prettier/prettier */
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '../../../components/table'
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
-import Moment from "moment"
-import Button from '@material-ui/core/Button';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Dialog from '../../../components/dialog'
+import { makeStyles } from "@material-ui/core/styles";
+import Table from "../../../components/table";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+import Moment from "moment";
+import Button from "@material-ui/core/Button";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import Dialog from "../../../components/dialog";
+import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
-import HorizontalBar from "./../horizontalBar";
-
+import TopBar from "../../../components/topBar";
+import FullWidthTabs from "../customerMenuBar";
+import { Tab } from "@material-ui/core";
+import Loading from "../../../components/loading";
 
 const tableHeaders = [
   { label: "NOTE NO", value: "note_no" },
@@ -24,7 +24,7 @@ const tableHeaders = [
   { label: "DESCRIPTION", value: "desc" },
   { label: "CREATED BY", value: "created_by" },
   { label: "CREATED AT", value: "created_at" },
-]
+];
 
 function Notes(props) {
   const classes = useStyles();
@@ -34,8 +34,8 @@ function Notes(props) {
   // const [isLoading, setLoading] = useState(false)
   // const [pageNo, setPageNo] = useState(activePage)
 
-  const [showAddNoteDilog, setShowAddNoteDialog] = useState(false)
-  const [age, setAge] = useState('');
+  const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
+  const [age, setAge] = useState("");
 
   useEffect(() => {
     props.fetchConsumerNotes(props.orderInfo.order_id);
@@ -46,133 +46,118 @@ function Notes(props) {
   };
 
   const mountAddNote = () => {
-    setShowAddNoteDialog(true)
-  }
+    setShowAddNoteDialog(true);
+  };
 
   const UnmountAddNote = () => {
-    setShowAddNoteDialog(false)
-  }
-
-
-  // const handlePageChange = (pageObj) => {
-  //   setPageNo(pageObj.activePage)
-  //   const queryParamsObj = {
-  //     activePage: pageObj.activePage,
-  //   }
-  //   history.pushState(queryParamsObj, "soa listing", `/soa ${getQueryUri(queryParamsObj)}`)
-  // }
+    setShowAddNoteDialog(false);
+  };
 
   let loading = props.notesProgress;
   if (loading) {
-    return <p>Loading...</p>;
+    return <Loading message="Loading..." />;
   }
 
   return (
-    <div className={classes.formContainer}>
-      <HorizontalBar />
-      <div className={classes.row1}>
-        <p>CUSTOMER ID: {props.customerId}</p>
-        <div>
-          <Button
-            variant="contained"
-            onClick={mountAddNote}
-            color="primary"
-          >
-            Add Note
-          </Button>
-          {
-            showAddNoteDilog &&
-            <Dialog
-              title="ADD NOTE"
-              actions={[
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={UnmountAddNote}
-                >
-                  Cancel
-                </Button>,
-                <Button
-                  variant="outlined"
-                  color="primary"
-                //onClick={commentUnmountModel}
-                >
-                  Save
-                </Button>
-              ]}
-            >
-              <form>
-                <div className={classes.selectIssue}>
-                  <div>Select Issue</div>
-                  <div>
-                    <FormControl className={classes.formControl}>
-                      <Select
-                        value={age}
-                        onChange={handleChange}
-                        displayEmpty
-                        className={classes.selectEmpty}
-                        inputProps={{ 'aria-label': 'Without label' }}
-                      >
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
-                      </Select>
-                    </FormControl>
+    <>
+      <TopBar />
+      <div className={classes.formContainer}>
+        <FullWidthTabs value={4} orderId={props.orderInfo.order_id} />
+        <div className={classes.row1}>
+          <p>CUSTOMER ID: {props.customerId}</p>
+          <div>
+            <Button variant="contained" onClick={mountAddNote} color="primary">
+              Add Note
+            </Button>
+            {showAddNoteDilog && (
+              <Dialog
+                title="ADD NOTE"
+                actions={[
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={UnmountAddNote}
+                    key="cancelBtn"
+                  >
+                    Cancel
+                  </Button>,
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    key="saveBtn"
+                    //onClick={commentUnmountModel}
+                  >
+                    Save
+                  </Button>,
+                ]}
+              >
+                <form>
+                  <div className={classes.selectIssue}>
+                    <div>Select Issue</div>
+                    <div>
+                      <FormControl className={classes.formControl}>
+                        <Select
+                          value={age}
+                          onChange={handleChange}
+                          displayEmpty
+                          className={classes.selectEmpty}
+                          inputProps={{ "aria-label": "Without label" }}
+                        >
+                          <MenuItem value={10}>Ten</MenuItem>
+                          <MenuItem value={20}>Twenty</MenuItem>
+                          <MenuItem value={30}>Thirty</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </div>
                   </div>
-                </div>
-                <div className={classes.formRoot}>
-                  <TextareaAutosize
-                    className={classes.formControlTextarea}
-                    aria-label="minimum height"
-                    rowsMin={7}
-                    //onChange={handleCommentChange}
-                    placeholder="Add note here"
-                  />
-                </div>
-              </form>
-            </Dialog>
-          }
+                  <div className={classes.formRoot}>
+                    <TextareaAutosize
+                      className={classes.formControlTextarea}
+                      aria-label="minimum height"
+                      rowsMin={7}
+                      //onChange={handleCommentChange}
+                      placeholder="Add note here"
+                    />
+                  </div>
+                </form>
+              </Dialog>
+            )}
+          </div>
+        </div>
+        <div className={classes.table}>
+          <Paper className={classes.paper}>
+            <Table tableHeaders={tableHeaders}>
+              {props.notesSuccess && props.customerNotes.orderNotes !== null
+                ? props.customerNotes.orderNotes.map((data, ind) => {
+                    return (
+                      <TableRow key={ind}>
+                        <TableCell>{data.order_id}</TableCell>
+                        <TableCell>{data.type}</TableCell>
+                        <TableCell>{data.notes}</TableCell>
+                        <TableCell align="left">{data.created_by}</TableCell>
+                        <TableCell align="left">
+                          {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
+                : props.notesSuccess &&
+                  props.customerNotes.orderNotes == null && (
+                    <tr>
+                      <td
+                        style={{ textAlign: "center", padding: "10px 0" }}
+                        colSpan="6"
+                      >
+                        <p style={{ fontWeight: "16px" }}>No records found</p>
+                      </td>
+                    </tr>
+                  )}
+            </Table>
+          </Paper>
         </div>
       </div>
-      <div className={classes.table}>
-        <Paper className={classes.paper}>
-        <Table tableHeaders={tableHeaders}>
-          {
-            props.notesSuccess && props.customerNotes.orderNotes !== null
-            ? props.customerNotes.orderNotes.map((data, index) => {
-              return (
-                <TableRow key={index}>
-                  <TableCell>{data.order_id}</TableCell>
-                  <TableCell>{data.type}</TableCell>
-                  <TableCell>{data.notes}</TableCell>
-                  <TableCell align="left">{data.created_by}</TableCell>
-                  <TableCell align="left">{Moment(data.created_at).format("DD/MM/YYYY h:mm A")}</TableCell>
-                </TableRow>
-              )
-            })
-                : props.notesSuccess && (
-                <tr>
-                  <td
-                    style={{ textAlign: "center", padding: "10px 0" }}
-                    colSpan="6"
-                  >
-                    <p style={{ fontWeight: "16px" }}>No records found</p>
-                  </td>
-                </tr>
-            )}
-        </Table>
-        </Paper>
-        {/* <Pagination
-          activePage={parseInt(pageNo)}
-          //itemsCountPerPage={parseInt(pageLimit)}
-          rowsPerPage={parseInt(pageLimit)}
-          count={props.notes.count}
-          setPage={handlePageChange}
-          color="primary"
-        /> */}
-      </div>
-    </div>
-  )
+    </>
+  );
 }
 
 Notes.propTypes = {
@@ -184,50 +169,49 @@ Notes.propTypes = {
   orderInfo: PropTypes.object,
 };
 
-export { Notes }
+export { Notes };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   navBar: {
-    display: 'flex',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    padding: '24px',
-    color: '#696969',
-    fontWeight: 'bold',
-    fontSize: '14px',
-    lineHeight: '21px',
+    display: "flex",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    padding: "24px",
+    color: "#696969",
+    fontWeight: "bold",
+    fontSize: "14px",
+    lineHeight: "21px",
   },
   navContent: {
-    marginLeft: '22px',
+    marginLeft: "22px",
   },
   row1: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    padding: '34px 24px',
-    letterSpacing: '0.012em',
-    fontSize: '16px',
-    color: '#696969',
-    fontWeight: 'bold',
+    display: "flex",
+    justifyContent: "space-between",
+    padding: "34px 24px",
+    letterSpacing: "0.012em",
+    fontSize: "16px",
+    color: "#696969",
+    fontWeight: "bold",
   },
   table: {
-    padding: '0px 80px'
+    padding: "0px 80px",
   },
   formRoot: {
-    padding: 24
+    padding: 24,
   },
   formControlTextarea: {
     width: "100%",
     marginBottom: 24,
-    padding: 10
+    padding: 10,
   },
   selectIssue: {
     display: "flex",
     paddingLeft: "24px",
-    color: "#606060"
+    color: "#606060",
   },
   formControl: {
     marginLeft: "16px",
     minWidth: 120,
   },
 }));
-

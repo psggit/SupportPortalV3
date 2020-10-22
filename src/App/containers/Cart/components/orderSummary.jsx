@@ -1,7 +1,7 @@
 import React, { useState, createRef } from "react";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Collapse from "@material-ui/core/Collapse";
 import ExpandLess from "@material-ui/icons/ExpandLess";
@@ -95,6 +95,16 @@ const useStyles = makeStyles((theme) => ({
     width: "30%",
   },
 }));
+
+const BlueCheckbox = withStyles({
+  root: {
+    color: "#0086AD",
+    "&$checked": {
+      color: "#0086AD",
+    },
+  },
+  checked: {},
+})((props) => <Checkbox color="default" {...props} />);
 
 const OrderSummary = (props) => {
   const classes = useStyles();
@@ -255,7 +265,7 @@ const OrderSummary = (props) => {
           >
             {props.modify && (
               <ListItemIcon>
-                <Checkbox
+                <BlueCheckbox
                   edge="start"
                   checked={checked.indexOf("hipbarWallet") !== -1}
                   tabIndex={-1}
@@ -284,7 +294,7 @@ const OrderSummary = (props) => {
           >
             {props.modify && (
               <ListItemIcon>
-                <Checkbox
+                <BlueCheckbox
                   edge="start"
                   checked={checked.indexOf("giftWallet") !== -1}
                   tabIndex={-1}

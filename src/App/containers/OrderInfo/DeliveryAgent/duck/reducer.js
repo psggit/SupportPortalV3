@@ -35,14 +35,16 @@ const initialValue = {
   reserveDaProgress: false,
 };
 const deliveryAgentReducer = createReducer(initialValue, {
-  [fetchDeliveryAgentNotesSuccess]: (state, data) => ({
-    ...state,
-    deliveryAgentNotesData: data.payload,
-    fetchSuccess: true,
-    fetchFailed: false,
-    fetchProgress: false,
-    errorMsg: "",
-  }),
+  [fetchDeliveryAgentNotesSuccess]: (state, data) => {
+    return {
+      ...state,
+      deliveryAgentNotesData: data.payload,
+      fetchSuccess: true,
+      fetchFailed: false,
+      fetchProgress: false,
+      errorMsg: "",
+    };
+  },
   [fetchDeliveryAgentNotesFailed]: (state) => ({
     ...state,
     fetchSuccess: false,

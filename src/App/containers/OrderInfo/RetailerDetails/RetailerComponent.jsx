@@ -42,8 +42,8 @@ const RetailerDetails = (props) => {
   };
 
   const actionButtons = [
-    <Button variant="outlined" color="primary" key="unassignBtn">
-      Unassign
+    <Button variant="outlined" color="primary" key="changeRetailerBtn">
+      Change Retailer
     </Button>,
     <Button
       variant="contained"
@@ -58,7 +58,22 @@ const RetailerDetails = (props) => {
   const retailerNotes = [
     // eslint-disable-next-line react/jsx-key
     <Button color="primary" endIcon={<ChevronRightIcon />} onClick={handleMore}>
-      Add more
+      More
+    </Button>,
+  ];
+
+  const handleChange = () => {
+    history.push("/change-retailer");
+  };
+
+  const subheadAction = [
+    <Button
+      color="primary"
+      endIcon={<ChevronRightIcon />}
+      onClick={handleChange}
+      key="moreBtn"
+    >
+      More
     </Button>,
   ];
 
@@ -86,6 +101,7 @@ const RetailerDetails = (props) => {
               subtitle={retailerNotes}
               issueType={"retailer"}
               click={props.openDialog}
+              cardActions={true}
             />
           )}
           {props.fetchProgress && <CircularProgress />}

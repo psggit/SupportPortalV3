@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { LoginContainer } from "./containers/Login";
 import { LogoutContainer } from "./containers/Logout";
 import { DashboardContainer } from "./containers/Dashboard";
+import { IssuesContainer } from "./containers/Issues";
 import { OrderDetailsContainer } from "./containers/OrderDetails";
 import { CartModificationContainer } from "./containers/CartModification";
 import { OrderInfoContainer } from "./containers/OrderInfo";
@@ -23,6 +24,7 @@ import { CustomerSoaContainer } from "./containers/Customer/CustomerSoa";
 import { CustomerGiftSoaContainer } from "./containers/Customer/CustomerGiftSoa";
 import { RewardsContainer } from "./containers/Customer/Rewards";
 import { NotesContainer } from "./containers/Customer/Notes";
+import { ActivityListContainer } from "./containers/ActivityList";
 
 function App(props) {
   useEffect(() => {
@@ -57,6 +59,7 @@ function App(props) {
                 path="/cart-modify"
                 component={CartModificationContainer}
               />
+              <Route path="/activity-list" component={ActivityListContainer} />
 
               <Route
                 path="/change-retailer"
@@ -74,6 +77,8 @@ function App(props) {
               <Route path="/gift-soa" component={CustomerGiftSoaContainer} />
               <Route path="/rewards" component={RewardsContainer} />
               <Route path="/notes" component={NotesContainer} />
+
+              <Route path="/issues" component={IssuesContainer} />
 
               <Route path="/" component={LoginContainer} />
             </Switch>
