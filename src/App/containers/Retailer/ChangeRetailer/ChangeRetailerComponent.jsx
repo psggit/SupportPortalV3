@@ -92,8 +92,7 @@ const ChangeRetailerComponent = (props) => {
               <Grid item xs={4}>
                 <RetailerCardContainer
                   retailerName={value.retailer_name}
-                  totalDa={value.total_da}
-                  freeDa={value.free_da}
+                  value={value}
                 />
               </Grid>
             ))}

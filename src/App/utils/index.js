@@ -26,3 +26,4 @@ export { cancelOrderAPI } from "./cancelOrderAPI";
 export { deliverOrderReasonAPI } from "./deliverOrderReasonAPI";
 export { deliverOrderAPI } from "./deliverOrderAPI";
 export { listRetailerAPI } from "./listRetailerAPI";
+export { reassignRetailerAPI } from "./reassignRetailerAPI";

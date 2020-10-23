@@ -2,8 +2,12 @@ import {
   listRetailerSuccess,
   listRetailerFailed,
   listRetailerProgress,
+  reassignRetailerProgress,
+  reassignRetailerFailed,
+  reassignRetailerSuccess,
 } from "./action";
 import { listRetailerAPI } from "../../../../utils/listRetailerAPI";
+import { reassignRetailerAPI } from "../../../../utils/reassignRetailerAPI";
 
 const processResponse = () => {
   return (res) => {
@@ -21,9 +25,21 @@ const onSuccessListRetailer = (dispatch) => {
   };
 };
 
+const onSuccessReassignRetailer = (dispatch) => {
+  return (data) => {
+    dispatch(reassignRetailerSuccess(data));
+  };
+};
+
 const onErrorListRetailer = (dispatch) => {
   return () => {
     dispatch(listRetailerFailed());
+  };
+};
+
+const onErrorReassignRetailer = (dispatch) => {
+  return () => {
+    dispatch(reassignRetailerFailed());
   };
 };
 
@@ -39,4 +55,16 @@ const listRetailer = (reqBody) => {
   };
 };
 
-export { listRetailer };
+const reassignRetailer = (reqBody) => {
+  return (dispatch) => {
+    dispatch(reassignRetailerProgress());
+    reassignRetailerAPI(
+      reqBody,
+      processResponse(dispatch),
+      onSuccessReassignRetailer(dispatch),
+      onErrorReassignRetailer(dispatch)
+    );
+  };
+};
+
+export { listRetailer, reassignRetailer };

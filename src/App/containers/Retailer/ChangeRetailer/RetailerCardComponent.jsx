@@ -82,6 +82,21 @@ const RetailerCardComponent = (props) => {
     setMountDialog(false);
   };
 
+  const handleConfirm = () => {
+    const payload = {
+      order_id: props.orderInfo.order_id,
+      retailer_id: parseInt(props.value.retailer_id),
+      retailer_name: props.value.retailer_name,
+      warehouse_id: parseInt(props.orderInfo.warehouse_id),
+      delivery_status: props.orderInfo.delivery_status,
+      assigned_delivery_agent: parseInt(props.orderInfo.delivery_agent_id),
+      reserved_for_da_id: parseInt(props.orderInfo.delivery_agent_id),
+      cancellation_reason: "",
+    };
+    props.reassignRetailer(payload);
+    setMountDialog(false);
+  };
+
   return (
     <Card className={classes.RetailerCardComponent} variant="outlined">
       <CardContent p={2}>
@@ -90,7 +105,7 @@ const RetailerCardComponent = (props) => {
           <ListItemText primary={"Free Agent/ Total Delivery Agents"} />
           <Box>
             <Typography>
-              {props.freeDa}/{props.totalDa}
+              {props.value.free_da}/{props.value.total_da}
             </Typography>
           </Box>
 
@@ -131,7 +146,7 @@ const RetailerCardComponent = (props) => {
                 variant="contained"
                 color="primary"
                 size="small"
-                onClick={handleCancel}
+                onClick={handleConfirm}
               >
                 Confirm
               </Button>,
@@ -152,6 +167,8 @@ RetailerCardComponent.propTypes = {
   orderInfo: PropTypes.object,
   totalDa: PropTypes.string,
   freeDa: PropTypes.string,
+  reassignRetailer: PropTypes.func,
+  value: PropTypes.object,
 };
 
 export { RetailerCardComponent };
