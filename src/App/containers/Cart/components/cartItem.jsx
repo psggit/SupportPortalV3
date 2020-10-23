@@ -101,7 +101,7 @@ const CartItem = (props) => {
       <ListItemText
         className={classes.ListItems}
         primary={value.brand_name}
-        secondary={`${value.volume} ML | ₹ ${value.sku_price}`}
+        secondary={`${value.volume} ML | ${value.sku_price}`}
       />
 
       <Box className={classes.addComponentLeft}>

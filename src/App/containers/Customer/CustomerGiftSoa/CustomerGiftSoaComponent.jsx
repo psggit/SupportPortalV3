@@ -1,13 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-import Table from "../../../components/table";
+import { makeStyles } from "@material-ui/core/styles";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-//import Pagination from "../../../components/pagination";
+import TableBody from "@material-ui/core/TableBody";
+import { Box, TablePagination } from "@material-ui/core";
 import Moment from "moment";
 import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
+import TopBar from "../../../components/topBar";
+import FullWidthTabs from "../customerMenuBar";
+import {
+  TableContainer,
+  Table,
+  Container,
+  Tab,
+  TableHead,
+} from "@material-ui/core";
+import Loading from "../../../components/loading";
 
 const useStyles = makeStyles((theme) => ({
   navBar: {
@@ -35,144 +45,154 @@ const useStyles = makeStyles((theme) => ({
   table: {
     padding: "0px 80px",
   },
-  paper: {},
+  paper: {
+    //padding: 24,
+  },
 }));
 
-const tableHeaders = [
-  { label: "ORDER ID", value: "order_id" },
-  { label: "TRANSACTION TYPE", value: "transaction_type" },
-  { label: "TRANSACTION AMOUNT", value: "transaction_amount" },
-  { label: "CARD NUMBER AND VALUE", value: "card_number_and_value" },
-  { label: "TRANSACTION STATUS", value: "transaction_status" },
-  { label: "CREATED AT", value: "created_at" },
-];
+const createData = ({
+  reference_number,
+  transaction_type,
+  transaction_amount,
+  gift_cards_and_value,
+  ResponseMessage,
+  date_at_server,
+}) => {
+  return {
+    reference_number,
+    transaction_type,
+    transaction_amount,
+    gift_cards_and_value,
+    ResponseMessage,
+    date_at_server,
+  };
+};
 
 function CustomerGiftSoa(props) {
-  const history = useHistory();
   const classes = useStyles();
+  const [showData, setShowData] = useState(false);
+  const [rows, setRowsData] = useState(null);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [page, setPage] = useState(0);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const payload = {
       customer_contact_number: props.customerNumber,
-      limit: 10,
-      offset: 0,
+      limit: rowsPerPage,
+      offset: page * rowsPerPage,
     };
     props.fetchGiftSoaList(payload);
-  }, []);
+  }, [rowsPerPage, page]);
 
-  // const pageLimit = 2;
-  // const activePage = getQueryParamByName("activePage") || 1;
-  // const [isLoading, setLoading] = useState(false);
-  // const [pageNo, setPageNo] = useState(activePage);
+  useEffect(() => {
+    if (props.giftSoaSuccess) {
+      if (props.giftSoaList !== null) {
+        loopData(props.giftSoaList);
+        setShowData(true);
+      } else {
+        setShowData(false);
+      }
+    }
+  }, [props.giftSoaSuccess]);
 
-  // const handlePageChange = (pageObj) => {
-  //   setPageNo(pageObj.activePage);
-  //   const queryParamsObj = {
-  //     activePage: pageObj.activePage,
-  //   };
-  //   history.pushState(
-  //     queryParamsObj,
-  //     "soa listing",
-  //     `/soa${getQueryUri(queryParamsObj)}`
-  //   );
-  // };
+  useEffect(() => {
+    setErrorMessage(props.giftSoaFail);
+  }, [props.giftSoaFail]);
 
-  const handleGiftSoaChange = () => {
-    console.log("gift-soa");
-    history.push("/gift-soa");
+  const handleClose = () => {
+    setErrorMessage(false);
   };
 
-  const handleRewardChange = () => {
-    console.log("rewards");
-    history.push("/rewards");
+  const filledRows = [];
+  const loopData = (data) => {
+    data.map((value) => {
+      filledRows.push(createData(value));
+    });
+    setRowsData(filledRows);
   };
 
-  const handleSoaChange = () => {
-    console.log("soa");
-    history.push("/soa");
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
   };
 
-  const handleBack = () => {
-    history.push("/order-details");
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value));
+    setPage(0);
   };
 
-  const handleNotes = () => {
-    history.push("/notes");
-  };
+  console.log(props);
 
-  const handleCustomerDetail = () => {
-    history.push("/customer-detail");
-  };
+  let loading = props.giftSoaProgress;
+  if (loading) {
+    return <Loading message="Loading..." />;
+  }
 
   return (
-    <div className={classes.formContainer}>
-      <div className={classes.navBar}>
-        <div className={classes.backButton}>
-          <div onClick={handleBack}>Back</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleCustomerDetail}>Customer Details</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleSoaChange}>SOA</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleGiftSoaChange}>Gift Soa</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleRewardChange}>Rewards</div>
-        </div>
-        <div className={classes.navContent}>
-          <div onClick={handleNotes}>Notes</div>
-        </div>
-      </div>
+    <>
+      <TopBar />
+      <FullWidthTabs value={2} orderId={props.orderInfo.order_id} />
       <div className={classes.row1}>
         <p>CUSTOMER ID: {props.customerId}</p>
         <div>Search</div>
       </div>
-      <div className={classes.table}>
-        <Paper className={classes.paper}>
-          <Table tableHeaders={tableHeaders}>
-            {props.giftSoaSuccess
-              ? props.giftSoaList.map((data) => {
-                  return (
-                    // eslint-disable-next-line react/jsx-key
-                    <TableRow>
-                      <TableCell>{data.reference_number}</TableCell>
-                      <TableCell>{data.transaction_type}</TableCell>
-                      <TableCell>{data.transaction_amount}</TableCell>
-                      <TableCell>{data.gift_cards_and_value}</TableCell>
-                      <TableCell>{data.ResponseMessage}</TableCell>
-                      <TableCell align="left">
-                        {Moment(data.date_at_server).format(
-                          "DD/MM/YYYY h:mm A"
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })
-              : !props.giftSoaSuccess && (
-                  <tr>
-                    <td
-                      style={{ textAlign: "center", padding: "10px 0" }}
-                      colSpan="6"
-                    >
-                      <p style={{ fontWeight: "16px" }}>No records found</p>
-                    </td>
-                  </tr>
-                )}
+      <Box width="90%" mx="auto" mt={4}>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">ORDER ID</TableCell>
+                <TableCell align="center">TRANSACTION TYPE</TableCell>
+                <TableCell align="center">TRANSACTION AMOUNT</TableCell>
+                <TableCell align="center">CARD NUMBER AND VALUE</TableCell>
+                <TableCell align="center">TRANSACTION STATUS</TableCell>
+                <TableCell align="center">CREATED AT</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {showData &&
+                rows
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((data) => {
+                    return (
+                      // eslint-disable-next-line react/jsx-key
+                      <TableRow>
+                        <TableCell>{data.reference_number}</TableCell>
+                        <TableCell>{data.transaction_type}</TableCell>
+                        <TableCell>{data.transaction_amount}</TableCell>
+                        <TableCell>{data.gift_cards_and_value}</TableCell>
+                        <TableCell>{data.ResponseMessage}</TableCell>
+                        <TableCell align="left">
+                          {Moment(data.date_at_server).format(
+                            "DD/MM/YYYY h:mm A"
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+              {!showData && (
+                <TableRow>
+                  <TableCell colSpan={10} align="center">
+                    No data available
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
           </Table>
-        </Paper>
-        {/* <Pagination
-          activePage={parseInt(pageNo)}
-          //itemsCountPerPage={parseInt(pageLimit)}
-          rowsPerPage={parseInt(pageLimit)}
-          count={props.CustomerGiftSoaList.count}
-          setPage={handlePageChange}
-          color="primary"
-        /> */}
-      </div>
-    </div>
+          {showData && (
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
+            />
+          )}
+        </TableContainer>
+      </Box>
+    </>
   );
 }
 
@@ -182,6 +202,9 @@ CustomerGiftSoa.propTypes = {
   giftSoaList: PropTypes.array,
   giftSoaSuccess: PropTypes.bool,
   giftSoa: PropTypes.bool,
+  errorMsg: PropTypes.any,
+  giftSoaFail: PropTypes.bool,
+  giftSoaProgress: PropTypes.bool,
 };
 
 export { CustomerGiftSoa };

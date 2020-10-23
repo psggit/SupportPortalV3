@@ -37,6 +37,7 @@ const rewardsReducer = createReducer(initialState, {
     return {
       ...state,
       rewardsProgress: true,
+      rewardsSuccess: false,
     };
   },
 });

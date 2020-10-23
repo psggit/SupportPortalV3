@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     fontFamily: theme.typography.fontFamily,
     padding: 24,
-    boxShadow: "none",
     "& .MuiCardHeader-root": {
       padding: 0,
     },
@@ -36,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between",
-      padding: "12px 0",
       "& .title": {
         width: "30%",
       },

@@ -5,10 +5,9 @@ const headers = {
   "Content-Type": "application/json",
 };
 
-// const api = `/deliveryman/api/1/support/send-login-email`;
-// const URL = `https://${apiUrl}.${process.env.BASE_URL}${api}`;
 const loginAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://${apiUrl}/deliveryman/api/1/support/send-login-email`;
+  const URL = `https://${apiUrl}/supportman/api/1/send-login-email`;
+  // const URL = `https://${apiUrl}/deliveryman/api/1/support/send-login-email`;
   fetch(URL, {
     method: "POST",
     headers: headers,

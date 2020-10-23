@@ -6,8 +6,8 @@ import {
 import { consumerRewardsAPI } from "../../../../utils/consumerRewardsAPI";
 
 const processResponse = () => {
-  console.clear();
-  console.log("[processResponse]");
+  // console.clear();
+  // console.log("[processResponse]");
   return (res) => {
     if (res.status === 200) {
       return res.json();
@@ -31,8 +31,8 @@ const onError = (dispatch) => {
 };
 
 const fetchRewardsList = (reqBody) => {
-  console.clear();
-  console.clear("fetchCustomerSoaList");
+  // console.clear();
+  // console.clear("fetchCustomerSoaList");
   return (dispatch) => {
     dispatch(fetchRewardProgress());
     consumerRewardsAPI(

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Button, TextField } from "@material-ui/core";
+import { Box, Button, Paper, TextField } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import TopBar from "../../components/topBar";
 import { useHistory } from "react-router-dom";
@@ -16,16 +16,22 @@ import DialogComponent from "../../components/dialog";
 import Loading from "../../components/loading";
 import ErrorMsg from "../../components/errorMsg";
 import { ActivityLogContainer } from "./ActivityLogs";
-import { IconButton } from "@material-ui/core";
+import {
+  Fab,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    fontFamily: theme.typography.body1,
+    fontFamily: theme.typography.body1.fontFamily,
   },
   boxContainer: {
-    fontFamily: theme.typography.body1,
+    fontFamily: theme.typography.body1.fontFamily,
   },
   containerBox: {
     width: "100%",
@@ -48,8 +54,83 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "16px",
     lineHeight: "22px",
   },
+  fixedSideBar: {
+    height: "100%",
+    position: "fixed",
+    right: 0,
+    top: 60,
+    padding: 10,
+    paddingTop: 20,
+  },
+  fabBtn: {
+    marginTop: 150,
+  },
+  sideNavBtnO: {
+    backgroundColor: theme.palette.primary.main,
+    color: "#fff",
+    height: 24,
+    width: 24,
+    minWidth: 24,
+    fontSize: 18,
+    margin: 5,
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: theme.palette.primary.main,
+      textDecoration: "underline",
+      color: "#fff",
+    },
+  },
+  sideNavBtnC: {
+    backgroundColor: "#FB337A",
+    color: "#fff",
+    height: 24,
+    width: 24,
+    minWidth: 24,
+    fontSize: 18,
+    margin: 5,
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: "#FB337A",
+      textDecoration: "underline",
+      color: "#fff",
+    },
+  },
+  sideNavBtnR: {
+    backgroundColor: "#F4A60B",
+    color: "#fff",
+    height: 24,
+    width: 24,
+    minWidth: 24,
+    fontSize: 18,
+    margin: 5,
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: "#F4A60B",
+      textDecoration: "underline",
+      color: "#fff",
+    },
+  },
+  sideNavBtnD: {
+    backgroundColor: "#1B4987",
+    color: "#fff",
+    height: 24,
+    width: 24,
+    minWidth: 24,
+    fontSize: 18,
+    margin: 5,
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: "#1B4987",
+      textDecoration: "underline",
+      color: "#fff",
+    },
+  },
   marginTop: {
-    marginTop: "25px",
+    marginTop: theme.spacing(3),
+  },
+  formControl: {
+    marginBottom: theme.spacing(2),
+    minWidth: 200,
   },
 }));
 
@@ -72,10 +153,12 @@ const OrderInfoComponent = (props) => {
         order_id: orderId,
       };
       props.fetchCancelReason(payload);
+      props.fetchIssueTypes();
     }
   }, [props.fetchOrderInfoSuccess]);
 
   let loading = props.fetchOrderInfoProgress;
+  const [selectedValue, handleSelect] = useState("");
   const [issueType, setIssueType] = useState(null);
   const [newIssueDesc, setNewIssueDesc] = useState("");
   const [issueDesc, setIssueDesc] = useState("");
@@ -84,6 +167,10 @@ const OrderInfoComponent = (props) => {
   const [showError, setShowError] = useState(false);
 
   const [activeSection, setActiveSection] = useState("");
+
+  const handleSelectChange = (event) => {
+    handleSelect(event.target.value);
+  };
 
   const handleScroll = (id) => {
     setActiveSection(id);
@@ -131,6 +218,15 @@ const OrderInfoComponent = (props) => {
     props.fetchCancelReason(payload);
   };
 
+  const updateIssue = () => {
+    const payload = {
+      order_id: props.orderId,
+      reason: selectedValue,
+    };
+    props.submitIssue(payload);
+    handleAddIssue();
+  };
+
   const dialogActions = [
     <Button
       variant="outlined"
@@ -150,12 +246,39 @@ const OrderInfoComponent = (props) => {
     </Button>,
   ];
 
+  const dialogActionsIssue = [
+    <Button
+      variant="outlined"
+      color="primary"
+      key="closeDialog"
+      onClick={() => handleAddIssue()}
+    >
+      Cancel
+    </Button>,
+    <Button
+      variant="contained"
+      color="primary"
+      key="createIssue"
+      onClick={() => updateIssue()}
+    >
+      Save
+    </Button>,
+  ];
+
   if (loading) {
     return <Loading message="Loading..." />;
   }
 
   if (props.fetchOrderInfoFailure) {
-    return <ErrorMsg show={true} message={props.errorMsg} type={"error"} />;
+    return (
+      <ErrorMsg
+        show={true}
+        message={
+          props.errorMsg !== "" ? props.errorMsg : "Something went wrong"
+        }
+        type={"error"}
+      />
+    );
   }
 
   return (
@@ -185,9 +308,42 @@ const OrderInfoComponent = (props) => {
         <DialogComponent
           title="ADD NEW ISSUE"
           subtitle={`Order ID: ` + orderId}
-          actions={dialogActions}
+          actions={dialogActionsIssue}
           openDialog={handleAddIssue}
         >
+          {props.fetchOrderInfoSuccess && (
+            <FormControl className={classes.formControl}>
+              <InputLabel id="demo-simple-select-label">
+                Select Reason
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                onChange={(event) => handleSelectChange(event)}
+              >
+                {props.fetchOrderInfoSuccess &&
+                  props.issueTypes.issue_types.map((value) => {
+                    if (selectedValue === value) {
+                      return (
+                        <MenuItem
+                          value={value.issue_type}
+                          key={value.issue_id}
+                          selected={true}
+                        >
+                          {value.issue_label}
+                        </MenuItem>
+                      );
+                    } else {
+                      return (
+                        <MenuItem value={value.issue_type} key={value.issue_id}>
+                          {value.issue_label}
+                        </MenuItem>
+                      );
+                    }
+                  })}
+              </Select>
+            </FormControl>
+          )}
           <TextField
             id="outlined-textarea"
             placeholder="Add issue description"
@@ -207,7 +363,7 @@ const OrderInfoComponent = (props) => {
             {props.fetchOrderInfoSuccess && <OrderStatusContainer />}
           </Grid>
           <Grid item xs={8}>
-            <Grid container spacing={4} className={classes.marginTop}>
+            <Grid container spacing={4}>
               <Grid item xs={6}>
                 {props.fetchOrderInfoSuccess && <CartContainer {...props} />}
               </Grid>
@@ -215,16 +371,26 @@ const OrderInfoComponent = (props) => {
                 {/* {props.fetchOrderInfoSuccess && (
                   <>
                     <OrderDetailsContainer
-                     {...props}
+                      {...props}
                       buttonState={!props.order.order_status_button}
                       handleError={handleError}
                     />
                   </>
                 )}
                 {props.fetchOrderInfoSuccess && <ActivityLogContainer />} */}
+                {/* {props.fetchOrderInfoSuccess && (
+                  <Box mt={4}>
+                    <ActivityLogContainer />
+                  </Box>
+                )} */}
               </Grid>
             </Grid>
-            <Grid container spacing={4} id="section2">
+            <Grid
+              container
+              spacing={4}
+              id="section2"
+              className={classes.marginTop}
+            >
               <Grid item xs={12}>
                 {props.fetchOrderInfoSuccess && (
                   <CustomerContainer
@@ -234,7 +400,12 @@ const OrderInfoComponent = (props) => {
                 )}
               </Grid>
             </Grid>
-            <Grid container spacing={4} id="section3">
+            <Grid
+              container
+              spacing={4}
+              id="section3"
+              className={classes.marginTop}
+            >
               <Grid item xs={12}>
                 {props.fetchOrderInfoSuccess && (
                   <RetailerContainer
@@ -244,7 +415,12 @@ const OrderInfoComponent = (props) => {
                 )}
               </Grid>
             </Grid>
-            <Grid container spacing={4} id="section4">
+            <Grid
+              container
+              spacing={4}
+              id="section4"
+              className={classes.marginTop}
+            >
               <Grid item xs={12}>
                 {props.fetchOrderInfoSuccess && (
                   <DeliveryAgentContainer
@@ -255,40 +431,54 @@ const OrderInfoComponent = (props) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={1}>
-            <Box display="flex" alignItems="flex-end" flexDirection="column">
-              <Button
-                title="Order Detail"
-                className={activeSection === "section1" ? "active" : null}
-                onClick={() => handleScroll("section1")}
-              >
-                O
-              </Button>
-              <Button
-                title="Customer"
-                className={activeSection === "section2" ? "active" : null}
-                onClick={() => handleScroll("section2")}
-              >
-                C
-              </Button>
-              <Button
-                title="Retailer"
-                className={activeSection === "section3" ? "active" : null}
-                onClick={() => handleScroll("section3")}
-              >
-                R
-              </Button>
-              <Button
-                title="Delivery Agent"
-                className={activeSection === "section4" ? "active" : null}
-                onClick={() => handleScroll("section4")}
-              >
-                D
-              </Button>
-              <IconButton aria-label="add" onClick={() => handleAddIssue()}>
-                <AddIcon />
-              </IconButton>
-            </Box>
+          <Grid item xs={1} boxshadow={1}>
+            <Paper elevation={4} className={classes.fixedSideBar}>
+              <Box display="flex" alignItems="flex-end" flexDirection="column">
+                <Button
+                  title="Order Detail"
+                  className={activeSection === "section1" ? "active" : null}
+                  classes={{ root: classes.sideNavBtnO }}
+                  onClick={() => handleScroll("section1")}
+                >
+                  O
+                </Button>
+                <Button
+                  title="Customer"
+                  className={activeSection === "section2" ? "active" : null}
+                  classes={{ root: classes.sideNavBtnC }}
+                  onClick={() => handleScroll("section2")}
+                >
+                  C
+                </Button>
+                <Button
+                  title="Retailer"
+                  className={activeSection === "section3" ? "active" : null}
+                  classes={{ root: classes.sideNavBtnR }}
+                  onClick={() => handleScroll("section3")}
+                >
+                  R
+                </Button>
+                <Button
+                  title="Delivery Agent"
+                  className={activeSection === "section4" ? "active" : null}
+                  classes={{ root: classes.sideNavBtnD }}
+                  onClick={() => handleScroll("section4")}
+                >
+                  D
+                </Button>
+                <Box>
+                  <Fab
+                    size="small"
+                    color="primary"
+                    className={classes.fabBtn}
+                    aria-label="add"
+                    onClick={() => handleAddIssue()}
+                  >
+                    <AddIcon />
+                  </Fab>
+                </Box>
+              </Box>
+            </Paper>
           </Grid>
         </Grid>
       </Box>
@@ -303,6 +493,9 @@ const OrderInfoComponent = (props) => {
           type="error"
         />
       )}
+      {props.submitIssueSuccess && (
+        <ErrorMsg show={true} message={props.successMsg} type="success" />
+      )}
     </div>
   );
 };
@@ -310,6 +503,7 @@ const OrderInfoComponent = (props) => {
 OrderInfoComponent.propTypes = {
   fetchOrderInfo: PropTypes.func,
   fetchCancelReason: PropTypes.func,
+  fetchIssueTypes: PropTypes.func,
   cancelReasons: PropTypes.array,
   fetchOrderInfoSuccess: PropTypes.bool,
   fetchOrderInfoFailure: PropTypes.bool,
@@ -326,6 +520,9 @@ OrderInfoComponent.propTypes = {
   successMsg: PropTypes.string,
   errorMsg: PropTypes.string,
   activityLog: PropTypes.object,
+  issueTypes: PropTypes.object,
+  submitIssue: PropTypes.func,
+  submitIssueSuccess: PropTypes.bool,
 };
 
 export { OrderInfoComponent };

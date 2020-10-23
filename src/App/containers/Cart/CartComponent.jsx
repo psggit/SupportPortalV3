@@ -82,6 +82,7 @@ const CartComponent = (props) => {
       color="primary"
       onClick={handleModify}
       key="modifyBtn"
+      disabled={false}
     >
       Modify
     </Button>,

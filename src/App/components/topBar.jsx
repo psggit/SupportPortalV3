@@ -8,6 +8,7 @@ import { logo } from "../assets/images/";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    height: 65,
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -22,7 +23,7 @@ export default function TopBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar disableGutters={true}>
           <MenuDrawer />
           <img src={logo} />

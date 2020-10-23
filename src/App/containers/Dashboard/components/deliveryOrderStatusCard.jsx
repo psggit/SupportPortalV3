@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import { FormControl, InputLabel, Select } from "@material-ui/core/";
@@ -53,7 +53,7 @@ const DeliveryOrderStatusCard = (props) => {
   }
 
   return (
-    <Card className={classes.root} variant="outlined">
+    <Card className={classes.root}>
       <CardContent>
         <Typography variant="h5" className={classes.heading} gutterBottom>
           DELIVER ORDER STATUS

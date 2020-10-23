@@ -10,6 +10,7 @@ const mapStateToProps = (state) => {
     listRetailerFailed: state.listRetailer.listRetailerFailed,
     listRetailerProgress: state.listRetailer.listRetailerProgress,
     listRetailerData: state.listRetailer.listRetailerData,
+    orderInfo: state.order.orderInfo.orderInfo,
   };
 };
 
