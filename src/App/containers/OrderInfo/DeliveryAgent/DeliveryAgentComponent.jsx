@@ -203,10 +203,11 @@ const DeliveryAgentComponent = (props) => {
                 })}
             </Select>
             <TextField
-              id="outlined-textarea"
+              id="outlined-multiline-static"
               className={classes.textBox}
               onChange={handleTextChange}
-              rows={7}
+              multiline
+              rows={4}
               fullWidth
               variant="outlined"
               autoComplete="off"
