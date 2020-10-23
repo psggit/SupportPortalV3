@@ -85,6 +85,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     width: "56px",
     color: "#010B13",
+    marginLeft: "auto",
   },
   counterUnAvailable: {
     textAlign: "center",

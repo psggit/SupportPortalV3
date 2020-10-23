@@ -8,12 +8,22 @@ import Grid from "@material-ui/core/Grid";
 import TopBar from "../../../components/topBar";
 import { RetailerCardContainer } from "./RetailerCardContainer";
 import { Tab } from "@material-ui/core";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import Paper from "@material-ui/core/Paper";
+import Tabs from "@material-ui/core/Tabs";
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
+import Button from "@material-ui/core/Button";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     fontFamily: theme.typography.body1,
+  },
+  paper: {
+    cursor: "pointer",
+    alignItems: "center",
+    paddingBottom: "5px",
+    width: "100%",
   },
   navBar: {
     display: "flex",
@@ -53,6 +63,9 @@ const useStyles = makeStyles((theme) => ({
 
 const ChangeRetailerComponent = (props) => {
   const classes = useStyles();
+  const history = useHistory();
+
+  const [value, setValue] = React.useState(0);
 
   useEffect(() => {
     let skuId = props.orderDetails.cart_items.map((item) => item.sku_id);
@@ -65,27 +78,42 @@ const ChangeRetailerComponent = (props) => {
   }, []);
 
   const handleBack = () => {
-    location.href = "/dashboard";
-    console.log("handleBack");
+    history.push(`/order-info/${props.orderId}`);
   };
 
-  const handleRetailer = () => {
-    console.log("handleRetailer");
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
   };
-
-  const menuLabels = [
-    <Tab
-      label="Change Retailer"
-      key={"retailerBtn"}
-      onClick={handleRetailer}
-    />,
-  ];
 
   console.log("ChangeRetailerCardComponent", props);
 
   return (
     <Container component="main" className={classes.root}>
       <TopBar />
+      <Paper className={classes.paper}>
+        <Grid alignItems="center" container>
+          <Grid item xs={1}>
+            <Button
+              color="primary"
+              startIcon={<KeyboardBackspaceIcon />}
+              onClick={handleBack}
+            >
+              Back
+            </Button>
+          </Grid>
+          <Grid item xs={2}>
+            <Tabs
+              value={value}
+              onChange={handleTabChange}
+              indicatorColor="primary"
+              textColor="primary"
+              centered
+            >
+              <Tab label={<Button color="primary">Change Retailer</Button>} />,
+            </Tabs>
+          </Grid>
+        </Grid>
+      </Paper>
       <Box className={classes.boxContainer}>
         <Grid container spacing={4}>
           {props.listRetailerSuccess &&
@@ -98,11 +126,6 @@ const ChangeRetailerComponent = (props) => {
               </Grid>
             ))}
         </Grid>
-        {/* <Grid container spacing={4}>
-          <Grid item xs={4}>
-            <RetailerCardContainer />
-          </Grid>
-        </Grid> */}
       </Box>
     </Container>
   );
@@ -115,6 +138,7 @@ ChangeRetailerComponent.propTypes = {
   listRetailerFailed: PropTypes.bool,
   listRetailerProgres: PropTypes.bool,
   orderDetails: PropTypes.object,
+  orderId: PropTypes.string,
 };
 
 export { ChangeRetailerComponent };

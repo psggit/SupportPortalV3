@@ -63,6 +63,9 @@ const useStyles = makeStyles((theme) => ({
   marginLeft: {
     marginLeft: "auto",
   },
+  finalRow: {
+    marginBottom: "23px",
+  },
 }));
 
 const RetailerCardComponent = (props) => {
@@ -101,15 +104,13 @@ const RetailerCardComponent = (props) => {
     <Card className={classes.RetailerCardComponent} variant="outlined">
       <CardContent p={2}>
         <OrderDetails {...props} />
-        <ListItem dense disableGutters>
+        <ListItem dense disableGutters className={classes.finalRow}>
           <ListItemText primary={"Free Agent/ Total Delivery Agents"} />
           <Box>
             <Typography>
               {props.value.free_da}/{props.value.total_da}
             </Typography>
           </Box>
-
-          <Box className={classes.addComponentRight} />
         </ListItem>
         <CardActions className={classes.actionContainer}>
           <Button

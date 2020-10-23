@@ -99,8 +99,8 @@ const OrderDetails = (props) => {
 
   return (
     <Box>
-      <List dense disablePadding>
-        <ListItem dense disableGutters>
+      <List>
+        <ListItem>
           <Typography variant="h5" className={classes.heading} gutterBottom>
             {props.retailerName}
           </Typography>
