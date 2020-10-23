@@ -196,6 +196,7 @@ function Rewards(props) {
                               "DD/MM/YYYY h:mm A"
                             )}
                           </TableCell>
+                          <TableCell align="center">{data.status}</TableCell>
                         </TableRow>
                       );
                     })}
