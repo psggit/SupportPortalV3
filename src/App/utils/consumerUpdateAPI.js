@@ -9,7 +9,7 @@ const headers = {
 };
 
 const consumerUpdateAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://${customerURL}/Api/consumer/update`;
+  const URL = `https://${customerURL}/consumer/update`;
   fetch(URL, {
     method: "POST",
     headers: headers,

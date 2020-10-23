@@ -12,7 +12,6 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Dialog from "../../components/dialog";
 import TopBar from "../../components/topBar";
-import FullWidthTabs from "../../components/menuBar";
 import Notification from "../../components/notification";
 import { Tab } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
@@ -275,8 +274,8 @@ DaNotes.propTypes = {
   fetchSuccess: PropTypes.bool,
   fetchProgress: PropTypes.bool,
   fetchDeliveryAgentNotes: PropTypes.func,
-  deliveryAgentNotes: PropTypes.array,
-  errorMsg: PropTypes.bool,
+  deliveryAgentNotes: PropTypes.object,
+  errorMsg: PropTypes.string,
   fetchFailed: PropTypes.bool,
 };
 

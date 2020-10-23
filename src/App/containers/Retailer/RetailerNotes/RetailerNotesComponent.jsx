@@ -233,7 +233,7 @@ function RetailerNotesComponent(props) {
 }
 
 RetailerNotesComponent.propTypes = {
-  notesList: PropTypes.array,
+  notesList: PropTypes.object,
   fetchRetailerNotesList: PropTypes.any,
   notesProgress: PropTypes.bool,
   notesSuccess: PropTypes.bool,

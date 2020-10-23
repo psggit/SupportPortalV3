@@ -211,9 +211,9 @@ function CustomerSoa(props) {
 }
 
 CustomerSoa.propTypes = {
-  soaList: PropTypes.array,
+  soaList: PropTypes.object,
   orderInfo: PropTypes.object,
-  CustomerSoaList: PropTypes.array,
+  CustomerSoaList: PropTypes.object,
   fetchCustomerSoaList: PropTypes.any,
   soaProgress: PropTypes.bool,
   soaSuccess: PropTypes.bool,

@@ -8,9 +8,9 @@ import Radio from "@material-ui/core/Radio";
 import PropTypes from "prop-types";
 import TopBar from "../../../components/topBar";
 import { FormControlLabel, RadioGroup } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
 import FullWidthTabs from "../customerMenuBar";
 import { Grid, Tab } from "@material-ui/core";
+import Notification from "../../../components/notification";
 
 const BlueRadio = withStyles({
   root: {
@@ -87,6 +87,7 @@ function CustomerForm(props) {
   const [dob, setDob] = useState("");
   const [value, setSelectedValue] = useState("not-specified");
   const [signupDate, setSignupDate] = useState("");
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     setConsumerDetail(props.orderInfo);
@@ -98,6 +99,14 @@ function CustomerForm(props) {
     setSignupDate(props.orderInfo.customer_sign_up_date.slice(0, 10));
     //setSignupDate(Moment(props.orderInfo.customer_sign_up_date).format("DD/MM/YYYY"));
   }, []);
+
+  useEffect(() => {
+    setMessage(props.updateSuccess);
+  }, [props.updateSuccess]);
+
+  const handleClose = () => {
+    setMessage(false);
+  };
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
@@ -310,6 +319,14 @@ function CustomerForm(props) {
             </Button>
           </div>
         </Grid>
+        {message && (
+          <Notification
+            message={props.updateSuccessMsg}
+            messageType="success"
+            open={message}
+            handleClose={handleClose}
+          />
+        )}
       </div>
     </>
   );
