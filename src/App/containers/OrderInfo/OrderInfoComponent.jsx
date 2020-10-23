@@ -377,11 +377,11 @@ const OrderInfoComponent = (props) => {
                     />
                   </>
                 )}
-                {props.fetchOrderInfoSuccess && (
+                {/* {props.fetchOrderInfoSuccess && (
                   <Box mt={4}>
                     <ActivityLogContainer />
                   </Box>
-                )}
+                )} */}
               </Grid>
             </Grid>
             <Grid
