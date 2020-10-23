@@ -4,11 +4,11 @@ import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-import SimpleMenuBar from "../../../components/simpleMenuBar";
 import Moment from "moment";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import TopBar from "../../../components/topBar";
+import Notification from "../../../components/notification";
 import { useHistory } from "react-router-dom";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import {
@@ -18,9 +18,11 @@ import {
   TableContainer,
   TableBody,
   TablePagination,
+  Grid,
+  Tabs,
 } from "@material-ui/core";
-import FullWidthTabs from "../../../components/menuBar";
 import { Tab } from "@material-ui/core";
+import { propTypes } from "react-bootstrap/esm/Image";
 
 const useStyles = makeStyles((theme) => ({
   navBar: {
@@ -48,6 +50,9 @@ const useStyles = makeStyles((theme) => ({
   table: {
     padding: "0px 25px",
   },
+  root: {
+    paddingBottom: "5px",
+  },
 }));
 
 const createData = ({ order_id, type, notes, created_at, created_by }) => {
@@ -70,6 +75,7 @@ function RetailerNotesComponent(props) {
   const [page, setPage] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
   const [showData, setShowData] = useState(false);
+  const [value, setValue] = React.useState(0);
 
   useEffect(() => {
     const payload = {
@@ -90,12 +96,20 @@ function RetailerNotesComponent(props) {
     }
   }, [props.notesSuccess]);
 
+  useEffect(() => {
+    setErrorMessage(props.notesFail);
+  }, [props.notesFail]);
+
   const filledRows = [];
   const loopData = (data) => {
     data.map((value) => {
       filledRows.push(createData(value));
     });
     setRowsData(data);
+  };
+
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -111,18 +125,9 @@ function RetailerNotesComponent(props) {
     history.push(`/order-info/${props.orderId.order_id}`);
   };
 
-  const menuLabels = [
-    <Tab
-      label={
-        <Button color="primary" startIcon={<KeyboardBackspaceIcon />}>
-          {" "}
-          Back{" "}
-        </Button>
-      }
-      onClick={handleBack}
-    />,
-    <Tab label={<Button color="primary">Notes</Button>} />,
-  ];
+  const handleClose = () => {
+    setErrorMessage(false);
+  };
 
   let loading = props.notesProgress;
   if (loading) {
@@ -133,14 +138,30 @@ function RetailerNotesComponent(props) {
     <>
       <div className={classes.formContainer}>
         <TopBar />
-        {/* <SimpleMenuBar orderId={props.orderId.order_id}>
-          {props.notesSuccess && <p>CHANGE RETAILER</p>}
-        </SimpleMenuBar> */}
-        <FullWidthTabs
-          labels={menuLabels}
-          className={classes.horizontalBar}
-          value={1}
-        />
+        <Paper className={classes.root}>
+          <Grid alignItems="center" container>
+            <Grid item xs={1}>
+              <Button
+                color="primary"
+                startIcon={<KeyboardBackspaceIcon />}
+                onClick={handleBack}
+              >
+                Back
+              </Button>
+            </Grid>
+            <Grid item xs={1}>
+              <Tabs
+                value={value}
+                onChange={handleTabChange}
+                indicatorColor="primary"
+                textColor="primary"
+                centered
+              >
+                <Tab label={<Button color="primary">Notes</Button>} />,
+              </Tabs>
+            </Grid>
+          </Grid>
+        </Paper>
         <div className={classes.row1}>
           <p>CUSTOMER ID: {props.orderInfo.customer_id}</p>
           <div>
@@ -198,10 +219,17 @@ function RetailerNotesComponent(props) {
             )}
           </TableContainer>
         </Box>
+        {errorMessage && (
+          <Notification
+            message={props.errorMsg}
+            messageType="error"
+            open={errorMessage}
+            handleClose={handleClose}
+          />
+        )}
       </div>
     </>
   );
-  // }
 }
 
 RetailerNotesComponent.propTypes = {
@@ -209,6 +237,8 @@ RetailerNotesComponent.propTypes = {
   fetchRetailerNotesList: PropTypes.any,
   notesProgress: PropTypes.bool,
   notesSuccess: PropTypes.bool,
+  notesFail: PropTypes.bool,
+  errorMsg: propTypes.any,
   orderId: PropTypes.any,
 };
 

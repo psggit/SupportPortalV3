@@ -11,7 +11,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Dialog from "../../components/dialog";
-import Paper from "@material-ui/core/Paper";
 import TopBar from "../../components/topBar";
 import FullWidthTabs from "../../components/menuBar";
 import Notification from "../../components/notification";
@@ -28,6 +27,9 @@ import {
   TablePagination,
   Grid,
 } from "@material-ui/core";
+
+import Paper from "@material-ui/core/Paper";
+import Tabs from "@material-ui/core/Tabs";
 
 const createData = ({ order_id, type, notes, created_at, created_by }) => {
   return {
@@ -49,6 +51,11 @@ function DaNotes(props) {
   const [showData, setShowData] = useState(false);
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
   const [age, setAge] = useState("");
+  const [value, setValue] = React.useState(0);
+
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   useEffect(() => {
     props.fetchDeliveryAgentNotes(props.orderInfo.order_id);
@@ -106,19 +113,6 @@ function DaNotes(props) {
     history.push(`/order-info/${props.orderInfo.order_id}`);
   };
 
-  const menuLabels = [
-    <Tab
-      label={
-        <Button color="primary" startIcon={<KeyboardBackspaceIcon />}>
-          {" "}
-          Back{" "}
-        </Button>
-      }
-      onClick={handleBack}
-    />,
-    <Tab label={<Button color="primary">Notes</Button>} />,
-  ];
-
   let loading = props.fetchProgress;
   if (loading) {
     return <Loading message="Loading..." />;
@@ -128,12 +122,30 @@ function DaNotes(props) {
     <>
       <TopBar />
       <div className={classes.formContainer}>
-        <FullWidthTabs
-          labels={menuLabels}
-          className={classes.horizontalBar}
-          value={1}
-        />
-        ;
+        <Paper className={classes.root}>
+          <Grid alignItems="center" container>
+            <Grid item xs={1}>
+              <Button
+                color="primary"
+                startIcon={<KeyboardBackspaceIcon />}
+                onClick={handleBack}
+              >
+                Back
+              </Button>
+            </Grid>
+            <Grid item xs={1}>
+              <Tabs
+                value={value}
+                onChange={handleTabChange}
+                indicatorColor="primary"
+                textColor="primary"
+                centered
+              >
+                <Tab label={<Button color="primary">Notes</Button>} />,
+              </Tabs>
+            </Grid>
+          </Grid>
+        </Paper>
         <div className={classes.row1}>
           <p>CUSTOMER ID: {props.orderInfo.customer_id}</p>
           <div>
@@ -315,5 +327,8 @@ const useStyles = makeStyles((theme) => ({
   },
   horizontalBar: {
     backgroundColor: "#FFFFFF",
-  }
+  },
+  root: {
+    paddingBottom: "5px",
+  },
 }));
