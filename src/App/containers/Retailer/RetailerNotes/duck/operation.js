@@ -6,8 +6,8 @@ import {
 import { fetchRetailerNotesAPI } from "../../../../utils/fetchRetailerNotesAPI";
 
 const processResponse = () => {
-  console.clear();
-  console.log("[processResponse]");
+  // console.clear();
+  // console.log("[processResponse]");
   return (res) => {
     if (res.status === 200) {
       return res.json();

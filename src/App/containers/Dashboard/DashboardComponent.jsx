@@ -148,7 +148,7 @@ const DashboardComponent = (props) => {
   const handleSubmit = (type) => {
     let sendPayload = {
       pagination: {
-        limit: 25,
+        limit: 125,
         offset: 0,
       },
       filter: payload[type],

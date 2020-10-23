@@ -10,7 +10,7 @@ const headers = {
 };
 
 const resolveIssueAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = ` https://${apiUrl}/supportman/api/1/issue/markresolved/${reqBody.orderId}`;
+  const URL = ` https://${apiUrl}/deliveryman/api/1/support/issue/markresolved/${reqBody.orderId}`;
   console.log(URL);
   fetch(URL, {
     method: "GET",

@@ -5,6 +5,7 @@ const mapStateToProps = (state) => {
   console.log("orderinfocontainer", state);
   return {
     orderId: state.home.orderId,
+    orderInfo: state.order.orderInfo.orderInfo,
   };
 };
 

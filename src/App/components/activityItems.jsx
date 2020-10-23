@@ -1,14 +1,14 @@
-/* eslint-disable prettier/prettier */
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
+  Box,
   Card,
+  CardHeader,
   CardContent,
   ListItem,
   ListItemText,
   Button,
   CardActions,
-  Typography
 } from "@material-ui/core";
 import PropTypes from "prop-types";
 import Moment from "moment";
@@ -20,6 +20,15 @@ const getTimestamp = (timestamp) => {
 const useStyles = makeStyles((theme) => ({
   card: {
     marginTop: theme.spacing(4),
+  },
+  cardHeader: {
+    "& .MuiCardHeader-content": {
+      "& > span": {
+        fontSize: 16,
+        fontWeight: 600,
+        textTransform: "uppercase",
+      },
+    },
   },
   actionContainer: {
     padding: theme.spacing(2),
@@ -41,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "flex-start",
   },
   ListItemRootTitle: {
-    width: "30%",
+    width: "40%",
     fontSize: 12,
     color: "#606060",
     textAlign: "right",
@@ -59,20 +68,27 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: theme.typography.fontFamily,
     padding: 24,
     alignSelf: "baseline",
-    boxShadow: "none",
     "& .MuiCardHeader-root": {
       padding: 0,
     },
     "& .MuiCardContent-root": {
       padding: 0,
     },
-    "& .MuiCardActions-root": {
-      padding: "8px 0",
-    },
+  },
+  addBtn: {
+    padding: 0,
   },
   cardActions: {
     display: "flex",
     justifyContent: "flex-end",
+    paddingTop: 24,
+  },
+  header: {
+    display: "flex",
+    width: "100%",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingBottom: 12,
   },
 }));
 
@@ -83,6 +99,7 @@ ActivityItem.propTypes = {
   issueType: PropTypes.string,
   title: PropTypes.string,
   subtitle: PropTypes.array,
+  cardActions: PropTypes.bool,
 };
 
 export default function ActivityItem(props) {
@@ -94,22 +111,25 @@ export default function ActivityItem(props) {
   const keysToRender = props.keysToRender;
   const type = props.issueType;
   const subtitle = props.subtitle;
-  const title = props.title;
+  const titleText = props.title;
+  const cardActions = props.cardActions;
 
   if (mapArray === null) {
     return (
       <Card className={classes.root}>
+        <Box className={classes.header}>
+          <CardHeader title={titleText} className={classes.cardHeader} />
+          {subtitle ? (
+            <CardActions className={classes.addBtn}>
+              {subtitle.map((item, ind) => (
+                <div key={ind}>{item}</div>
+              ))}
+            </CardActions>
+          ) : (
+            ""
+          )}
+        </Box>
         <CardContent>
-          <Typography variant="h5" className={classes.heading} gutterBottom>
-            {title}
-            {subtitle ? (
-              <CardActions >
-                {subtitle.map((item, index) => { return <div key={index}>{item}</div>})}
-              </CardActions>
-            ) : (
-                ""
-              )}
-          </Typography>
           <ListItem
             dense
             disableGutters={true}
@@ -123,15 +143,17 @@ export default function ActivityItem(props) {
             />
           </ListItem>
         </CardContent>
-        <CardActions className={classes.cardActions}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => props.click(type)}
-          >
-            Add
-          </Button>
-        </CardActions>
+        {cardActions && (
+          <CardActions className={classes.cardActions}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => props.click(type)}
+            >
+              Add
+            </Button>
+          </CardActions>
+        )}
       </Card>
     );
   }
@@ -139,16 +161,18 @@ export default function ActivityItem(props) {
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Typography variant="h5" className={classes.heading} gutterBottom>
-          {title}
+        <Box className={classes.header}>
+          <CardHeader title={titleText} className={classes.cardHeader} />
           {subtitle ? (
-            <CardActions >
-              {subtitle.map((item, index) => { return <div key={index}>{item}</div>} )}
+            <CardActions className={classes.addBtn}>
+              {subtitle.map((item, ind) => (
+                <div key={ind}>{item}</div>
+              ))}
             </CardActions>
           ) : (
-              ""
-            )}
-        </Typography>    
+            ""
+          )}
+        </Box>
         {mapArray.map((value, index) => {
           let data = value;
           return (
@@ -170,7 +194,7 @@ export default function ActivityItem(props) {
                     : classes.ListItemTextRoot;
                 return (
                   <ListItemText
-                    key={ind}
+                    key={ind + "." + keyValue}
                     primary={primaryValue}
                     className={listClass}
                     classes={{ root: classes.ListItemTextValue }}
@@ -181,15 +205,17 @@ export default function ActivityItem(props) {
           );
         })}
       </CardContent>
-      <CardActions className={classes.cardActions}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => props.click(type)}
-        >
-          Add
-        </Button>
-      </CardActions>
+      {cardActions && (
+        <CardActions className={classes.cardActions}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => props.click(type)}
+          >
+            Add
+          </Button>
+        </CardActions>
+      )}
     </Card>
   );
-  };
+}

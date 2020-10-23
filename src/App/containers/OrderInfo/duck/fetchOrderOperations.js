@@ -11,6 +11,12 @@ import {
   connectCallProgress,
   connectCallFailed,
   connectCallSuccess,
+  fetchIssueTypesProgress,
+  fetchIssueTypesFailed,
+  fetchIssueTypesSuccess,
+  submitIssueProgress,
+  submitIssueFailed,
+  submitIssueSuccess,
 } from "./actions";
 
 import { selectOrder } from "../../Dashboard/duck";
@@ -19,6 +25,8 @@ import {
   cancelReasonAPI,
   createNotesAPI,
   callAPI,
+  listIssueAPI,
+  submitNewIssueAPI,
 } from "../../../utils";
 
 const processResponse = () => {
@@ -116,14 +124,14 @@ const createNotes = (payload) => {
 
 const onSuccessCall = (dispatch) => {
   return (data) => {
-    console.log("[onSuccessCall]");
+    // console.log("[onSuccessCall]");
     dispatch(connectCallSuccess(data));
   };
 };
 
 const onErrorCall = (dispatch) => {
   return (err) => {
-    console.log("[onErrorCall]", err);
+    // console.log("[onErrorCall]", err);
     dispatch(connectCallFailed(err));
   };
 };
@@ -135,4 +143,61 @@ const connectCall = (reqBody) => {
   };
 };
 
-export { fetchOrder, fetchCancelReason, createNotes, connectCall };
+const onSuccessIssueTypes = (dispatch) => {
+  return (data) => {
+    // console.log("onSuccessIssueTypes", data);
+    dispatch(fetchIssueTypesSuccess(data));
+  };
+};
+
+const onErrorIssueTypes = (dispatch) => {
+  return (err) => {
+    dispatch(fetchIssueTypesFailed(err));
+  };
+};
+
+const fetchIssueTypes = () => {
+  return (dispatch) => {
+    dispatch(fetchIssueTypesProgress());
+    listIssueAPI(
+      null,
+      processResponse(dispatch),
+      onSuccessIssueTypes(dispatch),
+      onErrorIssueTypes(dispatch)
+    );
+  };
+};
+
+const onSuccessSubmitIssue = (dispatch) => {
+  return (data) => {
+    // console.log("onSuccessIssueTypes", data);
+    dispatch(submitIssueSuccess(data));
+  };
+};
+
+const onErrorSubmitIssue = (dispatch) => {
+  return (err) => {
+    dispatch(submitIssueFailed(err));
+  };
+};
+
+const submitIssue = (payload) => {
+  return (dispatch) => {
+    dispatch(submitIssueProgress());
+    submitNewIssueAPI(
+      payload,
+      processResponse(dispatch),
+      onSuccessSubmitIssue(dispatch),
+      onErrorSubmitIssue(dispatch)
+    );
+  };
+};
+
+export {
+  fetchOrder,
+  fetchCancelReason,
+  createNotes,
+  connectCall,
+  fetchIssueTypes,
+  submitIssue,
+};

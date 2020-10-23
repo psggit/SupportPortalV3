@@ -34,7 +34,7 @@ const processResponse = () => {
 
 const onSuccess = (dispatch) => {
   return (data) => {
-    console.log("[onSuccess] data", data);
+    // console.log("[onSuccess] data", data);
     dispatch(fetchDeliveryAgentNotesSuccess(data));
     // createSession(data);
   };
@@ -42,7 +42,7 @@ const onSuccess = (dispatch) => {
 
 const onError = (dispatch) => {
   return (err) => {
-    console.log("[onError]", err);
+    // console.log("[onError]", err);
     dispatch(fetchDeliveryAgentNotesFailed(err));
   };
 };
