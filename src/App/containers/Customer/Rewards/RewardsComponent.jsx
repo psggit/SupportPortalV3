@@ -243,7 +243,7 @@ Rewards.propTypes = {
   rewardsFail: PropTypes.bool,
   customerId: PropTypes.any,
   fetchRewardsList: PropTypes.func,
-  errorMsg: PropTypes.string,
+  errorMsg: PropTypes.any,
 };
 
 export { Rewards };
