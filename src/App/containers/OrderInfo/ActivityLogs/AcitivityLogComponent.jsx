@@ -29,9 +29,13 @@ const ActivityLogComponent = (props) => {
   ];
 
   if (props.fetchLogSuccess) {
+    let arr = [];
+    if (props.activityData) {
+      arr = props.activityData;
+    }
     return (
       <ActivityItem
-        arr={props.activityData.activity_details.activity}
+        arr={arr}
         keysToRender={["notes", "created_at"]}
         title={"ACTIVITY LOGS"}
         cardActions={false}

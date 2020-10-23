@@ -63,7 +63,7 @@ function ActivityListComponent(props) {
 
   useEffect(() => {
     const reqBody = {
-      order_id: `${props.orderId.orderDetails.order_id}`,
+      order_id: `${props.orderData}`,
       limit: rowsPerPage,
       offset: page * rowsPerPage,
     };
@@ -77,8 +77,8 @@ function ActivityListComponent(props) {
 
   useEffect(() => {
     if (props.notesSuccess) {
-      if (props.acitivityLog.activityLogs.activity_details.activity !== null) {
-        loopData(props.acitivityLog.activityLogs.activity_details.activity);
+      if (props.acitivityLog.activityLogs !== null) {
+        loopData(props.acitivityLog.activityLogs);
         setShowData(true);
       } else {
         setShowData(false);
@@ -111,8 +111,8 @@ function ActivityListComponent(props) {
   return (
     <div className={classes.formContainer}>
       <TopBar />
-      <SimpleMenuBar orderId={props.orderId}>
-        {props.notesSuccess && <p>ACTIVITY LOGS-ORDER ID: {props.orderId}</p>}
+      <SimpleMenuBar orderId={props.orderData}>
+        {props.notesSuccess && <p>ACTIVITY LOGS-ORDER ID: {props.orderData}</p>}
       </SimpleMenuBar>
       <Box className={classes.table} mt={4}>
         <TableContainer className={classes.TableContainer}>
@@ -127,17 +127,19 @@ function ActivityListComponent(props) {
             <TableBody>
               {props.notesSuccess &&
                 rows &&
-                rows.map((data, index) => {
-                  return (
-                    <TableRow key={index}>
-                      <TableCell>{data.created_by}</TableCell>
-                      <TableCell>{data.notes}</TableCell>
-                      <TableCell align="left">
-                        {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+                rows
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((data, index) => {
+                    return (
+                      <TableRow key={index}>
+                        <TableCell>{data.created_by}</TableCell>
+                        <TableCell>{data.notes}</TableCell>
+                        <TableCell align="left">
+                          {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
               {!showData && (
                 <TableRow>
                   <TableCell colSpan={10} align="center">
@@ -151,7 +153,7 @@ function ActivityListComponent(props) {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={props.acitivityLog.activityLogs.activity_details.count}
+              count={rows.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onChangePage={handleChangePage}
@@ -170,7 +172,7 @@ ActivityListComponent.propTypes = {
   fetchActLogsList: PropTypes.any,
   notesProgress: PropTypes.bool,
   notesSuccess: PropTypes.bool,
-  orderId: PropTypes.any,
+  orderData: PropTypes.any,
 };
 
 export { ActivityListComponent };

@@ -1,3 +1,5 @@
+import { apiUrl } from "./config";
+
 const headers = {
   Accept: "application/json",
   "Content-Type": "application/json",
@@ -7,7 +9,7 @@ const headers = {
 };
 
 const reserveOrderAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://api.hipbar-dev.com/supportman/api/1/deliveryagent/reserveorder`;
+  const URL = `https://${apiUrl}/supportman/api/1/deliveryagent/reserveorder`;
   fetch(URL, {
     method: "POST",
     headers: headers,

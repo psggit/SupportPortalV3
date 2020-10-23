@@ -313,6 +313,7 @@ const RenderIssues = (props) => {
               onClick={() => unmountConfirmationDialog()}
               color="primary"
               variant="outlined"
+              key="cancelIssueBtn"
             >
               Cancel
             </Button>,
@@ -320,6 +321,7 @@ const RenderIssues = (props) => {
               onClick={() => handleConfirmation()}
               color="primary"
               variant="contained"
+              key="confirmIssueBtn"
             >
               Confirm
             </Button>,
