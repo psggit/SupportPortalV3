@@ -188,18 +188,18 @@ function CustomerGiftSoa(props) {
               )}
             </TableBody>
           </Table>
-          {showData && (
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
-              component="div"
-              count={props.fetchGiftSoaList.count}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
-            />
-          )}
         </TableContainer>
+        {showData && (
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={props.giftSoaList.count}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+        )}
       </Box>
       {errorMessage && (
         <Notification
