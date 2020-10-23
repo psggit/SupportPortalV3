@@ -88,8 +88,8 @@ function CustomerGiftSoa(props) {
 
   useEffect(() => {
     if (props.giftSoaSuccess) {
-      if (props.giftSoaList !== null) {
-        loopData(props.giftSoaList);
+      if (props.giftSoaList.soa !== null) {
+        loopData(props.giftSoaList.soa);
         setShowData(true);
       } else {
         setShowData(false);
@@ -137,7 +137,7 @@ function CustomerGiftSoa(props) {
         <p>CUSTOMER ID: {props.customerId}</p>
         <div>Search</div>
       </div>
-      <Box width="90%" mx="auto" mt={4}>
+      <Box width="80%" mx="auto">
         <TableContainer component={Paper}>
           <Table>
             <TableHead>

@@ -151,7 +151,7 @@ function Rewards(props) {
           <p>CUSTOMER ID: {props.customerId}</p>
           <div>Search</div>
         </div>
-        <Box width="90%" mx="auto" mt={4}>
+        <Box width="80%" mx="auto">
           <TableContainer component={Paper}>
             <Table>
               <TableHead>

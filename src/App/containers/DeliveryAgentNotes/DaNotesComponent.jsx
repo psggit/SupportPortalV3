@@ -206,7 +206,7 @@ function DaNotes(props) {
             )}
           </div>
         </div>
-        <Box width="90%" mx="auto" mt={4}>
+        <Box width="80%" mx="auto">
           <TableContainer component={Paper}>
             <Table>
               <TableHead>
@@ -328,6 +328,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#FFFFFF",
   },
   root: {
+    cursor: "pointer",
+    alignItems: "center",
     paddingBottom: "5px",
   },
 }));
