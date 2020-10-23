@@ -112,7 +112,6 @@ const useStyles = makeStyles((theme) => ({
 const CartItem = (props) => {
   const classes = useStyles();
   const value = props.value;
-  console.log("CartItem", props.listRetailerData);
   return (
     <List>
       <ListItem>
@@ -126,6 +125,11 @@ const CartItem = (props) => {
             {value.ordered_count}
           </Typography>
           {props.listRetailerData.sku.retailer_sku_details === null ? (
+            <Typography className={classes.counterUnAvailable}>
+              {"Not Available"}
+            </Typography>
+          ) : Object.keys(props.listRetailerData.sku.retailer_sku_details)
+              .length <= 0 ? (
             <Typography className={classes.counterUnAvailable}>
               {"Not Available"}
             </Typography>
