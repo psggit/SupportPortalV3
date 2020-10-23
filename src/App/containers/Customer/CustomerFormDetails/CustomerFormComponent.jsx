@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   section2: {
     width: "100%",
     margin: 0,
-    padding: theme.spacing(2),
+    padding: "0px 50px",
   },
   navBar: {
     display: "flex",

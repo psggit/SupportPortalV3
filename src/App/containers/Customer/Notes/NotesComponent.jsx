@@ -167,7 +167,7 @@ function Notes(props) {
             )}
           </div>
         </div>
-        <Box width="80%" mx="auto">
+        <Box width="85%" mx="auto">
           <TableContainer component={Paper}>
             <Table>
               <TableHead>
