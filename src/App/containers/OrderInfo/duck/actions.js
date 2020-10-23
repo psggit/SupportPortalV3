@@ -16,6 +16,14 @@ const connectCallProgress = createAction("connectCallProgress");
 const connectCallFailed = createAction("connectCallFailed");
 const connectCallSuccess = createAction("connectCallSuccess");
 
+const fetchIssueTypesProgress = createAction("fetchIssueTypesProgress");
+const fetchIssueTypesFailed = createAction("fetchIssueTypesFailed");
+const fetchIssueTypesSuccess = createAction("fetchIssueTypesSuccess");
+
+const submitIssueProgress = createAction("submitIssueProgress");
+const submitIssueFailed = createAction("submitIssueFailed");
+const submitIssueSuccess = createAction("submitIssueSuccess");
+
 export {
   fetchOrderInfoProgress,
   fetchOrderInfoFailure,
@@ -29,4 +37,10 @@ export {
   connectCallProgress,
   connectCallFailed,
   connectCallSuccess,
+  fetchIssueTypesProgress,
+  fetchIssueTypesFailed,
+  fetchIssueTypesSuccess,
+  submitIssueProgress,
+  submitIssueFailed,
+  submitIssueSuccess,
 };

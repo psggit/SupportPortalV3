@@ -58,7 +58,7 @@ const createData = ({
   reward_id,
   reward_source,
   amount,
-  promocode,
+  promo_code,
   bank_rrn,
   failure_reason,
   created_at,
@@ -70,7 +70,7 @@ const createData = ({
     reward_id,
     reward_source,
     amount,
-    promocode,
+    promo_code,
     bank_rrn,
     failure_reason,
     created_at,
@@ -79,19 +79,9 @@ const createData = ({
 };
 
 function Rewards(props) {
-  useEffect(() => {
-    const payload = {
-      consumer_id: parseInt(props.customerId),
-      limit: 10,
-      offset: 0,
-    };
-    console.log("payload", payload);
-    props.fetchRewardsList(payload);
-  }, []);
-
   const classes = useStyles();
-  const pageLimit = 10;
   const activePage = getQueryParamByName("activePage") || 1;
+  // eslint-disable-next-line no-unused-vars
   const [pageNo, setPageNo] = useState(activePage);
   const [showData, setShowData] = useState(false);
   const [rows, setRowsData] = useState(null);
@@ -100,8 +90,20 @@ function Rewards(props) {
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
+    const payload = {
+      consumer_id: parseInt(props.customerId),
+      limit: rowsPerPage,
+      offset: page * rowsPerPage,
+    };
+    props.fetchRewardsList(payload);
+  }, [rowsPerPage, page]);
+
+  useEffect(() => {
     if (props.rewardsSuccess) {
-      if (props.rewardsList.rewards !== null && props.rewardsList.rewards > 0) {
+      if (
+        props.rewardsList.rewards !== null &&
+        props.rewardsList.rewards.length > 0
+      ) {
         loopData(props.rewardsList.rewards);
         setShowData(true);
       } else {
@@ -118,21 +120,21 @@ function Rewards(props) {
     setErrorMessage(false);
   };
 
-  const filledRows = [];
-  const loopData = (data) => {
-    data.map((value) => {
-      filledRows.push(createData(value));
-    });
-    setRowsData(filledRows);
-  };
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(parseInt(event.target.value));
     setPage(0);
+  };
+
+  const filledRows = [];
+  const loopData = (data) => {
+    data.map((value) => {
+      filledRows.push(createData(value));
+    });
+    setRowsData(data);
   };
 
   let loading = props.rewardsProgress;
@@ -199,7 +201,9 @@ function Rewards(props) {
                     })}
                 {!showData && (
                   <TableRow>
-                    <TableCell colSpan={10} align="center">No data available</TableCell>
+                    <TableCell colSpan={10} align="center">
+                      No data available
+                    </TableCell>
                   </TableRow>
                 )}
               </TableBody>
@@ -208,7 +212,7 @@ function Rewards(props) {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
-                count={props.rewardsList.rewards.count}
+                count={props.rewardsList.count}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onChangePage={handleChangePage}

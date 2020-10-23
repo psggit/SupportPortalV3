@@ -10,7 +10,7 @@ const headers = {
 };
 
 const fetchIssuesAPI = (process, onSuccess, onError) => {
-  const URL = ` https://${apiUrl}/supportman/api/1/issue/fetch`;
+  const URL = ` https://${apiUrl}/deliveryman/api/1/support/issue/fetch`;
   console.log(URL);
   fetch(URL, {
     method: "POST",
