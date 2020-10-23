@@ -66,8 +66,8 @@ function DaNotes(props) {
   }, [props.fetchSuccess]);
 
   useEffect(() => {
-    setErrorMessage(props.fetchFail);
-  }, [props.fetchFail]);
+    setErrorMessage(props.fetchFailed);
+  }, [props.fetchFailed]);
 
   const filledRows = [];
   const loopData = (data) => {
@@ -265,6 +265,7 @@ DaNotes.propTypes = {
   fetchDeliveryAgentNotes: PropTypes.func,
   deliveryAgentNotes: PropTypes.array,
   errorMsg: PropTypes.bool,
+  fetchFailed: PropTypes.bool,
 };
 
 export { DaNotes };
