@@ -13,6 +13,7 @@ const mapStateToProps = (state) => {
     notesSuccess: state.order.customer.notesSuccess,
     notesProgress: state.order.customer.notesProgress,
     notesFail: state.order.customer.notesFail,
+    errorMsg: state.order.customer.errorMsg,
   };
 };
 

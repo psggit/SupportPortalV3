@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
@@ -6,15 +7,16 @@ import TableCell from "@material-ui/core/TableCell";
 import Moment from "moment";
 import Button from "@material-ui/core/Button";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import Notification from "../../../components/notification";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import Dialog from "../../../components/dialog";
-import Paper from "@material-ui/core/Paper";
-import TopBar from "../../../components/topBar";
-import FullWidthTabs from "../customerMenuBar";
-import Loading from "../../../components/loading";
+import Dialog from "../../components/dialog";
+import TopBar from "../../components/topBar";
+import Notification from "../../components/notification";
+import { Tab } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+import Loading from "../../components/loading";
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import {
   Table,
   Box,
@@ -22,7 +24,11 @@ import {
   TableContainer,
   TableBody,
   TablePagination,
+  Grid,
 } from "@material-ui/core";
+
+import Paper from "@material-ui/core/Paper";
+import Tabs from "@material-ui/core/Tabs";
 
 const createData = ({ order_id, type, notes, created_at, created_by }) => {
   return {
@@ -34,8 +40,9 @@ const createData = ({ order_id, type, notes, created_at, created_by }) => {
   };
 };
 
-function Notes(props) {
+function DaNotes(props) {
   const classes = useStyles();
+  const history = useHistory();
   const [rows, setRowsData] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
@@ -43,25 +50,30 @@ function Notes(props) {
   const [showData, setShowData] = useState(false);
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
   const [age, setAge] = useState("");
+  const [value, setValue] = React.useState(0);
+
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   useEffect(() => {
-    props.fetchConsumerNotes(props.orderInfo.order_id);
+    props.fetchDeliveryAgentNotes(props.orderInfo.order_id);
   }, [rowsPerPage, page]);
 
   useEffect(() => {
-    if (props.notesSuccess) {
-      if (props.customerNotes.orderNotes !== null) {
-        loopData(props.customerNotes.orderNotes);
+    if (props.fetchSuccess) {
+      if (props.deliveryAgentNotes.orderNotes !== null) {
+        loopData(props.deliveryAgentNotes.orderNotes);
         setShowData(true);
       } else {
         setShowData(false);
       }
     }
-  }, [props.notesSuccess]);
+  }, [props.fetchSuccess]);
 
   useEffect(() => {
-    setErrorMessage(props.notesFail);
-  }, [props.notesFail]);
+    setErrorMessage(props.fetchFailed);
+  }, [props.fetchFailed]);
 
   const filledRows = [];
   const loopData = (data) => {
@@ -96,7 +108,11 @@ function Notes(props) {
     setErrorMessage(false);
   };
 
-  let loading = props.notesProgress;
+  const handleBack = () => {
+    history.push(`/order-info/${props.orderInfo.order_id}`);
+  };
+
+  let loading = props.fetchProgress;
   if (loading) {
     return <Loading message="Loading..." />;
   }
@@ -105,9 +121,32 @@ function Notes(props) {
     <>
       <TopBar />
       <div className={classes.formContainer}>
-        <FullWidthTabs value={4} orderId={props.orderInfo.order_id} />
+        <Paper className={classes.root}>
+          <Grid alignItems="center" container>
+            <Grid item xs={1}>
+              <Button
+                color="primary"
+                startIcon={<KeyboardBackspaceIcon />}
+                onClick={handleBack}
+              >
+                Back
+              </Button>
+            </Grid>
+            <Grid item xs={1}>
+              <Tabs
+                value={value}
+                onChange={handleTabChange}
+                indicatorColor="primary"
+                textColor="primary"
+                centered
+              >
+                <Tab label={<Button color="primary">Notes</Button>} />,
+              </Tabs>
+            </Grid>
+          </Grid>
+        </Paper>
         <div className={classes.row1}>
-          <p>CUSTOMER ID: {props.customerId}</p>
+          <p>CUSTOMER ID: {props.orderInfo.customer_id}</p>
           <div>
             <Button variant="contained" onClick={mountAddNote} color="primary">
               Add Note
@@ -229,17 +268,18 @@ function Notes(props) {
   );
 }
 
-Notes.propTypes = {
-  customerNotes: PropTypes.object,
-  fetchConsumerNotes: PropTypes.any,
-  notesProgress: PropTypes.bool,
-  notesSuccess: PropTypes.bool,
+DaNotes.propTypes = {
   customerId: PropTypes.any,
   orderInfo: PropTypes.object,
-  notesFail: PropTypes.bool,
+  fetchSuccess: PropTypes.bool,
+  fetchProgress: PropTypes.bool,
+  fetchDeliveryAgentNotes: PropTypes.func,
+  deliveryAgentNotes: PropTypes.object,
+  errorMsg: PropTypes.string,
+  fetchFailed: PropTypes.bool,
 };
 
-export { Notes };
+export { DaNotes };
 
 const useStyles = makeStyles((theme) => ({
   navBar: {
@@ -283,5 +323,13 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     marginLeft: "16px",
     minWidth: 120,
+  },
+  horizontalBar: {
+    backgroundColor: "#FFFFFF",
+  },
+  root: {
+    cursor: "pointer",
+    alignItems: "center",
+    paddingBottom: "5px",
   },
 }));

@@ -11,11 +11,12 @@ const initialState = {
   updateFail: false,
   updateSuccess: false,
   errorMsg: "",
+  updateSuccessMsg: "",
 };
 
 const customerUpdateReducer = createReducer(initialState, {
   [consumerUpdateSuccess]: (state, data) => {
-    console.log("form-success", data);
+    console.log("form-success");
     return {
       ...state,
       updateProgress: false,
@@ -23,6 +24,7 @@ const customerUpdateReducer = createReducer(initialState, {
       updateSuccess: true,
       errorMsg: "",
       updateConsumerData: data.payload,
+      updateSuccessMsg: data.payload.message,
     };
   },
   [consumerUpdateFailed]: (state) => ({

@@ -377,7 +377,6 @@ const OrderInfoComponent = (props) => {
                     />
                   </>
                 )}
-                {props.fetchOrderInfoSuccess && <ActivityLogContainer />} */}
                 {/* {props.fetchOrderInfoSuccess && (
                   <Box mt={4}>
                     <ActivityLogContainer />
