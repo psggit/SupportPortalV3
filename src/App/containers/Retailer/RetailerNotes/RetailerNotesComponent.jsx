@@ -68,6 +68,8 @@ const createData = ({ order_id, type, notes, created_at, created_by }) => {
 function RetailerNotesComponent(props) {
   console.log("[RetailerNotesComponent]", props);
   const classes = useStyles();
+  // console.log(history.location.state.orderId);
+  // const orderId = history.location.state.orderId;
   const history = useHistory();
 
   const [rows, setRowsData] = useState(null);
@@ -79,7 +81,7 @@ function RetailerNotesComponent(props) {
 
   useEffect(() => {
     const payload = {
-      order_id: props.orderId.order_id,
+      order_id: orderId,
       type: "retailer",
     };
     props.fetchRetailerNotesList(payload);

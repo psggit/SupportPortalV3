@@ -38,7 +38,12 @@ const RetailerDetails = (props) => {
   const history = useHistory();
 
   const handleMore = () => {
-    history.push("/retailer-notes");
+    history.push({
+      pathname: "/retailer-notes",
+      state: {
+        orderId: props.orderInfo.order_id,
+      },
+    });
   };
 
   const handleChangeRetailer = () => {

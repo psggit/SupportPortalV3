@@ -159,12 +159,9 @@ const DashboardComponent = (props) => {
     } else {
       // console.log(sendPayload);
       props.fetchOrderDetails(sendPayload);
+      history.push("/order-details");
     }
   };
-
-  if (props.fetchDetailsSuccess) {
-    history.push("/order-details");
-  }
 
   // console.log("deliveryStatus", props);
 

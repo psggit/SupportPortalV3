@@ -78,7 +78,7 @@ function ActivityListComponent(props) {
   useEffect(() => {
     if (props.notesSuccess) {
       if (props.acitivityLog.activityLogs !== null) {
-        loopData(props.acitivityLog.activityLogs);
+        loopData(props.acitivityLog.activityLogs.activity_logs);
         setShowData(true);
       } else {
         setShowData(false);
@@ -153,7 +153,7 @@ function ActivityListComponent(props) {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={rows.length}
+              count={props.acitivityLog.activityLogs.count}
               rowsPerPage={rowsPerPage}
               page={page}
               onChangePage={handleChangePage}

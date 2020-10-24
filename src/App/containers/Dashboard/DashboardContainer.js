@@ -5,18 +5,16 @@ import { fetchOrderDetails, preponeOrder, fetchDeliveryStatus } from "./duck";
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.login.isAuthenticated,
-    fetchDetailsProgress: state.home.fetchDetailsProgress,
-    fetchDetailsFail: state.home.fetchDetailsFail,
-    fetchDetailsSuccess: state.home.fetchDetailsSuccess,
-    preponeOrderSuccess: state.home.preponeOrderSuccess,
-    preponeOrderFailed: state.home.preponeOrderFailed,
-    preponeOrderProgress: state.home.preponeOrderProgress,
-    fetchDeliverySuccess: state.home.fetchDeliverySuccess,
-    fetchDeliveryFailed: state.home.fetchDeliveryFailed,
-    fetchDeliveryProgress: state.home.fetchDeliveryProgress,
-    errorMsg: state.home.errorMsg,
-    successMsg: state.home.successMsg,
-    deliveryStatus: state.home.deliveryStatus,
+    fetchDetailsProgress: state.dashboard.fetchDetailsProgress,
+    preponeOrderSuccess: state.dashboard.preponeOrderSuccess,
+    preponeOrderFailed: state.dashboard.preponeOrderFailed,
+    preponeOrderProgress: state.dashboard.preponeOrderProgress,
+    fetchDeliverySuccess: state.dashboard.fetchDeliverySuccess,
+    fetchDeliveryFailed: state.dashboard.fetchDeliveryFailed,
+    fetchDeliveryProgress: state.dashboard.fetchDeliveryProgress,
+    errorMsg: state.dashboard.errorMsg,
+    successMsg: state.dashboard.successMsg,
+    deliveryStatus: state.dashboard.deliveryStatus,
   };
 };
 const mapDispatchToProps = (dispatch) => {
