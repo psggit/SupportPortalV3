@@ -97,6 +97,7 @@ export default function CustomCard(props) {
     subheader,
   } = props;
   const classes = useStyles();
+
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -129,8 +130,13 @@ export default function CustomCard(props) {
                   classes={{ root: classes.ListItemTextLabel }}
                 />
                 <ListItemText
+                  // primary={
+                  //   item[keysToRender[index]] ? item[keysToRender[index]] : "-"
+                  // }
                   primary={
                     item[keysToRender[index]] === item[keysToRender[4]]
+                      ? getTimestamp(item[keysToRender[index]])
+                      : item[keysToRender[index]] === item[keysToRender[5]]
                       ? getTimestamp(item[keysToRender[index]])
                       : item[keysToRender[index]]
                       ? item[keysToRender[index]]

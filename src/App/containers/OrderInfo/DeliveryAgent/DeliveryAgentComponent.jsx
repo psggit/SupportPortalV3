@@ -8,8 +8,10 @@ import ActivityItem from "../../../components/activityItems";
 import { getListOfDataObjects } from "../../../utils/helpers";
 import Notification from "../../../components/notification";
 import Dialog from "../../../components/dialog";
-import { Select, MenuItem, InputLabel, FormControl } from "@material-ui/core";
+import { Select, MenuItem, InputLabel } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
+import { useHistory } from "react-router-dom";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
 const keysToRender = [
   "delivery_agent_id",
@@ -30,6 +32,7 @@ const keyMap = {
 
 const DeliveryAgentComponent = (props) => {
   const classes = useStyles();
+  const history = useHistory();
 
   const [data, setData] = useState([]);
   const [selectedValue, setValue] = useState("");
@@ -107,6 +110,21 @@ const DeliveryAgentComponent = (props) => {
     setShowDialogBox(false);
   };
 
+  const handleNotesChange = () => {
+    history.push("/da-notes");
+  };
+
+  const subheadNotesAction = [
+    <Button
+      className={classes.moreButton}
+      color="primary"
+      endIcon={<ChevronRightIcon />}
+      onClick={handleNotesChange}
+    >
+      More
+    </Button>,
+  ];
+
   const actionButtons = [
     <Button
       variant="outlined"
@@ -157,7 +175,7 @@ const DeliveryAgentComponent = (props) => {
             </Button>,
           ]}
         >
-          <FormControl className={classes.formControl}>
+          <>
             <InputLabel id="demo-simple-select-label">
               Delivery Agent List
             </InputLabel>
@@ -185,8 +203,11 @@ const DeliveryAgentComponent = (props) => {
                 })}
             </Select>
             <TextField
+              id="outlined-multiline-static"
+              className={classes.textBox}
               onChange={handleTextChange}
-              rows={7}
+              multiline
+              rows={4}
               fullWidth
               variant="outlined"
               autoComplete="off"
@@ -194,7 +215,7 @@ const DeliveryAgentComponent = (props) => {
               size="small"
               placeholder="Add cancel reason"
             />
-          </FormControl>
+          </>
         </Dialog>
       )}
     </div>,
@@ -246,6 +267,7 @@ const DeliveryAgentComponent = (props) => {
               keysToRender={keysToRenderInNotesCard}
               title={"Delivery Agent Notes"}
               issueType={"delivery_agent"}
+              subtitle={subheadNotesAction}
               click={props.openDialog}
               cardActions={true}
             />
@@ -289,18 +311,10 @@ const useStyles = makeStyles((theme) => ({
   formRoot: {
     padding: 36,
   },
-  formControl: {
-    margin: theme.spacing(1),
-    // minWidth: 200,
-  },
-  formControlTextarea: {
-    // width: "170%",
-    // marginBottom: 24,
-    // marginTop: 20,
-  },
   selectBox: {
-    //paddingBottom: "20px",
+    width: "100%",
   },
+  textBox: {},
 }));
 
 export { DeliveryAgentComponent };

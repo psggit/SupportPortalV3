@@ -25,6 +25,7 @@ import { CustomerGiftSoaContainer } from "./containers/Customer/CustomerGiftSoa"
 import { RewardsContainer } from "./containers/Customer/Rewards";
 import { NotesContainer } from "./containers/Customer/Notes";
 import { ActivityListContainer } from "./containers/ActivityList";
+import { DaNotesContainer } from "./containers/DeliveryAgentNotes";
 
 function App(props) {
   useEffect(() => {
@@ -78,6 +79,7 @@ function App(props) {
               <Route path="/rewards" component={RewardsContainer} />
               <Route path="/notes" component={NotesContainer} />
 
+              <Route path="/da-notes" component={DaNotesContainer} />
               <Route path="/issues" component={IssuesContainer} />
 
               <Route path="/" component={LoginContainer} />
