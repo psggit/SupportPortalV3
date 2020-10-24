@@ -1,4 +1,4 @@
-import { customerURL } from "./config";
+import { apiUrl } from "./config";
 
 const headers = {
   Accept: "application/json",
@@ -8,8 +8,8 @@ const headers = {
   "hasura-id": `${localStorage.getItem("hasura-id")}`,
 };
 
-const consumerUpdateAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://${customerURL}/consumer/update`;
+const listRetailerAPI = (reqBody, process, onSuccess, onError) => {
+  const URL = `https://${apiUrl}/supportman/api/2/retailer/list`;
   fetch(URL, {
     method: "POST",
     headers: headers,
@@ -21,4 +21,4 @@ const consumerUpdateAPI = (reqBody, process, onSuccess, onError) => {
     .catch((err) => onError(err));
 };
 
-export { consumerUpdateAPI };
+export { listRetailerAPI };

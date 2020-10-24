@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-import Box from "@material-ui/core/Box";
 import { List, Typography } from "@material-ui/core";
 
 import ListItem from "@material-ui/core/ListItem";
@@ -24,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   ListItems: {
     color: "#010B13",
+    padding: 0,
   },
   ListItemRoot: {
     width: "100%",
@@ -80,19 +80,23 @@ const useStyles = makeStyles((theme) => ({
       marginTop: "30px",
     },
   },
-  counterAvailable: {
+  counter: {
     border: "1px solid #C7C7C7",
     borderRadius: "12px",
     textAlign: "center",
     width: "56px",
-    color: "green",
+    color: "#010B13",
+    marginLeft: "auto",
   },
   counterUnAvailable: {
-    border: "1px solid #C7C7C7",
-    borderRadius: "12px",
     textAlign: "center",
-    width: "56px",
-    color: "red",
+    color: "#FF1212",
+    fontSize: 12,
+  },
+  counterAvailable: {
+    textAlign: "center",
+    color: "#02B133",
+    fontSize: 12,
   },
   addComponentRight: {
     border: "1px solid #C7C7C7",
@@ -114,23 +118,30 @@ const CartItem = (props) => {
   const value = props.value;
   return (
     <List>
-      <ListItem>
+      <ListItem dense disableGutters>
         <ListItemText
           className={classes.ListItems}
           primary={value.brand_name}
-          secondary={`${value.volume} ML | ₹ ${value.sku_price}`}
+          secondary={`${value.volume} ML | ${value.sku_price}`}
         />
         <div>
-          <Typography
-            className={
-              value.ordered_count === 1
-                ? classes.counterAvailable
-                : classes.counterUnAvailable
-            }
-          >
+          <Typography className={classes.counter}>
             {value.ordered_count}
           </Typography>
-          <Typography>{"Available"}</Typography>
+          {props.listRetailerData.sku.retailer_sku_details === null ? (
+            <Typography className={classes.counterUnAvailable}>
+              {"Not Available"}
+            </Typography>
+          ) : Object.keys(props.listRetailerData.sku.retailer_sku_details)
+              .length <= 0 ? (
+            <Typography className={classes.counterUnAvailable}>
+              {"Not Available"}
+            </Typography>
+          ) : (
+            <Typography className={classes.counterAvailable}>
+              {"Available"}
+            </Typography>
+          )}
         </div>
       </ListItem>
     </List>
@@ -139,6 +150,7 @@ const CartItem = (props) => {
 
 CartItem.propTypes = {
   value: PropTypes.string,
+  listRetailerData: PropTypes.object,
 };
 
 export { CartItem };

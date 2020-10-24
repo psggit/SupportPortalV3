@@ -10,9 +10,7 @@ const headers = {
 };
 
 const daListAPI = (reqBody, process, onSuccess, onError) => {
-  // https://api.hipbar-dev.com/supportman/api/1/deliveryagent/list/:retailer_id
   const URL = `https://${apiUrl}/supportman/api/1/deliveryagent/list/${reqBody.retailer_id}/${reqBody.order_id}`;
-
   fetch(URL, {
     method: "GET",
     headers: headers,

@@ -142,7 +142,7 @@ function CustomerSoa(props) {
           <p>CUSTOMER ID: {props.customerId}</p>
           <div>Search</div>
         </div>
-        <Box width="90%" mx="auto" mt={4}>
+        <Box width="85%" mx="auto">
           <TableContainer component={Paper}>
             <Table>
               <TableHead>
@@ -160,12 +160,16 @@ function CustomerSoa(props) {
                   rows.map((data, ind) => {
                     return (
                       <TableRow key={ind}>
-                        <TableCell>{data.order_id}</TableCell>
-                        <TableCell>{data.type}</TableCell>
-                        <TableCell>{data.amount}</TableCell>
-                        <TableCell>{data.opening_balance}</TableCell>
-                        <TableCell>{data.closing_balance}</TableCell>
-                        <TableCell align="left">
+                        <TableCell align="center">{data.order_id}</TableCell>
+                        <TableCell align="center">{data.type}</TableCell>
+                        <TableCell align="center">{data.amount}</TableCell>
+                        <TableCell align="center">
+                          {data.opening_balance}
+                        </TableCell>
+                        <TableCell align="center">
+                          {data.closing_balance}
+                        </TableCell>
+                        <TableCell align="center">
                           {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
                         </TableCell>
                       </TableRow>
@@ -180,18 +184,18 @@ function CustomerSoa(props) {
                 )}
               </TableBody>
             </Table>
-            {showData && (
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                component="div"
-                count={props.soaList.count}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
-              />
-            )}
           </TableContainer>
+          {showData && (
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={props.soaList.count}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
+            />
+          )}
         </Box>
         {errorMessage && (
           <Notification
@@ -207,9 +211,9 @@ function CustomerSoa(props) {
 }
 
 CustomerSoa.propTypes = {
-  soaList: PropTypes.array,
+  soaList: PropTypes.object,
   orderInfo: PropTypes.object,
-  CustomerSoaList: PropTypes.array,
+  CustomerSoaList: PropTypes.object,
   fetchCustomerSoaList: PropTypes.any,
   soaProgress: PropTypes.bool,
   soaSuccess: PropTypes.bool,
