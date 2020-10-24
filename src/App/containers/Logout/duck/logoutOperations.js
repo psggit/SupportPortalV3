@@ -1,5 +1,5 @@
 const logoutSession = () => {
-  document.cookie = "dinoisses=''";
+  document.cookie = "dinoisses=";
   console.log("logout");
 };
 
