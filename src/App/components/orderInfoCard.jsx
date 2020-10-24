@@ -134,7 +134,7 @@ export default function CustomCard(props) {
                   //   item[keysToRender[index]] ? item[keysToRender[index]] : "-"
                   // }
                   primary={
-                    item[keysToRender[index]] === item[keysToRender[4]]
+                    Date.parse(item[keysToRender[index]])
                       ? getTimestamp(item[keysToRender[index]])
                       : item[keysToRender[index]] === item[keysToRender[5]]
                       ? getTimestamp(item[keysToRender[index]])

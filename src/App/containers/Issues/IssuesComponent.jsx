@@ -328,28 +328,31 @@ const RenderIssues = (props) => {
           ]}
         >
           <form>
-            <div className={classes.selectIssue}>
-              <div>Select support personel</div>
-              <div>
-                <FormControl className={classes.formControl}>
-                  <Select
-                    value={supportPersonId}
-                    onChange={handleSupportPersonChange}
-                    displayEmpty
-                    className={classes.selectEmpty}
-                  >
-                    {!props.fetchSupportPersonListInProgress &&
-                      props.supportPersonList.support_person.map((item) => {
-                        return (
-                          <MenuItem value={item.id} key={item.id}>
-                            {item.username}
-                          </MenuItem>
-                        );
-                      })}
-                  </Select>
-                </FormControl>
+            {
+              !resolveIssue &&
+              <div className={classes.selectIssue}>
+                <div>Select support personel</div>
+                <div>
+                  <FormControl className={classes.formControl}>
+                    <Select
+                      value={supportPersonId}
+                      onChange={handleSupportPersonChange}
+                      displayEmpty
+                      className={classes.selectEmpty}
+                    >
+                      {!props.fetchSupportPersonListInProgress &&
+                        props.supportPersonList.support_person.map((item) => {
+                          return (
+                            <MenuItem value={item.id} key={item.id}>
+                              {item.username}
+                            </MenuItem>
+                          );
+                        })}
+                    </Select>
+                  </FormControl>
+                </div>
               </div>
-            </div>
+            }
           </form>
         </Dialog>
       )}
