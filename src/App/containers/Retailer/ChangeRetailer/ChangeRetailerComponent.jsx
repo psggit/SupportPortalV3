@@ -24,6 +24,11 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     paddingBottom: "5px",
     width: "100%",
+    margin: 0,
+  },
+  containerBox: {
+    width: "100%",
+    margin: 0,
   },
   navBar: {
     display: "flex",
@@ -88,10 +93,10 @@ const ChangeRetailerComponent = (props) => {
   console.log("ChangeRetailerCardComponent", props);
 
   return (
-    <Container component="main" className={classes.root}>
+    <div component="main" className={classes.root}>
       <TopBar />
       <Paper className={classes.paper}>
-        <Grid alignItems="center" container>
+        <Grid alignItems="center" container className={classes.containerBox}>
           <Grid item xs={1}>
             <Button
               color="primary"
@@ -115,7 +120,7 @@ const ChangeRetailerComponent = (props) => {
         </Grid>
       </Paper>
       <Box className={classes.boxContainer}>
-        <Grid container spacing={4}>
+        <Grid container spacing={4} className={classes.containerBox}>
           {props.listRetailerSuccess &&
             props.listRetailerData.da_info.map((value) => (
               <Grid item xs={4}>
@@ -127,7 +132,7 @@ const ChangeRetailerComponent = (props) => {
             ))}
         </Grid>
       </Box>
-    </Container>
+    </div>
   );
 };
 

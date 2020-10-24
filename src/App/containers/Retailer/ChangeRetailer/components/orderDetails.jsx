@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
 import { Typography } from "@material-ui/core";
 
 import { CartItem } from "./cartItem";
@@ -100,7 +101,7 @@ const OrderDetails = (props) => {
   return (
     <Box>
       <List>
-        <ListItem>
+        <ListItem dense disableGutters>
           <Typography variant="h5" className={classes.heading} gutterBottom>
             {props.retailerName}
           </Typography>
@@ -114,6 +115,14 @@ const OrderDetails = (props) => {
             />
           );
         })}
+        <ListItem dense disableGutters className={classes.finalRow}>
+          <ListItemText primary={"Free Agent/ Total Delivery Agents"} />
+          <Box>
+            <Typography>
+              {props.value.free_da}/{props.value.total_da}
+            </Typography>
+          </Box>
+        </ListItem>
       </List>
     </Box>
   );

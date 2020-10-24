@@ -11,7 +11,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Dialog from "../../../components/dialog";
 
-import { Button, Typography } from "@material-ui/core";
+import { Button, Typography, List } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -104,29 +104,15 @@ const RetailerCardComponent = (props) => {
     <Card className={classes.RetailerCardComponent} variant="outlined">
       <CardContent p={2}>
         <OrderDetails {...props} />
-        <ListItem dense disableGutters className={classes.finalRow}>
-          <ListItemText primary={"Free Agent/ Total Delivery Agents"} />
-          <Box>
-            <Typography>
-              {props.value.free_da}/{props.value.total_da}
-            </Typography>
-          </Box>
-        </ListItem>
         <CardActions className={classes.actionContainer}>
           <Button
             variant="outlined"
             color="primary"
             className={classes.marginLeft}
-            size="small"
           >
             Call
           </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            onClick={handleSelect}
-          >
+          <Button variant="contained" color="primary" onClick={handleSelect}>
             Select
           </Button>
         </CardActions>

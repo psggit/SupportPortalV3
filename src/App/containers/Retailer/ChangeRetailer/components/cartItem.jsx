@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   ListItems: {
     color: "#010B13",
+    padding: 0,
   },
   ListItemRoot: {
     width: "100%",
@@ -90,10 +91,12 @@ const useStyles = makeStyles((theme) => ({
   counterUnAvailable: {
     textAlign: "center",
     color: "#FF1212",
+    fontSize: 12,
   },
   counterAvailable: {
     textAlign: "center",
     color: "#02B133",
+    fontSize: 12,
   },
   addComponentRight: {
     border: "1px solid #C7C7C7",
@@ -115,11 +118,11 @@ const CartItem = (props) => {
   const value = props.value;
   return (
     <List>
-      <ListItem>
+      <ListItem dense disableGutters>
         <ListItemText
           className={classes.ListItems}
           primary={value.brand_name}
-          secondary={`${value.volume} ML | ₹ ${value.sku_price}`}
+          secondary={`${value.volume} ML | ${value.sku_price}`}
         />
         <div>
           <Typography className={classes.counter}>
