@@ -41,8 +41,17 @@ const RetailerDetails = (props) => {
     history.push("/retailer-notes");
   };
 
+  const handleChangeRetailer = () => {
+    history.push("/change-retailer");
+  };
+
   const actionButtons = [
-    <Button variant="outlined" color="primary" key="changeRetailerBtn">
+    <Button
+      variant="outlined"
+      color="primary"
+      key="unassignBtn"
+      onClick={handleChangeRetailer}
+    >
       Change Retailer
     </Button>,
     <Button
