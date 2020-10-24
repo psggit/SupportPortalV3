@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 import TopBar from "../../../components/topBar";
 import { FormControlLabel, RadioGroup } from "@material-ui/core";
 import FullWidthTabs from "../customerMenuBar";
-import { Grid, Tab } from "@material-ui/core";
+import { Grid, Tab, Box } from "@material-ui/core";
 import Notification from "../../../components/notification";
 
 const BlueRadio = withStyles({
@@ -36,20 +36,7 @@ const useStyles = makeStyles((theme) => ({
   section2: {
     width: "100%",
     margin: 0,
-    padding: "0px 50px",
-  },
-  navBar: {
-    display: "flex",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    padding: "24px",
-    color: "#696969",
-    fontWeight: "bold",
-    fontSize: "14px",
-    lineHeight: "21px",
-  },
-  navContent: {
-    marginLeft: "22px",
+    padding: "0px 50px 60px",
   },
   section1: {
     padding: "34px 24px",
@@ -62,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: "center",
   },
   textField: {
-    marginBottom: "16px",
     backgroundColor: "#fff",
     width: "220px",
   },
@@ -73,10 +59,14 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "16px",
   },
   buttonContainer: {
-    marginLeft: "500px",
     display: "flex",
-    paddingBottom: "20px",
+    flexDirection: "row",
+    width: "60%",
+    justifyContent: "flex-end",
   },
+  generalForm: {
+    marginBottom: "16px",
+  }
 }));
 
 function CustomerForm(props) {
@@ -141,6 +131,7 @@ function CustomerForm(props) {
         <div className={classes.section1}>
           <p>CUSTOMER ID: {props.orderInfo.customer_id}</p>
         </div>
+        <Box width="85%" mx="auto"></Box>
         <Grid container className={classes.section2}>
           <Grid container spacing={2} className={classes.generalForm}>
             <Grid item xs={3} className={classes.label}>
