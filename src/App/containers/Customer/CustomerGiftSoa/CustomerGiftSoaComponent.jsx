@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
@@ -5,8 +6,8 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import { Box, TablePagination } from "@material-ui/core";
+import Notification from "../../../components/notification";
 import Moment from "moment";
-import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import TopBar from "../../../components/topBar";
 import FullWidthTabs from "../customerMenuBar";
@@ -87,7 +88,6 @@ function CustomerGiftSoa(props) {
 
   useEffect(() => {
     if (props.giftSoaSuccess) {
-      //  console.log("props ", props);
       if (props.giftSoaList.soa !== null) {
         loopData(props.giftSoaList.soa);
         setShowData(true);
@@ -141,7 +141,7 @@ function CustomerGiftSoa(props) {
         <p>CUSTOMER ID: {props.customerId}</p>
         <div>Search</div>
       </div>
-      <Box width="90%" mx="auto" mt={4}>
+      <Box width="85%" mx="auto">
         <TableContainer component={Paper}>
           <Table>
             <TableHead>
@@ -156,25 +156,33 @@ function CustomerGiftSoa(props) {
             </TableHead>
             <TableBody>
               {showData &&
-                rows
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((data) => {
-                    return (
-                      // eslint-disable-next-line react/jsx-key
-                      <TableRow>
-                        <TableCell>{data.reference_number}</TableCell>
-                        <TableCell>{data.transaction_type}</TableCell>
-                        <TableCell>{data.transaction_amount}</TableCell>
-                        <TableCell>{data.gift_cards_and_value}</TableCell>
-                        <TableCell>{data.ResponseMessage}</TableCell>
-                        <TableCell align="left">
-                          {Moment(data.date_at_server).format(
-                            "DD/MM/YYYY h:mm A"
-                          )}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
+                rows.map((data, index) => {
+                  return (
+                    // eslint-disable-next-line react/jsx-key
+                    <TableRow key={index}>
+                      <TableCell align="center">
+                        {data.reference_number}
+                      </TableCell>
+                      <TableCell align="center">
+                        {data.transaction_type}
+                      </TableCell>
+                      <TableCell align="center">
+                        {data.transaction_amount}
+                      </TableCell>
+                      <TableCell align="center">
+                        {data.gift_cards_and_value}
+                      </TableCell>
+                      <TableCell align="center">
+                        {data.ResponseMessage}
+                      </TableCell>
+                      <TableCell align="center">
+                        {Moment(data.date_at_server).format(
+                          "DD/MM/YYYY h:mm A"
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               {!showData && (
                 <TableRow>
                   <TableCell colSpan={10} align="center">
@@ -184,19 +192,27 @@ function CustomerGiftSoa(props) {
               )}
             </TableBody>
           </Table>
-          {showData && (
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
-              component="div"
-              count={rows.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
-            />
-          )}
         </TableContainer>
+        {showData && (
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={props.giftSoaList.count}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+        )}
       </Box>
+      {errorMessage && (
+        <Notification
+          message={props.errorMsg}
+          messageType="error"
+          open={errorMessage}
+          handleClose={handleClose}
+        />
+      )}
     </>
   );
 }

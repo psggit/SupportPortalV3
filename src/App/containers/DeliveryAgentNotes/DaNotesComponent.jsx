@@ -6,10 +6,16 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import Moment from "moment";
 import Button from "@material-ui/core/Button";
-import Paper from "@material-ui/core/Paper";
-import TopBar from "../../../components/topBar";
-import Notification from "../../../components/notification";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import Dialog from "../../components/dialog";
+import TopBar from "../../components/topBar";
+import Notification from "../../components/notification";
+import { Tab } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import Loading from "../../components/loading";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import {
   Table,
@@ -19,41 +25,10 @@ import {
   TableBody,
   TablePagination,
   Grid,
-  Tabs,
 } from "@material-ui/core";
-import { Tab } from "@material-ui/core";
-import { propTypes } from "react-bootstrap/esm/Image";
 
-const useStyles = makeStyles((theme) => ({
-  navBar: {
-    display: "flex",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    padding: "24px",
-    color: "#696969",
-    fontWeight: "bold",
-    fontSize: "14px",
-    lineHeight: "21px",
-  },
-  navContent: {
-    marginLeft: "22px",
-  },
-  row1: {
-    display: "flex",
-    justifyContent: "space-between",
-    padding: "34px 24px",
-    letterSpacing: "0.012em",
-    fontSize: "16px",
-    color: "#696969",
-    fontWeight: "bold",
-  },
-  table: {
-    padding: "0px 25px",
-  },
-  root: {
-    paddingBottom: "5px",
-  },
-}));
+import Paper from "@material-ui/core/Paper";
+import Tabs from "@material-ui/core/Tabs";
 
 const createData = ({ order_id, type, notes, created_at, created_by }) => {
   return {
@@ -65,42 +40,40 @@ const createData = ({ order_id, type, notes, created_at, created_by }) => {
   };
 };
 
-function RetailerNotesComponent(props) {
-  console.log("[RetailerNotesComponent]", props);
+function DaNotes(props) {
   const classes = useStyles();
-  // console.log(history.location.state.orderId);
-  // const orderId = history.location.state.orderId;
   const history = useHistory();
-
   const [rows, setRowsData] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
   const [showData, setShowData] = useState(false);
+  const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
+  const [age, setAge] = useState("");
   const [value, setValue] = React.useState(0);
 
-  useEffect(() => {
-    const payload = {
-      order_id: orderId,
-      type: "retailer",
-    };
-    props.fetchRetailerNotesList(payload);
-  }, []);
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   useEffect(() => {
-    if (props.notesSuccess) {
-      if (props.notesList.orderNotes !== null) {
-        loopData(props.notesList.orderNotes);
+    props.fetchDeliveryAgentNotes(props.orderInfo.order_id);
+  }, [rowsPerPage, page]);
+
+  useEffect(() => {
+    if (props.fetchSuccess) {
+      if (props.deliveryAgentNotes.orderNotes !== null) {
+        loopData(props.deliveryAgentNotes.orderNotes);
         setShowData(true);
       } else {
         setShowData(false);
       }
     }
-  }, [props.notesSuccess]);
+  }, [props.fetchSuccess]);
 
   useEffect(() => {
-    setErrorMessage(props.notesFail);
-  }, [props.notesFail]);
+    setErrorMessage(props.fetchFailed);
+  }, [props.fetchFailed]);
 
   const filledRows = [];
   const loopData = (data) => {
@@ -108,10 +81,6 @@ function RetailerNotesComponent(props) {
       filledRows.push(createData(value));
     });
     setRowsData(data);
-  };
-
-  const handleTabChange = (event, newValue) => {
-    setValue(newValue);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -123,23 +92,35 @@ function RetailerNotesComponent(props) {
     setPage(0);
   };
 
-  const handleBack = () => {
-    history.push(`/order-info/${props.orderId.order_id}`);
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
+
+  const mountAddNote = () => {
+    setShowAddNoteDialog(true);
+  };
+
+  const UnmountAddNote = () => {
+    setShowAddNoteDialog(false);
   };
 
   const handleClose = () => {
     setErrorMessage(false);
   };
 
-  let loading = props.notesProgress;
+  const handleBack = () => {
+    history.push(`/order-info/${props.orderInfo.order_id}`);
+  };
+
+  let loading = props.fetchProgress;
   if (loading) {
-    return <p>Loading...</p>;
+    return <Loading message="Loading..." />;
   }
 
   return (
     <>
+      <TopBar />
       <div className={classes.formContainer}>
-        <TopBar />
         <Paper className={classes.root}>
           <Grid alignItems="center" container>
             <Grid item xs={1}>
@@ -167,9 +148,62 @@ function RetailerNotesComponent(props) {
         <div className={classes.row1}>
           <p>CUSTOMER ID: {props.orderInfo.customer_id}</p>
           <div>
-            <Button variant="contained" color="primary">
+            <Button variant="contained" onClick={mountAddNote} color="primary">
               Add Note
             </Button>
+            {showAddNoteDilog && (
+              <Dialog
+                title="ADD NOTE"
+                actions={[
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={UnmountAddNote}
+                    key="cancelBtn"
+                  >
+                    Cancel
+                  </Button>,
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    key="saveBtn"
+                    //onClick={commentUnmountModel}
+                  >
+                    Save
+                  </Button>,
+                ]}
+              >
+                <form>
+                  <div className={classes.selectIssue}>
+                    <div>Select Issue</div>
+                    <div>
+                      <FormControl className={classes.formControl}>
+                        <Select
+                          value={age}
+                          onChange={handleChange}
+                          displayEmpty
+                          className={classes.selectEmpty}
+                          inputProps={{ "aria-label": "Without label" }}
+                        >
+                          <MenuItem value={10}>Ten</MenuItem>
+                          <MenuItem value={20}>Twenty</MenuItem>
+                          <MenuItem value={30}>Thirty</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </div>
+                  </div>
+                  <div className={classes.formRoot}>
+                    <TextareaAutosize
+                      className={classes.formControlTextarea}
+                      aria-label="minimum height"
+                      rowsMin={7}
+                      //onChange={handleCommentChange}
+                      placeholder="Add note here"
+                    />
+                  </div>
+                </form>
+              </Dialog>
+            )}
           </div>
         </div>
         <Box width="85%" mx="auto">
@@ -234,14 +268,68 @@ function RetailerNotesComponent(props) {
   );
 }
 
-RetailerNotesComponent.propTypes = {
-  notesList: PropTypes.object,
-  fetchRetailerNotesList: PropTypes.any,
-  notesProgress: PropTypes.bool,
-  notesSuccess: PropTypes.bool,
-  notesFail: PropTypes.bool,
-  errorMsg: propTypes.any,
-  orderId: PropTypes.any,
+DaNotes.propTypes = {
+  customerId: PropTypes.any,
+  orderInfo: PropTypes.object,
+  fetchSuccess: PropTypes.bool,
+  fetchProgress: PropTypes.bool,
+  fetchDeliveryAgentNotes: PropTypes.func,
+  deliveryAgentNotes: PropTypes.object,
+  errorMsg: PropTypes.string,
+  fetchFailed: PropTypes.bool,
 };
 
-export { RetailerNotesComponent };
+export { DaNotes };
+
+const useStyles = makeStyles((theme) => ({
+  navBar: {
+    display: "flex",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    padding: "24px",
+    color: "#696969",
+    fontWeight: "bold",
+    fontSize: "14px",
+    lineHeight: "21px",
+  },
+  navContent: {
+    marginLeft: "22px",
+  },
+  row1: {
+    display: "flex",
+    justifyContent: "space-between",
+    padding: "34px 24px",
+    letterSpacing: "0.012em",
+    fontSize: "16px",
+    color: "#696969",
+    fontWeight: "bold",
+  },
+  table: {
+    padding: "0px 80px",
+  },
+  formRoot: {
+    padding: 24,
+  },
+  formControlTextarea: {
+    width: "100%",
+    marginBottom: 24,
+    padding: 10,
+  },
+  selectIssue: {
+    display: "flex",
+    paddingLeft: "24px",
+    color: "#606060",
+  },
+  formControl: {
+    marginLeft: "16px",
+    minWidth: 120,
+  },
+  horizontalBar: {
+    backgroundColor: "#FFFFFF",
+  },
+  root: {
+    cursor: "pointer",
+    alignItems: "center",
+    paddingBottom: "5px",
+  },
+}));

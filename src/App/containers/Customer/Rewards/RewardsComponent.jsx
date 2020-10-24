@@ -155,7 +155,7 @@ function Rewards(props) {
           <p>CUSTOMER ID: {props.customerId}</p>
           <div>Search</div>
         </div>
-        <Box width="90%" mx="auto" mt={4}>
+        <Box width="85%" mx="auto">
           <TableContainer component={Paper}>
             <Table>
               <TableHead>
@@ -174,24 +174,36 @@ function Rewards(props) {
               </TableHead>
               <TableBody>
                 {showData &&
-                  rows.map((data, ind) => {
-                    return (
-                      <TableRow key={ind}>
-                        <TableCell>{data.order_id}</TableCell>
-                        <TableCell>{data.retailer_name}</TableCell>
-                        <TableCell>{data.reward_id}</TableCell>
-                        <TableCell>{data.reward_source}</TableCell>
-                        <TableCell>{data.amount}</TableCell>
-                        <TableCell>{data.promo_code}</TableCell>
-                        <TableCell>{data.bank_rrn}</TableCell>
-                        <TableCell>{data.failure_reason}</TableCell>
-                        <TableCell align="left">
-                          {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
-                        </TableCell>
-                        <TableCell>{data.status}</TableCell>
-                      </TableRow>
-                    );
-                  })}
+                  rows
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((data, ind) => {
+                      return (
+                        <TableRow key={ind}>
+                          <TableCell align="center">{data.order_id}</TableCell>
+                          <TableCell align="center">
+                            {data.retailer_name}
+                          </TableCell>
+                          <TableCell align="center">{data.id}</TableCell>
+                          <TableCell align="center">
+                            {data.reward_source}
+                          </TableCell>
+                          <TableCell align="center">{data.amount}</TableCell>
+                          <TableCell align="center">
+                            {data.promo_code}
+                          </TableCell>
+                          <TableCell align="center">{data.bank_rrn}</TableCell>
+                          <TableCell align="center">
+                            {data.failure_reason}
+                          </TableCell>
+                          <TableCell align="center">
+                            {Moment(data.created_at).format(
+                              "DD/MM/YYYY h:mm A"
+                            )}
+                          </TableCell>
+                          <TableCell align="center">{data.status}</TableCell>
+                        </TableRow>
+                      );
+                    })}
                 {!showData && (
                   <TableRow>
                     <TableCell colSpan={10} align="center">
@@ -201,18 +213,18 @@ function Rewards(props) {
                 )}
               </TableBody>
             </Table>
-            {showData && (
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                component="div"
-                count={props.rewardsList.count}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
-              />
-            )}
           </TableContainer>
+          {showData && (
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={props.rewardsList.count}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
+            />
+          )}
         </Box>
         {errorMessage && (
           <Notification
@@ -228,15 +240,15 @@ function Rewards(props) {
 }
 
 Rewards.propTypes = {
+  rewardsList: PropTypes.object,
   soaList: PropTypes.array,
   orderInfo: PropTypes.object,
-  rewardsList: PropTypes.object,
   rewardsProgress: PropTypes.bool,
   rewardsSuccess: PropTypes.bool,
   rewardsFail: PropTypes.bool,
   customerId: PropTypes.any,
   fetchRewardsList: PropTypes.func,
-  errorMsg: PropTypes.string,
+  errorMsg: PropTypes.any,
 };
 
 export { Rewards };

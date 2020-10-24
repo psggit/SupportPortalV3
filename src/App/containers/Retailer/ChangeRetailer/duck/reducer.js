@@ -1,38 +1,64 @@
 import { createReducer } from "@reduxjs/toolkit";
 import {
-  fetchOrderSuccess,
-  fetchOrderFailed,
-  fetchOrderProgress,
+  listRetailerSuccess,
+  listRetailerFailed,
+  listRetailerProgress,
+  reassignRetailerProgress,
+  reassignRetailerFailed,
+  reassignRetailerSuccess,
 } from "./action";
 
 const initialValue = {
-  orderData: null,
-  fetchDetailsProgress: false,
-  fetchDetailsFail: false,
-  fetchDetailsStatus: false,
+  listRetailerData: null,
+  reassignRetailerData: null,
+  listRetailerSuccess: false,
+  listRetailerFailed: false,
+  listRetailerProgress: false,
+  reassignRetailerProgress: false,
+  reassignRetailerFailed: false,
+  reassignRetailerSuccess: false,
   errorMsg: "",
 };
 
-const cartReducer = createReducer(initialValue, {
-  [fetchOrderSuccess]: (state, payload) => ({
+const listRetailerReducer = createReducer(initialValue, {
+  [listRetailerSuccess]: (state, data) => ({
     ...state,
-    fetchDetailsProgress: false,
-    fetchDetailsFail: false,
-    fetchDetailsStatus: true,
+    listRetailerData: data.payload,
+    listRetailerProgress: false,
+    listRetailerFailed: false,
+    listRetailerSuccess: true,
     errorMsg: "",
-    orderData: payload.data,
   }),
-  [fetchOrderFailed]: (state) => ({
+  [listRetailerFailed]: (state) => ({
     ...state,
-    fetchDetailsProgress: false,
-    fetchDetailsFail: true,
-    fetchDetailsStatus: false,
+    listRetailerProgress: false,
+    listRetailerFailed: true,
+    listRetailerSuccess: false,
     errorMsg: "Something went wrong, please try again",
   }),
-  [fetchOrderProgress]: (state) => ({
+  [listRetailerProgress]: (state) => ({
     ...state,
-    fetchDetailsProgress: true,
+    listRetailerProgress: true,
+  }),
+
+  [reassignRetailerSuccess]: (state, data) => ({
+    ...state,
+    reassignRetailerData: data.payload,
+    reassignRetailerProgress: false,
+    reassignRetailerFailed: false,
+    reassignRetailerSuccess: true,
+    errorMsg: "",
+  }),
+  [reassignRetailerFailed]: (state) => ({
+    ...state,
+    reassignRetailerProgress: false,
+    reassignRetailerFailed: true,
+    reassignRetailerSuccess: false,
+    errorMsg: "Something went wrong, please try again",
+  }),
+  [reassignRetailerProgress]: (state) => ({
+    ...state,
+    reassignRetailerProgress: true,
   }),
 });
-
-export { cartReducer };
+export { listRetailerReducer };
