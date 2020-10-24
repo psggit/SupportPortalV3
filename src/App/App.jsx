@@ -25,6 +25,7 @@ import { CustomerGiftSoaContainer } from "./containers/Customer/CustomerGiftSoa"
 import { RewardsContainer } from "./containers/Customer/Rewards";
 import { NotesContainer } from "./containers/Customer/Notes";
 import { ActivityListContainer } from "./containers/ActivityList";
+import TopBar from "./components/topBar";
 
 function App(props) {
   useEffect(() => {

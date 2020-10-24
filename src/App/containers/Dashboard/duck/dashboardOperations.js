@@ -1,6 +1,4 @@
 import {
-  fetchOrderSuccess,
-  fetchOrderFailed,
   fetchOrderProgress,
   preponeOrderSuccess,
   preponeOrderFailed,
@@ -9,11 +7,7 @@ import {
   fetchDeliveryFailed,
   fetchDeliveryProgress,
 } from "./actions";
-import {
-  completeOrderAPI,
-  assignWarehouseAPI,
-  listDeliveryStatusAPI,
-} from "../../../utils";
+import { assignWarehouseAPI, listDeliveryStatusAPI } from "../../../utils";
 
 const processResponse = () => {
   return (res) => {
@@ -22,12 +16,6 @@ const processResponse = () => {
     } else {
       throw new Error("Something went wrong, try again");
     }
-  };
-};
-
-const onSuccess = (dispatch) => {
-  return (data) => {
-    dispatch(fetchOrderSuccess(data));
   };
 };
 
@@ -40,12 +28,6 @@ const onErrorAssign = (dispatch) => {
 const onSuccessAssign = (dispatch) => {
   return (data) => {
     dispatch(preponeOrderSuccess(data));
-  };
-};
-
-const onError = (dispatch) => {
-  return (err) => {
-    dispatch(fetchOrderFailed(err));
   };
 };
 
@@ -63,13 +45,7 @@ const onErrorDeliveryStatus = (dispatch) => {
 
 const fetchOrderDetails = (reqBody) => {
   return (dispatch) => {
-    dispatch(fetchOrderProgress());
-    completeOrderAPI(
-      reqBody,
-      processResponse(dispatch),
-      onSuccess(dispatch),
-      onError(dispatch)
-    );
+    dispatch(fetchOrderProgress(reqBody));
   };
 };
 

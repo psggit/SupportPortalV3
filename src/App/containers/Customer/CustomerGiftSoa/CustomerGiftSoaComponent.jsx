@@ -87,8 +87,9 @@ function CustomerGiftSoa(props) {
 
   useEffect(() => {
     if (props.giftSoaSuccess) {
-      if (props.giftSoaList !== null) {
-        loopData(props.giftSoaList);
+      //  console.log("props ", props);
+      if (props.giftSoaList.soa !== null) {
+        loopData(props.giftSoaList.soa);
         setShowData(true);
       } else {
         setShowData(false);
@@ -131,7 +132,11 @@ function CustomerGiftSoa(props) {
   return (
     <>
       <TopBar />
-      <FullWidthTabs value={2} orderId={props.orderInfo.order_id} />
+      <FullWidthTabs
+        value={2}
+        orderId={props.orderInfo.order_id}
+        customerId={props.orderInfo.customer_id}
+      />
       <div className={classes.row1}>
         <p>CUSTOMER ID: {props.customerId}</p>
         <div>Search</div>

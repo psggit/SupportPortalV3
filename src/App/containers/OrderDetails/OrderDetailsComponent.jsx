@@ -16,6 +16,7 @@ import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Moment from "moment";
 import { TablePagination } from "@material-ui/core";
+import Loading from "../../components/loading";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -33,12 +34,23 @@ const useStyles = makeStyles(() => ({
 const OrderDetailsComponent = (props) => {
   const history = useHistory();
   useEffect(() => {
-    if (props.orderData === null) {
+    if (props.payload === undefined) {
       history.push("/dashboard");
     } else {
-      loopData(props.orderData.order_details);
+      props.fetchOrderDetails(props.payload.payload);
     }
   }, []);
+
+  useEffect(() => {
+    if (props.fetchDetailsSuccess) {
+      if (props.orderData !== null) {
+        loopData(props.orderData.order_details);
+        setShowData(true);
+      } else {
+        history.push("/dashboard");
+      }
+    }
+  }, [props.fetchDetailsSuccess]);
 
   const classes = useStyles();
   const [showData, setShowData] = useState(false);
@@ -73,13 +85,11 @@ const OrderDetailsComponent = (props) => {
   };
 
   const filledRows = [];
-
   const loopData = (data) => {
     data.map((value) => {
       filledRows.push(createData(value));
     });
-    setShowData(true);
-    setRowsData(filledRows);
+    setRowsData(data);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -87,7 +97,7 @@ const OrderDetailsComponent = (props) => {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(parseInt(event.target.value));
     setPage(0);
   };
 
@@ -96,17 +106,10 @@ const OrderDetailsComponent = (props) => {
     history.push(`/order-info/${orderId}`);
   };
 
-  if (!showData) {
-    return (
-      <Container>
-        <p>No data available</p>
-      </Container>
-    );
-  }
-
   return (
     <Container component="main">
       <TopBar />
+      {props.fetchDetailsProgress && <Loading message="Fetching data..." />}
       <Box width="90%" mx="auto" mt={4}>
         <TableContainer component={Paper}>
           <Table aria-label="order table" size="small">
@@ -123,43 +126,55 @@ const OrderDetailsComponent = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => (
-                  <TableRow key={row.order_id}>
-                    <TableCell align="center">
-                      <Button
-                        onClick={(event) => selectOrderId(event, row.order_id)}
-                        className={classes.btn}
-                      >
-                        {row.order_id}
-                      </Button>
-                    </TableCell>
-                    <TableCell align="center">
-                      {formatDate(row.date_and_time)}
-                    </TableCell>
-                    <TableCell align="center">{row.order_status}</TableCell>
-                    <TableCell align="center">{row.consumer_id}</TableCell>
-                    <TableCell align="center">{row.consumer_name}</TableCell>
-                    <TableCell align="center">
-                      {row.consumer_contact_number}
-                    </TableCell>
-                    <TableCell align="center">{row.retailer_id}</TableCell>
-                    <TableCell align="center">{row.retailer_name}</TableCell>
-                  </TableRow>
-                ))}
+              {showData &&
+                rows
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => (
+                    <TableRow key={row.order_id}>
+                      <TableCell align="center">
+                        <Button
+                          onClick={(event) =>
+                            selectOrderId(event, row.order_id)
+                          }
+                          className={classes.btn}
+                        >
+                          {row.order_id}
+                        </Button>
+                      </TableCell>
+                      <TableCell align="center">
+                        {formatDate(row.date_and_time)}
+                      </TableCell>
+                      <TableCell align="center">{row.order_status}</TableCell>
+                      <TableCell align="center">{row.consumer_id}</TableCell>
+                      <TableCell align="center">{row.consumer_name}</TableCell>
+                      <TableCell align="center">
+                        {row.consumer_contact_number}
+                      </TableCell>
+                      <TableCell align="center">{row.retailer_id}</TableCell>
+                      <TableCell align="center">{row.retailer_name}</TableCell>
+                    </TableRow>
+                  ))}
+              {!showData && (
+                <TableRow>
+                  <TableCell colSpan={10} align="center">
+                    No data available
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
+        {showData && (
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+        )}
       </Box>
     </Container>
   );
@@ -167,8 +182,12 @@ const OrderDetailsComponent = (props) => {
 
 OrderDetailsComponent.propTypes = {
   selectOrder: PropTypes.func,
+  fetchOrderDetails: PropTypes.func,
   orderId: PropTypes.any,
   orderData: PropTypes.object,
+  payload: PropTypes.any,
+  fetchDetailsProgress: PropTypes.bool,
+  fetchDetailsSuccess: PropTypes.bool,
 };
 
 export { OrderDetailsComponent };

@@ -68,9 +68,9 @@ const useStyles = makeStyles((theme) => ({
   sideNavBtnO: {
     backgroundColor: theme.palette.primary.main,
     color: "#fff",
-    height: 24,
-    width: 24,
-    minWidth: 24,
+    height: 30,
+    width: 30,
+    minWidth: 30,
     fontSize: 18,
     margin: 5,
     cursor: "pointer",
@@ -83,9 +83,9 @@ const useStyles = makeStyles((theme) => ({
   sideNavBtnC: {
     backgroundColor: "#FB337A",
     color: "#fff",
-    height: 24,
-    width: 24,
-    minWidth: 24,
+    height: 30,
+    width: 30,
+    minWidth: 30,
     fontSize: 18,
     margin: 5,
     cursor: "pointer",
@@ -98,9 +98,9 @@ const useStyles = makeStyles((theme) => ({
   sideNavBtnR: {
     backgroundColor: "#F4A60B",
     color: "#fff",
-    height: 24,
-    width: 24,
-    minWidth: 24,
+    height: 30,
+    width: 30,
+    minWidth: 30,
     fontSize: 18,
     margin: 5,
     cursor: "pointer",
@@ -113,9 +113,9 @@ const useStyles = makeStyles((theme) => ({
   sideNavBtnD: {
     backgroundColor: "#1B4987",
     color: "#fff",
-    height: 24,
-    width: 24,
-    minWidth: 24,
+    height: 30,
+    width: 30,
+    minWidth: 30,
     fontSize: 18,
     margin: 5,
     cursor: "pointer",
@@ -165,11 +165,23 @@ const OrderInfoComponent = (props) => {
   const [open, setOpen] = useState(false);
   const [openIssueDialog, setOpenIssueDialog] = useState(false);
   const [showError, setShowError] = useState(false);
-
+  const [createDisabledBtn, setDisabledBtn] = useState(true);
   const [activeSection, setActiveSection] = useState("");
 
-  const handleSelectChange = (event) => {
-    handleSelect(event.target.value);
+  const validateIssue = (event, type) => {
+    if (type === "select") {
+      var selectValue = event.target.value;
+      handleSelect(event.target.value);
+    }
+    console.log("validateIssue", newIssueDesc.trim().length, selectValue);
+    if (
+      newIssueDesc.trim().length !== 0 &&
+      (selectValue !== "" || selectedValue !== "")
+    ) {
+      setDisabledBtn(false);
+    } else {
+      setDisabledBtn(true);
+    }
   };
 
   const handleScroll = (id) => {
@@ -180,6 +192,9 @@ const OrderInfoComponent = (props) => {
 
   const handleAddIssue = () => {
     setOpenIssueDialog(!openIssueDialog);
+    setNewIssueDesc("");
+    handleSelect("");
+    setDisabledBtn(true);
   };
 
   const handleError = () => {
@@ -216,6 +231,7 @@ const OrderInfoComponent = (props) => {
     setOpen(false);
     props.fetchOrderInfo(orderId);
     props.fetchCancelReason(payload);
+    setIssueDesc("");
   };
 
   const updateIssue = () => {
@@ -260,8 +276,9 @@ const OrderInfoComponent = (props) => {
       color="primary"
       key="createIssue"
       onClick={() => updateIssue()}
+      disabled={createDisabledBtn}
     >
-      Save
+      Create Issue
     </Button>,
   ];
 
@@ -319,7 +336,7 @@ const OrderInfoComponent = (props) => {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                onChange={(event) => handleSelectChange(event)}
+                onChange={(event) => validateIssue(event, "select")}
               >
                 {props.fetchOrderInfoSuccess &&
                   props.issueTypes.issue_types.map((value) => {
@@ -353,6 +370,7 @@ const OrderInfoComponent = (props) => {
             size="small"
             value={newIssueDesc}
             fullWidth
+            onKeyUp={(event) => validateIssue(event, "text")}
             onChange={(event) => setNewIssueDesc(event.target.value)}
           />
         </DialogComponent>
@@ -360,7 +378,9 @@ const OrderInfoComponent = (props) => {
       <Box className={classes.boxContainer}>
         <Grid container spacing={4} className={classes.containerBox}>
           <Grid item xs={3}>
-            {props.fetchOrderInfoSuccess && <OrderStatusContainer />}
+            <Box ml={2}>
+              {props.fetchOrderInfoSuccess && <OrderStatusContainer />}
+            </Box>
           </Grid>
           <Grid item xs={8}>
             <Grid container spacing={4}>

@@ -15,6 +15,7 @@ import {
 } from "../../../utils/helpers";
 import Paper from "@material-ui/core/Paper";
 import TopBar from "../../../components/topBar";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   navBar: {
@@ -58,10 +59,14 @@ function RetailerNotesComponent(props) {
   const pageLimit = 20;
   const activePage = getQueryParamByName("activePage") || 1;
   const [pageNo, setPageNo] = useState(activePage);
+  const history = useHistory();
+  console.log(" ------------------ ");
+  console.log(history.location.state.orderId);
+  const orderId = history.location.state.orderId;
 
   useEffect(() => {
     const payload = {
-      order_id: props.orderId.order_id,
+      order_id: orderId,
       type: "retailer",
     };
     props.fetchRetailerNotesList(payload);
@@ -87,7 +92,7 @@ function RetailerNotesComponent(props) {
   return (
     <div className={classes.formContainer}>
       <TopBar />
-      <SimpleMenuBar orderId={props.orderId.order_id}>
+      <SimpleMenuBar orderId={orderId}>
         {props.notesSuccess && <p>CHANGE RETAILER</p>}
       </SimpleMenuBar>
       <div className={classes.row1}>

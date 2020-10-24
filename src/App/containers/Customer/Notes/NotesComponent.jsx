@@ -63,7 +63,11 @@ function Notes(props) {
     <>
       <TopBar />
       <div className={classes.formContainer}>
-        <FullWidthTabs value={4} orderId={props.orderInfo.order_id} />
+        <FullWidthTabs
+          value={4}
+          orderId={props.orderInfo.order_id}
+          customerId={props.orderInfo.customer_id}
+        />
         <div className={classes.row1}>
           <p>CUSTOMER ID: {props.customerId}</p>
           <div>
