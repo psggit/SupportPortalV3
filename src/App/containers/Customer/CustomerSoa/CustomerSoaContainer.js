@@ -1,12 +1,10 @@
 import { connect } from "react-redux";
 import { CustomerSoa } from "./CustomerSoaComponent";
-import { CustomerSOA } from "./mockData";
 import { fetchCustomerSoaList } from "./duck/consumerSoaOperations";
 
 const mapStateToProps = (state) => {
   return {
     orderInfo: state.order.orderInfo.orderInfo,
-    CustomerSoaList: CustomerSOA,
     soaList: state.soa.customerSoaList,
     customerId: state.order.orderInfo.customerId,
     soaProgress: state.soa.soaProgress,

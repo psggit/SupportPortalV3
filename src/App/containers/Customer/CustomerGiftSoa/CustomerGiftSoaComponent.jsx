@@ -21,19 +21,6 @@ import {
 import Loading from "../../../components/loading";
 
 const useStyles = makeStyles((theme) => ({
-  navBar: {
-    display: "flex",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    padding: "24px",
-    color: "#696969",
-    fontWeight: "bold",
-    fontSize: "14px",
-    lineHeight: "21px",
-  },
-  navContent: {
-    marginLeft: "22px",
-  },
   row1: {
     display: "flex",
     justifyContent: "space-between",

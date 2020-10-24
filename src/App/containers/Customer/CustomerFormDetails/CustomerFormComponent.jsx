@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 import TopBar from "../../../components/topBar";
 import { FormControlLabel, RadioGroup } from "@material-ui/core";
 import FullWidthTabs from "../customerMenuBar";
-import { Grid, Tab, Box } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import Notification from "../../../components/notification";
 
 const BlueRadio = withStyles({
@@ -131,7 +131,6 @@ function CustomerForm(props) {
         <div className={classes.section1}>
           <p>CUSTOMER ID: {props.orderInfo.customer_id}</p>
         </div>
-        <Box width="85%" mx="auto"></Box>
         <Grid container className={classes.section2}>
           <Grid container spacing={2} className={classes.generalForm}>
             <Grid item xs={3} className={classes.label}>

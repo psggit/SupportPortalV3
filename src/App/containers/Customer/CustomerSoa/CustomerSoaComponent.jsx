@@ -20,19 +20,6 @@ import {
 import Loading from "../../../components/loading";
 
 const useStyles = makeStyles(() => ({
-  navBar: {
-    display: "flex",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    padding: "24px",
-    color: "#696969",
-    fontWeight: "bold",
-    fontSize: "14px",
-    lineHeight: "21px",
-  },
-  navContent: {
-    marginLeft: "22px",
-  },
   row1: {
     display: "flex",
     justifyContent: "space-between",
@@ -78,8 +65,6 @@ function CustomerSoa(props) {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
-
-  // page * rowsPerPage + rowsPerPage
 
   useEffect(() => {
     const payload = {

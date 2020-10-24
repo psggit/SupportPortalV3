@@ -237,6 +237,7 @@ Notes.propTypes = {
   customerId: PropTypes.any,
   orderInfo: PropTypes.object,
   notesFail: PropTypes.bool,
+  errorMsg: PropTypes.string,
 };
 
 export { Notes };
