@@ -1,46 +1,84 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "../../../components/table";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import Moment from "moment";
 import Button from "@material-ui/core/Button";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import Notification from "../../../components/notification";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Dialog from "../../../components/dialog";
-import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import TopBar from "../../../components/topBar";
 import FullWidthTabs from "../customerMenuBar";
-import { Tab } from "@material-ui/core";
 import Loading from "../../../components/loading";
+import {
+  Table,
+  Box,
+  TableHead,
+  TableContainer,
+  TableBody,
+  TablePagination,
+} from "@material-ui/core";
 
-const tableHeaders = [
-  { label: "NOTE NO", value: "note_no" },
-  { label: "NOTE TYPE", value: "note_type" },
-  { label: "DESCRIPTION", value: "desc" },
-  { label: "CREATED BY", value: "created_by" },
-  { label: "CREATED AT", value: "created_at" },
-];
+const createData = ({ order_id, type, notes, created_at, created_by }) => {
+  return {
+    order_id,
+    type,
+    notes,
+    created_at,
+    created_by,
+  };
+};
 
 function Notes(props) {
-  const history = useHistory();
   const classes = useStyles();
-
-  // const pageLimit = 2
-  // const activePage = getQueryParamByName("activePage") || 1
-  // const [isLoading, setLoading] = useState(false)
-  // const [pageNo, setPageNo] = useState(activePage)
-
+  const [rows, setRowsData] = useState(null);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [page, setPage] = useState(0);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showData, setShowData] = useState(false);
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
   const [age, setAge] = useState("");
 
   useEffect(() => {
     props.fetchConsumerNotes(props.orderInfo.order_id);
-  }, []);
+  }, [rowsPerPage, page]);
+
+  useEffect(() => {
+    if (props.notesSuccess) {
+      if (props.customerNotes.orderNotes !== null) {
+        loopData(props.customerNotes.orderNotes);
+        setShowData(true);
+      } else {
+        setShowData(false);
+      }
+    }
+  }, [props.notesSuccess]);
+
+  useEffect(() => {
+    setErrorMessage(props.notesFail);
+  }, [props.notesFail]);
+
+  const filledRows = [];
+  const loopData = (data) => {
+    data.map((value) => {
+      filledRows.push(createData(value));
+    });
+    setRowsData(data);
+  };
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value));
+    setPage(0);
+  };
 
   const handleChange = (event) => {
     setAge(event.target.value);
@@ -54,6 +92,10 @@ function Notes(props) {
     setShowAddNoteDialog(false);
   };
 
+  const handleClose = () => {
+    setErrorMessage(false);
+  };
+
   let loading = props.notesProgress;
   if (loading) {
     return <Loading message="Loading..." />;
@@ -63,7 +105,11 @@ function Notes(props) {
     <>
       <TopBar />
       <div className={classes.formContainer}>
-        <FullWidthTabs value={4} orderId={props.orderInfo.order_id} />
+        <FullWidthTabs
+          value={4}
+          orderId={props.orderInfo.order_id}
+          customerId={props.orderInfo.customer_id}
+        />
         <div className={classes.row1}>
           <p>CUSTOMER ID: {props.customerId}</p>
           <div>
@@ -125,49 +171,76 @@ function Notes(props) {
             )}
           </div>
         </div>
-        <div className={classes.table}>
-          <Paper className={classes.paper}>
-            <Table tableHeaders={tableHeaders}>
-              {props.notesSuccess && props.customerNotes.orderNotes !== null
-                ? props.customerNotes.orderNotes.map((data, ind) => {
+        <Box width="85%" mx="auto">
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center">NOTE NUMBER</TableCell>
+                  <TableCell align="center">TYPE TYPE</TableCell>
+                  <TableCell align="center">DESCRIPTION</TableCell>
+                  <TableCell align="center">CREATED AT</TableCell>
+                  <TableCell align="center">CREATED BY</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {showData &&
+                  rows.map((data, ind) => {
                     return (
                       <TableRow key={ind}>
-                        <TableCell>{data.order_id}</TableCell>
-                        <TableCell>{data.type}</TableCell>
-                        <TableCell>{data.notes}</TableCell>
-                        <TableCell align="left">{data.created_by}</TableCell>
-                        <TableCell align="left">
+                        <TableCell align="center">{data.order_id}</TableCell>
+                        <TableCell align="center">{data.type}</TableCell>
+                        <TableCell align="center">{data.notes}</TableCell>
+                        <TableCell align="center">
                           {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
                         </TableCell>
+                        <TableCell align="center">{data.created_by}</TableCell>
                       </TableRow>
                     );
-                  })
-                : props.notesSuccess &&
-                  props.customerNotes.orderNotes == null && (
-                    <tr>
-                      <td
-                        style={{ textAlign: "center", padding: "10px 0" }}
-                        colSpan="6"
-                      >
-                        <p style={{ fontWeight: "16px" }}>No records found</p>
-                      </td>
-                    </tr>
-                  )}
+                  })}
+                {!showData && (
+                  <TableRow>
+                    <TableCell colSpan={10} align="center">
+                      No data available
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
             </Table>
-          </Paper>
-        </div>
+          </TableContainer>
+          {showData && (
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={10}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
+            />
+          )}
+        </Box>
+        {errorMessage && (
+          <Notification
+            message={props.errorMsg}
+            messageType="error"
+            open={errorMessage}
+            handleClose={handleClose}
+          />
+        )}
       </div>
     </>
   );
 }
 
 Notes.propTypes = {
-  customerNotes: PropTypes.array,
+  customerNotes: PropTypes.object,
   fetchConsumerNotes: PropTypes.any,
   notesProgress: PropTypes.bool,
   notesSuccess: PropTypes.bool,
   customerId: PropTypes.any,
   orderInfo: PropTypes.object,
+  notesFail: PropTypes.bool,
 };
 
 export { Notes };

@@ -1,13 +1,15 @@
+import { customerURL } from "./config";
+
 const headers = {
   Accept: "application/json",
   "Content-Type": "application/json",
-  "x-hasura-role": "support_admin",
   "App-Name": "HipBar-Drinks",
-  "hasura-id": "515876",
+  "x-hasura-role": `${localStorage.getItem("x-hasura-role")}`,
+  "hasura-id": `${localStorage.getItem("hasura-id")}`,
 };
 
 const consumerUpdateAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://customer.hipbar-dev.com/Api/consumer/update`;
+  const URL = `https://${customerURL}/consumer/update`;
   fetch(URL, {
     method: "POST",
     headers: headers,

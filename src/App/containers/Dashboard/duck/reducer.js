@@ -15,6 +15,7 @@ import {
 const initialValue = {
   orderData: null,
   orderId: null,
+  payloadInfo: null,
   fetchDetailsProgress: false,
   fetchDetailsFail: false,
   fetchDetailsSuccess: false,
@@ -29,7 +30,7 @@ const initialValue = {
   deliveryStatus: [],
 };
 
-const homeReducer = createReducer(initialValue, {
+const dashboardReducer = createReducer(initialValue, {
   [fetchOrderSuccess]: (state, data) => ({
     ...state,
     fetchDetailsProgress: false,
@@ -43,8 +44,9 @@ const homeReducer = createReducer(initialValue, {
     fetchDetailsFail: true,
     errorMsg: "Something went wrong, please try again",
   }),
-  [fetchOrderProgress]: (state) => ({
+  [fetchOrderProgress]: (state, data) => ({
     ...state,
+    payloadInfo: data,
     fetchDetailsProgress: true,
     fetchDetailsSuccess: false,
     fetchDetailsFail: false,
@@ -96,4 +98,4 @@ const homeReducer = createReducer(initialValue, {
   }),
 });
 
-export { homeReducer };
+export { dashboardReducer };

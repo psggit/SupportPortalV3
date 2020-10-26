@@ -1,4 +1,4 @@
-export { homeReducer } from "./reducer";
+export { dashboardReducer } from "./reducer";
 export {
   fetchOrderDetails,
   preponeOrder,

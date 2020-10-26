@@ -16,7 +16,13 @@ import DialogComponent from "../../components/dialog";
 import Loading from "../../components/loading";
 import ErrorMsg from "../../components/errorMsg";
 import { ActivityLogContainer } from "./ActivityLogs";
-import { Fab } from "@material-ui/core";
+import {
+  Fab,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles((theme) => ({
@@ -62,9 +68,9 @@ const useStyles = makeStyles((theme) => ({
   sideNavBtnO: {
     backgroundColor: theme.palette.primary.main,
     color: "#fff",
-    height: 24,
-    width: 24,
-    minWidth: 24,
+    height: 30,
+    width: 30,
+    minWidth: 30,
     fontSize: 18,
     margin: 5,
     cursor: "pointer",
@@ -77,9 +83,9 @@ const useStyles = makeStyles((theme) => ({
   sideNavBtnC: {
     backgroundColor: "#FB337A",
     color: "#fff",
-    height: 24,
-    width: 24,
-    minWidth: 24,
+    height: 30,
+    width: 30,
+    minWidth: 30,
     fontSize: 18,
     margin: 5,
     cursor: "pointer",
@@ -92,9 +98,9 @@ const useStyles = makeStyles((theme) => ({
   sideNavBtnR: {
     backgroundColor: "#F4A60B",
     color: "#fff",
-    height: 24,
-    width: 24,
-    minWidth: 24,
+    height: 30,
+    width: 30,
+    minWidth: 30,
     fontSize: 18,
     margin: 5,
     cursor: "pointer",
@@ -107,9 +113,9 @@ const useStyles = makeStyles((theme) => ({
   sideNavBtnD: {
     backgroundColor: "#1B4987",
     color: "#fff",
-    height: 24,
-    width: 24,
-    minWidth: 24,
+    height: 30,
+    width: 30,
+    minWidth: 30,
     fontSize: 18,
     margin: 5,
     cursor: "pointer",
@@ -118,6 +124,13 @@ const useStyles = makeStyles((theme) => ({
       textDecoration: "underline",
       color: "#fff",
     },
+  },
+  marginTop: {
+    marginTop: theme.spacing(3),
+  },
+  formControl: {
+    marginBottom: theme.spacing(2),
+    minWidth: 200,
   },
 }));
 
@@ -140,18 +153,36 @@ const OrderInfoComponent = (props) => {
         order_id: orderId,
       };
       props.fetchCancelReason(payload);
+      props.fetchIssueTypes();
     }
   }, [props.fetchOrderInfoSuccess]);
 
   let loading = props.fetchOrderInfoProgress;
+  const [selectedValue, handleSelect] = useState("");
   const [issueType, setIssueType] = useState(null);
   const [newIssueDesc, setNewIssueDesc] = useState("");
   const [issueDesc, setIssueDesc] = useState("");
   const [open, setOpen] = useState(false);
   const [openIssueDialog, setOpenIssueDialog] = useState(false);
   const [showError, setShowError] = useState(false);
-
+  const [createDisabledBtn, setDisabledBtn] = useState(true);
   const [activeSection, setActiveSection] = useState("");
+
+  const validateIssue = (event, type) => {
+    if (type === "select") {
+      var selectValue = event.target.value;
+      handleSelect(event.target.value);
+    }
+    console.log("validateIssue", newIssueDesc.trim().length, selectValue);
+    if (
+      newIssueDesc.trim().length !== 0 &&
+      (selectValue !== "" || selectedValue !== "")
+    ) {
+      setDisabledBtn(false);
+    } else {
+      setDisabledBtn(true);
+    }
+  };
 
   const handleScroll = (id) => {
     setActiveSection(id);
@@ -161,6 +192,9 @@ const OrderInfoComponent = (props) => {
 
   const handleAddIssue = () => {
     setOpenIssueDialog(!openIssueDialog);
+    setNewIssueDesc("");
+    handleSelect("");
+    setDisabledBtn(true);
   };
 
   const handleError = () => {
@@ -197,6 +231,16 @@ const OrderInfoComponent = (props) => {
     setOpen(false);
     props.fetchOrderInfo(orderId);
     props.fetchCancelReason(payload);
+    setIssueDesc("");
+  };
+
+  const updateIssue = () => {
+    const payload = {
+      order_id: props.orderId,
+      reason: selectedValue,
+    };
+    props.submitIssue(payload);
+    handleAddIssue();
   };
 
   const dialogActions = [
@@ -231,9 +275,10 @@ const OrderInfoComponent = (props) => {
       variant="contained"
       color="primary"
       key="createIssue"
-      onClick={() => updateNotes()}
+      onClick={() => updateIssue()}
+      disabled={createDisabledBtn}
     >
-      Save
+      Create Issue
     </Button>,
   ];
 
@@ -242,7 +287,15 @@ const OrderInfoComponent = (props) => {
   }
 
   if (props.fetchOrderInfoFailure) {
-    return <ErrorMsg show={true} message={props.errorMsg} type={"error"} />;
+    return (
+      <ErrorMsg
+        show={true}
+        message={
+          props.errorMsg !== "" ? props.errorMsg : "Something went wrong"
+        }
+        type={"error"}
+      />
+    );
   }
 
   return (
@@ -275,6 +328,39 @@ const OrderInfoComponent = (props) => {
           actions={dialogActionsIssue}
           openDialog={handleAddIssue}
         >
+          {props.fetchOrderInfoSuccess && (
+            <FormControl className={classes.formControl}>
+              <InputLabel id="demo-simple-select-label">
+                Select Reason
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                onChange={(event) => validateIssue(event, "select")}
+              >
+                {props.fetchOrderInfoSuccess &&
+                  props.issueTypes.issue_types.map((value) => {
+                    if (selectedValue === value) {
+                      return (
+                        <MenuItem
+                          value={value.issue_type}
+                          key={value.issue_id}
+                          selected={true}
+                        >
+                          {value.issue_label}
+                        </MenuItem>
+                      );
+                    } else {
+                      return (
+                        <MenuItem value={value.issue_type} key={value.issue_id}>
+                          {value.issue_label}
+                        </MenuItem>
+                      );
+                    }
+                  })}
+              </Select>
+            </FormControl>
+          )}
           <TextField
             id="outlined-textarea"
             placeholder="Add issue description"
@@ -284,6 +370,7 @@ const OrderInfoComponent = (props) => {
             size="small"
             value={newIssueDesc}
             fullWidth
+            onKeyUp={(event) => validateIssue(event, "text")}
             onChange={(event) => setNewIssueDesc(event.target.value)}
           />
         </DialogComponent>
@@ -291,7 +378,9 @@ const OrderInfoComponent = (props) => {
       <Box className={classes.boxContainer}>
         <Grid container spacing={4} className={classes.containerBox}>
           <Grid item xs={3}>
-            {props.fetchOrderInfoSuccess && <OrderStatusContainer />}
+            <Box ml={2}>
+              {props.fetchOrderInfoSuccess && <OrderStatusContainer />}
+            </Box>
           </Grid>
           <Grid item xs={8}>
             <Grid container spacing={4}>
@@ -315,7 +404,12 @@ const OrderInfoComponent = (props) => {
                 )}
               </Grid>
             </Grid>
-            <Grid container spacing={4} id="section2">
+            <Grid
+              container
+              spacing={4}
+              id="section2"
+              className={classes.marginTop}
+            >
               <Grid item xs={12}>
                 {props.fetchOrderInfoSuccess && (
                   <CustomerContainer
@@ -325,7 +419,12 @@ const OrderInfoComponent = (props) => {
                 )}
               </Grid>
             </Grid>
-            <Grid container spacing={4} id="section3">
+            <Grid
+              container
+              spacing={4}
+              id="section3"
+              className={classes.marginTop}
+            >
               <Grid item xs={12}>
                 {props.fetchOrderInfoSuccess && (
                   <RetailerContainer
@@ -335,7 +434,12 @@ const OrderInfoComponent = (props) => {
                 )}
               </Grid>
             </Grid>
-            <Grid container spacing={4} id="section4">
+            <Grid
+              container
+              spacing={4}
+              id="section4"
+              className={classes.marginTop}
+            >
               <Grid item xs={12}>
                 {props.fetchOrderInfoSuccess && (
                   <DeliveryAgentContainer
@@ -346,7 +450,7 @@ const OrderInfoComponent = (props) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={1} boxShadow={1}>
+          <Grid item xs={1} boxshadow={1}>
             <Paper elevation={4} className={classes.fixedSideBar}>
               <Box display="flex" alignItems="flex-end" flexDirection="column">
                 <Button
@@ -408,6 +512,9 @@ const OrderInfoComponent = (props) => {
           type="error"
         />
       )}
+      {props.submitIssueSuccess && (
+        <ErrorMsg show={true} message={props.successMsg} type="success" />
+      )}
     </div>
   );
 };
@@ -415,6 +522,7 @@ const OrderInfoComponent = (props) => {
 OrderInfoComponent.propTypes = {
   fetchOrderInfo: PropTypes.func,
   fetchCancelReason: PropTypes.func,
+  fetchIssueTypes: PropTypes.func,
   cancelReasons: PropTypes.array,
   fetchOrderInfoSuccess: PropTypes.bool,
   fetchOrderInfoFailure: PropTypes.bool,
@@ -431,6 +539,9 @@ OrderInfoComponent.propTypes = {
   successMsg: PropTypes.string,
   errorMsg: PropTypes.string,
   activityLog: PropTypes.object,
+  issueTypes: PropTypes.object,
+  submitIssue: PropTypes.func,
+  submitIssueSuccess: PropTypes.bool,
 };
 
 export { OrderInfoComponent };

@@ -27,7 +27,6 @@ export default function FullWidthTabs(props) {
   const history = useHistory();
   const classes = useStyles();
   const [value, setValue] = React.useState(props.value);
-  const labels = props.labels;
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -39,22 +38,52 @@ export default function FullWidthTabs(props) {
 
   const handleGiftSoaChange = () => {
     history.push("/gift-soa");
+    // history.push({
+    //   pathname: "/gift-soa",
+    //   state: {
+    //     customerId: props.customerId,
+    //   },
+    // });
   };
 
   const handleRewardChange = () => {
     history.push("/rewards");
+    // history.push({
+    //   pathname: "/gift-soa",
+    //   state: {
+    //     customerId: props.customerId,
+    //   },
+    // });
   };
 
   const handleSoaChange = () => {
     history.push("/soa");
+    // history.push({
+    //   pathname: "/gift-soa",
+    //   state: {
+    //     customerId: props.customerId,
+    //   },
+    // });
   };
 
   const handleNotesChange = () => {
     history.push("/notes");
+    // history.push({
+    //   pathname: "/gift-soa",
+    //   state: {
+    //     customerId: props.customerId,
+    //   },
+    // });
   };
 
   const handleCustomerDetails = () => {
     history.push("/customer-detail");
+    // history.push({
+    //   pathname: "/gift-soa",
+    //   state: {
+    //     customerId: props.customerId,
+    //   },
+    // });
   };
 
   return (
@@ -62,13 +91,15 @@ export default function FullWidthTabs(props) {
       <AppBar position="static" className={classes.root}>
         <Grid alignItems="center" className={classes.root} container>
           <Grid item xs={1}>
-            <Button
-              color="primary"
-              startIcon={<KeyboardBackspaceIcon />}
-              onClick={() => goBack()}
-            >
-              Back
-            </Button>
+            <Box textAlign="center">
+              <Button
+                color="primary"
+                startIcon={<KeyboardBackspaceIcon />}
+                onClick={() => goBack()}
+              >
+                Back
+              </Button>
+            </Box>
           </Grid>
           <Grid item xs={11}>
             <Tabs

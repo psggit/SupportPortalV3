@@ -313,6 +313,7 @@ const RenderIssues = (props) => {
               onClick={() => unmountConfirmationDialog()}
               color="primary"
               variant="outlined"
+              key="cancelIssueBtn"
             >
               Cancel
             </Button>,
@@ -320,34 +321,38 @@ const RenderIssues = (props) => {
               onClick={() => handleConfirmation()}
               color="primary"
               variant="contained"
+              key="confirmIssueBtn"
             >
               Confirm
             </Button>,
           ]}
         >
           <form>
-            <div className={classes.selectIssue}>
-              <div>Select support personel</div>
-              <div>
-                <FormControl className={classes.formControl}>
-                  <Select
-                    value={supportPersonId}
-                    onChange={handleSupportPersonChange}
-                    displayEmpty
-                    className={classes.selectEmpty}
-                  >
-                    {!props.fetchSupportPersonListInProgress &&
-                      props.supportPersonList.support_person.map((item) => {
-                        return (
-                          <MenuItem value={item.id} key={item.id}>
-                            {item.username}
-                          </MenuItem>
-                        );
-                      })}
-                  </Select>
-                </FormControl>
+            {
+              !resolveIssue &&
+              <div className={classes.selectIssue}>
+                <div>Select support personel</div>
+                <div>
+                  <FormControl className={classes.formControl}>
+                    <Select
+                      value={supportPersonId}
+                      onChange={handleSupportPersonChange}
+                      displayEmpty
+                      className={classes.selectEmpty}
+                    >
+                      {!props.fetchSupportPersonListInProgress &&
+                        props.supportPersonList.support_person.map((item) => {
+                          return (
+                            <MenuItem value={item.id} key={item.id}>
+                              {item.username}
+                            </MenuItem>
+                          );
+                        })}
+                    </Select>
+                  </FormControl>
+                </div>
               </div>
-            </div>
+            }
           </form>
         </Dialog>
       )}

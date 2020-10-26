@@ -38,11 +38,25 @@ const RetailerDetails = (props) => {
   const history = useHistory();
 
   const handleMore = () => {
-    history.push("/retailer-notes");
+    history.push({
+      pathname: "/retailer-notes",
+      state: {
+        orderId: props.orderInfo.order_id,
+      },
+    });
+  };
+
+  const handleChangeRetailer = () => {
+    history.push("/change-retailer");
   };
 
   const actionButtons = [
-    <Button variant="outlined" color="primary" key="changeRetailerBtn">
+    <Button
+      variant="outlined"
+      color="primary"
+      key="unassignBtn"
+      onClick={handleChangeRetailer}
+    >
       Change Retailer
     </Button>,
     <Button

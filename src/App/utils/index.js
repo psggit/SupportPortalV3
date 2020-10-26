@@ -30,3 +30,7 @@ export { cancelOrderSummaryAPI } from "./cancelOrderSummaryAPI";
 export { deliverOrderReasonAPI } from "./deliverOrderReasonAPI";
 export { deliverOrderAPI } from "./deliverOrderAPI";
 export { cancelOrderAPI } from "./cancelOrderAPI";
+export { listRetailerAPI } from "./listRetailerAPI";
+export { reassignRetailerAPI } from "./reassignRetailerAPI";
+export { listIssueAPI } from "./listIssueTypesAPI";
+export { submitNewIssueAPI } from "./submitNewIssue";

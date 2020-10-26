@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { validateAuth } from "./duck/authOperation";
@@ -18,19 +17,16 @@ import newTheme from "./sass/theme";
 import "./sass/app.scss";
 import { RetailerNotesContainer } from "./containers/Retailer/RetailerNotes/RetailerNotesContainer";
 import { ChangeRetailerContainer } from "./containers/Retailer/ChangeRetailer/ChangeRetailerContainer";
-// import { CustomerDetailContainer } from './containers/Customer/CustomerCard'
 import { CustomerFormContainer } from "./containers/Customer/CustomerFormDetails";
 import { CustomerSoaContainer } from "./containers/Customer/CustomerSoa";
 import { CustomerGiftSoaContainer } from "./containers/Customer/CustomerGiftSoa";
 import { RewardsContainer } from "./containers/Customer/Rewards";
 import { NotesContainer } from "./containers/Customer/Notes";
 import { ActivityListContainer } from "./containers/ActivityList";
+import { DaNotesContainer } from "./containers/DeliveryAgentNotes";
 
 function App(props) {
   useEffect(() => {
-    // console.log(props);
-    // console.log(history);
-    // const node = this.wrapper.current;
     props.validateAuth();
   }, []);
 
@@ -78,6 +74,7 @@ function App(props) {
               <Route path="/rewards" component={RewardsContainer} />
               <Route path="/notes" component={NotesContainer} />
 
+              <Route path="/da-notes" component={DaNotesContainer} />
               <Route path="/issues" component={IssuesContainer} />
 
               <Route path="/" component={LoginContainer} />

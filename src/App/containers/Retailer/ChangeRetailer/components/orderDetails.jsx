@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
 import { Typography } from "@material-ui/core";
 
 import { CartItem } from "./cartItem";
@@ -93,20 +94,35 @@ const useStyles = makeStyles((theme) => ({
 
 const OrderDetails = (props) => {
   const classes = useStyles();
-  const orderInfo = props.cartDetails;
-  const [cartItems] = useState(orderInfo.cart_items);
+  const cartItem = props.orderInfo.cart_items;
+  console.clear();
+  console.log("orderDetail.jsx", props);
 
   return (
     <Box>
-      <List dense disablePadding>
+      <List>
         <ListItem dense disableGutters>
           <Typography variant="h5" className={classes.heading} gutterBottom>
-            {orderInfo.retailer_name}
+            {props.retailerName}
           </Typography>
         </ListItem>
-        {cartItems.map((value) => {
-          return <CartItem value={value} key={value.sku_id} />;
+        {cartItem.map((value) => {
+          return (
+            <CartItem
+              value={value}
+              key={value.sku_id}
+              listRetailerData={props.listRetailerData}
+            />
+          );
         })}
+        <ListItem dense disableGutters className={classes.finalRow}>
+          <ListItemText primary={"Free Agent/ Total Delivery Agents"} />
+          <Box>
+            <Typography>
+              {props.value.free_da}/{props.value.total_da}
+            </Typography>
+          </Box>
+        </ListItem>
       </List>
     </Box>
   );
@@ -115,7 +131,8 @@ const OrderDetails = (props) => {
 OrderDetails.propTypes = {
   orderInfo: PropTypes.object,
   cartDetails: PropTypes.array,
-  fetchGenre: PropTypes.func,
+  listRetailerData: PropTypes.object,
+  retailerName: PropTypes.string,
 };
 
 export { OrderDetails };

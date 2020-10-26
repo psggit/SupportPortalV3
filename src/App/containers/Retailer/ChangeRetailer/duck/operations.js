@@ -1,9 +1,13 @@
 import {
-  fetchOrderSuccess,
-  fetchOrderFailed,
-  fetchOrderProgress,
+  listRetailerSuccess,
+  listRetailerFailed,
+  listRetailerProgress,
+  reassignRetailerProgress,
+  reassignRetailerFailed,
+  reassignRetailerSuccess,
 } from "./action";
-import { genresAPI } from "../../../../utils";
+import { listRetailerAPI } from "../../../../utils/listRetailerAPI";
+import { reassignRetailerAPI } from "../../../../utils/reassignRetailerAPI";
 
 const processResponse = () => {
   return (res) => {
@@ -15,28 +19,52 @@ const processResponse = () => {
   };
 };
 
-const onSuccess = (dispatch) => {
+const onSuccessListRetailer = (dispatch) => {
   return (data) => {
-    dispatch(fetchOrderSuccess(data));
+    dispatch(listRetailerSuccess(data));
   };
 };
 
-const onError = (dispatch) => {
+const onSuccessReassignRetailer = (dispatch) => {
+  return (data) => {
+    dispatch(reassignRetailerSuccess(data));
+  };
+};
+
+const onErrorListRetailer = (dispatch) => {
   return () => {
-    dispatch(fetchOrderFailed());
+    dispatch(listRetailerFailed());
   };
 };
 
-const fetchGenre = (reqBody) => {
+const onErrorReassignRetailer = (dispatch) => {
+  return () => {
+    dispatch(reassignRetailerFailed());
+  };
+};
+
+const listRetailer = (reqBody) => {
   return (dispatch) => {
-    dispatch(fetchOrderProgress());
-    genresAPI(
+    dispatch(listRetailerProgress());
+    listRetailerAPI(
       reqBody,
       processResponse(dispatch),
-      onSuccess(dispatch),
-      onError(dispatch)
+      onSuccessListRetailer(dispatch),
+      onErrorListRetailer(dispatch)
     );
   };
 };
 
-export { fetchGenre };
+const reassignRetailer = (reqBody) => {
+  return (dispatch) => {
+    dispatch(reassignRetailerProgress());
+    reassignRetailerAPI(
+      reqBody,
+      processResponse(dispatch),
+      onSuccessReassignRetailer(dispatch),
+      onErrorReassignRetailer(dispatch)
+    );
+  };
+};
+
+export { listRetailer, reassignRetailer };
