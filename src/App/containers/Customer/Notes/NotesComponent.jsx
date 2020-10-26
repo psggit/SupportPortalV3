@@ -15,6 +15,8 @@ import Paper from "@material-ui/core/Paper";
 import TopBar from "../../../components/topBar";
 import FullWidthTabs from "../customerMenuBar";
 import Loading from "../../../components/loading";
+import { useHistory } from "react-router-dom";
+
 import {
   Table,
   Box,
@@ -36,6 +38,7 @@ const createData = ({ order_id, type, notes, created_at, created_by }) => {
 
 function Notes(props) {
   const classes = useStyles();
+  const history = useHistory();
   const [rows, setRowsData] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
@@ -45,7 +48,7 @@ function Notes(props) {
   const [age, setAge] = useState("");
 
   useEffect(() => {
-    props.fetchConsumerNotes(props.orderInfo.order_id);
+    props.fetchConsumerNotes(history.location.state.orderId);
   }, [rowsPerPage, page]);
 
   useEffect(() => {
@@ -96,22 +99,18 @@ function Notes(props) {
     setErrorMessage(false);
   };
 
-  let loading = props.notesProgress;
-  if (loading) {
-    return <Loading message="Loading..." />;
-  }
-
+  // console.log(
+  //   "histootrryy",
+  //   history.location.state.orderId,
+  //   history.location.state.customerId
+  // );
   return (
     <>
       <TopBar />
       <div className={classes.formContainer}>
-        <FullWidthTabs
-          value={4}
-          orderId={props.orderInfo.order_id}
-          customerId={props.orderInfo.customer_id}
-        />
+        <FullWidthTabs value={4} orderId={history.location.state.orderId} />
         <div className={classes.row1}>
-          <p>CUSTOMER ID: {props.customerId}</p>
+          <p>CUSTOMER ID: {history.location.state.customerId}</p>
           <div>
             <Button variant="contained" onClick={mountAddNote} color="primary">
               Add Note
@@ -171,6 +170,7 @@ function Notes(props) {
             )}
           </div>
         </div>
+        {props.notesProgress && <Loading message="Fetching data..." />}
         <Box width="85%" mx="auto">
           <TableContainer component={Paper}>
             <Table>

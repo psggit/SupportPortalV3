@@ -7,10 +7,13 @@ import Button from "@material-ui/core/Button";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import { useHistory } from "react-router-dom";
 import { Box, Grid, Tab } from "@material-ui/core";
+import { propTypes } from "react-bootstrap/esm/Image";
 
 FullWidthTabs.propTypes = {
   labels: PropTypes.array,
   orderId: PropTypes.number,
+  customerId: PropTypes.number,
+  customerNumber: PropTypes.string,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -37,53 +40,55 @@ export default function FullWidthTabs(props) {
   };
 
   const handleGiftSoaChange = () => {
-    history.push("/gift-soa");
-    // history.push({
-    //   pathname: "/gift-soa",
-    //   state: {
-    //     customerId: props.customerId,
-    //   },
-    // });
+    //history.push("/gift-soa");
+    history.push({
+      pathname: "/gift-soa",
+      state: {
+        customerId: props.customerId,
+        orderId: props.orderId,
+      },
+    });
   };
 
   const handleRewardChange = () => {
-    history.push("/rewards");
-    // history.push({
-    //   pathname: "/gift-soa",
-    //   state: {
-    //     customerId: props.customerId,
-    //   },
-    // });
+    history.push({
+      pathname: "/rewards",
+      state: {
+        customerId: props.customerId,
+        orderId: props.orderId,
+      },
+    });
   };
 
   const handleSoaChange = () => {
-    history.push("/soa");
-    // history.push({
-    //   pathname: "/gift-soa",
-    //   state: {
-    //     customerId: props.customerId,
-    //   },
-    // });
+    console.log("history-push", props.customerId);
+    history.push({
+      pathname: "/soa",
+      state: {
+        customerId: props.customerId,
+        orderId: props.orderId,
+      },
+    });
   };
 
   const handleNotesChange = () => {
-    history.push("/notes");
-    // history.push({
-    //   pathname: "/gift-soa",
-    //   state: {
-    //     customerId: props.customerId,
-    //   },
-    // });
+    history.push({
+      pathname: "/notes",
+      state: {
+        customerId: props.customerId,
+        orderId: props.orderId,
+      },
+    });
   };
 
   const handleCustomerDetails = () => {
-    history.push("/customer-detail");
-    // history.push({
-    //   pathname: "/gift-soa",
-    //   state: {
-    //     customerId: props.customerId,
-    //   },
-    // });
+    history.push({
+      pathname: "/customer-detail",
+      state: {
+        customerId: props.customerId,
+        orderId: props.orderId,
+      },
+    });
   };
 
   return (

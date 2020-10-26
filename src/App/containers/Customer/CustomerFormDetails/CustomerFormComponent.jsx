@@ -11,6 +11,7 @@ import { FormControlLabel, RadioGroup } from "@material-ui/core";
 import FullWidthTabs from "../customerMenuBar";
 import { Grid, Tab } from "@material-ui/core";
 import Notification from "../../../components/notification";
+import { useHistory } from "react-router-dom";
 
 const BlueRadio = withStyles({
   root: {
@@ -81,6 +82,7 @@ const useStyles = makeStyles((theme) => ({
 
 function CustomerForm(props) {
   const classes = useStyles();
+  const history = useHistory();
   const [consumerDetail, setConsumerDetail] = useState("");
   // console.log("useffect", consumerDetail);
   const [customerName, setCustomerName] = useState("");

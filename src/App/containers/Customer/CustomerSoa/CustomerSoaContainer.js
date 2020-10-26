@@ -4,6 +4,7 @@ import { CustomerSOA } from "./mockData";
 import { fetchCustomerSoaList } from "./duck/consumerSoaOperations";
 
 const mapStateToProps = (state) => {
+  console.log("yyyyyyyy", state);
   return {
     orderInfo: state.order.orderInfo.orderInfo,
     CustomerSoaList: CustomerSOA,

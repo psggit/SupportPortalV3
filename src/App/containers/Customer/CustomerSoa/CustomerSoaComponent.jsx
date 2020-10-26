@@ -6,9 +6,11 @@ import TableCell from "@material-ui/core/TableCell";
 import TopBar from "../../../components/topBar";
 import Notification from "../../../components/notification";
 import Moment from "moment";
-import { getQueryParamByName } from "../../../utils/helpers";
 import Paper from "@material-ui/core/Paper";
 import FullWidthTabs from "../customerMenuBar";
+import Loading from "../../../components/loading";
+import { useHistory } from "react-router-dom";
+
 import {
   Table,
   Box,
@@ -17,22 +19,8 @@ import {
   TableBody,
   TablePagination,
 } from "@material-ui/core";
-import Loading from "../../../components/loading";
 
 const useStyles = makeStyles(() => ({
-  navBar: {
-    display: "flex",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    padding: "24px",
-    color: "#696969",
-    fontWeight: "bold",
-    fontSize: "14px",
-    lineHeight: "21px",
-  },
-  navContent: {
-    marginLeft: "22px",
-  },
   row1: {
     display: "flex",
     justifyContent: "space-between",
@@ -41,12 +29,6 @@ const useStyles = makeStyles(() => ({
     fontSize: "16px",
     color: "#696969",
     fontWeight: "bold",
-  },
-  table: {
-    padding: "0px 80px",
-  },
-  paper: {
-    //padding: 24,
   },
 }));
 
@@ -70,20 +52,16 @@ const createData = ({
 
 function CustomerSoa(props) {
   const classes = useStyles();
-  const activePage = getQueryParamByName("activePage") || 1;
-  // eslint-disable-next-line no-unused-vars
-  const [pageNo, setPageNo] = useState(activePage);
+  const history = useHistory();
   const [showData, setShowData] = useState(false);
   const [rows, setRowsData] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // page * rowsPerPage + rowsPerPage
-
   useEffect(() => {
     const payload = {
-      consumer_id: props.customerId,
+      consumer_id: history.location.state.customerId,
       limit: rowsPerPage,
       offset: page * rowsPerPage,
     };
@@ -93,7 +71,6 @@ function CustomerSoa(props) {
   useEffect(() => {
     if (props.soaSuccess) {
       if (props.soaList.consumer_soa !== null) {
-        // console.clear();
         loopData(props.soaList.consumer_soa);
         setShowData(true);
       } else {
@@ -127,10 +104,7 @@ function CustomerSoa(props) {
     setPage(0);
   };
 
-  let loading = props.soaProgress;
-  if (loading) {
-    return <Loading message="Loading..." />;
-  }
+  console.log("from soa", history.location.state.customerId)
 
   return (
     <>
@@ -138,13 +112,14 @@ function CustomerSoa(props) {
       <div className={classes.formContainer}>
         <FullWidthTabs
           value={1}
-          orderId={props.orderInfo.order_id}
-          customerId={props.orderInfo.customer_id}
+          orderId={history.location.state.orderId}
+          customerId={history.location.state.customerId}
         />
         <div className={classes.row1}>
-          <p>CUSTOMER ID: {props.customerId}</p>
+          <p>CUSTOMER ID: {history.location.state.customerId}</p>
           <div>Search</div>
         </div>
+        {props.soaProgress && <Loading message="Fetching data..." />}
         <Box width="85%" mx="auto">
           <TableContainer component={Paper}>
             <Table>

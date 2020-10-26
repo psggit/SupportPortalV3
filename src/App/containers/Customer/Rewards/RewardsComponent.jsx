@@ -6,13 +6,11 @@ import TableCell from "@material-ui/core/TableCell";
 import TopBar from "../../../components/topBar";
 import Notification from "../../../components/notification";
 import Moment from "moment";
-import { getQueryParamByName } from "../../../utils/helpers";
 import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import FullWidthTabs from "../customerMenuBar";
 import {
   Table,
-  Container,
   Box,
   TableHead,
   TableContainer,
@@ -22,19 +20,6 @@ import {
 import Loading from "../../../components/loading";
 
 const useStyles = makeStyles((theme) => ({
-  navBar: {
-    display: "flex",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    padding: "24px",
-    color: "#696969",
-    fontWeight: "bold",
-    fontSize: "14px",
-    lineHeight: "21px",
-  },
-  navContent: {
-    marginLeft: "22px",
-  },
   row1: {
     display: "flex",
     justifyContent: "space-between",
@@ -43,12 +28,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "16px",
     color: "#696969",
     fontWeight: "bold",
-  },
-  table: {
-    padding: "0px 80px",
-  },
-  paper: {
-    //padding: 24,
   },
 }));
 
@@ -80,9 +59,7 @@ const createData = ({
 
 function Rewards(props) {
   const classes = useStyles();
-  const activePage = getQueryParamByName("activePage") || 1;
-  // eslint-disable-next-line no-unused-vars
-  const [pageNo, setPageNo] = useState(activePage);
+  const history = useHistory();
   const [showData, setShowData] = useState(false);
   const [rows, setRowsData] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -91,7 +68,7 @@ function Rewards(props) {
 
   useEffect(() => {
     const payload = {
-      consumer_id: parseInt(props.customerId),
+      consumer_id: parseInt(history.location.state.customerId),
       limit: rowsPerPage,
       offset: page * rowsPerPage,
     };
@@ -137,24 +114,20 @@ function Rewards(props) {
     setRowsData(data);
   };
 
-  let loading = props.rewardsProgress;
-  if (loading) {
-    return <Loading message="Loading..." />;
-  }
-
   return (
     <>
       <TopBar />
       <div className={classes.formContainer}>
         <FullWidthTabs
           value={3}
-          orderId={props.orderInfo.order_id}
-          customerId={props.orderInfo.customer_id}
+          orderId={history.location.state.orderId}
+          customerId={history.location.state.customerId}
         />
         <div className={classes.row1}>
-          <p>CUSTOMER ID: {props.customerId}</p>
+          <p>CUSTOMER ID: {history.location.state.customerId}</p>
           <div>Search</div>
         </div>
+        {props.rewardsProgress && <Loading message="Fetching data..." />}
         <Box width="85%" mx="auto">
           <TableContainer component={Paper}>
             <Table>

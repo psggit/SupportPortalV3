@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-key */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
@@ -11,29 +10,11 @@ import Moment from "moment";
 import Paper from "@material-ui/core/Paper";
 import TopBar from "../../../components/topBar";
 import FullWidthTabs from "../customerMenuBar";
-import {
-  TableContainer,
-  Table,
-  Container,
-  Tab,
-  TableHead,
-} from "@material-ui/core";
+import { TableContainer, Table, TableHead } from "@material-ui/core";
 import Loading from "../../../components/loading";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
-  navBar: {
-    display: "flex",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    padding: "24px",
-    color: "#696969",
-    fontWeight: "bold",
-    fontSize: "14px",
-    lineHeight: "21px",
-  },
-  navContent: {
-    marginLeft: "22px",
-  },
   row1: {
     display: "flex",
     justifyContent: "space-between",
@@ -43,12 +24,6 @@ const useStyles = makeStyles((theme) => ({
     color: "#696969",
     fontWeight: "bold",
   },
-  table: {
-    padding: "0px 80px",
-  },
-  paper: {
-    //padding: 24,
-  },
 }));
 
 const createData = ({
@@ -56,7 +31,7 @@ const createData = ({
   transaction_type,
   transaction_amount,
   gift_cards_and_value,
-  ResponseMessage,
+  transaction_status,
   date_at_server,
 }) => {
   return {
@@ -64,13 +39,14 @@ const createData = ({
     transaction_type,
     transaction_amount,
     gift_cards_and_value,
-    ResponseMessage,
+    transaction_status,
     date_at_server,
   };
 };
 
 function CustomerGiftSoa(props) {
   const classes = useStyles();
+  const history = useHistory();
   const [showData, setShowData] = useState(false);
   const [rows, setRowsData] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -122,25 +98,21 @@ function CustomerGiftSoa(props) {
     setPage(0);
   };
 
-  console.log(props);
-
-  let loading = props.giftSoaProgress;
-  if (loading) {
-    return <Loading message="Loading..." />;
-  }
+  console.log("from gift-soa", history);
 
   return (
     <>
       <TopBar />
       <FullWidthTabs
         value={2}
-        orderId={props.orderInfo.order_id}
-        customerId={props.orderInfo.customer_id}
+        orderId={history.location.state.orderId}
+        customerId={history.location.state.customerId}
       />
       <div className={classes.row1}>
-        <p>CUSTOMER ID: {props.customerId}</p>
+        <p>CUSTOMER ID: {history.location.state.customerId}</p>
         <div>Search</div>
       </div>
+      {props.giftSoaProgress && <Loading message="Fetching data..." />}
       <Box width="85%" mx="auto">
         <TableContainer component={Paper}>
           <Table>
@@ -173,7 +145,7 @@ function CustomerGiftSoa(props) {
                         {data.gift_cards_and_value}
                       </TableCell>
                       <TableCell align="center">
-                        {data.ResponseMessage}
+                        {data.transaction_status}
                       </TableCell>
                       <TableCell align="center">
                         {Moment(data.date_at_server).format(

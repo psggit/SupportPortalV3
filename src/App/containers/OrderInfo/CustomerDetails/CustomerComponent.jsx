@@ -95,7 +95,14 @@ const CustomerDetails = (props) => {
   };
 
   const handleNotesChange = () => {
-    history.push("/notes");
+    //history.push("/notes");
+    history.push({
+      pathname: "/notes",
+      state: {
+        customerId: props.customerId,
+        orderId: props.orderId,
+      },
+    });
   };
 
   const [data, setData] = useState([]);
