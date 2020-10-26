@@ -5,13 +5,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Box from "@material-ui/core/Box";
+// import Box from "@material-ui/core/Box";
 import { OrderDetails } from "./components/orderDetails";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
+// import ListItem from "@material-ui/core/ListItem";
+// import ListItemText from "@material-ui/core/ListItemText";
 import Dialog from "../../../components/dialog";
-
 import { Button, Typography, List } from "@material-ui/core";
+import ErrorMsg from "../../../components/errorMsg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -96,9 +96,22 @@ const RetailerCardComponent = (props) => {
       reserved_for_da_id: parseInt(props.orderInfos.delivery_agent_id),
       cancellation_reason: "",
     };
+    console.log("handleConfirm11", props.reassignRetailerFailed, props.errorMsg);
     props.reassignRetailer(payload);
     setMountDialog(false);
   };
+
+  // if (props.reassignRetailerFailed) {
+  //   return (
+  //     <ErrorMsg
+  //       show={true}
+  //       message={
+  //         props.errorMsg !== "" ? props.errorMsg : "Something went wrong"
+  //       }
+  //       type={"error"}
+  //     />
+  //   );
+  // }
 
   return (
     <Card className={classes.RetailerCardComponent} variant="outlined">
@@ -144,6 +157,17 @@ const RetailerCardComponent = (props) => {
             }
           </Dialog>
         )}
+        {props.reassignRetailerFailed && (
+          <ErrorMsg
+            show={true}
+            message={
+              props.errorMessage !== ""
+                ? props.errorMessage
+                : "Something went wrong"
+            }
+            type={"error"}
+          />
+        )}
       </CardContent>
     </Card>
   );
@@ -156,6 +180,8 @@ RetailerCardComponent.propTypes = {
   freeDa: PropTypes.string,
   reassignRetailer: PropTypes.func,
   value: PropTypes.object,
+  reassignRetailerFailed: PropTypes.bool,
+  errorMessage: PropTypes.string,
 };
 
 export { RetailerCardComponent };

@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
     reassignRetailerFailed: state.listRetailer.reassignRetailerFailed,
     reassignRetailerSuccess: state.listRetailer.reassignRetailerSuccess,
     reassignRetailerData: state.listRetailer.reassignRetailerData,
+    errorMessage: state.listRetailer.errorMessage,
   };
 };
 
