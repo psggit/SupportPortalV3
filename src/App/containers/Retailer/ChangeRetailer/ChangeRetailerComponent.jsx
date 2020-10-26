@@ -69,28 +69,31 @@ const useStyles = makeStyles((theme) => ({
 const ChangeRetailerComponent = (props) => {
   const classes = useStyles();
   const history = useHistory();
+  const retailerId = history.location.state.retailerId;
+  const cityId = history.location.state.cityId;
+  const skuId = history.location.state.skuId;
+  const orderId = history.location.state.orderId;
+  const orderInfo = history.location.state.orderInfo;
 
   const [value, setValue] = React.useState(0);
 
   useEffect(() => {
-    let skuId = props.orderDetails.cart_items.map((item) => item.sku_id);
+    // let skuId = props.orderDetails.cart_items.map((item) => item.sku_id);
     const payload = {
       sku_ids: skuId,
-      retailer_id: parseInt(props.orderDetails.retailer_id),
-      city_id: props.orderDetails.city_id,
+      retailer_id: parseInt(retailerId),
+      city_id: cityId,
     };
     props.listRetailer(payload);
   }, []);
 
   const handleBack = () => {
-    history.push(`/order-info/${props.orderId}`);
+    history.push(`/order-info/${orderId}`);
   };
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  console.log("ChangeRetailerCardComponent", props);
 
   return (
     <div component="main" className={classes.root}>
@@ -127,6 +130,7 @@ const ChangeRetailerComponent = (props) => {
                 <RetailerCardContainer
                   retailerName={value.retailer_name}
                   value={value}
+                  orderInfos={orderInfo}
                 />
               </Grid>
             ))}

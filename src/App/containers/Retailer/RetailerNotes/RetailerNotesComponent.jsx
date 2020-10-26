@@ -68,9 +68,9 @@ const createData = ({ order_id, type, notes, created_at, created_by }) => {
 function RetailerNotesComponent(props) {
   console.log("[RetailerNotesComponent]", props);
   const classes = useStyles();
-  // console.log(history.location.state.orderId);
-  // const orderId = history.location.state.orderId;
   const history = useHistory();
+  const orderId = history.location.state.orderId;
+  const customerId = history.location.state.customerId;
 
   const [rows, setRowsData] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -124,7 +124,7 @@ function RetailerNotesComponent(props) {
   };
 
   const handleBack = () => {
-    history.push(`/order-info/${props.orderId.order_id}`);
+    history.push(`/order-info/${orderId}`);
   };
 
   const handleClose = () => {
@@ -165,7 +165,7 @@ function RetailerNotesComponent(props) {
           </Grid>
         </Paper>
         <div className={classes.row1}>
-          <p>CUSTOMER ID: {props.orderInfo.customer_id}</p>
+          <p>CUSTOMER ID: {customerId}</p>
           <div>
             <Button variant="contained" color="primary">
               Add Note

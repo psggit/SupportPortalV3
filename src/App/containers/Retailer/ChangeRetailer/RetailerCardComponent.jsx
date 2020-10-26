@@ -87,13 +87,13 @@ const RetailerCardComponent = (props) => {
 
   const handleConfirm = () => {
     const payload = {
-      order_id: props.orderInfo.order_id,
+      order_id: props.orderInfos.order_id,
       retailer_id: parseInt(props.value.retailer_id),
       retailer_name: props.value.retailer_name,
-      warehouse_id: parseInt(props.orderInfo.warehouse_id),
-      delivery_status: props.orderInfo.delivery_status,
-      assigned_delivery_agent: parseInt(props.orderInfo.delivery_agent_id),
-      reserved_for_da_id: parseInt(props.orderInfo.delivery_agent_id),
+      warehouse_id: parseInt(props.orderInfos.warehouse_id),
+      delivery_status: props.orderInfos.delivery_status,
+      assigned_delivery_agent: parseInt(props.orderInfos.delivery_agent_id),
+      reserved_for_da_id: parseInt(props.orderInfos.delivery_agent_id),
       cancellation_reason: "",
     };
     props.reassignRetailer(payload);
@@ -151,7 +151,7 @@ const RetailerCardComponent = (props) => {
 
 RetailerCardComponent.propTypes = {
   fetchOrderDetails: PropTypes.func,
-  orderInfo: PropTypes.object,
+  orderInfos: PropTypes.object,
   totalDa: PropTypes.string,
   freeDa: PropTypes.string,
   reassignRetailer: PropTypes.func,

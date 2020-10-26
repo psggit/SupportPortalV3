@@ -6,6 +6,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { Typography } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 import { CartItem } from "./cartItem";
 
@@ -94,7 +95,9 @@ const useStyles = makeStyles((theme) => ({
 
 const OrderDetails = (props) => {
   const classes = useStyles();
-  const cartItem = props.orderInfo.cart_items;
+  const history = useHistory();
+  // const cartItem = props.orderInfo.cart_items;
+  const cartItem = history.location.state.cartItems;
   console.clear();
   console.log("orderDetail.jsx", props);
 
