@@ -52,10 +52,13 @@ function CustomerGiftSoa(props) {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
+  const customerNumber = history.location.state.customerNumber;
+
+  console.log("CustomerGiftSoa", history);
 
   useEffect(() => {
     const payload = {
-      customer_contact_number: props.customerNumber,
+      customer_contact_number: customerNumber,
       limit: rowsPerPage,
       offset: page * rowsPerPage,
     };
@@ -107,6 +110,7 @@ function CustomerGiftSoa(props) {
         value={2}
         orderId={history.location.state.orderId}
         customerId={history.location.state.customerId}
+        customerNumber={customerNumber}
       />
       <div className={classes.row1}>
         <p>CUSTOMER ID: {history.location.state.customerId}</p>
@@ -191,6 +195,7 @@ function CustomerGiftSoa(props) {
 
 CustomerGiftSoa.propTypes = {
   customerId: PropTypes.any,
+  customerNumber: PropTypes.any,
   fetchGiftSoaList: PropTypes.func,
   giftSoaList: PropTypes.array,
   giftSoaSuccess: PropTypes.bool,

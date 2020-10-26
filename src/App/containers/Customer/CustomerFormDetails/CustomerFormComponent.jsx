@@ -90,15 +90,19 @@ function CustomerForm(props) {
   const [value, setSelectedValue] = useState("not-specified");
   const [signupDate, setSignupDate] = useState("");
   const [message, setMessage] = useState("");
+  const customerId = history.location.state.customerId;
+  const orderId = history.location.state.orderId;
+  const orderInfos = history.location.state.orderInfos;
+  // const customerNumber = history.location.state.customerNumber;
 
   useEffect(() => {
-    setConsumerDetail(props.orderInfo);
-    setCustomerName(props.orderInfo.customer_name);
-    setDob(props.orderInfo.customer_dob.slice(0, 10));
-    if (props.orderInfo.customer_gender.length !== 0) {
-      setSelectedValue(props.orderInfo.customer_gender);
+    setConsumerDetail(orderInfos);
+    setCustomerName(orderInfos.customer_name);
+    setDob(orderInfos.customer_dob.slice(0, 10));
+    if (orderInfos.customer_gender.length !== 0) {
+      setSelectedValue(orderInfos.customer_gender);
     }
-    setSignupDate(props.orderInfo.customer_sign_up_date.slice(0, 10));
+    setSignupDate(orderInfos.customer_sign_up_date.slice(0, 10));
     //setSignupDate(Moment(props.orderInfo.customer_sign_up_date).format("DD/MM/YYYY"));
   }, []);
 
@@ -122,7 +126,7 @@ function CustomerForm(props) {
 
   const handleSave = () => {
     const payload = {
-      consumer_id: parseInt(props.orderInfo.customer_id),
+      consumer_id: parseInt(customerId),
       dob: dob,
       gender: value,
       name: customerName,
@@ -139,13 +143,9 @@ function CustomerForm(props) {
     <>
       <TopBar />
       <div className={classes.formContainer}>
-        <FullWidthTabs
-          value={0}
-          orderId={props.orderInfo.order_id}
-          customerId={props.orderInfo.customer_id}
-        />
+        <FullWidthTabs value={0} orderId={orderId} customerId={customerId} />
         <div className={classes.section1}>
-          <p>CUSTOMER ID: {props.orderInfo.customer_id}</p>
+          <p>CUSTOMER ID: {customerId}</p>
         </div>
         <Grid container className={classes.section2}>
           <Grid container spacing={2} className={classes.generalForm}>

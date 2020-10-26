@@ -7,7 +7,6 @@ import Button from "@material-ui/core/Button";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import { useHistory } from "react-router-dom";
 import { Box, Grid, Tab } from "@material-ui/core";
-import { propTypes } from "react-bootstrap/esm/Image";
 
 FullWidthTabs.propTypes = {
   labels: PropTypes.array,
@@ -46,6 +45,7 @@ export default function FullWidthTabs(props) {
       state: {
         customerId: props.customerId,
         orderId: props.orderId,
+        customerNumber: 9445175856,
       },
     });
   };
