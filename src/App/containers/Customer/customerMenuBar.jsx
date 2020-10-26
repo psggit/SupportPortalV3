@@ -39,13 +39,12 @@ export default function FullWidthTabs(props) {
   };
 
   const handleGiftSoaChange = () => {
-    //history.push("/gift-soa");
     history.push({
       pathname: "/gift-soa",
       state: {
         customerId: props.customerId,
         orderId: props.orderId,
-        customerNumber: history.location.state.customerNumber,
+        customerNumber: props.customerNumber,
       },
     });
   };
@@ -56,6 +55,7 @@ export default function FullWidthTabs(props) {
       state: {
         customerId: props.customerId,
         orderId: props.orderId,
+        customerNumber: props.customerNumber,
       },
     });
   };
@@ -67,6 +67,7 @@ export default function FullWidthTabs(props) {
       state: {
         customerId: props.customerId,
         orderId: props.orderId,
+        customerNumber: props.customerNumber,
       },
     });
   };
@@ -77,6 +78,7 @@ export default function FullWidthTabs(props) {
       state: {
         customerId: props.customerId,
         orderId: props.orderId,
+        customerNumber: props.customerNumber,
       },
     });
   };
@@ -87,6 +89,7 @@ export default function FullWidthTabs(props) {
       state: {
         customerId: props.customerId,
         orderId: props.orderId,
+        customerNumber: props.customerNumber,
       },
     });
   };

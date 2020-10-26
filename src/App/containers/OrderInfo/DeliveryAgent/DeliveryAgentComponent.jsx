@@ -111,7 +111,14 @@ const DeliveryAgentComponent = (props) => {
   };
 
   const handleNotesChange = () => {
-    history.push("/da-notes");
+    //history.push("/da-notes");
+    history.push({
+      pathname: "/da-notes",
+      state: {
+        customerId: props.orderInfo.customer_id,
+        orderId: props.orderInfo.order_id,
+      },
+    });
   };
 
   const subheadNotesAction = [

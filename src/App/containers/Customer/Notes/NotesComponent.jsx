@@ -39,6 +39,9 @@ const createData = ({ order_id, type, notes, created_at, created_by }) => {
 function Notes(props) {
   const classes = useStyles();
   const history = useHistory();
+  const customerId = history.location.state.customerId;
+  const orderId = history.location.state.orderId;
+  const customerNumber = history.location.state.customerNumber;
   const [rows, setRowsData] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
@@ -48,7 +51,7 @@ function Notes(props) {
   const [age, setAge] = useState("");
 
   useEffect(() => {
-    props.fetchConsumerNotes(history.location.state.orderId);
+    props.fetchConsumerNotes(orderId);
   }, [rowsPerPage, page]);
 
   useEffect(() => {
@@ -99,16 +102,16 @@ function Notes(props) {
     setErrorMessage(false);
   };
 
-  // console.log(
-  //   "histootrryy",
-  //   history.location.state.orderId,
-  //   history.location.state.customerId
-  // );
   return (
     <>
       <TopBar />
       <div className={classes.formContainer}>
-        <FullWidthTabs value={4} orderId={history.location.state.orderId} />
+        <FullWidthTabs
+          value={4}
+          orderId={orderId}
+          customerId={customerId}
+          customerNumber={customerNumber}
+        />
         <div className={classes.row1}>
           <p>CUSTOMER ID: {history.location.state.customerId}</p>
           <div>

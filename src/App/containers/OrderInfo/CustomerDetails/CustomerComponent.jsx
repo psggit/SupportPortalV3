@@ -54,10 +54,6 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "16px",
     minWidth: 120,
   },
-  // moreButton: {
-  //   marginLeft: "200px",
-  //   marginTop: "-40px",
-  // },
 }));
 
 const keysToRender = [
@@ -87,8 +83,6 @@ const CustomerDetails = (props) => {
   const history = useHistory();
   const classes = useStyles();
 
-  //const [customerDetailsData, setCustomerDetailsData] = useState([]);
-
   const handleChange = () => {
     history.push({
       pathname: "/customer-detail",
@@ -102,12 +96,12 @@ const CustomerDetails = (props) => {
   };
 
   const handleNotesChange = () => {
-    //history.push("/notes");
     history.push({
       pathname: "/notes",
       state: {
         customerId: props.customerId,
         orderId: props.orderId,
+        customerNumber: props.orderInfo.customer_contact_number,
       },
     });
   };

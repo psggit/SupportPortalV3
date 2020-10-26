@@ -84,7 +84,6 @@ function CustomerForm(props) {
   const classes = useStyles();
   const history = useHistory();
   const [consumerDetail, setConsumerDetail] = useState("");
-  // console.log("useffect", consumerDetail);
   const [customerName, setCustomerName] = useState("");
   const [dob, setDob] = useState("");
   const [value, setSelectedValue] = useState("not-specified");
@@ -103,7 +102,6 @@ function CustomerForm(props) {
       setSelectedValue(orderInfos.customer_gender);
     }
     setSignupDate(orderInfos.customer_sign_up_date.slice(0, 10));
-    //setSignupDate(Moment(props.orderInfo.customer_sign_up_date).format("DD/MM/YYYY"));
   }, []);
 
   useEffect(() => {
@@ -133,11 +131,6 @@ function CustomerForm(props) {
     };
     props.updateConsumer(payload);
   };
-
-  // let loading = props.soaProgress;
-  // if (loading) {
-  //   return <Loading message="Loading..." />;
-  // }
 
   return (
     <>

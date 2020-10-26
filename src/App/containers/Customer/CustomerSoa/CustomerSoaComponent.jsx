@@ -58,10 +58,13 @@ function CustomerSoa(props) {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
+  const customerId = history.location.state.customerId;
+  const orderId = history.location.state.orderId;
+  const customerNumber = history.location.state.customerNumber;
 
   useEffect(() => {
     const payload = {
-      consumer_id: history.location.state.customerId,
+      consumer_id: customerId,
       limit: rowsPerPage,
       offset: page * rowsPerPage,
     };
@@ -104,19 +107,18 @@ function CustomerSoa(props) {
     setPage(0);
   };
 
-  console.log("from soa", history.location.state.customerId)
-
   return (
     <>
       <TopBar />
       <div className={classes.formContainer}>
         <FullWidthTabs
           value={1}
-          orderId={history.location.state.orderId}
-          customerId={history.location.state.customerId}
+          orderId={orderId}
+          customerId={customerId}
+          customerNumber={customerNumber}
         />
         <div className={classes.row1}>
-          <p>CUSTOMER ID: {history.location.state.customerId}</p>
+          <p>CUSTOMER ID: {customerId}</p>
           <div>Search</div>
         </div>
         {props.soaProgress && <Loading message="Fetching data..." />}
