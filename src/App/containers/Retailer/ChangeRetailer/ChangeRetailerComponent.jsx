@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+// import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import TopBar from "../../../components/topBar";
@@ -13,6 +13,7 @@ import Tabs from "@material-ui/core/Tabs";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router-dom";
+import Loading from "../../../components/loading";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -124,6 +125,7 @@ const ChangeRetailerComponent = (props) => {
       </Paper>
       <Box className={classes.boxContainer}>
         <Grid container spacing={4} className={classes.containerBox}>
+          {props.listRetailerProgres && <Loading message="Loading..." />}
           {props.listRetailerSuccess &&
             props.listRetailerData.da_info.map((value) => (
               <Grid item xs={4}>
