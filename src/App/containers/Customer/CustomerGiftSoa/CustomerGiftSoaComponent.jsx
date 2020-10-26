@@ -54,8 +54,6 @@ function CustomerGiftSoa(props) {
   const [errorMessage, setErrorMessage] = useState("");
   const customerNumber = history.location.state.customerNumber;
 
-  console.log("CustomerGiftSoa", history);
-
   useEffect(() => {
     const payload = {
       customer_contact_number: customerNumber,

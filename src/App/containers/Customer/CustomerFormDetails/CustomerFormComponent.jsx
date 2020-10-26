@@ -93,7 +93,7 @@ function CustomerForm(props) {
   const customerId = history.location.state.customerId;
   const orderId = history.location.state.orderId;
   const orderInfos = history.location.state.orderInfos;
-  // const customerNumber = history.location.state.customerNumber;
+  const customerNumber = history.location.state.customerNumber;
 
   useEffect(() => {
     setConsumerDetail(orderInfos);
@@ -143,7 +143,12 @@ function CustomerForm(props) {
     <>
       <TopBar />
       <div className={classes.formContainer}>
-        <FullWidthTabs value={0} orderId={orderId} customerId={customerId} />
+        <FullWidthTabs
+          value={0}
+          orderId={orderId}
+          customerId={customerId}
+          customerNumber={customerNumber}
+        />
         <div className={classes.section1}>
           <p>CUSTOMER ID: {customerId}</p>
         </div>

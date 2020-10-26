@@ -45,7 +45,7 @@ export default function FullWidthTabs(props) {
       state: {
         customerId: props.customerId,
         orderId: props.orderId,
-        customerNumber: 9445175856,
+        customerNumber: history.location.state.customerNumber,
       },
     });
   };
