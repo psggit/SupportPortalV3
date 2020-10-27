@@ -92,8 +92,8 @@ function CustomerForm(props) {
   const customerId = history.location.state.customerId;
   const orderId = history.location.state.orderId;
   const orderInfos = history.location.state.orderInfos;
+  console.log("ooooordeee", history.location.state.orderInfos)
   const customerNumber = history.location.state.customerNumber;
-  //const customerName = history.location.state.customerName;
 
   useEffect(() => {
     setConsumerDetail(orderInfos);
@@ -142,6 +142,7 @@ function CustomerForm(props) {
           orderId={orderId}
           customerId={customerId}
           customerNumber={customerNumber}
+          orderInfos={orderInfos}
         />
         <div className={classes.section1}>
           <p>CUSTOMER ID: {customerId}</p>

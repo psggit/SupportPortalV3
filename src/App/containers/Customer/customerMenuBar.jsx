@@ -13,6 +13,7 @@ FullWidthTabs.propTypes = {
   orderId: PropTypes.number,
   customerId: PropTypes.number,
   customerNumber: PropTypes.string,
+  orderInfos: PropTypes.any,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -45,6 +46,7 @@ export default function FullWidthTabs(props) {
         customerId: props.customerId,
         orderId: props.orderId,
         customerNumber: props.customerNumber,
+        orderInfos: props.orderInfos,
       },
     });
   };
@@ -56,6 +58,7 @@ export default function FullWidthTabs(props) {
         customerId: props.customerId,
         orderId: props.orderId,
         customerNumber: props.customerNumber,
+        orderInfos: props.orderInfos,
       },
     });
   };
@@ -68,6 +71,7 @@ export default function FullWidthTabs(props) {
         customerId: props.customerId,
         orderId: props.orderId,
         customerNumber: props.customerNumber,
+        orderInfos: props.orderInfos,
       },
     });
   };
@@ -79,6 +83,7 @@ export default function FullWidthTabs(props) {
         customerId: props.customerId,
         orderId: props.orderId,
         customerNumber: props.customerNumber,
+        orderInfos: props.orderInfos,
       },
     });
   };
@@ -90,6 +95,7 @@ export default function FullWidthTabs(props) {
         customerId: props.customerId,
         orderId: props.orderId,
         customerNumber: props.customerNumber,
+        orderInfos: props.orderInfos,
       },
     });
   };

@@ -61,10 +61,11 @@ function CustomerSoa(props) {
   const customerId = history.location.state.customerId;
   const orderId = history.location.state.orderId;
   const customerNumber = history.location.state.customerNumber;
+  const orderInfos = history.location.state.orderInfos;
 
   useEffect(() => {
     const payload = {
-      consumer_id: "customerId",
+      consumer_id: customerId,
       limit: rowsPerPage,
       offset: page * rowsPerPage,
     };
@@ -116,6 +117,7 @@ function CustomerSoa(props) {
           orderId={orderId}
           customerId={customerId}
           customerNumber={customerNumber}
+          orderInfos={orderInfos}
         />
         <div className={classes.row1}>
           <p>CUSTOMER ID: {customerId}</p>

@@ -68,6 +68,8 @@ function Rewards(props) {
   const customerId = history.location.state.customerId;
   const orderId = history.location.state.orderId;
   const customerNumber = history.location.state.customerNumber;
+  const orderInfos = history.location.state.orderInfos;
+
 
   useEffect(() => {
     const payload = {
@@ -126,6 +128,7 @@ function Rewards(props) {
           orderId={orderId}
           customerId={customerId}
           customerNumber={customerNumber}
+          orderInfos={orderInfos}
         />
         <div className={classes.row1}>
           <p>CUSTOMER ID: {customerId}</p>

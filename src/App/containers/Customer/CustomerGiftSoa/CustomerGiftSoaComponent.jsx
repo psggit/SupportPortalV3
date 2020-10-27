@@ -53,6 +53,7 @@ function CustomerGiftSoa(props) {
   const [page, setPage] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
   const customerNumber = history.location.state.customerNumber;
+  const orderInfos = history.location.state.orderInfos;
 
   useEffect(() => {
     const payload = {
@@ -109,6 +110,7 @@ function CustomerGiftSoa(props) {
         orderId={history.location.state.orderId}
         customerId={history.location.state.customerId}
         customerNumber={customerNumber}
+        orderInfos={orderInfos}
       />
       <div className={classes.row1}>
         <p>CUSTOMER ID: {history.location.state.customerId}</p>

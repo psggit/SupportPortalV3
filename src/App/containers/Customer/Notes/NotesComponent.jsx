@@ -49,6 +49,7 @@ function Notes(props) {
   const [showData, setShowData] = useState(false);
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
   const [age, setAge] = useState("");
+  const orderInfos = history.location.state.orderInfos;
 
   useEffect(() => {
     props.fetchConsumerNotes(orderId);
@@ -111,6 +112,7 @@ function Notes(props) {
           orderId={orderId}
           customerId={customerId}
           customerNumber={customerNumber}
+          orderInfos={orderInfos}
         />
         <div className={classes.row1}>
           <p>CUSTOMER ID: {history.location.state.customerId}</p>
