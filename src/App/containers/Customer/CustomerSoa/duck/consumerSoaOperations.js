@@ -18,8 +18,10 @@ import { consumerSoaAPI } from "../../../../utils/consumerSoaAPI";
 const processResponse = () => {
   return (res) => {
     if (res.status === 200) {
+      //console.log("response-soa", res.json());
       return res.json();
     } else if (res.status === 400) {
+      //console.log("response-soa-fail", res.json());
       console.log(
         "error",
         res.json().then((json) => json.message)
@@ -30,6 +32,16 @@ const processResponse = () => {
     }
   };
 };
+
+// const processResponse = () => {
+//   return (res) => {
+//     if (res.status === 200) {
+//       return res.json();
+//     } else {
+//       console.log("response-soa-fail", res.json());
+//     }
+//   };
+// };
 
 const onSuccess = (dispatch) => {
   return (data) => {

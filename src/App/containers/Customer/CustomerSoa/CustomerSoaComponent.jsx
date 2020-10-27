@@ -181,7 +181,7 @@ function CustomerSoa(props) {
         </Box>
         {errorMessage && (
           <Notification
-            message={props.errorMsg}
+            message={props.errorMsg.message}
             messageType="error"
             open={errorMessage}
             handleClose={handleClose}

@@ -26,13 +26,13 @@ const customerSOAReducer = createReducer(initialState, {
     };
   },
   [fetchCustomerSoaFailure]: (state, data) => {
-    console.log("soa-fail", data.payload.message);
+    console.log("soa-fail", data.payload);
     return {
       ...state,
       soaProgress: false,
       soaFail: true,
       soaSuccess: false,
-      errorMsg: data.payload.message,
+      errorMsg: data.payload,
     };
   },
   [fetchCustomerSoaInProgress]: (state) => {
