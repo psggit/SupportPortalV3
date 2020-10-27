@@ -6,10 +6,6 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import Moment from "moment";
 import Button from "@material-ui/core/Button";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
 import Dialog from "../../components/dialog";
 import TopBar from "../../components/topBar";
 import Notification from "../../components/notification";
@@ -29,6 +25,7 @@ import {
 
 import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
+import TextField from "@material-ui/core/TextField";
 
 const createData = ({ order_id, type, notes, created_at, created_by }) => {
   return {
@@ -49,8 +46,8 @@ function DaNotes(props) {
   const [errorMessage, setErrorMessage] = useState("");
   const [showData, setShowData] = useState(false);
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
-  const [age, setAge] = useState("");
   const [value, setValue] = React.useState(0);
+  const [noteData, setNoteData] = useState("");
   const customerId = history.location.state.customerId;
   const orderId = history.location.state.orderId;
 
@@ -85,6 +82,20 @@ function DaNotes(props) {
     setRowsData(data);
   };
 
+  const handleTextChange = (e) => {
+    setNoteData(e.target.value);
+  };
+
+  const handleAddNoteSubmit = () => {
+    let payload = {
+      order_id: orderId,
+      type: "delivery_agent",
+      notes: noteData,
+    };
+    props.createNotes(payload);
+    setShowAddNoteDialog(false);
+  };
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -92,10 +103,6 @@ function DaNotes(props) {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value));
     setPage(0);
-  };
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
   };
 
   const mountAddNote = () => {
@@ -169,41 +176,29 @@ function DaNotes(props) {
                     variant="outlined"
                     color="primary"
                     key="saveBtn"
-                    //onClick={commentUnmountModel}
+                    onClick={handleAddNoteSubmit}
                   >
                     Save
                   </Button>,
                 ]}
               >
-                <form>
-                  <div className={classes.selectIssue}>
-                    <div>Select Issue</div>
-                    <div>
-                      <FormControl className={classes.formControl}>
-                        <Select
-                          value={age}
-                          onChange={handleChange}
-                          displayEmpty
-                          className={classes.selectEmpty}
-                          inputProps={{ "aria-label": "Without label" }}
-                        >
-                          <MenuItem value={10}>Ten</MenuItem>
-                          <MenuItem value={20}>Twenty</MenuItem>
-                          <MenuItem value={30}>Thirty</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </div>
-                  </div>
-                  <div className={classes.formRoot}>
-                    <TextareaAutosize
-                      className={classes.formControlTextarea}
-                      aria-label="minimum height"
-                      rowsMin={7}
-                      //onChange={handleCommentChange}
-                      placeholder="Add note here"
-                    />
-                  </div>
-                </form>
+                <>
+                  <Grid>
+                    <p>ORDER ID: {orderId}</p>
+                  </Grid>
+                  <TextField
+                    id="outlined-multiline-static"
+                    onChange={handleTextChange}
+                    multiline
+                    rows={4}
+                    fullWidth
+                    variant="outlined"
+                    autoComplete="off"
+                    margin="normal"
+                    size="small"
+                    placeholder="Add notes"
+                  />
+                </>
               </Dialog>
             )}
           </div>
@@ -279,6 +274,7 @@ DaNotes.propTypes = {
   deliveryAgentNotes: PropTypes.object,
   errorMsg: PropTypes.string,
   fetchFailed: PropTypes.bool,
+  createNotes: PropTypes.func,
 };
 
 export { DaNotes };
