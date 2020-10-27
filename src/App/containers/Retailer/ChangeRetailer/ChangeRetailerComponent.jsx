@@ -96,6 +96,12 @@ const ChangeRetailerComponent = (props) => {
     setValue(newValue);
   };
 
+  let loading = props.listRetailerProgress;
+
+  if (loading) {
+    return <Loading message="Loading..." />;
+  }
+
   return (
     <div component="main" className={classes.root}>
       <TopBar />
@@ -125,7 +131,6 @@ const ChangeRetailerComponent = (props) => {
       </Paper>
       <Box className={classes.boxContainer}>
         <Grid container spacing={4} className={classes.containerBox}>
-          {props.listRetailerProgres && <Loading message="Loading..." />}
           {props.listRetailerSuccess &&
             props.listRetailerData.da_info.map((value) => (
               <Grid item xs={4}>
@@ -147,7 +152,7 @@ ChangeRetailerComponent.propTypes = {
   listRetailer: PropTypes.func,
   listRetailerSuccess: PropTypes.bool,
   listRetailerFailed: PropTypes.bool,
-  listRetailerProgres: PropTypes.bool,
+  listRetailerProgress: PropTypes.bool,
   orderDetails: PropTypes.object,
   orderId: PropTypes.string,
 };
