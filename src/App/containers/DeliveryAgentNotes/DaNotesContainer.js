@@ -3,11 +3,6 @@ import { DaNotes } from "./DaNotesComponent";
 import { fetchDeliveryAgentNotes } from "../OrderInfo/DeliveryAgent/duck/operations";
 
 const mapStateToProps = (state) => {
-  console.log(
-    "[da-notes-mapStateToProps]",
-    state,
-    state.order.deliveryAgent.deliveryAgentNotesData
-  );
   return {
     orderInfo: state.order.orderInfo.orderDetails,
     deliveryAgentNotes: state.order.deliveryAgent.deliveryAgentNotesData,

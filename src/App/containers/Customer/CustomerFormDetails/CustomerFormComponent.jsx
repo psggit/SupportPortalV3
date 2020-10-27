@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 import TopBar from "../../../components/topBar";
 import { FormControlLabel, RadioGroup } from "@material-ui/core";
 import FullWidthTabs from "../customerMenuBar";
-import { Grid, Tab } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import Notification from "../../../components/notification";
 import { useHistory } from "react-router-dom";
 
@@ -37,20 +37,7 @@ const useStyles = makeStyles((theme) => ({
   section2: {
     width: "100%",
     margin: 0,
-    padding: "0px 50px",
-  },
-  navBar: {
-    display: "flex",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    padding: "24px",
-    color: "#696969",
-    fontWeight: "bold",
-    fontSize: "14px",
-    lineHeight: "21px",
-  },
-  navContent: {
-    marginLeft: "22px",
+    padding: "0px 50px 60px",
   },
   section1: {
     padding: "34px 24px",
@@ -63,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: "center",
   },
   textField: {
-    marginBottom: "16px",
     backgroundColor: "#fff",
     width: "220px",
   },
@@ -74,10 +60,14 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "16px",
   },
   buttonContainer: {
-    marginLeft: "500px",
     display: "flex",
-    paddingBottom: "20px",
+    flexDirection: "row",
+    width: "60%",
+    justifyContent: "flex-end",
   },
+  generalForm: {
+    marginBottom: "16px",
+  }
 }));
 
 function CustomerForm(props) {

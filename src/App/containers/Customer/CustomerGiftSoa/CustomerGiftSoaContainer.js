@@ -3,9 +3,7 @@ import { CustomerGiftSoa } from "./CustomerGiftSoaComponent";
 import { fetchGiftSoaList } from "./duck/giftSoaOperations";
 
 const mapStateToProps = (state) => {
-  console.log("[gift-soa-container]", state);
   return {
-    //CustomerGiftSoaList: CustomerGiftSOA,
     orderInfo: state.order.orderInfo.orderInfo,
     giftSoaList: state.giftSoa.customerGiftSoaList,
     customerNumber: state.order.orderInfo.customerContactNumber,
