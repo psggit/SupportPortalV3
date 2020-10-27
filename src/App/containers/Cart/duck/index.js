@@ -1,2 +1,2 @@
 export { cartReducer } from "./reducer";
-export { fetchGenre } from "./cartOperations";
+export { fetchSummary } from "./cartOperations";

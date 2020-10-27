@@ -24,6 +24,8 @@ import { RewardsContainer } from "./containers/Customer/Rewards";
 import { NotesContainer } from "./containers/Customer/Notes";
 import { ActivityListContainer } from "./containers/ActivityList";
 import { DaNotesContainer } from "./containers/DeliveryAgentNotes";
+import { OrderTrackingContainer } from "./containers/OrderTracking";
+import { OrderModificationContainer } from "./containers/OrderModification";
 
 function App(props) {
   useEffect(() => {
@@ -76,6 +78,16 @@ function App(props) {
 
               <Route path="/da-notes" component={DaNotesContainer} />
               <Route path="/issues" component={IssuesContainer} />
+
+              <Route
+                path="/order-tracking"
+                component={OrderTrackingContainer}
+              />
+
+              <Route
+                path="/order-modification"
+                component={OrderModificationContainer}
+              />
 
               <Route path="/" component={LoginContainer} />
             </Switch>

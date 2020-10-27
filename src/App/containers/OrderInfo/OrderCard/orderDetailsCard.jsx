@@ -462,7 +462,7 @@ OrderDetailsCard.propTypes = {
   address: PropTypes.string,
   handleCancel: PropTypes.func,
   handleDeliver: PropTypes.func,
-  cancelReasons: PropTypes.object,
+  cancelReasons: PropTypes.any,
   deliverOrderData: PropTypes.array,
   kycListData: PropTypes.array,
   buttonState: PropTypes.bool,

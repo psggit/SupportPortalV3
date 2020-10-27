@@ -33,3 +33,7 @@ export { listRetailerAPI } from "./listRetailerAPI";
 export { reassignRetailerAPI } from "./reassignRetailerAPI";
 export { listIssueAPI } from "./listIssueTypesAPI";
 export { submitNewIssueAPI } from "./submitNewIssue";
+export { orderTrackingAPI } from "./orderTrackingAPI";
+export { listOrderModificationAPI } from "./listOrderModificationAPI";
+export { sendSMSAPI } from "./sendSMSAPI";
+export { orderSummaryAPI } from "./orderSummaryAPI";

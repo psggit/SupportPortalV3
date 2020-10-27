@@ -167,6 +167,10 @@ const OrderInfoComponent = (props) => {
   const [showError, setShowError] = useState(false);
   const [createDisabledBtn, setDisabledBtn] = useState(true);
   const [activeSection, setActiveSection] = useState("");
+  const [modifyCart, setModifyCart] = useState("");
+  //    history.location.state.modifyCartInfo
+  
+  console.log(modifyCart);
 
   const validateIssue = (event, type) => {
     if (type === "select") {
@@ -282,6 +286,9 @@ const OrderInfoComponent = (props) => {
     </Button>,
   ];
 
+  console.log("orderinfo");
+  console.log(history.location);
+
   if (loading) {
     return <Loading message="Loading..." />;
   }
@@ -385,7 +392,9 @@ const OrderInfoComponent = (props) => {
           <Grid item xs={8}>
             <Grid container spacing={4}>
               <Grid item xs={6}>
-                {props.fetchOrderInfoSuccess && <CartContainer {...props} />}
+                {props.fetchOrderInfoSuccess && (
+                  <CartContainer {...props} modifyCart={modifyCart} />
+                )}
               </Grid>
               <Grid item xs={6} id="section1">
                 {props.fetchOrderInfoSuccess && (

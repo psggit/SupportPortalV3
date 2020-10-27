@@ -60,10 +60,14 @@ const useStyles = makeStyles((theme) => ({
 
 const CartComponent = (props) => {
   useEffect(() => {
-    console.log("Cart Component");
+    console.log("Cart Component", props.modifyCart);
+    if (props.modifyCart !== undefined) {
+      props.fetchSummary(props.modifyCart);
+    }
   }, []);
   const classes = useStyles();
   const [modify, setModify] = useState(false);
+  let modifyState = modify;
   const handleModify = () => {
     setModify(!modify);
   };
@@ -82,7 +86,6 @@ const CartComponent = (props) => {
       color="primary"
       onClick={handleModify}
       key="modifyBtn"
-      disabled={true}
     >
       Modify
     </Button>,
@@ -110,6 +113,15 @@ const CartComponent = (props) => {
     ];
   }
 
+  useEffect(() => {
+    if (props.fetchGenreSuccess) {
+      console.log("order summary");
+      console.log(props.orderSummary);
+      modifyState = props.orderSummary.to_show_confirm;
+      handleModify();
+    }
+  }, [props.fetchGenreSuccess]);
+
   return (
     <>
       <CartDetailsCard
@@ -117,7 +129,11 @@ const CartComponent = (props) => {
         actions={actionButtons}
         id="order-details"
       >
-        <OrderSummary {...props} modify={modify} />
+        <OrderSummary
+          {...props}
+          modify={modifyState}
+          orderSummary={props.fetchGenreSuccess && props.orderSummary}
+        />
       </CartDetailsCard>
     </>
   );
@@ -126,6 +142,10 @@ const CartComponent = (props) => {
 CartComponent.propTypes = {
   orderInfo: PropTypes.object,
   order: PropTypes.any,
+  modifyCart: PropTypes.any,
+  fetchSummary: PropTypes.func,
+  orderSummary: PropTypes.any,
+  fetchGenreSuccess: PropTypes.bool,
 };
 
 export { CartComponent };

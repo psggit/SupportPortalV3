@@ -90,8 +90,8 @@ const CustomerDetails = (props) => {
   //const [customerDetailsData, setCustomerDetailsData] = useState([]);
 
   const handleChange = () => {
-    history.push("/customer-detail");
-    // history.push("/rewards");
+    // history.push("/customer-detail");
+    history.push("/gift-soa");
   };
 
   const handleNotesChange = () => {

@@ -3,7 +3,7 @@ import {
   fetchOrderFailed,
   fetchOrderProgress,
 } from "./actions";
-import { genresAPI } from "../../../utils";
+import { orderSummaryAPI } from "../../../utils";
 
 const processResponse = () => {
   return (res) => {
@@ -27,10 +27,11 @@ const onError = (dispatch) => {
   };
 };
 
-const fetchGenre = (reqBody) => {
+const fetchSummary = (reqBody) => {
+  console.log("[fetch summary]", reqBody);
   return (dispatch) => {
     dispatch(fetchOrderProgress());
-    genresAPI(
+    orderSummaryAPI(
       reqBody,
       processResponse(dispatch),
       onSuccess(dispatch),
@@ -39,4 +40,4 @@ const fetchGenre = (reqBody) => {
   };
 };
 
-export { fetchGenre };
+export { fetchSummary };

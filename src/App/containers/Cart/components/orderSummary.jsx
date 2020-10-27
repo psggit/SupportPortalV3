@@ -124,8 +124,24 @@ const OrderSummary = (props) => {
   };
 
   const handleClickAdd = () => {
-    history.push("/cart-modify");
+    // history.push("/cart-modify");
+    // console.clear();
+    // console.log("clickAdd ", orderInfo);
+    history.push({
+      pathname: "/cart-modify",
+      state: {
+        retailerId: orderInfo.retailer_id,
+        retailer_name: orderInfo.retailer_name,
+        city_id: orderInfo.city_id,
+        state_id: orderInfo.state_id,
+        gps: orderInfo.gps,
+        orderId: orderInfo.order_id,
+        products: orderInfo.cart_items,
+      },
+    });
   };
+
+  console.log("Order summary props", props);
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -159,9 +175,7 @@ const OrderSummary = (props) => {
           )}
         </ListItem>
         {cartItems.map((value) => {
-          return (
-            <CartItem value={value} key={value.sku_id} modify={props.modify} />
-          );
+          return <CartItem value={value} key={value.sku_id} modify={false} />;
         })}
       </List>
       <List disablePadding>

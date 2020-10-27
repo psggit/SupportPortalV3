@@ -6,32 +6,34 @@ import {
 } from "./actions";
 
 const initialValue = {
-  orderData: null,
-  fetchDetailsProgress: false,
-  fetchDetailsFail: false,
-  fetchDetailsStatus: false,
+  orderSummary: null,
+  fetchGenreProgress: false,
+  fetchGenreFailed: false,
+  fetchGenreSuccess: false,
   errorMsg: "",
 };
 
 const cartReducer = createReducer(initialValue, {
-  [fetchOrderSuccess]: (state, payload) => ({
+  [fetchOrderSuccess]: (state, data) => ({
     ...state,
-    fetchDetailsProgress: false,
-    fetchDetailsFail: false,
-    fetchDetailsStatus: true,
+    fetchGenreProgress: false,
+    fetchGenreFailed: false,
+    fetchGenreSuccess: true,
     errorMsg: "",
-    orderData: payload.data,
+    orderSummary: data.payload,
   }),
   [fetchOrderFailed]: (state) => ({
     ...state,
-    fetchDetailsProgress: false,
-    fetchDetailsFail: true,
-    fetchDetailsStatus: false,
+    fetchGenreProgress: false,
+    fetchGenreFailed: true,
+    fetchGenreSuccess: false,
     errorMsg: "Something went wrong, please try again",
   }),
   [fetchOrderProgress]: (state) => ({
     ...state,
-    fetchDetailsProgress: true,
+    fetchGenreProgress: true,
+    fetchGenreFailed: false,
+    fetchGenreSuccess: false,
   }),
 });
 

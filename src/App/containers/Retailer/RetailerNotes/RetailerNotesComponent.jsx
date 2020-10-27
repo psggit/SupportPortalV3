@@ -69,8 +69,8 @@ function RetailerNotesComponent(props) {
   console.log("[RetailerNotesComponent]", props);
   const classes = useStyles();
   // console.log(history.location.state.orderId);
-  // const orderId = history.location.state.orderId;
   const history = useHistory();
+  const orderId = history.location.state.orderId;
 
   const [rows, setRowsData] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(5);

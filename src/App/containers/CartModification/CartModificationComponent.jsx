@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
@@ -67,15 +67,16 @@ TabPanel.propTypes = {
 const CartModificationComponent = (props) => {
   const classes = useStyles();
   const history = useHistory();
-  let products = props.products;
+  const [sendPayload, setPayload] = useState("");
+  let products = history.location.state.products;
   useEffect(() => {
-    // console.log("cartModification orderData", props);
+    console.log("cartModification orderData", props);
     //
     let payload = {
-      city_id: 5,
-      state_id: 4,
-      retailer_id: 436,
-      gps: "13.00712998686621,80.25632254779339",
+      city_id: history.location.state.city_id,
+      state_id: history.location.state.state_id,
+      retailer_id: parseInt(history.location.state.retailerId),
+      gps: history.location.state.gps,
     };
     props.setCart(products);
     props.fetchGenre(payload);
@@ -84,11 +85,11 @@ const CartModificationComponent = (props) => {
   useEffect(() => {
     if (props.fetchGenreSuccess) {
       let brandpayload = {
-        city_id: 5,
-        state_id: 4,
-        retailer_id: 436,
+        city_id: history.location.state.city_id,
+        state_id: history.location.state.state_id,
+        retailer_id: parseInt(history.location.state.retailerId),
+        gps: history.location.state.gps,
         genre_id: props.genreData[0].id,
-        gps: "13.00712998686621,80.25632254779339",
         offset: 0,
         limit: 20,
       };
@@ -102,27 +103,51 @@ const CartModificationComponent = (props) => {
 
   const addItems = () => {
     //call fetch summary API
+    let cartItem = [];
+
+    Object.keys(props.cartProducts).forEach((value) => {
+      cartItem.push({
+        sku_id: parseInt(value),
+        count: props.cartProducts[value].ordered_count,
+      });
+    });
+
+    let payload = {
+      order_id: props.orderId,
+      is_hw_enabled: false,
+      is_gw_enabled: false,
+      items: cartItem,
+    };
+    setPayload(payload);
+    history.push({
+      pathname: "/order-info/" + history.location.state.orderId,
+      state: {
+        modifyCartInfo: payload,
+      },
+    });
   };
 
   // console.log(props);
 
   const addItem = (event, value) => {
-    // console.log("addItem", value);
+    // console.log("addItem", value, props.cartProducts);
+    console.log(props.cartProducts);
     props.addSkuToCart(value);
   };
 
   const removeItem = (event, value) => {
-    // console.log("remvoveItem", value);
+    console.log("removeItem", value);
+    console.log(props.cartProducts);
     props.removeSkuFromCart(value);
   };
 
   const handleGenre = (event, genreId) => {
     let brandpayload = {
-      city_id: 5,
-      state_id: 4,
-      retailer_id: 436,
+      city_id: history.location.state.city_id,
+      state_id: history.location.state.state_id,
+      retailer_id: parseInt(history.location.state.retailerId),
+      gps: history.location.state.gps,
       genre_id: genreId,
-      gps: "13.00712998686621,80.25632254779339",
       offset: 0,
       limit: 20,
     };
@@ -144,7 +169,7 @@ const CartModificationComponent = (props) => {
             </Button>
           </Grid>
           <Grid item xs={11}>
-            <p>RETAILER NAME: {props.retailer_name}</p>
+            <p>RETAILER NAME: {history.location.state.retailer_name}</p>
           </Grid>
         </Grid>
       </Box>
