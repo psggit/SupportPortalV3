@@ -8,8 +8,8 @@ const headers = {
   "hasura-id": `${localStorage.getItem("hasura-id")}`,
 };
 
-const cancelOrderAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://${apiUrl}/supportman/api/1/cancel-order`;
+const cancelOrderSummaryAPI = (reqBody, process, onSuccess, onError) => {
+  const URL = `https://${apiUrl}/supportman/api/1/cancellation_summary`;
   fetch(URL, {
     method: "POST",
     headers: headers,
@@ -21,4 +21,4 @@ const cancelOrderAPI = (reqBody, process, onSuccess, onError) => {
     .catch((err) => onError(err));
 };
 
-export { cancelOrderAPI };
+export { cancelOrderSummaryAPI };

@@ -11,7 +11,11 @@ import {
   deliverOrderProgress,
   deliverOrderFailed,
   deliverOrderSuccess,
+  fetchCancellationSummarySuccess,
+  fetchCancellationSummaryFailed,
+  fetchCancellationSummaryProgress,
 } from "./actions";
+import { cancelOrderSummaryAPI } from "../../../../utils/cancelOrderSummaryAPI";
 import { cancelOrderAPI } from "../../../../utils/cancelOrderAPI";
 import { deliverOrderReasonAPI } from "../../../../utils/deliverOrderReasonAPI";
 import { kycListAPI } from "../../../../utils/kycListAPI";
@@ -31,6 +35,12 @@ const processResponse = () => {
 };
 
 const onSuccessCancelOrder = (dispatch) => {
+  return (data) => {
+    dispatch(fetchCancellationSummarySuccess(data));
+  };
+};
+
+const onSuccessCancel = (dispatch) => {
   return (data) => {
     dispatch(cancelOrderSuccess(data));
   };
@@ -56,6 +66,12 @@ const onSuccessDeliverOrder = (dispatch) => {
 
 const onErrorCancelOrder = (dispatch) => {
   return (err) => {
+    dispatch(fetchCancellationSummaryFailed(err));
+  };
+};
+
+const onErrorCancel = (dispatch) => {
+  return (err) => {
     dispatch(cancelOrderFailure(err));
   };
 };
@@ -78,14 +94,26 @@ const onErrorDeliverOrder = (dispatch) => {
   };
 };
 
+const cancelOrderSummary = (payload) => {
+  return (dispatch) => {
+    dispatch(fetchCancellationSummaryProgress());
+    cancelOrderSummaryAPI(
+      payload,
+      processResponse(dispatch),
+      onSuccessCancelOrder(dispatch),
+      onErrorCancelOrder(dispatch)
+    );
+  };
+};
+
 const cancelOrder = (payload) => {
   return (dispatch) => {
     dispatch(cancelOrderProgress());
     cancelOrderAPI(
       payload,
       processResponse(dispatch),
-      onSuccessCancelOrder(dispatch),
-      onErrorCancelOrder(dispatch)
+      onSuccessCancel(dispatch),
+      onErrorCancel(dispatch)
     );
   };
 };
@@ -125,4 +153,10 @@ const deliverOrder = (payload) => {
   };
 };
 
-export { cancelOrder, deliverOrderReasons, fetchKycList, deliverOrder };
+export {
+  cancelOrderSummary,
+  deliverOrderReasons,
+  fetchKycList,
+  deliverOrder,
+  cancelOrder,
+};
