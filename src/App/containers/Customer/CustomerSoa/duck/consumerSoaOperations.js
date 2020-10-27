@@ -5,10 +5,26 @@ import {
 } from "./actions";
 import { consumerSoaAPI } from "../../../../utils/consumerSoaAPI";
 
+// const processResponse = () => {
+//   return (res) => {
+//     if (res.status === 200) {
+//       return res.json();
+//     } else {
+//       throw new Error("Something went wrong......");
+//     }
+//   };
+// };
+
 const processResponse = () => {
   return (res) => {
     if (res.status === 200) {
       return res.json();
+    } else if (res.status === 400) {
+      console.log(
+        "error",
+        res.json().then((json) => json.message)
+      );
+      throw new Error("Something went wrong! Please contact tech");
     } else {
       throw new Error("Something went wrong, try again");
     }

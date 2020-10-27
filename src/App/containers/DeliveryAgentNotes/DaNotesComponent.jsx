@@ -51,13 +51,15 @@ function DaNotes(props) {
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
   const [age, setAge] = useState("");
   const [value, setValue] = React.useState(0);
+  const customerId = history.location.state.customerId;
+  const orderId = history.location.state.orderId;
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
 
   useEffect(() => {
-    props.fetchDeliveryAgentNotes(props.orderInfo.order_id);
+    props.fetchDeliveryAgentNotes(orderId);
   }, [rowsPerPage, page]);
 
   useEffect(() => {
@@ -109,7 +111,7 @@ function DaNotes(props) {
   };
 
   const handleBack = () => {
-    history.push(`/order-info/${props.orderInfo.order_id}`);
+    history.push(`/order-info/${orderId}`);
   };
 
   let loading = props.fetchProgress;
@@ -146,7 +148,7 @@ function DaNotes(props) {
           </Grid>
         </Paper>
         <div className={classes.row1}>
-          <p>CUSTOMER ID: {props.orderInfo.customer_id}</p>
+          <p>CUSTOMER ID: {customerId}</p>
           <div>
             <Button variant="contained" onClick={mountAddNote} color="primary">
               Add Note
