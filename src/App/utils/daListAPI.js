@@ -10,7 +10,7 @@ const headers = {
 };
 
 const daListAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://${apiUrl}/supportman/api/1/deliveryagent/list/${reqBody.retailer_id}/${reqBody.order_id}`;
+  const URL = `https://${apiUrl}/supportman/api/1/deliveryagent/list/${reqBody.retailer_id}`;
   fetch(URL, {
     method: "GET",
     headers: headers,

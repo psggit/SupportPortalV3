@@ -94,6 +94,7 @@ const OrderDetailsCard = (props) => {
   const [openCancel, setOpenCancel] = useState(false);
   const [openDeliver, setOpenDeliver] = useState(false);
   const [selectedValue, setValue] = useState("");
+  const [cancellationSummary, setCancellationSummary] = useState(false);
   const [completeBtnDisabled, setCompleteBtnDisabled] = useState(true);
   const [kycArray, setKycArray] = useState(["", "", "", ""]);
   const [dobArray, setDobArray] = useState(["", "", "", ""]);
@@ -114,17 +115,42 @@ const OrderDetailsCard = (props) => {
   };
 
   const handleClose = () => {
-    setOpenCancel(false);
-    setOpenDeliver(false);
+    unmountConfirmationDialog();
+    // setOpenCancel(false);
+    // setOpenDeliver(false);
   };
 
   const handleCancel = () => {
+    unmountConfirmationDialog();
+  };
+
+  const unmountConfirmationDialog = () => {
+    setValue("");
+    setCancellationSummary(false);
     setOpenCancel(false);
     setOpenDeliver(false);
   };
 
   const handleChange = (event) => {
     setValue(event.target.value);
+    setCancellationSummary(true);
+    const payload = {
+      order_id: props.order.order_id,
+      restocking_charges: parseInt(props.order.restocking_charges),
+      total_fee: parseInt(props.order.total_fee),
+      cancellation_id: parseInt(selectedValue),
+      retailer_id: parseInt(props.order.retailer_id),
+      consumer_id: parseInt(props.order.customer_id),
+      hipbar_wallet_amount:
+        props.order.hipbar_wallet === ""
+          ? 0
+          : parseFloat(props.order.hipbar_wallet.split(" ")[1]),
+      gift_wallet_amount:
+        props.order.gift_wallet === ""
+          ? 0
+          : parseFloat(props.order.gift_wallet.split(" ")[1]),
+    };
+    props.cancelOrderSummary(payload);
   };
 
   const handleKycChange = (event) => {
@@ -156,22 +182,13 @@ const OrderDetailsCard = (props) => {
 
   const handleCancelOrder = () => {
     const payload = {
+      reason_id: parseInt(selectedValue),
       order_id: props.order.order_id,
-      restocking_charges: parseInt(props.order.restocking_charges),
-      total_fee: parseInt(props.order.total_fee),
-      cancellation_id: parseInt(selectedValue),
-      retailer_id: parseInt(props.order.retailer_id),
-      consumer_id: parseInt(props.order.customer_id),
-      hipbar_wallet_amount:
-        props.order.hipbar_wallet === ""
-          ? 0
-          : parseFloat(props.order.hipbar_wallet.split(" ")[1]),
-      gift_wallet_amount:
-        props.order.gift_wallet === ""
-          ? 0
-          : parseFloat(props.order.gift_wallet.split(" ")[1]),
+      slot_id: "",
+      notes: notes,
     };
     props.cancelOrder(payload);
+    setOpenCancel(false);
   };
 
   const handleCompleteChange = (event, type, index) => {
@@ -281,15 +298,15 @@ const OrderDetailsCard = (props) => {
                 })}
             </Select>
           </FormControl>
-          {props.cancelOrderSuccess && (
+          {props.fetchCancellationSummarySuccess && cancellationSummary && (
             <div>
               <OrderSummaryItem
                 title="Cancellation charges"
-                // value={props.cancelOrderData.total_cancellation_charges}
+                // value={props.cancelOrderSummaryData.total_cancellation_charges}
               />
               <OrderSummaryItem
                 title="Total Cancellation Charges:"
-                value={props.cancelOrderData.total_cancellation_charges}
+                value={props.cancelOrderSummaryData.total_cancellation_charges}
                 type="button"
               >
                 <OrderSummaryItem title="Taxes" value="Taxes charges" />
@@ -297,15 +314,15 @@ const OrderDetailsCard = (props) => {
               <OrderSummaryItem title="Refund Amount" />
               <OrderSummaryItem
                 title="Wallet:"
-                value={props.cancelOrderData.refund_amount.wallet}
+                value={props.cancelOrderSummaryData.refund_amount.wallet}
               />
               <OrderSummaryItem
                 title="HipBar Wallet:"
-                value={props.cancelOrderData.refund_amount.hipbar_wallet}
+                value={props.cancelOrderSummaryData.refund_amount.hipbar_wallet}
               />
               <OrderSummaryItem
                 title="Gift Wallet:"
-                value={props.cancelOrderData.refund_amount.gift_wallet}
+                value={props.cancelOrderSummaryData.refund_amount.gift_wallet}
               />
             </div>
           )}
@@ -472,12 +489,16 @@ OrderDetailsCard.propTypes = {
   fetchKycListProgress: PropTypes.bool,
   fetchDeliverOrderSuccess: PropTypes.bool,
   handleError: PropTypes.func,
-  cancelOrder: PropTypes.func,
+  cancelOrderSummary: PropTypes.func,
   deliverOrderReasons: PropTypes.func,
   fetchKycList: PropTypes.func,
   deliverOrder: PropTypes.func,
-  cancelOrderData: PropTypes.object,
+  cancelOrderSummaryData: PropTypes.object,
   cancelOrderSuccess: PropTypes.bool,
+  fetchCancellationSummarySuccess: PropTypes.bool,
+  fetchCancellationSummaryFailed: PropTypes.bool,
+  fetchCancellationSummaryProgress: PropTypes.bool,
+  cancelOrder: PropTypes.func,
 };
 
 export { OrderDetailsCard };

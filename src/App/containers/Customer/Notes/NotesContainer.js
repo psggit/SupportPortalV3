@@ -1,12 +1,9 @@
 import { connect } from "react-redux";
 import { Notes } from "./NotesComponent";
-import { NotesList } from "./mockData";
 import { fetchConsumerNotes } from "../../OrderInfo/CustomerDetails/duck/CustomerOperations";
 
 const mapStateToProps = (state) => {
-  console.log("[notes-mapStateToProps]", state);
   return {
-    notes: NotesList,
     orderInfo: state.order.orderInfo.orderInfo,
     customerNotes: state.order.customer.customerNotesData,
     customerId: state.order.orderInfo.customerId,

@@ -1,5 +1,4 @@
 import { createReducer } from "@reduxjs/toolkit";
-//import { data } from "../mockData";
 import {
   fetchNotesSuccess,
   fetchNotesFailed,
