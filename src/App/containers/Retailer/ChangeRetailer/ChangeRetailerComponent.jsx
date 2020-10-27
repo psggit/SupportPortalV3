@@ -1,8 +1,7 @@
 /* eslint-disable react/jsx-key */
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-// import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import TopBar from "../../../components/topBar";
@@ -79,7 +78,6 @@ const ChangeRetailerComponent = (props) => {
   const [value, setValue] = React.useState(0);
 
   useEffect(() => {
-    // let skuId = props.orderDetails.cart_items.map((item) => item.sku_id);
     const payload = {
       sku_ids: skuId,
       retailer_id: parseInt(retailerId),

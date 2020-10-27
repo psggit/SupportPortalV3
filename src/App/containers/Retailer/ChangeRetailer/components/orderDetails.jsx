@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
@@ -96,10 +96,7 @@ const useStyles = makeStyles((theme) => ({
 const OrderDetails = (props) => {
   const classes = useStyles();
   const history = useHistory();
-  // const cartItem = props.orderInfo.cart_items;
   const cartItem = history.location.state.cartItems;
-  console.clear();
-  console.log("orderDetail.jsx", props);
 
   return (
     <Box>

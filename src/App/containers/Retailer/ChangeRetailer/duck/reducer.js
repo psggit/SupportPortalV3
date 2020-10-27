@@ -19,6 +19,7 @@ const initialValue = {
   reassignRetailerSuccess: false,
   errorMsg: "",
   errorMessage: "",
+  successMsg: "",
 };
 
 const listRetailerReducer = createReducer(initialValue, {
@@ -49,9 +50,9 @@ const listRetailerReducer = createReducer(initialValue, {
     reassignRetailerFailed: false,
     reassignRetailerSuccess: true,
     errorMessage: "",
+    successMsg: data.payload,
   }),
-  [reassignRetailerFailed]: (state, data) => {
-    console.log("from failuare", data);
+  [reassignRetailerFailed]: (state) => {
     return {
       ...state,
       reassignRetailerProgress: false,

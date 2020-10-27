@@ -66,7 +66,6 @@ const createData = ({ order_id, type, notes, created_at, created_by }) => {
 };
 
 function RetailerNotesComponent(props) {
-  console.log("[RetailerNotesComponent]", props);
   const classes = useStyles();
   const history = useHistory();
   const orderId = history.location.state.orderId;

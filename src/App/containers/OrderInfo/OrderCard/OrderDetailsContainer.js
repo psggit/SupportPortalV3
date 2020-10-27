@@ -13,6 +13,8 @@ const mapStateToProps = (state) => {
     cancelOrderSuccess: state.order.orderCard.cancelOrderSuccess,
     cancelOrderFailure: state.order.orderCard.cancelOrderFailure,
     cancelOrderProgress: state.order.orderCard.cancelOrderProgress,
+    errorMsg: state.order.orderCard.errorMsg,
+    successMsg: state.order.orderCard.successMsg,
     cancelOrderSummaryData: state.order.orderCard.cancelOrderSummaryData,
     deliverOrderData: state.order.orderCard.deliverOrderData,
     fetchDeliverOrderSuccess: state.order.orderCard.fetchDeliverOrderSuccess,
