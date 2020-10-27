@@ -28,6 +28,7 @@ const keyMap = {
 
 const RetailerDetails = (props) => {
   const [data, setData] = useState([]);
+  console.log("RetailerDetails", props.orderInfo.order_status_button);
 
   useEffect(() => {
     const details = getListOfDataObjects(props.orderInfo, keysToRender);
@@ -68,6 +69,7 @@ const RetailerDetails = (props) => {
       color="primary"
       key="unassignBtn"
       onClick={handleChangeRetailer}
+      disabled={!props.orderInfo.order_status_button}
     >
       Change Retailer
     </Button>,
