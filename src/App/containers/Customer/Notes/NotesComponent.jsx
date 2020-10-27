@@ -51,6 +51,7 @@ function Notes(props) {
   const [age, setAge] = useState("");
   const orderInfos = history.location.state.orderInfos;
 
+
   useEffect(() => {
     props.fetchConsumerNotes(orderId);
   }, [rowsPerPage, page]);
@@ -115,7 +116,7 @@ function Notes(props) {
           orderInfos={orderInfos}
         />
         <div className={classes.row1}>
-          <p>CUSTOMER ID: {history.location.state.customerId}</p>
+          <p>CUSTOMER ID: {customerId}</p>
           <div>
             <Button variant="contained" onClick={mountAddNote} color="primary">
               Add Note

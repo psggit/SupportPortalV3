@@ -55,6 +55,7 @@ const CustomerDetails = (props) => {
         customerId: props.customerId,
         orderId: props.orderId,
         customerNumber: props.orderInfo.customer_contact_number,
+        orderInfos: props.orderInfo,
       },
     });
   };
