@@ -25,6 +25,8 @@ const mapStateToProps = (state) => {
     message: state.order.deliveryAgent.message,
     reserveDaSuccess: state.order.deliveryAgent.reserveDaSuccess,
     reserveDaFail: state.order.deliveryAgent.reserveDaFail,
+    orderId: state.home.orderId,
+    customerId: state.order.orderInfo.customerId,
   };
 };
 

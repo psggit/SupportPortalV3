@@ -25,13 +25,16 @@ const customerSOAReducer = createReducer(initialState, {
       customerSoaList: data.payload,
     };
   },
-  [fetchCustomerSoaFailure]: (state) => ({
-    ...state,
-    soaProgress: false,
-    soaFail: true,
-    soaSuccess: false,
-    errorMsg: "Something went wrong! Please contact tech",
-  }),
+  [fetchCustomerSoaFailure]: (state, data) => {
+    console.log("soa-fail", data.payload.message);
+    return {
+      ...state,
+      soaProgress: false,
+      soaFail: true,
+      soaSuccess: false,
+      errorMsg: data.payload.message,
+    };
+  },
   [fetchCustomerSoaInProgress]: (state) => {
     return {
       ...state,

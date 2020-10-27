@@ -64,7 +64,7 @@ function CustomerSoa(props) {
 
   useEffect(() => {
     const payload = {
-      consumer_id: customerId,
+      consumer_id: "customerId",
       limit: rowsPerPage,
       offset: page * rowsPerPage,
     };

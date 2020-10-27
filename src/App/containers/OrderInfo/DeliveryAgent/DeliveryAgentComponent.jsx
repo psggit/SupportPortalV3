@@ -111,7 +111,6 @@ const DeliveryAgentComponent = (props) => {
   };
 
   const handleNotesChange = () => {
-    //history.push("/da-notes");
     history.push({
       pathname: "/da-notes",
       state: {

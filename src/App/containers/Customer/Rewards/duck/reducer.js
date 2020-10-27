@@ -25,12 +25,12 @@ const rewardsReducer = createReducer(initialState, {
       rewardsList: data.payload,
     };
   },
-  [fetchRewardFailure]: (state) => ({
+  [fetchRewardFailure]: (state, data) => ({
     ...state,
     rewardsProgress: false,
     rewardsFail: true,
     rewardsSuccess: false,
-    errorMsg: "Something went wrong, please try again",
+    errorMsg: data.payload.message,
   }),
   [fetchRewardProgress]: (state) => {
     console.log("rewards-progress");

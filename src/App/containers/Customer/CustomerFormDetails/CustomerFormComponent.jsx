@@ -93,6 +93,7 @@ function CustomerForm(props) {
   const orderId = history.location.state.orderId;
   const orderInfos = history.location.state.orderInfos;
   const customerNumber = history.location.state.customerNumber;
+  //const customerName = history.location.state.customerName;
 
   useEffect(() => {
     setConsumerDetail(orderInfos);
