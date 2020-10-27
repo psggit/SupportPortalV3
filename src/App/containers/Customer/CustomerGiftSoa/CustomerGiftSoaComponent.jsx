@@ -119,7 +119,11 @@ function CustomerGiftSoa(props) {
   return (
     <>
       <TopBar />
-      <FullWidthTabs value={2} orderId={props.orderInfo.order_id} />
+      <FullWidthTabs
+        value={2}
+        orderId={props.orderInfo.order_id}
+        customerId={props.orderInfo.customer_id}
+      />
       <div className={classes.row1}>
         <p>CUSTOMER ID: {props.customerId}</p>
         <div>Search</div>

@@ -26,7 +26,9 @@ const onError = (dispatch) => {
 };
 
 const getRedirectURL = () => {
-  let redirectURL = "http://localhost:8080/dashboard";
+  // let redirectURL = "http://localhost:8080/dashboard"; //local
+  let redirectURL = "https://support.hipbar-dev.com/dashboard"; //live
+  // console.log(process.env.NODE_ENV);
   switch (process.env.NODE_ENV) {
     case "local":
       return (redirectURL =

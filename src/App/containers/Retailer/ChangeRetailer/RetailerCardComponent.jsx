@@ -11,7 +11,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Dialog from "../../../components/dialog";
 
-import { Button, Typography } from "@material-ui/core";
+import { Button, Typography, List } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,11 +63,14 @@ const useStyles = makeStyles((theme) => ({
   marginLeft: {
     marginLeft: "auto",
   },
+  finalRow: {
+    marginBottom: "23px",
+  },
 }));
 
 const RetailerCardComponent = (props) => {
   useEffect(() => {
-    console.log("RetailerCardComponent");
+    // console.clear();
     console.dir(props);
   }, []);
 
@@ -82,33 +85,34 @@ const RetailerCardComponent = (props) => {
     setMountDialog(false);
   };
 
+  const handleConfirm = () => {
+    const payload = {
+      order_id: props.orderInfo.order_id,
+      retailer_id: parseInt(props.value.retailer_id),
+      retailer_name: props.value.retailer_name,
+      warehouse_id: parseInt(props.orderInfo.warehouse_id),
+      delivery_status: props.orderInfo.delivery_status,
+      assigned_delivery_agent: parseInt(props.orderInfo.delivery_agent_id),
+      reserved_for_da_id: parseInt(props.orderInfo.delivery_agent_id),
+      cancellation_reason: "",
+    };
+    props.reassignRetailer(payload);
+    setMountDialog(false);
+  };
+
   return (
     <Card className={classes.RetailerCardComponent} variant="outlined">
       <CardContent p={2}>
         <OrderDetails {...props} />
-        <ListItem dense disableGutters>
-          <ListItemText primary={"Free Agent/ Total Delivery Agents"} />
-          <Box>
-            <Typography>{"2/10"}</Typography>
-          </Box>
-
-          <Box className={classes.addComponentRight} />
-        </ListItem>
         <CardActions className={classes.actionContainer}>
           <Button
             variant="outlined"
             color="primary"
             className={classes.marginLeft}
-            size="small"
           >
             Call
           </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            onClick={handleSelect}
-          >
+          <Button variant="contained" color="primary" onClick={handleSelect}>
             Select
           </Button>
         </CardActions>
@@ -129,7 +133,7 @@ const RetailerCardComponent = (props) => {
                 variant="contained"
                 color="primary"
                 size="small"
-                onClick={handleCancel}
+                onClick={handleConfirm}
               >
                 Confirm
               </Button>,
@@ -148,6 +152,10 @@ const RetailerCardComponent = (props) => {
 RetailerCardComponent.propTypes = {
   fetchOrderDetails: PropTypes.func,
   orderInfo: PropTypes.object,
+  totalDa: PropTypes.string,
+  freeDa: PropTypes.string,
+  reassignRetailer: PropTypes.func,
+  value: PropTypes.object,
 };
 
 export { RetailerCardComponent };

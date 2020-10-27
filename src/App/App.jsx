@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { validateAuth } from "./duck/authOperation";
@@ -18,7 +17,6 @@ import newTheme from "./sass/theme";
 import "./sass/app.scss";
 import { RetailerNotesContainer } from "./containers/Retailer/RetailerNotes/RetailerNotesContainer";
 import { ChangeRetailerContainer } from "./containers/Retailer/ChangeRetailer/ChangeRetailerContainer";
-// import { CustomerDetailContainer } from './containers/Customer/CustomerCard'
 import { CustomerFormContainer } from "./containers/Customer/CustomerFormDetails";
 import { CustomerSoaContainer } from "./containers/Customer/CustomerSoa";
 import { CustomerGiftSoaContainer } from "./containers/Customer/CustomerGiftSoa";
@@ -29,9 +27,6 @@ import { DaNotesContainer } from "./containers/DeliveryAgentNotes";
 
 function App(props) {
   useEffect(() => {
-    // console.log(props);
-    // console.log(history);
-    // const node = this.wrapper.current;
     props.validateAuth();
   }, []);
 

@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   cardHeader: {
+    fontWeight: 700,
     "& .MuiCardHeader-content": {
       paddingBottom: 12,
       "& > span": {

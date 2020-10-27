@@ -94,6 +94,11 @@ const useStyles = makeStyles((theme) => ({
   addMorebutton: {
     width: "30%",
   },
+  listItemTextHead: {
+    fontSize: 16,
+    fontWeight: 600,
+    color: "#010B13",
+  },
 }));
 
 const BlueCheckbox = withStyles({
@@ -139,7 +144,10 @@ const OrderSummary = (props) => {
     <Box>
       <List dense disablePadding>
         <ListItem dense disableGutters>
-          <ListItemText primary="Order Items" />
+          <ListItemText
+            primary="Order Items"
+            classes={{ primary: classes.listItemTextHead }}
+          />
           {props.modify && (
             <Button
               color="primary"
@@ -157,7 +165,11 @@ const OrderSummary = (props) => {
         })}
       </List>
       <List disablePadding>
-        <OrderSummaryItem title="Order Summary" value={""} />
+        {/* {<OrderSummaryItem title="Order Summary" value={""} />} */}
+        <ListItemText
+          primary="Order Summary"
+          classes={{ primary: classes.listItemTextHead }}
+        />
         <OrderSummaryItem
           title="Order Total"
           value={orderInfo.revised_order_total}
@@ -201,7 +213,7 @@ const OrderSummary = (props) => {
       <Divider />
       <List>
         <OrderSummaryItem title="Payment Details" value={""} type="button">
-          <OrderSummaryItem title="Mode of Payment:" value="MISSING" />
+          <OrderSummaryItem title="Mode of Payment:" value="-" />
           <OrderSummaryItem
             title="Wallet:"
             value={orderInfo.payment_total}
@@ -231,8 +243,8 @@ const OrderSummary = (props) => {
           value={""}
           type="button"
         >
-          <OrderSummaryItem title="Total Order Difference:" value={"MISSING"} />
-          <OrderSummaryItem title="Cart Difference:" value={"MISSING"} />
+          <OrderSummaryItem title="Total Order Difference:" value={"-"} />
+          <OrderSummaryItem title="Cart Difference:" value={"-"} />
           <OrderSummaryItem
             title="Additional Charges:"
             value={orderInfo.total_additional_fee}

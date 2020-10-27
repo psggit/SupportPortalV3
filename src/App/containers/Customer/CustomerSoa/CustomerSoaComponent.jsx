@@ -79,7 +79,6 @@ function CustomerSoa(props) {
     if (props.soaSuccess) {
       if (props.soaList.consumer_soa !== null) {
         // console.clear();
-        console.log(props.soaList.consumer_soa);
         loopData(props.soaList.consumer_soa);
         setShowData(true);
       } else {
@@ -122,7 +121,11 @@ function CustomerSoa(props) {
     <>
       <TopBar />
       <div className={classes.formContainer}>
-        <FullWidthTabs value={1} orderId={props.orderInfo.order_id} />
+        <FullWidthTabs
+          value={1}
+          orderId={props.orderInfo.order_id}
+          customerId={props.orderInfo.customer_id}
+        />
         <div className={classes.row1}>
           <p>CUSTOMER ID: {props.customerId}</p>
           <div>Search</div>

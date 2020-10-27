@@ -127,7 +127,11 @@ function CustomerForm(props) {
     <>
       <TopBar />
       <div className={classes.formContainer}>
-        <FullWidthTabs value={0} orderId={props.orderInfo.order_id} />
+        <FullWidthTabs
+          value={0}
+          orderId={props.orderInfo.order_id}
+          customerId={props.orderInfo.customer_id}
+        />
         <div className={classes.section1}>
           <p>CUSTOMER ID: {props.orderInfo.customer_id}</p>
         </div>

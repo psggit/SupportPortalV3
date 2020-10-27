@@ -20,6 +20,7 @@ import {
   deliverOrderFailed,
   deliverOrderSuccess,
 } from "./actions";
+import { cancelOrder } from "./operations";
 
 const initialValue = {
   cancelReasons: null,
@@ -36,7 +37,7 @@ const initialValue = {
   fetchCancelReasonsSuccess: false,
   fetchCancelReasonsFailed: false,
   fetchCancelReasonsProgress: false,
-  cancelOrderData: null,
+  cancelOrderSummaryData: null,
   cancelOrderProgress: false,
   cancelOrderFailure: false,
   cancelOrderSuccess: false,
@@ -104,24 +105,24 @@ const orderDataReducer = createReducer(initialValue, {
     ...state,
     fetchKycListProgress: true,
   }),
-  [cancelOrderSuccess]: (state, data) => ({
+  [fetchCancellationSummarySuccess]: (state, data) => ({
     ...state,
-    cancelOrderData: data.payload,
-    cancelOrderSuccess: true,
-    cancelOrderFailure: false,
+    cancelOrderSummaryData: data.payload,
+    fetchCancellationSummarySuccess: true,
+    fetchCancellationSummaryFailed: false,
     cancelOrderProgress: false,
     errorMsg: "",
   }),
-  [cancelOrderFailure]: (state) => ({
+  [fetchCancellationSummaryFailed]: (state) => ({
     ...state,
-    cancelOrderSuccess: false,
-    cancelOrderFailure: true,
+    fetchCancellationSummarySuccess: false,
+    fetchCancellationSummaryFailed: true,
     cancelOrderProgress: false,
     errorMsg: "Something went wrong Please try again!",
   }),
-  [cancelOrderProgress]: (state) => ({
+  [fetchCancellationSummaryProgress]: (state) => ({
     ...state,
-    cancelOrderProgress: true,
+    fetchCancellationSummaryProgress: true,
   }),
   [deliverOrderSuccess]: (state, data) => ({
     ...state,
@@ -141,6 +142,26 @@ const orderDataReducer = createReducer(initialValue, {
   [deliverOrderProgress]: (state) => ({
     ...state,
     deliverOrderProgress: true,
+  }),
+
+  [cancelOrderSuccess]: (state, data) => ({
+    ...state,
+    deliverData: data.payload,
+    cancelOrderSuccess: true,
+    cancelOrderFailure: false,
+    cancelOrderProgress: false,
+    errorMsg: "",
+  }),
+  [cancelOrderFailure]: (state) => ({
+    ...state,
+    cancelOrderSuccess: false,
+    cancelOrderFailure: true,
+    cancelOrderProgress: false,
+    errorMsg: "Something went wrong Please try again!",
+  }),
+  [cancelOrderProgress]: (state) => ({
+    ...state,
+    cancelOrderProgress: true,
   }),
 });
 export { orderDataReducer };

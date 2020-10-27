@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { LogoutComponent } from "./LogoutComponent";
-import { logoutSession } from "./duck";
+// import { logoutSession } from "./duck";
 
 const mapStateToProps = (state) => {
   return {

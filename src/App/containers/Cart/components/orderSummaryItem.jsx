@@ -85,6 +85,11 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "1rem",
     },
   },
+  listItemTextHead: {
+    fontWeight: 600,
+    color: "#010B13",
+    fontSize: 16,
+  },
 }));
 
 const OrderSummaryItem = (props) => {
@@ -110,7 +115,7 @@ const OrderSummaryItem = (props) => {
           <ListItemText
             primary={title}
             className={classes.ListItemRootTitle}
-            classes={{ root: classes.ListItemRootTitle }}
+            classes={{ primary: classes.listItemTextHead }}
           />
           {open ? <ExpandLess /> : <ExpandMore />}
           {value !== "" ? (
