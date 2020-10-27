@@ -30,7 +30,7 @@ const homeReducer = createReducer(initialValue, {
   }),
   [fetchOrderProgress]: (state, data) => ({
     ...state,
-    payloadInfo: data,
+    payloadInfo: data.payload,
     fetchDetailsProgress: true,
     fetchDetailsSuccess: false,
     fetchDetailsFail: false,

@@ -11,11 +11,12 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Button from "@material-ui/core/Button";
 import { Divider } from "@material-ui/core";
-import Checkbox from "@material-ui/core/Checkbox";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import { OrderSummaryItem } from "./orderSummaryItem";
 import { CartItem } from "./cartItem";
+import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@material-ui/icons/CheckBox";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -101,16 +102,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BlueCheckbox = withStyles({
-  root: {
-    color: "#0086AD",
-    "&$checked": {
-      color: "#0086AD",
-    },
-  },
-  checked: {},
-})((props) => <Checkbox color="default" {...props} />);
-
 const OrderSummary = (props) => {
   const classes = useStyles();
   const history = useHistory();
@@ -124,9 +115,6 @@ const OrderSummary = (props) => {
   };
 
   const handleClickAdd = () => {
-    // history.push("/cart-modify");
-    // console.clear();
-    // console.log("clickAdd ", orderInfo);
     history.push({
       pathname: "/cart-modify",
       state: {
@@ -141,7 +129,7 @@ const OrderSummary = (props) => {
     });
   };
 
-  console.log("Order summary props", props);
+  // console.log("Order summary props", props.cartSummary);
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -179,7 +167,6 @@ const OrderSummary = (props) => {
         })}
       </List>
       <List disablePadding>
-        {/* {<OrderSummaryItem title="Order Summary" value={""} />} */}
         <ListItemText
           primary="Order Summary"
           classes={{ primary: classes.listItemTextHead }}
@@ -251,97 +238,161 @@ const OrderSummary = (props) => {
               : "-"
           }
         />
-        <Divider />
-        <OrderSummaryItem
-          title="Difference in Order Amount"
-          value={""}
-          type="button"
-        >
-          <OrderSummaryItem title="Total Order Difference:" value={"-"} />
-          <OrderSummaryItem title="Cart Difference:" value={"-"} />
-          <OrderSummaryItem
-            title="Additional Charges:"
-            value={orderInfo.total_additional_fee}
-            type="button"
-          ></OrderSummaryItem>
-        </OrderSummaryItem>
-        <Divider />
-        <ListItem
-          classes={{ root: classes.ListItemRoot }}
-          dense
-          disableGutters
-          button={true}
-          onClick={handleClick}
-          ref={ref}
-        >
-          <ListItemText
-            primary="To Debit"
-            className={classes.ListItemRootTitle}
-            classes={{ root: classes.ListItemRootTitle }}
-          />
-          {open ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          <ListItem
-            classes={{ root: classes.ListItemRoot }}
-            dense
-            disableGutters
-            button={props.modify}
-            onClick={handleToggle("hipbarWallet")}
-          >
-            {props.modify && (
-              <ListItemIcon>
-                <BlueCheckbox
-                  edge="start"
-                  checked={checked.indexOf("hipbarWallet") !== -1}
-                  tabIndex={-1}
-                  disableRipple
+        {props.cartSummary !== null && (
+          <Box>
+            <Divider />
+            <OrderSummaryItem
+              title="Difference in Order Amount"
+              value={""}
+              type="button"
+            >
+              <OrderSummaryItem
+                title="Total Order Difference:"
+                value={
+                  props.cartSummary
+                    ? props.cartSummary.display_details[0].display_value
+                    : "-"
+                }
+              />
+              <OrderSummaryItem
+                title="Cart Difference:"
+                value={
+                  props.cartSummary
+                    ? props.cartSummary.display_details[1].display_value
+                    : "-"
+                }
+              />
+              <OrderSummaryItem
+                title="Additional Charges:"
+                value=""
+                type="button"
+              >
+                <OrderSummaryItem
+                  title="Delivery Charges:"
+                  value={
+                    props.cartSummary
+                      ? props.cartSummary.display_details[2].display_value
+                      : "-"
+                  }
                 />
-              </ListItemIcon>
-            )}
-            <ListItemText
-              primary="HipBar Wallet:"
-              secondary="Current Balance"
-              className={classes.ListItemTextRoot}
-              classes={{ root: classes.ListItemTextLabel }}
-            />
-            <ListItemText
-              primary={orderInfo.revised_hipbar_wallet}
-              className={classes.ListItemTextRoot}
-              classes={{ root: classes.ListItemTextValue }}
-            />
-          </ListItem>
-          <ListItem
-            classes={{ root: classes.ListItemRoot }}
-            dense
-            disableGutters
-            button={props.modify}
-            onClick={handleToggle("giftWallet")}
-          >
-            {props.modify && (
-              <ListItemIcon>
-                <BlueCheckbox
-                  edge="start"
-                  checked={checked.indexOf("giftWallet") !== -1}
-                  tabIndex={-1}
-                  disableRipple
+                <OrderSummaryItem
+                  title="Other Charges:"
+                  value={
+                    props.cartSummary
+                      ? props.cartSummary.display_details[3].display_value
+                      : "-"
+                  }
                 />
-              </ListItemIcon>
-            )}
-            <ListItemText
-              primary="Gift Wallet:"
-              secondary="Current Balance"
-              className={classes.ListItemTextRoot}
-              classes={{ root: classes.ListItemTextLabel }}
+              </OrderSummaryItem>
+            </OrderSummaryItem>
+            <Divider />
+            <ListItem
+              classes={{ root: classes.ListItemRoot }}
+              dense
+              disableGutters
+              button={true}
+              onClick={handleClick}
+              ref={ref}
+            >
+              <ListItemText
+                primary="To Debit"
+                className={classes.ListItemRootTitle}
+                classes={{ root: classes.ListItemRootTitle }}
+              />
+              {open ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <ListItem
+                classes={{ root: classes.ListItemRoot }}
+                dense
+                disableGutters
+                onClick={handleToggle("hipbarWallet")}
+              >
+                {props.modify && (
+                  <ListItemIcon>
+                    {props.cartSummary ? (
+                      props.cartSummary.hipbar_wallet.is_wallet_enabled ? (
+                        <CheckBoxIcon color="primary" />
+                      ) : (
+                        <CheckBoxOutlineBlankIcon color="primary" />
+                      )
+                    ) : (
+                      <CheckBoxOutlineBlankIcon color="primary" />
+                    )}
+                  </ListItemIcon>
+                )}
+                <ListItemText
+                  primary="HipBar Wallet:"
+                  secondary="Current Balance"
+                  className={classes.ListItemTextRoot}
+                  classes={{ root: classes.ListItemTextLabel }}
+                />
+                <ListItemText
+                  primary={
+                    props.cartSummary
+                      ? props.cartSummary.hipbar_wallet.display_charged_credits
+                      : "-"
+                  }
+                  secondary={
+                    props.cartSummary
+                      ? props.cartSummary.hipbar_wallet
+                          .display_available_credits
+                      : "-"
+                  }
+                  className={classes.ListItemTextRoot}
+                  classes={{ root: classes.ListItemTextValue }}
+                />
+              </ListItem>
+              <ListItem
+                classes={{ root: classes.ListItemRoot }}
+                dense
+                disableGutters
+              >
+                {props.modify && (
+                  <ListItemIcon>
+                    {props.cartSummary ? (
+                      props.cartSummary.gift_wallet.is_wallet_enabled ? (
+                        <CheckBoxIcon color="primary" />
+                      ) : (
+                        <CheckBoxOutlineBlankIcon color="primary" />
+                      )
+                    ) : (
+                      <CheckBoxOutlineBlankIcon color="primary" />
+                    )}
+                  </ListItemIcon>
+                )}
+                <ListItemText
+                  primary="Gift Wallet:"
+                  secondary="Current Balance"
+                  className={classes.ListItemTextRoot}
+                  classes={{ root: classes.ListItemTextLabel }}
+                />
+                <ListItemText
+                  primary={
+                    props.cartSummary
+                      ? props.cartSummary.gift_wallet.display_charged_credits
+                      : "-"
+                  }
+                  secondary={
+                    props.cartSummary
+                      ? props.cartSummary.gift_wallet.display_available_credits
+                      : "-"
+                  }
+                  className={classes.ListItemTextRoot}
+                  classes={{ root: classes.ListItemTextValue }}
+                />
+              </ListItem>
+            </Collapse>
+            <OrderSummaryItem
+              title="To Pay:"
+              value={
+                props.cartSummary
+                  ? props.cartSummary.display_details[4].display_value
+                  : "-"
+              }
             />
-            <ListItemText
-              primary={orderInfo.revised_gift_wallet}
-              className={classes.ListItemTextRoot}
-              classes={{ root: classes.ListItemTextValue }}
-            />
-          </ListItem>
-        </Collapse>
-        <OrderSummaryItem title="To Pay:" value={orderInfo.payment_total} />
+          </Box>
+        )}
       </List>
     </Box>
   );
@@ -352,6 +403,7 @@ OrderSummary.propTypes = {
   fetchGenre: PropTypes.func,
   modify: PropTypes.bool,
   products: PropTypes.array,
+  cartSummary: PropTypes.object,
 };
 
 export { OrderSummary };

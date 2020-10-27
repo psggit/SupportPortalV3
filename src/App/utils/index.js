@@ -37,3 +37,4 @@ export { orderTrackingAPI } from "./orderTrackingAPI";
 export { listOrderModificationAPI } from "./listOrderModificationAPI";
 export { sendSMSAPI } from "./sendSMSAPI";
 export { orderSummaryAPI } from "./orderSummaryAPI";
+export { confirmCartAPI } from "./confirmCartAPI";

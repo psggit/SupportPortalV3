@@ -1,9 +1,12 @@
 import {
-  fetchOrderSuccess,
-  fetchOrderFailed,
-  fetchOrderProgress,
+  fetchCartSummarySuccess,
+  fetchCartSummaryFailed,
+  fetchCartSummaryProgress,
+  fetchUpdateCartSuccess,
+  fetchUpdateCartFailed,
+  fetchUpdateCartProgress,
 } from "./actions";
-import { orderSummaryAPI } from "../../../utils";
+import { orderSummaryAPI, confirmCartAPI } from "../../../utils";
 
 const processResponse = () => {
   return (res) => {
@@ -17,20 +20,33 @@ const processResponse = () => {
 
 const onSuccess = (dispatch) => {
   return (data) => {
-    dispatch(fetchOrderSuccess(data));
+    dispatch(fetchCartSummarySuccess(data));
   };
 };
 
 const onError = (dispatch) => {
   return (err) => {
-    dispatch(fetchOrderFailed(err));
+    dispatch(fetchCartSummaryFailed(err));
+  };
+};
+
+const onSuccessConfirm = (dispatch) => {
+  return (data) => {
+    dispatch(fetchUpdateCartSuccess(data));
+  };
+};
+
+const onErrorConfirm = (dispatch) => {
+  return (err) => {
+    dispatch(fetchUpdateCartFailed(err));
   };
 };
 
 const fetchSummary = (reqBody) => {
+  // console.clear();
   console.log("[fetch summary]", reqBody);
   return (dispatch) => {
-    dispatch(fetchOrderProgress());
+    dispatch(fetchCartSummaryProgress());
     orderSummaryAPI(
       reqBody,
       processResponse(dispatch),
@@ -40,4 +56,17 @@ const fetchSummary = (reqBody) => {
   };
 };
 
-export { fetchSummary };
+const updateCart = (reqBody) => {
+  console.log("[update summary]", reqBody);
+  return (dispatch) => {
+    dispatch(fetchUpdateCartProgress());
+    confirmCartAPI(
+      reqBody,
+      processResponse(dispatch),
+      onSuccessConfirm(dispatch),
+      onErrorConfirm(dispatch)
+    );
+  };
+};
+
+export { fetchSummary, updateCart };

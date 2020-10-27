@@ -9,6 +9,7 @@ import Alert from "@material-ui/lab/Alert";
 import Icon from "@material-ui/core/Icon";
 import SendIcon from "@material-ui/icons/Send";
 import ErrorMsg from "../../components/errorMsg";
+import AutorenewIcon from "@material-ui/icons/Autorenew";
 
 import {
   TableContainer,
@@ -114,6 +115,10 @@ const OrderModificationComponent = (props) => {
     props.sendSMSOperation(orderId);
   };
 
+  const refreshOrder = (event, orderId) => {
+    console.log("refreshOrder");
+  };
+
   let loading = props.fetchOrderInProgress;
   if (loading) {
     return <Loading message="Loading..." />;
@@ -124,12 +129,13 @@ const OrderModificationComponent = (props) => {
   return (
     <div className={classes.formContainer}>
       <TopBar />
-      <Box width="90%" mx="auto" className={classes.table} mt={4}>
+      <Box width="95%" mx="auto" className={classes.table} mt={4}>
         <TableContainer className={classes.TableContainer}>
-          <Table>
+          <Table size="small">
             <TableHead>
               <TableRow>
                 <TableCell align="center">ORDER ID</TableCell>
+                <TableCell align="center">MODIFICATION ORDER ID</TableCell>
                 <TableCell align="center">STATUS</TableCell>
                 <TableCell align="center">SEND SMS</TableCell>
                 <TableCell align="center">HIPBAR WALLET</TableCell>
@@ -138,6 +144,7 @@ const OrderModificationComponent = (props) => {
                 <TableCell align="center">REQUEST BY ID</TableCell>
                 <TableCell align="center">CANCELLED BY</TableCell>
                 <TableCell align="center">CANCELLED BY ID</TableCell>
+                <TableCell align="center">UPDATE STATUS</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -156,6 +163,7 @@ const OrderModificationComponent = (props) => {
                           {data.ref_order_id}
                         </Button>
                       </TableCell>
+                      <TableCell>{data.order_id}</TableCell>
                       <TableCell>
                         {data.status == "success" && (
                           <Alert severity="success">{data.status}</Alert>
@@ -184,6 +192,17 @@ const OrderModificationComponent = (props) => {
                       <TableCell>{data.request_by_id}</TableCell>
                       <TableCell>{data.cancelled_by}</TableCell>
                       <TableCell>{data.cancelled_by_id}</TableCell>
+                      <TableCell>
+                        <Button
+                          variant="outlined"
+                          color="primary"
+                          endIcon={<AutorenewIcon />}
+                          onClick={(event) => refreshOrder(event, data.order_id)}
+                          disabled={!(data.status == "pending")}
+                        >
+                          Update
+                        </Button>
+                      </TableCell>
                     </TableRow>
                   );
                 })}

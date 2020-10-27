@@ -1,39 +1,66 @@
 import { createReducer } from "@reduxjs/toolkit";
 import {
-  fetchOrderSuccess,
-  fetchOrderFailed,
-  fetchOrderProgress,
+  fetchCartSummarySuccess,
+  fetchCartSummaryFailed,
+  fetchCartSummaryProgress,
+  fetchUpdateCartSuccess,
+  fetchUpdateCartFailed,
+  fetchUpdateCartProgress,
 } from "./actions";
 
 const initialValue = {
-  orderSummary: null,
-  fetchGenreProgress: false,
-  fetchGenreFailed: false,
-  fetchGenreSuccess: false,
+  cartSummary: null,
+  fetchCartSummaryProgress: false,
+  fetchCartSummaryFailed: false,
+  fetchCartSummarySuccess: false,
+  fetchUpdateCartSuccess: false,
+  fetchUpdateCartFailed: false,
+  fetchUpdateCartProgress: false,
   errorMsg: "",
+  successMsg: "",
 };
 
 const cartReducer = createReducer(initialValue, {
-  [fetchOrderSuccess]: (state, data) => ({
+  [fetchCartSummarySuccess]: (state, data) => ({
     ...state,
-    fetchGenreProgress: false,
-    fetchGenreFailed: false,
-    fetchGenreSuccess: true,
+    fetchCartSummaryProgress: false,
+    fetchCartSummaryFailed: false,
+    fetchCartSummarySuccess: true,
     errorMsg: "",
-    orderSummary: data.payload,
+    cartSummary: data.payload,
   }),
-  [fetchOrderFailed]: (state) => ({
+  [fetchCartSummaryFailed]: (state) => ({
     ...state,
-    fetchGenreProgress: false,
-    fetchGenreFailed: true,
-    fetchGenreSuccess: false,
+    fetchCartSummaryProgress: false,
+    fetchCartSummaryFailed: true,
+    fetchCartSummarySuccess: false,
     errorMsg: "Something went wrong, please try again",
   }),
-  [fetchOrderProgress]: (state) => ({
+  [fetchCartSummaryProgress]: (state) => ({
     ...state,
-    fetchGenreProgress: true,
-    fetchGenreFailed: false,
-    fetchGenreSuccess: false,
+    fetchCartSummaryProgress: true,
+    fetchCartSummaryFailed: false,
+    fetchCartSummarySuccess: false,
+  }),
+  [fetchUpdateCartSuccess]: (state) => ({
+    ...state,
+    fetchUpdateCartProgress: false,
+    fetchUpdateCartFailed: false,
+    fetchUpdateCartSuccess: true,
+    errorMsg: "",
+  }),
+  [fetchUpdateCartFailed]: (state) => ({
+    ...state,
+    fetchUpdateCartProgress: false,
+    fetchUpdateCartFailed: true,
+    fetchUpdateCartSuccess: false,
+    errorMsg: "Something went wrong, please try again",
+  }),
+  [fetchUpdateCartProgress]: (state) => ({
+    ...state,
+    fetchUpdateCartProgress: true,
+    fetchUpdateCartFailed: false,
+    fetchUpdateCartSuccess: false,
   }),
 });
 

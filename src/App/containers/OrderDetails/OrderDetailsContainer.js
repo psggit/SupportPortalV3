@@ -3,10 +3,10 @@ import { OrderDetailsComponent } from "./OrderDetailsComponent";
 import { selectOrder, fetchOrderDetails } from "./duck";
 
 const mapStateToProps = (state) => {
-  // console.log("mapstatetoprops - order details", state.home.payloadInfo);
+  // console.log("mapstatetoprops - order details", state);
   return {
     orderId: state.home.orderId,
-    payload: state.home.payloadInfo,
+    payloadInfo: state.home.payloadInfo,
     orderData: state.home.orderData,
     fetchDetailsProgress: state.home.fetchDetailsProgress,
     fetchDetailsFail: state.home.fetchDetailsFail,

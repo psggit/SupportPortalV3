@@ -138,12 +138,20 @@ const OrderInfoComponent = (props) => {
   const history = useHistory();
   const classes = useStyles();
   let { orderId } = useParams();
+  const [modifyCart, setModifyCart] = useState("");
 
   useEffect(() => {
+    // console.log("ORDERINFO COmponenet", props);
     if (orderId === null || orderId == "") {
       history.push("/dashboard");
     } else {
       props.fetchOrderInfo(orderId);
+    }
+
+    if (history.location.state !== undefined) {
+      if ("modifyCartInfo" in history.location.state) {
+        setModifyCart(history.location.state.modifyCartInfo);
+      }
     }
   }, []);
 
@@ -167,10 +175,6 @@ const OrderInfoComponent = (props) => {
   const [showError, setShowError] = useState(false);
   const [createDisabledBtn, setDisabledBtn] = useState(true);
   const [activeSection, setActiveSection] = useState("");
-  const [modifyCart, setModifyCart] = useState("");
-  //    history.location.state.modifyCartInfo
-  
-  console.log(modifyCart);
 
   const validateIssue = (event, type) => {
     if (type === "select") {
@@ -285,9 +289,6 @@ const OrderInfoComponent = (props) => {
       Create Issue
     </Button>,
   ];
-
-  console.log("orderinfo");
-  console.log(history.location);
 
   if (loading) {
     return <Loading message="Loading..." />;

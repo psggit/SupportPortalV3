@@ -67,6 +67,7 @@ const CartComponent = (props) => {
   }, []);
   const classes = useStyles();
   const [modify, setModify] = useState(false);
+
   let modifyState = modify;
   const handleModify = () => {
     setModify(!modify);
@@ -77,6 +78,7 @@ const CartComponent = (props) => {
   };
 
   const handleConfirm = () => {
+    props.updateCart(props.modifyCart);
     setModify(!modify);
   };
 
@@ -115,12 +117,14 @@ const CartComponent = (props) => {
 
   useEffect(() => {
     if (props.fetchGenreSuccess) {
-      console.log("order summary");
-      console.log(props.orderSummary);
-      modifyState = props.orderSummary.to_show_confirm;
+      console.log("cartSummary summary");
+      console.log(props.cartSummary);
+      modifyState = props.cartSummary.to_show_confirm;
       handleModify();
     }
   }, [props.fetchGenreSuccess]);
+
+  console.log(props.cartSummary);
 
   return (
     <>
@@ -132,7 +136,7 @@ const CartComponent = (props) => {
         <OrderSummary
           {...props}
           modify={modifyState}
-          orderSummary={props.fetchGenreSuccess && props.orderSummary}
+          orderSummary={props.cartSummary}
         />
       </CartDetailsCard>
     </>
@@ -144,7 +148,8 @@ CartComponent.propTypes = {
   order: PropTypes.any,
   modifyCart: PropTypes.any,
   fetchSummary: PropTypes.func,
-  orderSummary: PropTypes.any,
+  updateCart: PropTypes.func,
+  cartSummary: PropTypes.any,
   fetchGenreSuccess: PropTypes.bool,
 };
 
