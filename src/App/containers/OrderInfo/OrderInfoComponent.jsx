@@ -545,6 +545,7 @@ OrderInfoComponent.propTypes = {
   issueTypes: PropTypes.object,
   submitIssue: PropTypes.func,
   submitIssueSuccess: PropTypes.bool,
+  createNotesSuccess: PropTypes.bool,
 };
 
 export { OrderInfoComponent };
