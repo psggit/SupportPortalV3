@@ -192,6 +192,7 @@ const DeliveryAgentComponent = (props) => {
               onChange={(event) => handleChange(event)}
             >
               {props.daListSuccess &&
+                props.daList.data !== null &&
                 props.daList.data.map((value, index) => {
                   if (selectedValue === value) {
                     return (

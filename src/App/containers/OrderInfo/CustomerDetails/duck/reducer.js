@@ -11,6 +11,7 @@ const initialValue = {
   notesFail: false,
   notesSuccess: false,
   errorMsg: "",
+  succMsg: "",
 };
 
 const customerReducer = createReducer(initialValue, {
@@ -22,6 +23,7 @@ const customerReducer = createReducer(initialValue, {
       notesSuccess: true,
       errorMsg: "",
       customerNotesData: data.payload,
+      succMsg: "success",
     };
   },
   [fetchNotesFailed]: (state, data) => ({

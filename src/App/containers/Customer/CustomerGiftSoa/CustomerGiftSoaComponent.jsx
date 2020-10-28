@@ -100,8 +100,6 @@ function CustomerGiftSoa(props) {
     setPage(0);
   };
 
-  console.log("from gift-soa", history);
-
   return (
     <>
       <TopBar />

@@ -13,6 +13,7 @@ import FullWidthTabs from "../customerMenuBar";
 import Loading from "../../../components/loading";
 import { useHistory } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
+import ErrorMsg from "../../../components/errorMsg";
 import {
   Table,
   Box,
@@ -104,6 +105,7 @@ function Notes(props) {
     };
     props.createNotes(payload);
     setShowAddNoteDialog(false);
+    //location.reload();
   };
 
   const handleClose = () => {
@@ -228,6 +230,9 @@ function Notes(props) {
             handleClose={handleClose}
           />
         )}
+        {/* {props.notesSuccess && (
+          <ErrorMsg show={true} message={props.succMsg} type={"success"} />
+        )} */}
       </div>
     </>
   );
@@ -243,6 +248,7 @@ Notes.propTypes = {
   notesFail: PropTypes.bool,
   errorMsg: PropTypes.string,
   createNotes: PropTypes.func,
+  succMsg: PropTypes.string,
 };
 
 export { Notes };

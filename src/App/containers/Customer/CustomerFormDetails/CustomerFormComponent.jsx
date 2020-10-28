@@ -12,6 +12,7 @@ import FullWidthTabs from "../customerMenuBar";
 import { Grid } from "@material-ui/core";
 import Notification from "../../../components/notification";
 import { useHistory } from "react-router-dom";
+import ErrorMsg from "../../../components/errorMsg";
 
 const BlueRadio = withStyles({
   root: {
@@ -82,8 +83,10 @@ function CustomerForm(props) {
   const customerId = history.location.state.customerId;
   const orderId = history.location.state.orderId;
   const orderInfos = history.location.state.orderInfos;
-  console.log("ooooordeee", history.location.state.orderInfos)
   const customerNumber = history.location.state.customerNumber;
+
+  const [successMsgData, setMsg] = useState("");
+  const [successState, setSuccessState] = useState("");
 
   useEffect(() => {
     setConsumerDetail(orderInfos);
@@ -98,6 +101,15 @@ function CustomerForm(props) {
   useEffect(() => {
     setMessage(props.updateSuccess);
   }, [props.updateSuccess]);
+
+  // useEffect(() => {
+  //   if (props.updateSuccess) {
+  //     setMsg(props.updateSuccessMsg);
+  //     setSuccessState(true);
+  //   } else {
+  //     setSuccessState(false);
+  //   }
+  // }, [props.updateSuccess]);
 
   const handleClose = () => {
     setMessage(false);
@@ -315,13 +327,13 @@ function CustomerForm(props) {
             </Button>
           </div>
         </Grid>
-        {message && (
+        {props.updateSuccess && message && (
           <Notification
             message={props.updateSuccessMsg}
             messageType="success"
             open={message}
             handleClose={handleClose}
-          />
+            />
         )}
       </div>
     </>
