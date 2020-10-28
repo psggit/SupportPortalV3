@@ -20,23 +20,14 @@ import {
 import OrderCard from "../../../components/card";
 import { OrderSummaryItem } from "../../Cart/components/orderSummaryItem";
 import { fetchDeliverOrderSuccess, fetchKycListSuccess } from "./duck/actions";
+import ErrorMsg from "../../../components/errorMsg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  actionContainer: {
-    padding: theme.spacing(2),
-  },
   marginLeft: {
     marginLeft: "auto",
-  },
-  heading: {
-    fontSize: "16px",
-    lineHeight: "22px",
-  },
-  ListItems: {
-    color: "#010B13",
   },
   ListItemRoot: {
     width: "100%",
@@ -83,8 +74,6 @@ const OrderDetailsCard = (props) => {
     props.deliverOrderReasons(payload);
     props.fetchKycList();
   }, []);
-  //TODOS:@Purva - clean up mock data
-  // fetchKYCDetailsSuccess - should be returned from KYC details
 
   let { platform, customer_address } = {
     ...props.order,
@@ -263,6 +252,39 @@ const OrderDetailsCard = (props) => {
           </ListItem>
         </List>
       </OrderCard>
+      {props.cancelOrderFailure && (
+        <ErrorMsg
+          show={true}
+          message={
+            props.errorMsg !== "" ? props.errorMsg : "Something went wrong"
+          }
+          type={"error"}
+        />
+      )}
+
+      {props.cancelOrderSuccess && (
+        <ErrorMsg
+          show={true}
+          message={props.successMsg.message}
+          type={"success"}
+        />
+      )}
+      {props.deliverOrderFailed && (
+        <ErrorMsg
+          show={true}
+          message={
+            props.errorMsg !== "" ? props.errorMsg : "Something went wrong"
+          }
+          type={"error"}
+        />
+      )}
+      {props.deliverOrderSuccess && (
+        <ErrorMsg
+          show={true}
+          message={props.successMsg.message}
+          type={"success"}
+        />
+      )}
       <Dialog
         open={openCancel}
         onClose={handleClose}
@@ -300,10 +322,7 @@ const OrderDetailsCard = (props) => {
           </FormControl>
           {props.fetchCancellationSummarySuccess && cancellationSummary && (
             <div>
-              <OrderSummaryItem
-                title="Cancellation charges"
-                // value={props.cancelOrderSummaryData.total_cancellation_charges}
-              />
+              <OrderSummaryItem title="Cancellation charges" />
               <OrderSummaryItem
                 title="Total Cancellation Charges:"
                 value={props.cancelOrderSummaryData.total_cancellation_charges}
@@ -499,6 +518,11 @@ OrderDetailsCard.propTypes = {
   fetchCancellationSummaryFailed: PropTypes.bool,
   fetchCancellationSummaryProgress: PropTypes.bool,
   cancelOrder: PropTypes.func,
+  cancelOrderFailure: PropTypes.bool,
+  errorMsg: PropTypes.any,
+  deliverOrderFailed: PropTypes.bool,
+  successMsg: PropTypes.any,
+  deliverOrderSuccess: PropTypes.bool,
 };
 
 export { OrderDetailsCard };

@@ -11,6 +11,8 @@ import TopBar from "../../../components/topBar";
 import Notification from "../../../components/notification";
 import { useHistory } from "react-router-dom";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
+import Dialog from "../../../components/dialog";
+import TextField from "@material-ui/core/TextField";
 import {
   Table,
   Box,
@@ -66,11 +68,10 @@ const createData = ({ order_id, type, notes, created_at, created_by }) => {
 };
 
 function RetailerNotesComponent(props) {
-  console.log("[RetailerNotesComponent]", props);
   const classes = useStyles();
-  // console.log(history.location.state.orderId);
-  // const orderId = history.location.state.orderId;
   const history = useHistory();
+  const orderId = history.location.state.orderId;
+  const customerId = history.location.state.customerId;
 
   const [rows, setRowsData] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -78,6 +79,8 @@ function RetailerNotesComponent(props) {
   const [errorMessage, setErrorMessage] = useState("");
   const [showData, setShowData] = useState(false);
   const [value, setValue] = React.useState(0);
+  const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
+  const [noteData, setNoteData] = useState("");
 
   useEffect(() => {
     const payload = {
@@ -124,7 +127,26 @@ function RetailerNotesComponent(props) {
   };
 
   const handleBack = () => {
-    history.push(`/order-info/${props.orderId.order_id}`);
+    history.push(`/order-info/${orderId}`);
+  };
+
+  const handleTextChange = (e) => {
+    setNoteData(e.target.value);
+  };
+  const mountAddNote = () => {
+    setShowAddNoteDialog(true);
+  };
+  const UnmountAddNote = () => {
+    setShowAddNoteDialog(false);
+  };
+  const handleAddNoteSubmit = () => {
+    let payload = {
+      order_id: orderId,
+      type: "retailer",
+      notes: noteData,
+    };
+    props.createNotes(payload);
+    setShowAddNoteDialog(false);
   };
 
   const handleClose = () => {
@@ -165,11 +187,52 @@ function RetailerNotesComponent(props) {
           </Grid>
         </Paper>
         <div className={classes.row1}>
-          <p>CUSTOMER ID: {props.orderInfo.customer_id}</p>
+          <p>CUSTOMER ID: {customerId}</p>
           <div>
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="primary" onClick={mountAddNote}>
               Add Note
             </Button>
+            {showAddNoteDilog && (
+              <Dialog
+                title="ADD NOTE"
+                actions={[
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={UnmountAddNote}
+                    key="cancelBtn"
+                  >
+                    Cancel
+                  </Button>,
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    key="saveBtn"
+                    onClick={handleAddNoteSubmit}
+                  >
+                    Save
+                  </Button>,
+                ]}
+              >
+                <>
+                  <Grid>
+                    <p>ORDER ID: {orderId}</p>
+                  </Grid>
+                  <TextField
+                    id="outlined-multiline-static"
+                    onChange={handleTextChange}
+                    multiline
+                    rows={4}
+                    fullWidth
+                    variant="outlined"
+                    autoComplete="off"
+                    margin="normal"
+                    size="small"
+                    placeholder="Add notes"
+                  />
+                </>
+              </Dialog>
+            )}
           </div>
         </div>
         <Box width="85%" mx="auto">
@@ -242,6 +305,7 @@ RetailerNotesComponent.propTypes = {
   notesFail: PropTypes.bool,
   errorMsg: propTypes.any,
   orderId: PropTypes.any,
+  createNotes: PropTypes.func,
 };
 
 export { RetailerNotesComponent };

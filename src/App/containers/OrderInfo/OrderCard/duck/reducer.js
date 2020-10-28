@@ -45,6 +45,7 @@ const initialValue = {
   deliverOrderFailed: false,
   deliverOrderSuccess: false,
   errorMsg: "",
+  successMsg: "",
 };
 const orderDataReducer = createReducer(initialValue, {
   [fetchCancelReasonsSuccess]: (state, data) => ({
@@ -131,13 +132,14 @@ const orderDataReducer = createReducer(initialValue, {
     deliverOrderFailed: false,
     deliverOrderProgress: false,
     errorMsg: "",
+    successMsg: data.payload,
   }),
-  [deliverOrderFailed]: (state) => ({
+  [deliverOrderFailed]: (state, data) => ({
     ...state,
     deliverOrderSuccess: false,
     deliverOrderFailed: true,
     deliverOrderProgress: false,
-    errorMsg: "Something went wrong Please try again!",
+    errorMsg: "Something went wrong!",
   }),
   [deliverOrderProgress]: (state) => ({
     ...state,
@@ -151,13 +153,14 @@ const orderDataReducer = createReducer(initialValue, {
     cancelOrderFailure: false,
     cancelOrderProgress: false,
     errorMsg: "",
+    successMsg: data.payload,
   }),
-  [cancelOrderFailure]: (state) => ({
+  [cancelOrderFailure]: (state, data) => ({
     ...state,
     cancelOrderSuccess: false,
     cancelOrderFailure: true,
     cancelOrderProgress: false,
-    errorMsg: "Something went wrong Please try again!",
+    errorMsg: data.payload.message,
   }),
   [cancelOrderProgress]: (state) => ({
     ...state,
