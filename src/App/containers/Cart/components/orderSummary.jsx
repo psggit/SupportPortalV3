@@ -147,7 +147,7 @@ const OrderSummary = (props) => {
   return (
     <Box>
       <List dense disablePadding>
-        <ListItem dense disableGutters>
+        {/* <ListItem dense disableGutters>
           <ListItemText
             primary="Order Items"
             classes={{ primary: classes.listItemTextHead }}
@@ -157,11 +157,12 @@ const OrderSummary = (props) => {
               color="primary"
               endIcon={<ChevronRightIcon />}
               onClick={handleClickAdd}
+              disabled={props.confirm}
             >
               Add more
             </Button>
           )}
-        </ListItem>
+        </ListItem> */}
         {cartItems.map((value) => {
           return <CartItem value={value} key={value.sku_id} modify={false} />;
         })}
@@ -184,15 +185,16 @@ const OrderSummary = (props) => {
           value={orderInfo.total_additional_fee}
           type="button"
         >
-          {orderInfo.fee_details_struct.map((value) => {
-            return (
-              <OrderSummaryItem
-                title={value.fee_title}
-                value={value.fee_value_without_taxes}
-                key={value.fee_type}
-              />
-            );
-          })}
+          {orderInfo.fee_details_struct &&
+            orderInfo.fee_details_struct.map((value) => {
+              return (
+                <OrderSummaryItem
+                  title={value.fee_title}
+                  value={value.fee_value_without_taxes}
+                  key={value.fee_type}
+                />
+              );
+            })}
           {orderInfo.taxes && (
             <>
               <OrderSummaryItem

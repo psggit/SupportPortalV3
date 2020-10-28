@@ -1,5 +1,8 @@
 import { createReducer } from "@reduxjs/toolkit";
 import {
+  validateOrderSuccess,
+  validateOrderFailed,
+  validateOrderProgress,
   fetchCartSummarySuccess,
   fetchCartSummaryFailed,
   fetchCartSummaryProgress,
@@ -10,14 +13,22 @@ import {
 
 const initialValue = {
   cartSummary: null,
+  validateInfo: null,
   fetchCartSummaryProgress: false,
   fetchCartSummaryFailed: false,
   fetchCartSummarySuccess: false,
   fetchUpdateCartSuccess: false,
   fetchUpdateCartFailed: false,
   fetchUpdateCartProgress: false,
+  validateOrderSuccess: false,
+  validateOrderFailed: false,
+  validateOrderProgress: false,
+  fetchCancelCartSuccess: false,
+  fetchCancelCartFailed: false,
+  fetchCancelCartProgress: false,
   errorMsg: "",
   successMsg: "",
+  msg: "",
 };
 
 const cartReducer = createReducer(initialValue, {
@@ -42,25 +53,46 @@ const cartReducer = createReducer(initialValue, {
     fetchCartSummaryFailed: false,
     fetchCartSummarySuccess: false,
   }),
-  [fetchUpdateCartSuccess]: (state) => ({
+  [fetchUpdateCartSuccess]: (state, data) => ({
     ...state,
     fetchUpdateCartProgress: false,
     fetchUpdateCartFailed: false,
     fetchUpdateCartSuccess: true,
-    errorMsg: "",
+    msg: data.message,
   }),
-  [fetchUpdateCartFailed]: (state) => ({
+  [fetchUpdateCartFailed]: (state, data) => ({
     ...state,
     fetchUpdateCartProgress: false,
     fetchUpdateCartFailed: true,
     fetchUpdateCartSuccess: false,
-    errorMsg: "Something went wrong, please try again",
+    msg: data.message,
   }),
   [fetchUpdateCartProgress]: (state) => ({
     ...state,
     fetchUpdateCartProgress: true,
     fetchUpdateCartFailed: false,
     fetchUpdateCartSuccess: false,
+  }),
+  [validateOrderSuccess]: (state, data) => ({
+    ...state,
+    validateOrderProgress: false,
+    validateOrderFailed: false,
+    validateOrderSuccess: true,
+    errorMsg: "",
+    validateInfo: data.payload,
+  }),
+  [validateOrderFailed]: (state) => ({
+    ...state,
+    validateOrderProgress: false,
+    validateOrderFailed: true,
+    validateOrderSuccess: false,
+    errorMsg: "Something went wrong, please try again",
+  }),
+  [validateOrderProgress]: (state) => ({
+    ...state,
+    validateOrderProgress: true,
+    validateOrderFailed: false,
+    validateOrderSuccess: false,
   }),
 });
 

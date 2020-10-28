@@ -12,6 +12,9 @@ import {
   fetchSupportPersonListInProgress,
   fetchSupportPersonListSuccess,
   fetchSupportPersonListFailed,
+  fetchCancelCartSuccess,
+  fetchCancelCartFailed,
+  fetchCancelCartProgress,
 } from "./action";
 
 const initialState = {
@@ -27,9 +30,13 @@ const initialState = {
   fetchSupportPersonListInProgress: false,
   fetchSupportPersonListSuccess: false,
   fetchSupportPersonListFailed: false,
+  fetchCancelCartSuccess: false,
+  fetchCancelCartFailed: false,
+  fetchCancelCartProgress: false,
   orderList: null,
   supportPersonList: null,
   msg: "",
+  errorMsg: "",
 };
 
 const orderModificationReducer = createReducer(initialState, {
@@ -132,6 +139,26 @@ const orderModificationReducer = createReducer(initialState, {
       fetchSupportPersonListSuccess: false,
     };
   },
+  [fetchCancelCartSuccess]: (state, data) => ({
+    ...state,
+    fetchCancelCartFailed: false,
+    fetchCancelCartProgress: false,
+    fetchCancelCartSuccess: true,
+    errorMsg: "",
+  }),
+  [fetchCancelCartProgress]: (state) => ({
+    ...state,
+    fetchCancelCartFailed: false,
+    fetchCancelCartProgress: true,
+    fetchCancelCartSuccess: false,
+    errorMsg: "Something went wrong, please try again",
+  }),
+  [fetchCancelCartFailed]: (state) => ({
+    ...state,
+    fetchCancelCartFailed: true,
+    fetchCancelCartProgress: false,
+    fetchCancelCartSuccess: false,
+  }),
 });
 
 export { orderModificationReducer };

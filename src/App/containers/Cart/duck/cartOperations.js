@@ -1,4 +1,7 @@
 import {
+  validateOrderSuccess,
+  validateOrderFailed,
+  validateOrderProgress,
   fetchCartSummarySuccess,
   fetchCartSummaryFailed,
   fetchCartSummaryProgress,
@@ -6,7 +9,11 @@ import {
   fetchUpdateCartFailed,
   fetchUpdateCartProgress,
 } from "./actions";
-import { orderSummaryAPI, confirmCartAPI } from "../../../utils";
+import {
+  orderSummaryAPI,
+  confirmCartAPI,
+  listOrderModificationAPI,
+} from "../../../utils";
 
 const processResponse = () => {
   return (res) => {
@@ -27,6 +34,24 @@ const onSuccess = (dispatch) => {
 const onError = (dispatch) => {
   return (err) => {
     dispatch(fetchCartSummaryFailed(err));
+  };
+};
+
+const onSuccessValidate = (dispatch) => {
+  return (data) => {
+    dispatch(validateOrderSuccess(data));
+  };
+};
+
+const onErrorValidate = (dispatch) => {
+  return (err) => {
+    dispatch(validateOrderFailed(err));
+  };
+};
+
+const processResponseConfirm = () => {
+  return (res) => {
+    return res.json();
   };
 };
 
@@ -62,11 +87,24 @@ const updateCart = (reqBody) => {
     dispatch(fetchUpdateCartProgress());
     confirmCartAPI(
       reqBody,
-      processResponse(dispatch),
+      processResponseConfirm(dispatch),
       onSuccessConfirm(dispatch),
       onErrorConfirm(dispatch)
     );
   };
 };
 
-export { fetchSummary, updateCart };
+const validateCart = (reqBody) => {
+  console.log("[validate summary]", reqBody);
+  return (dispatch) => {
+    dispatch(validateOrderProgress());
+    listOrderModificationAPI(
+      reqBody,
+      processResponse(dispatch),
+      onSuccessValidate(dispatch),
+      onErrorValidate(dispatch)
+    );
+  };
+};
+
+export { fetchSummary, updateCart, validateCart };

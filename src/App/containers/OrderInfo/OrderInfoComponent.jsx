@@ -394,7 +394,7 @@ const OrderInfoComponent = (props) => {
             <Grid container spacing={4}>
               <Grid item xs={6}>
                 {props.fetchOrderInfoSuccess && (
-                  <CartContainer {...props} modifyCart={modifyCart} />
+                  <CartContainer modifyCart={modifyCart} />
                 )}
               </Grid>
               <Grid item xs={6} id="section1">

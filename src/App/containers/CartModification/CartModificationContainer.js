@@ -6,6 +6,7 @@ import {
   setCart,
   addSkuToCart,
   removeSkuFromCart,
+  fetchBrandPagination,
 } from "./duck";
 
 const mapStateToProps = (state) => {
@@ -40,6 +41,7 @@ const mapDispatchToProps = (dispatch) => {
     setCart: (products) => dispatch(setCart(products)),
     addSkuToCart: (sku) => dispatch(addSkuToCart(sku)),
     removeSkuFromCart: (sku) => dispatch(removeSkuFromCart(sku)),
+    fetchBrandPagination: (payload) => dispatch(fetchBrandPagination(payload)),
   };
 };
 

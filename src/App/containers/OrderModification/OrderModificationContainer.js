@@ -3,22 +3,8 @@ import { OrderModificationComponent } from "./OrderModificationComponent";
 import {
   fetchListOrderModification,
   sendSMSOperation,
-  // resolveOrderIssue,
-  // fetchSupportPersonList,
+  cancelOrderRequest,
 } from "./duck/operations";
-
-// fetchOrderSuccess,
-//   fetchOrderFailed,
-//   fetchOrderInProgress,
-//   assignOrderInProgress,
-//   assignOrderSuccess,
-//   assignOrderFailed,
-//   resolveOrderInProgress,
-//   resolveOrderSuccess,
-//   resolveOrderFailed,
-//   fetchSupportPersonListInProgress,
-//   fetchSupportPersonListSuccess,
-//   fetchSupportPersonListFailed,
 
 const mapStateToProps = (state) => {
   return {
@@ -37,8 +23,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchListOrderModification: (payload) => dispatch(fetchListOrderModification(payload)),
     sendSMSOperation: (orderId) => dispatch(sendSMSOperation(orderId)),
-    // resolveIssue: (orderId) => dispatch(resolveOrderIssue(orderId)),
-    // fetchSupportPerson: () => dispatch(fetchSupportPersonList()),
+    cancelOrderRequest: (orderId) => dispatch(cancelOrderRequest(orderId)),
   };
 };
 

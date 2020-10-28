@@ -6,8 +6,8 @@ import { Box } from "@material-ui/core";
 import TopBar from "../../components/topBar";
 import Loading from "../../components/loading";
 import Alert from "@material-ui/lab/Alert";
-import Icon from "@material-ui/core/Icon";
 import SendIcon from "@material-ui/icons/Send";
+import ClearIcon from "@material-ui/icons/Clear";
 import ErrorMsg from "../../components/errorMsg";
 import AutorenewIcon from "@material-ui/icons/Autorenew";
 
@@ -119,16 +119,26 @@ const OrderModificationComponent = (props) => {
     console.log("refreshOrder");
   };
 
+  const cancelOrder = (event, orderId) => {
+    console.log("cancelOrder");
+    props.cancelOrderRequest(orderId);
+  };
+
   let loading = props.fetchOrderInProgress;
   if (loading) {
     return <Loading message="Loading..." />;
   }
 
-  console.log(props);
+  // console.log(props);
 
   return (
     <div className={classes.formContainer}>
       <TopBar />
+      {/* <Box width="200px" display="flex">
+        <Alert severity="success">SUCCESS</Alert>
+        <Alert severity="error">CANCELLED</Alert>
+        <Alert severity="warning">PENDING</Alert>
+      </Box> */}
       <Box width="95%" mx="auto" className={classes.table} mt={4}>
         <TableContainer className={classes.TableContainer}>
           <Table size="small">
@@ -145,6 +155,7 @@ const OrderModificationComponent = (props) => {
                 <TableCell align="center">CANCELLED BY</TableCell>
                 <TableCell align="center">CANCELLED BY ID</TableCell>
                 <TableCell align="center">UPDATE STATUS</TableCell>
+                <TableCell align="center">CANCEL ORDER</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -197,10 +208,23 @@ const OrderModificationComponent = (props) => {
                           variant="outlined"
                           color="primary"
                           endIcon={<AutorenewIcon />}
-                          onClick={(event) => refreshOrder(event, data.order_id)}
+                          onClick={(event) =>
+                            refreshOrder(event, data.order_id)
+                          }
                           disabled={!(data.status == "pending")}
                         >
                           Update
+                        </Button>
+                      </TableCell>
+                      <TableCell>
+                        <Button
+                          variant="outlined"
+                          color="primary"
+                          endIcon={<ClearIcon />}
+                          onClick={(event) => cancelOrder(event, data.order_id)}
+                          disabled={!(data.status == "pending")}
+                        >
+                          Cancel
                         </Button>
                       </TableCell>
                     </TableRow>
@@ -238,6 +262,7 @@ const OrderModificationComponent = (props) => {
 OrderModificationComponent.propTypes = {
   fetchListOrderModification: PropTypes.func,
   sendSMSOperation: PropTypes.func,
+  cancelOrderRequest: PropTypes.func,
   fetchOrderSuccess: PropTypes.bool,
   fetchOrderInProgress: PropTypes.bool,
   sendSMSInProgress: PropTypes.bool,

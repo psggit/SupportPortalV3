@@ -3,9 +3,11 @@ import { createAction } from "@reduxjs/toolkit";
 const fetchOrderSuccess = createAction("fetchOrderSuccess");
 const fetchOrderFailed = createAction("fetchOrderFailed");
 const fetchOrderInProgress = createAction("fetchOrderInProgress");
+
 const sendSMSInProgress = createAction("sendSMSInProgress");
 const sendSMSSuccess = createAction("sendSMSSuccess");
 const sendSMSFailed = createAction("sendSMSFailed");
+
 const resolveOrderInProgress = createAction("resolveOrderInProgress");
 const resolveOrderSuccess = createAction("resolveOrderSuccess");
 const resolveOrderFailed = createAction("resolveOrderFailed");
@@ -18,6 +20,10 @@ const fetchSupportPersonListSuccess = createAction(
 const fetchSupportPersonListFailed = createAction(
   "fetchSupportPersonListFailed"
 );
+
+const fetchCancelCartSuccess = createAction("fetchCancelCartSuccess");
+const fetchCancelCartFailed = createAction("fetchCancelCartFailed");
+const fetchCancelCartProgress = createAction("fetchCancelCartProgress");
 
 export {
   fetchOrderSuccess,
@@ -32,8 +38,7 @@ export {
   fetchSupportPersonListInProgress,
   fetchSupportPersonListSuccess,
   fetchSupportPersonListFailed,
+  fetchCancelCartSuccess,
+  fetchCancelCartFailed,
+  fetchCancelCartProgress,
 };
-
-// fetch list
-// check status - success / pending / failed
-// trigger SMS

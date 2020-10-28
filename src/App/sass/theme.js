@@ -8,6 +8,12 @@ const newTheme = createMuiTheme({
     primary: {
       main: "#0086AD",
     },
+    secondary: {
+      main: "#696969",
+    },
+    secondary2: {
+      main: "#010B13",
+    },
   },
   typography: {
     fontFamily: font,

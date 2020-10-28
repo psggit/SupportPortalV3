@@ -1,2 +1,2 @@
 export { cartReducer } from "./reducer";
-export { fetchSummary, updateCart } from "./cartOperations";
+export { fetchSummary, updateCart, validateCart } from "./cartOperations";

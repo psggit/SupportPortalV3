@@ -110,7 +110,7 @@ const CartItem = (props) => {
           addItem={props.addItem}
           removeItem={props.removeItem}
         />
-        {props.modify && (
+        {/* {props.modify && (
           <IconButton
             aria-label="delete"
             color="primary"
@@ -119,7 +119,7 @@ const CartItem = (props) => {
           >
             <DeleteOutlineIcon size="small" fontSize="small" />
           </IconButton>
-        )}
+        )} */}
       </ListItem>
     );
 };
