@@ -515,6 +515,9 @@ const OrderInfoComponent = (props) => {
       {props.submitIssueSuccess && (
         <ErrorMsg show={true} message={props.successMsg} type="success" />
       )}
+      {props.createNotesSuccess && (
+        <ErrorMsg show={true} message={props.successMsg} type="success" />
+      )}
     </div>
   );
 };
