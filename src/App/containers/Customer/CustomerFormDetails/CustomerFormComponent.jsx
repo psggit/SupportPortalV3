@@ -10,7 +10,6 @@ import TopBar from "../../../components/topBar";
 import { FormControlLabel, RadioGroup } from "@material-ui/core";
 import FullWidthTabs from "../customerMenuBar";
 import { Grid } from "@material-ui/core";
-import Notification from "../../../components/notification";
 import { useHistory } from "react-router-dom";
 import ErrorMsg from "../../../components/errorMsg";
 
@@ -68,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   },
   generalForm: {
     marginBottom: "16px",
-  }
+  },
 }));
 
 function CustomerForm(props) {
@@ -79,14 +78,10 @@ function CustomerForm(props) {
   const [dob, setDob] = useState("");
   const [value, setSelectedValue] = useState("not-specified");
   const [signupDate, setSignupDate] = useState("");
-  const [message, setMessage] = useState("");
   const customerId = history.location.state.customerId;
   const orderId = history.location.state.orderId;
   const orderInfos = history.location.state.orderInfos;
   const customerNumber = history.location.state.customerNumber;
-
-  const [successMsgData, setMsg] = useState("");
-  const [successState, setSuccessState] = useState("");
 
   useEffect(() => {
     setConsumerDetail(orderInfos);
@@ -97,23 +92,6 @@ function CustomerForm(props) {
     }
     setSignupDate(orderInfos.customer_sign_up_date.slice(0, 10));
   }, []);
-
-  useEffect(() => {
-    setMessage(props.updateSuccess);
-  }, [props.updateSuccess]);
-
-  // useEffect(() => {
-  //   if (props.updateSuccess) {
-  //     setMsg(props.updateSuccessMsg);
-  //     setSuccessState(true);
-  //   } else {
-  //     setSuccessState(false);
-  //   }
-  // }, [props.updateSuccess]);
-
-  const handleClose = () => {
-    setMessage(false);
-  };
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
@@ -327,13 +305,15 @@ function CustomerForm(props) {
             </Button>
           </div>
         </Grid>
-        {props.updateSuccess && message && (
-          <Notification
+        {props.updateSuccess && (
+          <ErrorMsg
+            show={true}
             message={props.updateSuccessMsg}
-            messageType="success"
-            open={message}
-            handleClose={handleClose}
-            />
+            type={"success"}
+          />
+        )}
+        {props.updateFail && (
+          <ErrorMsg show={true} message={props.errorMsg} type={"error"} />
         )}
       </div>
     </>

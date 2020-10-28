@@ -31,7 +31,7 @@ const customerUpdateReducer = createReducer(initialState, {
     updateProgress: false,
     updateFail: true,
     updateSuccess: false,
-    errorMsg: "Something went wrong, please try again",
+    errorMsg: "Something went wrong! Please contact tech",
   }),
   [consumerUpdateProgress]: (state) => {
     return {

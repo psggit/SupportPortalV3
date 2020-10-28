@@ -101,7 +101,7 @@ export default function FullWidthTabs(props) {
         orderInfos: props.orderInfos,
       },
     });
-    location.reload();
+    //location.reload();
     setTimeout(() => {
       location.reload();
     }, 100);

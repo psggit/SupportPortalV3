@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
     updateSuccessMsg: state.update.updateSuccessMsg,
     orderId: state.home.orderId,
     customerId: state.order.orderInfo.customerId,
+    errorMsg: state.update.errorMsg,
   };
 };
 

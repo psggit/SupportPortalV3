@@ -124,11 +124,6 @@ function DaNotes(props) {
     }, 100);
   };
 
-  let loading = props.fetchProgress;
-  if (loading) {
-    return <Loading message="Loading..." />;
-  }
-
   return (
     <>
       <TopBar />
@@ -206,6 +201,7 @@ function DaNotes(props) {
             )}
           </div>
         </div>
+        {props.fetchProgress && <Loading message="Fetching data..." />}
         <Box width="85%" mx="auto">
           <TableContainer component={Paper}>
             <Table>
