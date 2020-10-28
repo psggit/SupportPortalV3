@@ -184,7 +184,7 @@ function DaNotes(props) {
               >
                 <>
                   <Grid>
-                    <p>ORDER ID: {orderId}</p>
+                    <p className={classes.orderId}>Order ID: {orderId}</p>
                   </Grid>
                   <TextField
                     id="outlined-multiline-static"
@@ -280,19 +280,6 @@ DaNotes.propTypes = {
 export { DaNotes };
 
 const useStyles = makeStyles((theme) => ({
-  navBar: {
-    display: "flex",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    padding: "24px",
-    color: "#696969",
-    fontWeight: "bold",
-    fontSize: "14px",
-    lineHeight: "21px",
-  },
-  navContent: {
-    marginLeft: "22px",
-  },
   row1: {
     display: "flex",
     justifyContent: "space-between",
@@ -302,32 +289,13 @@ const useStyles = makeStyles((theme) => ({
     color: "#696969",
     fontWeight: "bold",
   },
-  table: {
-    padding: "0px 80px",
-  },
-  formRoot: {
-    padding: 24,
-  },
-  formControlTextarea: {
-    width: "100%",
-    marginBottom: 24,
-    padding: 10,
-  },
-  selectIssue: {
-    display: "flex",
-    paddingLeft: "24px",
-    color: "#606060",
-  },
-  formControl: {
-    marginLeft: "16px",
-    minWidth: 120,
-  },
-  horizontalBar: {
-    backgroundColor: "#FFFFFF",
-  },
   root: {
     cursor: "pointer",
     alignItems: "center",
     paddingBottom: "5px",
+  },
+  orderId: {
+    fontSize: "16px",
+    color: "rgba(0, 0, 0, 0.54)",
   },
 }));
