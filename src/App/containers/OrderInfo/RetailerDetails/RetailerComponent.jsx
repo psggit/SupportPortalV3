@@ -28,7 +28,6 @@ const keyMap = {
 
 const RetailerDetails = (props) => {
   const [data, setData] = useState([]);
-
   useEffect(() => {
     const details = getListOfDataObjects(props.orderInfo, keysToRender);
     setData(details);
@@ -42,12 +41,24 @@ const RetailerDetails = (props) => {
       pathname: "/retailer-notes",
       state: {
         orderId: props.orderInfo.order_id,
+        customerId: props.orderInfo.customer_id,
       },
     });
   };
 
   const handleChangeRetailer = () => {
-    history.push("/change-retailer");
+    let skuId = props.orderInfo.cart_items.map((item) => item.sku_id);
+    history.push({
+      pathname: "/change-retailer",
+      state: {
+        orderId: props.orderInfo.order_id,
+        retailerId: props.orderInfo.retailer_id,
+        cityId: props.orderInfo.city_id,
+        skuId: skuId,
+        cartItems: props.orderInfo.cart_items,
+        orderInfo: props.orderInfo,
+      },
+    });
   };
 
   const actionButtons = [
@@ -56,6 +67,7 @@ const RetailerDetails = (props) => {
       color="primary"
       key="unassignBtn"
       onClick={handleChangeRetailer}
+      disabled={!props.orderInfo.order_status_button}
     >
       Change Retailer
     </Button>,
@@ -72,21 +84,6 @@ const RetailerDetails = (props) => {
   const retailerNotes = [
     // eslint-disable-next-line react/jsx-key
     <Button color="primary" endIcon={<ChevronRightIcon />} onClick={handleMore}>
-      More
-    </Button>,
-  ];
-
-  const handleChange = () => {
-    history.push("/change-retailer");
-  };
-
-  const subheadAction = [
-    <Button
-      color="primary"
-      endIcon={<ChevronRightIcon />}
-      onClick={handleChange}
-      key="moreBtn"
-    >
       More
     </Button>,
   ];

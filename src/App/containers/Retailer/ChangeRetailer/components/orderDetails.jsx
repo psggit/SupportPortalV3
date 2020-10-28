@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
@@ -6,6 +6,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { Typography } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 import { CartItem } from "./cartItem";
 
@@ -94,9 +95,8 @@ const useStyles = makeStyles((theme) => ({
 
 const OrderDetails = (props) => {
   const classes = useStyles();
-  const cartItem = props.orderInfo.cart_items;
-  console.clear();
-  console.log("orderDetail.jsx", props);
+  const history = useHistory();
+  const cartItem = history.location.state.cartItems;
 
   return (
     <Box>

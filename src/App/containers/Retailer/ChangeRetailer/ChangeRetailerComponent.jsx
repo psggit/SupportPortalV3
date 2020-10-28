@@ -1,8 +1,7 @@
 /* eslint-disable react/jsx-key */
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import TopBar from "../../../components/topBar";
@@ -13,6 +12,7 @@ import Tabs from "@material-ui/core/Tabs";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router-dom";
+import Loading from "../../../components/loading";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,28 +69,36 @@ const useStyles = makeStyles((theme) => ({
 const ChangeRetailerComponent = (props) => {
   const classes = useStyles();
   const history = useHistory();
+  const retailerId = history.location.state.retailerId;
+  const cityId = history.location.state.cityId;
+  const skuId = history.location.state.skuId;
+  const orderId = history.location.state.orderId;
+  const orderInfo = history.location.state.orderInfo;
 
   const [value, setValue] = React.useState(0);
 
   useEffect(() => {
-    let skuId = props.orderDetails.cart_items.map((item) => item.sku_id);
     const payload = {
       sku_ids: skuId,
-      retailer_id: parseInt(props.orderDetails.retailer_id),
-      city_id: props.orderDetails.city_id,
+      retailer_id: parseInt(retailerId),
+      city_id: cityId,
     };
     props.listRetailer(payload);
   }, []);
 
   const handleBack = () => {
-    history.push(`/order-info/${props.orderId}`);
+    history.push(`/order-info/${orderId}`);
   };
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  console.log("ChangeRetailerCardComponent", props);
+  let loading = props.listRetailerProgress;
+
+  if (loading) {
+    return <Loading message="Loading..." />;
+  }
 
   return (
     <div component="main" className={classes.root}>
@@ -127,6 +135,7 @@ const ChangeRetailerComponent = (props) => {
                 <RetailerCardContainer
                   retailerName={value.retailer_name}
                   value={value}
+                  orderInfos={orderInfo}
                 />
               </Grid>
             ))}
@@ -141,7 +150,7 @@ ChangeRetailerComponent.propTypes = {
   listRetailer: PropTypes.func,
   listRetailerSuccess: PropTypes.bool,
   listRetailerFailed: PropTypes.bool,
-  listRetailerProgres: PropTypes.bool,
+  listRetailerProgress: PropTypes.bool,
   orderDetails: PropTypes.object,
   orderId: PropTypes.string,
 };

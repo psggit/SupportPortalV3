@@ -27,7 +27,7 @@ const processResponse = () => {
       return res.json();
     }
     if (res.status === 400) {
-      throw new Error("invalid params");
+      throw new Error("Invalid Params");
     } else {
       throw new Error("Something went wrong, try again");
     }

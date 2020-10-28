@@ -18,6 +18,8 @@ const initialValue = {
   reassignRetailerFailed: false,
   reassignRetailerSuccess: false,
   errorMsg: "",
+  errorMessage: "",
+  successMsg: "",
 };
 
 const listRetailerReducer = createReducer(initialValue, {
@@ -47,15 +49,18 @@ const listRetailerReducer = createReducer(initialValue, {
     reassignRetailerProgress: false,
     reassignRetailerFailed: false,
     reassignRetailerSuccess: true,
-    errorMsg: "",
+    errorMessage: "",
+    successMsg: data.payload,
   }),
-  [reassignRetailerFailed]: (state) => ({
-    ...state,
-    reassignRetailerProgress: false,
-    reassignRetailerFailed: true,
-    reassignRetailerSuccess: false,
-    errorMsg: "Something went wrong, please try again",
-  }),
+  [reassignRetailerFailed]: (state) => {
+    return {
+      ...state,
+      reassignRetailerProgress: false,
+      reassignRetailerFailed: true,
+      reassignRetailerSuccess: false,
+      errorMessage: "Something went wrong",
+    };
+  },
   [reassignRetailerProgress]: (state) => ({
     ...state,
     reassignRetailerProgress: true,
