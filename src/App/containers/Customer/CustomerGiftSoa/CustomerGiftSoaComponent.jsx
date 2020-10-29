@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-key */
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import TableRow from "@material-ui/core/TableRow";
@@ -58,6 +59,7 @@ const createData = ({
 
 function CustomerGiftSoa(props) {
   const classes = useStyles();
+  const history = useHistory();
   const [showData, setShowData] = useState(false);
   const [rows, setRowsData] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -65,6 +67,7 @@ function CustomerGiftSoa(props) {
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
+    console.log("gift soa", props.customerNumber);
     const payload = {
       customer_contact_number: props.customerNumber,
       limit: rowsPerPage,
@@ -110,6 +113,7 @@ function CustomerGiftSoa(props) {
   };
 
   console.log(props);
+  console.log(history);
 
   let loading = props.giftSoaProgress;
   if (loading) {
@@ -123,6 +127,7 @@ function CustomerGiftSoa(props) {
         value={2}
         orderId={props.orderInfo.order_id}
         customerId={props.orderInfo.customer_id}
+        customerNumber={props.customerNumber}
       />
       <div className={classes.row1}>
         <p>CUSTOMER ID: {props.customerId}</p>

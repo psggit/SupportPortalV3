@@ -36,6 +36,8 @@ export default function FullWidthTabs(props) {
     history.push("/order-info/" + props.orderId);
   };
 
+  console.log(props);
+
   const handleGiftSoaChange = () => {
     history.push("/gift-soa");
     // history.push({

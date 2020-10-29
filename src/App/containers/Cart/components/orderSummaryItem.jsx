@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
   listItemTextHead: {
     fontWeight: 600,
     color: "#010B13",
-    fontSize: 16,
+    fontSize: 14,
   },
 }));
 

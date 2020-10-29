@@ -24,10 +24,10 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "underline",
   },
   cartItem: {
-    width: "50%",
     display: "inline-block",
-    float: "left",
     padding: "0 20px",
+    margin: "0 0 1em",
+    width: "100%",
   },
   ListItemText: {
     marginTop: 15,

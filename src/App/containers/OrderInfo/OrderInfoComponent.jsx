@@ -138,12 +138,20 @@ const OrderInfoComponent = (props) => {
   const history = useHistory();
   const classes = useStyles();
   let { orderId } = useParams();
+  const [modifyCart, setModifyCart] = useState("");
 
   useEffect(() => {
+    // console.log("ORDERINFO COmponenet", props);
     if (orderId === null || orderId == "") {
       history.push("/dashboard");
     } else {
       props.fetchOrderInfo(orderId);
+    }
+
+    if (history.location.state !== undefined) {
+      if ("modifyCartInfo" in history.location.state) {
+        setModifyCart(history.location.state.modifyCartInfo);
+      }
     }
   }, []);
 
@@ -385,7 +393,12 @@ const OrderInfoComponent = (props) => {
           <Grid item xs={8}>
             <Grid container spacing={4}>
               <Grid item xs={6}>
-                {props.fetchOrderInfoSuccess && <CartContainer {...props} />}
+                {props.fetchOrderInfoSuccess && (
+                  <CartContainer
+                    modifyCart={modifyCart}
+                    buttonState={!props.order.order_status_button}
+                  />
+                )}
               </Grid>
               <Grid item xs={6} id="section1">
                 {props.fetchOrderInfoSuccess && (

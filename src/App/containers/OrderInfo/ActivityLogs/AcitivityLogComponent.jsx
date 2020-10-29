@@ -28,27 +28,22 @@ const ActivityLogComponent = (props) => {
       More
     </Button>,
   ];
+  let arr = null;
 
   if (props.fetchLogSuccess) {
-    let arr = [];
     if (props.activityData) {
       arr = props.activityData.activity_logs;
     }
-    return (
-      <ActivityItem
-        arr={arr}
-        keysToRender={["notes", "created_at"]}
-        title={"ACTIVITY LOGS"}
-        cardActions={false}
-        subtitle={subheadAction}
-      />
-    );
-  } else {
-    if (props.fetchLogFailed) {
-      <ErrorMsg show={true} message={"Something went wrong"} type="error" />;
-    }
   }
-  return <p>Fetching data</p>;
+  return (
+    <ActivityItem
+      arr={arr}
+      keysToRender={["notes", "created_at"]}
+      title={"ACTIVITY LOGS"}
+      cardActions={false}
+      subtitle={subheadAction}
+    />
+  );
 };
 
 ActivityLogComponent.propTypes = {

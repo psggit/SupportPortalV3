@@ -1,37 +1,98 @@
 import { createReducer } from "@reduxjs/toolkit";
 import {
-  fetchOrderSuccess,
-  fetchOrderFailed,
-  fetchOrderProgress,
+  validateOrderSuccess,
+  validateOrderFailed,
+  validateOrderProgress,
+  fetchCartSummarySuccess,
+  fetchCartSummaryFailed,
+  fetchCartSummaryProgress,
+  fetchUpdateCartSuccess,
+  fetchUpdateCartFailed,
+  fetchUpdateCartProgress,
 } from "./actions";
 
 const initialValue = {
-  orderData: null,
-  fetchDetailsProgress: false,
-  fetchDetailsFail: false,
-  fetchDetailsStatus: false,
+  cartSummary: null,
+  validateInfo: null,
+  fetchCartSummaryProgress: false,
+  fetchCartSummaryFailed: false,
+  fetchCartSummarySuccess: false,
+  fetchUpdateCartSuccess: false,
+  fetchUpdateCartFailed: false,
+  fetchUpdateCartProgress: false,
+  validateOrderSuccess: false,
+  validateOrderFailed: false,
+  validateOrderProgress: false,
+  fetchCancelCartSuccess: false,
+  fetchCancelCartFailed: false,
+  fetchCancelCartProgress: false,
   errorMsg: "",
+  successMsg: "",
+  msg: "",
 };
 
 const cartReducer = createReducer(initialValue, {
-  [fetchOrderSuccess]: (state, payload) => ({
+  [fetchCartSummarySuccess]: (state, data) => ({
     ...state,
-    fetchDetailsProgress: false,
-    fetchDetailsFail: false,
-    fetchDetailsStatus: true,
+    fetchCartSummaryProgress: false,
+    fetchCartSummaryFailed: false,
+    fetchCartSummarySuccess: true,
     errorMsg: "",
-    orderData: payload.data,
+    cartSummary: data.payload,
   }),
-  [fetchOrderFailed]: (state) => ({
+  [fetchCartSummaryFailed]: (state) => ({
     ...state,
-    fetchDetailsProgress: false,
-    fetchDetailsFail: true,
-    fetchDetailsStatus: false,
+    fetchCartSummaryProgress: false,
+    fetchCartSummaryFailed: true,
+    fetchCartSummarySuccess: false,
     errorMsg: "Something went wrong, please try again",
   }),
-  [fetchOrderProgress]: (state) => ({
+  [fetchCartSummaryProgress]: (state) => ({
     ...state,
-    fetchDetailsProgress: true,
+    fetchCartSummaryProgress: true,
+    fetchCartSummaryFailed: false,
+    fetchCartSummarySuccess: false,
+  }),
+  [fetchUpdateCartSuccess]: (state, data) => ({
+    ...state,
+    fetchUpdateCartProgress: false,
+    fetchUpdateCartFailed: false,
+    fetchUpdateCartSuccess: true,
+    msg: data.message,
+  }),
+  [fetchUpdateCartFailed]: (state, data) => ({
+    ...state,
+    fetchUpdateCartProgress: false,
+    fetchUpdateCartFailed: true,
+    fetchUpdateCartSuccess: false,
+    msg: data.message,
+  }),
+  [fetchUpdateCartProgress]: (state) => ({
+    ...state,
+    fetchUpdateCartProgress: true,
+    fetchUpdateCartFailed: false,
+    fetchUpdateCartSuccess: false,
+  }),
+  [validateOrderSuccess]: (state, data) => ({
+    ...state,
+    validateOrderProgress: false,
+    validateOrderFailed: false,
+    validateOrderSuccess: true,
+    errorMsg: "",
+    validateInfo: data.payload,
+  }),
+  [validateOrderFailed]: (state) => ({
+    ...state,
+    validateOrderProgress: false,
+    validateOrderFailed: true,
+    validateOrderSuccess: false,
+    errorMsg: "Something went wrong, please try again",
+  }),
+  [validateOrderProgress]: (state) => ({
+    ...state,
+    validateOrderProgress: true,
+    validateOrderFailed: false,
+    validateOrderSuccess: false,
   }),
 });
 

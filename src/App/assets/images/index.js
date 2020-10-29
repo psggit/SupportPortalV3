@@ -3,3 +3,7 @@ export const logo = require("./logo.svg");
 export const menuIcon = require("./menuIcon.svg");
 export const searchIcon = require("./searchIcon.svg");
 export const resolveIcon = require("./resolveIcon.svg");
+export const sendIcon = require("./sendIcon.svg");
+export const markerIcon = require("./markerIcon.svg");
+export const markerIconConsumer = require("./markerIconConsumer.svg");
+export const markerIconDA = require("./markerIconDA.svg");

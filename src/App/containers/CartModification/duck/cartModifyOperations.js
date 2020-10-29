@@ -5,6 +5,7 @@ import {
   fetchBrandSuccess,
   fetchBrandFailed,
   fetchBrandProgress,
+  brandPagination,
   updateFromCart,
 } from "./actions";
 import { genresAPI, brandsAPI } from "../../../utils";
@@ -49,6 +50,12 @@ const onSuccessBrand = (dispatch) => {
   };
 };
 
+const onSuccessBrandPagination = (dispatch) => {
+  return (data) => {
+    dispatch(brandPagination(data));
+  };
+};
+
 const onErrorBrand = (dispatch) => {
   return (err) => {
     dispatch(fetchBrandFailed(err));
@@ -67,10 +74,21 @@ const fetchBrand = (reqBody) => {
   };
 };
 
+const fetchBrandPagination = (reqBody) => {
+  return (dispatch) => {
+    dispatch(fetchBrandProgress()),
+      brandsAPI(
+        reqBody,
+        processResponse(dispatch),
+        onSuccessBrandPagination(dispatch),
+        onErrorBrand(dispatch)
+      );
+  };
+};
+
 const setCart = (products) => {
   return (dispatch) => {
     let newObj = {};
-    // console.log(products, dispatch);
     products.map((value) => {
       newObj[value.sku_id] = value;
     });
@@ -78,4 +96,4 @@ const setCart = (products) => {
   };
 };
 
-export { fetchGenre, fetchBrand, setCart };
+export { fetchGenre, fetchBrand, setCart, fetchBrandPagination };

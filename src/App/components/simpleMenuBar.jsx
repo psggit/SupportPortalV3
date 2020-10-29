@@ -9,7 +9,7 @@ import { useHistory } from "react-router-dom";
 
 SimpleMenuBar.propTypes = {
   labels: PropTypes.array,
-  orderId: PropTypes.number,
+  orderId: PropTypes.any,
   children: PropTypes.any,
 };
 
@@ -19,6 +19,13 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     color: theme.palette.primary.main,
     height: 64,
+    position: "relative",
+    zIndex: 1,
+    boxShadow: "none",
+    borderBottom: "1px solid #e5e5e5",
+  },
+  header: {
+    height: "100vh",
   },
 }));
 
@@ -33,7 +40,7 @@ export default function SimpleMenuBar(props) {
   return (
     <div>
       <AppBar position="static" className={classes.root}>
-        <Grid alignItems="center" container>
+        <Grid alignItems="center" container className={classes.header}>
           <Grid item xs={1}>
             <Button
               color="primary"

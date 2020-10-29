@@ -16,6 +16,8 @@ const removeSkuFromCart = createAction("removeSkuFromCart");
 
 const updateFromCart = createAction("updateFromCart");
 
+const brandPagination = createAction("brandPagination");
+
 export {
   fetchGenreSuccess,
   fetchGenreFailed,
@@ -26,4 +28,5 @@ export {
   addSkuToCart,
   removeSkuFromCart,
   updateFromCart,
+  brandPagination,
 };

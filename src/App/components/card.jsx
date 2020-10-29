@@ -6,6 +6,7 @@ import CardActions from "@material-ui/core/CardActions";
 import { makeStyles } from "@material-ui/core/styles";
 
 import PropTypes from "prop-types";
+import { Box } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   root: {
     fontFamily: theme.typography.fontFamily,
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   cardContent: {
-    "& > div": {
+    "& > .MuiBox-root": {
       fontSize: 16,
       color: "#606060",
       width: "100%",
@@ -71,9 +72,10 @@ CustomCard.propTypes = {
   actions: PropTypes.array,
   children: PropTypes.any,
   subheader: PropTypes.any,
+  cardFooter: PropTypes.any,
 };
 export default function CustomCard(props) {
-  const { title, actions, children, subheader } = props;
+  const { title, actions, children, subheader, cardFooter } = props;
   const classes = useStyles();
   return (
     <Card className={classes.root}>
@@ -102,6 +104,7 @@ export default function CustomCard(props) {
       ) : (
         ""
       )}
+      <Box mt={2}>{cardFooter}</Box>
     </Card>
   );
 }

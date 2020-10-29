@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -33,11 +32,12 @@ const useStyles = makeStyles(() => ({
 
 const OrderDetailsComponent = (props) => {
   const history = useHistory();
+  // console.log("OrderDetailsComponent ", props.payloadInfo);
   useEffect(() => {
-    if (props.payload === undefined) {
+    if (props.payloadInfo === undefined) {
       history.push("/dashboard");
     } else {
-      props.fetchOrderDetails(props.payload.payload);
+      props.fetchOrderDetails(props.payloadInfo);
     }
   }, []);
 
@@ -185,7 +185,7 @@ OrderDetailsComponent.propTypes = {
   fetchOrderDetails: PropTypes.func,
   orderId: PropTypes.any,
   orderData: PropTypes.object,
-  payload: PropTypes.any,
+  payloadInfo: PropTypes.any,
   fetchDetailsProgress: PropTypes.bool,
   fetchDetailsSuccess: PropTypes.bool,
 };

@@ -1,14 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
-import { Button, Grid, List, LinearProgress } from "@material-ui/core";
+import {
+  Button,
+  Grid,
+  List,
+  LinearProgress,
+  Drawer,
+  ListItem,
+  Divider,
+} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import TopBar from "../../components/topBar";
 import { CartItemComponent } from "./components/cartItem";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,15 +35,38 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
   },
   btn: {
-    textDecoration: "underline",
+    color: "#696969",
   },
-  newspaper: {
-    height: 380,
+  cartItemContainer: {
+    height: "55vh",
     overflowY: "auto",
+  },
+  masonry: {
     padding: 20,
+    columnCount: 2,
+    columnGap: "1em",
   },
   marginRight: {
     marginRight: 10,
+  },
+  active: {
+    color: "#010B13",
+  },
+  list: {
+    width: 250,
+    padding: 20,
+  },
+  ListItemRoot: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  ListItem: {
+    display: "flex",
+    justifyContent: "space-between",
+    borderBottom: "1px solid #C7C7C7",
+  },
+  ListItemName: {
+    width: "auto",
   },
 }));
 
@@ -67,15 +99,31 @@ TabPanel.propTypes = {
 const CartModificationComponent = (props) => {
   const classes = useStyles();
   const history = useHistory();
-  let products = props.products;
+  const boxRef = useRef(null);
+  const [currentlyChecked, setCurrentlyChecked] = useState();
+  const [limit] = useState(20);
+  const [offset, setOffset] = useState(0);
+  const [state, setState] = useState({ right: false });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
+
+  let products = history.location.state.products;
+  let anchor = "right";
   useEffect(() => {
-    // console.log("cartModification orderData", props);
-    //
     let payload = {
-      city_id: 5,
-      state_id: 4,
-      retailer_id: 436,
-      gps: "13.00712998686621,80.25632254779339",
+      city_id: history.location.state.city_id,
+      state_id: history.location.state.state_id,
+      retailer_id: parseInt(history.location.state.retailerId),
+      gps: history.location.state.gps,
     };
     props.setCart(products);
     props.fetchGenre(payload);
@@ -84,15 +132,17 @@ const CartModificationComponent = (props) => {
   useEffect(() => {
     if (props.fetchGenreSuccess) {
       let brandpayload = {
-        city_id: 5,
-        state_id: 4,
-        retailer_id: 436,
+        city_id: history.location.state.city_id,
+        state_id: history.location.state.state_id,
+        retailer_id: parseInt(history.location.state.retailerId),
+        gps: history.location.state.gps,
         genre_id: props.genreData[0].id,
-        gps: "13.00712998686621,80.25632254779339",
-        offset: 0,
-        limit: 20,
+        offset: offset,
+        limit: limit,
       };
       props.fetchBrand(brandpayload);
+      setCurrentlyChecked(props.genreData[0].id);
+      setOffset(0);
     }
   }, [props.fetchGenreSuccess]);
 
@@ -102,36 +152,111 @@ const CartModificationComponent = (props) => {
 
   const addItems = () => {
     //call fetch summary API
+    let cartItem = [];
+
+    Object.keys(props.cartProducts).forEach((value) => {
+      cartItem.push({
+        sku_id: parseInt(value),
+        count: props.cartProducts[value].ordered_count,
+      });
+    });
+
+    let payload = {
+      order_id: props.orderId,
+      is_hw_enabled: false,
+      is_gw_enabled: false,
+      items: cartItem,
+    };
+    history.push({
+      pathname: "/order-info/" + history.location.state.orderId,
+      state: {
+        modifyCartInfo: payload,
+      },
+    });
   };
 
-  // console.log(props);
-
   const addItem = (event, value) => {
-    // console.log("addItem", value);
     props.addSkuToCart(value);
   };
 
   const removeItem = (event, value) => {
-    // console.log("remvoveItem", value);
     props.removeSkuFromCart(value);
   };
 
   const handleGenre = (event, genreId) => {
+    setCurrentlyChecked(genreId);
+    setOffset(0);
     let brandpayload = {
-      city_id: 5,
-      state_id: 4,
-      retailer_id: 436,
+      city_id: history.location.state.city_id,
+      state_id: history.location.state.state_id,
+      retailer_id: parseInt(history.location.state.retailerId),
+      gps: history.location.state.gps,
       genre_id: genreId,
-      gps: "13.00712998686621,80.25632254779339",
       offset: 0,
-      limit: 20,
+      limit: limit,
     };
     props.fetchBrand(brandpayload);
   };
 
+  const handleClick = () => {
+    //load more items
+    let brandpayload = {
+      city_id: history.location.state.city_id,
+      state_id: history.location.state.state_id,
+      retailer_id: parseInt(history.location.state.retailerId),
+      gps: history.location.state.gps,
+      genre_id: currentlyChecked,
+      offset: offset + limit,
+      limit: limit,
+    };
+    setOffset(offset + limit);
+    props.fetchBrandPagination(brandpayload);
+  };
+
+  let disableAddBtn = false;
+  if (props.fetchGenreSuccess) {
+    disableAddBtn = Object.keys(props.cartProducts).length == 0 ? true : false;
+  }
+
   return (
     <Container component="main">
       <TopBar />
+      <Drawer
+        anchor={anchor}
+        open={state[anchor]}
+        onClose={toggleDrawer(anchor, false)}
+      >
+        <Box className={classes.list}>
+          <Typography>Cart Products</Typography>
+          <List>
+            <div className={classes.ListItemRoot}>
+              <ListItem className={classes.ListItemName} disableGutters>
+                Item
+              </ListItem>
+              <ListItem className={classes.ListItemName} disableGutters>
+                Qty
+              </ListItem>
+            </div>
+            <Divider />
+            {props.fetchGenreSuccess &&
+              Object.keys(props.cartProducts).map((value) => {
+                return (
+                  <div
+                    key={props.cartProducts[value]}
+                    className={classes.ListItem}
+                  >
+                    <ListItem className={classes.ListItemName} disableGutters>
+                      {props.cartProducts[value].brand_name}
+                    </ListItem>
+                    <ListItem className={classes.ListItemName} disableGutters>
+                      {props.cartProducts[value].ordered_count}
+                    </ListItem>
+                  </div>
+                );
+              })}
+          </List>
+        </Box>
+      </Drawer>
       <Box className={classes.boxContainer}>
         <Grid alignItems="baseline" container>
           <Grid item xs={1}>
@@ -143,29 +268,39 @@ const CartModificationComponent = (props) => {
               Back
             </Button>
           </Grid>
-          <Grid item xs={11}>
-            <p>RETAILER NAME: {props.retailer_name}</p>
+          <Grid item xs={10}>
+            <p>RETAILER NAME: {history.location.state.retailer_name}</p>
+          </Grid>
+          <Grid item xs={1}>
+            <Button
+              color="primary"
+              startIcon={<ShoppingCartIcon />}
+              onClick={toggleDrawer(anchor, true)}
+            >
+              Cart
+            </Button>
           </Grid>
         </Grid>
       </Box>
-      <Box>
-        <Grid item xs={12}>
-          {props.fetchGenreSuccess &&
-            props.genreData.map((value) => {
-              return (
-                <Button
-                  key={value.id}
-                  onClick={(event) => handleGenre(event, value.id)}
-                >
-                  {value.name}
-                </Button>
-              );
-            })}
-        </Grid>
-        {props.fetchBrandProgress && <LinearProgress />}
+      <Box display="flex" alignItems="center" height={"60px"}>
+        {props.fetchGenreSuccess &&
+          props.genreData.map((value) => {
+            return (
+              <Button
+                key={value.id}
+                onClick={(event) => handleGenre(event, value.id)}
+                className={
+                  currentlyChecked == value.id ? classes.active : classes.btn
+                }
+              >
+                {value.name}
+              </Button>
+            );
+          })}
       </Box>
-      <Box mt={4}>
-        <List className={classes.newspaper}>
+      {props.fetchBrandProgress && <LinearProgress />}
+      <Box className={classes.cartItemContainer} ref={boxRef}>
+        <List className={classes.masonry}>
           {props.fetchBrandSuccess &&
             Object.entries(props.brandData).map((k) => {
               return (
@@ -179,6 +314,11 @@ const CartModificationComponent = (props) => {
               );
             })}
         </List>
+        {props.fetchBrandSuccess && (
+          <Button onClick={handleClick} fullWidth>
+            Load more
+          </Button>
+        )}
       </Box>
       <Box m={1} display="flex" justifyContent="flex-end">
         <Button
@@ -189,7 +329,12 @@ const CartModificationComponent = (props) => {
         >
           Cancel
         </Button>
-        <Button variant="contained" color="primary" onClick={() => addItems()}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => addItems()}
+          disabled={disableAddBtn}
+        >
           Add Items
         </Button>
       </Box>
@@ -214,6 +359,7 @@ CartModificationComponent.propTypes = {
   brandData: PropTypes.array,
   products: PropTypes.array,
   cartProducts: PropTypes.object,
+  fetchBrandPagination: PropTypes.func,
 };
 
 export { CartModificationComponent };

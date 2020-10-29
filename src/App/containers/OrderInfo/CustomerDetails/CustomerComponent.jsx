@@ -10,6 +10,52 @@ import { getListOfDataObjects } from "../../../utils/helpers";
 import { useHistory } from "react-router-dom";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  ListItemRoot: {
+    width: "100%",
+    borderBottom: "1px solid #E5E5E5",
+    fontSize: 16,
+    color: "#606060",
+  },
+  ListCustomerItem: {
+    width: "100%",
+    fontSize: 16,
+    color: "#606060",
+  },
+  ListItemTextRoot: {
+    wordBreak: "break-word",
+  },
+  ListItemTextLabel: {
+    width: "70%",
+  },
+  ListItemTextValue: {
+    width: "30%",
+  },
+  formRoot: {
+    padding: 24,
+  },
+  formControlTextarea: {
+    width: "100%",
+    marginBottom: 24,
+    padding: 10,
+  },
+  selectIssue: {
+    display: "flex",
+    paddingLeft: "24px",
+    color: "#606060",
+  },
+  formControl: {
+    marginLeft: "16px",
+    minWidth: 120,
+  },
+}));
+
 const keysToRender = [
   "customer_id",
   "customer_name",
