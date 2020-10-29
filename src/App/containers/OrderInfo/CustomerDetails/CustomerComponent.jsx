@@ -9,6 +9,7 @@ import ActivityItem from "../../../components/activityItems";
 import { getListOfDataObjects } from "../../../utils/helpers";
 import { useHistory } from "react-router-dom";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -53,10 +54,6 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "16px",
     minWidth: 120,
   },
-  // moreButton: {
-  //   marginLeft: "200px",
-  //   marginTop: "-40px",
-  // },
 }));
 
 const keysToRender = [
@@ -84,13 +81,8 @@ const keyMap = {
 
 const CustomerDetails = (props) => {
   const history = useHistory();
-  const classes = useStyles();
-
-  //const [customerDetailsData, setCustomerDetailsData] = useState([]);
-
   const handleChange = () => {
-    // history.push("/customer-detail");
-    history.push("/gift-soa");
+    history.push("/customer-detail");
   };
 
   const handleNotesChange = () => {
@@ -121,7 +113,6 @@ const CustomerDetails = (props) => {
 
   const subheadAction = [
     <Button
-      className={classes.moreButton}
       color="primary"
       endIcon={<ChevronRightIcon />}
       onClick={handleChange}
@@ -132,7 +123,6 @@ const CustomerDetails = (props) => {
 
   const subheadNotesAction = [
     <Button
-      className={classes.moreButton}
       color="primary"
       endIcon={<ChevronRightIcon />}
       onClick={handleNotesChange}

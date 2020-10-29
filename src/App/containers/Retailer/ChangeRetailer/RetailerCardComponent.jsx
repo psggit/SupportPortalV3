@@ -5,13 +5,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Box from "@material-ui/core/Box";
 import { OrderDetails } from "./components/orderDetails";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import Dialog from "../../../components/dialog";
-
-import { Button, Typography, List } from "@material-ui/core";
+import { Button } from "@material-ui/core";
+import ErrorMsg from "../../../components/errorMsg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,7 +67,6 @@ const useStyles = makeStyles((theme) => ({
 
 const RetailerCardComponent = (props) => {
   useEffect(() => {
-    // console.clear();
     console.dir(props);
   }, []);
 
@@ -87,13 +83,13 @@ const RetailerCardComponent = (props) => {
 
   const handleConfirm = () => {
     const payload = {
-      order_id: props.orderInfo.order_id,
+      order_id: props.orderInfos.order_id,
       retailer_id: parseInt(props.value.retailer_id),
       retailer_name: props.value.retailer_name,
-      warehouse_id: parseInt(props.orderInfo.warehouse_id),
-      delivery_status: props.orderInfo.delivery_status,
-      assigned_delivery_agent: parseInt(props.orderInfo.delivery_agent_id),
-      reserved_for_da_id: parseInt(props.orderInfo.delivery_agent_id),
+      warehouse_id: parseInt(props.orderInfos.warehouse_id),
+      delivery_status: props.orderInfos.delivery_status,
+      assigned_delivery_agent: parseInt(props.orderInfos.delivery_agent_id),
+      reserved_for_da_id: parseInt(props.orderInfos.delivery_agent_id),
       cancellation_reason: "",
     };
     props.reassignRetailer(payload);
@@ -144,6 +140,24 @@ const RetailerCardComponent = (props) => {
             }
           </Dialog>
         )}
+        {props.reassignRetailerFailed && (
+          <ErrorMsg
+            show={true}
+            message={
+              props.errorMessage !== ""
+                ? props.errorMessage
+                : "Something went wrong"
+            }
+            type={"error"}
+          />
+        )}
+        {props.reassignRetailerSuccess && (
+          <ErrorMsg
+            show={true}
+            message={props.successMsg.message}
+            type={"success"}
+          />
+        )}
       </CardContent>
     </Card>
   );
@@ -151,11 +165,15 @@ const RetailerCardComponent = (props) => {
 
 RetailerCardComponent.propTypes = {
   fetchOrderDetails: PropTypes.func,
-  orderInfo: PropTypes.object,
+  orderInfos: PropTypes.object,
   totalDa: PropTypes.string,
   freeDa: PropTypes.string,
   reassignRetailer: PropTypes.func,
   value: PropTypes.object,
+  reassignRetailerFailed: PropTypes.bool,
+  errorMessage: PropTypes.string,
+  reassignRetailerSuccess: PropTypes.bool,
+  successMsg: PropTypes.any,
 };
 
 export { RetailerCardComponent };
