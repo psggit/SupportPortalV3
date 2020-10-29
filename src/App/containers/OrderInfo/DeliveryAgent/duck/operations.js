@@ -18,14 +18,24 @@ import { daListAPI } from "../../../../utils/daListAPI";
 import { unassignDaAPI } from "../../../../utils/unassignDaAPI";
 import { reserveOrderAPI } from "../../../../utils";
 
+// const processResponse = () => {
+//   // console.log("[processResponse]");
+//   return (res) => {
+//     if (res.ok) {
+//       return res.json();
+//     }
+//     if (res.status === 400) {
+//       throw new Error("invalid params");
+//     } else {
+//       throw new Error("Something went wrong, try again");
+//     }
+//   };
+// };
+
 const processResponse = () => {
-  // console.log("[processResponse]");
   return (res) => {
-    if (res.ok) {
+    if (res.status === 200) {
       return res.json();
-    }
-    if (res.status === 400) {
-      throw new Error("invalid params");
     } else {
       throw new Error("Something went wrong, try again");
     }

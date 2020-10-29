@@ -119,13 +119,13 @@ const orderInfoReducer = createReducer(initialValue, {
     createNotesSuccess: false,
     errorMsg: err,
   }),
-  [createNotesSuccess]: (state) => {
+  [createNotesSuccess]: (state, data) => {
     return {
       ...state,
       createNotesProgress: false,
       createNotesFailure: false,
       createNotesSuccess: true,
-      errorMsg: "",
+      successMsg: data.payload.message,
     };
   },
   [connectCallProgress]: (state) => ({

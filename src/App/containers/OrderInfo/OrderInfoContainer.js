@@ -33,6 +33,7 @@ const mapStateToProps = (state) => {
     fetchIssueTypesFailed: state.order.orderInfo.fetchIssueTypesFailed,
     issueTypes: state.order.orderInfo.issueTypes,
     submitIssueSuccess: state.order.orderInfo.submitIssueSuccess,
+    createNotesSuccess: state.order.orderInfo.createNotesSuccess,
   };
 };
 

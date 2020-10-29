@@ -10,7 +10,8 @@ import TopBar from "../../../components/topBar";
 import { FormControlLabel, RadioGroup } from "@material-ui/core";
 import FullWidthTabs from "../customerMenuBar";
 import { Grid } from "@material-ui/core";
-import Notification from "../../../components/notification";
+import { useHistory } from "react-router-dom";
+import ErrorMsg from "../../../components/errorMsg";
 
 const BlueRadio = withStyles({
   root: {
@@ -66,37 +67,31 @@ const useStyles = makeStyles((theme) => ({
   },
   generalForm: {
     marginBottom: "16px",
-  }
+  },
 }));
 
 function CustomerForm(props) {
   const classes = useStyles();
+  const history = useHistory();
   const [consumerDetail, setConsumerDetail] = useState("");
-  // console.log("useffect", consumerDetail);
   const [customerName, setCustomerName] = useState("");
   const [dob, setDob] = useState("");
   const [value, setSelectedValue] = useState("not-specified");
   const [signupDate, setSignupDate] = useState("");
-  const [message, setMessage] = useState("");
+  const customerId = history.location.state.customerId;
+  const orderId = history.location.state.orderId;
+  const orderInfos = history.location.state.orderInfos;
+  const customerNumber = history.location.state.customerNumber;
 
   useEffect(() => {
-    setConsumerDetail(props.orderInfo);
-    setCustomerName(props.orderInfo.customer_name);
-    setDob(props.orderInfo.customer_dob.slice(0, 10));
-    if (props.orderInfo.customer_gender.length !== 0) {
-      setSelectedValue(props.orderInfo.customer_gender);
+    setConsumerDetail(orderInfos);
+    setCustomerName(orderInfos.customer_name);
+    setDob(orderInfos.customer_dob.slice(0, 10));
+    if (orderInfos.customer_gender.length !== 0) {
+      setSelectedValue(orderInfos.customer_gender);
     }
-    setSignupDate(props.orderInfo.customer_sign_up_date.slice(0, 10));
-    //setSignupDate(Moment(props.orderInfo.customer_sign_up_date).format("DD/MM/YYYY"));
+    setSignupDate(orderInfos.customer_sign_up_date.slice(0, 10));
   }, []);
-
-  useEffect(() => {
-    setMessage(props.updateSuccess);
-  }, [props.updateSuccess]);
-
-  const handleClose = () => {
-    setMessage(false);
-  };
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
@@ -110,7 +105,7 @@ function CustomerForm(props) {
 
   const handleSave = () => {
     const payload = {
-      consumer_id: parseInt(props.orderInfo.customer_id),
+      consumer_id: parseInt(customerId),
       dob: dob,
       gender: value,
       name: customerName,
@@ -118,22 +113,19 @@ function CustomerForm(props) {
     props.updateConsumer(payload);
   };
 
-  // let loading = props.soaProgress;
-  // if (loading) {
-  //   return <Loading message="Loading..." />;
-  // }
-
   return (
     <>
       <TopBar />
       <div className={classes.formContainer}>
         <FullWidthTabs
           value={0}
-          orderId={props.orderInfo.order_id}
-          customerId={props.orderInfo.customer_id}
+          orderId={orderId}
+          customerId={customerId}
+          customerNumber={customerNumber}
+          orderInfos={orderInfos}
         />
         <div className={classes.section1}>
-          <p>CUSTOMER ID: {props.orderInfo.customer_id}</p>
+          <p>CUSTOMER ID: {customerId}</p>
         </div>
         <Grid container className={classes.section2}>
           <Grid container spacing={2} className={classes.generalForm}>
@@ -313,13 +305,15 @@ function CustomerForm(props) {
             </Button>
           </div>
         </Grid>
-        {message && (
-          <Notification
+        {props.updateSuccess && (
+          <ErrorMsg
+            show={true}
             message={props.updateSuccessMsg}
-            messageType="success"
-            open={message}
-            handleClose={handleClose}
+            type={"success"}
           />
+        )}
+        {props.updateFail && (
+          <ErrorMsg show={true} message={props.errorMsg} type={"error"} />
         )}
       </div>
     </>

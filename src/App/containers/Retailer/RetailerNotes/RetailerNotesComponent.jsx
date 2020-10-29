@@ -9,6 +9,7 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import TopBar from "../../../components/topBar";
 import Notification from "../../../components/notification";
+import Loading from "../../../components/loading";
 import { useHistory } from "react-router-dom";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import Dialog from "../../../components/dialog";
@@ -26,20 +27,7 @@ import {
 import { Tab } from "@material-ui/core";
 import { propTypes } from "react-bootstrap/esm/Image";
 
-const useStyles = makeStyles(() => ({
-  navBar: {
-    display: "flex",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    padding: "24px",
-    color: "#696969",
-    fontWeight: "bold",
-    fontSize: "14px",
-    lineHeight: "21px",
-  },
-  navContent: {
-    marginLeft: "22px",
-  },
+const useStyles = makeStyles((theme) => ({
   row1: {
     display: "flex",
     justifyContent: "space-between",
@@ -49,11 +37,12 @@ const useStyles = makeStyles(() => ({
     color: "#696969",
     fontWeight: "bold",
   },
-  table: {
-    padding: "0px 25px",
-  },
   root: {
     paddingBottom: "5px",
+  },
+  orderId: {
+    fontSize: "16px",
+    color: "rgba(0, 0, 0, 0.54)",
   },
 }));
 
@@ -153,11 +142,6 @@ function RetailerNotesComponent(props) {
     setErrorMessage(false);
   };
 
-  let loading = props.notesProgress;
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
   return (
     <>
       <div className={classes.formContainer}>
@@ -216,7 +200,7 @@ function RetailerNotesComponent(props) {
               >
                 <>
                   <Grid>
-                    <p>ORDER ID: {orderId}</p>
+                    <p className={classes.orderId}>Order ID: {orderId}</p>
                   </Grid>
                   <TextField
                     id="outlined-multiline-static"
@@ -235,6 +219,7 @@ function RetailerNotesComponent(props) {
             )}
           </div>
         </div>
+        {props.notesProgress && <Loading message="Fetching data..." />}
         <Box width="85%" mx="auto">
           <TableContainer component={Paper}>
             <Table>

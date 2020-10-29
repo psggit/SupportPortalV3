@@ -87,8 +87,8 @@ const deliveryAgentReducer = createReducer(initialValue, {
     unassignDASuccess: false,
     unassignDAFail: true,
     unassignDAProgress: false,
-    message: "No delivery agent has been assigned to the order yet.",
-    errorMsg: error.payload,
+    //message: "No delivery agent has been assigned to the order yet.",
+    errorMsg: error.payload.message,
   }),
   [fetchUnassignDAProgress]: (state) => ({
     ...state,
@@ -100,14 +100,15 @@ const deliveryAgentReducer = createReducer(initialValue, {
     reserveDAFail: false,
     reserveDAProgress: false,
     message: data.payload.message,
-    errorMsg: data.payload,
+    //errorMsg: data.payload,
   }),
-  [fetchReserveDAFailed]: (state, data) => ({
+  [fetchReserveDAFailed]: (state) => ({
     ...state,
     reserveDaSuccess: false,
-    reserveDAFail: true,
+    reserveDaFail: true,
     reserveDAProgress: false,
-    message: data.payload.message,
+    errorMsg:
+      "Reserving the order for the delivery agent is not allowed at the current order state.",
   }),
   [fetchReserveDAProgress]: (state) => ({
     ...state,

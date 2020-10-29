@@ -6,12 +6,12 @@ import { Button, Grid, CircularProgress } from "@material-ui/core";
 import DeliveryAgentDetailsCard from "../../../components/orderInfoCard";
 import ActivityItem from "../../../components/activityItems";
 import { getListOfDataObjects } from "../../../utils/helpers";
-import Notification from "../../../components/notification";
 import Dialog from "../../../components/dialog";
 import { Select, MenuItem, InputLabel } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import { useHistory } from "react-router-dom";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import ErrorMsg from "../../../components/errorMsg";
 
 const keysToRender = [
   "delivery_agent_id",
@@ -38,32 +38,13 @@ const DeliveryAgentComponent = (props) => {
   const [selectedValue, setValue] = useState("");
   const [showDialogBox, setShowDialogBox] = useState(false);
   const [showUnassignDADialog, setShowUnassignDADialog] = useState(false);
-  const [message, setMessage] = useState("");
   const [cancelReasonNote, setCancelReasonNote] = useState("");
-
-  useEffect(() => {
-    setMessage(
-      props.unassignDAFail ||
-        props.unassignDASuccess ||
-        props.reserveDaFail ||
-        props.reserveDaSuccess
-    );
-  }, [
-    props.unassignDAFail,
-    props.unassignDASuccess,
-    props.reserveDaFail,
-    props.reserveDaSuccess,
-  ]);
 
   useEffect(() => {
     const details = getListOfDataObjects(props.orderInfo, keysToRender);
     setData(details);
     props.fetchNotes(props.orderInfo.order_id);
   }, []);
-
-  const handleClose = () => {
-    setMessage(false);
-  };
 
   const handleTextChange = (e) => {
     setCancelReasonNote(e.target.value);
@@ -111,7 +92,13 @@ const DeliveryAgentComponent = (props) => {
   };
 
   const handleNotesChange = () => {
-    history.push("/da-notes");
+    history.push({
+      pathname: "/da-notes",
+      state: {
+        customerId: props.orderInfo.customer_id,
+        orderId: props.orderInfo.order_id,
+      },
+    });
   };
 
   const subheadNotesAction = [
@@ -186,6 +173,7 @@ const DeliveryAgentComponent = (props) => {
               onChange={(event) => handleChange(event)}
             >
               {props.daListSuccess &&
+                props.daList.data !== null &&
                 props.daList.data.map((value, index) => {
                   if (selectedValue === value) {
                     return (
@@ -275,13 +263,17 @@ const DeliveryAgentComponent = (props) => {
           {props.fetchProgress && <CircularProgress />}
         </>
       </Grid>
-      {message && (
-        <Notification
-          message={props.message}
-          messageType="info"
-          open={message}
-          handleClose={handleClose}
-        />
+      {props.unassignDASuccess && (
+        <ErrorMsg show={true} message={props.message} type="success" />
+      )}
+      {props.reserveDaSuccess && (
+        <ErrorMsg show={true} message={props.message} type="success" />
+      )}
+      {props.reserveDaFail && (
+        <ErrorMsg show={true} message={props.errorMsg} type="error" />
+      )}
+      {props.unassignDAFail && (
+        <ErrorMsg show={true} message={props.errorMsg} type="error" />
       )}
     </Grid>
   );
@@ -305,6 +297,7 @@ DeliveryAgentComponent.propTypes = {
   message: PropTypes.any,
   daList: PropTypes.object,
   unassignDASuccess: PropTypes.bool,
+  errorMsg: PropTypes.bool,
 };
 
 const useStyles = makeStyles((theme) => ({

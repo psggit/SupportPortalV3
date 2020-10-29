@@ -103,17 +103,13 @@ function ActivityListComponent(props) {
     setPage(0);
   };
 
-  let loading = props.notesProgress;
-  if (loading) {
-    return <Loading message="Loading..." />;
-  }
-
   return (
     <div className={classes.formContainer}>
       <TopBar />
       <SimpleMenuBar orderId={props.orderData}>
         {props.notesSuccess && <p>ACTIVITY LOGS-ORDER ID: {props.orderData}</p>}
       </SimpleMenuBar>
+      {props.notesProgress && <Loading message="Fetching data..." />}
       <Box className={classes.table} mt={4}>
         <TableContainer className={classes.TableContainer}>
           <Table>
@@ -132,9 +128,9 @@ function ActivityListComponent(props) {
                   .map((data, index) => {
                     return (
                       <TableRow key={index}>
-                        <TableCell>{data.created_by}</TableCell>
-                        <TableCell>{data.notes}</TableCell>
-                        <TableCell align="left">
+                        <TableCell align="center">{data.created_by}</TableCell>
+                        <TableCell align="center">{data.notes}</TableCell>
+                        <TableCell align="center">
                           {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
                         </TableCell>
                       </TableRow>
