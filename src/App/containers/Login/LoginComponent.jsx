@@ -108,7 +108,7 @@ const LoginComponent = (props) => {
             id="email"
             label="Email Address"
             name="email"
-            autoComplete="email"
+            autoComplete="new-email"
             onChange={(event) => handleChange(event)}
             autoFocus
           />

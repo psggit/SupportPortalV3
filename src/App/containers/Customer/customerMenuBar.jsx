@@ -42,6 +42,8 @@ export default function FullWidthTabs(props) {
     });
   };
 
+  console.log(props);
+
   const handleGiftSoaChange = () => {
     history.push({
       pathname: "/gift-soa",

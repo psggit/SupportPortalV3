@@ -58,10 +58,10 @@ const createData = ({ order_id, type, notes, created_at, created_by }) => {
 
 function RetailerNotesComponent(props) {
   const classes = useStyles();
+
   const history = useHistory();
   const orderId = history.location.state.orderId;
   const customerId = history.location.state.customerId;
-
   const [rows, setRowsData] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);

@@ -6,21 +6,14 @@ import {
   setCart,
   addSkuToCart,
   removeSkuFromCart,
+  fetchBrandPagination,
 } from "./duck";
 
 const mapStateToProps = (state) => {
-  // console.log("mapStateToProps");
-  // console.log(state);
   return {
     orderId: state.home.orderId,
-    products: state.order.orderInfo.products,
     cartProducts: state.cartModify.cartProducts,
     modifySuccess: state.cartModify.modifySuccess,
-    retailerId: state.order.orderInfo.orderDetails.retailer_id,
-    retailer_name: state.order.orderInfo.orderDetails.retailer_name,
-    city_id: state.order.orderInfo.orderDetails.city_id,
-    state_id: state.order.orderInfo.orderDetails.state_id,
-    gps: state.order.orderInfo.orderDetails.gps,
     fetchGenreProgress: state.cartModify.fetchGenreProgress,
     fetchGenreFailed: state.cartModify.fetchGenreFailed,
     fetchGenreSuccess: state.cartModify.fetchGenreSuccess,
@@ -40,6 +33,7 @@ const mapDispatchToProps = (dispatch) => {
     setCart: (products) => dispatch(setCart(products)),
     addSkuToCart: (sku) => dispatch(addSkuToCart(sku)),
     removeSkuFromCart: (sku) => dispatch(removeSkuFromCart(sku)),
+    fetchBrandPagination: (payload) => dispatch(fetchBrandPagination(payload)),
   };
 };
 

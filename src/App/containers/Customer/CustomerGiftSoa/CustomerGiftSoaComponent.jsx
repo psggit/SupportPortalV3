@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import TableRow from "@material-ui/core/TableRow";
@@ -12,7 +13,6 @@ import TopBar from "../../../components/topBar";
 import FullWidthTabs from "../customerMenuBar";
 import { TableContainer, Table, TableHead } from "@material-ui/core";
 import Loading from "../../../components/loading";
-import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   row1: {
@@ -56,6 +56,7 @@ function CustomerGiftSoa(props) {
   const orderInfos = history.location.state.orderInfos;
 
   useEffect(() => {
+    console.log("gift soa", props.customerNumber);
     const payload = {
       customer_contact_number: customerNumber,
       limit: rowsPerPage,

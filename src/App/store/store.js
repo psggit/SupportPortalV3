@@ -15,6 +15,8 @@ import { rewardsReducer } from "../containers/Customer/Rewards";
 import { customerUpdateReducer } from "../containers/Customer/CustomerFormDetails";
 import { listRetailerReducer } from "../containers/Retailer/ChangeRetailer/duck";
 import { acitivityListReducer } from "../containers/ActivityList";
+import { orderTrackingReducer } from "../containers/OrderTracking";
+import { orderModificationReducer } from "../containers/OrderModification";
 
 const store = configureStore({
   reducer: combineReducers({
@@ -32,6 +34,8 @@ const store = configureStore({
     listRetailer: listRetailerReducer,
     acitivityLog: acitivityListReducer,
     issues: issuesReducer,
+    orderTracking: orderTrackingReducer,
+    orderModify: orderModificationReducer,
   }),
   middleware: [thunk],
 });

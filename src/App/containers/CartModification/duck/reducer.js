@@ -11,6 +11,7 @@ import {
   addSkuToCart,
   removeSkuFromCart,
   updateFromCart,
+  brandPagination,
 } from "./actions";
 
 declare type Product = {
@@ -110,6 +111,8 @@ let removeProduct = (state: State, sku: sku): State => {
   return state;
 };
 
+let newState;
+
 const cartModifyReducer = createReducer(initialValue, {
   [fetchGenreSuccess]: (state, data) => ({
     ...state,
@@ -162,6 +165,16 @@ const cartModifyReducer = createReducer(initialValue, {
     cartProducts: data.payload,
     modifySuccess: true,
   }),
+  [brandPagination]: (state, data) => {
+    newState = {
+      ...state,
+      fetchBrandSuccess: true,
+      fetchBrandProgress: false,
+      fetchBrandFail: false,
+      brandData: [...state.brandData, ...data.payload.brands],
+    };
+    return newState;
+  },
 });
 
 export { cartModifyReducer };
