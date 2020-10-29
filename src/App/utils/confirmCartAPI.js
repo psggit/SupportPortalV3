@@ -9,7 +9,7 @@ const headers = {
 };
 
 const confirmCartAPI = (reqBody, process, onSuccess, onError) => {
-//   console.log("confirmCartAPI ", reqBody);
+  //   console.log("confirmCartAPI ", reqBody);
   const URL = `https://${apiUrl}/orderman/api/1/order/modify/confirm`;
   fetch(URL, {
     method: "POST",

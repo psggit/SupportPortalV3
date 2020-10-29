@@ -21,7 +21,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchListOrderModification: (payload) => dispatch(fetchListOrderModification(payload)),
+    fetchListOrderModification: (payload) =>
+      dispatch(fetchListOrderModification(payload)),
     sendSMSOperation: (orderId) => dispatch(sendSMSOperation(orderId)),
     cancelOrderRequest: (orderId) => dispatch(cancelOrderRequest(orderId)),
   };

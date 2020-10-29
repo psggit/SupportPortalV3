@@ -29,7 +29,6 @@ const mapDispatchToProps = (dispatch) => {
     fetchSummary: (payload) => dispatch(fetchSummary(payload)),
     updateCart: (payload) => dispatch(updateCart(payload)),
     validateCart: (payload) => dispatch(validateCart(payload)),
-    cancelCart: (payload) => dispatch(cancelCart(payload)),
   };
 };
 

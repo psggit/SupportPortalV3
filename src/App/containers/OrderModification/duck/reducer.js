@@ -145,7 +145,7 @@ const orderModificationReducer = createReducer(initialState, {
       fetchSupportPersonListSuccess: false,
     };
   },
-  [fetchCancelCartSuccess]: (state, data) => ({
+  [fetchCancelCartSuccess]: (state) => ({
     ...state,
     fetchCancelCartFailed: false,
     fetchCancelCartProgress: false,
@@ -165,7 +165,7 @@ const orderModificationReducer = createReducer(initialState, {
     fetchCancelCartProgress: false,
     fetchCancelCartSuccess: false,
   }),
-  [fetchUpdatedStatusSuccess]: (state, data) => ({
+  [fetchUpdatedStatusSuccess]: (state) => ({
     ...state,
     fetchUpdatedStatusFailed: false,
     fetchUpdatedStatusProgress: false,
