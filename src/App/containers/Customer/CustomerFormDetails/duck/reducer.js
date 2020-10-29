@@ -16,7 +16,6 @@ const initialState = {
 
 const customerUpdateReducer = createReducer(initialState, {
   [consumerUpdateSuccess]: (state, data) => {
-    console.log("form-success");
     return {
       ...state,
       updateProgress: false,
@@ -32,10 +31,9 @@ const customerUpdateReducer = createReducer(initialState, {
     updateProgress: false,
     updateFail: true,
     updateSuccess: false,
-    errorMsg: "Something went wrong, please try again",
+    errorMsg: "Something went wrong! Please contact tech",
   }),
   [consumerUpdateProgress]: (state) => {
-    console.log("form-progress");
     return {
       ...state,
       updateProgress: true,

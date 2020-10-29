@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { DaNotes } from "./DaNotesComponent";
 import { fetchDeliveryAgentNotes } from "../OrderInfo/DeliveryAgent/duck/operations";
+import { createNotes } from "../OrderInfo/duck";
 
 const mapStateToProps = (state) => {
   return {
@@ -18,6 +19,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchDeliveryAgentNotes: (payload) =>
       dispatch(fetchDeliveryAgentNotes(payload)),
+    createNotes: (type) => dispatch(createNotes(type)),
   };
 };
 

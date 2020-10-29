@@ -8,6 +8,8 @@ const mapStateToProps = (state) => {
     customerNotes: state.order.customer.customerNotesData,
     fetchSuccess: state.order.customer.notesSuccess,
     fetchProgress: state.order.customer.notesProgress,
+    orderId: state.home.orderId,
+    customerId: state.order.orderInfo.customerId,
   };
 };
 

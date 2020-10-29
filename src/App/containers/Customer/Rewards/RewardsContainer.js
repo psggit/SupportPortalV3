@@ -10,6 +10,7 @@ const mapStateToProps = (state) => {
     rewardsProgress: state.rewards.rewardsProgress,
     rewardsSuccess: state.rewards.rewardsSuccess,
     rewardsFail: state.rewards.rewardsFail,
+    errorMsg: state.rewards.errorMsg,
   };
 };
 

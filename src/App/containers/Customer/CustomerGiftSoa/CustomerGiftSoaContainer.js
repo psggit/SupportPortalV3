@@ -12,6 +12,7 @@ const mapStateToProps = (state) => {
     giftSoaProgress: state.giftSoa.giftSoaProgress,
     giftSoaFail: state.giftSoa.giftSoaFail,
     errorMsg: state.giftSoa.errorMsg,
+    orderId: state.home.orderId,
   };
 };
 

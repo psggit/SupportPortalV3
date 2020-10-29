@@ -528,6 +528,9 @@ const OrderInfoComponent = (props) => {
       {props.submitIssueSuccess && (
         <ErrorMsg show={true} message={props.successMsg} type="success" />
       )}
+      {props.createNotesSuccess && (
+        <ErrorMsg show={true} message={props.successMsg} type="success" />
+      )}
     </div>
   );
 };
@@ -555,6 +558,7 @@ OrderInfoComponent.propTypes = {
   issueTypes: PropTypes.object,
   submitIssue: PropTypes.func,
   submitIssueSuccess: PropTypes.bool,
+  createNotesSuccess: PropTypes.bool,
 };
 
 export { OrderInfoComponent };

@@ -11,6 +11,9 @@ import { Box, Grid, Tab } from "@material-ui/core";
 FullWidthTabs.propTypes = {
   labels: PropTypes.array,
   orderId: PropTypes.number,
+  customerId: PropTypes.number,
+  customerNumber: PropTypes.string,
+  orderInfos: PropTypes.any,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -34,58 +37,76 @@ export default function FullWidthTabs(props) {
 
   const goBack = () => {
     history.push("/order-info/" + props.orderId);
+    setTimeout(() => {
+      location.reload();
+    });
   };
 
   console.log(props);
 
   const handleGiftSoaChange = () => {
-    history.push("/gift-soa");
-    // history.push({
-    //   pathname: "/gift-soa",
-    //   state: {
-    //     customerId: props.customerId,
-    //   },
-    // });
+    history.push({
+      pathname: "/gift-soa",
+      state: {
+        customerId: props.customerId,
+        orderId: props.orderId,
+        customerNumber: props.customerNumber,
+        orderInfos: props.orderInfos,
+      },
+    });
   };
 
   const handleRewardChange = () => {
-    history.push("/rewards");
-    // history.push({
-    //   pathname: "/gift-soa",
-    //   state: {
-    //     customerId: props.customerId,
-    //   },
-    // });
+    history.push({
+      pathname: "/rewards",
+      state: {
+        customerId: props.customerId,
+        orderId: props.orderId,
+        customerNumber: props.customerNumber,
+        orderInfos: props.orderInfos,
+      },
+    });
   };
 
   const handleSoaChange = () => {
-    history.push("/soa");
-    // history.push({
-    //   pathname: "/gift-soa",
-    //   state: {
-    //     customerId: props.customerId,
-    //   },
-    // });
+    console.log("history-push", props.customerId);
+    history.push({
+      pathname: "/soa",
+      state: {
+        customerId: props.customerId,
+        orderId: props.orderId,
+        customerNumber: props.customerNumber,
+        orderInfos: props.orderInfos,
+      },
+    });
   };
 
   const handleNotesChange = () => {
-    history.push("/notes");
-    // history.push({
-    //   pathname: "/gift-soa",
-    //   state: {
-    //     customerId: props.customerId,
-    //   },
-    // });
+    history.push({
+      pathname: "/notes",
+      state: {
+        customerId: props.customerId,
+        orderId: props.orderId,
+        customerNumber: props.customerNumber,
+        orderInfos: props.orderInfos,
+      },
+    });
   };
 
   const handleCustomerDetails = () => {
-    history.push("/customer-detail");
-    // history.push({
-    //   pathname: "/gift-soa",
-    //   state: {
-    //     customerId: props.customerId,
-    //   },
-    // });
+    history.push({
+      pathname: "/customer-detail",
+      state: {
+        customerId: props.customerId,
+        orderId: props.orderId,
+        customerNumber: props.customerNumber,
+        orderInfos: props.orderInfos,
+      },
+    });
+    //location.reload();
+    setTimeout(() => {
+      location.reload();
+    }, 100);
   };
 
   return (

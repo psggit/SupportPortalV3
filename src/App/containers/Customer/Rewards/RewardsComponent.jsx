@@ -6,13 +6,11 @@ import TableCell from "@material-ui/core/TableCell";
 import TopBar from "../../../components/topBar";
 import Notification from "../../../components/notification";
 import Moment from "moment";
-import { getQueryParamByName } from "../../../utils/helpers";
 import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import FullWidthTabs from "../customerMenuBar";
 import {
   Table,
-  Container,
   Box,
   TableHead,
   TableContainer,
@@ -30,12 +28,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "16px",
     color: "#696969",
     fontWeight: "bold",
-  },
-  table: {
-    padding: "0px 80px",
-  },
-  paper: {
-    //padding: 24,
   },
 }));
 
@@ -67,18 +59,21 @@ const createData = ({
 
 function Rewards(props) {
   const classes = useStyles();
-  const activePage = getQueryParamByName("activePage") || 1;
-  // eslint-disable-next-line no-unused-vars
-  const [pageNo, setPageNo] = useState(activePage);
+  const history = useHistory();
   const [showData, setShowData] = useState(false);
   const [rows, setRowsData] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
+  const customerId = history.location.state.customerId;
+  const orderId = history.location.state.orderId;
+  const customerNumber = history.location.state.customerNumber;
+  const orderInfos = history.location.state.orderInfos;
+
 
   useEffect(() => {
     const payload = {
-      consumer_id: parseInt(props.customerId),
+      consumer_id: parseInt(customerId),
       limit: rowsPerPage,
       offset: page * rowsPerPage,
     };
@@ -124,24 +119,22 @@ function Rewards(props) {
     setRowsData(data);
   };
 
-  let loading = props.rewardsProgress;
-  if (loading) {
-    return <Loading message="Loading..." />;
-  }
-
   return (
     <>
       <TopBar />
       <div className={classes.formContainer}>
         <FullWidthTabs
           value={3}
-          orderId={props.orderInfo.order_id}
-          customerId={props.orderInfo.customer_id}
+          orderId={orderId}
+          customerId={customerId}
+          customerNumber={customerNumber}
+          orderInfos={orderInfos}
         />
         <div className={classes.row1}>
-          <p>CUSTOMER ID: {props.customerId}</p>
+          <p>CUSTOMER ID: {customerId}</p>
           <div>Search</div>
         </div>
+        {props.rewardsProgress && <Loading message="Fetching data..." />}
         <Box width="85%" mx="auto">
           <TableContainer component={Paper}>
             <Table>

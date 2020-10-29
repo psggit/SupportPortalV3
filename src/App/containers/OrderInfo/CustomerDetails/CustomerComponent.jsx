@@ -81,12 +81,29 @@ const keyMap = {
 
 const CustomerDetails = (props) => {
   const history = useHistory();
+
   const handleChange = () => {
-    history.push("/customer-detail");
+    history.push({
+      pathname: "/customer-detail",
+      state: {
+        customerNumber: props.orderInfo.customer_contact_number,
+        orderId: props.orderId,
+        customerId: props.customerId,
+        orderInfos: props.orderInfo,
+      },
+    });
   };
 
   const handleNotesChange = () => {
-    history.push("/notes");
+    history.push({
+      pathname: "/notes",
+      state: {
+        customerId: props.customerId,
+        orderId: props.orderId,
+        customerNumber: props.orderInfo.customer_contact_number,
+        orderInfos: props.orderInfo,
+      },
+    });
   };
 
   const [data, setData] = useState([]);
@@ -98,9 +115,9 @@ const CustomerDetails = (props) => {
   }, []);
 
   const customerAction = [
-    <Button variant="outlined" color="primary">
-      Message
-    </Button>,
+    // <Button variant="outlined" color="primary">
+    //   Message
+    // </Button>,
     <Button
       variant="contained"
       color="primary"

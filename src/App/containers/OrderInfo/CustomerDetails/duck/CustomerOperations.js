@@ -10,7 +10,11 @@ const processResponse = () => {
     if (res.status === 200) {
       return res.json();
     } else {
-      throw new Error("Something went wrong, try again");
+      console.log(
+        "error",
+        res.json().then((json) => json.message)
+      );
+      throw new Error("Bad Request!");
     }
   };
 };
