@@ -13,6 +13,9 @@ const useStyles = makeStyles({
   list: {
     width: 250,
   },
+  anchor: {
+    width: "100%",
+  },
   fullList: {
     width: "auto",
   },
@@ -53,7 +56,7 @@ export default function MenuDrawer() {
         {["Home", "Order Modification", "Issues", "Logout"].map(
           (text, index) => (
             <ListItem button key={text}>
-              <Link href={anchors[index]}>
+              <Link className={classes.anchor} href={anchors[index]}>
                 <ListItemText primary={text} />
               </Link>
             </ListItem>
