@@ -20,6 +20,7 @@ import {
   TableCell,
   TableRow,
   Button,
+  IconButton,
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -148,14 +149,14 @@ const OrderModificationComponent = (props) => {
                 <TableCell align="center">MODIFICATION ORDER ID</TableCell>
                 <TableCell align="center">STATUS</TableCell>
                 <TableCell align="center">SEND SMS</TableCell>
+                <TableCell align="center">UPDATE STATUS</TableCell>
+                <TableCell align="center">CANCEL ORDER</TableCell>
                 <TableCell align="center">HIPBAR WALLET</TableCell>
                 <TableCell align="center">GIFT WALLET</TableCell>
                 <TableCell align="center">NODAL AMOUNT</TableCell>
                 <TableCell align="center">REQUEST BY ID</TableCell>
                 <TableCell align="center">CANCELLED BY</TableCell>
                 <TableCell align="center">CANCELLED BY ID</TableCell>
-                <TableCell align="center">UPDATE STATUS</TableCell>
-                <TableCell align="center">CANCEL ORDER</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -187,15 +188,36 @@ const OrderModificationComponent = (props) => {
                         )}
                       </TableCell>
                       <TableCell>
-                        <Button
+                        <IconButton
                           variant="outlined"
                           color="primary"
-                          endIcon={<SendIcon />}
                           onClick={(event) => sendSMS(event, data.order_id)}
                           disabled={!(data.status == "pending")}
                         >
-                          Send
-                        </Button>
+                          <SendIcon />
+                        </IconButton>
+                      </TableCell>
+                      <TableCell>
+                        <IconButton
+                          variant="outlined"
+                          color="primary"
+                          onClick={(event) =>
+                            refreshOrder(event, data.order_id)
+                          }
+                          disabled={!(data.status == "pending")}
+                        >
+                          <AutorenewIcon />
+                        </IconButton>
+                      </TableCell>
+                      <TableCell>
+                        <IconButton
+                          variant="outlined"
+                          color="primary"
+                          onClick={(event) => cancelOrder(event, data.order_id)}
+                          disabled={!(data.status == "pending")}
+                        >
+                          <ClearIcon />
+                        </IconButton>
                       </TableCell>
                       <TableCell>{data.hipbar_wallet}</TableCell>
                       <TableCell>{data.gift_wallet}</TableCell>
@@ -203,30 +225,6 @@ const OrderModificationComponent = (props) => {
                       <TableCell>{data.request_by_id}</TableCell>
                       <TableCell>{data.cancelled_by}</TableCell>
                       <TableCell>{data.cancelled_by_id}</TableCell>
-                      <TableCell>
-                        <Button
-                          variant="outlined"
-                          color="primary"
-                          endIcon={<AutorenewIcon />}
-                          onClick={(event) =>
-                            refreshOrder(event, data.order_id)
-                          }
-                          disabled={!(data.status == "pending")}
-                        >
-                          Update
-                        </Button>
-                      </TableCell>
-                      <TableCell>
-                        <Button
-                          variant="outlined"
-                          color="primary"
-                          endIcon={<ClearIcon />}
-                          onClick={(event) => cancelOrder(event, data.order_id)}
-                          disabled={!(data.status == "pending")}
-                        >
-                          Cancel
-                        </Button>
-                      </TableCell>
                     </TableRow>
                   );
                 })}

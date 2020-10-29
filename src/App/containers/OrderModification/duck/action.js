@@ -25,6 +25,10 @@ const fetchCancelCartSuccess = createAction("fetchCancelCartSuccess");
 const fetchCancelCartFailed = createAction("fetchCancelCartFailed");
 const fetchCancelCartProgress = createAction("fetchCancelCartProgress");
 
+const fetchUpdatedStatusSuccess = createAction("fetchUpdatedStatusSuccess");
+const fetchUpdatedStatusFailed = createAction("fetchUpdatedStatusFailed");
+const fetchUpdatedStatusProgress = createAction("fetchUpdatedStatusProgress");
+
 export {
   fetchOrderSuccess,
   fetchOrderFailed,
@@ -41,4 +45,7 @@ export {
   fetchCancelCartSuccess,
   fetchCancelCartFailed,
   fetchCancelCartProgress,
+  fetchUpdatedStatusSuccess,
+  fetchUpdatedStatusFailed,
+  fetchUpdatedStatusProgress,
 };

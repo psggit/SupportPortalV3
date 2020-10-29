@@ -66,7 +66,7 @@ const CartComponent = (props) => {
   const classes = useStyles();
   const orderInfo = props.orderInfo;
   const [modify, setModify] = useState(false);
-  const [disableModify, setDisableModify] = useState(false);
+  const [disableModify, setDisableModify] = useState(props.buttonState);
   const [confirm, setConfirm] = useState(false);
   const [cancel, setCancel] = useState(false);
   useEffect(() => {
@@ -104,7 +104,6 @@ const CartComponent = (props) => {
       setDisableModify(modifyState);
     }
   }, [props.fetchCartSummarySuccess]);
-
 
   const handleModify = () => {
     history.push({
@@ -192,9 +191,12 @@ const CartComponent = (props) => {
           confirm={confirm}
         />
       </CartDetailsCard>
-      {props.fetchUpdateCartSuccess && (
-        <ErrorMsg message={props.msg} show={true} type="info" />
-      )}
+      {props.fetchUpdateCartSuccess ||
+        (props.fetchUpdateCartFailed && (
+          <ErrorMsg message={props.msg} show={true} type="info" />
+        ))}
+
+      <ErrorMsg message={"test message"} show={true} type="info" />
     </>
   );
 };
@@ -203,11 +205,13 @@ CartComponent.propTypes = {
   orderInfo: PropTypes.object,
   order: PropTypes.any,
   modifyCart: PropTypes.any,
+  buttonState: PropTypes.bool,
   fetchSummary: PropTypes.func,
   updateCart: PropTypes.func,
   cartSummary: PropTypes.any,
   fetchCartSummarySuccess: PropTypes.bool,
   fetchUpdateCartSuccess: PropTypes.bool,
+  fetchUpdateCartFailed: PropTypes.bool,
   validateOrderSuccess: PropTypes.bool,
   validateCart: PropTypes.func,
   validateInfo: PropTypes.any,

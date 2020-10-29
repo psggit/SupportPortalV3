@@ -201,7 +201,7 @@ function OrderTrackingComponent(props) {
               <Typography variant="body2">
                 {details.retailer_name.length > 0 ? details.retailer_name : "-"}
               </Typography>
-              <Typography>Retailer phone number:</Typography>
+              <Typography variant="body2">Retailer phone number:</Typography>
               <Typography variant="body2">
                 {details.retailer_contact_number > 0
                   ? details.retailer_contact_number

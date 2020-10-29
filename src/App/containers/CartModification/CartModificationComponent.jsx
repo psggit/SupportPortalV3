@@ -11,6 +11,7 @@ import {
   LinearProgress,
   Drawer,
   ListItem,
+  Divider,
 } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
@@ -53,9 +54,19 @@ const useStyles = makeStyles((theme) => ({
   },
   list: {
     width: 250,
+    padding: 20,
+  },
+  ListItemRoot: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  ListItem: {
+    display: "flex",
+    justifyContent: "space-between",
+    borderBottom: "1px solid #C7C7C7",
   },
   ListItemName: {
-    width: "70%",
+    width: "auto",
   },
 }));
 
@@ -93,7 +104,6 @@ const CartModificationComponent = (props) => {
   const [limit] = useState(20);
   const [offset, setOffset] = useState(0);
   const [state, setState] = useState({ right: false });
-  const [disableAddBtn, setDisabledAddBtn] = useState(false);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -107,9 +117,8 @@ const CartModificationComponent = (props) => {
   };
 
   let products = history.location.state.products;
+  let anchor = "right";
   useEffect(() => {
-    console.log("cartModification orderData", props);
-    //
     let payload = {
       city_id: history.location.state.city_id,
       state_id: history.location.state.state_id,
@@ -167,19 +176,10 @@ const CartModificationComponent = (props) => {
   };
 
   const addItem = (event, value) => {
-    // console.log(props.cartProducts);
-    console.log(Object.entries(props.cartProducts).length);
-    Object.entries(props.cartProducts).length == 1
-      ? setDisabledAddBtn(true)
-      : setDisabledAddBtn(false);
     props.addSkuToCart(value);
   };
 
   const removeItem = (event, value) => {
-    console.log(Object.entries(props.cartProducts).length);
-    Object.entries(props.cartProducts).length == 1
-      ? setDisabledAddBtn(true)
-      : setDisabledAddBtn(false);
     props.removeSkuFromCart(value);
   };
 
@@ -198,7 +198,7 @@ const CartModificationComponent = (props) => {
     props.fetchBrand(brandpayload);
   };
 
-  const handleClick = (event) => {
+  const handleClick = () => {
     //load more items
     let brandpayload = {
       city_id: history.location.state.city_id,
@@ -213,8 +213,10 @@ const CartModificationComponent = (props) => {
     props.fetchBrandPagination(brandpayload);
   };
 
-  console.log(props);
-  let anchor = "right";
+  let disableAddBtn = false;
+  if (props.fetchGenreSuccess) {
+    disableAddBtn = Object.keys(props.cartProducts).length == 0 ? true : false;
+  }
 
   return (
     <Container component="main">
@@ -225,16 +227,28 @@ const CartModificationComponent = (props) => {
         onClose={toggleDrawer(anchor, false)}
       >
         <Box className={classes.list}>
-          <p>Cart Products</p>
+          <Typography>Cart Products</Typography>
           <List>
+            <div className={classes.ListItemRoot}>
+              <ListItem className={classes.ListItemName} disableGutters>
+                Item
+              </ListItem>
+              <ListItem className={classes.ListItemName} disableGutters>
+                Qty
+              </ListItem>
+            </div>
+            <Divider />
             {props.fetchGenreSuccess &&
               Object.keys(props.cartProducts).map((value) => {
                 return (
-                  <div key={props.cartProducts[value]}>
-                    <ListItem className={classes.ListItemName}>
+                  <div
+                    key={props.cartProducts[value]}
+                    className={classes.ListItem}
+                  >
+                    <ListItem className={classes.ListItemName} disableGutters>
                       {props.cartProducts[value].brand_name}
                     </ListItem>
-                    <ListItem>
+                    <ListItem className={classes.ListItemName} disableGutters>
                       {props.cartProducts[value].ordered_count}
                     </ListItem>
                   </div>

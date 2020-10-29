@@ -15,6 +15,9 @@ import {
   fetchCancelCartSuccess,
   fetchCancelCartFailed,
   fetchCancelCartProgress,
+  fetchUpdatedStatusSuccess,
+  fetchUpdatedStatusFailed,
+  fetchUpdatedStatusProgress,
 } from "./action";
 
 const initialState = {
@@ -33,6 +36,9 @@ const initialState = {
   fetchCancelCartSuccess: false,
   fetchCancelCartFailed: false,
   fetchCancelCartProgress: false,
+  fetchUpdatedStatusSuccess: false,
+  fetchUpdatedStatusFailed: false,
+  fetchUpdatedStatusProgress: false,
   orderList: null,
   supportPersonList: null,
   msg: "",
@@ -158,6 +164,26 @@ const orderModificationReducer = createReducer(initialState, {
     fetchCancelCartFailed: true,
     fetchCancelCartProgress: false,
     fetchCancelCartSuccess: false,
+  }),
+  [fetchUpdatedStatusSuccess]: (state, data) => ({
+    ...state,
+    fetchUpdatedStatusFailed: false,
+    fetchUpdatedStatusProgress: false,
+    fetchUpdatedStatusSuccess: true,
+    errorMsg: "",
+  }),
+  [fetchUpdatedStatusProgress]: (state) => ({
+    ...state,
+    fetchUpdatedStatusFailed: false,
+    fetchUpdatedStatusProgress: true,
+    fetchUpdatedStatusSuccess: false,
+    errorMsg: "Something went wrong, please try again",
+  }),
+  [fetchUpdatedStatusFailed]: (state) => ({
+    ...state,
+    fetchUpdatedStatusFailed: true,
+    fetchUpdatedStatusProgress: false,
+    fetchUpdatedStatusSuccess: false,
   }),
 });
 
