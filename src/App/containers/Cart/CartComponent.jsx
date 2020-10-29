@@ -195,8 +195,6 @@ const CartComponent = (props) => {
         (props.fetchUpdateCartFailed && (
           <ErrorMsg message={props.msg} show={true} type="info" />
         ))}
-
-      <ErrorMsg message={"test message"} show={true} type="info" />
     </>
   );
 };
