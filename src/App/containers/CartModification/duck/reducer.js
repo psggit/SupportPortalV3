@@ -227,7 +227,7 @@ const cartModifyReducer = createReducer(initialValue, {
     fetchBrandProgress: false,
     fetchBrandFail: false,
   }),
-  [resetOnUnmount]: (state) => ({
+  [resetOnUnmount]: () => ({
     genreData: null,
     brandData: {},
     activityLog: null,
