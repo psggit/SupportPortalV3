@@ -4,5 +4,6 @@ export {
   fetchBrand,
   setCart,
   fetchBrandPagination,
+  searchItems,
 } from "./cartModifyOperations";
-export { addSkuToCart, removeSkuFromCart } from "./actions";
+export { addSkuToCart, removeSkuFromCart, resetOnUnmount } from "./actions";

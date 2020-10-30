@@ -7,6 +7,8 @@ import {
   addSkuToCart,
   removeSkuFromCart,
   fetchBrandPagination,
+  searchItems,
+  resetOnUnmount,
 } from "./duck";
 
 const mapStateToProps = (state) => {
@@ -22,6 +24,9 @@ const mapStateToProps = (state) => {
     fetchBrandFailed: state.cartModify.fetchBrandFailed,
     genreData: state.cartModify.genreData,
     brandData: state.cartModify.brandData,
+    searchSuccess: state.cartModify.searchSuccess,
+    searchFailed: state.cartModify.searchFailed,
+    searchProgress: state.cartModify.searchProgress,
   };
 };
 
@@ -34,6 +39,8 @@ const mapDispatchToProps = (dispatch) => {
     addSkuToCart: (sku) => dispatch(addSkuToCart(sku)),
     removeSkuFromCart: (sku) => dispatch(removeSkuFromCart(sku)),
     fetchBrandPagination: (payload) => dispatch(fetchBrandPagination(payload)),
+    searchItems: (payload) => dispatch(searchItems(payload)),
+    resetOnUnmount: () => dispatch(resetOnUnmount()),
   };
 };
 

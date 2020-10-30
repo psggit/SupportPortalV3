@@ -131,7 +131,7 @@ export default function CustomCard(props) {
                 />
                 <ListItemText
                   primary={
-                    Date.parse(item[keysToRender[index]])
+                    Date.parse(item[keysToRender[index]]) > 0
                       ? getTimestamp(item[keysToRender[index]])
                       : item[keysToRender[index]]
                       ? item[keysToRender[index]]

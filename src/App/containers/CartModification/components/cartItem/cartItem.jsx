@@ -95,6 +95,7 @@ const useStyles = makeStyles((theme) => ({
 const CartItem = (props) => {
   const classes = useStyles();
   const value = props.value;
+  // console.log("value ==== ", value);
 
   if (props)
     return (

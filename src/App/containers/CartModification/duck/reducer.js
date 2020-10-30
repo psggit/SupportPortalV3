@@ -12,6 +12,10 @@ import {
   removeSkuFromCart,
   updateFromCart,
   brandPagination,
+  searchSuccess,
+  searchFailed,
+  searchProgress,
+  resetOnUnmount,
 } from "./actions";
 
 declare type Product = {
@@ -58,7 +62,7 @@ declare type State = {
 const initialValue = (): State => {
   return {
     genreData: null,
-    brandData: null,
+    brandData: {},
     activityLog: null,
     cartProducts: {},
     modifySuccess: false,
@@ -68,6 +72,9 @@ const initialValue = (): State => {
     fetchBrandProgress: false,
     fetchBrandFail: false,
     fetchBrandSuccess: false,
+    searchSuccess: false,
+    searchFailed: false,
+    searchProgress: false,
     errorMsg: "",
   };
 };
@@ -94,6 +101,8 @@ let addProduct = (state: State, sku: sku): State => {
   } else {
     prod.ordered_count += 1;
   }
+  console.clear();
+  console.log(sku);
   state.cartProducts[prod.sku_id.toString()] = prod;
   return state;
 };
@@ -175,6 +184,66 @@ const cartModifyReducer = createReducer(initialValue, {
     };
     return newState;
   },
+  // [searchSuccess]: (state, data) => ({
+  //   ...state,
+  //   searchProgress: false,
+  //   searchFailed: false,
+  //   searchSuccess: true,
+  //   errorMsg: "",
+  //   brandData: data.payload.brand_list,
+  // }),
+  [searchSuccess]: (state, data) => {
+    newState = {
+      ...state,
+      searchProgress: false,
+      searchFailed: false,
+      searchSuccess: true,
+      fetchBrandSuccess: true,
+      fetchBrandProgress: false,
+      fetchBrandFail: false,
+      brandData: data.payload.brand_list,
+    };
+    return newState;
+  },
+  [searchFailed]: (state) => ({
+    ...state,
+    searchProgress: false,
+    searchFailed: true,
+    searchSuccess: false,
+    fetchBrandSuccess: false,
+    fetchBrandProgress: false,
+    fetchBrandFail: false,
+    errorMsg: "Something went wrong, please try again",
+  }),
+  [searchProgress]: (state) => ({
+    ...state,
+    searchFailed: false,
+    searchSuccess: false,
+    searchProgress: true,
+    fetchGenreSuccess: false,
+    fetchGenreProgress: false,
+    fetchGenreFail: false,
+    fetchBrandSuccess: false,
+    fetchBrandProgress: false,
+    fetchBrandFail: false,
+  }),
+  [resetOnUnmount]: (state) => ({
+    genreData: null,
+    brandData: {},
+    activityLog: null,
+    cartProducts: {},
+    modifySuccess: false,
+    fetchGenreProgress: false,
+    fetchGenreFail: false,
+    fetchGenreSuccess: false,
+    fetchBrandProgress: false,
+    fetchBrandFail: false,
+    fetchBrandSuccess: false,
+    searchSuccess: false,
+    searchFailed: false,
+    searchProgress: false,
+    errorMsg: "",
+  }),
 });
 
 export { cartModifyReducer };

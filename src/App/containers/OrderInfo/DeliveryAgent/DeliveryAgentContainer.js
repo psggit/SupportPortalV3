@@ -8,7 +8,6 @@ import {
 } from "./duck/operations";
 
 const mapStateToProps = (state) => {
-  console.log("[DA-container]", state.order.deliveryAgent.errorMsg);
   return {
     orderInfo: state.order.orderInfo.orderDetails,
     deliveryAgentNotes: state.order.deliveryAgent.deliveryAgentNotesData,

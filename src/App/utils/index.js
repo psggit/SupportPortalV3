@@ -40,3 +40,5 @@ export { sendSMSAPI } from "./sendSMSAPI";
 export { orderSummaryAPI } from "./orderSummaryAPI";
 export { confirmCartAPI } from "./confirmCartAPI";
 export { cancelOrderModificationAPI } from "./cancelOrderModificationAPI";
+export { searchItemsAPI } from "./searchItemsAPI";
+export { fetchRequestStatusAPI } from "./fetchRequestStatusAPI";

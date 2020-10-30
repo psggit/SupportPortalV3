@@ -18,6 +18,12 @@ const updateFromCart = createAction("updateFromCart");
 
 const brandPagination = createAction("brandPagination");
 
+const searchSuccess = createAction("searchSuccess");
+const searchFailed = createAction("searchFailed");
+const searchProgress = createAction("searchProgress");
+
+const resetOnUnmount = createAction("resetOnUnmount");
+
 export {
   fetchGenreSuccess,
   fetchGenreFailed,
@@ -29,4 +35,8 @@ export {
   removeSkuFromCart,
   updateFromCart,
   brandPagination,
+  searchSuccess,
+  searchFailed,
+  searchProgress,
+  resetOnUnmount,
 };
