@@ -37,6 +37,8 @@ const retailerNotesListReducer = createReducer(initialState, {
     return {
       ...state,
       notesProgress: true,
+      notesFail: false,
+      notesSuccess: false,
     };
   },
 });

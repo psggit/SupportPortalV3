@@ -58,7 +58,7 @@ const cartReducer = createReducer(initialValue, {
     fetchUpdateCartProgress: false,
     fetchUpdateCartFailed: false,
     fetchUpdateCartSuccess: true,
-    msg: data.message,
+    msg: "Order modification request raised.",
   }),
   [fetchUpdateCartFailed]: (state, data) => ({
     ...state,

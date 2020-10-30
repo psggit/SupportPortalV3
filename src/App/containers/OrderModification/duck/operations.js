@@ -18,6 +18,7 @@ import {
   listOrderModificationAPI,
   sendSMSAPI,
   cancelOrderModificationAPI,
+  fetchRequestStatusAPI,
 } from "../../../utils";
 
 const processResponse = () => {
@@ -112,4 +113,34 @@ const cancelOrderRequest = (reqBody) => {
   };
 };
 
-export { fetchListOrderModification, sendSMSOperation, cancelOrderRequest };
+const onSuccessStatus = (dispatch) => {
+  return (data) => {
+    dispatch(fetchUpdatedStatusSuccess(data));
+  };
+};
+
+const onErrorStatus = (dispatch) => {
+  return (err) => {
+    // console.log("error", err);
+    dispatch(fetchUpdatedStatusFailed(err));
+  };
+};
+
+const fetchUpdatedStatus = (reqBody) => {
+  return (dispatch) => {
+    dispatch(fetchUpdatedStatusProgress());
+    fetchRequestStatusAPI(
+      reqBody,
+      processResponseSMS(dispatch),
+      onSuccessStatus(dispatch),
+      onErrorStatus(dispatch)
+    );
+  };
+};
+
+export {
+  fetchListOrderModification,
+  sendSMSOperation,
+  cancelOrderRequest,
+  fetchUpdatedStatus,
+};

@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import "./style.scss";
 import { CartItem } from "./cartItem";
 import { ListItemText, Box, Divider } from "@material-ui/core";
+import uuid from "react-uuid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,6 +42,7 @@ CartItemComponent.propTypes = {
   retailer: PropTypes.object,
   ordered_count: PropTypes.number,
   cartProducts: PropTypes.object,
+  skuData: PropTypes.any,
 };
 
 function CartItemComponent(props) {
@@ -58,7 +60,7 @@ function CartItemComponent(props) {
           <CartItem
             ordered_count={ordered_count}
             value={value}
-            key={value.sku_id}
+            key={uuid()}
             modify={true}
             removeItem={removeItem}
             addItem={addItem}

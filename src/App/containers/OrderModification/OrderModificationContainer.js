@@ -4,7 +4,9 @@ import {
   fetchListOrderModification,
   sendSMSOperation,
   cancelOrderRequest,
+  fetchUpdatedStatus,
 } from "./duck/operations";
+import { resetOnUnmount } from "./duck/action";
 
 const mapStateToProps = (state) => {
   return {
@@ -15,6 +17,9 @@ const mapStateToProps = (state) => {
     sendSMSInProgress: state.orderModify.sendSMSInProgress,
     sendSMSSuccess: state.orderModify.sendSMSSuccess,
     sendSMSFailed: state.orderModify.sendSMSFailed,
+    fetchCancelCartSuccess: state.orderModify.fetchCancelCartSuccess,
+    fetchUpdatedStatusSuccess: state.orderModify.fetchUpdatedStatusSuccess,
+    fetchUpdatedStatusFailed: state.orderModify.fetchUpdatedStatusFailed,
     msg: state.orderModify.msg,
   };
 };
@@ -25,6 +30,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(fetchListOrderModification(payload)),
     sendSMSOperation: (orderId) => dispatch(sendSMSOperation(orderId)),
     cancelOrderRequest: (orderId) => dispatch(cancelOrderRequest(orderId)),
+    fetchUpdatedStatus: (payload) => dispatch(fetchUpdatedStatus(payload)),
+    resetOnUnmount: () => dispatch(resetOnUnmount()),
   };
 };
 

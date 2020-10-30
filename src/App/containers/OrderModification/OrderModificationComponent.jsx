@@ -67,6 +67,13 @@ const OrderModificationComponent = (props) => {
   const [rows, setRowsData] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
+  const [disableClear, setDisableClear] = useState("");
+
+  useEffect(() => {
+    return () => {
+      props.resetOnUnmount();
+    };
+  }, []);
 
   useEffect(() => {
     const payload = {
@@ -118,10 +125,15 @@ const OrderModificationComponent = (props) => {
 
   const refreshOrder = (event, orderId) => {
     console.log("refreshOrder");
+    const payload = {
+      order_id: orderId,
+    };
+    props.fetchUpdatedStatus(payload);
   };
 
   const cancelOrder = (event, orderId) => {
     console.log("cancelOrder");
+    setDisableClear(orderId);
     props.cancelOrderRequest(orderId);
   };
 
@@ -130,7 +142,7 @@ const OrderModificationComponent = (props) => {
     return <Loading message="Loading..." />;
   }
 
-  // console.log(props);
+  console.log(props);
 
   return (
     <div className={classes.formContainer}>
@@ -150,7 +162,7 @@ const OrderModificationComponent = (props) => {
                 <TableCell align="center">STATUS</TableCell>
                 <TableCell align="center">SEND SMS</TableCell>
                 <TableCell align="center">UPDATE STATUS</TableCell>
-                <TableCell align="center">CANCEL ORDER</TableCell>
+                <TableCell align="center">CANCEL REQUEST</TableCell>
                 <TableCell align="center">HIPBAR WALLET</TableCell>
                 <TableCell align="center">GIFT WALLET</TableCell>
                 <TableCell align="center">NODAL AMOUNT</TableCell>
@@ -214,7 +226,10 @@ const OrderModificationComponent = (props) => {
                           variant="outlined"
                           color="primary"
                           onClick={(event) => cancelOrder(event, data.order_id)}
-                          disabled={!(data.status == "pending")}
+                          disabled={
+                            !(data.status == "pending") ||
+                            disableClear === data.order_id
+                          }
                         >
                           <ClearIcon />
                         </IconButton>
@@ -252,6 +267,21 @@ const OrderModificationComponent = (props) => {
         {(props.sendSMSSuccess || props.sendSMSFailed) && (
           <ErrorMsg show={true} message={props.msg.message} type={"info"} />
         )}
+        {(props.fetchUpdatedStatusSuccess ||
+          props.fetchUpdatedStatusFailed) && (
+          <ErrorMsg
+            show={true}
+            message={props.msg.payload.message}
+            type={"info"}
+          />
+        )}
+        {props.fetchCancelCartSuccess && (
+          <ErrorMsg
+            show={true}
+            message={"Order cancelled successfully."}
+            type="success"
+          />
+        )}
       </Box>
     </div>
   );
@@ -266,8 +296,13 @@ OrderModificationComponent.propTypes = {
   sendSMSInProgress: PropTypes.bool,
   sendSMSSuccess: PropTypes.bool,
   sendSMSFailed: PropTypes.bool,
+  fetchCancelCartSuccess: PropTypes.bool,
   orderList: PropTypes.any,
   msg: PropTypes.any,
+  resetOnUnmount: PropTypes.func,
+  fetchUpdatedStatus: PropTypes.func,
+  fetchUpdatedStatusSuccess: PropTypes.bool,
+  fetchUpdatedStatusFailed: PropTypes.bool,
 };
 
 export { OrderModificationComponent };

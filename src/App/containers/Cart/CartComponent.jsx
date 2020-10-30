@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import CartDetailsCard from "../../components/card";
@@ -148,6 +148,10 @@ const CartComponent = (props) => {
     cardFooter = (
       <Alert severity="warning">
         This order already has an <b>Order Modification</b> request.
+        <br />
+        <br />
+        Go to <Link to="/order-modification">Order Modificaton</Link> page to
+        cancel the previous request.
       </Alert>
     );
   }
@@ -191,12 +195,13 @@ const CartComponent = (props) => {
           confirm={confirm}
         />
       </CartDetailsCard>
-      {props.fetchUpdateCartSuccess ||
-        (props.fetchUpdateCartFailed && (
-          <ErrorMsg message={props.msg} show={true} type="info" />
-        ))}
-
-      <ErrorMsg message={"test message"} show={true} type="info" />
+      {(props.fetchUpdateCartSuccess || props.fetchUpdateCartFailed) && (
+        <ErrorMsg
+          message={props.msg}
+          show={true}
+          type={props.fetchUpdateCartSuccess ? "success" : "info"}
+        />
+      )}
     </>
   );
 };

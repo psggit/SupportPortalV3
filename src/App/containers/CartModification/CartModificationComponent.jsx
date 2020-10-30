@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
+import uuid from "react-uuid";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
@@ -12,12 +13,14 @@ import {
   Drawer,
   ListItem,
   Divider,
+  TextField,
 } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import TopBar from "../../components/topBar";
 import { CartItemComponent } from "./components/cartItem";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import SearchIcon from "@material-ui/icons/Search";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -90,6 +93,11 @@ function TabPanel(props) {
   );
 }
 
+const generateSKU = (cartItem) => {
+  let updatedSKU = { ...cartItem.sku[0], brand_name: cartItem.brand_name };
+  return updatedSKU;
+};
+
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.any.isRequired,
@@ -100,10 +108,12 @@ const CartModificationComponent = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const boxRef = useRef(null);
-  const [currentlyChecked, setCurrentlyChecked] = useState();
+  const [currentlyChecked, setCurrentlyChecked] = useState("");
   const [limit] = useState(20);
   const [offset, setOffset] = useState(0);
   const [state, setState] = useState({ right: false });
+  const [searchQueryText, setSearchQueryText] = useState("");
+  const [searchList, setSearchList] = useState("brand");
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -127,6 +137,9 @@ const CartModificationComponent = (props) => {
     };
     props.setCart(products);
     props.fetchGenre(payload);
+    return () => {
+      props.resetOnUnmount();
+    };
   }, []);
 
   useEffect(() => {
@@ -185,6 +198,7 @@ const CartModificationComponent = (props) => {
 
   const handleGenre = (event, genreId) => {
     setCurrentlyChecked(genreId);
+    setSearchList("brand");
     setOffset(0);
     let brandpayload = {
       city_id: history.location.state.city_id,
@@ -200,22 +214,62 @@ const CartModificationComponent = (props) => {
 
   const handleClick = () => {
     //load more items
-    let brandpayload = {
+    if (searchList === "brand") {
+      let brandpayload = {
+        city_id: history.location.state.city_id,
+        state_id: history.location.state.state_id,
+        retailer_id: parseInt(history.location.state.retailerId),
+        gps: history.location.state.gps,
+        genre_id: currentlyChecked,
+        offset: offset + limit,
+        limit: limit,
+      };
+      // setSearchList("brand");
+      setOffset(offset + limit);
+      props.fetchBrandPagination(brandpayload);
+    } else {
+      let queryPayload = {
+        city_id: history.location.state.city_id,
+        state_id: history.location.state.state_id,
+        retailer_id: parseInt(history.location.state.retailerId),
+        gps: history.location.state.gps,
+        query: searchQueryText,
+        offset: 0,
+        limit: offset + limit,
+      };
+      // console.log("offset: ", offset, "limit: ", limit);
+      setOffset(offset + limit);
+      setCurrentlyChecked("");
+      setSearchQueryText(searchQueryText);
+      // setSearchList("query");
+      props.searchItems(queryPayload);
+    }
+  };
+
+  const searchQuery = (value) => {
+    let queryPayload = {
       city_id: history.location.state.city_id,
       state_id: history.location.state.state_id,
       retailer_id: parseInt(history.location.state.retailerId),
       gps: history.location.state.gps,
-      genre_id: currentlyChecked,
-      offset: offset + limit,
+      query: value,
+      offset: 0,
       limit: limit,
     };
-    setOffset(offset + limit);
-    props.fetchBrandPagination(brandpayload);
+    setOffset(0);
+    setSearchQueryText(value);
+    setSearchList("query");
+    setCurrentlyChecked("");
+    props.searchItems(queryPayload);
   };
 
   let disableAddBtn = false;
   if (props.fetchGenreSuccess) {
     disableAddBtn = Object.keys(props.cartProducts).length == 0 ? true : false;
+  }
+
+  if (props.searchSuccess) {
+    console.log(props.brandData);
   }
 
   return (
@@ -241,10 +295,7 @@ const CartModificationComponent = (props) => {
             {props.fetchGenreSuccess &&
               Object.keys(props.cartProducts).map((value) => {
                 return (
-                  <div
-                    key={props.cartProducts[value]}
-                    className={classes.ListItem}
-                  >
+                  <div key={uuid()} className={classes.ListItem}>
                     <ListItem className={classes.ListItemName} disableGutters>
                       {props.cartProducts[value].brand_name}
                     </ListItem>
@@ -268,8 +319,23 @@ const CartModificationComponent = (props) => {
               Back
             </Button>
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={7}>
             <p>RETAILER NAME: {history.location.state.retailer_name}</p>
+          </Grid>
+          <Grid item xs={3}>
+            <Grid container spacing={1} alignItems="flex-end">
+              <Grid item>
+                <SearchIcon />
+              </Grid>
+              <Grid item>
+                <TextField
+                  id="input-with-icon-grid"
+                  label="Search items"
+                  onChange={(event) => searchQuery(event.target.value)}
+                  autoComplete="off"
+                />
+              </Grid>
+            </Grid>
           </Grid>
           <Grid item xs={1}>
             <Button
@@ -287,7 +353,7 @@ const CartModificationComponent = (props) => {
           props.genreData.map((value) => {
             return (
               <Button
-                key={value.id}
+                key={uuid()}
                 onClick={(event) => handleGenre(event, value.id)}
                 className={
                   currentlyChecked == value.id ? classes.active : classes.btn
@@ -299,13 +365,19 @@ const CartModificationComponent = (props) => {
           })}
       </Box>
       {props.fetchBrandProgress && <LinearProgress />}
+      {props.searchProgress && <LinearProgress />}
       <Box className={classes.cartItemContainer} ref={boxRef}>
         <List className={classes.masonry}>
           {props.fetchBrandSuccess &&
             Object.entries(props.brandData).map((k) => {
+              let updatedSku = generateSKU(k[1]);
+              k[1] = {
+                ...k[1],
+                sku: [updatedSku],
+              };
               return (
                 <CartItemComponent
-                  key={k[0]}
+                  key={uuid()}
                   product={k[1]}
                   addItem={addItem}
                   removeItem={removeItem}
@@ -314,10 +386,16 @@ const CartModificationComponent = (props) => {
               );
             })}
         </List>
-        {props.fetchBrandSuccess && (
+        {props.fetchBrandSuccess && props.brandData.length > 0 && (
           <Button onClick={handleClick} fullWidth>
             Load more
           </Button>
+        )}
+        {props.fetchBrandSuccess && props.brandData.length == 0 && (
+          <Typography variant="body2" align="center">
+            Search for items using <b>Search Bar</b> on top right corner or
+            click on <b>Genres</b>.
+          </Typography>
         )}
       </Box>
       <Box m={1} display="flex" justifyContent="flex-end">
@@ -354,12 +432,16 @@ CartModificationComponent.propTypes = {
   fetchGenreSuccess: PropTypes.bool,
   fetchBrandSuccess: PropTypes.bool,
   fetchBrandProgress: PropTypes.bool,
+  searchProgress: PropTypes.bool,
+  searchSuccess: PropTypes.bool,
   modifySuccess: PropTypes.bool,
   genreData: PropTypes.array,
   brandData: PropTypes.array,
   products: PropTypes.array,
   cartProducts: PropTypes.object,
   fetchBrandPagination: PropTypes.func,
+  searchItems: PropTypes.func,
+  resetOnUnmount: PropTypes.func,
 };
 
 export { CartModificationComponent };

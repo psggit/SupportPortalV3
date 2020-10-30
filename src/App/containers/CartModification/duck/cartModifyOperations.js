@@ -7,8 +7,10 @@ import {
   fetchBrandProgress,
   brandPagination,
   updateFromCart,
+  searchSuccess,
+  searchFailed,
 } from "./actions";
-import { genresAPI, brandsAPI } from "../../../utils";
+import { genresAPI, brandsAPI, searchItemsAPI } from "../../../utils";
 
 const processResponse = () => {
   return (res) => {
@@ -96,4 +98,27 @@ const setCart = (products) => {
   };
 };
 
-export { fetchGenre, fetchBrand, setCart, fetchBrandPagination };
+const onSuccessSearch = (dispatch) => {
+  return (data) => {
+    dispatch(searchSuccess(data));
+  };
+};
+
+const onErrorSearch = (dispatch) => {
+  return (err) => {
+    dispatch(searchFailed(err));
+  };
+};
+
+const searchItems = (reqBody) => {
+  return (dispatch) => {
+    searchItemsAPI(
+      reqBody,
+      processResponse(dispatch),
+      onSuccessSearch(dispatch),
+      onErrorSearch(dispatch)
+    );
+  };
+};
+
+export { fetchGenre, fetchBrand, setCart, fetchBrandPagination, searchItems };

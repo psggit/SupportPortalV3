@@ -18,6 +18,7 @@ import {
   fetchUpdatedStatusSuccess,
   fetchUpdatedStatusFailed,
   fetchUpdatedStatusProgress,
+  resetOnUnmount,
 } from "./action";
 
 const initialState = {
@@ -67,6 +68,9 @@ const orderModificationReducer = createReducer(initialState, {
       fetchOrderInProgress: false,
       fetchOrderFailed: false,
       fetchOrderSuccess: true,
+      fetchUpdatedStatusFailed: false,
+      fetchUpdatedStatusProgress: false,
+      fetchUpdatedStatusSuccess: false,
       orderList: data.payload,
     };
   },
@@ -165,25 +169,32 @@ const orderModificationReducer = createReducer(initialState, {
     fetchCancelCartProgress: false,
     fetchCancelCartSuccess: false,
   }),
-  [fetchUpdatedStatusSuccess]: (state) => ({
+  [fetchUpdatedStatusSuccess]: (state, data) => ({
     ...state,
     fetchUpdatedStatusFailed: false,
     fetchUpdatedStatusProgress: false,
     fetchUpdatedStatusSuccess: true,
-    errorMsg: "",
+    sendSMSFailed: false,
+    sendSMSSuccess: false,
+    msg: data,
   }),
   [fetchUpdatedStatusProgress]: (state) => ({
     ...state,
     fetchUpdatedStatusFailed: false,
     fetchUpdatedStatusProgress: true,
     fetchUpdatedStatusSuccess: false,
-    errorMsg: "Something went wrong, please try again",
   }),
-  [fetchUpdatedStatusFailed]: (state) => ({
+  [fetchUpdatedStatusFailed]: (state, err) => ({
     ...state,
     fetchUpdatedStatusFailed: true,
     fetchUpdatedStatusProgress: false,
     fetchUpdatedStatusSuccess: false,
+    sendSMSFailed: false,
+    sendSMSSuccess: false,
+    msg: err.payload,
+  }),
+  [resetOnUnmount]: () => ({
+    ...initialState,
   }),
 });
 

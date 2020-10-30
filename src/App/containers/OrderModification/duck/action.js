@@ -29,6 +29,8 @@ const fetchUpdatedStatusSuccess = createAction("fetchUpdatedStatusSuccess");
 const fetchUpdatedStatusFailed = createAction("fetchUpdatedStatusFailed");
 const fetchUpdatedStatusProgress = createAction("fetchUpdatedStatusProgress");
 
+const resetOnUnmount = createAction("resetOnUnmount");
+
 export {
   fetchOrderSuccess,
   fetchOrderFailed,
@@ -48,4 +50,5 @@ export {
   fetchUpdatedStatusSuccess,
   fetchUpdatedStatusFailed,
   fetchUpdatedStatusProgress,
+  resetOnUnmount,
 };

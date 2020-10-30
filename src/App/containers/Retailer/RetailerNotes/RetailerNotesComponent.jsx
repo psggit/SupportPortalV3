@@ -71,12 +71,16 @@ function RetailerNotesComponent(props) {
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
   const [noteData, setNoteData] = useState("");
 
-  useEffect(() => {
+  const fetchNotes = () => {
     const payload = {
       order_id: orderId,
       type: "retailer",
     };
     props.fetchRetailerNotesList(payload);
+  }
+
+  useEffect(() => {
+    fetchNotes();
   }, []);
 
   useEffect(() => {
@@ -135,6 +139,7 @@ function RetailerNotesComponent(props) {
       notes: noteData,
     };
     props.createNotes(payload);
+    fetchNotes();
     setShowAddNoteDialog(false);
   };
 

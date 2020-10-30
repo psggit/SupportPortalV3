@@ -90,6 +90,7 @@ const OrderDetailsCard = (props) => {
   const [kyc, setKyc] = useState("");
   const [reasonIdx, setReasonIdx] = useState("");
   const [notes, setNotes] = useState("");
+  const [disabled, setDisabled] = useState(false);
 
   const handleClickOpen = (type) => {
     if (type == "cancel") {
@@ -166,6 +167,7 @@ const OrderDetailsCard = (props) => {
       note: notes,
     };
     props.deliverOrder(payload);
+    setDisabled(true);
     setOpenDeliver(false);
   };
 
@@ -177,6 +179,7 @@ const OrderDetailsCard = (props) => {
       notes: notes,
     };
     props.cancelOrder(payload);
+    setDisabled(true);
     setOpenCancel(false);
   };
 
@@ -203,7 +206,7 @@ const OrderDetailsCard = (props) => {
       className={classes.marginLeft}
       onClick={() => handleClickOpen("cancel")}
       key="cancelBtn"
-      disabled={props.buttonState}
+      disabled={props.buttonState || disabled}
     >
       Cancel Order
     </Button>,
@@ -212,7 +215,7 @@ const OrderDetailsCard = (props) => {
       color="primary"
       key="deliverBtn"
       onClick={() => handleClickOpen("deliver")}
-      disabled={props.buttonState}
+      disabled={props.buttonState || disabled}
     >
       Deliver Order
     </Button>,
