@@ -58,11 +58,14 @@ function CustomerGiftSoa(props) {
   useEffect(() => {
     console.log("gift soa", props.customerNumber);
     const payload = {
-      customer_contact_number: customerNumber,
+      customer_contact_number: "customerNumber",
       limit: rowsPerPage,
       offset: page * rowsPerPage,
     };
     props.fetchGiftSoaList(payload);
+    return () => {
+      props.resetOnUnmount();
+    };
   }, [rowsPerPage, page]);
 
   useEffect(() => {
@@ -202,6 +205,7 @@ CustomerGiftSoa.propTypes = {
   errorMsg: PropTypes.any,
   giftSoaFail: PropTypes.bool,
   giftSoaProgress: PropTypes.bool,
+  resetOnUnmount: PropTypes.func,
 };
 
 export { CustomerGiftSoa };

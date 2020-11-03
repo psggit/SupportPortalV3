@@ -6,8 +6,6 @@ import {
 import { consumerGiftSoaAPI } from "../../../../utils/consumerGiftSoaAPI";
 
 const processResponse = () => {
-  // console.clear();
-  console.log("[processResponse]");
   return (res) => {
     if (res.status === 200) {
       return res.json();
@@ -31,8 +29,6 @@ const onError = (dispatch) => {
 };
 
 const fetchGiftSoaList = (reqBody) => {
-  // console.clear();
-  // console.clear("fetchCustomerSoaList");
   return (dispatch) => {
     dispatch(fetchGiftSoaProgress());
     consumerGiftSoaAPI(
