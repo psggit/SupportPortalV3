@@ -112,6 +112,9 @@ function CustomerSoa(props) {
       offset: page * rowsPerPage,
     };
     props.fetchCustomerSoaList(payload);
+    return () => {
+      props.resetOnUnmount();
+    };
   }, [rowsPerPage, page]);
 
   useEffect(() => {
@@ -277,6 +280,7 @@ CustomerSoa.propTypes = {
   soaFail: PropTypes.bool,
   customerId: PropTypes.any,
   errorMsg: PropTypes.any,
+  resetOnUnmount: PropTypes.func,
 };
 
 export { CustomerSoa };

@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { CustomerSoa } from "./CustomerSoaComponent";
 import { fetchCustomerSoaList } from "./duck/consumerSoaOperations";
+import { resetOnUnmount } from "./duck/index";
 
 const mapStateToProps = (state) => {
   return {
@@ -17,6 +18,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchCustomerSoaList: (payload) => dispatch(fetchCustomerSoaList(payload)),
+    resetOnUnmount: () => dispatch(resetOnUnmount()),
   };
 };
 
