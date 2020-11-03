@@ -10,11 +10,7 @@ const processResponse = () => {
     if (res.status === 200) {
       return res.json();
     } else {
-      console.log(
-        "error",
-        res.json().then((json) => json.message)
-      );
-      throw new Error("Bad Request!");
+      throw res;
     }
   };
 };
@@ -26,8 +22,10 @@ const onSuccess = (dispatch) => {
 };
 
 const onError = (dispatch) => {
-  return (error) => {
-    dispatch(fetchNotesFailed(error));
+  return (data) => {
+    data.json().then((json) => {
+      dispatch(fetchNotesFailed(json));
+    });
   };
 };
 

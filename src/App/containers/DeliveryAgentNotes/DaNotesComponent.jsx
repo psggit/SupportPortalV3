@@ -119,9 +119,6 @@ function DaNotes(props) {
 
   const handleBack = () => {
     history.push(`/order-info/${orderId}`);
-    setTimeout(() => {
-      location.reload();
-    }, 100);
   };
 
   return (

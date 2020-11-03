@@ -40,7 +40,6 @@ function Notes(props) {
   const [rows, setRowsData] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
-  const [errorMessage, setErrorMessage] = useState("");
   const [showData, setShowData] = useState(false);
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
   const [noteData, setNoteData] = useState("");
@@ -51,6 +50,9 @@ function Notes(props) {
 
   useEffect(() => {
     props.fetchConsumerNotes(orderId);
+    return () => {
+      props.resetOnUnmount();
+    };
   }, [rowsPerPage, page]);
 
   useEffect(() => {
@@ -63,10 +65,6 @@ function Notes(props) {
       }
     }
   }, [props.notesSuccess]);
-
-  useEffect(() => {
-    setErrorMessage(props.notesFail);
-  }, [props.notesFail]);
 
   const filledRows = [];
   const loopData = (data) => {
@@ -105,11 +103,6 @@ function Notes(props) {
     };
     props.createNotes(payload);
     setShowAddNoteDialog(false);
-    //location.reload();
-  };
-
-  const handleClose = () => {
-    setErrorMessage(false);
   };
 
   return (
@@ -222,17 +215,12 @@ function Notes(props) {
             />
           )}
         </Box>
-        {errorMessage && (
-          <Notification
-            message={props.errorMsg}
-            messageType="error"
-            open={errorMessage}
-            handleClose={handleClose}
-          />
+        {props.notesFail && (
+          <ErrorMsg show={true} message={props.errorMsg} type={"error"} />
         )}
-        {/* {props.notesSuccess && (
-          <ErrorMsg show={true} message={props.succMsg} type={"success"} />
-        )} */}
+        {props.createNotesSuccess && (
+          <ErrorMsg show={true} message={props.successMsg} type="success" />
+        )}
       </div>
     </>
   );
@@ -248,7 +236,9 @@ Notes.propTypes = {
   notesFail: PropTypes.bool,
   errorMsg: PropTypes.string,
   createNotes: PropTypes.func,
-  succMsg: PropTypes.string,
+  successMsg: PropTypes.string,
+  resetOnUnmount: PropTypes.func,
+  createNotesSuccess: PropTypes.bool,
 };
 
 export { Notes };
