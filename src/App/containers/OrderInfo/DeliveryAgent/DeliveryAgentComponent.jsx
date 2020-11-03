@@ -44,6 +44,9 @@ const DeliveryAgentComponent = (props) => {
     const details = getListOfDataObjects(props.orderInfo, keysToRender);
     setData(details);
     props.fetchNotes(props.orderInfo.order_id);
+    return () => {
+      props.resetOnUnmount();
+    };
   }, []);
 
   const handleTextChange = (e) => {
@@ -234,7 +237,6 @@ const DeliveryAgentComponent = (props) => {
   ];
 
   const keysToRenderInNotesCard = ["notes", "created_at"];
-
   return (
     <Grid container spacing={4}>
       <Grid item xs={6}>
@@ -298,6 +300,7 @@ DeliveryAgentComponent.propTypes = {
   daList: PropTypes.object,
   unassignDASuccess: PropTypes.bool,
   errorMsg: PropTypes.bool,
+  resetOnUnmount: PropTypes.func,
 };
 
 const useStyles = makeStyles((theme) => ({

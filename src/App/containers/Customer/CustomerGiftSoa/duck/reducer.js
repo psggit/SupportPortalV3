@@ -3,6 +3,7 @@ import {
   fetchGiftSoaSuccess,
   fetchGiftSoaFailure,
   fetchGiftSoaProgress,
+  resetOnUnmount,
 } from "./actions";
 
 const initialState = {
@@ -36,6 +37,15 @@ const customerGiftSOAReducer = createReducer(initialState, {
       ...state,
       giftSoaProgress: true,
       giftSoaSuccess: false,
+    };
+  },
+  [resetOnUnmount]: () => {
+    return {
+      customerGiftSoaList: null,
+      giftSoaProgress: false,
+      giftSoaFail: false,
+      giftSoaSuccess: false,
+      errorMsg: "",
     };
   },
 });

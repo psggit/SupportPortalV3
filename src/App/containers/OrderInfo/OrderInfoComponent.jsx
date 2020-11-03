@@ -157,6 +157,9 @@ const OrderInfoComponent = (props) => {
         setModifyCart(history.location.state.modifyCartInfo);
       }
     }
+    return () => {
+      props.resetOnUnmount();
+    };
   }, []);
 
   useEffect(() => {

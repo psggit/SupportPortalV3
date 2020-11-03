@@ -6,6 +6,7 @@ import {
   unassignDeliveryAgent,
   reserveDeliveryAgent,
 } from "./duck/operations";
+import { resetOnUnmount } from "./duck/index";
 
 const mapStateToProps = (state) => {
   return {
@@ -37,6 +38,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchDAList: (orderId, retailerId) =>
       dispatch(fetchDAList(orderId, retailerId)),
     reserveDeliveryAgent: (payload) => dispatch(reserveDeliveryAgent(payload)),
+    resetOnUnmount: () => dispatch(resetOnUnmount()),
   };
 };
 
