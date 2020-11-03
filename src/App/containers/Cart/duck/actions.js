@@ -12,6 +12,8 @@ const fetchUpdateCartSuccess = createAction("fetchUpdateCartSuccess");
 const fetchUpdateCartFailed = createAction("fetchUpdateCartFailed");
 const fetchUpdateCartProgress = createAction("fetchUpdateCartProgress");
 
+const resetOnUnmount = createAction("resetOnUnmount");
+
 export {
   validateOrderSuccess,
   validateOrderFailed,
@@ -22,4 +24,5 @@ export {
   fetchUpdateCartSuccess,
   fetchUpdateCartFailed,
   fetchUpdateCartProgress,
+  resetOnUnmount,
 };

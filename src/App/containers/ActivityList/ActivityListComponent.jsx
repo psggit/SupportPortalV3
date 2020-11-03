@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import TableRow from "@material-ui/core/TableRow";
@@ -44,26 +45,31 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const createData = ({ created_by, notes, created_at }) => {
+const createData = ({ created_by, notes, created_at, description }) => {
   return {
     created_by,
     notes,
     created_at,
+    description,
   };
 };
 
 function ActivityListComponent(props) {
-  console.log("[ActivityListComponent]", props);
+  // console.log("[ActivityListComponent]", props);
   const classes = useStyles();
   const [showData, setShowData] = useState(false);
   const [rows, setRowsData] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
   // const [errorMessage, setErrorMessage] = useState("");
+  const history = useHistory();
+  let orderId = history.location.state.orderId;
+  console.log(orderId);
 
   useEffect(() => {
+    // console.log(orderId);
     const reqBody = {
-      order_id: `${props.orderData}`,
+      order_id: `${orderId}`,
       limit: rowsPerPage,
       offset: page * rowsPerPage,
     };
@@ -106,8 +112,8 @@ function ActivityListComponent(props) {
   return (
     <div className={classes.formContainer}>
       <TopBar />
-      <SimpleMenuBar orderId={props.orderData}>
-        {props.notesSuccess && <p>ACTIVITY LOGS-ORDER ID: {props.orderData}</p>}
+      <SimpleMenuBar orderId={orderId}>
+        {props.notesSuccess && <p>ACTIVITY LOGS-ORDER ID: {orderId}</p>}
       </SimpleMenuBar>
       {props.notesProgress && <Loading message="Fetching data..." />}
       <Box className={classes.table} mt={4}>
@@ -115,8 +121,9 @@ function ActivityListComponent(props) {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell align="center">SUPPORT PERSON</TableCell>
+                <TableCell align="center">ACTION BY</TableCell>
                 <TableCell align="center">NOTE</TableCell>
+                <TableCell align="center">DESCRIPTION</TableCell>
                 <TableCell align="center">CREATED AT</TableCell>
               </TableRow>
             </TableHead>
@@ -130,6 +137,7 @@ function ActivityListComponent(props) {
                       <TableRow key={index}>
                         <TableCell align="center">{data.created_by}</TableCell>
                         <TableCell align="center">{data.notes}</TableCell>
+                        <TableCell align="center">{data.description}</TableCell>
                         <TableCell align="center">
                           {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
                         </TableCell>

@@ -19,7 +19,7 @@ import {
 } from "@material-ui/core";
 import Loading from "../../../components/loading";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   row1: {
     display: "flex",
     justifyContent: "space-between",

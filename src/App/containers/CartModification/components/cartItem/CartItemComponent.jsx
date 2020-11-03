@@ -56,6 +56,7 @@ function CartItemComponent(props) {
         className={classes.ListItemText}
       />
       {product.sku.map((value) => {
+        // console.log(product.sku.length, value.brand_name, value.volume);
         return (
           <CartItem
             ordered_count={ordered_count}

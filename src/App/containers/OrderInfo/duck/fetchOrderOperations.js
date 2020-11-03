@@ -62,8 +62,13 @@ const onSuccessCancel = (dispatch) => {
 };
 
 const onError = (dispatch) => {
-  return (err) => {
-    dispatch(fetchOrderInfoFailure(err));
+  // return (err) => {
+  //   dispatch(fetchOrderInfoFailure(err));
+  // };
+  return (data) => {
+    data.json().then((json) => {
+      dispatch(fetchOrderInfoFailure(json));
+    });
   };
 };
 

@@ -5,7 +5,7 @@ import {
   GoogleMap,
   LoadScript,
   Marker,
-  InfoWindow,
+  // InfoWindow,
 } from "@react-google-maps/api";
 import PropTypes from "prop-types";
 import TopBar from "../../components/topBar";
@@ -19,13 +19,6 @@ import {
 } from "../../assets/images";
 
 const placesLib = ["places"];
-// const mapStyle = require("./styles.json");
-
-const icons = {
-  custom: {
-    icon: markerIcon,
-  },
-};
 
 const onLoadMarker = (marker) => {
   console.log("marker: ", marker);
@@ -44,7 +37,7 @@ const MapComponent = (props) => {
   const gpsConsumer = props.trackData.consumer_gps.split(",");
   const gpsRetailer = props.trackData.retailer_gps.split(",");
   const mapRef = useRef(null);
-  const [positionAgent, setCenterAgent] = useState({
+  const [positionAgent] = useState({
     lat: parseFloat(gpsAgent[0]),
     lng: parseFloat(gpsAgent[1]),
   });
@@ -52,11 +45,11 @@ const MapComponent = (props) => {
     lat: parseFloat(gpsConsumer[0]),
     lng: parseFloat(gpsConsumer[1]),
   });
-  const [positionRetailer, setCenterRetailer] = useState({
+  const [positionRetailer] = useState({
     lat: parseFloat(gpsRetailer[0]),
     lng: parseFloat(gpsRetailer[1]),
   });
-  const [current, setCurrent] = useState(null);
+  const [current] = useState(null);
 
   useEffect(() => {
     if (mapRef.current && current) {
@@ -82,7 +75,7 @@ const MapComponent = (props) => {
 
   //12.930229,80.213797
 
-  console.log(props, positionAgent, positionConsumer, positionRetailer);
+  // console.log(props, positionAgent, positionConsumer, positionRetailer);
 
   return (
     <>
@@ -150,6 +143,10 @@ const MapComponent = (props) => {
   );
 };
 
+MapComponent.propTypes = {
+  trackData: PropTypes.any,
+}
+
 function OrderTrackingComponent(props) {
   const history = useHistory();
   let orderID = history.location.state.orderId;
@@ -165,7 +162,7 @@ function OrderTrackingComponent(props) {
   useEffect(() => {
     if (props.fetchLiveDataSuccess) {
       setShow(true);
-      console.log(props);
+      // console.log(props);
       setDetails(history.location.state.orderInfo);
       if (props.trackData.agent_gps.trim().length == 0) {
         setShowError(true);
@@ -180,7 +177,11 @@ function OrderTrackingComponent(props) {
         {show && <p>TRACK ORDER: {orderID}</p>}
       </SimpleMenuBar>
       {showError && show && (
-        <ErrorMsg show={true} message={props.trackData.message} type="error" />
+        <ErrorMsg
+          show={true}
+          message={"Delivery agent location not found."}
+          type="error"
+        />
       )}
       <Grid container>
         <Grid item xs={3}>

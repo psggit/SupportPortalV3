@@ -8,6 +8,7 @@ import {
   fetchUpdateCartSuccess,
   fetchUpdateCartFailed,
   fetchUpdateCartProgress,
+  resetOnUnmount,
 } from "./actions";
 import {
   orderSummaryAPI,
@@ -69,7 +70,7 @@ const onErrorConfirm = (dispatch) => {
 
 const fetchSummary = (reqBody) => {
   // console.clear();
-  console.log("[fetch summary]", reqBody);
+  // console.log("[fetch summary]", reqBody);
   return (dispatch) => {
     dispatch(fetchCartSummaryProgress());
     orderSummaryAPI(
@@ -82,7 +83,7 @@ const fetchSummary = (reqBody) => {
 };
 
 const updateCart = (reqBody) => {
-  console.log("[update summary]", reqBody);
+  // console.log("[update summary]", reqBody);
   return (dispatch) => {
     dispatch(fetchUpdateCartProgress());
     confirmCartAPI(
@@ -95,7 +96,7 @@ const updateCart = (reqBody) => {
 };
 
 const validateCart = (reqBody) => {
-  console.log("[validate summary]", reqBody);
+  // console.log("[validate summary]", reqBody);
   return (dispatch) => {
     dispatch(validateOrderProgress());
     listOrderModificationAPI(
@@ -107,4 +108,10 @@ const validateCart = (reqBody) => {
   };
 };
 
-export { fetchSummary, updateCart, validateCart };
+const resetOnUnmountFn = () => {
+  return (dispatch) => {
+    dispatch(resetOnUnmount());
+  };
+};
+
+export { fetchSummary, updateCart, validateCart, resetOnUnmountFn };

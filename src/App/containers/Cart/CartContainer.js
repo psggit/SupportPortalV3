@@ -1,6 +1,11 @@
 import { connect } from "react-redux";
 import { CartComponent } from "./CartComponent";
-import { fetchSummary, updateCart, validateCart } from "./duck";
+import {
+  fetchSummary,
+  updateCart,
+  validateCart,
+  resetOnUnmountFn,
+} from "./duck";
 
 const mapStateToProps = (state) => {
   // console.log("[mapping state in cart container]", state);
@@ -29,6 +34,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchSummary: (payload) => dispatch(fetchSummary(payload)),
     updateCart: (payload) => dispatch(updateCart(payload)),
     validateCart: (payload) => dispatch(validateCart(payload)),
+    resetOnUnmount: () => dispatch(resetOnUnmountFn()),
   };
 };
 
