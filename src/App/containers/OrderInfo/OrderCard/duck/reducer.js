@@ -139,7 +139,7 @@ const orderDataReducer = createReducer(initialValue, {
     deliverOrderSuccess: false,
     deliverOrderFailed: true,
     deliverOrderProgress: false,
-    errorMsg: "Something went wrong!",
+    errorMsg: data.payload.message,
   }),
   [deliverOrderProgress]: (state) => ({
     ...state,
