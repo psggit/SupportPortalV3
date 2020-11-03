@@ -56,7 +56,6 @@ function CustomerGiftSoa(props) {
   const orderInfos = history.location.state.orderInfos;
 
   useEffect(() => {
-    console.log("gift soa", props.customerNumber);
     const payload = {
       customer_contact_number: customerNumber,
       limit: rowsPerPage,

@@ -16,7 +16,6 @@ const processResponse = () => {
 };
 
 const onSuccess = (dispatch) => {
-  console.log("[onSuccess]");
   return (data) => {
     dispatch(fetchGiftSoaSuccess(data));
   };
