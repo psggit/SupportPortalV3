@@ -9,10 +9,10 @@
   "scripts": {
     "flow": "flow",
     "clean": "rm dist/bundle.js",
-    "build-dev": "echo \"Look at dockerfile \"",
-    "build-prod": "echo \"Look at dockerfile \"",
+    "build-dev": "BASE_URL=hipbar-dev.com NODE_ENV=production webpack-dev-server --config webpack.dev.js",
+    "build": "BASE_URL=hipbar.com NODE_ENV=production webpack-dev-server --config webpack.dev.js",
     "start:dev": "BASE_URL=hipbar-dev.com NODE_ENV=local webpack-dev-server --config webpack.dev.js --history-api-fallback --disable-host-check",
-    "start": "BASE_URL=hipbar-dev.com NODE_ENV=production webpack-dev-server --config webpack.dev.js",
+    "start": "BASE_URL=hipbar.com NODE_ENV=production webpack-dev-server --config webpack.dev.js",
     "test": "jest",
     "cy:run": "cypress run --record",
     "cy:ci": "start-server-and-test start http-get://localhost:8080 cy:run"
