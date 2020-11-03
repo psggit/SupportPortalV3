@@ -55,7 +55,7 @@ const createData = ({ created_by, notes, created_at, description }) => {
 };
 
 function ActivityListComponent(props) {
-  // console.log("[ActivityListComponent]", props);
+  // console.log("[ActivityListComponent]", prop);
   const classes = useStyles();
   const [showData, setShowData] = useState(false);
   const [rows, setRowsData] = useState(null);
