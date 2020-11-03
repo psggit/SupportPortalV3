@@ -231,7 +231,7 @@ function DaNotes(props) {
               </TableBody>
             </Table>
           </TableContainer>
-          {showData && (
+          {props.fetchSuccess && showData && (
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"

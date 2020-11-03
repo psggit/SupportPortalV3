@@ -244,7 +244,7 @@ function CustomerSoa(props) {
               </TableBody>
             </Table>
           </TableContainer>
-          {showData && (
+          {props.soaSuccess && showData && (
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"

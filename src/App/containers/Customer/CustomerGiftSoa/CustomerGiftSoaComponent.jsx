@@ -170,7 +170,7 @@ function CustomerGiftSoa(props) {
             </TableBody>
           </Table>
         </TableContainer>
-        {showData && (
+        {props.giftSoaSuccess && showData && (
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"

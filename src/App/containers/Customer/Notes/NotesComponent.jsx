@@ -202,7 +202,7 @@ function Notes(props) {
               </TableBody>
             </Table>
           </TableContainer>
-          {showData && (
+          {props.notesSuccess && showData && (
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"

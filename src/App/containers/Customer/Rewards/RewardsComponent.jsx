@@ -196,7 +196,7 @@ function Rewards(props) {
               </TableBody>
             </Table>
           </TableContainer>
-          {showData && (
+          {props.rewardsSuccess && showData && (
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
