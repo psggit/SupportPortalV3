@@ -5,7 +5,6 @@ import { createNotes } from "../../OrderInfo/duck";
 import { resetOnUnmount } from "../../OrderInfo/CustomerDetails/duck";
 
 const mapStateToProps = (state) => {
-  console.log("[DA-notes]", state.order.customer.succMsg)
   return {
     orderInfo: state.order.orderInfo.orderInfo,
     customerNotes: state.order.customer.customerNotesData,

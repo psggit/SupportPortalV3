@@ -8,11 +8,11 @@ import Moment from "moment";
 import Button from "@material-ui/core/Button";
 import Dialog from "../../components/dialog";
 import TopBar from "../../components/topBar";
-import Notification from "../../components/notification";
 import { Tab } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import Loading from "../../components/loading";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
+import ErrorMsg from "../../components/errorMsg";
 import {
   Table,
   Box,
@@ -43,7 +43,6 @@ function DaNotes(props) {
   const [rows, setRowsData] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
-  const [errorMessage, setErrorMessage] = useState("");
   const [showData, setShowData] = useState(false);
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
   const [value, setValue] = React.useState(0);
@@ -68,11 +67,10 @@ function DaNotes(props) {
         setShowData(false);
       }
     }
+    return () => {
+      props.resetOnUnmount();
+    };
   }, [props.fetchSuccess]);
-
-  useEffect(() => {
-    setErrorMessage(props.fetchFailed);
-  }, [props.fetchFailed]);
 
   const filledRows = [];
   const loopData = (data) => {
@@ -111,10 +109,6 @@ function DaNotes(props) {
 
   const UnmountAddNote = () => {
     setShowAddNoteDialog(false);
-  };
-
-  const handleClose = () => {
-    setErrorMessage(false);
   };
 
   const handleBack = () => {
@@ -248,13 +242,11 @@ function DaNotes(props) {
             />
           )}
         </Box>
-        {errorMessage && (
-          <Notification
-            message={props.errorMsg}
-            messageType="error"
-            open={errorMessage}
-            handleClose={handleClose}
-          />
+        {props.createNotesSuccess && (
+          <ErrorMsg show={true} message={props.successMsg} type="success" />
+        )}
+        {props.fetchFailed && (
+          <ErrorMsg show={true} message={props.errorMsg} type="error" />
         )}
       </div>
     </>
@@ -271,6 +263,9 @@ DaNotes.propTypes = {
   errorMsg: PropTypes.string,
   fetchFailed: PropTypes.bool,
   createNotes: PropTypes.func,
+  resetOnUnmount: PropTypes.func,
+  successMsg: PropTypes.string,
+  createNotesSuccess: PropTypes.bool,
 };
 
 export { DaNotes };
