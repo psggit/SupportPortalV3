@@ -77,7 +77,7 @@ function RetailerNotesComponent(props) {
       type: "retailer",
     };
     props.fetchRetailerNotesList(payload);
-  }
+  };
 
   useEffect(() => {
     fetchNotes();
@@ -225,7 +225,7 @@ function RetailerNotesComponent(props) {
           </div>
         </div>
         {props.notesProgress && <Loading message="Fetching data..." />}
-        <Box width="85%" mx="auto">
+        <Box Box width="85%" mx="auto">
           <TableContainer component={Paper}>
             <Table>
               <TableHead>
@@ -239,9 +239,10 @@ function RetailerNotesComponent(props) {
               </TableHead>
               <TableBody>
                 {showData &&
-                  rows.map((data, ind) => {
-                    return (
-                      <TableRow key={ind}>
+                  rows
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((data) => (
+                      <TableRow>
                         <TableCell align="center">{data.order_id}</TableCell>
                         <TableCell align="center">{data.type}</TableCell>
                         <TableCell align="center">{data.notes}</TableCell>
@@ -250,8 +251,7 @@ function RetailerNotesComponent(props) {
                         </TableCell>
                         <TableCell align="center">{data.created_by}</TableCell>
                       </TableRow>
-                    );
-                  })}
+                    ))}
                 {!showData && (
                   <TableRow>
                     <TableCell colSpan={10} align="center">
@@ -262,11 +262,11 @@ function RetailerNotesComponent(props) {
               </TableBody>
             </Table>
           </TableContainer>
-          {showData && (
+          {props.notesSuccess && showData && (
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={10}
+              count={rows.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onChangePage={handleChangePage}
