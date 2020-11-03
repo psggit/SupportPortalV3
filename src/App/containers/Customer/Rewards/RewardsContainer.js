@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { Rewards } from "./RewardsComponent";
-import { fetchRewardsList } from "./duck";
+import { fetchRewardsList, resetOnUnmount } from "./duck";
 
 const mapStateToProps = (state) => {
   return {
@@ -17,6 +17,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchRewardsList: (payload) => dispatch(fetchRewardsList(payload)),
+    resetOnUnmount: () => dispatch(resetOnUnmount()),
   };
 };
 

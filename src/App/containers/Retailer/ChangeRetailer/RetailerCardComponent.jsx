@@ -68,6 +68,9 @@ const useStyles = makeStyles((theme) => ({
 const RetailerCardComponent = (props) => {
   useEffect(() => {
     console.dir(props);
+    return () => {
+      props.resetOnUnmount();
+    };
   }, []);
 
   const classes = useStyles();
@@ -93,6 +96,7 @@ const RetailerCardComponent = (props) => {
       cancellation_reason: "",
     };
     props.reassignRetailer(payload);
+    // console.log("RetailerCardComponent", props.errorMessage.message);
     setMountDialog(false);
   };
 
@@ -171,9 +175,10 @@ RetailerCardComponent.propTypes = {
   reassignRetailer: PropTypes.func,
   value: PropTypes.object,
   reassignRetailerFailed: PropTypes.bool,
-  errorMessage: PropTypes.string,
+  errorMessage: PropTypes.any,
   reassignRetailerSuccess: PropTypes.bool,
   successMsg: PropTypes.any,
+  resetOnUnmount: PropTypes.func,
 };
 
 export { RetailerCardComponent };

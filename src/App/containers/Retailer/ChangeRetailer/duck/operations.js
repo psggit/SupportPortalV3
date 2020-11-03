@@ -14,7 +14,7 @@ const processResponse = () => {
     if (res.status === 200) {
       return res.json();
     } else {
-      throw new Error("Something went wrong, try again");
+      throw res;
     }
   };
 };
@@ -38,8 +38,10 @@ const onErrorListRetailer = (dispatch) => {
 };
 
 const onErrorReassignRetailer = (dispatch) => {
-  return () => {
-    dispatch(reassignRetailerFailed());
+  return (data) => {
+    data.json().then((json) => {
+      dispatch(reassignRetailerFailed(json));
+    });
   };
 };
 

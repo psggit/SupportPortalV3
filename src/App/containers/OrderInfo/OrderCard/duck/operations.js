@@ -23,13 +23,10 @@ import { deliverOrderAPI } from "../../../../utils/deliverOrderAPI";
 
 const processResponse = () => {
   return (res) => {
-    if (res.ok) {
+    if (res.status === 200) {
       return res.json();
-    }
-    if (res.status === 400) {
-      throw new Error("Invalid Params");
     } else {
-      throw new Error("Something went wrong, try again");
+      throw res;
     }
   };
 };
@@ -71,8 +68,10 @@ const onErrorCancelOrder = (dispatch) => {
 };
 
 const onErrorCancel = (dispatch) => {
-  return (err) => {
-    dispatch(cancelOrderFailure(err));
+  return (data) => {
+    data.json().then((json) => {
+      dispatch(cancelOrderFailure(json));
+    });
   };
 };
 
@@ -89,8 +88,10 @@ const onErrorKyc = (dispatch) => {
 };
 
 const onErrorDeliverOrder = (dispatch) => {
-  return (err) => {
-    dispatch(deliverOrderFailed(err));
+  return (data) => {
+    data.json().then((json) => {
+      dispatch(deliverOrderFailed(json));
+    });
   };
 };
 

@@ -8,6 +8,8 @@ const reassignRetailerSuccess = createAction("reassignRetailerSuccess");
 const reassignRetailerFailed = createAction("reassignRetailerFailed");
 const reassignRetailerProgress = createAction("reassignRetailerProgress");
 
+const resetOnUnmount = createAction("resetOnUnmount");
+
 export {
   listRetailerSuccess,
   listRetailerFailed,
@@ -15,4 +17,5 @@ export {
   reassignRetailerProgress,
   reassignRetailerFailed,
   reassignRetailerSuccess,
+  resetOnUnmount,
 };

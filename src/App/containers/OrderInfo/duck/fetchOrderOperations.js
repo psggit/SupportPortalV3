@@ -34,7 +34,7 @@ const processResponse = () => {
     if (res.status === 200) {
       return res.json();
     } else {
-      throw new Error("Something went wrong, try again");
+      throw res;
     }
   };
 };
@@ -110,8 +110,13 @@ const onSuccessNotes = (dispatch) => {
 };
 
 const onErrorNotes = (dispatch) => {
-  return (err) => {
-    dispatch(createNotesFailure(err));
+  // return (err) => {
+  //   dispatch(createNotesFailure(err));
+  // };
+  return (data) => {
+    data.json().then((json) => {
+      dispatch(createNotesFailure(json));
+    });
   };
 };
 

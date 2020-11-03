@@ -4,4 +4,11 @@ const fetchNotesSuccess = createAction("fetchNotesSuccess");
 const fetchNotesFailed = createAction("fetchNotesFailed");
 const fetchNotesProgress = createAction("fetchNotesProgress");
 
-export { fetchNotesSuccess, fetchNotesFailed, fetchNotesProgress };
+const resetOnUnmount = createAction("resetOnUnmount");
+
+export {
+  fetchNotesSuccess,
+  fetchNotesFailed,
+  fetchNotesProgress,
+  resetOnUnmount,
+};

@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { RetailerCardComponent } from "./RetailerCardComponent";
 import { reassignRetailer } from "./duck/operations";
+import { resetOnUnmount } from "./duck/action";
 
 const mapStateToProps = (state) => {
   return {
@@ -19,6 +20,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     reassignRetailer: (payload) => dispatch(reassignRetailer(payload)),
+    resetOnUnmount: () => dispatch(resetOnUnmount()),
   };
 };
 

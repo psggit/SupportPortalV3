@@ -3,6 +3,7 @@ import {
   fetchNotesSuccess,
   fetchNotesFailed,
   fetchNotesProgress,
+  resetOnUnmount,
 } from "./actions";
 
 const initialValue = {
@@ -23,7 +24,6 @@ const customerReducer = createReducer(initialValue, {
       notesSuccess: true,
       errorMsg: "",
       customerNotesData: data.payload,
-      succMsg: "success",
     };
   },
   [fetchNotesFailed]: (state, data) => ({
@@ -37,6 +37,15 @@ const customerReducer = createReducer(initialValue, {
     return {
       ...state,
       notesProgress: true,
+    };
+  },
+  [resetOnUnmount]: () => {
+    return {
+      notesProgress: false,
+      notesFail: false,
+      notesSuccess: false,
+      errorMsg: "",
+      succMsg: "",
     };
   },
 });

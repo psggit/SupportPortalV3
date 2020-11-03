@@ -72,6 +72,7 @@ const useStyles = makeStyles((theme) => ({
     width: 30,
     minWidth: 30,
     fontSize: 18,
+    lineHeight: "1em",
     margin: 5,
     cursor: "pointer",
     "&:hover": {
@@ -88,6 +89,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 30,
     fontSize: 18,
     margin: 5,
+    lineHeight: "1em",
     cursor: "pointer",
     "&:hover": {
       backgroundColor: "#FB337A",
@@ -103,6 +105,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 30,
     fontSize: 18,
     margin: 5,
+    lineHeight: "1em",
     cursor: "pointer",
     "&:hover": {
       backgroundColor: "#F4A60B",
@@ -118,6 +121,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 30,
     fontSize: 18,
     margin: 5,
+    lineHeight: "1em",
     cursor: "pointer",
     "&:hover": {
       backgroundColor: "#1B4987",
@@ -153,6 +157,9 @@ const OrderInfoComponent = (props) => {
         setModifyCart(history.location.state.modifyCartInfo);
       }
     }
+    return () => {
+      props.resetOnUnmount();
+    };
   }, []);
 
   useEffect(() => {

@@ -19,7 +19,7 @@ import {
 } from "@material-ui/core";
 import Loading from "../../../components/loading";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   row1: {
     display: "flex",
     justifyContent: "space-between",
@@ -70,7 +70,6 @@ function Rewards(props) {
   const customerNumber = history.location.state.customerNumber;
   const orderInfos = history.location.state.orderInfos;
 
-
   useEffect(() => {
     const payload = {
       consumer_id: parseInt(customerId),
@@ -78,6 +77,9 @@ function Rewards(props) {
       offset: page * rowsPerPage,
     };
     props.fetchRewardsList(payload);
+    return () => {
+      props.resetOnUnmount();
+    };
   }, [rowsPerPage, page]);
 
   useEffect(() => {
@@ -132,6 +134,7 @@ function Rewards(props) {
         />
         <div className={classes.row1}>
           <p>CUSTOMER ID: {customerId}</p>
+          {/* <div>Search</div> */}
         </div>
         {props.rewardsProgress && <Loading message="Fetching data..." />}
         <Box width="85%" mx="auto">
@@ -193,7 +196,7 @@ function Rewards(props) {
               </TableBody>
             </Table>
           </TableContainer>
-          {showData && (
+          {props.rewardsSuccess && showData && (
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
@@ -228,6 +231,7 @@ Rewards.propTypes = {
   customerId: PropTypes.any,
   fetchRewardsList: PropTypes.func,
   errorMsg: PropTypes.any,
+  resetOnUnmount: PropTypes.func,
 };
 
 export { Rewards };

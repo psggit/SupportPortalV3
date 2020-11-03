@@ -3,6 +3,7 @@ import {
   fetchRewardSuccess,
   fetchRewardFailure,
   fetchRewardProgress,
+  resetOnUnmount,
 } from "./actions";
 
 const initialState = {
@@ -36,6 +37,14 @@ const rewardsReducer = createReducer(initialState, {
       ...state,
       rewardsProgress: true,
       rewardsSuccess: false,
+    };
+  },
+  [resetOnUnmount]: () => {
+    return {
+      rewardsProgress: false,
+      rewardsFail: false,
+      rewardsSuccess: false,
+      errorMsg: "",
     };
   },
 });
