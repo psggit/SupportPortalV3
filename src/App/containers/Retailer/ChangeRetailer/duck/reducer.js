@@ -6,6 +6,7 @@ import {
   reassignRetailerProgress,
   reassignRetailerFailed,
   reassignRetailerSuccess,
+  resetOnUnmount,
 } from "./action";
 
 const initialValue = {
@@ -52,18 +53,32 @@ const listRetailerReducer = createReducer(initialValue, {
     errorMessage: "",
     successMsg: data.payload,
   }),
-  [reassignRetailerFailed]: (state) => {
+  [reassignRetailerFailed]: (state, data) => {
     return {
       ...state,
       reassignRetailerProgress: false,
       reassignRetailerFailed: true,
       reassignRetailerSuccess: false,
-      errorMessage: "Something went wrong",
+      errorMessage: data.payload.message,
     };
   },
   [reassignRetailerProgress]: (state) => ({
     ...state,
     reassignRetailerProgress: true,
+  }),
+  [resetOnUnmount]: (state) => ({
+    ...state,
+    listRetailerData: null,
+    reassignRetailerData: null,
+    listRetailerSuccess: false,
+    listRetailerFailed: false,
+    listRetailerProgress: false,
+    reassignRetailerProgress: false,
+    reassignRetailerFailed: false,
+    reassignRetailerSuccess: false,
+    errorMsg: "",
+    errorMessage: "",
+    successMsg: "",
   }),
 });
 export { listRetailerReducer };
