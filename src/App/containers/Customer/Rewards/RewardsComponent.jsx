@@ -70,7 +70,6 @@ function Rewards(props) {
   const customerNumber = history.location.state.customerNumber;
   const orderInfos = history.location.state.orderInfos;
 
-
   useEffect(() => {
     const payload = {
       consumer_id: parseInt(customerId),
@@ -78,6 +77,9 @@ function Rewards(props) {
       offset: page * rowsPerPage,
     };
     props.fetchRewardsList(payload);
+    return () => {
+      props.resetOnUnmount();
+    };
   }, [rowsPerPage, page]);
 
   useEffect(() => {
@@ -229,6 +231,7 @@ Rewards.propTypes = {
   customerId: PropTypes.any,
   fetchRewardsList: PropTypes.func,
   errorMsg: PropTypes.any,
+  resetOnUnmount: PropTypes.func,
 };
 
 export { Rewards };
