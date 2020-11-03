@@ -8,6 +8,7 @@ import {
   connectCall,
   fetchIssueTypes,
   submitIssue,
+  resetOnUnmount,
 } from "../OrderInfo/duck";
 
 const mapStateToProps = (state) => {
@@ -45,6 +46,7 @@ const mapDispatchToProps = (dispatch) => {
     connectCall: (payload) => dispatch(connectCall(payload)),
     fetchIssueTypes: () => dispatch(fetchIssueTypes()),
     submitIssue: (payload) => dispatch(submitIssue(payload)),
+    resetOnUnmount: () => dispatch(resetOnUnmount()),
   };
 };
 

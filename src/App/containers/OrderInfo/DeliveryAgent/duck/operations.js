@@ -18,42 +18,27 @@ import { daListAPI } from "../../../../utils/daListAPI";
 import { unassignDaAPI } from "../../../../utils/unassignDaAPI";
 import { reserveOrderAPI } from "../../../../utils";
 
-// const processResponse = () => {
-//   // console.log("[processResponse]");
-//   return (res) => {
-//     if (res.ok) {
-//       return res.json();
-//     }
-//     if (res.status === 400) {
-//       throw new Error("invalid params");
-//     } else {
-//       throw new Error("Something went wrong, try again");
-//     }
-//   };
-// };
-
 const processResponse = () => {
   return (res) => {
     if (res.status === 200) {
       return res.json();
     } else {
-      throw new Error("Something went wrong, try again");
+      throw res;
     }
   };
 };
 
 const onSuccess = (dispatch) => {
   return (data) => {
-    // console.log("[onSuccess] data", data);
     dispatch(fetchDeliveryAgentNotesSuccess(data));
-    // createSession(data);
   };
 };
 
 const onError = (dispatch) => {
-  return (err) => {
-    // console.log("[onError]", err);
-    dispatch(fetchDeliveryAgentNotesFailed(err));
+  return (data) => {
+    data.json().then((json) => {
+      dispatch(fetchDeliveryAgentNotesFailed(json));
+    });
   };
 };
 
@@ -64,8 +49,10 @@ const daListSuccess = (dispatch) => {
 };
 
 const daListError = (dispatch) => {
-  return (err) => {
-    dispatch(fetchDeliveryAgentListFailed(err));
+  return (data) => {
+    data.json().then((json) => {
+      dispatch(fetchDeliveryAgentListFailed(json));
+    });
   };
 };
 
@@ -76,8 +63,10 @@ const unassignDaSuccess = (dispatch) => {
 };
 
 const unassignDaError = (dispatch) => {
-  return (err) => {
-    dispatch(fetchUnassignDAFailed(err));
+  return (data) => {
+    data.json().then((json) => {
+      dispatch(fetchUnassignDAFailed(json));
+    });
   };
 };
 
@@ -88,8 +77,10 @@ const reserveOrderSuccess = (dispatch) => {
 };
 
 const reserveOrderError = (dispatch) => {
-  return (err) => {
-    dispatch(fetchReserveDAFailed(err));
+  return (data) => {
+    data.json().then((json) => {
+      dispatch(fetchReserveDAFailed(json));
+    });
   };
 };
 

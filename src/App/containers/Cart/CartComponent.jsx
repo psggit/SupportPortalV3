@@ -66,7 +66,7 @@ const CartComponent = (props) => {
   const classes = useStyles();
   const orderInfo = props.orderInfo;
   const [modify, setModify] = useState(false);
-  const [disableModify, setDisableModify] = useState(props.buttonState);
+  const [disableModify, setDisableModify] = useState(!props.buttonState);
   const [confirm, setConfirm] = useState(false);
   const [cancel, setCancel] = useState(false);
   useEffect(() => {
@@ -79,14 +79,13 @@ const CartComponent = (props) => {
       offset: 0,
     };
     props.validateCart(payload);
+    return () => {
+      props.resetOnUnmount();
+    };
   }, []);
 
   useEffect(() => {
     if (props.validateOrderSuccess) {
-      // if (props.validateInfo.count == 0) {
-      // if (props.modifyCart.length !== 0 && props.modifyCart !== undefined) {
-      // }
-      // }
       if (!cancel) {
         props.fetchSummary(props.modifyCart);
       }
@@ -131,6 +130,10 @@ const CartComponent = (props) => {
     setConfirm(!confirm);
   };
 
+  // console.log(disableModify);
+  // console.log(props.buttonState);
+  // console.log(modify, props.validateInfo);
+
   let actionButtons = [
     <Button
       variant="contained"
@@ -144,7 +147,11 @@ const CartComponent = (props) => {
   ];
 
   let cardFooter = "";
-  if (props.validateOrderSuccess && props.validateInfo.count !== 0) {
+  // console.log("cart component", props.fetchCartSummarySuccess, props.validateOrderSuccess, props.validateInfo.count);
+  if (
+    (props.fetchCartSummarySuccess && props.cartSummary === null) ||
+    (props.validateOrderSuccess && props.validateInfo.count !== 0)
+  ) {
     cardFooter = (
       <Alert severity="warning">
         This order already has an <b>Order Modification</b> request.
@@ -156,7 +163,7 @@ const CartComponent = (props) => {
     );
   }
 
-  if (modify && props.validateInfo.count == 0) {
+  if (props.cartSummary !== null) {
     actionButtons = [
       <Button
         variant="outlined"
@@ -221,6 +228,7 @@ CartComponent.propTypes = {
   validateCart: PropTypes.func,
   validateInfo: PropTypes.any,
   cancelCart: PropTypes.func,
+  resetOnUnmount: PropTypes.func,
   msg: PropTypes.string,
 };
 

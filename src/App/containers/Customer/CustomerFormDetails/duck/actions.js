@@ -4,4 +4,11 @@ const consumerUpdateSuccess = createAction("consumerUpdateSuccess");
 const consumerUpdateFailed = createAction("consumerUpdateFailed");
 const consumerUpdateProgress = createAction("consumerUpdateProgress");
 
-export { consumerUpdateSuccess, consumerUpdateFailed, consumerUpdateProgress };
+const resetOnUnmount = createAction("resetOnUnmount");
+
+export {
+  consumerUpdateSuccess,
+  consumerUpdateFailed,
+  consumerUpdateProgress,
+  resetOnUnmount,
+};

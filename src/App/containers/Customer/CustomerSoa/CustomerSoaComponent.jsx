@@ -10,7 +10,11 @@ import Paper from "@material-ui/core/Paper";
 import FullWidthTabs from "../customerMenuBar";
 import Loading from "../../../components/loading";
 import { useHistory } from "react-router-dom";
-
+// import SearchIcon from "@material-ui/icons/Search";
+// import MenuItem from "@material-ui/core/MenuItem";
+// import FormControl from "@material-ui/core/FormControl";
+// import Select from "@material-ui/core/Select";
+// import InputBase from "@material-ui/core/InputBase";
 import {
   Table,
   Box,
@@ -29,6 +33,38 @@ const useStyles = makeStyles(() => ({
     fontSize: "16px",
     color: "#696969",
     fontWeight: "bold",
+  },
+  search: {
+    position: "relative",
+  },
+  searchIcon: {
+    padding: "2px",
+    height: "100%",
+    position: "absolute",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "#C7C7C7",
+  },
+  inputRoot: {
+    color: "inherit",
+  },
+  inputInput: {
+    border: "1px solid #C7C7C7",
+    paddingLeft: "30px",
+    width: "50%",
+  },
+  formControl: {
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginLeft: "-83px",
+    width: "80%",
+    border: "1px solid #C7C7C7",
+    backgroundColor: "#E5E5E5",
+  },
+  design: {
+    display: "flex",
   },
 }));
 
@@ -62,6 +98,11 @@ function CustomerSoa(props) {
   const orderId = history.location.state.orderId;
   const customerNumber = history.location.state.customerNumber;
   const orderInfos = history.location.state.orderInfos;
+  // const [age, setAge] = React.useState("");
+
+  // const handleChange = (event) => {
+  //   setAge(event.target.value);
+  // };
 
   useEffect(() => {
     const payload = {
@@ -70,6 +111,9 @@ function CustomerSoa(props) {
       offset: page * rowsPerPage,
     };
     props.fetchCustomerSoaList(payload);
+    return () => {
+      props.resetOnUnmount();
+    };
   }, [rowsPerPage, page]);
 
   useEffect(() => {
@@ -121,7 +165,40 @@ function CustomerSoa(props) {
         />
         <div className={classes.row1}>
           <p>CUSTOMER ID: {customerId}</p>
-          <div>Search</div>
+          {/* <div>
+            <div className={classes.design}>
+              <div>
+                <div className={classes.search}>
+                  <div className={classes.searchIcon}>
+                    <SearchIcon />
+                  </div>
+                  <InputBase
+                    placeholder="Search here"
+                    classes={{
+                      input: classes.inputInput,
+                    }}
+                    inputProps={{ "aria-label": "search" }}
+                  />
+                </div>
+              </div>
+              <FormControl className={classes.formControl}>
+                <Select
+                  value={age}
+                  onChange={handleChange}
+                  displayEmpty
+                  className={classes.selectEmpty}
+                  inputProps={{ "aria-label": "Without label" }}
+                >
+                  <MenuItem value="">
+                    <em>Order ID</em>
+                  </MenuItem>
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+          </div> */}
         </div>
         {props.soaProgress && <Loading message="Fetching data..." />}
         <Box width="85%" mx="auto">
@@ -167,7 +244,7 @@ function CustomerSoa(props) {
               </TableBody>
             </Table>
           </TableContainer>
-          {showData && (
+          {props.soaSuccess && showData && (
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
@@ -202,6 +279,7 @@ CustomerSoa.propTypes = {
   soaFail: PropTypes.bool,
   customerId: PropTypes.any,
   errorMsg: PropTypes.any,
+  resetOnUnmount: PropTypes.func,
 };
 
 export { CustomerSoa };

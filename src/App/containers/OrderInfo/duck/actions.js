@@ -24,6 +24,8 @@ const submitIssueProgress = createAction("submitIssueProgress");
 const submitIssueFailed = createAction("submitIssueFailed");
 const submitIssueSuccess = createAction("submitIssueSuccess");
 
+const resetOnUnmount = createAction("resetOnUnmount");
+
 export {
   fetchOrderInfoProgress,
   fetchOrderInfoFailure,
@@ -43,4 +45,5 @@ export {
   submitIssueProgress,
   submitIssueFailed,
   submitIssueSuccess,
+  resetOnUnmount,
 };

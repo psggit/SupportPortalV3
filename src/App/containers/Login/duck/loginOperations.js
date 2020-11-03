@@ -26,17 +26,17 @@ const onError = (dispatch) => {
 };
 
 const getRedirectURL = () => {
-  // let redirectURL = "http://localhost:8080/dashboard"; //local
-  let redirectURL = "https://support.hipbar-dev.com/dashboard"; //live
-  // console.log(process.env.NODE_ENV);
+  let redirectURL = "http://localhost:8080/dashboard"; //local
+  // let redirectURL = "https://support.hipbar-dev.com/dashboard"; //live
+  console.log(process.env.NODE_ENV);
   switch (process.env.NODE_ENV) {
     case "local":
       return (redirectURL =
         "http://support-local.hipbar-dev.com:8080/dashboard");
     case "development":
-      return (redirectURL = "https://ts-support.hipbar-dev.com/dashboard");
+      return (redirectURL = "https://support.hipbar-dev.com/dashboard");
     case "production":
-      return (redirectURL = "https://support.hipbar.com/dashboard");
+      return (redirectURL = "https://support-v2.hipbar.com/dashboard");
   }
   return redirectURL;
 };

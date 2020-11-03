@@ -14,7 +14,7 @@ import FullWidthTabs from "../customerMenuBar";
 import { TableContainer, Table, TableHead } from "@material-ui/core";
 import Loading from "../../../components/loading";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   row1: {
     display: "flex",
     justifyContent: "space-between",
@@ -56,13 +56,15 @@ function CustomerGiftSoa(props) {
   const orderInfos = history.location.state.orderInfos;
 
   useEffect(() => {
-    console.log("gift soa", props.customerNumber);
     const payload = {
       customer_contact_number: customerNumber,
       limit: rowsPerPage,
       offset: page * rowsPerPage,
     };
     props.fetchGiftSoaList(payload);
+    return () => {
+      props.resetOnUnmount();
+    };
   }, [rowsPerPage, page]);
 
   useEffect(() => {
@@ -113,7 +115,7 @@ function CustomerGiftSoa(props) {
       />
       <div className={classes.row1}>
         <p>CUSTOMER ID: {history.location.state.customerId}</p>
-        <div>Search</div>
+        {/* <div>Search</div> */}
       </div>
       {props.giftSoaProgress && <Loading message="Fetching data..." />}
       <Box width="85%" mx="auto">
@@ -168,7 +170,7 @@ function CustomerGiftSoa(props) {
             </TableBody>
           </Table>
         </TableContainer>
-        {showData && (
+        {props.giftSoaSuccess && showData && (
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
@@ -202,6 +204,7 @@ CustomerGiftSoa.propTypes = {
   errorMsg: PropTypes.any,
   giftSoaFail: PropTypes.bool,
   giftSoaProgress: PropTypes.bool,
+  resetOnUnmount: PropTypes.func,
 };
 
 export { CustomerGiftSoa };

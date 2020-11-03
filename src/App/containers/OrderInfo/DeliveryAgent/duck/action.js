@@ -28,6 +28,8 @@ const fetchReserveDASuccess = createAction("fetchReserveDASuccess");
 const fetchReserveDAFailed = createAction("fetchReserveDAFailed");
 const fetchReserveDAProgress = createAction("fetchReserveDAProgress");
 
+const resetOnUnmount = createAction("resetOnUnmount");
+
 export {
   fetchDeliveryAgentNotesSuccess,
   fetchDeliveryAgentNotesFailed,
@@ -41,4 +43,5 @@ export {
   fetchReserveDASuccess,
   fetchReserveDAFailed,
   fetchReserveDAProgress,
+  resetOnUnmount,
 };

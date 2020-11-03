@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
@@ -5,7 +6,6 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import Moment from "moment";
 import Button from "@material-ui/core/Button";
-import Notification from "../../../components/notification";
 import Dialog from "../../../components/dialog";
 import Paper from "@material-ui/core/Paper";
 import TopBar from "../../../components/topBar";
@@ -40,7 +40,6 @@ function Notes(props) {
   const [rows, setRowsData] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
-  const [errorMessage, setErrorMessage] = useState("");
   const [showData, setShowData] = useState(false);
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
   const [noteData, setNoteData] = useState("");
@@ -51,6 +50,9 @@ function Notes(props) {
 
   useEffect(() => {
     props.fetchConsumerNotes(orderId);
+    return () => {
+      props.resetOnUnmount();
+    };
   }, [rowsPerPage, page]);
 
   useEffect(() => {
@@ -63,10 +65,6 @@ function Notes(props) {
       }
     }
   }, [props.notesSuccess]);
-
-  useEffect(() => {
-    setErrorMessage(props.notesFail);
-  }, [props.notesFail]);
 
   const filledRows = [];
   const loopData = (data) => {
@@ -105,11 +103,6 @@ function Notes(props) {
     };
     props.createNotes(payload);
     setShowAddNoteDialog(false);
-    //location.reload();
-  };
-
-  const handleClose = () => {
-    setErrorMessage(false);
   };
 
   return (
@@ -173,7 +166,7 @@ function Notes(props) {
           </div>
         </div>
         {props.notesProgress && <Loading message="Fetching data..." />}
-        <Box width="85%" mx="auto">
+        <Box Box width="85%" mx="auto">
           <TableContainer component={Paper}>
             <Table>
               <TableHead>
@@ -187,9 +180,10 @@ function Notes(props) {
               </TableHead>
               <TableBody>
                 {showData &&
-                  rows.map((data, ind) => {
-                    return (
-                      <TableRow key={ind}>
+                  rows
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((data) => (
+                      <TableRow>
                         <TableCell align="center">{data.order_id}</TableCell>
                         <TableCell align="center">{data.type}</TableCell>
                         <TableCell align="center">{data.notes}</TableCell>
@@ -198,8 +192,7 @@ function Notes(props) {
                         </TableCell>
                         <TableCell align="center">{data.created_by}</TableCell>
                       </TableRow>
-                    );
-                  })}
+                    ))}
                 {!showData && (
                   <TableRow>
                     <TableCell colSpan={10} align="center">
@@ -210,11 +203,11 @@ function Notes(props) {
               </TableBody>
             </Table>
           </TableContainer>
-          {showData && (
+          {props.notesSuccess && showData && (
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={10}
+              count={rows.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onChangePage={handleChangePage}
@@ -222,17 +215,12 @@ function Notes(props) {
             />
           )}
         </Box>
-        {errorMessage && (
-          <Notification
-            message={props.errorMsg}
-            messageType="error"
-            open={errorMessage}
-            handleClose={handleClose}
-          />
+        {props.notesFail && (
+          <ErrorMsg show={true} message={props.errorMsg} type={"error"} />
         )}
-        {/* {props.notesSuccess && (
-          <ErrorMsg show={true} message={props.succMsg} type={"success"} />
-        )} */}
+        {props.createNotesSuccess && (
+          <ErrorMsg show={true} message={props.successMsg} type="success" />
+        )}
       </div>
     </>
   );
@@ -248,7 +236,9 @@ Notes.propTypes = {
   notesFail: PropTypes.bool,
   errorMsg: PropTypes.string,
   createNotes: PropTypes.func,
-  succMsg: PropTypes.string,
+  successMsg: PropTypes.string,
+  resetOnUnmount: PropTypes.func,
+  createNotesSuccess: PropTypes.bool,
 };
 
 export { Notes };

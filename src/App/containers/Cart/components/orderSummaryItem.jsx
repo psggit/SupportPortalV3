@@ -7,8 +7,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
 import Collapse from "@material-ui/core/Collapse";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
+import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -89,6 +89,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600,
     color: "#010B13",
     fontSize: 14,
+    marginRight: 5,
   },
 }));
 
@@ -117,7 +118,7 @@ const OrderSummaryItem = (props) => {
             className={classes.ListItemRootTitle}
             classes={{ primary: classes.listItemTextHead }}
           />
-          {open ? <ExpandLess /> : <ExpandMore />}
+          {open ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
           {value !== "" ? (
             <ListItemText
               primary={value}

@@ -3,6 +3,7 @@ import {
   fetchCustomerSoaSuccessfull,
   fetchCustomerSoaFailure,
   fetchCustomerSoaInProgress,
+  resetOnUnmount,
 } from "./actions";
 
 const initialState = {
@@ -38,6 +39,14 @@ const customerSOAReducer = createReducer(initialState, {
       ...state,
       soaProgress: true,
       soaSuccess: false,
+    };
+  },
+  [resetOnUnmount]: () => {
+    return {
+      soaProgress: false,
+      soaFail: false,
+      soaSuccess: false,
+      errorMsg: "",
     };
   },
 });

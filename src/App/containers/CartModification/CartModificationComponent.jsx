@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useDebugValue } from "react";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import uuid from "react-uuid";
@@ -94,7 +94,17 @@ function TabPanel(props) {
 }
 
 const generateSKU = (cartItem) => {
-  let updatedSKU = { ...cartItem.sku[0], brand_name: cartItem.brand_name };
+  // let updatedSKU = { ...cartItem.sku[0], brand_name: cartItem.brand_name };
+  let updatedSKU = [];
+  cartItem.sku.map((value, index) => {
+    updatedSKU[index] = {
+      ...cartItem.sku[index],
+      brand_name: cartItem.brand_name,
+    };
+    // 
+    
+  });
+  console.log("---- ", updatedSKU);
   return updatedSKU;
 };
 
@@ -370,10 +380,12 @@ const CartModificationComponent = (props) => {
         <List className={classes.masonry}>
           {props.fetchBrandSuccess &&
             Object.entries(props.brandData).map((k) => {
+              // console.log(k[1]);
               let updatedSku = generateSKU(k[1]);
+              console.log(updatedSku);
               k[1] = {
                 ...k[1],
-                sku: [updatedSku],
+                sku: [...updatedSku],
               };
               return (
                 <CartItemComponent

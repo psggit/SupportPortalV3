@@ -2,6 +2,7 @@ import { connect } from "react-redux";
 import { DaNotes } from "./DaNotesComponent";
 import { fetchDeliveryAgentNotes } from "../OrderInfo/DeliveryAgent/duck/operations";
 import { createNotes } from "../OrderInfo/duck";
+import { resetOnUnmount } from "../OrderInfo/DeliveryAgent/duck";
 
 const mapStateToProps = (state) => {
   return {
@@ -12,6 +13,8 @@ const mapStateToProps = (state) => {
     fetchProgress: state.order.deliveryAgent.fetchProgress,
     fetchFailed: state.order.deliveryAgent.fetchFailed,
     errorMsg: state.order.deliveryAgent.errorMsg,
+    createNotesSuccess: state.order.orderInfo.createNotesSuccess,
+    successMsg: state.order.orderInfo.successMsg,
   };
 };
 
@@ -20,6 +23,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchDeliveryAgentNotes: (payload) =>
       dispatch(fetchDeliveryAgentNotes(payload)),
     createNotes: (type) => dispatch(createNotes(type)),
+    resetOnUnmount: () => dispatch(resetOnUnmount()),
   };
 };
 

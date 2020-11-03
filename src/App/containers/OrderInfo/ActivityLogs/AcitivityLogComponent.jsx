@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import ActivityItem from "../../../components/activityItems";
 import { Button } from "@material-ui/core";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ErrorMsg from "../../../components/errorMsg";
 
 const ActivityLogComponent = (props) => {
   // const classes = useStyles();
@@ -15,7 +14,12 @@ const ActivityLogComponent = (props) => {
   }, []);
 
   const handleChange = () => {
-    history.push("/activity-list");
+    history.push({
+      pathname: "/activity-list",
+      state: {
+        orderId: props.orderId,
+      },
+    });
   };
 
   const subheadAction = [

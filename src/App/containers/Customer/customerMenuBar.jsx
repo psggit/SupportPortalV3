@@ -37,9 +37,6 @@ export default function FullWidthTabs(props) {
 
   const goBack = () => {
     history.push("/order-info/" + props.orderId);
-    setTimeout(() => {
-      location.reload();
-    });
   };
 
   console.log(props);
@@ -103,10 +100,6 @@ export default function FullWidthTabs(props) {
         orderInfos: props.orderInfos,
       },
     });
-    //location.reload();
-    setTimeout(() => {
-      location.reload();
-    }, 100);
   };
 
   return (

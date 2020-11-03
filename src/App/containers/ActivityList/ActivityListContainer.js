@@ -4,10 +4,10 @@ import { ActivityListComponent } from "./ActivityListComponent";
 import { fetchActLogsList } from "./duck";
 
 const mapStateToProps = (state) => {
-  console.log("[activityLogs]", state);
+  // console.log("[activityLogs]", state);
   return {
     acitivityLog: state.acitivityLog,
-    orderData: state.order.orderInfo.orderInfo.order_id,
+    // orderData: state.order.orderInfo.orderInfo.order_id,
     // orderId: "50011546022614",
     notesProgress: state.acitivityLog.notesProgress,
     notesSuccess: state.acitivityLog.notesSuccess,
