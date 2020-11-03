@@ -194,7 +194,7 @@ function DaNotes(props) {
           </div>
         </div>
         {props.fetchProgress && <Loading message="Fetching data..." />}
-        <Box width="85%" mx="auto">
+        <Box Box width="85%" mx="auto">
           <TableContainer component={Paper}>
             <Table>
               <TableHead>
@@ -208,9 +208,10 @@ function DaNotes(props) {
               </TableHead>
               <TableBody>
                 {showData &&
-                  rows.map((data, ind) => {
-                    return (
-                      <TableRow key={ind}>
+                  rows
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((data) => (
+                      <TableRow>
                         <TableCell align="center">{data.order_id}</TableCell>
                         <TableCell align="center">{data.type}</TableCell>
                         <TableCell align="center">{data.notes}</TableCell>
@@ -219,13 +220,12 @@ function DaNotes(props) {
                         </TableCell>
                         <TableCell align="center">{data.created_by}</TableCell>
                       </TableRow>
-                    );
-                  })}
+                    ))}
                 {!showData && (
                   <TableRow>
                     <TableCell colSpan={10} align="center">
                       No data available
-                    </TableCell>
+                  </TableCell>
                   </TableRow>
                 )}
               </TableBody>
@@ -235,7 +235,7 @@ function DaNotes(props) {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={props.deliveryAgentNotes.count}
+              count={rows.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onChangePage={handleChangePage}

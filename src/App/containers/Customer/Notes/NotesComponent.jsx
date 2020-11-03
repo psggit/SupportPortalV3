@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
@@ -165,7 +166,7 @@ function Notes(props) {
           </div>
         </div>
         {props.notesProgress && <Loading message="Fetching data..." />}
-        <Box width="85%" mx="auto">
+        <Box Box width="85%" mx="auto">
           <TableContainer component={Paper}>
             <Table>
               <TableHead>
@@ -179,9 +180,10 @@ function Notes(props) {
               </TableHead>
               <TableBody>
                 {showData &&
-                  rows.map((data, ind) => {
-                    return (
-                      <TableRow key={ind}>
+                  rows
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((data) => (
+                      <TableRow>
                         <TableCell align="center">{data.order_id}</TableCell>
                         <TableCell align="center">{data.type}</TableCell>
                         <TableCell align="center">{data.notes}</TableCell>
@@ -190,8 +192,7 @@ function Notes(props) {
                         </TableCell>
                         <TableCell align="center">{data.created_by}</TableCell>
                       </TableRow>
-                    );
-                  })}
+                    ))}
                 {!showData && (
                   <TableRow>
                     <TableCell colSpan={10} align="center">
@@ -206,7 +207,7 @@ function Notes(props) {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={props.customerNotes.count}
+              count={rows.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onChangePage={handleChangePage}
