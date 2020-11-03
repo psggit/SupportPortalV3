@@ -132,7 +132,6 @@ function Rewards(props) {
         />
         <div className={classes.row1}>
           <p>CUSTOMER ID: {customerId}</p>
-          <div>Search</div>
         </div>
         {props.rewardsProgress && <Loading message="Fetching data..." />}
         <Box width="85%" mx="auto">

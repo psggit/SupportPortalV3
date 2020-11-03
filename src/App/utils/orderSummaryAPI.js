@@ -9,7 +9,7 @@ const headers = {
 };
 
 const orderSummaryAPI = (reqBody, process, onSuccess, onError) => {
-  console.log("orderSummaryAPI ", reqBody);
+  // console.log("orderSummaryAPI ", reqBody);
   const URL = `https://${apiUrl}/orderman/api/1/order/modify/summary`;
   fetch(URL, {
     method: "POST",

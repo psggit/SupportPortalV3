@@ -9,6 +9,7 @@ import {
   fetchUpdateCartSuccess,
   fetchUpdateCartFailed,
   fetchUpdateCartProgress,
+  resetOnUnmount,
 } from "./actions";
 
 const initialValue = {
@@ -26,7 +27,7 @@ const initialValue = {
   fetchCancelCartSuccess: false,
   fetchCancelCartFailed: false,
   fetchCancelCartProgress: false,
-  errorMsg: "",
+  errorMsg: "Something went wrong, please try again",
   successMsg: "",
   msg: "",
 };
@@ -53,7 +54,7 @@ const cartReducer = createReducer(initialValue, {
     fetchCartSummaryFailed: false,
     fetchCartSummarySuccess: false,
   }),
-  [fetchUpdateCartSuccess]: (state, data) => ({
+  [fetchUpdateCartSuccess]: (state) => ({
     ...state,
     fetchUpdateCartProgress: false,
     fetchUpdateCartFailed: false,
@@ -93,6 +94,9 @@ const cartReducer = createReducer(initialValue, {
     validateOrderProgress: true,
     validateOrderFailed: false,
     validateOrderSuccess: false,
+  }),
+  [resetOnUnmount]: () => ({
+    ...initialValue,
   }),
 });
 

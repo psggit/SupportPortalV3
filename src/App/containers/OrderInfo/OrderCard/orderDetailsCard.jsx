@@ -75,7 +75,7 @@ const OrderDetailsCard = (props) => {
     props.fetchKycList();
   }, []);
 
-  let { platform, customer_address } = {
+  let { platform, customer_address, delivery_status } = {
     ...props.order,
   };
   platform = platform === "hb" ? "Hipbar Web" : "Flipkart";
@@ -249,6 +249,22 @@ const OrderDetailsCard = (props) => {
             />
             <ListItemText
               primary={customer_address}
+              className={classes.ListItemTextRoot}
+              classes={{ root: classes.ListItemTextRoot }}
+            />
+          </ListItem>
+          <ListItem
+            dense
+            disableGutters={true}
+            className={classes.ListItemRoot}
+          >
+            <ListItemText
+              primary="Order Status"
+              className={classes.ListItemRootTitle}
+              classes={{ root: classes.ListItemRootTitle }}
+            />
+            <ListItemText
+              primary={delivery_status}
               className={classes.ListItemTextRoot}
               classes={{ root: classes.ListItemTextRoot }}
             />

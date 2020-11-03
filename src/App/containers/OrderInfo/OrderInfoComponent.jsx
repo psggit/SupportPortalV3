@@ -396,7 +396,7 @@ const OrderInfoComponent = (props) => {
                 {props.fetchOrderInfoSuccess && (
                   <CartContainer
                     modifyCart={modifyCart}
-                    buttonState={!props.order.order_status_button}
+                    buttonState={props.order.order_status_button}
                   />
                 )}
               </Grid>

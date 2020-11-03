@@ -21,7 +21,7 @@ import {
 } from "./actions";
 
 const initialValue = {
-  fetchOrderInfoProgress: true,
+  fetchOrderInfoProgress: false,
   fetchOrderInfoFailure: false,
   fetchOrderInfoSuccess: false,
   fetchCancelReasonProgress: false,
@@ -51,13 +51,13 @@ const initialValue = {
 };
 
 const orderInfoReducer = createReducer(initialValue, {
-  [fetchOrderInfoFailure]: (state) => {
+  [fetchOrderInfoFailure]: (state, message) => {
     return {
       ...state,
       fetchOrderInfoProgress: false,
       fetchOrderInfoFailure: true,
       fetchOrderInfoSuccess: false,
-      errorMsg: "Something went wrong, please try again",
+      errorMsg: message,
     };
   },
   [fetchOrderInfoProgress]: (state) => {

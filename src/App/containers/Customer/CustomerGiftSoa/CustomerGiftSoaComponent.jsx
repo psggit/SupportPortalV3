@@ -113,7 +113,6 @@ function CustomerGiftSoa(props) {
       />
       <div className={classes.row1}>
         <p>CUSTOMER ID: {history.location.state.customerId}</p>
-        <div>Search</div>
       </div>
       {props.giftSoaProgress && <Loading message="Fetching data..." />}
       <Box width="85%" mx="auto">

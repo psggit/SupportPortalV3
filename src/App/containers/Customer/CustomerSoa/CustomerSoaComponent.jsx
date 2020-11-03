@@ -121,7 +121,6 @@ function CustomerSoa(props) {
         />
         <div className={classes.row1}>
           <p>CUSTOMER ID: {customerId}</p>
-          <div>Search</div>
         </div>
         {props.soaProgress && <Loading message="Fetching data..." />}
         <Box width="85%" mx="auto">
