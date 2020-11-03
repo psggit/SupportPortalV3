@@ -5,7 +5,6 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import Moment from "moment";
 import Button from "@material-ui/core/Button";
-import Notification from "../../../components/notification";
 import Dialog from "../../../components/dialog";
 import Paper from "@material-ui/core/Paper";
 import TopBar from "../../../components/topBar";
@@ -207,7 +206,7 @@ function Notes(props) {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={10}
+              count={props.customerNotes.count}
               rowsPerPage={rowsPerPage}
               page={page}
               onChangePage={handleChangePage}

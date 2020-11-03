@@ -56,20 +56,21 @@ function DaNotes(props) {
 
   useEffect(() => {
     props.fetchDeliveryAgentNotes(orderId);
+    return () => {
+      props.resetOnUnmount();
+    };
   }, [rowsPerPage, page]);
 
   useEffect(() => {
     if (props.fetchSuccess) {
       if (props.deliveryAgentNotes.orderNotes !== null) {
+        console.log("count", props.deliveryAgentNotes.count)
         loopData(props.deliveryAgentNotes.orderNotes);
         setShowData(true);
       } else {
         setShowData(false);
       }
     }
-    return () => {
-      props.resetOnUnmount();
-    };
   }, [props.fetchSuccess]);
 
   const filledRows = [];
@@ -234,7 +235,7 @@ function DaNotes(props) {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={10}
+              count={props.deliveryAgentNotes.count}
               rowsPerPage={rowsPerPage}
               page={page}
               onChangePage={handleChangePage}
