@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { CustomerForm } from "./CustomerFormComponent";
 import { updateConsumer } from "./duck/formOperations";
+import { resetOnUnmount } from "./duck/index";
 
 const mapStateToProps = (state) => {
   return {
@@ -18,6 +19,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     updateConsumer: (payload) => dispatch(updateConsumer(payload)),
+    resetOnUnmount: () => dispatch(resetOnUnmount()),
   };
 };
 

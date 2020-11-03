@@ -3,6 +3,7 @@ import {
   consumerUpdateSuccess,
   consumerUpdateFailed,
   consumerUpdateProgress,
+  resetOnUnmount,
 } from "./actions";
 
 const initialState = {
@@ -26,12 +27,12 @@ const customerUpdateReducer = createReducer(initialState, {
       updateSuccessMsg: data.payload.message,
     };
   },
-  [consumerUpdateFailed]: (state) => ({
+  [consumerUpdateFailed]: (state, error) => ({
     ...state,
     updateProgress: false,
     updateFail: true,
     updateSuccess: false,
-    errorMsg: "Something went wrong! Please contact tech",
+    errorMsg: error.payload.message,
   }),
   [consumerUpdateProgress]: (state) => {
     return {
@@ -39,6 +40,14 @@ const customerUpdateReducer = createReducer(initialState, {
       updateProgress: true,
     };
   },
+  [resetOnUnmount]: () => ({
+    updateConsumerData: null,
+    updateProgress: false,
+    updateFail: false,
+    updateSuccess: false,
+    errorMsg: "",
+    updateSuccessMsg: "",
+  }),
 });
 
 export { customerUpdateReducer };

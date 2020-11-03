@@ -12,6 +12,7 @@ import {
   fetchReserveDASuccess,
   fetchReserveDAFailed,
   fetchReserveDAProgress,
+  resetOnUnmount,
 } from "./action";
 
 const initialValue = {
@@ -25,7 +26,6 @@ const initialValue = {
   daListSuccess: false,
   daListFail: false,
   daListProgress: false,
-  successMsg: "",
   unassignDASuccess: false,
   unassignDAFail: false,
   unassignDAProgress: false,
@@ -45,12 +45,12 @@ const deliveryAgentReducer = createReducer(initialValue, {
       errorMsg: "",
     };
   },
-  [fetchDeliveryAgentNotesFailed]: (state) => ({
+  [fetchDeliveryAgentNotesFailed]: (state, error) => ({
     ...state,
     fetchSuccess: false,
     fetchFailed: true,
     fetchProgress: false,
-    errorMsg: "Something went wrong Please try again!",
+    errorMsg: error.payload.message,
   }),
   [fetchDeliveryAgentNotesProgress]: (state) => ({
     ...state,
@@ -87,7 +87,6 @@ const deliveryAgentReducer = createReducer(initialValue, {
     unassignDASuccess: false,
     unassignDAFail: true,
     unassignDAProgress: false,
-    //message: "No delivery agent has been assigned to the order yet.",
     errorMsg: error.payload.message,
   }),
   [fetchUnassignDAProgress]: (state) => ({
@@ -100,19 +99,34 @@ const deliveryAgentReducer = createReducer(initialValue, {
     reserveDAFail: false,
     reserveDAProgress: false,
     message: data.payload.message,
-    //errorMsg: data.payload,
   }),
-  [fetchReserveDAFailed]: (state) => ({
+  [fetchReserveDAFailed]: (state, error) => ({
     ...state,
     reserveDaSuccess: false,
     reserveDaFail: true,
     reserveDAProgress: false,
-    errorMsg:
-      "Reserving the order for the delivery agent is not allowed at the current order state.",
+    errorMsg: error.payload.message,
   }),
   [fetchReserveDAProgress]: (state) => ({
     ...state,
     reserveDAProgress: true,
+  }),
+  [resetOnUnmount]: () => ({
+    fetchSuccess: false,
+    fetchFailed: false,
+    fetchProgress: false,
+    errorMsg: "",
+    deliveryAgentList: null,
+    daListSuccess: false,
+    daListFail: false,
+    daListProgress: false,
+    unassignDASuccess: false,
+    unassignDAFail: false,
+    unassignDAProgress: false,
+    message: "",
+    reserveDaSuccess: false,
+    reserveDaFail: false,
+    reserveDaProgress: false,
   }),
 });
 export { deliveryAgentReducer };

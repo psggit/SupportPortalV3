@@ -91,6 +91,9 @@ function CustomerForm(props) {
       setSelectedValue(orderInfos.customer_gender);
     }
     setSignupDate(orderInfos.customer_sign_up_date.slice(0, 10));
+    return () => {
+      props.resetOnUnmount();
+    };
   }, []);
 
   const handleChange = (event) => {
@@ -323,6 +326,7 @@ function CustomerForm(props) {
 CustomerForm.prototype = {
   orderInfo: PropTypes.object,
   updateConsumer: PropTypes.func,
+  resetOnUnmount: PropTypes.func,
 };
 
 export { CustomerForm };
