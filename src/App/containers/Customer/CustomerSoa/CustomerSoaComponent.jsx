@@ -10,11 +10,11 @@ import Paper from "@material-ui/core/Paper";
 import FullWidthTabs from "../customerMenuBar";
 import Loading from "../../../components/loading";
 import { useHistory } from "react-router-dom";
-import SearchIcon from "@material-ui/icons/Search";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import InputBase from "@material-ui/core/InputBase";
+// import SearchIcon from "@material-ui/icons/Search";
+// import MenuItem from "@material-ui/core/MenuItem";
+// import FormControl from "@material-ui/core/FormControl";
+// import Select from "@material-ui/core/Select";
+// import InputBase from "@material-ui/core/InputBase";
 import {
   Table,
   Box,
@@ -98,12 +98,11 @@ function CustomerSoa(props) {
   const orderId = history.location.state.orderId;
   const customerNumber = history.location.state.customerNumber;
   const orderInfos = history.location.state.orderInfos;
+  // const [age, setAge] = React.useState("");
 
-  const [age, setAge] = React.useState('');
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+  // const handleChange = (event) => {
+  //   setAge(event.target.value);
+  // };
 
   useEffect(() => {
     const payload = {
@@ -166,7 +165,7 @@ function CustomerSoa(props) {
         />
         <div className={classes.row1}>
           <p>CUSTOMER ID: {customerId}</p>
-          <div>
+          {/* <div>
             <div className={classes.design}>
               <div>
                 <div className={classes.search}>
@@ -199,7 +198,7 @@ function CustomerSoa(props) {
                 </Select>
               </FormControl>
             </div>
-          </div>
+          </div> */}
         </div>
         {props.soaProgress && <Loading message="Fetching data..." />}
         <Box width="85%" mx="auto">
