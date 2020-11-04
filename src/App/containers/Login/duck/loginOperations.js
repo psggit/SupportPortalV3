@@ -25,7 +25,8 @@ const onError = (dispatch) => {
     dispatch(loginFailed(err));
   };
 };
-console.log(ARGS_BUILD_ENV)
+console.log(ARGS_BUILD_ENV);
+
 const getRedirectURL = () => {
   // let redirectURL = "http://localhost:8080/dashboard"; //local
   // let redirectURL = "https://support.hipbar-dev.com/dashboard"; //live
