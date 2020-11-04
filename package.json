@@ -11,7 +11,7 @@
     "clean": "rm dist/bundle.js",
     "build-dev": "echo \"Look at dockerfile \"",
     "build-prod": "echo \"Look at dockerfile \"",
-    "start": "webpack-dev-server --hot --mode development --env.NODE_ENV=local",
+    "start": "webpack-dev-server --hot --mode development --env.NODE_ENV=dev",
     "test": "jest",
     "cy:run": "cypress run --record",
     "cy:ci": "start-server-and-test start http-get://localhost:8080 cy:run"
