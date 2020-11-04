@@ -101,8 +101,6 @@ let addProduct = (state: State, sku: sku): State => {
   } else {
     prod.ordered_count += 1;
   }
-  console.clear();
-  console.log(sku);
   state.cartProducts[prod.sku_id.toString()] = prod;
   return state;
 };
