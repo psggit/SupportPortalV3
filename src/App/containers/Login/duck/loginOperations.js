@@ -38,7 +38,7 @@ const getRedirectURL = () => {
         "http://support-local.hipbar-dev.com:8080/dashboard");
     case "dev":
       return (redirectURL = "https://support.hipbar-dev.com/dashboard");
-    case "prod":
+    case "production":
       return (redirectURL = "https://support-v2.hipbar.com/dashboard");
   }
   return redirectURL;
