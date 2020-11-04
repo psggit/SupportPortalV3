@@ -218,7 +218,6 @@ const RenderIssues = (props) => {
   };
 
   const handleSupportPersonChange = (event) => {
-    console.log("id", event.target.value);
     setSupportPersonId(event.target.value);
   };
 

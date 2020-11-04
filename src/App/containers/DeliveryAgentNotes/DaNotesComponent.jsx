@@ -64,7 +64,6 @@ function DaNotes(props) {
   useEffect(() => {
     if (props.fetchSuccess) {
       if (props.deliveryAgentNotes.orderNotes !== null) {
-        console.log("count", props.deliveryAgentNotes.count)
         loopData(props.deliveryAgentNotes.orderNotes);
         setShowData(true);
       } else {

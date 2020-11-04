@@ -42,7 +42,6 @@ const onSuccess = (dispatch) => {
 
 const onError = (dispatch) => {
   return (err) => {
-    console.log("[onError]", err);
     dispatch(fetchIssuesFailed(err));
   };
 };
@@ -68,7 +67,6 @@ const onAssignIssueSuccess = (dispatch) => {
 
 const onAssignIssueError = (dispatch) => {
   return (err) => {
-    console.log("[onError]", err);
     dispatch(assignIssueFailed(err));
   };
 };
