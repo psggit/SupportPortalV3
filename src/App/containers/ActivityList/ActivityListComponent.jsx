@@ -64,7 +64,7 @@ function ActivityListComponent(props) {
   // const [errorMessage, setErrorMessage] = useState("");
   const history = useHistory();
   let orderId = history.location.state.orderId;
-  console.log(orderId);
+  // console.log(orderId);
 
   useEffect(() => {
     // console.log(orderId);

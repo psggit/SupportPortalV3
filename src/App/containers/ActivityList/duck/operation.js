@@ -6,7 +6,6 @@ import {
 import { acitivityLogsAPI } from "../../../utils";
 
 const processResponse = () => {
-  console.log("[processResponse]");
   return (res) => {
     if (res.status === 200) {
       return res.json();
@@ -17,7 +16,6 @@ const processResponse = () => {
 };
 
 const onSuccess = (dispatch) => {
-  console.log("[onSuccess]");
   return (data) => {
     dispatch(fetchActLogsSuccessfull(data));
   };

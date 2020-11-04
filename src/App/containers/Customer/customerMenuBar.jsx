@@ -39,8 +39,6 @@ export default function FullWidthTabs(props) {
     history.push("/order-info/" + props.orderId);
   };
 
-  console.log(props);
-
   const handleGiftSoaChange = () => {
     history.push({
       pathname: "/gift-soa",
@@ -66,7 +64,6 @@ export default function FullWidthTabs(props) {
   };
 
   const handleSoaChange = () => {
-    console.log("history-push", props.customerId);
     history.push({
       pathname: "/soa",
       state: {

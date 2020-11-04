@@ -15,7 +15,6 @@ const initialState = {
 
 const acitivityListReducer = createReducer(initialState, {
   [fetchActLogsSuccessfull]: (state, data) => {
-    console.log("retailerNotesListSuccess", data);
     return {
       ...state,
       notesProgress: false,

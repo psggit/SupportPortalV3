@@ -101,10 +101,8 @@ const generateSKU = (cartItem) => {
       ...cartItem.sku[index],
       brand_name: cartItem.brand_name,
     };
-    // 
-    
+    //
   });
-  console.log("---- ", updatedSKU);
   return updatedSKU;
 };
 
@@ -279,7 +277,7 @@ const CartModificationComponent = (props) => {
   }
 
   if (props.searchSuccess) {
-    console.log(props.brandData);
+    // console.log(props.brandData);
   }
 
   return (
@@ -380,9 +378,7 @@ const CartModificationComponent = (props) => {
         <List className={classes.masonry}>
           {props.fetchBrandSuccess &&
             Object.entries(props.brandData).map((k) => {
-              // console.log(k[1]);
               let updatedSku = generateSKU(k[1]);
-              console.log(updatedSku);
               k[1] = {
                 ...k[1],
                 sku: [...updatedSku],
