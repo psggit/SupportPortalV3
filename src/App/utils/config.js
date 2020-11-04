@@ -1,7 +1,8 @@
-export const authUrl = `auth.${process.env.BASE_URL}`;
-export const apiUrl = `api.${process.env.BASE_URL}`;
-export const stockPriceURL = `retailer.${process.env.BASE_URL}/Api/stockandprice`;
-export const customerURL = `customer.${process.env.BASE_URL}/Api`;
+/* eslint-disable no-undef */
+export const authUrl = `auth.${ARGS_BASE_DOMAIN}`;
+export const apiUrl = `api.${ARGS_BASE_DOMAIN}`;
+export const stockPriceURL = `retailer.${ARGS_BASE_DOMAIN}/Api/stockandprice`;
+export const customerURL = `customer.${ARGS_BASE_DOMAIN}/Api`;
 
 // console.log("config::: ", apiUrl);
 // console.log("config::: ", authUrl);
