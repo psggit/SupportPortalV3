@@ -24,12 +24,13 @@ const onError = (dispatch) => {
     dispatch(loginFailed(err));
   };
 };
-
+console.log(ARGS_BUILD_ENV);
 const getRedirectURL = () => {
-  let redirectURL = "http://localhost:8080/dashboard"; //local
+  // let redirectURL = "http://localhost:8080/dashboard"; //local
   // let redirectURL = "https://support.hipbar-dev.com/dashboard"; //live
-  console.log(process.env.NODE_ENV);
-  switch (process.env.NODE_ENV) {
+  // console.log(process.env.NODE_ENV);
+  let redirectURL = "";
+  switch (ARGS_BUILD_ENV) {
     case "local":
       return (redirectURL =
         "http://support-local.hipbar-dev.com:8080/dashboard");
