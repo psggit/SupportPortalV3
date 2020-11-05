@@ -41,7 +41,7 @@ export default function MenuDrawer() {
     setState({ ...state, [anchor]: open });
   };
 
-  const anchors = ["/dashboard", "/order-modification", "/issues", "/logout"];
+  const anchors = ["/dashboard", "/issues", "/logout"];
 
   const list = (anchor) => (
     <div
@@ -53,15 +53,13 @@ export default function MenuDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["Home", "Order Modification", "Issues", "Logout"].map(
-          (text, index) => (
-            <ListItem button key={text}>
-              <Link className={classes.anchor} href={anchors[index]}>
-                <ListItemText primary={text} />
-              </Link>
-            </ListItem>
-          )
-        )}
+        {["Home", "Issues", "Logout"].map((text, index) => (
+          <ListItem button key={text}>
+            <Link className={classes.anchor} href={anchors[index]}>
+              <ListItemText primary={text} />
+            </Link>
+          </ListItem>
+        ))}
       </List>
     </div>
   );

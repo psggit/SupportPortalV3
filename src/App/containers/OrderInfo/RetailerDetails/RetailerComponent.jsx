@@ -71,14 +71,14 @@ const RetailerDetails = (props) => {
     >
       Change Retailer
     </Button>,
-    <Button
-      variant="contained"
-      color="primary"
-      key="callBtn"
-      onClick={() => props.handleCall(props.orderInfo.retailer_contact_number)}
-    >
-      Call
-    </Button>,
+    // <Button
+    //   variant="contained"
+    //   color="primary"
+    //   key="callBtn"
+    //   onClick={() => props.handleCall(props.orderInfo.retailer_contact_number)}
+    // >
+    //   Call
+    // </Button>,
   ];
 
   const retailerNotes = [

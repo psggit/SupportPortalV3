@@ -8,12 +8,12 @@ import Moment from "moment";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import TopBar from "../../../components/topBar";
-import Notification from "../../../components/notification";
 import Loading from "../../../components/loading";
 import { useHistory } from "react-router-dom";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import Dialog from "../../../components/dialog";
 import TextField from "@material-ui/core/TextField";
+import ErrorMsg from "../../../components/errorMsg";
 import {
   Table,
   Box,
@@ -65,7 +65,6 @@ function RetailerNotesComponent(props) {
   const [rows, setRowsData] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
-  const [errorMessage, setErrorMessage] = useState("");
   const [showData, setShowData] = useState(false);
   const [value, setValue] = React.useState(0);
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
@@ -93,10 +92,6 @@ function RetailerNotesComponent(props) {
       }
     }
   }, [props.notesSuccess]);
-
-  useEffect(() => {
-    setErrorMessage(props.notesFail);
-  }, [props.notesFail]);
 
   const filledRows = [];
   const loopData = (data) => {
@@ -141,10 +136,6 @@ function RetailerNotesComponent(props) {
     props.createNotes(payload);
     fetchNotes();
     setShowAddNoteDialog(false);
-  };
-
-  const handleClose = () => {
-    setErrorMessage(false);
   };
 
   return (
@@ -274,13 +265,11 @@ function RetailerNotesComponent(props) {
             />
           )}
         </Box>
-        {errorMessage && (
-          <Notification
-            message={props.errorMsg}
-            messageType="error"
-            open={errorMessage}
-            handleClose={handleClose}
-          />
+        {props.createNotesFailure && (
+          <ErrorMsg message={props.errorMsg} show={true} type={"error"} />
+        )}
+        {props.createNotesSuccess && (
+          <ErrorMsg message={props.successMsg} show={true} type={"success"} />
         )}
       </div>
     </>
@@ -296,6 +285,9 @@ RetailerNotesComponent.propTypes = {
   errorMsg: propTypes.any,
   orderId: PropTypes.any,
   createNotes: PropTypes.func,
+  createNotesSuccess: PropTypes.bool,
+  createNotesFailure: PropTypes.bool,
+  successMsg: PropTypes.any,
 };
 
 export { RetailerNotesComponent };

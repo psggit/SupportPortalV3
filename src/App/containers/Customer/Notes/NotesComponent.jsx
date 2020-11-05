@@ -48,12 +48,13 @@ function Notes(props) {
   const orderId = history.location.state.orderId;
   const customerNumber = history.location.state.customerNumber;
 
-  useEffect(() => {
+  const fetchNote = () => {
     props.fetchConsumerNotes(orderId);
-    return () => {
-      props.resetOnUnmount();
-    };
-  }, [rowsPerPage, page]);
+  };
+
+  useEffect(() => {
+    fetchNote();
+  }, []);
 
   useEffect(() => {
     if (props.notesSuccess) {
@@ -64,6 +65,9 @@ function Notes(props) {
         setShowData(false);
       }
     }
+    return () => {
+      props.resetOnUnmount();
+    };
   }, [props.notesSuccess]);
 
   const filledRows = [];
@@ -103,6 +107,7 @@ function Notes(props) {
     };
     props.createNotes(payload);
     setShowAddNoteDialog(false);
+    fetchNote();
   };
 
   return (
@@ -203,7 +208,7 @@ function Notes(props) {
               </TableBody>
             </Table>
           </TableContainer>
-          {props.notesSuccess && showData && (
+          { showData && (
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"

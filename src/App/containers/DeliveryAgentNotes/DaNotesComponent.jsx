@@ -50,16 +50,13 @@ function DaNotes(props) {
   const customerId = history.location.state.customerId;
   const orderId = history.location.state.orderId;
 
-  const handleTabChange = (event, newValue) => {
-    setValue(newValue);
+  const fetchNote = () => {
+    props.fetchDeliveryAgentNotes(orderId);
   };
 
   useEffect(() => {
-    props.fetchDeliveryAgentNotes(orderId);
-    return () => {
-      props.resetOnUnmount();
-    };
-  }, [rowsPerPage, page]);
+    fetchNote();
+  }, []);
 
   useEffect(() => {
     if (props.fetchSuccess) {
@@ -70,6 +67,9 @@ function DaNotes(props) {
         setShowData(false);
       }
     }
+    return () => {
+      props.resetOnUnmount();
+    };
   }, [props.fetchSuccess]);
 
   const filledRows = [];
@@ -80,18 +80,8 @@ function DaNotes(props) {
     setRowsData(data);
   };
 
-  const handleTextChange = (e) => {
-    setNoteData(e.target.value);
-  };
-
-  const handleAddNoteSubmit = () => {
-    let payload = {
-      order_id: orderId,
-      type: "delivery_agent",
-      notes: noteData,
-    };
-    props.createNotes(payload);
-    setShowAddNoteDialog(false);
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -103,6 +93,14 @@ function DaNotes(props) {
     setPage(0);
   };
 
+  const handleBack = () => {
+    history.push(`/order-info/${orderId}`);
+  };
+
+  const handleTextChange = (e) => {
+    setNoteData(e.target.value);
+  };
+
   const mountAddNote = () => {
     setShowAddNoteDialog(true);
   };
@@ -111,8 +109,15 @@ function DaNotes(props) {
     setShowAddNoteDialog(false);
   };
 
-  const handleBack = () => {
-    history.push(`/order-info/${orderId}`);
+  const handleAddNoteSubmit = () => {
+    let payload = {
+      order_id: orderId,
+      type: "delivery_agent",
+      notes: noteData,
+    };
+    props.createNotes(payload);
+    fetchNote();
+    setShowAddNoteDialog(false);
   };
 
   return (
@@ -224,13 +229,13 @@ function DaNotes(props) {
                   <TableRow>
                     <TableCell colSpan={10} align="center">
                       No data available
-                  </TableCell>
+                    </TableCell>
                   </TableRow>
                 )}
               </TableBody>
             </Table>
           </TableContainer>
-          {props.fetchSuccess && showData && (
+          {showData && (
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
