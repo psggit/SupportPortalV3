@@ -115,14 +115,14 @@ const OrderDetails = (props) => {
             />
           );
         })}
-        <ListItem dense disableGutters className={classes.finalRow}>
+        {/* <ListItem dense disableGutters className={classes.finalRow}>
           <ListItemText primary={"Free Agent/ Total Delivery Agents"} />
           <Box>
             <Typography>
               {props.value.free_da}/{props.value.total_da}
             </Typography>
           </Box>
-        </ListItem>
+        </ListItem> */}
       </List>
     </Box>
   );
