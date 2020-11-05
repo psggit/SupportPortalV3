@@ -42,3 +42,4 @@ export { confirmCartAPI } from "./confirmCartAPI";
 export { cancelOrderModificationAPI } from "./cancelOrderModificationAPI";
 export { searchItemsAPI } from "./searchItemsAPI";
 export { fetchRequestStatusAPI } from "./fetchRequestStatusAPI";
+export { logoutAPI } from "./logoutAPI";

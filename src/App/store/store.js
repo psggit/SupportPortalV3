@@ -14,6 +14,7 @@ import { customerGiftSOAReducer } from "../containers/Customer/CustomerGiftSoa";
 import { rewardsReducer } from "../containers/Customer/Rewards";
 import { customerUpdateReducer } from "../containers/Customer/CustomerFormDetails";
 import { listRetailerReducer } from "../containers/Retailer/ChangeRetailer/duck";
+import { logoutReducer } from "../containers/Logout/duck";
 import { acitivityListReducer } from "../containers/ActivityList";
 import { orderTrackingReducer } from "../containers/OrderTracking";
 import { orderModificationReducer } from "../containers/OrderModification";
@@ -32,6 +33,7 @@ const store = configureStore({
     rewards: rewardsReducer,
     update: customerUpdateReducer,
     listRetailer: listRetailerReducer,
+    logout: logoutReducer,
     acitivityLog: acitivityListReducer,
     issues: issuesReducer,
     orderTracking: orderTrackingReducer,
