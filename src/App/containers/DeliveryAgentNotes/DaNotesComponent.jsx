@@ -50,20 +50,13 @@ function DaNotes(props) {
   const customerId = history.location.state.customerId;
   const orderId = history.location.state.orderId;
 
-  const handleTabChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
   const fetchNote = () => {
     props.fetchDeliveryAgentNotes(orderId);
   };
 
   useEffect(() => {
     fetchNote();
-    return () => {
-      props.resetOnUnmount();
-    };
-  }, [rowsPerPage, page]);
+  }, []);
 
   useEffect(() => {
     if (props.fetchSuccess) {
@@ -74,6 +67,9 @@ function DaNotes(props) {
         setShowData(false);
       }
     }
+    return () => {
+      props.resetOnUnmount();
+    };
   }, [props.fetchSuccess]);
 
   const filledRows = [];
@@ -84,19 +80,8 @@ function DaNotes(props) {
     setRowsData(data);
   };
 
-  const handleTextChange = (e) => {
-    setNoteData(e.target.value);
-  };
-
-  const handleAddNoteSubmit = () => {
-    let payload = {
-      order_id: orderId,
-      type: "delivery_agent",
-      notes: noteData,
-    };
-    props.createNotes(payload);
-    fetchNote();
-    setShowAddNoteDialog(false);
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -108,6 +93,14 @@ function DaNotes(props) {
     setPage(0);
   };
 
+  const handleBack = () => {
+    history.push(`/order-info/${orderId}`);
+  };
+
+  const handleTextChange = (e) => {
+    setNoteData(e.target.value);
+  };
+
   const mountAddNote = () => {
     setShowAddNoteDialog(true);
   };
@@ -116,8 +109,15 @@ function DaNotes(props) {
     setShowAddNoteDialog(false);
   };
 
-  const handleBack = () => {
-    history.push(`/order-info/${orderId}`);
+  const handleAddNoteSubmit = () => {
+    let payload = {
+      order_id: orderId,
+      type: "delivery_agent",
+      notes: noteData,
+    };
+    props.createNotes(payload);
+    fetchNote();
+    setShowAddNoteDialog(false);
   };
 
   return (

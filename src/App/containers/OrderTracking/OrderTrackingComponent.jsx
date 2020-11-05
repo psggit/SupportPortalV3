@@ -111,6 +111,7 @@ const MapComponent = (props) => {
             onLoad={onLoadMarker}
             position={positionAgent}
             icon={markerIconDA}
+            title={"DeliveryAgent"}
           />
           {/* <InfoWindow position={positionConsumer}>
             <div>
@@ -126,11 +127,13 @@ const MapComponent = (props) => {
             onLoad={onLoadMarker}
             position={positionConsumer}
             icon={markerIconConsumer}
+            title={"Customer"}
           />
           <Marker
             onLoad={onLoadMarker}
             position={positionRetailer}
             icon={markerIcon}
+            title={"Retailer"}
           />
           {/* <InfoWindow position={positionRetailer}>
             <div>

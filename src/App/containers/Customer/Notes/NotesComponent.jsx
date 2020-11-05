@@ -53,11 +53,7 @@ function Notes(props) {
   };
 
   useEffect(() => {
-    // props.fetchConsumerNotes(orderId);
     fetchNote();
-    return () => {
-      props.resetOnUnmount();
-    };
   }, []);
 
   useEffect(() => {
@@ -69,6 +65,9 @@ function Notes(props) {
         setShowData(false);
       }
     }
+    return () => {
+      props.resetOnUnmount();
+    };
   }, [props.notesSuccess]);
 
   const filledRows = [];

@@ -135,15 +135,15 @@ const CartComponent = (props) => {
   // console.log(modify, props.validateInfo);
 
   let actionButtons = [
-    <Button
-      variant="contained"
-      color="primary"
-      onClick={handleModify}
-      key="modifyBtn"
-      disabled={disableModify}
-    >
-      Modify
-    </Button>,
+    // <Button
+    //   variant="contained"
+    //   color="primary"
+    //   onClick={handleModify}
+    //   key="modifyBtn"
+    //   disabled={disableModify}
+    // >
+    //   Modify
+    // </Button>,
   ];
 
   let cardFooter = "";
