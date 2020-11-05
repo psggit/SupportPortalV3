@@ -128,12 +128,14 @@ const MapComponent = (props) => {
             position={positionConsumer}
             icon={markerIconConsumer}
             title={"Customer"}
+            label="C"
           />
           <Marker
             onLoad={onLoadMarker}
             position={positionRetailer}
             icon={markerIcon}
             title={"Retailer"}
+            label="R"
           />
           {/* <InfoWindow position={positionRetailer}>
             <div>
