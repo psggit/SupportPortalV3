@@ -160,7 +160,7 @@ const CustomerDetails = (props) => {
       <Grid item xs={6}>
         <DetailsCard
           title="CUSTOMER DETAILS"
-          actions={customerAction}
+          // actions={customerAction}
           subheader={subheadAction}
           renderArray={data}
           keyMap={keyMap}

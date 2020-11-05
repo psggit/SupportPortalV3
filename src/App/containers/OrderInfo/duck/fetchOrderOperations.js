@@ -62,9 +62,6 @@ const onSuccessCancel = (dispatch) => {
 };
 
 const onError = (dispatch) => {
-  // return (err) => {
-  //   dispatch(fetchOrderInfoFailure(err));
-  // };
   return (data) => {
     data.json().then((json) => {
       dispatch(fetchOrderInfoFailure(json));
@@ -110,9 +107,6 @@ const onSuccessNotes = (dispatch) => {
 };
 
 const onErrorNotes = (dispatch) => {
-  // return (err) => {
-  //   dispatch(createNotesFailure(err));
-  // };
   return (data) => {
     data.json().then((json) => {
       dispatch(createNotesFailure(json));
