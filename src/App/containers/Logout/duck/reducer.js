@@ -9,7 +9,7 @@ const initialValue = {
 };
 
 const logoutReducer = createReducer(initialValue, {
-  [logoutSuccess]: (state, data) => ({
+  [logoutSuccess]: (state) => ({
     ...state,
     logoutProgress: false,
     logoutFailed: false,
