@@ -9,10 +9,9 @@
   "scripts": {
     "flow": "flow",
     "clean": "rm dist/bundle.js",
-    "build-dev": "BASE_URL=hipbar-dev.com NODE_ENV=development webpack-dev-server --config webpack.dev.js",
-    "build": "BASE_URL=hipbar.com NODE_ENV=production webpack --config webpack.prod.js",
-    "start:dev": "BASE_URL=hipbar-dev.com NODE_ENV=local webpack-dev-server --config webpack.dev.js --history-api-fallback --disable-host-check",
-    "start": "BASE_URL=hipbar.com NODE_ENV=production webpack --config webpack.prod.js",
+    "build-dev": "echo \"Look at dockerfile \"",
+    "build-prod": "echo \"Look at dockerfile \"",
+    "start": "webpack-dev-server --hot --mode development --env.NODE_ENV=dev",
     "test": "jest",
     "cy:run": "cypress run --record",
     "cy:ci": "start-server-and-test start http-get://localhost:8080 cy:run"
@@ -26,7 +25,6 @@
     "@reduxjs/toolkit": "^1.4.0",
     "@sentry/react": "^5.19.0",
     "bootstrap": "^4.5.0",
-    "compression-webpack-plugin": "^6.0.2",
     "moment": "^2.29.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.2.0",
@@ -34,12 +32,9 @@
     "react-loadable": "^5.5.0",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
-    "react-swipeable-views": "^0.13.9",
     "react-uuid": "^1.0.2",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0",
-    "webpack-merge": "^5.1.4",
-    "yarn": "^1.22.10"
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.10.4",
