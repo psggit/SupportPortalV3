@@ -56,6 +56,10 @@ function Notes(props) {
     fetchNote();
   }, []);
 
+  // setTimeout(() => {
+  //   location.reload()
+  // }, 300)
+
   useEffect(() => {
     if (props.notesSuccess) {
       if (props.customerNotes.orderNotes !== null) {
@@ -106,8 +110,8 @@ function Notes(props) {
       notes: noteData,
     };
     props.createNotes(payload);
-    fetchNote();
     setShowAddNoteDialog(false);
+    fetchNote();
   };
 
   return (
