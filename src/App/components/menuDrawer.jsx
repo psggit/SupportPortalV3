@@ -41,7 +41,7 @@ export default function MenuDrawer() {
     setState({ ...state, [anchor]: open });
   };
 
-  const anchors = ["/dashboard", "/order-modification", "/issues", "/logout"];
+  const anchors = ["/dashboard", "/issues", "/logout"];
 
   const list = (anchor) => (
     <div
