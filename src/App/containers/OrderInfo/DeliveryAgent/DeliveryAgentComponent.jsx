@@ -134,16 +134,16 @@ const DeliveryAgentComponent = (props) => {
     >
       Reserve Order
     </Button>,
-    <Button
-      variant="contained"
-      color="primary"
-      key="callBtn"
-      onClick={() =>
-        props.handleCall(props.orderInfo.delivery_agent_contact_number)
-      }
-    >
-      Call
-    </Button>,
+    // <Button
+    //   variant="contained"
+    //   color="primary"
+    //   key="callBtn"
+    //   onClick={() =>
+    //     props.handleCall(props.orderInfo.delivery_agent_contact_number)
+    //   }
+    // >
+    //   Call
+    // </Button>,
     <div>
       {showDialogBox && (
         <Dialog

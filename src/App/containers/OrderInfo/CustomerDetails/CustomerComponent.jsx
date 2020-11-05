@@ -114,19 +114,19 @@ const CustomerDetails = (props) => {
     props.fetchConsumerNotes(props.orderInfo.order_id);
   }, []);
 
-  const customerAction = [
-    // <Button variant="outlined" color="primary">
-    //   Message
-    // </Button>,
-    <Button
-      variant="contained"
-      color="primary"
-      key="unassignBtn"
-      onClick={() => props.handleCall(props.orderInfo.customer_contact_number)}
-    >
-      Call
-    </Button>,
-  ];
+  // const customerAction = [
+  //   <Button variant="outlined" color="primary">
+  //     Message
+  //   </Button>,
+  //   <Button
+  //     variant="contained"
+  //     color="primary"
+  //     key="unassignBtn"
+  //     onClick={() => props.handleCall(props.orderInfo.customer_contact_number)}
+  //   >
+  //     Call
+  //   </Button>,
+  // ];
 
   const subheadAction = [
     <Button
@@ -160,7 +160,7 @@ const CustomerDetails = (props) => {
       <Grid item xs={6}>
         <DetailsCard
           title="CUSTOMER DETAILS"
-          actions={customerAction}
+          // actions={customerAction}
           subheader={subheadAction}
           renderArray={data}
           keyMap={keyMap}

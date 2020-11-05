@@ -59,6 +59,7 @@ const LogoutComponent = (props) => {
     // document.cookie = "dinoisses='';expires=" + new Date().toUTCString();
     console.log("logout container");
     // props.logoutSession();
+    props.logout();
   }, []);
 
   return (
@@ -90,6 +91,7 @@ const LogoutComponent = (props) => {
 
 LogoutComponent.propTypes = {
   logoutSession: PropTypes.func,
+  logout: PropTypes.func,
 };
 
 export { LogoutComponent };

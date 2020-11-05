@@ -105,14 +105,19 @@ const RetailerCardComponent = (props) => {
       <CardContent p={2}>
         <OrderDetails {...props} />
         <CardActions className={classes.actionContainer}>
-          <Button
+          {/* <Button
             variant="outlined"
             color="primary"
             className={classes.marginLeft}
           >
             Call
-          </Button>
-          <Button variant="contained" color="primary" onClick={handleSelect}>
+          </Button> */}
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.marginLeft}
+            onClick={handleSelect}
+          >
             Select
           </Button>
         </CardActions>

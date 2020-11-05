@@ -12,6 +12,9 @@ const mapStateToProps = (state) => {
     orderInfo: state.order.orderInfo.orderDetails,
     notesFail: state.order.orderInfo.notesFail,
     errorMsg: state.order.orderInfo.errorMsg,
+    successMsg: state.order.orderInfo.successMsg,
+    createNotesSuccess: state.order.orderInfo.createNotesSuccess,
+    createNotesFailure: state.order.orderInfo.createNotesFailure,
   };
 };
 
