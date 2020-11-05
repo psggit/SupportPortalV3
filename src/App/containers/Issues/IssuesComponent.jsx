@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { Box } from "@material-ui/core";
@@ -16,6 +17,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import { resolveIcon } from "./../../assets/images/index";
+import ErrorMsg from "./../../components/errorMsg";
 // import {
 //   Dialog,
 //   DialogActions,
@@ -24,6 +26,10 @@ import { resolveIcon } from "./../../assets/images/index";
 import { deepOrange, deepPurple } from "@material-ui/core/colors";
 import TablePagination from "@material-ui/core/TablePagination";
 import { getQueryParamByName, getQueryUri } from "../../utils/helpers";
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,6 +52,9 @@ const useStyles = makeStyles((theme) => ({
     padding: "64px 108px 0 108px",
     overflowY: "scroll",
   },
+  accordion: {
+    marginBottom: 16,
+  },
   paper: {
     marginBottom: 16,
     padding: "12px 22px",
@@ -57,6 +66,8 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontSize: 16,
     color: "#0086AD",
+    cursor: "pointer",
+    textDecoration: "underline",
   },
   subtitle: {
     fontSize: 14,
@@ -65,6 +76,11 @@ const useStyles = makeStyles((theme) => ({
   dateStyle: {
     fontSize: 12,
     color: "#696969",
+  },
+  datePlacement: {
+    fontSize: 12,
+    color: "#696969",
+    textAlign: "right",
   },
   buttonStyke: {
     fontSize: 14,
@@ -105,6 +121,7 @@ const useStyles = makeStyles((theme) => ({
 
 const RenderIssues = (props) => {
   const classes = useStyles();
+  const history = useHistory();
   const colors = ["purple", "orange"];
   const issuesList = props.issueList.issues;
 
@@ -221,77 +238,118 @@ const RenderIssues = (props) => {
     setSupportPersonId(event.target.value);
   };
 
+  const handleClick = (orderId) => {
+    history.push(`/order-info/${orderId}`);
+  };
+
   return (
     <>
       {data.map((issue, index) => {
         const avatarColor =
           classes[colors[Math.floor(Math.random() * colors.length)]];
         return (
-          <Paper className={classes.paper} key={`${issue.order_id}+${index}`}>
-            <Grid container item xs={12} classes={{ root: classes.grid }}>
-              <Grid item xs={2}>
-                <ListItemText
-                  className={classes.title}
-                  primary={issue.order_id}
-                />
-              </Grid>
-              <Grid item xs={2}>
-                <ListItemText
-                  className={classes.subtitle}
-                  primary={issue.reason}
-                />
-              </Grid>
-              <Grid item xs={3}>
-                <div className={classes.avatarContainer}>
-                  <Avatar
-                    classes={{ root: classes.avatar }}
-                    className={avatarColor}
-                  >
-                    {checkIsLetter(issue.assigned_to_name.charAt(0))
-                      ? issue.assigned_to_name.charAt(0).toUpperCase()
-                      : ""}
-                  </Avatar>
+          <Accordion key={`accordian${index}`} className={classes.accordion}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Grid container item xs={12} classes={{ root: classes.grid }}>
+                <Grid item xs={2}>
+                  <ListItemText
+                    className={classes.title}
+                    primary={issue.order_id}
+                    onClick={() => handleClick(issue.order_id)}
+                  />
+                </Grid>
+                <Grid item xs={2}>
                   <ListItemText
                     className={classes.subtitle}
-                    primary={issue.assigned_to_name}
+                    primary={issue.reason}
                   />
-                </div>
+                </Grid>
+                <Grid item xs={3}>
+                  <div className={classes.avatarContainer}>
+                    <Avatar
+                      classes={{ root: classes.avatar }}
+                      className={avatarColor}
+                    >
+                      {checkIsLetter(issue.assigned_to_name.charAt(0))
+                        ? issue.assigned_to_name.charAt(0).toUpperCase()
+                        : ""}
+                    </Avatar>
+                    <ListItemText
+                      className={classes.subtitle}
+                      primary={issue.assigned_to_name}
+                    />
+                  </div>
+                </Grid>
+                <Grid item xs={2}>
+                  <ListItemText
+                    className={classes.dateStyle}
+                    primary={`${Moment(issue.issue_raised_time).format(
+                      "D MMM"
+                    )} at ${Moment(issue.issue_raised_time).format("hh:mm A")}`}
+                  />
+                </Grid>
+                <Grid item xs={2}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.buttonStyle}
+                    onClick={(e) => handleAssignIssue(e, issue)}
+                    disabled={
+                      !issue.to_show_resolve || props.assignIssueInProgress
+                    }
+                  >
+                    ASSIGN TO
+                  </Button>
+                </Grid>
+                <Grid item xs={1}>
+                  <IconButton
+                    edge="end"
+                    aria-label="delete"
+                    onClick={(e) => handleResolveIssue(e, issue)}
+                    disabled={
+                      !issue.to_show_resolve || props.resolveIssueInProgress
+                    }
+                  >
+                    <img src={resolveIcon} className={classes.resolveIcon} />
+                  </IconButton>
+                </Grid>
               </Grid>
-              <Grid item xs={2}>
-                <ListItemText
-                  className={classes.dateStyle}
-                  primary={`${Moment(issue.issue_raised_time).format(
-                    "D MMM"
-                  )} at ${Moment(issue.issue_raised_time).format("hh:mm A")}`}
-                />
+            </AccordionSummary>
+            <AccordionDetails>
+              <Grid container item xs={12} classes={{ root: classes.grid }}>
+                <Grid item xs={2}>
+                  <ListItemText
+                    className={classes.subtitle}
+                    primary={"Assigned To"}
+                  />
+                </Grid>
+                <Grid item xs={3}>
+                  <div className={classes.avatarContainer}>
+                    <Avatar
+                      classes={{ root: classes.avatar }}
+                      className={avatarColor}
+                    >
+                      {checkIsLetter(issue.assigned_to_name.charAt(0))
+                        ? issue.assigned_to_name.charAt(0).toUpperCase()
+                        : ""}
+                    </Avatar>
+                    <ListItemText
+                      className={classes.subtitle}
+                      primary={issue.assigned_to_name}
+                    />
+                  </div>
+                </Grid>
+                <Grid item xs={7}>
+                  <ListItemText
+                    className={classes.datePlacement}
+                    primary={`${Moment(issue.issue_raised_time).format(
+                      "D MMM"
+                    )} at ${Moment(issue.issue_raised_time).format("hh:mm A")}`}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={2}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={classes.buttonStyle}
-                  onClick={(e) => handleAssignIssue(e, issue)}
-                  disabled={
-                    !issue.to_show_resolve || props.assignIssueInProgress
-                  }
-                >
-                  ASSIGN TO
-                </Button>
-              </Grid>
-              <Grid item xs={1}>
-                <IconButton
-                  edge="end"
-                  aria-label="delete"
-                  onClick={(e) => handleResolveIssue(e, issue)}
-                  disabled={
-                    !issue.to_show_resolve || props.resolveIssueInProgress
-                  }
-                >
-                  <img src={resolveIcon} className={classes.resolveIcon} />
-                </IconButton>
-              </Grid>
-            </Grid>
-          </Paper>
+            </AccordionDetails>
+          </Accordion>
         );
       })}
       {
@@ -307,6 +365,7 @@ const RenderIssues = (props) => {
       {showDialog && (
         <Dialog
           title={resolveIssue ? `RESOLVE ISSUE` : `REASSIGN ISSUE`}
+          subtitle={resolveIssue ? 'Are you sure want to ressolve the issue?' : ''}
           actions={[
             <Button
               onClick={() => unmountConfirmationDialog()}
@@ -355,6 +414,20 @@ const RenderIssues = (props) => {
           </form>
         </Dialog>
       )}
+      {props.assignIssueSuccess && (
+        <ErrorMsg
+          show={true}
+          message={"Successfully assigned the issue"}
+          type={"info"}
+        />
+      )}
+      {props.resolveIssueSuccess && (
+        <ErrorMsg
+          show={true}
+          message={"Successfully resolved the issue"}
+          type={"info"}
+        />
+      )}
     </>
   );
 };
@@ -368,7 +441,9 @@ const IssuesComponent = (props) => {
 
   useEffect(() => {
     if (props.assignIssueSuccess || props.resolveIssueSuccess) {
-      location.reload();
+      setTimeout(() => {
+        location.reload();
+      }, 1500);
     }
   }, [props.assignIssueSuccess, props.resolveIssueSuccess]);
 
@@ -390,10 +465,13 @@ const IssuesComponent = (props) => {
           </Grid>
           <Grid item xs={10}>
             <div className={classes.section2}>
-              {!props.fetchIssuesInProgress && (
+              {!props.fetchIssuesInProgress && props.issueList !== null && (
                 <>
                   <RenderIssues {...props} />
                 </>
+              )}
+              {!props.fetchIssuesInProgress && props.issueList === null && (
+                <Paper className={classes.paper}>No issues available</Paper>
               )}
             </div>
           </Grid>
