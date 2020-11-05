@@ -118,7 +118,10 @@ function CustomerSoa(props) {
 
   useEffect(() => {
     if (props.soaSuccess) {
-      if (props.soaList.consumer_soa !== null) {
+      if (
+        props.soaList.consumer_soa !== null &&
+        props.soaList.consumer_soa.length > 0
+      ) {
         loopData(props.soaList.consumer_soa);
         setShowData(true);
       } else {

@@ -229,13 +229,13 @@ function DaNotes(props) {
                   <TableRow>
                     <TableCell colSpan={10} align="center">
                       No data available
-                  </TableCell>
+                    </TableCell>
                   </TableRow>
                 )}
               </TableBody>
             </Table>
           </TableContainer>
-          {props.fetchSuccess && showData && (
+          {showData && (
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
