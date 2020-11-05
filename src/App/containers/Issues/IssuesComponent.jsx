@@ -72,6 +72,7 @@ const useStyles = makeStyles((theme) => ({
   subtitle: {
     fontSize: 14,
     color: "#606060",
+    wordBreak: "break-word",
   },
   dateStyle: {
     fontSize: 12,
