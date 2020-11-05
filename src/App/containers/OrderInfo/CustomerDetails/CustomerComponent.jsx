@@ -118,14 +118,14 @@ const CustomerDetails = (props) => {
     // <Button variant="outlined" color="primary">
     //   Message
     // </Button>,
-    <Button
-      variant="contained"
-      color="primary"
-      key="unassignBtn"
-      onClick={() => props.handleCall(props.orderInfo.customer_contact_number)}
-    >
-      Call
-    </Button>,
+    // <Button
+    //   variant="contained"
+    //   color="primary"
+    //   key="unassignBtn"
+    //   onClick={() => props.handleCall(props.orderInfo.customer_contact_number)}
+    // >
+    //   Call
+    // </Button>,
   ];
 
   const subheadAction = [

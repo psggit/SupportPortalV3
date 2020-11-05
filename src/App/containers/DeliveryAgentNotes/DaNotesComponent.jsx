@@ -54,8 +54,12 @@ function DaNotes(props) {
     setValue(newValue);
   };
 
-  useEffect(() => {
+  const fetchNote = () => {
     props.fetchDeliveryAgentNotes(orderId);
+  };
+
+  useEffect(() => {
+    fetchNote();
     return () => {
       props.resetOnUnmount();
     };
@@ -91,6 +95,7 @@ function DaNotes(props) {
       notes: noteData,
     };
     props.createNotes(payload);
+    fetchNote();
     setShowAddNoteDialog(false);
   };
 

@@ -48,12 +48,17 @@ function Notes(props) {
   const orderId = history.location.state.orderId;
   const customerNumber = history.location.state.customerNumber;
 
-  useEffect(() => {
+  const fetchNote = () => {
     props.fetchConsumerNotes(orderId);
+  };
+
+  useEffect(() => {
+    // props.fetchConsumerNotes(orderId);
+    fetchNote();
     return () => {
       props.resetOnUnmount();
     };
-  }, [rowsPerPage, page]);
+  }, []);
 
   useEffect(() => {
     if (props.notesSuccess) {
@@ -102,6 +107,7 @@ function Notes(props) {
       notes: noteData,
     };
     props.createNotes(payload);
+    fetchNote();
     setShowAddNoteDialog(false);
   };
 
