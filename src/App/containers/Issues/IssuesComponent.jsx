@@ -419,14 +419,14 @@ const RenderIssues = (props) => {
         <ErrorMsg
           show={true}
           message={"Successfully assigned the issue"}
-          type={"info"}
+          type={"success"}
         />
       )}
       {props.resolveIssueSuccess && (
         <ErrorMsg
           show={true}
           message={"Successfully resolved the issue"}
-          type={"info"}
+          type={"success"}
         />
       )}
     </>
