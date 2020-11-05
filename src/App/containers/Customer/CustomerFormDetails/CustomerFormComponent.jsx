@@ -267,7 +267,7 @@ function CustomerForm(props) {
               <TextField
                 className={classes.textField}
                 variant="outlined"
-                value={consumerDetail.hipbar_wallet}
+                value={consumerDetail.total_hipbar_wallet_balance}
                 size="small"
                 disabled
               />
@@ -282,7 +282,7 @@ function CustomerForm(props) {
               <TextField
                 className={classes.textField}
                 variant="outlined"
-                value={consumerDetail.gift_wallet}
+                value={consumerDetail.total_gift_wallet_balance}
                 size="small"
                 disabled
               />

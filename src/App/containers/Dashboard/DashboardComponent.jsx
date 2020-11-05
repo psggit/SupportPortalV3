@@ -217,7 +217,7 @@ const DashboardComponent = (props) => {
               filterType={filterType}
             />
           </Grid>
-          <Grid item xs={4}>
+          {/* <Grid item xs={4}>
             <PreponeDeliveryCard
               errorString={errorString}
               handleChange={handleChange}
@@ -228,8 +228,8 @@ const DashboardComponent = (props) => {
               payload={payload}
               filterType={filterType}
             />
-          </Grid>
-          <Grid item xs={4}>
+          </Grid> */}
+          {/* <Grid item xs={4}>
             {props.fetchDeliverySuccess && (
               <DeliveryOrderStatusCard
                 errorString={errorString}
@@ -243,7 +243,7 @@ const DashboardComponent = (props) => {
                 data={props.deliveryStatus}
               />
             )}
-          </Grid>
+          </Grid> */}
         </Grid>
       </Box>
     </Container>

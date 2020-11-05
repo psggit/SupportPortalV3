@@ -81,6 +81,11 @@ const LoginComponent = (props) => {
     setEmailAddress(event.target.value);
   };
 
+  const handleKeyPress = (e) => {
+    if (e.keyCode === 13);
+    sendEmail();
+  };
+
   const sendEmail = () => {
     props.sendLoginEmail(email);
     setSubmitState(true);
@@ -110,6 +115,7 @@ const LoginComponent = (props) => {
             name="email"
             autoComplete="off"
             onChange={(event) => handleChange(event)}
+            onKeyDown={handleKeyPress}
             autoFocus
           />
           <Button
