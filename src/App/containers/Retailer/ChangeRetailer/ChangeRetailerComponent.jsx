@@ -134,6 +134,7 @@ const ChangeRetailerComponent = (props) => {
               <Grid item xs={4}>
                 <RetailerCardContainer
                   retailerName={value.retailer_name}
+                  retailer_id={value.retailer_id}
                   value={value}
                   orderInfos={orderInfo}
                 />

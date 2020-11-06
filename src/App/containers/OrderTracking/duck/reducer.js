@@ -3,6 +3,7 @@ import {
   fetchLiveDataProgress,
   fetchLiveDataSuccess,
   fetchLiveDataFailure,
+  resetOnUnmount,
 } from "./actions";
 
 const initialValue = {
@@ -34,6 +35,9 @@ const orderTrackingReducer = createReducer(initialValue, {
     fetchLiveDataSuccess: false,
     fetchLiveDataFailure: true,
     errorMsg: err,
+  }),
+  [resetOnUnmount]: (state, err) => ({
+    ...initialValue,
   }),
 });
 

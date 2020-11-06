@@ -82,8 +82,9 @@ const LoginComponent = (props) => {
   };
 
   const handleKeyPress = (e) => {
-    if (e.keyCode === 13);
-    sendEmail();
+    if (e.keyCode === 13) {
+      sendEmail();
+    }
   };
 
   const sendEmail = () => {

@@ -89,12 +89,12 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "auto",
   },
   counterUnAvailable: {
-    textAlign: "center",
+    textAlign: "left",
     color: "#FF1212",
     fontSize: 12,
   },
   counterAvailable: {
-    textAlign: "center",
+    textAlign: "left",
     color: "#02B133",
     fontSize: 12,
   },
@@ -119,15 +119,11 @@ const CartItem = (props) => {
   return (
     <List>
       <ListItem dense disableGutters>
-        <ListItemText
-          className={classes.ListItems}
-          primary={value.brand_name}
-          secondary={`${value.volume} ML | ${value.sku_price}`}
-        />
-        <div>
-          <Typography className={classes.counter}>
-            {value.ordered_count}
-          </Typography>
+        <ListItemText className={classes.ListItems}>
+          {value.brand_name}
+          <br />
+          {`${value.volume} ML | ${value.sku_price}`}
+          <br />
           {props.listRetailerData.sku.retailer_sku_details === null ? (
             <Typography className={classes.counterUnAvailable}>
               {"Not Available"}
@@ -142,6 +138,11 @@ const CartItem = (props) => {
               {"Available"}
             </Typography>
           )}
+        </ListItemText>
+        <div>
+          <Typography className={classes.counter}>
+            {value.ordered_count}
+          </Typography>
         </div>
       </ListItem>
     </List>

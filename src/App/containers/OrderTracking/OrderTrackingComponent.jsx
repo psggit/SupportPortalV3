@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   GoogleMap,
@@ -8,10 +7,8 @@ import {
   // InfoWindow,
 } from "@react-google-maps/api";
 import PropTypes from "prop-types";
-import TopBar from "../../components/topBar";
-import SimpleMenuBar from "../../components/simpleMenuBar";
-import { Grid, Box, Typography } from "@material-ui/core";
-import ErrorMsg from "../../components/errorMsg";
+import { Grid, Paper, Box, Typography } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 import {
   markerIcon,
   markerIconDA,
@@ -24,11 +21,9 @@ const onLoadMarker = (marker) => {
   console.log("marker: ", marker);
 };
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
-    background: theme.palette.background.paper,
     padding: 24,
-    height: "100vh",
   },
 }));
 
@@ -150,14 +145,16 @@ const MapComponent = (props) => {
 
 MapComponent.propTypes = {
   trackData: PropTypes.any,
-}
+};
 
 function OrderTrackingComponent(props) {
-  const history = useHistory();
-  let orderID = history.location.state.orderId;
+  let orderID = props.orderId;
   const classes = useStyles();
   useEffect(() => {
     props.fetchDeliveryStatus(orderID);
+    return () => {
+      props.resetOnUnmountFunction();
+    };
   }, []);
 
   const [show, setShow] = useState(false);
@@ -167,8 +164,8 @@ function OrderTrackingComponent(props) {
   useEffect(() => {
     if (props.fetchLiveDataSuccess) {
       setShow(true);
-      // console.log(props);
-      setDetails(history.location.state.orderInfo);
+      console.log(props);
+      setDetails(props.orderInfo);
       if (props.trackData.agent_gps.trim().length == 0) {
         setShowError(true);
       }
@@ -177,64 +174,80 @@ function OrderTrackingComponent(props) {
 
   return (
     <>
-      <TopBar />
-      <SimpleMenuBar orderId={orderID}>
-        {show && <p>TRACK ORDER: {orderID}</p>}
-      </SimpleMenuBar>
-      {showError && show && (
-        <ErrorMsg
-          show={true}
-          message={"Delivery agent location not found."}
-          type="error"
-        />
-      )}
       <Grid container>
-        <Grid item xs={3}>
-          {show && (
-            <Box className={classes.root} elevation={0}>
-              <Typography variant="body2">Customer name:</Typography>
-              <Typography variant="body2">
-                {details.customer_name.length > 0 ? details.customer_name : "-"}
-              </Typography>
-              <Typography variant="body2">Customer phone number:</Typography>
-              <Typography variant="body2">
-                {details.customer_contact_number > 0
-                  ? details.customer_contact_number
-                  : "-"}
-              </Typography>
-              <Box mt={2} />
-              <Typography variant="body2">Retailer name:</Typography>
-              <Typography variant="body2">
-                {details.retailer_name.length > 0 ? details.retailer_name : "-"}
-              </Typography>
-              <Typography variant="body2">Retailer phone number:</Typography>
-              <Typography variant="body2">
-                {details.retailer_contact_number > 0
-                  ? details.retailer_contact_number
-                  : "-"}
-              </Typography>
-              <Box mt={2} />
-              <Typography variant="body2">Delivery Agent name:</Typography>
-              <Typography variant="body2">
-                {details.delivery_agent_name.length > 0
-                  ? details.delivery_agent_name
-                  : "-"}
-              </Typography>
-              <Typography variant="body2">
-                Delivery Agent phone number:
-              </Typography>
-              <Typography variant="body2">
-                {details.delivery_agent_contact_number.length > 0
-                  ? details.delivery_agent_contact_number
-                  : "-"}
-              </Typography>
+        {show && (
+          <Grid item xs={12}>
+            <Box>
+              <Grid container spacing={4} className={classes.containerBox}>
+                <Grid item xs={4}>
+                  <Paper className={classes.root} elevation={2}>
+                    <Typography variant="body2">Customer name:</Typography>
+                    <Typography variant="body2">
+                      {details.customer_name.length > 0
+                        ? details.customer_name
+                        : "-"}
+                    </Typography>
+                    <Typography variant="body2">
+                      Customer phone number:
+                    </Typography>
+                    <Typography variant="body2">
+                      {details.customer_contact_number > 0
+                        ? details.customer_contact_number
+                        : "-"}
+                    </Typography>
+                  </Paper>
+                </Grid>
+                <Grid item xs={4}>
+                  <Paper className={classes.root} elevation={2}>
+                    <Typography variant="body2">Retailer name:</Typography>
+                    <Typography variant="body2">
+                      {details.retailer_name.length > 0
+                        ? details.retailer_name
+                        : "-"}
+                    </Typography>
+                    <Typography variant="body2">
+                      Retailer phone number:
+                    </Typography>
+                    <Typography variant="body2">
+                      {details.retailer_contact_number > 0
+                        ? details.retailer_contact_number
+                        : "-"}
+                    </Typography>
+                  </Paper>
+                </Grid>
+                <Grid item xs={4}>
+                  <Paper className={classes.root} elevation={2}>
+                    <Typography variant="body2">
+                      Delivery Agent name:
+                    </Typography>
+                    <Typography variant="body2">
+                      {details.delivery_agent_name.length > 0
+                        ? details.delivery_agent_name
+                        : "-"}
+                    </Typography>
+                    <Typography variant="body2">
+                      Delivery Agent phone number:
+                    </Typography>
+                    <Typography variant="body2">
+                      {details.delivery_agent_contact_number.length > 0
+                        ? details.delivery_agent_contact_number
+                        : "-"}
+                    </Typography>
+                  </Paper>
+                </Grid>
+              </Grid>
             </Box>
-          )}
-        </Grid>
-        <Grid item xs={9}>
-          <Box width="80%" mx="auto">
-            {show && <MapComponent {...props} />}
+          </Grid>
+        )}
+        <Grid item xs={12}>
+          <Box mt={4}>
+            {showError && show && (
+              <Alert severity="error">{props.trackData.message}</Alert>
+            )}
           </Box>
+        </Grid>
+        <Grid item xs={12}>
+          <Box mb={10}>{show && <MapComponent {...props} />}</Box>
         </Grid>
       </Grid>
     </>
@@ -242,12 +255,14 @@ function OrderTrackingComponent(props) {
 }
 
 OrderTrackingComponent.propTypes = {
-  orderId: PropTypes.number,
+  orderId: PropTypes.string,
   fetchDeliveryStatus: PropTypes.func,
+  resetOnUnmountFunction: PropTypes.func,
   fetchLiveDataProgress: PropTypes.bool,
   fetchLiveDataSuccess: PropTypes.bool,
   fetchLiveDataFailure: PropTypes.bool,
   trackData: PropTypes.object,
+  errorMsg: PropTypes.string,
 };
 
 export { OrderTrackingComponent };

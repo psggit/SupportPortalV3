@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { validateAuth } from "./duck/authOperation";
@@ -28,9 +28,15 @@ import { OrderTrackingContainer } from "./containers/OrderTracking";
 import { OrderModificationContainer } from "./containers/OrderModification";
 
 function App(props) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
-    props.validateAuth();
-  }, []);
+    if (!isLoggedIn) {
+      props.validateAuth();
+    }
+    if (props.authenticateSuccess) {
+      setIsLoggedIn(true);
+    }
+  }, [props.authenticateSuccess]);
 
   let success = props.authenticateSuccess;
   if (props.authenticateProgress) {
@@ -89,7 +95,16 @@ function App(props) {
                 component={OrderModificationContainer}
               />
 
-              <Route path="/" component={LoginContainer} />
+              <Route
+                path="/"
+                component={
+                  success
+                    ? function () {
+                        return <DashboardContainer />;
+                      }
+                    : () => <LoginContainer />
+                }
+              />
             </Switch>
           </Router>
         </ThemeProvider>

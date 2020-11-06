@@ -104,7 +104,7 @@ const OrderStatus = (props) => {
       <Typography className={classes.text} variant="body2">
         ETA: -
       </Typography>
-      <Box textAlign="center">
+      {/* <Box textAlign="center">
         <Button
           variant="outlined"
           color="primary"
@@ -124,7 +124,7 @@ const OrderStatus = (props) => {
         >
           Track Order
         </Button>
-      </Box>
+      </Box> */}
       {props.timingDetails.length > 0 && (
         <>
           <Timeline>

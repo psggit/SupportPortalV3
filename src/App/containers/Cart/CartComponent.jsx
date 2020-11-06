@@ -148,7 +148,7 @@ const CartComponent = (props) => {
 
   let cardFooter = "";
   // console.log("cart component", props.fetchCartSummarySuccess, props.validateOrderSuccess, props.validateInfo.count);
-  if (
+  /*if (
     (props.fetchCartSummarySuccess && props.cartSummary === null) ||
     (props.validateOrderSuccess && props.validateInfo.count !== 0)
   ) {
@@ -161,7 +161,7 @@ const CartComponent = (props) => {
         cancel the previous request.
       </Alert>
     );
-  }
+  }*/
 
   if (props.cartSummary !== null) {
     actionButtons = [
