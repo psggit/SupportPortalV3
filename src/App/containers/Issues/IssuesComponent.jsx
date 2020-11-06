@@ -49,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 18,
   },
   section2: {
-    padding: "64px 108px 0 108px",
     overflowY: "scroll",
     "& .MuiAccordionSummary-root": {
       maxHeight: "56px",
@@ -470,7 +469,7 @@ const IssuesComponent = (props) => {
             </Paper>
           </Grid>
           <Grid item xs={10}>
-            <div className={classes.section2}>
+            <Box width="90%" mx="auto" mt={4} mb={4} className={classes.section2}>
               {!props.fetchIssuesInProgress && props.issueList !== null && (
                 <>
                   <RenderIssues {...props} />
@@ -479,7 +478,7 @@ const IssuesComponent = (props) => {
               {!props.fetchIssuesInProgress && props.issueList === null && (
                 <Paper className={classes.paper}>No issues available</Paper>
               )}
-            </div>
+            </Box>
           </Grid>
         </Grid>
       </Box>
