@@ -26,10 +26,10 @@ import ErrorMsg from "./../../components/errorMsg";
 import { deepOrange, deepPurple } from "@material-ui/core/colors";
 import TablePagination from "@material-ui/core/TablePagination";
 import { getQueryParamByName, getQueryUri } from "../../utils/helpers";
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Accordion from "@material-ui/core/Accordion";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,6 +51,9 @@ const useStyles = makeStyles((theme) => ({
   section2: {
     padding: "64px 108px 0 108px",
     overflowY: "scroll",
+    "& .MuiAccordionSummary-root": {
+      maxHeight: "56px",
+    },
   },
   accordion: {
     marginBottom: 16,
@@ -92,6 +95,8 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     marginRight: 12,
+    width: "32px",
+    height: "32px",
   },
   orange: {
     color: theme.palette.getContrastText(deepOrange[500]),
