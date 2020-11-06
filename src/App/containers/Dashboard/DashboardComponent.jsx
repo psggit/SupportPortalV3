@@ -11,7 +11,7 @@ import { validateNumberField } from "../../utils/validators";
 import { ConsumerCard } from "./components/consumerCard";
 import { RetailerCard } from "./components/retailerCard";
 import { DeliveryAgentCard } from "./components/deliveryAgentCard";
-import { PreponeDeliveryCard } from "./components/preponeCard";
+// import { PreponeDeliveryCard } from "./components/preponeCard";
 import { DeliveryOrderStatusCard } from "./components/deliveryOrderStatusCard";
 import Loading from "../../components/loading";
 
@@ -229,7 +229,7 @@ const DashboardComponent = (props) => {
               filterType={filterType}
             />
           </Grid> */}
-          {/* <Grid item xs={4}>
+          <Grid item xs={4}>
             {props.fetchDeliverySuccess && (
               <DeliveryOrderStatusCard
                 errorString={errorString}
@@ -243,7 +243,7 @@ const DashboardComponent = (props) => {
                 data={props.deliveryStatus}
               />
             )}
-          </Grid> */}
+          </Grid>
         </Grid>
       </Box>
     </Container>

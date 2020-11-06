@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
-
+import { loginLogo } from "../../assets/images";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import MuiAlert from "@material-ui/lab/Alert";
@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   title: {
-    flexGrow: 1,
+    marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(4),
   },
   paper: {
     marginTop: theme.spacing(8),
@@ -66,7 +67,8 @@ const LogoutComponent = (props) => {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
+        <img src={loginLogo} />
+        <Typography className={classes.title} component="h1" variant="h5">
           HIPBAR Support Portal
         </Typography>
         <div className={classes.form} noValidate>
@@ -80,7 +82,9 @@ const LogoutComponent = (props) => {
               </Typography>
             </Grid>
             <Grid item xs={12} className={classes.marginTop}>
-              <Alert severity="success">You have successfully logout out</Alert>
+              <Alert severity="success">
+                You have successfully logged out.
+              </Alert>
             </Grid>
           </Grid>
         </div>
