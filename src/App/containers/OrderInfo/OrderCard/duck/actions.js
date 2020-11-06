@@ -20,6 +20,8 @@ const deliverOrderProgress = createAction("deliverOrderProgress");
 const deliverOrderFailed = createAction("deliverOrderFailed");
 const deliverOrderSuccess = createAction("deliverOrderSuccess");
 
+const resetOnUnmount = createAction("resetOnUnmount");
+
 const fetchCancellationSummarySuccess = createAction(
   "fetchCancellationSummarySuccess"
 );
@@ -49,4 +51,5 @@ export {
   deliverOrderProgress,
   deliverOrderFailed,
   deliverOrderSuccess,
+  resetOnUnmount,
 };

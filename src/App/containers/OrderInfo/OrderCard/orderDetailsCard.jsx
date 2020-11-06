@@ -73,6 +73,9 @@ const OrderDetailsCard = (props) => {
     };
     props.deliverOrderReasons(payload);
     props.fetchKycList();
+    return () => {
+      props.resetOnUnmount();
+    };
   }, []);
 
   let { platform, customer_address, delivery_status } = {
@@ -542,6 +545,7 @@ OrderDetailsCard.propTypes = {
   deliverOrderFailed: PropTypes.bool,
   successMsg: PropTypes.any,
   deliverOrderSuccess: PropTypes.bool,
+  resetOnUnmount: PropTypes.func,
 };
 
 export { OrderDetailsCard };
