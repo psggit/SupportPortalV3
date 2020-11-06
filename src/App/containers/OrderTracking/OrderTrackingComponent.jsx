@@ -263,6 +263,7 @@ OrderTrackingComponent.propTypes = {
   fetchLiveDataFailure: PropTypes.bool,
   trackData: PropTypes.object,
   errorMsg: PropTypes.string,
+  orderInfo: PropTypes.any,
 };
 
 export { OrderTrackingComponent };

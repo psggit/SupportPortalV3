@@ -1,5 +1,4 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -11,7 +10,6 @@ import TimelineSeparator from "@material-ui/lab/TimelineSeparator";
 import TimelineConnector from "@material-ui/lab/TimelineConnector";
 import TimelineContent from "@material-ui/lab/TimelineContent";
 import TimelineDot from "@material-ui/lab/TimelineDot";
-import { Button, SvgIcon, Box } from "@material-ui/core";
 // import { sendIcon } from "../../../assets/images";
 
 const useStyles = makeStyles(() => ({
@@ -67,34 +65,33 @@ RenderTimeline.propTypes = {
 
 const OrderStatus = (props) => {
   const classes = useStyles();
-  const history = useHistory();
 
-  const handleChange = () => {
-    // history.push("/order-tracking/"+props.orderId);
-    console.log("handlechange", props);
-    let {
-      customer_name,
-      customer_contact_number,
-      delivery_agent_name,
-      delivery_agent_contact_number,
-      retailer_name,
-      retailer_contact_number,
-    } = props.orderInfo;
-    history.push({
-      pathname: "/order-tracking",
-      state: {
-        orderId: props.orderId,
-        orderInfo: {
-          customer_name: customer_name,
-          customer_contact_number: customer_contact_number,
-          delivery_agent_name: delivery_agent_name,
-          delivery_agent_contact_number: delivery_agent_contact_number,
-          retailer_name: retailer_name,
-          retailer_contact_number: retailer_contact_number,
-        },
-      },
-    });
-  };
+  // const handleChange = () => {
+  //   // history.push("/order-tracking/"+props.orderId);
+  //   console.log("handlechange", props);
+  //   let {
+  //     customer_name,
+  //     customer_contact_number,
+  //     delivery_agent_name,
+  //     delivery_agent_contact_number,
+  //     retailer_name,
+  //     retailer_contact_number,
+  //   } = props.orderInfo;
+  //   history.push({
+  //     pathname: "/order-tracking",
+  //     state: {
+  //       orderId: props.orderId,
+  //       orderInfo: {
+  //         customer_name: customer_name,
+  //         customer_contact_number: customer_contact_number,
+  //         delivery_agent_name: delivery_agent_name,
+  //         delivery_agent_contact_number: delivery_agent_contact_number,
+  //         retailer_name: retailer_name,
+  //         retailer_contact_number: retailer_contact_number,
+  //       },
+  //     },
+  //   });
+  // };
 
   return (
     <Paper className={classes.root}>

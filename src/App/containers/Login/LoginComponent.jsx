@@ -50,9 +50,9 @@ const LoginComponent = (props) => {
   const classes = useStyles();
   const [email, setEmailAddress] = useState("");
   const [isDisabled, setSubmitState] = useState(true);
-  const [isLoggedIn] = useState(
-    localStorage.getItem("hasura-id") ? true : false
-  );
+  // const [isLoggedIn] = useState(
+  //   localStorage.getItem("hasura-id") ? true : false
+  // );
   // let open = null;
   const [successMsgData, setMsg] = useState("");
   const [successState, setSuccessState] = useState("");

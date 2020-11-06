@@ -82,7 +82,9 @@ const LogoutComponent = (props) => {
               </Typography>
             </Grid>
             <Grid item xs={12} className={classes.marginTop}>
-              <Alert severity="success">You have successfully logged out.</Alert>
+              <Alert severity="success">
+                You have successfully logged out.
+              </Alert>
             </Grid>
           </Grid>
         </div>

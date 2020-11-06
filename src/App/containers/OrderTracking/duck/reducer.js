@@ -36,7 +36,7 @@ const orderTrackingReducer = createReducer(initialValue, {
     fetchLiveDataFailure: true,
     errorMsg: err,
   }),
-  [resetOnUnmount]: (state, err) => ({
+  [resetOnUnmount]: () => ({
     ...initialValue,
   }),
 });
