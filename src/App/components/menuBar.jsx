@@ -25,7 +25,7 @@ export default function FullWidthTabs(props) {
     setValue(newValue);
   };
 
-  // console.log("menuBar", props.labels);
+  // console.log("menuBars", props.labels);
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default">
