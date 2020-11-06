@@ -2,6 +2,7 @@ import {
   fetchLiveDataProgress,
   fetchLiveDataSuccess,
   fetchLiveDataFailure,
+  resetOnUnmount,
 } from "./actions";
 import { orderTrackingAPI } from "../../../utils";
 
@@ -25,8 +26,10 @@ const onSuccess = (dispatch) => {
 };
 
 const onError = (dispatch) => {
-  return (err) => {
-    dispatch(fetchLiveDataFailure(err));
+  return (data) => {
+    data.json().then((json) => {
+      dispatch(fetchLiveDataFailure(json));
+    });
   };
 };
 
@@ -42,4 +45,10 @@ const fetchDeliveryStatus = (orderId) => {
   };
 };
 
-export { fetchDeliveryStatus };
+const resetOnUnmountFunction = () => {
+  return (dispatch) => {
+    dispatch(resetOnUnmount());
+  };
+};
+
+export { fetchDeliveryStatus, resetOnUnmountFunction };
