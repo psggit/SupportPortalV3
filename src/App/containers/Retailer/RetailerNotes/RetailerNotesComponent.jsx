@@ -80,6 +80,9 @@ function RetailerNotesComponent(props) {
 
   useEffect(() => {
     fetchNotes();
+    return () => {
+      props.resetOnUnmount();
+    };
   }, []);
 
   useEffect(() => {
@@ -288,6 +291,7 @@ RetailerNotesComponent.propTypes = {
   createNotesSuccess: PropTypes.bool,
   createNotesFailure: PropTypes.bool,
   successMsg: PropTypes.any,
+  resetOnUnmount: PropTypes.func,
 };
 
 export { RetailerNotesComponent };
