@@ -4,4 +4,11 @@ const fetchLiveDataProgress = createAction("fetchLiveDataProgress");
 const fetchLiveDataSuccess = createAction("fetchLiveDataSuccess");
 const fetchLiveDataFailure = createAction("fetchLiveDataFailure");
 
-export { fetchLiveDataProgress, fetchLiveDataSuccess, fetchLiveDataFailure };
+const resetOnUnmount = createAction("resetOnUnmount");
+
+export {
+  fetchLiveDataProgress,
+  fetchLiveDataSuccess,
+  fetchLiveDataFailure,
+  resetOnUnmount,
+};

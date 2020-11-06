@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
   heading: {
     fontSize: 16,
     fontWeight: "700",
+    margin: 0,
   },
   nested: {
     paddingLeft: theme.spacing(4),
@@ -106,6 +107,11 @@ const OrderDetails = (props) => {
             {props.retailerName}
           </Typography>
         </ListItem>
+        <ListItem dense disableGutters>
+          <Typography variant="body2" gutterBottom>
+            Retailer ID: {props.retailer_id}
+          </Typography>
+        </ListItem>
         {cartItem.map((value) => {
           return (
             <CartItem
@@ -133,6 +139,7 @@ OrderDetails.propTypes = {
   cartDetails: PropTypes.array,
   listRetailerData: PropTypes.object,
   retailerName: PropTypes.string,
+  retailer_id: PropTypes.number,
 };
 
 export { OrderDetails };

@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { OrderTrackingComponent } from "./OrderTrackingComponent";
-import { fetchDeliveryStatus } from "./duck";
+import { fetchDeliveryStatus, resetOnUnmountFunction } from "./duck";
 
 const mapStateToProps = (state) => {
   return {
@@ -16,6 +16,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchDeliveryStatus: (payload) => dispatch(fetchDeliveryStatus(payload)),
+    resetOnUnmountFunction: () => dispatch(resetOnUnmountFunction()),
   };
 };
 

@@ -50,9 +50,9 @@ const LoginComponent = (props) => {
   const classes = useStyles();
   const [email, setEmailAddress] = useState("");
   const [isDisabled, setSubmitState] = useState(true);
-  const [isLoggedIn] = useState(
-    localStorage.getItem("hasura-id") ? true : false
-  );
+  // const [isLoggedIn] = useState(
+  //   localStorage.getItem("hasura-id") ? true : false
+  // );
   // let open = null;
   const [successMsgData, setMsg] = useState("");
   const [successState, setSuccessState] = useState("");
@@ -82,8 +82,9 @@ const LoginComponent = (props) => {
   };
 
   const handleKeyPress = (e) => {
-    if (e.keyCode === 13);
-    sendEmail();
+    if (e.keyCode === 13) {
+      sendEmail();
+    }
   };
 
   const sendEmail = () => {

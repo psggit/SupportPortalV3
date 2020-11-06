@@ -1,2 +1,2 @@
 export { orderTrackingReducer } from "./reducer";
-export { fetchDeliveryStatus } from "./operation";
+export { fetchDeliveryStatus, resetOnUnmountFunction } from "./operation";
