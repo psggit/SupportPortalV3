@@ -6,6 +6,7 @@ import {
   Marker,
   // InfoWindow,
 } from "@react-google-maps/api";
+import { OverlayView } from "@react-google-maps/api";
 import PropTypes from "prop-types";
 import { Grid, Paper, Box, Typography } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
@@ -17,17 +18,25 @@ import {
 
 const placesLib = ["places"];
 
-const onLoadMarker = (marker) => {
-  console.log("marker: ", marker);
-};
-
 const useStyles = makeStyles(() => ({
   root: {
     padding: 24,
   },
+  overlayView: {
+    background: "#606060",
+    color: "#fff",
+    padding: 5,
+    top: "-60px",
+    left: "-45px",
+    position: "absolute",
+    width: 80,
+    textAlign: "center",
+    display: "block",
+  },
 }));
 
 const MapComponent = (props) => {
+  const classes = useStyles();
   const gpsAgent = props.trackData.agent_gps.split(",");
   const gpsConsumer = props.trackData.consumer_gps.split(",");
   const gpsRetailer = props.trackData.retailer_gps.split(",");
@@ -102,41 +111,37 @@ const MapComponent = (props) => {
           onDragEnd={onCenterChanged}
           onUnmount={onUnmount}
         >
+          <OverlayView
+            position={positionConsumer}
+            mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+          >
+            <div className={classes.overlayView}>
+              <Typography variant="mapLabel">Delivery Point</Typography>
+            </div>
+          </OverlayView>
           <Marker
-            onLoad={onLoadMarker}
             position={positionAgent}
             icon={markerIconDA}
             title={"DeliveryAgent"}
           />
-          {/* <InfoWindow position={positionConsumer}>
-            <div>
-              <h4>Agent</h4>
-            </div>
-          </InfoWindow> */}
-          {/* <InfoWindow position={positionConsumer}>
-            <div>
-              <h4>Consumer</h4>
-            </div>
-          </InfoWindow> */}
           <Marker
-            onLoad={onLoadMarker}
             position={positionConsumer}
             icon={markerIconConsumer}
             title={"Customer"}
-            label="C"
           />
           <Marker
-            onLoad={onLoadMarker}
             position={positionRetailer}
             icon={markerIcon}
             title={"Retailer"}
-            label="R"
           />
-          {/* <InfoWindow position={positionRetailer}>
-            <div>
-              <h4>Retailer</h4>
+          <OverlayView
+            position={positionRetailer}
+            mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+          >
+            <div className={classes.overlayView}>
+              <Typography variant="mapLabel">Pickup Point</Typography>
             </div>
-          </InfoWindow> */}
+          </OverlayView>
         </GoogleMap>
       </LoadScript>
     </>
@@ -152,7 +157,14 @@ function OrderTrackingComponent(props) {
   const classes = useStyles();
   useEffect(() => {
     props.fetchDeliveryStatus(orderID);
+    // let count = 0;
+    let interval = setInterval(function () {
+      // console.log("update location", count);
+      // count++;
+      props.fetchDeliveryStatus(orderID);
+    }, 60000);
     return () => {
+      clearInterval(interval);
       props.resetOnUnmountFunction();
     };
   }, []);
@@ -164,9 +176,11 @@ function OrderTrackingComponent(props) {
   useEffect(() => {
     if (props.fetchLiveDataSuccess) {
       setShow(true);
-      console.log(props);
       setDetails(props.orderInfo);
-      if (props.trackData.agent_gps.trim().length == 0) {
+      if (
+        props.trackData.agent_gps.trim().length == 0 &&
+        props.trackData.message.trim().length !== 0
+      ) {
         setShowError(true);
       }
     }
@@ -181,71 +195,101 @@ function OrderTrackingComponent(props) {
               <Grid container spacing={4} className={classes.containerBox}>
                 <Grid item xs={4}>
                   <Paper className={classes.root} elevation={2}>
-                    <Typography variant="body2">Customer name:</Typography>
-                    <Typography variant="body2">
-                      {details.customer_name.length > 0
-                        ? details.customer_name
-                        : "-"}
-                    </Typography>
-                    <Typography variant="body2">
-                      Customer phone number:
-                    </Typography>
-                    <Typography variant="body2">
-                      {details.customer_contact_number > 0
-                        ? details.customer_contact_number
-                        : "-"}
-                    </Typography>
+                    <Box
+                      display="flex"
+                      alignContent="flex-start"
+                      alignItems="flex-start"
+                    >
+                      <img src={markerIconConsumer} />
+                      <Box ml={2}>
+                        <Typography variant="body2">Customer name:</Typography>
+                        <Typography variant="body2">
+                          {details.customer_name.length > 0
+                            ? details.customer_name
+                            : "-"}
+                        </Typography>
+                        <br />
+                        <Typography variant="body2">
+                          Customer phone number:
+                        </Typography>
+                        <Typography variant="body2">
+                          {details.customer_contact_number > 0
+                            ? details.customer_contact_number
+                            : "-"}
+                        </Typography>
+                      </Box>
+                    </Box>
                   </Paper>
                 </Grid>
                 <Grid item xs={4}>
                   <Paper className={classes.root} elevation={2}>
-                    <Typography variant="body2">Retailer name:</Typography>
-                    <Typography variant="body2">
-                      {details.retailer_name.length > 0
-                        ? details.retailer_name
-                        : "-"}
-                    </Typography>
-                    <Typography variant="body2">
-                      Retailer phone number:
-                    </Typography>
-                    <Typography variant="body2">
-                      {details.retailer_contact_number > 0
-                        ? details.retailer_contact_number
-                        : "-"}
-                    </Typography>
+                    <Box
+                      display="flex"
+                      alignContent="flex-start"
+                      alignItems="flex-start"
+                    >
+                      <img src={markerIcon} />
+                      <Box ml={2}>
+                        <Typography variant="body2">Retailer name:</Typography>
+                        <Typography variant="body2">
+                          {details.retailer_name.length > 0
+                            ? details.retailer_name
+                            : "-"}
+                        </Typography>
+                        <br />
+                        <Typography variant="body2">
+                          Retailer phone number:
+                        </Typography>
+                        <Typography variant="body2">
+                          {details.retailer_contact_number > 0
+                            ? details.retailer_contact_number
+                            : "-"}
+                        </Typography>
+                      </Box>
+                    </Box>
                   </Paper>
                 </Grid>
                 <Grid item xs={4}>
                   <Paper className={classes.root} elevation={2}>
-                    <Typography variant="body2">
-                      Delivery Agent name:
-                    </Typography>
-                    <Typography variant="body2">
-                      {details.delivery_agent_name.length > 0
-                        ? details.delivery_agent_name
-                        : "-"}
-                    </Typography>
-                    <Typography variant="body2">
-                      Delivery Agent phone number:
-                    </Typography>
-                    <Typography variant="body2">
-                      {details.delivery_agent_contact_number.length > 0
-                        ? details.delivery_agent_contact_number
-                        : "-"}
-                    </Typography>
+                    <Box
+                      display="flex"
+                      alignContent="flex-start"
+                      alignItems="flex-start"
+                    >
+                      <img src={markerIconDA} />
+                      <Box ml={2}>
+                        <Typography variant="body2">
+                          Delivery Agent name:
+                        </Typography>
+                        <Typography variant="body2">
+                          {details.delivery_agent_name.length > 0
+                            ? details.delivery_agent_name
+                            : "-"}
+                        </Typography>
+                        <br />
+                        <Typography variant="body2">
+                          Delivery Agent phone number:
+                        </Typography>
+                        <Typography variant="body2">
+                          {details.delivery_agent_contact_number.length > 0
+                            ? details.delivery_agent_contact_number
+                            : "-"}
+                        </Typography>
+                      </Box>
+                    </Box>
                   </Paper>
                 </Grid>
               </Grid>
             </Box>
           </Grid>
         )}
-        <Grid item xs={12}>
-          <Box mt={4}>
-            {showError && show && (
+        {showError && show && (
+          <Grid item xs={12}>
+            <Box mt={4}>
               <Alert severity="error">{props.trackData.message}</Alert>
-            )}
-          </Box>
-        </Grid>
+            </Box>
+          </Grid>
+        )}
         <Grid item xs={12}>
           <Box mb={10}>{show && <MapComponent {...props} />}</Box>
         </Grid>

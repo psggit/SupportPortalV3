@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { validateAuth } from "./duck/authOperation";
@@ -100,7 +101,7 @@ function App(props) {
                 component={
                   success
                     ? function () {
-                        return <DashboardContainer />;
+                        return <Redirect to="/dashboard" />;
                       }
                     : () => <LoginContainer />
                 }

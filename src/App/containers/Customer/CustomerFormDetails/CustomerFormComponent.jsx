@@ -5,6 +5,7 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Radio from "@material-ui/core/Radio";
+import { Typography } from "@material-ui/core";
 import PropTypes from "prop-types";
 import TopBar from "../../../components/topBar";
 import { FormControlLabel, RadioGroup } from "@material-ui/core";
@@ -128,7 +129,9 @@ function CustomerForm(props) {
           orderInfos={orderInfos}
         />
         <div className={classes.section1}>
-          <p>CUSTOMER ID: {customerId}</p>
+          <Typography>
+            <p>CUSTOMER ID: {customerId}</p>
+          </Typography>
         </div>
         <Grid container className={classes.section2}>
           <Grid container spacing={2} className={classes.generalForm}>

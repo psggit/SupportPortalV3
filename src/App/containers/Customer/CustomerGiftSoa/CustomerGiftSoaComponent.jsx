@@ -11,6 +11,7 @@ import Moment from "moment";
 import Paper from "@material-ui/core/Paper";
 import TopBar from "../../../components/topBar";
 import FullWidthTabs from "../customerMenuBar";
+import { Typography } from "@material-ui/core";
 import { TableContainer, Table, TableHead } from "@material-ui/core";
 import Loading from "../../../components/loading";
 
@@ -114,7 +115,9 @@ function CustomerGiftSoa(props) {
         orderInfos={orderInfos}
       />
       <div className={classes.row1}>
-        <p>CUSTOMER ID: {history.location.state.customerId}</p>
+        <Typography>
+          <p>CUSTOMER ID: {history.location.state.customerId}</p>
+        </Typography>
         {/* <div>Search</div> */}
       </div>
       {props.giftSoaProgress && <Loading message="Fetching data..." />}

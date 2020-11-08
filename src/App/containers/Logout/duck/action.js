@@ -4,4 +4,6 @@ const logoutSuccess = createAction("logoutSuccess");
 const logoutFailed = createAction("logoutFailed");
 const logoutProgress = createAction("logoutProgress");
 
-export { logoutSuccess, logoutFailed, logoutProgress };
+const resetOnUnmount = createAction("resetOnUnmount");
+
+export { logoutSuccess, logoutFailed, logoutProgress, resetOnUnmount };

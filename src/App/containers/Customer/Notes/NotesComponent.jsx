@@ -14,6 +14,7 @@ import Loading from "../../../components/loading";
 import { useHistory } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import ErrorMsg from "../../../components/errorMsg";
+import { Typography } from "@material-ui/core";
 import {
   Table,
   Box,
@@ -122,7 +123,9 @@ function Notes(props) {
           orderInfos={orderInfos}
         />
         <div className={classes.row1}>
-          <p>CUSTOMER ID: {customerId}</p>
+          <Typography>
+            <p>CUSTOMER ID: {customerId}</p>
+          </Typography>
           <div>
             <Button variant="contained" onClick={mountAddNote} color="primary">
               Add Note
@@ -208,7 +211,7 @@ function Notes(props) {
               </TableBody>
             </Table>
           </TableContainer>
-          { showData && (
+          {showData && (
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"

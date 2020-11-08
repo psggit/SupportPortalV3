@@ -26,7 +26,7 @@ const orderTrackingReducer = createReducer(initialValue, {
     ...state,
     fetchLiveDataProgress: false,
     fetchLiveDataSuccess: true,
-    fetchLiveDataFailure: true,
+    fetchLiveDataFailure: false,
     trackData: data.payload,
   }),
   [fetchLiveDataFailure]: (state, err) => ({

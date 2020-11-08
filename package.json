@@ -24,6 +24,7 @@
     "@react-google-maps/api": "^1.13.0",
     "@reduxjs/toolkit": "^1.4.0",
     "@sentry/react": "^5.19.0",
+    "@sentry/react-native": "^2.0.0",
     "bootstrap": "^4.5.0",
     "moment": "^2.29.0",
     "react": "^16.13.1",

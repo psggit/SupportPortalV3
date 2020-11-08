@@ -11,6 +11,7 @@ import TopBar from "../../components/topBar";
 import { Tab } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import Loading from "../../components/loading";
+import { Typography } from "@material-ui/core";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import ErrorMsg from "../../components/errorMsg";
 import {
@@ -149,7 +150,9 @@ function DaNotes(props) {
           </Grid>
         </Paper>
         <div className={classes.row1}>
-          <p>CUSTOMER ID: {customerId}</p>
+          <Typography>
+            <p>CUSTOMER ID: {customerId}</p>
+          </Typography>
           <div>
             <Button variant="contained" onClick={mountAddNote} color="primary">
               Add Note

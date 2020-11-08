@@ -9,6 +9,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { Redirect } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,6 +64,12 @@ const LogoutComponent = (props) => {
     props.logout();
   }, []);
 
+  if (props.logoutSuccess) {
+    setTimeout(function(){
+      return <Redirect to="/login" />
+    }, 3000);
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -94,8 +101,8 @@ const LogoutComponent = (props) => {
 };
 
 LogoutComponent.propTypes = {
-  logoutSession: PropTypes.func,
   logout: PropTypes.func,
+  logoutSuccess: PropTypes.bool,
 };
 
 export { LogoutComponent };

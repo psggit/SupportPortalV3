@@ -10,6 +10,7 @@ import Paper from "@material-ui/core/Paper";
 import FullWidthTabs from "../customerMenuBar";
 import Loading from "../../../components/loading";
 import { useHistory } from "react-router-dom";
+import { Typography } from "@material-ui/core";
 // import SearchIcon from "@material-ui/icons/Search";
 // import MenuItem from "@material-ui/core/MenuItem";
 // import FormControl from "@material-ui/core/FormControl";
@@ -167,7 +168,9 @@ function CustomerSoa(props) {
           orderInfos={orderInfos}
         />
         <div className={classes.row1}>
-          <p>CUSTOMER ID: {customerId}</p>
+          <Typography>
+            <p>CUSTOMER ID: {customerId}</p>
+          </Typography>
           {/* <div>
             <div className={classes.design}>
               <div>
