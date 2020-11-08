@@ -11,6 +11,7 @@ import {
   TableHead,
   TableBody,
   Box,
+  Typography,
 } from "@material-ui/core";
 import Moment from "moment";
 import Loading from "../../components/loading";
@@ -113,7 +114,7 @@ function ActivityListComponent(props) {
     <div className={classes.formContainer}>
       <TopBar />
       <SimpleMenuBar orderId={orderId}>
-        {props.notesSuccess && <p>ACTIVITY LOGS-ORDER ID: {orderId}</p>}
+        <Typography>{props.notesSuccess && <p>ACTIVITY LOGS-ORDER ID: {orderId}</p>}</Typography>
       </SimpleMenuBar>
       {props.notesProgress && <Loading message="Fetching data..." />}
       <Box className={classes.table} mt={4}>

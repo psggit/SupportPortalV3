@@ -7,6 +7,7 @@ import {
   deliverOrder,
   cancelOrder,
 } from "./duck/operations";
+import { resetOnUnmount } from "./duck";
 
 const mapStateToProps = (state) => {
   return {
@@ -43,6 +44,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchKycList: () => dispatch(fetchKycList()),
     deliverOrder: (payload) => dispatch(deliverOrder(payload)),
     cancelOrder: (payload) => dispatch(cancelOrder(payload)),
+    resetOnUnmount: () => dispatch(resetOnUnmount()),
   };
 };
 

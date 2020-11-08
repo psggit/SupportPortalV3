@@ -1,5 +1,10 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { logoutSuccess, logoutFailed, logoutProgress } from "./action";
+import {
+  logoutSuccess,
+  logoutFailed,
+  logoutProgress,
+  resetOnUnmount,
+} from "./action";
 
 const initialValue = {
   logoutSuccess,
@@ -28,6 +33,11 @@ const logoutReducer = createReducer(initialValue, {
   [logoutProgress]: (state) => ({
     ...state,
     logoutProgress: true,
+    logoutFailed: false,
+    logoutSuccess: false,
+  }),
+  [resetOnUnmount]: () => ({
+    ...initialValue,
   }),
 });
 export { logoutReducer };

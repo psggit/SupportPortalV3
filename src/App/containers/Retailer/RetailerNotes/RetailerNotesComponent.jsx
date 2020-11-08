@@ -24,6 +24,7 @@ import {
   Grid,
   Tabs,
 } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { Tab } from "@material-ui/core";
 import { propTypes } from "react-bootstrap/esm/Image";
 
@@ -170,7 +171,9 @@ function RetailerNotesComponent(props) {
           </Grid>
         </Paper>
         <div className={classes.row1}>
-          <p>CUSTOMER ID: {customerId}</p>
+          <Typography>
+            <p>CUSTOMER ID: {customerId}</p>
+          </Typography>
           <div>
             <Button variant="contained" color="primary" onClick={mountAddNote}>
               Add Note

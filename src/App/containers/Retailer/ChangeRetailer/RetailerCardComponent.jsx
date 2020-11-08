@@ -7,7 +7,7 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import { OrderDetails } from "./components/orderDetails";
 import Dialog from "../../../components/dialog";
-import { Button } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import ErrorMsg from "../../../components/errorMsg";
 
 const useStyles = makeStyles((theme) => ({
@@ -129,7 +129,6 @@ const RetailerCardComponent = (props) => {
                 variant="outlined"
                 color="primary"
                 className={classes.marginLeft}
-                size="small"
                 onClick={handleCancel}
               >
                 Cancel
@@ -137,16 +136,17 @@ const RetailerCardComponent = (props) => {
               <Button
                 variant="contained"
                 color="primary"
-                size="small"
                 onClick={handleConfirm}
               >
                 Confirm
               </Button>,
             ]}
           >
-            {
-              "Delivery Agent not mapped to retailer. Do you still want to change retailer?"
-            }
+            <Typography>
+              {
+                "Delivery Agent not mapped to retailer. Do you still want to change retailer?"
+              }
+            </Typography>
           </Dialog>
         )}
         {props.reassignRetailerFailed && (

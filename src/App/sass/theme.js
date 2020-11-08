@@ -48,6 +48,10 @@ const newTheme = createMuiTheme({
       fontSize: 12,
       lineHeight: "2.2em",
     },
+    mapLabel: {
+      color: "#fff",
+      fontSize: 12,
+    },
   },
   overrides: {
     MuiTableCell: {

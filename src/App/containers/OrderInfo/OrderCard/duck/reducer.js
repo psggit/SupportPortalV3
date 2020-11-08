@@ -19,6 +19,7 @@ import {
   deliverOrderProgress,
   deliverOrderFailed,
   deliverOrderSuccess,
+  resetOnUnmount,
 } from "./actions";
 import { cancelOrder } from "./operations";
 
@@ -165,6 +166,26 @@ const orderDataReducer = createReducer(initialValue, {
   [cancelOrderProgress]: (state) => ({
     ...state,
     cancelOrderProgress: true,
+  }),
+  [resetOnUnmount]: (state) => ({
+    ...state,
+    fetchCancellationSummarySuccess: false,
+    fetchCancellationSummaryFailed: false,
+    fetchCancellationSummaryProgress: false,
+    fetchKycListSuccess: false,
+    fetchKycListFailed: false,
+    fetchKycListProgress: false,
+    fetchCancelReasonsSuccess: false,
+    fetchCancelReasonsFailed: false,
+    fetchCancelReasonsProgress: false,
+    cancelOrderProgress: false,
+    cancelOrderFailure: false,
+    cancelOrderSuccess: false,
+    deliverOrderProgress: false,
+    deliverOrderFailed: false,
+    deliverOrderSuccess: false,
+    errorMsg: "",
+    successMsg: "",
   }),
 });
 export { orderDataReducer };

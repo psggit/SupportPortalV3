@@ -16,6 +16,7 @@ import {
   TableContainer,
   TableBody,
   TablePagination,
+  Typography,
 } from "@material-ui/core";
 import Loading from "../../../components/loading";
 
@@ -133,7 +134,9 @@ function Rewards(props) {
           orderInfos={orderInfos}
         />
         <div className={classes.row1}>
-          <p>CUSTOMER ID: {customerId}</p>
+          <Typography>
+            <p>CUSTOMER ID: {customerId}</p>
+          </Typography>
           {/* <div>Search</div> */}
         </div>
         {props.rewardsProgress && <Loading message="Fetching data..." />}

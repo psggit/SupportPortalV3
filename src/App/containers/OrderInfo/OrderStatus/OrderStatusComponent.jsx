@@ -98,10 +98,10 @@ const OrderStatus = (props) => {
       <Typography className={classes.text} variant="h4">
         ORDER ID: {props.orderId}
       </Typography>
-      <Typography className={classes.text} variant="body2">
+      {/*<Typography className={classes.text} variant="body2">
         ETA: -
       </Typography>
-      {/* <Box textAlign="center">
+       <Box textAlign="center">
         <Button
           variant="outlined"
           color="primary"

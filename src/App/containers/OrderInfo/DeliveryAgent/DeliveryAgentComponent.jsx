@@ -299,7 +299,7 @@ DeliveryAgentComponent.propTypes = {
   message: PropTypes.any,
   daList: PropTypes.object,
   unassignDASuccess: PropTypes.bool,
-  errorMsg: PropTypes.bool,
+  errorMsg: PropTypes.string,
   resetOnUnmount: PropTypes.func,
 };
 
