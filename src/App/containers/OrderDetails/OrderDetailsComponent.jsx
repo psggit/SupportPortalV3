@@ -16,6 +16,7 @@ import Button from "@material-ui/core/Button";
 import Moment from "moment";
 import { TablePagination } from "@material-ui/core";
 import Loading from "../../components/loading";
+import ErrorMsg from "../../components/errorMsg";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -176,6 +177,9 @@ const OrderDetailsComponent = (props) => {
           />
         )}
       </Box>
+      {props.fetchDetailsFail && (
+        <ErrorMsg show={true} message={props.errorMsg} type={"error"} />
+      )}
     </Container>
   );
 };
@@ -188,6 +192,8 @@ OrderDetailsComponent.propTypes = {
   payloadInfo: PropTypes.any,
   fetchDetailsProgress: PropTypes.bool,
   fetchDetailsSuccess: PropTypes.bool,
+  fetchDetailsFail: PropTypes.bool,
+  errorMsg: PropTypes.string,
 };
 
 export { OrderDetailsComponent };

@@ -22,11 +22,11 @@ const homeReducer = createReducer(initialValue, {
     errorMsg: "",
     orderData: data.payload,
   }),
-  [fetchOrderFailed]: (state) => ({
+  [fetchOrderFailed]: (state, data) => ({
     ...state,
     fetchDetailsProgress: false,
     fetchDetailsFail: true,
-    errorMsg: "Something went wrong, please try again",
+    errorMsg: data.payload.message,
   }),
   [fetchOrderProgress]: (state, data) => ({
     ...state,
