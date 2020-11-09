@@ -70,6 +70,7 @@ function RetailerNotesComponent(props) {
   const [value, setValue] = React.useState(0);
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
   const [noteData, setNoteData] = useState("");
+  const [disableBtn, setDisableBtn] = useState(false);
 
   const fetchNotes = () => {
     const payload = {
@@ -124,6 +125,10 @@ function RetailerNotesComponent(props) {
 
   const handleTextChange = (e) => {
     setNoteData(e.target.value);
+    setDisableBtn(false);
+    if (e.target.value.trim().length > 0) {
+      setDisableBtn(true);
+    }
   };
   const mountAddNote = () => {
     setShowAddNoteDialog(true);
@@ -195,6 +200,7 @@ function RetailerNotesComponent(props) {
                     color="primary"
                     key="saveBtn"
                     onClick={handleAddNoteSubmit}
+                    disabled={!disableBtn}
                   >
                     Save
                   </Button>,

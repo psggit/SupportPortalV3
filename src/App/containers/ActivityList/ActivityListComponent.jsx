@@ -17,6 +17,7 @@ import Moment from "moment";
 import Loading from "../../components/loading";
 import TopBar from "../../components/topBar";
 import SimpleMenuBar from "../../components/simpleMenuBar";
+import ErrorMsg from "../../components/errorMsg";
 
 const useStyles = makeStyles(() => ({
   navBar: {
@@ -167,6 +168,9 @@ function ActivityListComponent(props) {
           )}
         </TableContainer>
       </Box>
+      {props.notesFail && (
+        <ErrorMsg show={true} message={props.errorMsg} type={"error"} />
+      )}
     </div>
   );
   // }
@@ -178,6 +182,8 @@ ActivityListComponent.propTypes = {
   notesProgress: PropTypes.bool,
   notesSuccess: PropTypes.bool,
   orderData: PropTypes.any,
+  errorMsg: PropTypes.string,
+  notesFail: PropTypes.bool,
 };
 
 export { ActivityListComponent };

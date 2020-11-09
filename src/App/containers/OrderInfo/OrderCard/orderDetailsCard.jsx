@@ -209,7 +209,8 @@ const OrderDetailsCard = (props) => {
       className={classes.marginLeft}
       onClick={() => handleClickOpen("cancel")}
       key="cancelBtn"
-      disabled={props.buttonState || disabled}
+      // disabled={props.buttonState || disabled}
+      disabled={!props.orderInfo.cancel_order_button}
     >
       Cancel Order
     </Button>,
@@ -218,7 +219,8 @@ const OrderDetailsCard = (props) => {
       color="primary"
       key="deliverBtn"
       onClick={() => handleClickOpen("deliver")}
-      disabled={props.buttonState || disabled}
+      //disabled={props.buttonState || disabled}
+      disabled={!props.orderInfo.order_status_button}
     >
       Deliver Order
     </Button>,
