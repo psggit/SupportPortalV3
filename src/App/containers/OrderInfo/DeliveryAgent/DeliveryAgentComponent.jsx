@@ -52,10 +52,10 @@ const DeliveryAgentComponent = (props) => {
 
   const handleTextChange = (e) => {
     setCancelReasonNote(e.target.value);
-    setDisableBtn(false);
-    if (e.target.value.trim().length > 0) {
-      setDisableBtn(true);
-    }
+    // setDisableBtn(false);
+    // if (selectedValue !== "") {
+    //   setDisableBtn(true);
+    // }
   };
 
   const handleChange = (e) => {
@@ -158,7 +158,7 @@ const DeliveryAgentComponent = (props) => {
               variant="contained"
               color="primary"
               onClick={handleReserveOrder}
-              //disabled={!disableBtn}
+             // disabled={!disableBtn}
             >
               Yes
             </Button>,
