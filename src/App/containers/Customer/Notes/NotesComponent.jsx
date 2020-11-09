@@ -44,6 +44,7 @@ function Notes(props) {
   const [showData, setShowData] = useState(false);
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
   const [noteData, setNoteData] = useState("");
+  const [disableBtn, setDisableBtn] = useState(false);
   const orderInfos = history.location.state.orderInfos;
   const customerId = history.location.state.customerId;
   const orderId = history.location.state.orderId;
@@ -90,6 +91,10 @@ function Notes(props) {
 
   const handleTextChange = (e) => {
     setNoteData(e.target.value);
+    setDisableBtn(false);
+    if (e.target.value.trim().length > 0) {
+      setDisableBtn(true);
+    }
   };
 
   const mountAddNote = () => {
@@ -147,6 +152,7 @@ function Notes(props) {
                     color="primary"
                     key="saveBtn"
                     onClick={handleAddNoteSubmit}
+                    disabled={!disableBtn}
                   >
                     Save
                   </Button>,

@@ -39,6 +39,7 @@ const DeliveryAgentComponent = (props) => {
   const [showDialogBox, setShowDialogBox] = useState(false);
   const [showUnassignDADialog, setShowUnassignDADialog] = useState(false);
   const [cancelReasonNote, setCancelReasonNote] = useState("");
+  //const [disableBtn, setDisableBtn] = useState(false);
 
   useEffect(() => {
     const details = getListOfDataObjects(props.orderInfo, keysToRender);
@@ -51,6 +52,10 @@ const DeliveryAgentComponent = (props) => {
 
   const handleTextChange = (e) => {
     setCancelReasonNote(e.target.value);
+    setDisableBtn(false);
+    if (e.target.value.trim().length > 0) {
+      setDisableBtn(true);
+    }
   };
 
   const handleChange = (e) => {
@@ -153,6 +158,7 @@ const DeliveryAgentComponent = (props) => {
               variant="contained"
               color="primary"
               onClick={handleReserveOrder}
+              //disabled={!disableBtn}
             >
               Yes
             </Button>,
@@ -204,7 +210,7 @@ const DeliveryAgentComponent = (props) => {
               autoComplete="off"
               margin="normal"
               size="small"
-              placeholder="Add cancel reason"
+              placeholder="Add reserve reason"
             />
           </>
         </Dialog>
