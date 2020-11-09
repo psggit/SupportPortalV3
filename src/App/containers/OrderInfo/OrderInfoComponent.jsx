@@ -103,6 +103,7 @@ const OrderInfoComponent = (props) => {
   const [showError, setShowError] = useState(false);
   const [createDisabledBtn, setDisabledBtn] = useState(true);
   const [activeSection, setActiveSection] = useState("");
+  const [disableBtn, setDisableBtn] = useState(false);
 
   const validateIssue = (event, type) => {
     if (type === "select") {
@@ -117,6 +118,14 @@ const OrderInfoComponent = (props) => {
       setDisabledBtn(false);
     } else {
       setDisabledBtn(true);
+    }
+  };
+
+  const textFieldChange = (e) => {
+    setIssueDesc(e.target.value);
+    setDisableBtn(false);
+    if (e.target.value.trim().length > 0) {
+      setDisableBtn(true);
     }
   };
 
@@ -193,6 +202,7 @@ const OrderInfoComponent = (props) => {
       color="primary"
       key="createIssue"
       onClick={() => updateNotes()}
+      disabled={!disableBtn}
     >
       Save
     </Button>,
@@ -253,7 +263,8 @@ const OrderInfoComponent = (props) => {
             size="small"
             value={issueDesc}
             fullWidth
-            onChange={(event) => setIssueDesc(event.target.value)}
+            //onChange={(event) => setIssueDesc(event.target.value)}
+            onChange={textFieldChange}
           />
         </DialogComponent>
       )}

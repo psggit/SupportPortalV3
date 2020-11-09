@@ -48,6 +48,7 @@ function DaNotes(props) {
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
   const [value, setValue] = React.useState(0);
   const [noteData, setNoteData] = useState("");
+  const [disableBtn, setDisableBtn] = useState(false);
   const customerId = history.location.state.customerId;
   const orderId = history.location.state.orderId;
 
@@ -100,6 +101,10 @@ function DaNotes(props) {
 
   const handleTextChange = (e) => {
     setNoteData(e.target.value);
+    setDisableBtn(false);
+    if (e.target.value.trim().length > 0) {
+      setDisableBtn(true);
+    }
   };
 
   const mountAddNote = () => {
@@ -174,6 +179,7 @@ function DaNotes(props) {
                     color="primary"
                     key="saveBtn"
                     onClick={handleAddNoteSubmit}
+                    disabled={!disableBtn}
                   >
                     Save
                   </Button>,

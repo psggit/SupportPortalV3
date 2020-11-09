@@ -11,6 +11,8 @@ const mapStateToProps = (state) => {
     // orderId: "50011546022614",
     notesProgress: state.acitivityLog.notesProgress,
     notesSuccess: state.acitivityLog.notesSuccess,
+    notesFail: state.acitivityLog.notesFail,
+    errorMsg: state.acitivityLog.errorMsg,
   };
 };
 

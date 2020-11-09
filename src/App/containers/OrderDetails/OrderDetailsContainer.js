@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
     fetchDetailsProgress: state.home.fetchDetailsProgress,
     fetchDetailsFail: state.home.fetchDetailsFail,
     fetchDetailsSuccess: state.home.fetchDetailsSuccess,
+    errorMsg: state.home.errorMsg,
   };
 };
 

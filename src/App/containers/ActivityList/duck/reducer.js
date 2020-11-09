@@ -24,12 +24,12 @@ const acitivityListReducer = createReducer(initialState, {
       activityLogs: data.payload,
     };
   },
-  [fetchActLogsFailure]: (state) => ({
+  [fetchActLogsFailure]: (state, data) => ({
     ...state,
     notesProgress: false,
     notesFail: true,
     notesSuccess: false,
-    errorMsg: "Something went wrong, please try again",
+    errorMsg: data.payload.message,
   }),
   [fetchActLogsInProgress]: (state) => {
     return {
