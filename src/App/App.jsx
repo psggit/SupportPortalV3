@@ -96,6 +96,8 @@ function App(props) {
                 component={OrderModificationContainer}
               />
 
+              <Route path="/login" component={LoginContainer} />
+
               <Route
                 path="/"
                 component={
@@ -103,7 +105,9 @@ function App(props) {
                     ? function () {
                         return <Redirect to="/dashboard" />;
                       }
-                    : () => <LoginContainer />
+                    : function () {
+                        return <Redirect to="/login" />;
+                      }
                 }
               />
             </Switch>

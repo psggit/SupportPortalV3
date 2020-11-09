@@ -65,8 +65,8 @@ const LogoutComponent = (props) => {
   }, []);
 
   if (props.logoutSuccess) {
-    setTimeout(function(){
-      return <Redirect to="/login" />
+    setTimeout(function () {
+      return <Redirect to="/login" />;
     }, 3000);
   }
 
@@ -82,9 +82,9 @@ const LogoutComponent = (props) => {
           <Grid container>
             <Grid item xs={12}>
               <Typography variant="body1" color="textSecondary" align="center">
-                Having trouble? Contact Support at{" "}
-                <Link href="mailto:support@hiipbar.com" variant="body2">
-                  support@hipbar.com
+                Login again?{" "}
+                <Link href="/login" variant="body2">
+                  Click here
                 </Link>
               </Typography>
             </Grid>

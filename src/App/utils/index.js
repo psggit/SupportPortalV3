@@ -42,4 +42,7 @@ export { confirmCartAPI } from "./confirmCartAPI";
 export { cancelOrderModificationAPI } from "./cancelOrderModificationAPI";
 export { searchItemsAPI } from "./searchItemsAPI";
 export { fetchRequestStatusAPI } from "./fetchRequestStatusAPI";
-export { logoutAPI } from "./logoutAPI";
+export { restockOTPAPI } from "./restockOTPAPI";
+export { restockOrderAPI } from "./restockOrderAPI";
+export { pushOrderAPI } from "./pushOrderAPI";
+export { cancelOrderDSPAPI } from "./cancelOrderDSPAPI";

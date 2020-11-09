@@ -370,7 +370,9 @@ const RenderIssues = (props) => {
       {showDialog && (
         <Dialog
           title={resolveIssue ? `RESOLVE ISSUE` : `REASSIGN ISSUE`}
-          subtitle={resolveIssue ? 'Are you sure want to ressolve the issue?' : ''}
+          subtitle={
+            resolveIssue ? "Are you sure want to ressolve the issue?" : ""
+          }
           actions={[
             <Button
               onClick={() => unmountConfirmationDialog()}
@@ -391,8 +393,7 @@ const RenderIssues = (props) => {
           ]}
         >
           <form>
-            {
-              !resolveIssue &&
+            {!resolveIssue && (
               <div className={classes.selectIssue}>
                 <div>Select support personel</div>
                 <div>
@@ -415,7 +416,7 @@ const RenderIssues = (props) => {
                   </FormControl>
                 </div>
               </div>
-            }
+            )}
           </form>
         </Dialog>
       )}
@@ -469,7 +470,13 @@ const IssuesComponent = (props) => {
             </Paper>
           </Grid>
           <Grid item xs={10}>
-            <Box width="90%" mx="auto" mt={4} mb={4} className={classes.section2}>
+            <Box
+              width="90%"
+              mx="auto"
+              mt={4}
+              mb={4}
+              className={classes.section2}
+            >
               {!props.fetchIssuesInProgress && props.issueList !== null && (
                 <>
                   <RenderIssues {...props} />

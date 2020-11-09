@@ -13,6 +13,7 @@ import { RetailerContainer } from "./RetailerDetails/RetailerContainer";
 import { OrderStatusContainer } from "./OrderStatus";
 import { DeliveryAgentContainer } from "./DeliveryAgent";
 import { OrderTrackingContainer } from "../OrderTracking";
+import { DeliveryServiceProviderContainer } from "./DeliveryServiceProvider";
 import DialogComponent from "../../components/dialog";
 import Loading from "../../components/loading";
 import ErrorMsg from "../../components/errorMsg";
@@ -394,6 +395,14 @@ const OrderInfoComponent = (props) => {
               <Grid item xs={12}>
                 {props.fetchOrderInfoSuccess && (
                   <DeliveryAgentContainer
+                    openDialog={openDialog}
+                    handleCall={handleCall}
+                  />
+                )}
+              </Grid>
+              <Grid item xs={12}>
+                {props.fetchOrderInfoSuccess && (
+                  <DeliveryServiceProviderContainer
                     openDialog={openDialog}
                     handleCall={handleCall}
                   />

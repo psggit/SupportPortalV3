@@ -172,6 +172,7 @@ function OrderTrackingComponent(props) {
   const [show, setShow] = useState(false);
   const [showError, setShowError] = useState(false);
   const [details, setDetails] = useState("");
+  let message = "";
 
   useEffect(() => {
     if (props.fetchLiveDataSuccess) {
@@ -179,8 +180,12 @@ function OrderTrackingComponent(props) {
       setDetails(props.orderInfo);
       if (
         props.trackData.agent_gps.trim().length == 0 &&
-        props.trackData.message.trim().length !== 0
+        props.trackData.status !== "delivered"
       ) {
+        message = "Unable to locate Delivery Agent's location.";
+        if (props.trackData.message.trim().length !== 0) {
+          message = props.trackData.message;
+        }
         setShowError(true);
       }
     }
@@ -286,7 +291,7 @@ function OrderTrackingComponent(props) {
         {showError && show && (
           <Grid item xs={12}>
             <Box mt={4}>
-              <Alert severity="error">{props.trackData.message}</Alert>
+              <Alert severity="error">{message}</Alert>
             </Box>
           </Grid>
         )}
