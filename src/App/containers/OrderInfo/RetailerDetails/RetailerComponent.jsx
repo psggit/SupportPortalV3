@@ -67,7 +67,7 @@ const RetailerDetails = (props) => {
       color="primary"
       key="unassignBtn"
       onClick={handleChangeRetailer}
-      disabled={!props.orderInfo.order_status_button}
+      disabled={!props.orderInfo.cancel_order_button}
     >
       Change Retailer
     </Button>,

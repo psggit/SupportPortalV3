@@ -121,7 +121,7 @@ const DeliveryAgentComponent = (props) => {
       color="primary"
       key="unassignBtn"
       onClick={mountUnassignDA}
-      disabled={!props.orderInfo.order_status_button}
+      disabled={!props.orderInfo.cancel_order_button}
     >
       Unassign
     </Button>,
@@ -130,7 +130,7 @@ const DeliveryAgentComponent = (props) => {
       color="primary"
       key="reserveOrder"
       onClick={mountDialogBox}
-      disabled={!props.orderInfo.order_status_button}
+      disabled={!props.orderInfo.cancel_order_button}
     >
       Reserve Order
     </Button>,
