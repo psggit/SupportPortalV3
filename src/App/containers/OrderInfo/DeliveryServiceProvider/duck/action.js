@@ -1,24 +1,12 @@
 import { createAction } from "@reduxjs/toolkit";
 
-const pushOrderSuccess = createAction(
-  "pushOrderSuccess"
-);
-const pushOrderFailed = createAction(
-  "pushOrderFailed"
-);
-const pushOrderProgress = createAction(
-  "pushOrderProgress"
-);
+const pushOrderSuccess = createAction("pushOrderSuccess");
+const pushOrderFailed = createAction("pushOrderFailed");
+const pushOrderProgress = createAction("pushOrderProgress");
 
-const restockOrderSuccess = createAction(
-  "restockOrderSuccess"
-);
-const restockOrderFailed = createAction(
-  "restockOrderFailed"
-);
-const restockOrderProgress = createAction(
-  "restockOrderProgress"
-);
+const restockOrderSuccess = createAction("restockOrderSuccess");
+const restockOrderFailed = createAction("restockOrderFailed");
+const restockOrderProgress = createAction("restockOrderProgress");
 
 const fetchOTPSuccess = createAction("fetchOTPSuccess");
 const fetchOTPFailed = createAction("fetchOTPFailed");

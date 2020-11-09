@@ -65,7 +65,7 @@ const DeliveryServiceProviderComponent = (props) => {
       color="primary"
       key="unassignBtn"
       onClick={() => setShowDialogPush(true)}
-      disabled={props.orderInfo.push_order_to_dsp_button}
+      disabled={!props.orderInfo.push_order_to_dsp_button}
     >
       Push Order
     </Button>,
@@ -74,7 +74,7 @@ const DeliveryServiceProviderComponent = (props) => {
       color="primary"
       key="reserveOrder"
       onClick={() => setShowDialogBox(true)}
-      disabled={props.orderInfo.restock_button}
+      disabled={!props.orderInfo.restock_button}
     >
       Restock Order
     </Button>,
@@ -83,7 +83,7 @@ const DeliveryServiceProviderComponent = (props) => {
       color="primary"
       key="fetchOTP"
       onClick={() => handleOTP(true)}
-      disabled={props.orderInfo.restock_button}
+      disabled={!props.orderInfo.restock_button}
     >
       Fetch OTP
     </Button>,
@@ -92,7 +92,7 @@ const DeliveryServiceProviderComponent = (props) => {
       color="primary"
       key="cancelBtnDSP"
       onClick={() => setShowCancelOrder(true)}
-      disabled={props.orderInfo.cancel_order_from_dsp_button}
+      disabled={!props.orderInfo.cancel_order_from_dsp_button}
     >
       Cancel Order
     </Button>,
