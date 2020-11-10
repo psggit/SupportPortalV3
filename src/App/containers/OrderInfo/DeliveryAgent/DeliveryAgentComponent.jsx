@@ -21,6 +21,7 @@ const keysToRender = [
   "delivery_agnet_city_name",
   "delivery_agent_locality_name",
   "delivery_agent_limit",
+  "delivery_agent_status",
 ];
 const keyMap = {
   delivery_agent_id: "Agent ID",
@@ -29,6 +30,7 @@ const keyMap = {
   delivery_agnet_city_name: "City",
   delivery_agent_locality_name: "Locality",
   delivery_agent_limit: "Agent Limit",
+  delivery_agent_status: "Status",
 };
 
 const DeliveryAgentComponent = (props) => {
