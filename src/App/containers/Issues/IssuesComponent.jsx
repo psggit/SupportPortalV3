@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
@@ -150,10 +151,10 @@ const RenderIssues = (props) => {
   }, []);
 
   useEffect(() => {
-    if (!props.fetchSupportPersonListInProgress) {
+    if (!props.fetchSupportPersonListSuccess) {
       setSupportPersonId(props.supportPersonList.support_person[0].id);
     }
-  }, [props.fetchSupportPersonListInProgress]);
+  }, [props.fetchSupportPersonListSuccess]);
 
   useEffect(() => {
     setData(
@@ -491,6 +492,10 @@ const IssuesComponent = (props) => {
       </Box>
     </div>
   );
+};
+
+IssuesComponent.propTypes = {
+  fetchIssuesInProgress: PropTypes.bool,
 };
 
 export { IssuesComponent };

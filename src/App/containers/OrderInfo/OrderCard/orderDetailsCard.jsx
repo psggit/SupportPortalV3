@@ -368,21 +368,22 @@ const OrderDetailsCard = (props) => {
                 value={props.cancelOrderSummaryData.total_cancellation_charges}
                 type="button"
               >
-                <OrderSummaryItem title="Taxes" value="Taxes charges" />
+                <OrderSummaryItem title="Refund Amount" />
+                <OrderSummaryItem
+                  title="Wallet:"
+                  value={props.cancelOrderSummaryData.refund_amount.wallet}
+                />
+                <OrderSummaryItem
+                  title="HipBar Wallet:"
+                  value={
+                    props.cancelOrderSummaryData.refund_amount.hipbar_wallet
+                  }
+                />
+                <OrderSummaryItem
+                  title="Gift Wallet:"
+                  value={props.cancelOrderSummaryData.refund_amount.gift_wallet}
+                />
               </OrderSummaryItem>
-              <OrderSummaryItem title="Refund Amount" />
-              <OrderSummaryItem
-                title="Wallet:"
-                value={props.cancelOrderSummaryData.refund_amount.wallet}
-              />
-              <OrderSummaryItem
-                title="HipBar Wallet:"
-                value={props.cancelOrderSummaryData.refund_amount.hipbar_wallet}
-              />
-              <OrderSummaryItem
-                title="Gift Wallet:"
-                value={props.cancelOrderSummaryData.refund_amount.gift_wallet}
-              />
             </div>
           )}
         </DialogContent>

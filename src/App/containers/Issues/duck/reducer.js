@@ -15,7 +15,7 @@ import {
 } from "./action";
 
 const initialState = {
-  fetchIssuesInProgress: true,
+  fetchIssuesInProgress: false,
   fetchIssuesFailed: false,
   fetchIssuesSuccess: false,
   assignIssueInProgress: false,
@@ -24,7 +24,7 @@ const initialState = {
   resolveIssueInProgress: false,
   resolveIssueSuccess: false,
   resolveIssueFailed: false,
-  fetchSupportPersonListInProgress: true,
+  fetchSupportPersonListInProgress: false,
   fetchSupportPersonListSuccess: false,
   fetchSupportPersonListFailed: false,
   issueList: null,

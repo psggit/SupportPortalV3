@@ -19,7 +19,7 @@ import TopBar from "../../components/topBar";
 import SimpleMenuBar from "../../components/simpleMenuBar";
 import ErrorMsg from "../../components/errorMsg";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   navBar: {
     display: "flex",
     alignItems: "center",
@@ -44,6 +44,9 @@ const useStyles = makeStyles(() => ({
   },
   table: {
     padding: "0px 25px",
+  },
+  tableRow: {
+    background: theme.palette.background.paper,
   },
 }));
 
@@ -136,7 +139,7 @@ function ActivityListComponent(props) {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((data, index) => {
                     return (
-                      <TableRow key={index}>
+                      <TableRow key={index} className={classes.tableRow}>
                         <TableCell align="center">{data.created_by}</TableCell>
                         <TableCell align="center">{data.notes}</TableCell>
                         <TableCell align="center">{data.description}</TableCell>

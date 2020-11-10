@@ -13,6 +13,8 @@ const mapStateToProps = (state) => {
     supportPersonList: state.issues.supportPersonList,
     fetchSupportPersonListInProgress:
       state.issues.fetchSupportPersonListInProgress,
+      fetchSupportPersonListSuccess:
+      state.issues.fetchSupportPersonListSuccess,
     fetchIssuesSuccess: state.issues.fetchIssuesSuccess,
     fetchIssuesInProgress: state.issues.fetchIssuesInProgress,
     assignIssueInProgress: state.issues.assignIssueInProgress,
