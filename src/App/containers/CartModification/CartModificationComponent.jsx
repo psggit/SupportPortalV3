@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useDebugValue } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import uuid from "react-uuid";

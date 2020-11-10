@@ -14,7 +14,6 @@ import {
   FormControl,
   Select,
   MenuItem,
-  Input,
   TextField,
 } from "@material-ui/core";
 import OrderCard from "../../../components/card";
@@ -60,7 +59,10 @@ const useStyles = makeStyles((theme) => ({
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 200,
+    width: 188,
+  },
+  textField: {
+    width: 188,
   },
 }));
 
@@ -88,11 +90,14 @@ const OrderDetailsCard = (props) => {
   const [selectedValue, setValue] = useState("");
   const [cancellationSummary, setCancellationSummary] = useState(false);
   const [completeBtnDisabled, setCompleteBtnDisabled] = useState(true);
-  const [kycArray, setKycArray] = useState(["", "", "", ""]);
-  const [dobArray, setDobArray] = useState(["", "", "", ""]);
+  // const [kycArray, setKycArray] = useState(["", "", "", ""]);
+  // const [dobArray, setDobArray] = useState(["", "", "", ""]);
+  const [dob, setDob] = useState("");
   const [kyc, setKyc] = useState("");
   const [reasonIdx, setReasonIdx] = useState("");
   const [notes, setNotes] = useState("");
+  const [kycDigits, setKycDigits] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [disabled, setDisabled] = useState(false);
 
   const handleClickOpen = (type) => {
@@ -158,13 +163,24 @@ const OrderDetailsCard = (props) => {
     setNotes(event.target.value);
   };
 
+  const handleDob = (event) => {
+    setDob(event.target.value);
+    setCompleteBtnDisabled(false);
+  };
+
+  const handleKyc = (event) => {
+    setKycDigits(event.target.value);
+  };
+
   const handleDeliver = () => {
     const payload = {
       order_id: props.order.order_id,
       id_proof: kyc,
       slot_id: "",
-      digits: kycArray.toString().split(",").join(""),
-      year_of_birth: dobArray.toString().split(",").join(""),
+      // digits: kycArray.toString().split(",").join(""),
+      // year_of_birth: dobArray.toString().split(",").join(""),
+      digits: kycDigits,
+      year_of_birth: dob,
       reason_for_completion: parseInt(reasonIdx),
       note_type: "order",
       note: notes,
@@ -186,21 +202,21 @@ const OrderDetailsCard = (props) => {
     setOpenCancel(false);
   };
 
-  const handleCompleteChange = (event, type, index) => {
-    if (!isNaN(event.target.value)) {
-      if (type == "kyc") {
-        let newArray = [...kycArray];
-        newArray[index] = event.target.value;
-        setKycArray(newArray);
-      }
-      if (type == "dob") {
-        let newArray = [...dobArray];
-        newArray[index] = event.target.value;
-        setDobArray(newArray);
-      }
-    }
-    setCompleteBtnDisabled(false);
-  };
+  // const handleCompleteChange = (event, type, index) => {
+  //   if (!isNaN(event.target.value)) {
+  //     if (type == "kyc") {
+  //       let newArray = [...kycArray];
+  //       newArray[index] = event.target.value;
+  //       setKycArray(newArray);
+  //     }
+  //     if (type == "dob") {
+  //       let newArray = [...dobArray];
+  //       newArray[index] = event.target.value;
+  //       setDobArray(newArray);
+  //     }
+  //   }
+  //   setCompleteBtnDisabled(false);
+  // };
 
   const actionButtons = [
     <Button
@@ -352,21 +368,22 @@ const OrderDetailsCard = (props) => {
                 value={props.cancelOrderSummaryData.total_cancellation_charges}
                 type="button"
               >
-                <OrderSummaryItem title="Taxes" value="Taxes charges" />
+                <OrderSummaryItem title="Refund Amount" />
+                <OrderSummaryItem
+                  title="Wallet:"
+                  value={props.cancelOrderSummaryData.refund_amount.wallet}
+                />
+                <OrderSummaryItem
+                  title="HipBar Wallet:"
+                  value={
+                    props.cancelOrderSummaryData.refund_amount.hipbar_wallet
+                  }
+                />
+                <OrderSummaryItem
+                  title="Gift Wallet:"
+                  value={props.cancelOrderSummaryData.refund_amount.gift_wallet}
+                />
               </OrderSummaryItem>
-              <OrderSummaryItem title="Refund Amount" />
-              <OrderSummaryItem
-                title="Wallet:"
-                value={props.cancelOrderSummaryData.refund_amount.wallet}
-              />
-              <OrderSummaryItem
-                title="HipBar Wallet:"
-                value={props.cancelOrderSummaryData.refund_amount.hipbar_wallet}
-              />
-              <OrderSummaryItem
-                title="Gift Wallet:"
-                value={props.cancelOrderSummaryData.refund_amount.gift_wallet}
-              />
             </div>
           )}
         </DialogContent>
@@ -427,8 +444,13 @@ const OrderDetailsCard = (props) => {
                 className={classes.ListItemTextRoot}
                 classes={{ root: classes.ListItemTextRoot }}
               />
+              <TextField
+                id="standard-basic"
+                className={classes.textField}
+                onChange={(event) => handleKyc(event)}
+              />
 
-              {kycArray.map((value, index) => {
+              {/* {kycArray.map((value, index) => {
                 return (
                   <Input
                     key={index}
@@ -440,7 +462,7 @@ const OrderDetailsCard = (props) => {
                     }
                   />
                 );
-              })}
+              })} */}
             </ListItem>
             <ListItem dense disableGutters={true}>
               <ListItemText
@@ -448,7 +470,12 @@ const OrderDetailsCard = (props) => {
                 className={classes.ListItemTextRoot}
                 classes={{ root: classes.ListItemTextRoot }}
               />
-              {dobArray.map((value, index) => {
+              <TextField
+                id="standard-basic"
+                className={classes.textField}
+                onChange={(event) => handleDob(event)}
+              />
+              {/* {dobArray.map((value, index) => {
                 return (
                   <Input
                     key={index}
@@ -460,7 +487,7 @@ const OrderDetailsCard = (props) => {
                     }
                   />
                 );
-              })}
+              })} */}
             </ListItem>
             <ListItem dense disableGutters={true}>
               <ListItemText
@@ -548,6 +575,7 @@ OrderDetailsCard.propTypes = {
   successMsg: PropTypes.any,
   deliverOrderSuccess: PropTypes.bool,
   resetOnUnmount: PropTypes.func,
+  orderInfo: PropTypes.any,
 };
 
 export { OrderDetailsCard };
