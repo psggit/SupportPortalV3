@@ -60,7 +60,10 @@ const useStyles = makeStyles((theme) => ({
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 200,
+    width: 188,
+  },
+  textField: {
+    width: 188,
   },
 }));
 
@@ -442,6 +445,7 @@ const OrderDetailsCard = (props) => {
               />
               <TextField
                 id="standard-basic"
+                className={classes.textField}
                 onChange={(event) => handleKyc(event)}
               />
 
@@ -467,6 +471,7 @@ const OrderDetailsCard = (props) => {
               />
               <TextField
                 id="standard-basic"
+                className={classes.textField}
                 onChange={(event) => handleDob(event)}
               />
               {/* {dobArray.map((value, index) => {
