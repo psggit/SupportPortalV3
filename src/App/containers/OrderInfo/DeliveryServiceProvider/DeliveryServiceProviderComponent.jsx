@@ -97,95 +97,6 @@ const DeliveryServiceProviderComponent = (props) => {
     >
       Cancel Order
     </Button>,
-    <div>
-      {showDialogBox && (
-        <Dialog
-          title="Restock Order"
-          subtitle="Are you sure you want to restock this order?"
-          actions={[
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => handleRestockOrder()}
-            >
-              Yes
-            </Button>,
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => setShowDialogBox(false)}
-            >
-              No
-            </Button>,
-          ]}
-        ></Dialog>
-      )}
-    </div>,
-    <div>
-      {showDialogPush && (
-        <Dialog
-          title="Push Order"
-          subtitle="Are you sure you want to push this order?"
-          actions={[
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handlePushOrder}
-            >
-              Yes
-            </Button>,
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => setShowDialogPush(false)}
-            >
-              No
-            </Button>,
-          ]}
-        />
-      )}
-    </div>,
-    <div>
-      {showOTPDialogBox && (
-        <Dialog
-          title="OTP details"
-          subtitle={otpNumber}
-          actions={[
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => setShowOTPDialogBox(false)}
-            >
-              Close
-            </Button>,
-          ]}
-        />
-      )}
-    </div>,
-    <div>
-      {showCancelOrder && (
-        <Dialog
-          title="Cancel Order"
-          subtitle="Are you sure you want to cancel this order?"
-          actions={[
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleCancelOrder}
-            >
-              Yes
-            </Button>,
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => setShowCancelOrder(false)}
-            >
-              No
-            </Button>,
-          ]}
-        />
-      )}
-    </div>,
   ];
 
   return (
@@ -221,6 +132,95 @@ const DeliveryServiceProviderComponent = (props) => {
       {props.cancelOrderDSPSuccess && (
         <ErrorMsg show={true} message={props.message} type="success" />
       )}
+      <div>
+        {showDialogBox && (
+          <Dialog
+            title="Restock Order"
+            subtitle="Are you sure you want to restock this order?"
+            actions={[
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => handleRestockOrder()}
+              >
+                Yes
+              </Button>,
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={() => setShowDialogBox(false)}
+              >
+                No
+              </Button>,
+            ]}
+          ></Dialog>
+        )}
+      </div>
+      <div>
+        {showDialogPush && (
+          <Dialog
+            title="Push Order"
+            subtitle="Are you sure you want to push this order?"
+            actions={[
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handlePushOrder}
+              >
+                Yes
+              </Button>,
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={() => setShowDialogPush(false)}
+              >
+                No
+              </Button>,
+            ]}
+          />
+        )}
+      </div>
+      <div>
+        {showOTPDialogBox && (
+          <Dialog
+            title="OTP details"
+            subtitle={otpNumber}
+            actions={[
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={() => setShowOTPDialogBox(false)}
+              >
+                Close
+              </Button>,
+            ]}
+          />
+        )}
+      </div>
+      <div>
+        {showCancelOrder && (
+          <Dialog
+            title="Cancel Order"
+            subtitle="Are you sure you want to cancel this order?"
+            actions={[
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleCancelOrder}
+              >
+                Yes
+              </Button>,
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={() => setShowCancelOrder(false)}
+              >
+                No
+              </Button>,
+            ]}
+          />
+        )}
+      </div>
     </Grid>
   );
 };

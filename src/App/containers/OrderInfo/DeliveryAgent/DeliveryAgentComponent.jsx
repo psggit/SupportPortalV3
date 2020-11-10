@@ -150,97 +150,6 @@ const DeliveryAgentComponent = (props) => {
     // >
     //   Call
     // </Button>,
-    <div>
-      {showDialogBox && (
-        <Dialog
-          title="Reserve Orders"
-          actions={[
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleReserveOrder}
-             // disabled={!disableBtn}
-            >
-              Yes
-            </Button>,
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={unmountDialogBox}
-            >
-              No
-            </Button>,
-          ]}
-        >
-          <>
-            <InputLabel id="demo-simple-select-label">
-              Delivery Agent List
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              className={classes.selectBox}
-              onChange={(event) => handleChange(event)}
-            >
-              {props.daListSuccess &&
-                props.daList.data !== null &&
-                props.daList.data.map((value, index) => {
-                  if (selectedValue === value) {
-                    return (
-                      <MenuItem value={value.id} key={index} selected={true}>
-                        {value.name}-{value.id}
-                      </MenuItem>
-                    );
-                  } else {
-                    return (
-                      <MenuItem value={value.id} key={index}>
-                        {value.name}-{value.id}
-                      </MenuItem>
-                    );
-                  }
-                })}
-            </Select>
-            <TextField
-              id="outlined-multiline-static"
-              className={classes.textBox}
-              onChange={handleTextChange}
-              multiline
-              rows={4}
-              fullWidth
-              variant="outlined"
-              autoComplete="off"
-              margin="normal"
-              size="small"
-              placeholder="Add reserve reason"
-            />
-          </>
-        </Dialog>
-      )}
-    </div>,
-    <div>
-      {showUnassignDADialog && (
-        <Dialog
-          title="Unassign Delivery Agent"
-          subtitle="Are you sure you want to un-assign the delivery agent for this order ?"
-          actions={[
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleUnassignDA}
-            >
-              Yes
-            </Button>,
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={unmountUnassignDA}
-            >
-              No
-            </Button>,
-          ]}
-        />
-      )}
-    </div>,
   ];
 
   const keysToRenderInNotesCard = ["notes", "created_at"];
@@ -284,6 +193,97 @@ const DeliveryAgentComponent = (props) => {
       {props.unassignDAFail && (
         <ErrorMsg show={true} message={props.errorMsg} type="error" />
       )}
+      <div>
+        {showDialogBox && (
+          <Dialog
+            title="Reserve Orders"
+            actions={[
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleReserveOrder}
+                // disabled={!disableBtn}
+              >
+                Yes
+              </Button>,
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={unmountDialogBox}
+              >
+                No
+              </Button>,
+            ]}
+          >
+            <>
+              <InputLabel id="demo-simple-select-label">
+                Delivery Agent List
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                className={classes.selectBox}
+                onChange={(event) => handleChange(event)}
+              >
+                {props.daListSuccess &&
+                  props.daList.data !== null &&
+                  props.daList.data.map((value, index) => {
+                    if (selectedValue === value) {
+                      return (
+                        <MenuItem value={value.id} key={index} selected={true}>
+                          {value.name}-{value.id}
+                        </MenuItem>
+                      );
+                    } else {
+                      return (
+                        <MenuItem value={value.id} key={index}>
+                          {value.name}-{value.id}
+                        </MenuItem>
+                      );
+                    }
+                  })}
+              </Select>
+              <TextField
+                id="outlined-multiline-static"
+                className={classes.textBox}
+                onChange={handleTextChange}
+                multiline
+                rows={4}
+                fullWidth
+                variant="outlined"
+                autoComplete="off"
+                margin="normal"
+                size="small"
+                placeholder="Add reserve reason"
+              />
+            </>
+          </Dialog>
+        )}
+      </div>
+      <div>
+        {showUnassignDADialog && (
+          <Dialog
+            title="Unassign Delivery Agent"
+            subtitle="Are you sure you want to un-assign the delivery agent for this order ?"
+            actions={[
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleUnassignDA}
+              >
+                Yes
+              </Button>,
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={unmountUnassignDA}
+              >
+                No
+              </Button>,
+            ]}
+          />
+        )}
+      </div>
     </Grid>
   );
 };
@@ -310,7 +310,7 @@ DeliveryAgentComponent.propTypes = {
   resetOnUnmount: PropTypes.func,
 };
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   formRoot: {
     padding: 36,
   },

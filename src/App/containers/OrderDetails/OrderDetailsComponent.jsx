@@ -115,7 +115,7 @@ const OrderDetailsComponent = (props) => {
     <Container component="main">
       <TopBar />
       {props.fetchDetailsProgress && <Loading message="Fetching data..." />}
-      <Box width="90%" mx="auto" mt={4}>
+      <Box width="95%" mx="auto" mt={4}>
         <TableContainer component={Paper}>
           <Table aria-label="order table" size="small">
             <TableHead>
