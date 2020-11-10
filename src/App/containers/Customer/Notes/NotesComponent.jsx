@@ -15,6 +15,7 @@ import { useHistory } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import ErrorMsg from "../../../components/errorMsg";
 import { Typography } from "@material-ui/core";
+import uuid from "react-uuid";
 import {
   Table,
   Box,
@@ -143,14 +144,14 @@ function Notes(props) {
                     variant="contained"
                     color="primary"
                     onClick={UnmountAddNote}
-                    key="cancelBtn"
+                    key={uuid()}
                   >
                     Cancel
                   </Button>,
                   <Button
                     variant="outlined"
                     color="primary"
-                    key="saveBtn"
+                    key={uuid()}
                     onClick={handleAddNoteSubmit}
                     disabled={!disableBtn}
                   >

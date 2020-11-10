@@ -12,6 +12,7 @@ import TextField from "@material-ui/core/TextField";
 import { useHistory } from "react-router-dom";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ErrorMsg from "../../../components/errorMsg";
+import uuid from "react-uuid";
 
 const keysToRender = [
   "delivery_agent_id",
@@ -124,7 +125,7 @@ const DeliveryAgentComponent = (props) => {
     <Button
       variant="outlined"
       color="primary"
-      key="unassignBtn"
+      key={uuid()}
       onClick={mountUnassignDA}
       disabled={!props.orderInfo.cancel_order_button}
     >
@@ -133,7 +134,7 @@ const DeliveryAgentComponent = (props) => {
     <Button
       variant="outlined"
       color="primary"
-      key="reserveOrder"
+      key={uuid()}
       onClick={mountDialogBox}
       disabled={!props.orderInfo.cancel_order_button}
     >
@@ -142,7 +143,7 @@ const DeliveryAgentComponent = (props) => {
     // <Button
     //   variant="contained"
     //   color="primary"
-    //   key="callBtn"
+    //   key={uuid()}
     //   onClick={() =>
     //     props.handleCall(props.orderInfo.delivery_agent_contact_number)
     //   }

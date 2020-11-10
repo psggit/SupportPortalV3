@@ -6,7 +6,7 @@ import CartDetailsCard from "../../components/card";
 import { OrderSummary } from "../Cart/components/orderSummary";
 // import Alert from "@material-ui/lab/Alert";
 import ErrorMsg from "../../components/errorMsg";
-
+import uuid from "react-uuid";
 import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -140,7 +140,7 @@ const CartComponent = (props) => {
     //   variant="contained"
     //   color="primary"
     //   onClick={handleModify}
-    //   key="modifyBtn"
+    //   key={uuid()}
     //   disabled={disableModify}
     // >
     //   Modify
@@ -171,7 +171,7 @@ const CartComponent = (props) => {
         color="primary"
         onClick={handleCancel}
         className={classes.marginLeft}
-        key="cancelBtn"
+        key={uuid()}
         disabled={confirm}
       >
         Cancel
@@ -180,7 +180,7 @@ const CartComponent = (props) => {
         variant="contained"
         color="primary"
         onClick={handleConfirm}
-        key="confirmBtn"
+        key={uuid()}
         disabled={confirm}
       >
         Confirm

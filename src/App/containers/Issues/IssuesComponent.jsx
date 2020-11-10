@@ -18,6 +18,7 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import { resolveIcon } from "./../../assets/images/index";
 import ErrorMsg from "./../../components/errorMsg";
+import uuid from "react-uuid";
 // import {
 //   Dialog,
 //   DialogActions,
@@ -378,7 +379,7 @@ const RenderIssues = (props) => {
               onClick={() => unmountConfirmationDialog()}
               color="primary"
               variant="outlined"
-              key="cancelIssueBtn"
+              key={uuid()}
             >
               Cancel
             </Button>,
@@ -386,7 +387,7 @@ const RenderIssues = (props) => {
               onClick={() => handleConfirmation()}
               color="primary"
               variant="contained"
-              key="confirmIssueBtn"
+              key={uuid()}
             >
               Confirm
             </Button>,

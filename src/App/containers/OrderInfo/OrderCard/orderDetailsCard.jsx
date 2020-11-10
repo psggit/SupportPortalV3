@@ -21,6 +21,7 @@ import OrderCard from "../../../components/card";
 import { OrderSummaryItem } from "../../Cart/components/orderSummaryItem";
 import { fetchDeliverOrderSuccess, fetchKycListSuccess } from "./duck/actions";
 import ErrorMsg from "../../../components/errorMsg";
+import uuid from "react-uuid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -208,7 +209,7 @@ const OrderDetailsCard = (props) => {
       color="primary"
       className={classes.marginLeft}
       onClick={() => handleClickOpen("cancel")}
-      key="cancelBtn"
+      key={uuid()}
       // disabled={props.buttonState || disabled}
       disabled={!props.orderInfo.cancel_order_button}
     >
@@ -217,7 +218,7 @@ const OrderDetailsCard = (props) => {
     <Button
       variant="contained"
       color="primary"
-      key="deliverBtn"
+      key={uuid()}
       onClick={() => handleClickOpen("deliver")}
       //disabled={props.buttonState || disabled}
       disabled={!props.orderInfo.order_status_button}
@@ -431,7 +432,7 @@ const OrderDetailsCard = (props) => {
               {kycArray.map((value, index) => {
                 return (
                   <Input
-                    key={index}
+                    key={uuid()}
                     value={value}
                     className={classes.InputTextRoot}
                     inputProps={{ maxLength: 1 }}

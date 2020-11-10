@@ -6,6 +6,7 @@ import DSPDetailsCard from "../../../components/orderInfoCard";
 import { getListOfDataObjects } from "../../../utils/helpers";
 import Dialog from "../../../components/dialog";
 import ErrorMsg from "../../../components/errorMsg";
+import uuid from "react-uuid";
 
 const keysToRender = [
   "assigned_delivery_service_provider",
@@ -63,7 +64,7 @@ const DeliveryServiceProviderComponent = (props) => {
     <Button
       variant="outlined"
       color="primary"
-      key="unassignBtn"
+      key={uuid()}
       onClick={() => setShowDialogPush(true)}
       disabled={!props.orderInfo.push_order_to_dsp_button}
     >
@@ -72,7 +73,7 @@ const DeliveryServiceProviderComponent = (props) => {
     <Button
       variant="outlined"
       color="primary"
-      key="reserveOrder"
+      key={uuid()}
       onClick={() => setShowDialogBox(true)}
       disabled={!props.orderInfo.restock_button}
     >
@@ -81,7 +82,7 @@ const DeliveryServiceProviderComponent = (props) => {
     <Button
       variant="outlined"
       color="primary"
-      key="fetchOTP"
+      key={uuid()}
       onClick={() => handleOTP(true)}
       disabled={!props.orderInfo.restock_button}
     >
@@ -90,7 +91,7 @@ const DeliveryServiceProviderComponent = (props) => {
     <Button
       variant="outlined"
       color="primary"
-      key="cancelBtnDSP"
+      key={uuid()}
       onClick={() => setShowCancelOrder(true)}
       disabled={!props.orderInfo.cancel_order_from_dsp_button}
     >

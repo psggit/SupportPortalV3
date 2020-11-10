@@ -20,6 +20,7 @@ import ErrorMsg from "../../components/errorMsg";
 import { ActivityLogContainer } from "./ActivityLogs";
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import SideNav from "./components/sideNav";
+import uuid from "react-uuid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -192,7 +193,7 @@ const OrderInfoComponent = (props) => {
     <Button
       variant="outlined"
       color="primary"
-      key="closeDialog"
+      key={uuid()}
       onClick={() => openDialog(null)}
     >
       Cancel
@@ -200,7 +201,7 @@ const OrderInfoComponent = (props) => {
     <Button
       variant="contained"
       color="primary"
-      key="createIssue"
+      key={uuid()}
       onClick={() => updateNotes()}
       disabled={!disableBtn}
     >
@@ -212,7 +213,7 @@ const OrderInfoComponent = (props) => {
     <Button
       variant="outlined"
       color="primary"
-      key="closeDialog"
+      key={uuid()}
       onClick={() => handleAddIssue()}
     >
       Cancel
@@ -220,7 +221,7 @@ const OrderInfoComponent = (props) => {
     <Button
       variant="contained"
       color="primary"
-      key="createIssue"
+      key={uuid()}
       onClick={() => updateIssue()}
       disabled={createDisabledBtn}
     >
