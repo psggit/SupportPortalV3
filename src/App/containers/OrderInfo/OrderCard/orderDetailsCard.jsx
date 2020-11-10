@@ -432,7 +432,7 @@ const OrderDetailsCard = (props) => {
               {kycArray.map((value, index) => {
                 return (
                   <Input
-                    key={uuid()}
+                    key={index}
                     value={value}
                     className={classes.InputTextRoot}
                     inputProps={{ maxLength: 1 }}

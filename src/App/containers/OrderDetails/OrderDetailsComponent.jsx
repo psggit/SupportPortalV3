@@ -72,6 +72,7 @@ const OrderDetailsComponent = (props) => {
     consumer_contact_number,
     retailer_id,
     retailer_name,
+    delivery_agent_name,
   }) => {
     return {
       order_id,
@@ -82,6 +83,7 @@ const OrderDetailsComponent = (props) => {
       consumer_contact_number,
       retailer_id,
       retailer_name,
+      delivery_agent_name,
     };
   };
 
@@ -124,6 +126,7 @@ const OrderDetailsComponent = (props) => {
                 <TableCell align="center">Consumer Mobile</TableCell>
                 <TableCell align="center">Retailer ID</TableCell>
                 <TableCell align="center">Retailer Name</TableCell>
+                <TableCell align="center">Delivery Agent Name</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -153,6 +156,9 @@ const OrderDetailsComponent = (props) => {
                       </TableCell>
                       <TableCell align="center">{row.retailer_id}</TableCell>
                       <TableCell align="center">{row.retailer_name}</TableCell>
+                      <TableCell align="center">
+                        {row.delivery_agent_name}
+                      </TableCell>
                     </TableRow>
                   ))}
               {!showData && (
