@@ -14,6 +14,7 @@ import Loading from "../../components/loading";
 import { Typography } from "@material-ui/core";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import ErrorMsg from "../../components/errorMsg";
+import uuid from "react-uuid";
 import {
   Table,
   Box,
@@ -170,14 +171,14 @@ function DaNotes(props) {
                     variant="contained"
                     color="primary"
                     onClick={UnmountAddNote}
-                    key="cancelBtn"
+                    key={uuid()}
                   >
                     Cancel
                   </Button>,
                   <Button
                     variant="outlined"
                     color="primary"
-                    key="saveBtn"
+                    key={uuid()}
                     onClick={handleAddNoteSubmit}
                     disabled={!disableBtn}
                   >

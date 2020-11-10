@@ -19,6 +19,7 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import { resolveIcon } from "./../../assets/images/index";
 import ErrorMsg from "./../../components/errorMsg";
+import uuid from "react-uuid";
 // import {
 //   Dialog,
 //   DialogActions,
@@ -151,7 +152,7 @@ const RenderIssues = (props) => {
   }, []);
 
   useEffect(() => {
-    if (!props.fetchSupportPersonListSuccess) {
+    if (!props.fetchSupportPersonListInProgress && props.supportPersonList !== null) {
       setSupportPersonId(props.supportPersonList.support_person[0].id);
     }
   }, [props.fetchSupportPersonListSuccess]);
@@ -379,7 +380,7 @@ const RenderIssues = (props) => {
               onClick={() => unmountConfirmationDialog()}
               color="primary"
               variant="outlined"
-              key="cancelIssueBtn"
+              key={uuid()}
             >
               Cancel
             </Button>,
@@ -387,7 +388,7 @@ const RenderIssues = (props) => {
               onClick={() => handleConfirmation()}
               color="primary"
               variant="contained"
-              key="confirmIssueBtn"
+              key={uuid()}
             >
               Confirm
             </Button>,
@@ -405,7 +406,7 @@ const RenderIssues = (props) => {
                       displayEmpty
                       className={classes.selectEmpty}
                     >
-                      {!props.fetchSupportPersonListInProgress &&
+                      {!props.fetchSupportPersonListInProgress && props.supportPersonList !== null &&
                         props.supportPersonList.support_person.map((item) => {
                           return (
                             <MenuItem value={item.id} key={item.id}>

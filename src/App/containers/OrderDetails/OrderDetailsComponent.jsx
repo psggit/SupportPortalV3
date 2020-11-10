@@ -72,6 +72,8 @@ const OrderDetailsComponent = (props) => {
     consumer_contact_number,
     retailer_id,
     retailer_name,
+    delivery_agent_name,
+    delivery_agent_status,
   }) => {
     return {
       order_id,
@@ -82,6 +84,8 @@ const OrderDetailsComponent = (props) => {
       consumer_contact_number,
       retailer_id,
       retailer_name,
+      delivery_agent_name,
+      delivery_agent_status,
     };
   };
 
@@ -111,7 +115,7 @@ const OrderDetailsComponent = (props) => {
     <Container component="main">
       <TopBar />
       {props.fetchDetailsProgress && <Loading message="Fetching data..." />}
-      <Box width="90%" mx="auto" mt={4}>
+      <Box width="95%" mx="auto" mt={4}>
         <TableContainer component={Paper}>
           <Table aria-label="order table" size="small">
             <TableHead>
@@ -124,6 +128,8 @@ const OrderDetailsComponent = (props) => {
                 <TableCell align="center">Consumer Mobile</TableCell>
                 <TableCell align="center">Retailer ID</TableCell>
                 <TableCell align="center">Retailer Name</TableCell>
+                <TableCell align="center">Delivery Agent Name</TableCell>
+                <TableCell align="center">Delivery Agent Status</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -153,6 +159,12 @@ const OrderDetailsComponent = (props) => {
                       </TableCell>
                       <TableCell align="center">{row.retailer_id}</TableCell>
                       <TableCell align="center">{row.retailer_name}</TableCell>
+                      <TableCell align="center">
+                        {row.delivery_agent_name}
+                      </TableCell>
+                      <TableCell align="center">
+                        {row.delivery_agent_status}
+                      </TableCell>
                     </TableRow>
                   ))}
               {!showData && (

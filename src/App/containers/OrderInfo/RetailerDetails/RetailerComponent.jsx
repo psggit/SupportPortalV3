@@ -6,6 +6,7 @@ import ActivityItem from "../../../components/activityItems";
 import { getListOfDataObjects } from "../../../utils/helpers";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import { useHistory } from "react-router-dom";
+import uuid from "react-uuid";
 
 const keysToRender = [
   "retailer_id",
@@ -65,7 +66,7 @@ const RetailerDetails = (props) => {
     <Button
       variant="outlined"
       color="primary"
-      key="unassignBtn"
+      key={uuid()}
       onClick={handleChangeRetailer}
       disabled={!props.orderInfo.cancel_order_button}
     >

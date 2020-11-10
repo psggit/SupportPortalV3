@@ -103,7 +103,7 @@ const MapComponent = (props) => {
             width: "100%",
             bottom: "60px",
             top: "60px",
-            height: "50vh",
+            height: "65vh",
           }}
           center={positionConsumer}
           zoom={16}

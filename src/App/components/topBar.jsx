@@ -4,6 +4,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import MenuDrawer from "./menuDrawer";
 import { logo } from "../assets/images/";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,17 +17,29 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  hipbarLogo: {
+    marginTop: "8px",
+    cursor: "pointer",
+  },
 }));
 
 export default function TopBar() {
   const classes = useStyles();
+  const history = useHistory();
+
+  const handleLogo = () => {
+    history.push("/dashboard");
+  };
 
   return (
     <div className={classes.root}>
       <AppBar position="fixed">
         <Toolbar disableGutters={true}>
           <MenuDrawer />
-          <img src={logo} />
+          <div className={classes.hipbarLogo} onClick={handleLogo}>
+            <img src={logo} />
+          </div>
+          {/* <img src={logo} /> */}
         </Toolbar>
       </AppBar>
     </div>
