@@ -14,7 +14,6 @@ import {
   FormControl,
   Select,
   MenuItem,
-  Input,
   TextField,
 } from "@material-ui/core";
 import OrderCard from "../../../components/card";
@@ -98,6 +97,7 @@ const OrderDetailsCard = (props) => {
   const [reasonIdx, setReasonIdx] = useState("");
   const [notes, setNotes] = useState("");
   const [kycDigits, setKycDigits] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [disabled, setDisabled] = useState(false);
 
   const handleClickOpen = (type) => {
@@ -575,6 +575,7 @@ OrderDetailsCard.propTypes = {
   successMsg: PropTypes.any,
   deliverOrderSuccess: PropTypes.bool,
   resetOnUnmount: PropTypes.func,
+  orderInfo: PropTypes.any,
 };
 
 export { OrderDetailsCard };

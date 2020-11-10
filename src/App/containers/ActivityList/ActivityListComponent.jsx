@@ -118,7 +118,9 @@ function ActivityListComponent(props) {
     <div className={classes.formContainer}>
       <TopBar />
       <SimpleMenuBar orderId={orderId}>
-        <Typography>{props.notesSuccess && <p>ACTIVITY LOGS-ORDER ID: {orderId}</p>}</Typography>
+        <Typography>
+          {props.notesSuccess && <p>ACTIVITY LOGS-ORDER ID: {orderId}</p>}
+        </Typography>
       </SimpleMenuBar>
       {props.notesProgress && <Loading message="Fetching data..." />}
       <Box className={classes.table} mt={4}>
