@@ -151,7 +151,7 @@ const RenderIssues = (props) => {
   }, []);
 
   useEffect(() => {
-    if (!props.fetchSupportPersonListInProgress) {
+    if (!props.fetchSupportPersonListInProgress && props.supportPersonList !== null) {
       setSupportPersonId(props.supportPersonList.support_person[0].id);
     }
   }, [props.fetchSupportPersonListInProgress]);
@@ -405,7 +405,7 @@ const RenderIssues = (props) => {
                       displayEmpty
                       className={classes.selectEmpty}
                     >
-                      {!props.fetchSupportPersonListInProgress &&
+                      {!props.fetchSupportPersonListInProgress && props.supportPersonList !== null &&
                         props.supportPersonList.support_person.map((item) => {
                           return (
                             <MenuItem value={item.id} key={item.id}>
