@@ -13,6 +13,7 @@ const initialValue = {
   successMsg: "",
   errorMsg: "",
   trackData: null,
+  message: "",
 };
 
 const orderTrackingReducer = createReducer(initialValue, {
@@ -28,6 +29,7 @@ const orderTrackingReducer = createReducer(initialValue, {
     fetchLiveDataSuccess: true,
     fetchLiveDataFailure: false,
     trackData: data.payload,
+    message: data.payload.message,
   }),
   [fetchLiveDataFailure]: (state, err) => ({
     ...state,
@@ -35,6 +37,7 @@ const orderTrackingReducer = createReducer(initialValue, {
     fetchLiveDataSuccess: false,
     fetchLiveDataFailure: true,
     errorMsg: err,
+    message: err.payload.message,
   }),
   [resetOnUnmount]: () => ({
     ...initialValue,

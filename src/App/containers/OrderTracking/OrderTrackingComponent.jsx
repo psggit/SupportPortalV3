@@ -289,10 +289,10 @@ function OrderTrackingComponent(props) {
             </Box>
           </Grid>
         )}
-        {showError && show && (
+        {props.fetchLiveDataSuccess && (
           <Grid item xs={12}>
             <Box mt={4}>
-              <Alert severity="error">{message}</Alert>
+              <Alert severity="error" show={true}>{props.message}</Alert>
             </Box>
           </Grid>
         )}
