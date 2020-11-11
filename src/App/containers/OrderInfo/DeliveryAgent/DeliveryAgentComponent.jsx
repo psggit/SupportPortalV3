@@ -136,7 +136,7 @@ const DeliveryAgentComponent = (props) => {
       color="primary"
       key={uuid()}
       onClick={mountDialogBox}
-      disabled={!props.orderInfo.cancel_order_button}
+      disabled={!props.orderInfo.change_retailer_button}
     >
       Reserve Order
     </Button>,

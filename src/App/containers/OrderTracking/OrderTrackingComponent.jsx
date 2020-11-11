@@ -14,6 +14,7 @@ import {
   markerIcon,
   markerIconDA,
   markerIconConsumer,
+  mapMarkerIcon,
 } from "../../assets/images";
 
 const placesLib = ["places"];
@@ -126,12 +127,12 @@ const MapComponent = (props) => {
           />
           <Marker
             position={positionConsumer}
-            icon={markerIconConsumer}
+            icon={mapMarkerIcon}
             title={"Customer"}
           />
           <Marker
             position={positionRetailer}
-            icon={markerIcon}
+            icon={mapMarkerIcon}
             title={"Retailer"}
           />
           <OverlayView

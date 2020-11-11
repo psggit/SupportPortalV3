@@ -68,7 +68,7 @@ const RetailerDetails = (props) => {
       color="primary"
       key={uuid()}
       onClick={handleChangeRetailer}
-      disabled={!props.orderInfo.cancel_order_button}
+      disabled={!props.orderInfo.change_retailer_button}
     >
       Change Retailer
     </Button>,
