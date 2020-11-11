@@ -43,7 +43,7 @@ function DaNotes(props) {
   const classes = useStyles();
   const history = useHistory();
   const [rows, setRowsData] = useState(null);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(25);
   const [page, setPage] = useState(0);
   const [showData, setShowData] = useState(false);
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);

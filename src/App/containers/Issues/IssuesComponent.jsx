@@ -140,7 +140,7 @@ const RenderIssues = (props) => {
   const [issueId, setIssueId] = useState();
   const [data, setData] = useState([]);
 
-  const PAGE_OPTIONS = [10, 20, 30];
+  const PAGE_OPTIONS = [25, 30, 45];
   const currentPage = getQueryParamByName("pageSize") || PAGE_OPTIONS[0];
   const pageSize = getQueryParamByName("activePage") || 0;
 
