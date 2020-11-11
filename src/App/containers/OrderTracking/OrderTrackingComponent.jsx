@@ -206,7 +206,7 @@ function OrderTrackingComponent(props) {
                       alignContent="flex-start"
                       alignItems="flex-start"
                     >
-                      <img src={markerIconConsumer} />
+                      <img src={mapMarkerIcon} />
                       <Box ml={2}>
                         <Typography variant="body2">Customer name:</Typography>
                         <Typography variant="body2">
@@ -234,7 +234,7 @@ function OrderTrackingComponent(props) {
                       alignContent="flex-start"
                       alignItems="flex-start"
                     >
-                      <img src={markerIcon} />
+                      <img src={mapMarkerIcon} />
                       <Box ml={2}>
                         <Typography variant="body2">Retailer name:</Typography>
                         <Typography variant="body2">
