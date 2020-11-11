@@ -127,7 +127,7 @@ const DeliveryAgentComponent = (props) => {
       color="primary"
       key={uuid()}
       onClick={mountUnassignDA}
-      disabled={!props.orderInfo.cancel_order_button}
+      disabled={!props.orderInfo.change_retailer_button}
     >
       Unassign
     </Button>,
