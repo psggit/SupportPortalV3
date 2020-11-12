@@ -157,8 +157,11 @@ const DashboardComponent = (props) => {
       sendPayload = sendPayload.filter;
       props.preponeOrder(sendPayload);
     } else {
-      // console.log(sendPayload);
       props.fetchOrderDetails(sendPayload);
+      window.localStorage.setItem(
+        "dashboardPayload",
+        JSON.stringify({ filter: sendPayload.filter })
+      );
       history.push("/order-details");
     }
   };

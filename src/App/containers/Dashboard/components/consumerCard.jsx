@@ -63,7 +63,7 @@ const ConsumerCard = (props) => {
     <Card className={classes.root}>
       <CardContent>
         <Typography variant="h5" className={classes.heading} gutterBottom>
-          CUSTOMER DETAILS
+          CUSTOMER ORDER SEARCH
         </Typography>
         <TextField
           fullWidth
@@ -133,7 +133,7 @@ const ConsumerCard = (props) => {
           }
           onClick={() => props.handleSubmit("consumer")}
         >
-          Fetch Details
+          Fetch Orders
         </Button>
       </CardActions>
     </Card>
