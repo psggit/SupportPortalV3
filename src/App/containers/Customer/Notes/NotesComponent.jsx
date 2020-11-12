@@ -106,7 +106,7 @@ function Notes(props) {
 
   const mountAddNote = () => {
     setShowAddNoteDialog(true);
-    props.fetchConsumerNotesList();
+   // props.fetchConsumerNotesList();
   };
 
   const UnmountAddNote = () => {
@@ -170,36 +170,6 @@ function Notes(props) {
                   <Grid>
                     <p className={classes.orderId}>Order ID: {orderId}</p>
                   </Grid>
-                  {/* <InputLabel id="demo-simple-select-label">
-                    select Type
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    className={classes.selectBox}
-                    onChange={(event) => handleChange(event)}
-                  >
-                    {props.consumerNoteListSuccess &&
-                      props.noteListData.map((value, index) => {
-                        if (selectedValue === value) {
-                          return (
-                            <MenuItem
-                              value={value.id}
-                              key={index}
-                              selected={true}
-                            >
-                              {value.code}
-                            </MenuItem>
-                          );
-                        } else {
-                          return (
-                            <MenuItem value={value.id} key={index}>
-                              {value.name}-{value.id}
-                            </MenuItem>
-                          );
-                        }
-                      })}
-                  </Select> */}
                   <TextField
                     id="outlined-multiline-static"
                     onChange={handleTextChange}

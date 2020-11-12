@@ -68,6 +68,6 @@ const fetchNoteList = () => {
       onNoteError(dispatch)
     );
   };
-}
+};
 
 export { fetchRetailerNotesList, fetchNoteList };
