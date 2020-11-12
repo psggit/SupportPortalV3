@@ -308,6 +308,7 @@ function OrderTrackingComponent(props) {
                       "D MMM hh:mm A"
                     )
                   : "-"} */}
+                {/* {Moment("2020-11-06 17:40:53.042002432 +0530 IST").format('h:mm A')} */}
               </Alert>
             </Box>
           </Grid>
