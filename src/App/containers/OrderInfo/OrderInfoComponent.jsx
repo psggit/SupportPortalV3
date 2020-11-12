@@ -89,8 +89,10 @@ const OrderInfoComponent = (props) => {
       let payload = {
         order_id: orderId,
       };
-      props.fetchCancelReason(payload);
-      props.fetchIssueTypes();
+      if (props.order.cancel_order_button) {
+        props.fetchCancelReason(payload);
+        props.fetchIssueTypes();
+      }
     }
   }, [props.fetchOrderInfoSuccess]);
 
@@ -111,7 +113,6 @@ const OrderInfoComponent = (props) => {
       var selectValue = event.target.value;
       handleSelect(event.target.value);
     }
-    console.log("validateIssue", newIssueDesc.trim().length, selectValue);
     if (
       newIssueDesc.trim().length !== 0 &&
       (selectValue !== "" || selectedValue !== "")
