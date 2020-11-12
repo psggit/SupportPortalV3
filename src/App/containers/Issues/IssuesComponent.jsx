@@ -148,11 +148,19 @@ const RenderIssues = (props) => {
   const [activePage, setActivePage] = useState(pageSize);
 
   useEffect(() => {
-    props.fetchSupportPerson();
+    const payload = {
+      limit: 10,
+      offset: 0,
+      is_resolved: false,
+    };
+    props.fetchSupportPerson(payload);
   }, []);
 
   useEffect(() => {
-    if (!props.fetchSupportPersonListInProgress && props.supportPersonList !== null) {
+    if (
+      !props.fetchSupportPersonListInProgress &&
+      props.supportPersonList !== null
+    ) {
       setSupportPersonId(props.supportPersonList.support_person[0].id);
     }
   }, [props.fetchSupportPersonListSuccess]);
@@ -406,7 +414,8 @@ const RenderIssues = (props) => {
                       displayEmpty
                       className={classes.selectEmpty}
                     >
-                      {!props.fetchSupportPersonListInProgress && props.supportPersonList !== null &&
+                      {!props.fetchSupportPersonListInProgress &&
+                        props.supportPersonList !== null &&
                         props.supportPersonList.support_person.map((item) => {
                           return (
                             <MenuItem value={item.id} key={item.id}>

@@ -14,7 +14,7 @@ import Paper from "@material-ui/core/Paper";
 import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Moment from "moment";
-import { TablePagination } from "@material-ui/core";
+import { TablePagination, Typography } from "@material-ui/core";
 import Loading from "../../components/loading";
 import ErrorMsg from "../../components/errorMsg";
 
@@ -35,6 +35,9 @@ const useStyles = makeStyles(() => ({
   verticalSeparator: {
     borderRight: "1px solid rgba(224, 224, 224, 1)",
   },
+  marginBottomCls: {
+    marginBottom: 10,
+  },
 }));
 
 const OrderDetailsComponent = (props) => {
@@ -53,9 +56,8 @@ const OrderDetailsComponent = (props) => {
   );
   // console.log("OrderDetailsComponent ", props.payloadInfo);
   useEffect(() => {
-    // payload = {"pagination":{"limit":25,"offset":0},"filter":{"order_id":"33"}};
-    // console.log(typeof JSON.parse(localStorage.getItem("dashboardPayload")));
-    // console.log(typeof payload);
+    // let payload = {"pagination":{"limit":25,"offset":0},"filter":{"order_id":"33"}};
+    // let payload = {"pagination":{"limit":25,"offset":0},"filter":{"order_id":33}};
     const payload = {
       pagination: { limit: rowsPerPage, offset: page * rowsPerPage },
       ...savedPayload,
@@ -69,8 +71,6 @@ const OrderDetailsComponent = (props) => {
 
   useEffect(() => {
     if (props.fetchDetailsSuccess) {
-      console.log("success");
-      console.log(props.orderData);
       if (props.orderData !== null) {
         loopData(props.orderData.order_details);
         setShowData(true);
@@ -149,6 +149,11 @@ const OrderDetailsComponent = (props) => {
       <TopBar />
       {props.fetchDetailsProgress && <Loading message="Fetching data..." />}
       <Box width="95%" mx="auto" mt={4}>
+        {showData && (
+          <Typography type="subtitle1" className={classes.marginBottomCls}>
+            Search Results:
+          </Typography>
+        )}
         <TableContainer component={Paper}>
           <Table aria-label="order table" size="small">
             <TableHead>
@@ -160,11 +165,23 @@ const OrderDetailsComponent = (props) => {
                 <TableCell align="center" className={classes.verticalSeparator}>
                   Order Status
                 </TableCell>
-                <TableCell align="center">Consumer ID</TableCell>
-                <TableCell align="center">Consumer Name</TableCell>
-                <TableCell align="center" className={classes.verticalSeparator}>
-                  Consumer Mobile
-                </TableCell>
+                {localStorage.getItem("x-hasura-role") !==
+                  "ops_delivery_manager" && (
+                  <TableCell align="center">Consumer ID</TableCell>
+                )}
+                {localStorage.getItem("x-hasura-role") !==
+                  "ops_delivery_manager" && (
+                  <TableCell align="center">Consumer Name</TableCell>
+                )}
+                {localStorage.getItem("x-hasura-role") !==
+                  "ops_delivery_manager" && (
+                  <TableCell
+                    align="center"
+                    className={classes.verticalSeparator}
+                  >
+                    Consumer Mobile
+                  </TableCell>
+                )}
                 <TableCell align="center">Retailer ID</TableCell>
                 <TableCell align="center" className={classes.verticalSeparator}>
                   Retailer Name
@@ -176,7 +193,7 @@ const OrderDetailsComponent = (props) => {
             <TableBody>
               {showData &&
                 rows.map((row) => (
-                  <TableRow key={row.order_id}>
+                  <TableRow key={row.order_id} hover={true}>
                     <TableCell align="center">
                       <Button
                         onClick={(event) => selectOrderId(event, row.order_id)}
@@ -194,14 +211,23 @@ const OrderDetailsComponent = (props) => {
                     >
                       {row.order_status}
                     </TableCell>
-                    <TableCell align="center">{row.consumer_id}</TableCell>
-                    <TableCell align="center">{row.consumer_name}</TableCell>
-                    <TableCell
-                      align="center"
-                      className={classes.verticalSeparator}
-                    >
-                      {row.consumer_contact_number}
-                    </TableCell>
+                    {localStorage.getItem("x-hasura-role") !==
+                      "ops_delivery_manager" && (
+                      <TableCell align="center">{row.consumer_id}</TableCell>
+                    )}
+                    {localStorage.getItem("x-hasura-role") !==
+                      "ops_delivery_manager" && (
+                      <TableCell align="center">{row.consumer_name}</TableCell>
+                    )}
+                    {localStorage.getItem("x-hasura-role") !==
+                      "ops_delivery_manager" && (
+                      <TableCell
+                        align="center"
+                        className={classes.verticalSeparator}
+                      >
+                        {row.consumer_contact_number}
+                      </TableCell>
+                    )}
                     <TableCell align="center">{row.retailer_id}</TableCell>
                     <TableCell
                       align="center"
@@ -220,7 +246,7 @@ const OrderDetailsComponent = (props) => {
               {!showData && (
                 <TableRow>
                   <TableCell colSpan={10} align="center">
-                    No data available
+                    {/* {No data available} */}
                   </TableCell>
                 </TableRow>
               )}

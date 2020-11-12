@@ -32,7 +32,9 @@ const RetailerDetails = (props) => {
   useEffect(() => {
     const details = getListOfDataObjects(props.orderInfo, keysToRender);
     setData(details);
-    props.fetchNotes(props.orderInfo.order_id);
+    if (localStorage.getItem("x-hasura-role") !== "ops_delivery_manager") {
+      props.fetchNotes(props.orderInfo.order_id);
+    }
   }, []);
 
   const history = useHistory();
@@ -96,7 +98,10 @@ const RetailerDetails = (props) => {
       <Grid item xs={6}>
         <DetailsCard
           title="RETAILER DETAILS"
-          actions={actionButtons}
+          actions={
+            localStorage.getItem("x-hasura-role") !== "support_person" &&
+            actionButtons
+          }
           renderArray={data}
           keyMap={keyMap}
           keysToRender={keysToRender}

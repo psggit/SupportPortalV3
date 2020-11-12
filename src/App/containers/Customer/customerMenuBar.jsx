@@ -127,17 +127,21 @@ export default function FullWidthTabs(props) {
                 key="customerBtn"
                 onClick={handleCustomerDetails}
               />
-              <Tab label="SOA" key="soaBtn" onClick={handleSoaChange} />,
+              {localStorage.getItem("x-hasura-role") !== "support_person" && (
+                <Tab label="SOA" key="soaBtn" onClick={handleSoaChange} />
+              )}
               <Tab
                 label="Gift SOA"
                 key="giftBtn"
                 onClick={handleGiftSoaChange}
               />
-              <Tab
-                label="Rewards"
-                key="rewardsBtn"
-                onClick={handleRewardChange}
-              />
+              {localStorage.getItem("x-hasura-role") !== "support_person" && (
+                <Tab
+                  label="Rewards"
+                  key="rewardsBtn"
+                  onClick={handleRewardChange}
+                />
+              )}
               <Tab label="Notes" key="notesBtn" onClick={handleNotesChange} />
             </Tabs>
           </Grid>

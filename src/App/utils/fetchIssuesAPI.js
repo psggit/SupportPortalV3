@@ -9,14 +9,14 @@ const headers = {
   "hasura-id": `${localStorage.getItem("hasura-id")}`,
 };
 
-const fetchIssuesAPI = (process, onSuccess, onError) => {
-  const URL = ` https://${apiUrl}/deliveryman/api/1/support/issue/fetch`;
+const fetchIssuesAPI = (reqBody, process, onSuccess, onError) => {
+  const URL = ` https://${apiUrl}/deliveryman/api/1/support/issue/fetch-v2`;
   console.log(URL);
   fetch(URL, {
     method: "POST",
     headers: headers,
     credentials: "include",
-    body: JSON.stringify({}),
+    body: JSON.stringify(reqBody),
   })
     .then((res) => process(res))
     .then((data) => onSuccess(data))

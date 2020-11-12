@@ -14,14 +14,16 @@ const processResponse = () => {
     if (res.status === 200) {
       return res.json();
     } else {
-      throw new Error("Something went wrong, try again");
+      throw res;
     }
   };
 };
 
 const onErrorAssign = (dispatch) => {
-  return (err) => {
-    dispatch(preponeOrderFailed(err));
+  return (data) => {
+    data.json().then((err) => {
+      dispatch(preponeOrderFailed(err));
+    });
   };
 };
 
@@ -38,8 +40,10 @@ const onSuccessDeliveryStatus = (dispatch) => {
 };
 
 const onErrorDeliveryStatus = (dispatch) => {
-  return (err) => {
-    dispatch(fetchDeliveryFailed(err));
+  return (data) => {
+    data.json().then((json) => {
+      dispatch(fetchDeliveryFailed(json));
+    });
   };
 };
 

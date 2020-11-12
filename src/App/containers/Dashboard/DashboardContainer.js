@@ -4,10 +4,6 @@ import { fetchOrderDetails, preponeOrder, fetchDeliveryStatus } from "./duck";
 
 const mapStateToProps = (state) => {
   return {
-    fetchDetailsProgress: state.dashboard.fetchDetailsProgress,
-    preponeOrderSuccess: state.dashboard.preponeOrderSuccess,
-    preponeOrderFailed: state.dashboard.preponeOrderFailed,
-    preponeOrderProgress: state.dashboard.preponeOrderProgress,
     fetchDeliverySuccess: state.dashboard.fetchDeliverySuccess,
     fetchDeliveryFailed: state.dashboard.fetchDeliveryFailed,
     fetchDeliveryProgress: state.dashboard.fetchDeliveryProgress,

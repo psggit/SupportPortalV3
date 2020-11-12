@@ -91,8 +91,8 @@ const OrderInfoComponent = (props) => {
       };
       if (props.order.cancel_order_button) {
         props.fetchCancelReason(payload);
-        props.fetchIssueTypes();
       }
+      props.fetchIssueTypes();
     }
   }, [props.fetchOrderInfoSuccess]);
 
@@ -351,28 +351,35 @@ const OrderInfoComponent = (props) => {
                     />
                   </>
                 )}
-                {props.fetchOrderInfoSuccess && (
-                  <Box mt={4}>
-                    <ActivityLogContainer />
-                  </Box>
-                )}
+                {props.fetchOrderInfoSuccess &&
+                  localStorage.getItem("x-hasura-role") !==
+                    "ops_delivery_manager" &&
+                  localStorage.getItem("x-hasura-role") !==
+                    "support_person" && (
+                    <Box mt={4}>
+                      <ActivityLogContainer />
+                    </Box>
+                  )}
               </Grid>
             </Grid>
-            <Grid
-              container
-              spacing={4}
-              id="section2"
-              className={classes.marginTop}
-            >
-              <Grid item xs={12}>
-                {props.fetchOrderInfoSuccess && (
-                  <CustomerContainer
-                    openDialog={openDialog}
-                    handleCall={handleCall}
-                  />
-                )}
+            {localStorage.getItem("x-hasura-role") !==
+              "ops_delivery_manager" && (
+              <Grid
+                container
+                spacing={4}
+                id="section2"
+                className={classes.marginTop}
+              >
+                <Grid item xs={12}>
+                  {props.fetchOrderInfoSuccess && (
+                    <CustomerContainer
+                      openDialog={openDialog}
+                      handleCall={handleCall}
+                    />
+                  )}
+                </Grid>
               </Grid>
-            </Grid>
+            )}
             <Grid
               container
               spacing={4}
@@ -410,13 +417,22 @@ const OrderInfoComponent = (props) => {
                   />
                 )}
               </Grid>
+            </Grid>
+            <Grid
+              container
+              spacing={4}
+              id="section5"
+              className={classes.marginTop}
+            >
               <Grid item xs={12}>
-                {props.fetchOrderInfoSuccess && (
-                  <OrderTrackingContainer
-                    orderId={props.orderId}
-                    orderInfo={props.order}
-                  />
-                )}
+                {localStorage.getItem("x-hasura-role") !==
+                  "ops_delivery_manager" &&
+                  props.fetchOrderInfoSuccess && (
+                    <OrderTrackingContainer
+                      orderId={props.orderId}
+                      orderInfo={props.order}
+                    />
+                  )}
               </Grid>
             </Grid>
           </Grid>

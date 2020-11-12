@@ -74,8 +74,11 @@ const OrderDetailsCard = (props) => {
     const payload = {
       city_id: props.order.city_id.toString(),
     };
-    props.deliverOrderReasons(payload);
-    props.fetchKycList();
+    if (localStorage.getItem("x-hasura-role") !== "ops_delivery_manager") {
+      props.deliverOrderReasons(payload);
+      props.fetchKycList();
+    }
+
     return () => {
       props.resetOnUnmount();
     };
@@ -245,7 +248,13 @@ const OrderDetailsCard = (props) => {
 
   return (
     <>
-      <OrderCard title="Order Details" actions={actionButtons}>
+      <OrderCard
+        title="Order Details"
+        actions={
+          localStorage.getItem("x-hasura-role") !== "support_person" &&
+          actionButtons
+        }
+      >
         <List dense disablePadding>
           <ListItem dense disableGutters={true}>
             <ListItemText
