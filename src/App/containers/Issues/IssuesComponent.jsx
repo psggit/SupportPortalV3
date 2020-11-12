@@ -128,7 +128,6 @@ const useStyles = makeStyles((theme) => ({
 
 const RenderIssues = (props) => {
   const classes = useStyles();
-  const history = useHistory();
   const colors = ["purple", "orange"];
   console.log("FromRenderIssues");
   const issuesList = props.issueList.issues;
@@ -147,6 +146,7 @@ const RenderIssues = (props) => {
 
   const [pageLimit, setPageLimit] = useState(currentPage);
   const [activePage, setActivePage] = useState(pageSize);
+  const [activeIndex, setActiveIndex] = useState();
 
   useEffect(() => {
     props.fetchSupportPerson();
@@ -250,7 +250,13 @@ const RenderIssues = (props) => {
   };
 
   const handleClick = (orderId) => {
+    const history = useHistory();
     history.push(`/order-info/${orderId}`);
+  };
+
+  const handleAccordionChange = (activeId) => {
+    //console.log("hello", index)
+    setActiveIndex(activeId);
   };
 
   return (
@@ -259,7 +265,7 @@ const RenderIssues = (props) => {
         const avatarColor =
           classes[colors[Math.floor(Math.random() * colors.length)]];
         return (
-          <Accordion key={`accordian${index}`} className={classes.accordion}>
+          <Accordion key={`accordian${index}`} className={classes.accordion} onChange={() => handleAccordionChange(issue.id)} expanded={activeIndex === issue.id ? true: false}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <Grid container item xs={12} classes={{ root: classes.grid }}>
                 <Grid item xs={2}>
