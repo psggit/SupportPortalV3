@@ -265,7 +265,12 @@ const RenderIssues = (props) => {
         const avatarColor =
           classes[colors[Math.floor(Math.random() * colors.length)]];
         return (
-          <Accordion key={`accordian${index}`} className={classes.accordion} onChange={() => handleAccordionChange(issue.id)} expanded={activeIndex === issue.id ? true: false}>
+          <Accordion
+            key={`accordian${index}`}
+            className={classes.accordion}
+            onChange={() => handleAccordionChange(issue.id)}
+            expanded={activeIndex === issue.id ? true : false}
+          >
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <Grid container item xs={12} classes={{ root: classes.grid }}>
                 <Grid item xs={2}>
@@ -457,7 +462,12 @@ const IssuesComponent = (props) => {
   const classes = useStyles();
 
   useEffect(() => {
-    props.fetchIssueList();
+    const payload = {
+      limit: 25,
+      offset: 0,
+      is_resolved: false,
+    };
+    props.fetchIssueList(payload);
   }, []);
 
   useEffect(() => {
@@ -512,7 +522,7 @@ const IssuesComponent = (props) => {
                 )}
               {props.fetchIssuesFailed && (
                 <>
-                  <Paper className={classes.paper}>No issues available</Paper>
+                  <Paper className={classes.paper}>Unable to fetch issues. Please try again!</Paper>
                 </>
               )}
               {/* {!props.fetchIssuesInProgress && props.issueList !== null && (

@@ -26,7 +26,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchIssueList: () => dispatch(fetchIssues()),
+    fetchIssueList: (payload) => dispatch(fetchIssues(payload)),
     assignIssue: (orderId) => dispatch(assignOrderIssue(orderId)),
     resolveIssue: (orderId) => dispatch(resolveOrderIssue(orderId)),
     fetchSupportPerson: () => dispatch(fetchSupportPersonList()),
