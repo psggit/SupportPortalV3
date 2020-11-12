@@ -11,6 +11,7 @@ function getHasuraRole(data) {
     // support_admin: 5,
     // support_master: 4,
     support_admin: 4,
+    // ops_delivery_manager: 4,
     support_person: 3,
     ops_delivery_manager: 5,
     // business_team: 9,
