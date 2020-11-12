@@ -41,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
       cursor: "not-allowed",
     },
   },
+  assignBtnDiv: {
+    textAlign: "center",
+  },
   section1: {
     padding: 24,
     height: `calc(100vh - 64px)`,
@@ -264,7 +267,7 @@ const RenderIssues = (props) => {
                     )} at ${Moment(issue.issue_raised_time).format("hh:mm A")}`}
                   />
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={2} className={classes.assignBtnDiv}>
                   <Button
                     variant="contained"
                     color="primary"
@@ -277,7 +280,7 @@ const RenderIssues = (props) => {
                     ASSIGN TO
                   </Button>
                 </Grid>
-                <Grid item xs={1}>
+                <Grid item xs={1} className={classes.assignBtnDiv}>
                   <IconButton
                     edge="end"
                     aria-label="delete"

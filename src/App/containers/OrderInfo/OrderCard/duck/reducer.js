@@ -67,6 +67,8 @@ const orderDataReducer = createReducer(initialValue, {
   [fetchCancelReasonsProgress]: (state) => ({
     ...state,
     fetchProgress: true,
+    fetchFailed: false,
+    fetchSuccess: false,
   }),
   [fetchDeliverOrderSuccess]: (state, data) => ({
     ...state,
@@ -86,6 +88,8 @@ const orderDataReducer = createReducer(initialValue, {
   [fetchDeliverOrderProgress]: (state) => ({
     ...state,
     fetchDeliverOrderProgress: true,
+    fetchDeliverOrderSuccess: false,
+    fetchDeliverOrderFailed: false,
   }),
 
   [fetchKycListSuccess]: (state, data) => ({
@@ -106,6 +110,8 @@ const orderDataReducer = createReducer(initialValue, {
   [fetchKycListProgress]: (state) => ({
     ...state,
     fetchKycListProgress: true,
+    fetchKycListSuccess: false,
+    fetchKycListFailed: false,
   }),
   [fetchCancellationSummarySuccess]: (state, data) => ({
     ...state,
@@ -125,6 +131,8 @@ const orderDataReducer = createReducer(initialValue, {
   [fetchCancellationSummaryProgress]: (state) => ({
     ...state,
     fetchCancellationSummaryProgress: true,
+    fetchCancellationSummarySuccess: false,
+    fetchCancellationSummaryFailed: false,
   }),
   [deliverOrderSuccess]: (state, data) => ({
     ...state,
@@ -145,6 +153,8 @@ const orderDataReducer = createReducer(initialValue, {
   [deliverOrderProgress]: (state) => ({
     ...state,
     deliverOrderProgress: true,
+    deliverOrderSuccess: false,
+    deliverOrderFailed: false,
   }),
 
   [cancelOrderSuccess]: (state, data) => ({
@@ -166,6 +176,8 @@ const orderDataReducer = createReducer(initialValue, {
   [cancelOrderProgress]: (state) => ({
     ...state,
     cancelOrderProgress: true,
+    cancelOrderSuccess: false,
+    cancelOrderFailure: false,
   }),
   [resetOnUnmount]: (state) => ({
     ...state,
