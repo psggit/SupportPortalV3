@@ -16,6 +16,7 @@ import {
   markerIconConsumer,
   mapMarkerIcon,
 } from "../../assets/images";
+import Moment from "moment";
 
 const placesLib = ["places"];
 
@@ -90,6 +91,9 @@ const MapComponent = (props) => {
       >
         <GoogleMap
           id="gmap"
+          //defaultCenter={{ lat: -34.397, lng: 150.644 }}
+          latitude="65.29055"
+          longitude="-82.55425"
           options={{
             streetViewControl: false,
             keyboardShortcuts: false, // disable keyboard shortcuts
@@ -192,6 +196,9 @@ function OrderTrackingComponent(props) {
     }
   }, [props.fetchLiveDataSuccess]);
 
+  // var now = Moment("2020-11-06 17:40:53.042002432 +0530 IST").format('MMM DD h:mm A');
+  // alert(now);
+
   return (
     <>
       <Grid container>
@@ -293,6 +300,21 @@ function OrderTrackingComponent(props) {
           <Grid item xs={12}>
             <Box mt={4}>
               <Alert severity="error" show={true}>{props.message}</Alert>
+            </Box>
+          </Grid>
+        )}
+        {props.fetchLiveDataSuccess && (
+          <Grid item xs={12}>
+            <Box mt={2}>
+              <Alert severity="info" show={true}>
+                Last Updated at:
+                {props.trackData.last_updated_at}
+                {/* {props.trackData.last_updated_at
+                  ? Moment(props.trackData.last_updated_at).format(
+                      "D MMM hh:mm A"
+                    )
+                  : "-"} */}
+              </Alert>
             </Box>
           </Grid>
         )}
