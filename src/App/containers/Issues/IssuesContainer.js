@@ -15,6 +15,7 @@ const mapStateToProps = (state) => {
       state.issues.fetchSupportPersonListInProgress,
     fetchSupportPersonListSuccess: state.issues.fetchSupportPersonListSuccess,
     fetchIssuesSuccess: state.issues.fetchIssuesSuccess,
+    fetchIssuesFailed: state.issues.fetchIssuesFailed,
     fetchIssuesInProgress: state.issues.fetchIssuesInProgress,
     assignIssueInProgress: state.issues.assignIssueInProgress,
     assignIssueSuccess: state.issues.assignIssueSuccess,
@@ -25,7 +26,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchIssueList: () => dispatch(fetchIssues()),
+    fetchIssueList: (payload) => dispatch(fetchIssues(payload)),
     assignIssue: (orderId) => dispatch(assignOrderIssue(orderId)),
     resolveIssue: (orderId) => dispatch(resolveOrderIssue(orderId)),
     fetchSupportPerson: () => dispatch(fetchSupportPersonList()),

@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { ChangeRetailerComponent } from "./ChangeRetailerComponent";
 import { listRetailer } from "./duck/operations";
+import { resetOnUnmount } from "./duck";
 
 const mapStateToProps = (state) => {
   return {
@@ -9,6 +10,7 @@ const mapStateToProps = (state) => {
     listRetailerSuccess: state.listRetailer.listRetailerSuccess,
     listRetailerFailed: state.listRetailer.listRetailerFailed,
     listRetailerProgress: state.listRetailer.listRetailerProgress,
+    errorMsg: state.listRetailer.errorMsg,
     listRetailerData: state.listRetailer.listRetailerData,
     orderInfo: state.order.orderInfo.orderInfo,
   };
@@ -17,6 +19,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     listRetailer: (payload) => dispatch(listRetailer(payload)),
+    resetOnUnmount: () => dispatch(resetOnUnmount()),
   };
 };
 

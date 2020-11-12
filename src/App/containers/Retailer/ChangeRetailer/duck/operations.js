@@ -32,8 +32,10 @@ const onSuccessReassignRetailer = (dispatch) => {
 };
 
 const onErrorListRetailer = (dispatch) => {
-  return () => {
-    dispatch(listRetailerFailed());
+  return (data) => {
+    data.json().then((json) => {
+      dispatch(listRetailerFailed(json));
+    });
   };
 };
 

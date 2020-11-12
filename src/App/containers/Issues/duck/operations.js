@@ -46,10 +46,11 @@ const onError = (dispatch) => {
   };
 };
 
-const fetchIssues = () => {
+const fetchIssues = (payload) => {
   return (dispatch) => {
     dispatch(fetchIssuesInProgress());
     fetchIssuesAPI(
+      payload,
       processResponse(dispatch),
       onSuccess(dispatch),
       onError(dispatch)

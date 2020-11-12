@@ -207,7 +207,7 @@ const OrderSummary = (props) => {
               />
               <OrderSummaryItem
                 title={"IGST (" + orderInfo.igst_percentage + "%)"}
-                value={orderInfo.taxes.igst}
+                value={orderInfo.taxes.igst_total}
               />
             </>
           )}
@@ -228,7 +228,7 @@ const OrderSummary = (props) => {
             />
             <OrderSummaryItem
               title="Gift Wallet:"
-              value={orderInfo.gift_wallet}
+              value={orderInfo.gift_wallet ? orderInfo.gift_wallet : "-"}
             />
           </OrderSummaryItem>
         </OrderSummaryItem>

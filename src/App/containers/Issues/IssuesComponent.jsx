@@ -41,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
       cursor: "not-allowed",
     },
   },
+  assignBtnDiv: {
+    textAlign: "center",
+  },
   section1: {
     padding: 24,
     height: `calc(100vh - 64px)`,
@@ -128,7 +131,6 @@ const useStyles = makeStyles((theme) => ({
 
 const RenderIssues = (props) => {
   const classes = useStyles();
-  const history = useHistory();
   const colors = ["purple", "orange"];
   const issuesList = props.issueList.issues;
 
@@ -138,33 +140,21 @@ const RenderIssues = (props) => {
   const [orderId, setOrderId] = useState("");
   const [supportPersonId, setSupportPersonId] = useState();
   const [issueId, setIssueId] = useState();
-  const [data, setData] = useState([]);
 
-  const PAGE_OPTIONS = [10, 20, 30];
-  const currentPage = getQueryParamByName("pageSize") || PAGE_OPTIONS[0];
-  const pageSize = getQueryParamByName("activePage") || 0;
-
-  const [pageLimit, setPageLimit] = useState(currentPage);
-  const [activePage, setActivePage] = useState(pageSize);
+  const [activeIndex, setActiveIndex] = useState();
 
   useEffect(() => {
     props.fetchSupportPerson();
   }, []);
 
   useEffect(() => {
-    if (!props.fetchSupportPersonListInProgress && props.supportPersonList !== null) {
+    if (
+      !props.fetchSupportPersonListInProgress &&
+      props.supportPersonList !== null
+    ) {
       setSupportPersonId(props.supportPersonList.support_person[0].id);
     }
   }, [props.fetchSupportPersonListSuccess]);
-
-  useEffect(() => {
-    setData(
-      issuesList.slice(
-        activePage * pageLimit,
-        parseInt(pageLimit) + parseInt(activePage * pageLimit)
-      )
-    );
-  }, [activePage, pageLimit]);
 
   const unmountConfirmationDialog = () => {
     setShowDialog(false);
@@ -212,50 +202,32 @@ const RenderIssues = (props) => {
     mountConfirmationDialog();
   };
 
-  const handleChangePage = (e, pageNo) => {
-    setActivePage(pageNo);
-    const queryParamsObj = {
-      activePage: pageNo,
-      pageSize: pageLimit,
-    };
-    history.pushState(
-      queryParamsObj,
-      "issues listing",
-      `/issues${getQueryUri(queryParamsObj)}`
-    );
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setPageLimit(event.target.value);
-    if (parseInt(activePage) !== 0) setActivePage(0);
-
-    const queryParamsObj = {
-      activePage: parseInt(activePage) !== 0 ? 0 : activePage,
-      pageSize: event.target.value,
-    };
-
-    history.pushState(
-      queryParamsObj,
-      "issues listing",
-      `/issues${getQueryUri(queryParamsObj)}`
-    );
-  };
-
   const handleSupportPersonChange = (event) => {
     setSupportPersonId(event.target.value);
   };
 
   const handleClick = (orderId) => {
+    const history = useHistory();
     history.push(`/order-info/${orderId}`);
+  };
+
+  const handleAccordionChange = (activeId) => {
+    if (activeIndex !== activeId) setActiveIndex(activeId);
+    else setActiveIndex("");
   };
 
   return (
     <>
-      {data.map((issue, index) => {
+      {issuesList.map((issue, index) => {
         const avatarColor =
           classes[colors[Math.floor(Math.random() * colors.length)]];
         return (
-          <Accordion key={`accordian${index}`} className={classes.accordion}>
+          <Accordion
+            key={`accordian${index}`}
+            className={classes.accordion}
+            onChange={() => handleAccordionChange(issue.id)}
+            expanded={activeIndex === issue.id ? true : false}
+          >
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <Grid container item xs={12} classes={{ root: classes.grid }}>
                 <Grid item xs={2}>
@@ -295,7 +267,7 @@ const RenderIssues = (props) => {
                     )} at ${Moment(issue.issue_raised_time).format("hh:mm A")}`}
                   />
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={2} className={classes.assignBtnDiv}>
                   <Button
                     variant="contained"
                     color="primary"
@@ -308,7 +280,7 @@ const RenderIssues = (props) => {
                     ASSIGN TO
                   </Button>
                 </Grid>
-                <Grid item xs={1}>
+                <Grid item xs={1} className={classes.assignBtnDiv}>
                   <IconButton
                     edge="end"
                     aria-label="delete"
@@ -359,16 +331,6 @@ const RenderIssues = (props) => {
           </Accordion>
         );
       })}
-      {
-        <TablePagination
-          component="div"
-          count={props.issueList.issues.length}
-          page={parseInt(activePage)}
-          onChangePage={handleChangePage}
-          rowsPerPage={parseInt(pageLimit)}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
-      }
       {showDialog && (
         <Dialog
           title={resolveIssue ? `RESOLVE ISSUE` : `REASSIGN ISSUE`}
@@ -406,7 +368,8 @@ const RenderIssues = (props) => {
                       displayEmpty
                       className={classes.selectEmpty}
                     >
-                      {!props.fetchSupportPersonListInProgress && props.supportPersonList !== null &&
+                      {!props.fetchSupportPersonListInProgress &&
+                        props.supportPersonList !== null &&
                         props.supportPersonList.support_person.map((item) => {
                           return (
                             <MenuItem value={item.id} key={item.id}>
@@ -442,10 +405,21 @@ const RenderIssues = (props) => {
 
 const IssuesComponent = (props) => {
   const classes = useStyles();
+  const PAGE_OPTIONS = [10, 25, 30];
+  const currentPage = getQueryParamByName("pageSize") || PAGE_OPTIONS[1];
+  const pageSize = getQueryParamByName("activePage") || 0;
+
+  const [pageLimit, setPageLimit] = useState(currentPage);
+  const [activePage, setActivePage] = useState(pageSize);
 
   useEffect(() => {
-    props.fetchIssueList();
-  }, []);
+    const payload = {
+      limit: parseInt(currentPage),
+      offset: activePage * pageLimit,
+      is_resolved: false,
+    };
+    props.fetchIssueList(payload);
+  }, [pageLimit, activePage]);
 
   useEffect(() => {
     if (props.assignIssueSuccess || props.resolveIssueSuccess) {
@@ -458,6 +432,41 @@ const IssuesComponent = (props) => {
   if (props.fetchIssuesInProgress) {
     return <Loading message="Loading Issues..." />;
   }
+
+  const handleChangePage = (e, pageNo) => {
+    setActivePage(pageNo);
+    const queryParamsObj = {
+      activePage: pageNo,
+      pageSize: pageLimit,
+    };
+    history.pushState(
+      queryParamsObj,
+      "issues listing",
+      `/issues${getQueryUri(queryParamsObj)}`
+    );
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setPageLimit(event.target.value);
+    if (parseInt(activePage) !== 0) setActivePage(0);
+
+    const queryParamsObj = {
+      activePage: parseInt(activePage) !== 0 ? 0 : activePage,
+      pageSize: event.target.value,
+    };
+
+    history.pushState(
+      queryParamsObj,
+      "issues listing",
+      `/issues${getQueryUri(queryParamsObj)}`
+    );
+  };
+
+  RenderIssues.propTypes = {
+    fetchIssuesInProgress: PropTypes.bool,
+    fetchIssuesSuccess: PropTypes.bool,
+    fetchIssuesFailed: PropTypes.bool,
+  };
 
   return (
     <div className={classes.root}>
@@ -479,14 +488,43 @@ const IssuesComponent = (props) => {
               mb={4}
               className={classes.section2}
             >
-              {!props.fetchIssuesInProgress && props.issueList !== null && (
+              {props.fetchIssuesSuccess && props.issueList !== null && (
+                <>
+                  <RenderIssues {...props} />
+                </>
+              )}
+              {props.fetchIssuesSuccess &&
+                (props.issueList === null ||
+                  props.issueList.issues.length === 0) && (
+                  <>
+                    <Paper className={classes.paper}>No issues available</Paper>
+                  </>
+                )}
+              {props.fetchIssuesFailed && (
+                <>
+                  <Paper className={classes.paper}>Unable to fetch issues. Please try again!</Paper>
+                </>
+              )}
+              {props.fetchIssuesSuccess &&
+                (props.issueList !== null &&
+                props.issueList.issues.length > 0) && (
+                  <TablePagination
+                    component="div"
+                    count={props.issueList.count}
+                    page={parseInt(activePage)}
+                    onChangePage={handleChangePage}
+                    rowsPerPage={parseInt(pageLimit)}
+                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                  />
+              )}
+              {/* {!props.fetchIssuesInProgress && props.issueList !== null && (
                 <>
                   <RenderIssues {...props} />
                 </>
               )}
               {!props.fetchIssuesInProgress && props.issueList === null && (
                 <Paper className={classes.paper}>No issues available</Paper>
-              )}
+              )} */}
             </Box>
           </Grid>
         </Grid>
@@ -497,6 +535,8 @@ const IssuesComponent = (props) => {
 
 IssuesComponent.propTypes = {
   fetchIssuesInProgress: PropTypes.bool,
+  fetchIssuesSuccess: PropTypes.bool,
+  fetchIssuesFailed: PropTypes.bool,
 };
 
 export { IssuesComponent };
