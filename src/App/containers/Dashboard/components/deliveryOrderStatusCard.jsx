@@ -18,8 +18,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end",
   },
   card: {
-    padding: theme.spacing(2),
-    backgroundColor: "#fff",
+    minHeight: 120,
   },
   buttonDiv: {
     textAlign: "right",
@@ -44,6 +43,7 @@ const DeliveryOrderStatusCard = (props) => {
   const classes = useStyles();
   const errorString = props.errorString;
   let defValueRetailerNo = "restocked";
+  // const disabled = true;
   // const [age, setAge] = useState(defValueRetailerNo);
 
   if (!("deliver_status" in props.payload.deliver_status)) {
@@ -54,40 +54,42 @@ const DeliveryOrderStatusCard = (props) => {
 
   return (
     <Card className={classes.root}>
-      <CardContent>
+      <CardContent className={classes.card}>
         <Typography variant="h5" className={classes.heading} gutterBottom>
           DELIVER ORDER SEARCH
         </Typography>
         <FormControl className={classes.formControl}>
           <InputLabel id="demo-simple-select-label">Order Status</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            onChange={(event) =>
-              props.handleChange(
-                event,
-                "delivery_status",
-                "delivery_status",
-                "delivery_status"
-              )
-            }
-          >
-            {props.data.map((value, index) => {
-              if (defValueRetailerNo == value.Status) {
-                return (
-                  <MenuItem value={value.Status} key={index} selected={true}>
-                    {value.Status}
-                  </MenuItem>
-                );
-              } else {
-                return (
-                  <MenuItem value={value.Status} key={index}>
-                    {value.Status}
-                  </MenuItem>
-                );
+          {!props.fetchDeliveryFailed && (
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              onChange={(event) =>
+                props.handleChange(
+                  event,
+                  "delivery_status",
+                  "delivery_status",
+                  "delivery_status"
+                )
               }
-            })}
-          </Select>
+            >
+              {props.data.map((value, index) => {
+                if (defValueRetailerNo == value.Status) {
+                  return (
+                    <MenuItem value={value.Status} key={index} selected={true}>
+                      {value.Status}
+                    </MenuItem>
+                  );
+                } else {
+                  return (
+                    <MenuItem value={value.Status} key={index}>
+                      {value.Status}
+                    </MenuItem>
+                  );
+                }
+              })}
+            </Select>
+          )}
         </FormControl>
       </CardContent>
       <CardActions className={classes.actionContainer}>
@@ -116,6 +118,7 @@ DeliveryOrderStatusCard.propTypes = {
   payload: PropTypes.object,
   filterType: PropTypes.string,
   data: PropTypes.array,
+  fetchDeliveryFailed: PropTypes.bool,
 };
 
 export { DeliveryOrderStatusCard };

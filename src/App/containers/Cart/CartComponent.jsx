@@ -79,7 +79,13 @@ const CartComponent = (props) => {
       limit: 10,
       offset: 0,
     };
-    props.validateCart(payload);
+    if (
+      localStorage.getItem("x-hasura-role") !== "ops_delivery_manager" &&
+      localStorage.getItem("x-hasura-role") !== "support_person"
+    ) {
+      props.validateCart(payload);
+    }
+
     return () => {
       props.resetOnUnmount();
     };
@@ -88,7 +94,7 @@ const CartComponent = (props) => {
   useEffect(() => {
     if (props.validateOrderSuccess) {
       if (!cancel) {
-        props.fetchSummary(props.modifyCart);
+        // props.fetchSummary(props.modifyCart);
       }
 
       if (props.validateInfo.count !== 0) {

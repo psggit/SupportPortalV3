@@ -83,7 +83,12 @@ const OrderModificationComponent = (props) => {
       limit: rowsPerPage,
       offset: page * rowsPerPage,
     };
-    props.fetchListOrderModification(payload);
+    if (
+      localStorage.getItem("x-hasura-role") !== "ops_delivery_manager" ||
+      localStorage.getItem("x-hasura-role") !== "support_person"
+    ) {
+      // props.fetchListOrderModification(payload);
+    }
   }, [rowsPerPage, page]);
 
   useEffect(() => {

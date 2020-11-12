@@ -9,6 +9,8 @@ const processResponse = () => {
   return (res) => {
     if (res.status === 200) {
       return res.json();
+    } else if (res.status === 400) {
+      throw res;
     } else {
       throw res;
     }

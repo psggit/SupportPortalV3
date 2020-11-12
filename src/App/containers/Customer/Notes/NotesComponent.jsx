@@ -122,7 +122,9 @@ function Notes(props) {
       <TopBar />
       <div className={classes.formContainer}>
         <FullWidthTabs
-          value={4}
+          value={
+            localStorage.getItem("x-hasura-role") !== "support_person" ? 4 : 2
+          }
           orderId={orderId}
           customerId={customerId}
           customerNumber={customerNumber}

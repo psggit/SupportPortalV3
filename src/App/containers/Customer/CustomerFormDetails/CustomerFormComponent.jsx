@@ -147,6 +147,9 @@ function CustomerForm(props) {
                 onChange={(e) => setCustomerName(e.target.value)}
                 fullWidth
                 size="small"
+                disabled={
+                  localStorage.getItem("x-hasura-role") === "support_person"
+                }
               />
             </Grid>
           </Grid>
@@ -165,16 +168,25 @@ function CustomerForm(props) {
                 value="female"
                 control={<BlueRadio />}
                 label="Female"
+                disabled={
+                  localStorage.getItem("x-hasura-role") === "support_person"
+                }
               />
               <FormControlLabel
                 value="male"
                 control={<BlueRadio />}
                 label="Male"
+                disabled={
+                  localStorage.getItem("x-hasura-role") === "support_person"
+                }
               />
               <FormControlLabel
                 value="not-specified"
                 control={<BlueRadio />}
                 label="Not Specified"
+                disabled={
+                  localStorage.getItem("x-hasura-role") === "support_person"
+                }
               />
             </RadioGroup>
           </Grid>
@@ -225,6 +237,9 @@ function CustomerForm(props) {
                 size="small"
                 fullWidth
                 onChange={(e) => setDob(e.target.value)}
+                disabled={
+                  localStorage.getItem("x-hasura-role") === "support_person"
+                }
               />
             </Grid>
           </Grid>
@@ -292,24 +307,26 @@ function CustomerForm(props) {
             </Grid>
           </Grid>
 
-          <div className={classes.buttonContainer}>
-            <Button
-              className={classes.button}
-              onClick={handleReset}
-              variant="outlined"
-              color="primary"
-            >
-              Reset
-            </Button>
-            <Button
-              className={classes.button}
-              onClick={() => handleSave()}
-              variant="contained"
-              color="primary"
-            >
-              Save
-            </Button>
-          </div>
+          {localStorage.getItem("x-hasura-role") !== "support_person" && (
+            <div className={classes.buttonContainer}>
+              <Button
+                className={classes.button}
+                onClick={handleReset}
+                variant="outlined"
+                color="primary"
+              >
+                Reset
+              </Button>
+              <Button
+                className={classes.button}
+                onClick={() => handleSave()}
+                variant="contained"
+                color="primary"
+              >
+                Save
+              </Button>
+            </div>
+          )}
         </Grid>
         {props.updateSuccess && (
           <ErrorMsg
