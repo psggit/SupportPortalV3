@@ -402,8 +402,8 @@ const RenderIssues = (props) => {
 
 const IssuesComponent = (props) => {
   const classes = useStyles();
-  const PAGE_OPTIONS = [10, 20, 30];
-  const currentPage = getQueryParamByName("pageSize") || PAGE_OPTIONS[0];
+  const PAGE_OPTIONS = [10, 25, 30];
+  const currentPage = getQueryParamByName("pageSize") || PAGE_OPTIONS[1];
   const pageSize = getQueryParamByName("activePage") || 0;
 
   const [pageLimit, setPageLimit] = useState(currentPage);
