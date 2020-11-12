@@ -31,13 +31,14 @@ const listRetailerReducer = createReducer(initialValue, {
     listRetailerFailed: false,
     listRetailerSuccess: true,
     errorMsg: "",
+    successMsg: data.payload.message,
   }),
-  [listRetailerFailed]: (state) => ({
+  [listRetailerFailed]: (state, data) => ({
     ...state,
     listRetailerProgress: false,
     listRetailerFailed: true,
     listRetailerSuccess: false,
-    errorMsg: "Something went wrong, please try again",
+    errorMsg: data.payload.message,
   }),
   [listRetailerProgress]: (state) => ({
     ...state,
@@ -68,8 +69,8 @@ const listRetailerReducer = createReducer(initialValue, {
   }),
   [resetOnUnmount]: (state) => ({
     ...state,
-    listRetailerData: null,
-    reassignRetailerData: null,
+    // listRetailerData: null,
+    // reassignRetailerData: null,
     listRetailerSuccess: false,
     listRetailerFailed: false,
     listRetailerProgress: false,

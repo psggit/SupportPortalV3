@@ -164,7 +164,7 @@ function OrderTrackingComponent(props) {
       // console.log("update location", count);
       // count++;
       props.fetchDeliveryStatus(orderID);
-    }, 60000);
+    }, 10000);
     return () => {
       clearInterval(interval);
       props.resetOnUnmountFunction();

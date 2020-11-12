@@ -54,6 +54,7 @@ const RetailerDetails = (props) => {
       state: {
         orderId: props.orderInfo.order_id,
         retailerId: props.orderInfo.retailer_id,
+        stateId: props.orderInfo.state_id,
         cityId: props.orderInfo.city_id,
         skuId: skuId,
         cartItems: props.orderInfo.cart_items,

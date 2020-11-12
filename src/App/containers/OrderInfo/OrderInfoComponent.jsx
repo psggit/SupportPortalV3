@@ -91,8 +91,8 @@ const OrderInfoComponent = (props) => {
       };
       if (props.order.cancel_order_button) {
         props.fetchCancelReason(payload);
-        props.fetchIssueTypes();
       }
+      props.fetchIssueTypes();
     }
   }, [props.fetchOrderInfoSuccess]);
 
