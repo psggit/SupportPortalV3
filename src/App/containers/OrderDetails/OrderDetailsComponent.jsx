@@ -29,21 +29,48 @@ const useStyles = makeStyles(() => ({
   btn: {
     textDecoration: "underline",
   },
+  dateTime: {
+    minWidth: 150,
+  },
+  verticalSeparator: {
+    borderRight: "1px solid rgba(224, 224, 224, 1)",
+  },
 }));
 
 const OrderDetailsComponent = (props) => {
   const history = useHistory();
+  const classes = useStyles();
+  const [showData, setShowData] = useState(false);
+  const [rows, setRowsData] = useState(null);
+  const [rowsPerPage, setRowsPerPage] = useState(25);
+  const [page, setPage] = useState(0);
+  const formatDate = (date) => {
+    let formattedDate = Moment(date).format("D MMM YYYY, h:mm A");
+    return formattedDate;
+  };
+  let savedPayload = JSON.parse(
+    window.localStorage.getItem("dashboardPayload")
+  );
   // console.log("OrderDetailsComponent ", props.payloadInfo);
   useEffect(() => {
-    if (props.payloadInfo === undefined) {
+    // payload = {"pagination":{"limit":25,"offset":0},"filter":{"order_id":"33"}};
+    // console.log(typeof JSON.parse(localStorage.getItem("dashboardPayload")));
+    // console.log(typeof payload);
+    const payload = {
+      pagination: { limit: rowsPerPage, offset: page * rowsPerPage },
+      ...savedPayload,
+    };
+    if (payload === undefined) {
       history.push("/dashboard");
     } else {
-      props.fetchOrderDetails(props.payloadInfo);
+      props.fetchOrderDetails(payload);
     }
   }, []);
 
   useEffect(() => {
     if (props.fetchDetailsSuccess) {
+      console.log("success");
+      console.log(props.orderData);
       if (props.orderData !== null) {
         loopData(props.orderData.order_details);
         setShowData(true);
@@ -52,16 +79,6 @@ const OrderDetailsComponent = (props) => {
       }
     }
   }, [props.fetchDetailsSuccess]);
-
-  const classes = useStyles();
-  const [showData, setShowData] = useState(false);
-  const [rows, setRowsData] = useState(null);
-  const [rowsPerPage, setRowsPerPage] = useState(25);
-  const [page, setPage] = useState(0);
-  const formatDate = (date) => {
-    let formattedDate = Moment(date).format("D MMM h:mm A");
-    return formattedDate;
-  };
 
   const createData = ({
     order_id,
@@ -98,11 +115,27 @@ const OrderDetailsComponent = (props) => {
   };
 
   const handleChangePage = (event, newPage) => {
+    const payload = {
+      pagination: {
+        limit: rowsPerPage,
+        offset: newPage * rowsPerPage,
+      },
+      ...savedPayload,
+    };
+    props.fetchOrderDetails(payload);
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value));
+    const payload = {
+      pagination: {
+        limit: parseInt(event.target.value),
+        offset: page * parseInt(event.target.value),
+      },
+      ...savedPayload,
+    };
+    props.fetchOrderDetails(payload);
     setPage(0);
   };
 
@@ -121,52 +154,69 @@ const OrderDetailsComponent = (props) => {
             <TableHead>
               <TableRow>
                 <TableCell align="center">Order ID</TableCell>
-                <TableCell align="center">Date & Time</TableCell>
-                <TableCell align="center">Order Status</TableCell>
+                <TableCell align="center" className={classes.dateTime}>
+                  Date & Time
+                </TableCell>
+                <TableCell align="center" className={classes.verticalSeparator}>
+                  Order Status
+                </TableCell>
                 <TableCell align="center">Consumer ID</TableCell>
                 <TableCell align="center">Consumer Name</TableCell>
-                <TableCell align="center">Consumer Mobile</TableCell>
+                <TableCell align="center" className={classes.verticalSeparator}>
+                  Consumer Mobile
+                </TableCell>
                 <TableCell align="center">Retailer ID</TableCell>
-                <TableCell align="center">Retailer Name</TableCell>
+                <TableCell align="center" className={classes.verticalSeparator}>
+                  Retailer Name
+                </TableCell>
                 <TableCell align="center">Delivery Agent Name</TableCell>
                 <TableCell align="center">Delivery Agent Status</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {showData &&
-                rows
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => (
-                    <TableRow key={row.order_id}>
-                      <TableCell align="center">
-                        <Button
-                          onClick={(event) =>
-                            selectOrderId(event, row.order_id)
-                          }
-                          className={classes.btn}
-                        >
-                          {row.order_id}
-                        </Button>
-                      </TableCell>
-                      <TableCell align="center">
-                        {formatDate(row.date_and_time)}
-                      </TableCell>
-                      <TableCell align="center">{row.order_status}</TableCell>
-                      <TableCell align="center">{row.consumer_id}</TableCell>
-                      <TableCell align="center">{row.consumer_name}</TableCell>
-                      <TableCell align="center">
-                        {row.consumer_contact_number}
-                      </TableCell>
-                      <TableCell align="center">{row.retailer_id}</TableCell>
-                      <TableCell align="center">{row.retailer_name}</TableCell>
-                      <TableCell align="center">
-                        {row.delivery_agent_name}
-                      </TableCell>
-                      <TableCell align="center">
-                        {row.delivery_agent_status}
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                rows.map((row) => (
+                  <TableRow key={row.order_id}>
+                    <TableCell align="center">
+                      <Button
+                        onClick={(event) => selectOrderId(event, row.order_id)}
+                        className={classes.btn}
+                      >
+                        {row.order_id}
+                      </Button>
+                    </TableCell>
+                    <TableCell align="center">
+                      {formatDate(row.date_and_time)}
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      className={classes.verticalSeparator}
+                    >
+                      {row.order_status}
+                    </TableCell>
+                    <TableCell align="center">{row.consumer_id}</TableCell>
+                    <TableCell align="center">{row.consumer_name}</TableCell>
+                    <TableCell
+                      align="center"
+                      className={classes.verticalSeparator}
+                    >
+                      {row.consumer_contact_number}
+                    </TableCell>
+                    <TableCell align="center">{row.retailer_id}</TableCell>
+                    <TableCell
+                      align="center"
+                      className={classes.verticalSeparator}
+                    >
+                      {row.retailer_name}
+                    </TableCell>
+                    <TableCell align="center">
+                      {row.delivery_agent_name}
+                    </TableCell>
+                    <TableCell align="center">
+                      {row.delivery_agent_status}
+                    </TableCell>
+                  </TableRow>
+                ))}
               {!showData && (
                 <TableRow>
                   <TableCell colSpan={10} align="center">
@@ -181,7 +231,7 @@ const OrderDetailsComponent = (props) => {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={rows.length}
+            count={props.orderData.count}
             rowsPerPage={rowsPerPage}
             page={page}
             onChangePage={handleChangePage}

@@ -8,7 +8,7 @@ const processResponse = () => {
     if (res.status === 200) {
       return res.json();
     } else {
-      throw new Error("Something went wrong, try again");
+      throw res;
     }
   };
 };
@@ -21,11 +21,13 @@ const onSuccess = (dispatch) => {
 };
 
 const onError = (dispatch) => {
-  return (err) => {
-    dispatch(loginFailed(err));
+  return (data) => {
+    data.json().then((json) => {
+      dispatch(loginFailed(json));
+    });
   };
 };
-console.log(ARGS_BUILD_ENV);
+// console.log(ARGS_BUILD_ENV);
 
 const getRedirectURL = () => {
   // let redirectURL = "http://localhost:8080/dashboard"; //local
