@@ -132,6 +132,7 @@ function RetailerNotesComponent(props) {
   };
   const mountAddNote = () => {
     setShowAddNoteDialog(true);
+    props.fetchNoteList();
   };
   const UnmountAddNote = () => {
     setShowAddNoteDialog(false);

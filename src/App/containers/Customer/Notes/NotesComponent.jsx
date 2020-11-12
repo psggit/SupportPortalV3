@@ -15,6 +15,7 @@ import { useHistory } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import ErrorMsg from "../../../components/errorMsg";
 import { Typography } from "@material-ui/core";
+import { Select, MenuItem, InputLabel } from "@material-ui/core";
 import uuid from "react-uuid";
 import {
   Table,
@@ -46,6 +47,7 @@ function Notes(props) {
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
   const [noteData, setNoteData] = useState("");
   const [disableBtn, setDisableBtn] = useState(false);
+  const [selectedValue, setValue] = useState("");
   const orderInfos = history.location.state.orderInfos;
   const customerId = history.location.state.customerId;
   const orderId = history.location.state.orderId;
@@ -98,8 +100,13 @@ function Notes(props) {
     }
   };
 
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  };
+
   const mountAddNote = () => {
     setShowAddNoteDialog(true);
+    props.fetchConsumerNotesList();
   };
 
   const UnmountAddNote = () => {
@@ -163,6 +170,36 @@ function Notes(props) {
                   <Grid>
                     <p className={classes.orderId}>Order ID: {orderId}</p>
                   </Grid>
+                  {/* <InputLabel id="demo-simple-select-label">
+                    select Type
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    className={classes.selectBox}
+                    onChange={(event) => handleChange(event)}
+                  >
+                    {props.consumerNoteListSuccess &&
+                      props.noteListData.map((value, index) => {
+                        if (selectedValue === value) {
+                          return (
+                            <MenuItem
+                              value={value.id}
+                              key={index}
+                              selected={true}
+                            >
+                              {value.code}
+                            </MenuItem>
+                          );
+                        } else {
+                          return (
+                            <MenuItem value={value.id} key={index}>
+                              {value.name}-{value.id}
+                            </MenuItem>
+                          );
+                        }
+                      })}
+                  </Select> */}
                   <TextField
                     id="outlined-multiline-static"
                     onChange={handleTextChange}

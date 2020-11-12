@@ -4,6 +4,9 @@ import {
   fetchNotesFailed,
   fetchNotesProgress,
   resetOnUnmount,
+  consumerNoteListSuccess,
+  consumerNoteListFailed,
+  consumerNoteListProgress,
 } from "./actions";
 
 const initialValue = {
@@ -13,10 +16,15 @@ const initialValue = {
   notesSuccess: false,
   errorMsg: "",
   succMsg: "",
+  noteListData: null,
+  NoteListSuccess: false,
+  NoteListFailed: false,
+  NoteListProgress: false,
 };
 
 const customerReducer = createReducer(initialValue, {
   [fetchNotesSuccess]: (state, data) => {
+     console.log("customer-reducer", data.payload);
     return {
       ...state,
       notesProgress: false,
@@ -37,6 +45,34 @@ const customerReducer = createReducer(initialValue, {
     return {
       ...state,
       notesProgress: true,
+    };
+  },
+  [consumerNoteListSuccess]: (state, data) => {
+    console.log("consumerNoteListSuccess-reducer", data.payload);
+    return {
+      ...state,
+      NoteListProgress: false,
+      NoteListFailed: false,
+      NoteListSuccess: true,
+      errorMsg: "",
+      noteListData: data.payload,
+    };
+  },
+  [consumerNoteListFailed]: (state, data) => {
+    // console.log("consumerNoteFailed");
+    return {
+      ...state,
+      NoteListProgress: false,
+      NoteListFailed: true,
+      NoteListSuccess: false,
+      errorMsg: data.payload.message,
+    };
+  },
+  [consumerNoteListProgress]: (state) => {
+    // console.log("consumerNoteListProgress");
+    return {
+      ...state,
+      NoteListProgress: true,
     };
   },
   [resetOnUnmount]: () => {

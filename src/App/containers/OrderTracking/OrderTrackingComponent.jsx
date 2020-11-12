@@ -91,9 +91,6 @@ const MapComponent = (props) => {
       >
         <GoogleMap
           id="gmap"
-          //defaultCenter={{ lat: -34.397, lng: 150.644 }}
-          latitude="65.29055"
-          longitude="-82.55425"
           options={{
             streetViewControl: false,
             keyboardShortcuts: false, // disable keyboard shortcuts
@@ -195,9 +192,6 @@ function OrderTrackingComponent(props) {
       }
     }
   }, [props.fetchLiveDataSuccess]);
-
-  // var now = Moment("2020-11-06 17:40:53.042002432 +0530 IST").format('MMM DD h:mm A');
-  // alert(now);
 
   return (
     <>

@@ -2,8 +2,12 @@ import {
   fetchNotesSuccess,
   fetchNotesFailed,
   fetchNotesProgress,
+  consumerNoteListSuccess,
+  consumerNoteListFailed,
+  consumerNoteListProgress,
 } from "./actions";
 import { fetchNotesAPI } from "../../../../utils/fetchNotesAPI";
+import { consumerTypeNotesAPI } from "../../../../utils/consumerTypeNotesAPI";
 
 const processResponse = () => {
   return (res) => {
@@ -29,6 +33,20 @@ const onError = (dispatch) => {
   };
 };
 
+const onNoteSuccess = (dispatch) => {
+  return (data) => {
+    dispatch(consumerNoteListSuccess(data));
+  };
+};
+
+const onNoteError = (dispatch) => {
+  return (data) => {
+    data.json().then((json) => {
+      dispatch(consumerNoteListFailed(json));
+    });
+  };
+};
+
 const fetchConsumerNotes = (orderId) => {
   let reqBody = {
     order_id: orderId,
@@ -45,4 +63,15 @@ const fetchConsumerNotes = (orderId) => {
   };
 };
 
-export { fetchConsumerNotes };
+const fetchConsumerNotesList = () => {
+  return (dispatch) => {
+    dispatch(consumerNoteListProgress());
+    consumerTypeNotesAPI(
+      processResponse(dispatch),
+      onNoteSuccess(dispatch),
+      onNoteError(dispatch)
+    );
+  };
+};
+
+export { fetchConsumerNotes, fetchConsumerNotesList };

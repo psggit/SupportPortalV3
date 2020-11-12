@@ -3,7 +3,6 @@ import { OrderTrackingComponent } from "./OrderTrackingComponent";
 import { fetchDeliveryStatus, resetOnUnmountFunction } from "./duck";
 
 const mapStateToProps = (state) => {
-  console.log("[trackOrder]", state.orderTracking.message);
   return {
     fetchLiveDataProgress: state.orderTracking.fetchLiveDataProgress,
     fetchLiveDataSuccess: state.orderTracking.fetchLiveDataSuccess,

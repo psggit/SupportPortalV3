@@ -82,6 +82,10 @@ const keyMap = {
 const CustomerDetails = (props) => {
   const history = useHistory();
 
+  useEffect(() => {
+    props.fetchConsumerNotesList();
+  }, []);
+
   const handleChange = () => {
     history.push({
       pathname: "/customer-detail",

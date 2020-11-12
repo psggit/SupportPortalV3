@@ -3,6 +3,9 @@ import {
   fetchNotesSuccessfull,
   fetchNotesFailure,
   fetchNotesInProgress,
+  fetchRetailerNotesListSuccess,
+  fetchRetailerNotesListFailure,
+  fetchRetailerNotesListProgress,
 } from "./action";
 
 const initialState = {
@@ -11,6 +14,10 @@ const initialState = {
   notesFail: false,
   notesSuccess: false,
   errorMsg: "",
+  retailerTypeNoteList: null,
+  fetchRetailerNotesListSuccess: false,
+  fetchRetailerNotesListFailure: false,
+  fetchRetailerNotesListProgress: false,
 };
 
 const retailerNotesListReducer = createReducer(initialState, {
@@ -33,12 +40,37 @@ const retailerNotesListReducer = createReducer(initialState, {
     errorMsg: "Something went wrong, please try again",
   }),
   [fetchNotesInProgress]: (state) => {
-    console.log("retailerNotes");
     return {
       ...state,
       notesProgress: true,
       notesFail: false,
       notesSuccess: false,
+    };
+  },
+  [fetchRetailerNotesListSuccess]: (state, data) => {
+    console.log("fetchRetailerNotesListSuccess", data.payload);
+    return {
+      ...state,
+      fetchRetailerNotesListProgress: false,
+      fetchRetailerNotesListFailure: false,
+      fetchRetailerNotesListSuccess: true,
+      errorMsg: "",
+      retailerTypeNoteList: data.payload,
+    };
+  },
+  [fetchRetailerNotesListFailure]: (state) => ({
+    ...state,
+    fetchRetailerNotesListProgress: false,
+    fetchRetailerNotesListFailure: true,
+    fetchRetailerNotesListSuccess: false,
+    errorMsg: "Something went wrong, please try again",
+  }),
+  [fetchRetailerNotesListProgress]: (state) => {
+    return {
+      ...state,
+      fetchRetailerNotesListProgress: true,
+      fetchRetailerNotesListFailure: false,
+      fetchRetailerNotesListSuccess: false,
     };
   },
 });

@@ -2,8 +2,12 @@ import {
   fetchNotesSuccessfull,
   fetchNotesFailure,
   fetchNotesInProgress,
+  fetchRetailerNotesListSuccess,
+  fetchRetailerNotesListFailure,
+  fetchRetailerNotesListProgress,
 } from "./action";
 import { fetchRetailerNotesAPI } from "../../../../utils/fetchRetailerNotesAPI";
+import { retailerTypeNotesAPI } from "../../../../utils/retailerTypeNotesAPI";
 
 const processResponse = () => {
   // console.clear();
@@ -12,7 +16,7 @@ const processResponse = () => {
     if (res.status === 200) {
       return res.json();
     } else {
-      throw new Error("Something went wrong, try again");
+      throw res;
     }
   };
 };
@@ -30,9 +34,20 @@ const onError = (dispatch) => {
   };
 };
 
+const onNoteSuccess = (dispatch) => {
+  return (data) => {
+    dispatch(fetchRetailerNotesListSuccess(data));
+  };
+};
+
+const onNoteError = (dispatch) => {
+  return (error) => {
+    dispatch(fetchRetailerNotesListFailure(error));
+  };
+};
+
 const fetchRetailerNotesList = (reqBody) => {
   console.clear();
-  console.log("fetchRetailerNotesList");
   return (dispatch) => {
     dispatch(fetchNotesInProgress());
     fetchRetailerNotesAPI(
@@ -44,4 +59,15 @@ const fetchRetailerNotesList = (reqBody) => {
   };
 };
 
-export { fetchRetailerNotesList };
+const fetchNoteList = () => {
+  return (dispatch) => {
+    dispatch(fetchRetailerNotesListProgress());
+    retailerTypeNotesAPI(
+      processResponse(dispatch),
+      onNoteSuccess(dispatch),
+      onNoteError(dispatch)
+    );
+  };
+}
+
+export { fetchRetailerNotesList, fetchNoteList };
