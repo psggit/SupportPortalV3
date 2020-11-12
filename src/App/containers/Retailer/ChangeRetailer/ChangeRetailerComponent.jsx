@@ -13,6 +13,7 @@ import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router-dom";
 import Loading from "../../../components/loading";
+import ErrorMsg from "../../../components/errorMsg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,6 +72,7 @@ const ChangeRetailerComponent = (props) => {
   const history = useHistory();
   const retailerId = history.location.state.retailerId;
   const cityId = history.location.state.cityId;
+  const stateId = history.location.state.stateId;
   const skuId = history.location.state.skuId;
   const orderId = history.location.state.orderId;
   const orderInfo = history.location.state.orderInfo;
@@ -81,9 +83,13 @@ const ChangeRetailerComponent = (props) => {
     const payload = {
       sku_ids: skuId,
       retailer_id: parseInt(retailerId),
+      state_id: stateId,
       city_id: cityId,
     };
     props.listRetailer(payload);
+    return () => {
+      props.resetOnUnmount();
+    };
   }, []);
 
   const handleBack = () => {
@@ -127,6 +133,9 @@ const ChangeRetailerComponent = (props) => {
           </Grid>
         </Grid>
       </Paper>
+      {props.listRetailerFailed && (
+        <ErrorMsg show={true} message={props.errorMsg} type={"error"} />
+      )}
       <Box className={classes.boxContainer}>
         <Grid container spacing={4} className={classes.containerBox}>
           {props.listRetailerSuccess &&
@@ -154,6 +163,8 @@ ChangeRetailerComponent.propTypes = {
   listRetailerProgress: PropTypes.bool,
   orderDetails: PropTypes.object,
   orderId: PropTypes.string,
+  errorMsg: PropTypes.any,
+  resetOnUnmount: PropTypes.func,
 };
 
 export { ChangeRetailerComponent };

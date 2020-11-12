@@ -115,12 +115,12 @@ const orderDataReducer = createReducer(initialValue, {
     cancelOrderProgress: false,
     errorMsg: "",
   }),
-  [fetchCancellationSummaryFailed]: (state) => ({
+  [fetchCancellationSummaryFailed]: (state, data) => ({
     ...state,
     fetchCancellationSummarySuccess: false,
     fetchCancellationSummaryFailed: true,
     cancelOrderProgress: false,
-    errorMsg: "Something went wrong Please try again!",
+    errorMsg: data.payload.message,
   }),
   [fetchCancellationSummaryProgress]: (state) => ({
     ...state,

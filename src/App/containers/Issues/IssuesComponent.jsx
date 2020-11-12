@@ -130,6 +130,7 @@ const RenderIssues = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const colors = ["purple", "orange"];
+  console.log("FromRenderIssues");
   const issuesList = props.issueList.issues;
 
   const [showDialog, setShowDialog] = useState(false);
@@ -152,7 +153,10 @@ const RenderIssues = (props) => {
   }, []);
 
   useEffect(() => {
-    if (!props.fetchSupportPersonListInProgress && props.supportPersonList !== null) {
+    if (
+      !props.fetchSupportPersonListInProgress &&
+      props.supportPersonList !== null
+    ) {
       setSupportPersonId(props.supportPersonList.support_person[0].id);
     }
   }, [props.fetchSupportPersonListSuccess]);
@@ -359,16 +363,18 @@ const RenderIssues = (props) => {
           </Accordion>
         );
       })}
-      {
-        <TablePagination
-          component="div"
-          count={props.issueList.issues.length}
-          page={parseInt(activePage)}
-          onChangePage={handleChangePage}
-          rowsPerPage={parseInt(pageLimit)}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
-      }
+      {props.fetchIssuesSuccess &&
+        issuesList !== null &&
+        issuesList.length > 0 && (
+          <TablePagination
+            component="div"
+            count={props.issueList.issues.length}
+            page={parseInt(activePage)}
+            onChangePage={handleChangePage}
+            rowsPerPage={parseInt(pageLimit)}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+        )}
       {showDialog && (
         <Dialog
           title={resolveIssue ? `RESOLVE ISSUE` : `REASSIGN ISSUE`}
@@ -406,7 +412,8 @@ const RenderIssues = (props) => {
                       displayEmpty
                       className={classes.selectEmpty}
                     >
-                      {!props.fetchSupportPersonListInProgress && props.supportPersonList !== null &&
+                      {!props.fetchSupportPersonListInProgress &&
+                        props.supportPersonList !== null &&
                         props.supportPersonList.support_person.map((item) => {
                           return (
                             <MenuItem value={item.id} key={item.id}>
@@ -459,6 +466,12 @@ const IssuesComponent = (props) => {
     return <Loading message="Loading Issues..." />;
   }
 
+  RenderIssues.propTypes = {
+    fetchIssuesInProgress: PropTypes.bool,
+    fetchIssuesSuccess: PropTypes.bool,
+    fetchIssuesFailed: PropTypes.bool,
+  };
+
   return (
     <div className={classes.root}>
       <TopBar />
@@ -479,14 +492,31 @@ const IssuesComponent = (props) => {
               mb={4}
               className={classes.section2}
             >
-              {!props.fetchIssuesInProgress && props.issueList !== null && (
+              {props.fetchIssuesSuccess && props.issueList !== null && (
+                <>
+                  <RenderIssues {...props} />
+                </>
+              )}
+              {props.fetchIssuesSuccess &&
+                (props.issueList === null ||
+                  props.issueList.issues.length === 0) && (
+                  <>
+                    <Paper className={classes.paper}>No issues available</Paper>
+                  </>
+                )}
+              {props.fetchIssuesFailed && (
+                <>
+                  <Paper className={classes.paper}>No issues available</Paper>
+                </>
+              )}
+              {/* {!props.fetchIssuesInProgress && props.issueList !== null && (
                 <>
                   <RenderIssues {...props} />
                 </>
               )}
               {!props.fetchIssuesInProgress && props.issueList === null && (
                 <Paper className={classes.paper}>No issues available</Paper>
-              )}
+              )} */}
             </Box>
           </Grid>
         </Grid>
@@ -497,6 +527,8 @@ const IssuesComponent = (props) => {
 
 IssuesComponent.propTypes = {
   fetchIssuesInProgress: PropTypes.bool,
+  fetchIssuesSuccess: PropTypes.bool,
+  fetchIssuesFailed: PropTypes.bool,
 };
 
 export { IssuesComponent };

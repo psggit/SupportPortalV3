@@ -81,6 +81,18 @@ const OrderDetailsCard = (props) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (props.cancelOrderSuccess === true) {
+      location.reload();
+    }
+  }, [props.cancelOrderSuccess]);
+
+  useEffect(() => {
+    if (props.deliverOrderSuccess === true) {
+      location.reload();
+    }
+  }, [props.deliverOrderSuccess]);
+
   let { platform, customer_address, delivery_status } = {
     ...props.order,
   };
@@ -135,19 +147,20 @@ const OrderDetailsCard = (props) => {
     setCancellationSummary(true);
     const payload = {
       order_id: props.order.order_id,
-      restocking_charges: parseInt(props.order.restocking_charges),
-      total_fee: parseInt(props.order.total_fee),
-      cancellation_id: parseInt(selectedValue),
-      retailer_id: parseInt(props.order.retailer_id),
-      consumer_id: parseInt(props.order.customer_id),
-      hipbar_wallet_amount:
-        props.order.hipbar_wallet === ""
-          ? 0
-          : parseFloat(props.order.hipbar_wallet.split(" ")[1]),
-      gift_wallet_amount:
-        props.order.gift_wallet === ""
-          ? 0
-          : parseFloat(props.order.gift_wallet.split(" ")[1]),
+      cancellation_reason_id: parseInt(event.target.value),
+      // restocking_charges: parseInt(props.order.restocking_charges),
+      // total_fee: parseInt(props.order.total_fee),
+      // cancellation_id: parseInt(selectedValue),
+      // retailer_id: parseInt(props.order.retailer_id),
+      // consumer_id: parseInt(props.order.customer_id),
+      // hipbar_wallet_amount:
+      //   props.order.hipbar_wallet === ""
+      //     ? 0
+      //     : parseFloat(props.order.hipbar_wallet.split(" ")[1]),
+      // gift_wallet_amount:
+      //   props.order.gift_wallet === ""
+      //     ? 0
+      //     : parseFloat(props.order.gift_wallet.split(" ")[1]),
     };
     props.cancelOrderSummary(payload);
   };
@@ -293,6 +306,15 @@ const OrderDetailsCard = (props) => {
           </ListItem>
         </List>
       </OrderCard>
+      {props.fetchCancellationSummaryFailed && (
+        <ErrorMsg
+          show={true}
+          message={
+            props.errorMsg !== "" ? props.errorMsg : "Something went wrong"
+          }
+          type={"error"}
+        />
+      )}
       {props.cancelOrderFailure && (
         <ErrorMsg
           show={true}
@@ -302,7 +324,6 @@ const OrderDetailsCard = (props) => {
           type={"error"}
         />
       )}
-
       {props.cancelOrderSuccess && (
         <ErrorMsg
           show={true}
@@ -383,6 +404,12 @@ const OrderDetailsCard = (props) => {
                 <OrderSummaryItem
                   title="Gift Wallet:"
                   value={props.cancelOrderSummaryData.refund_amount.gift_wallet}
+                />
+                <OrderSummaryItem
+                  title="Nodal Amount:"
+                  value={
+                    props.cancelOrderSummaryData.refund_amount.nodal_amount
+                  }
                 />
               </OrderSummaryItem>
             </div>
