@@ -68,7 +68,7 @@ const ConsumerCard = (props) => {
         <TextField
           fullWidth
           variant="outlined"
-          autoComplete="off"
+          autoComplete="fff"
           margin="normal"
           size="small"
           label="Mobile Number"

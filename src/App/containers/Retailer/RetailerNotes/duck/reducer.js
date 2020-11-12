@@ -47,7 +47,6 @@ const retailerNotesListReducer = createReducer(initialState, {
     };
   },
   [fetchIssueListSuccess]: (state, data) => {
-    console.log("fetchRetailerNotesListSuccess-reducer", data.payload);
     return {
       ...state,
       issueListProgress: false,
