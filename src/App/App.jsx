@@ -48,9 +48,10 @@ function App(props) {
     );
   }
 
+  // console.log("success ", success);
   return (
     <div>
-      {success ? (
+      {success === true ? (
         <ThemeProvider theme={newTheme}>
           <Router>
             <Switch>
@@ -118,6 +119,7 @@ function App(props) {
           <Router>
             <Switch>
               <Route path="/logout" component={LogoutContainer} />
+              <Route path="/login" component={LoginContainer} />
               <Route path="/" component={LoginContainer} />
             </Switch>
           </Router>

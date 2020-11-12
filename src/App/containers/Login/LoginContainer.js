@@ -9,6 +9,7 @@ const mapStateToProps = (state) => {
     loginFailedStatus: state.login.loginFailedStatus,
     loginSuccessStatus: state.login.loginSuccessStatus,
     successMsg: state.login.successMsg,
+    errorMsg: state.login.errorMsg,
   };
 };
 

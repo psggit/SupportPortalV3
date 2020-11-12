@@ -33,12 +33,12 @@ const loginReducer = createReducer(initialValue, {
     successMsg: data.payload,
     errorMsg: "",
   }),
-  [loginFailed]: (state) => ({
+  [loginFailed]: (state, data) => ({
     ...state,
     isAuthenticated: false,
     loginProgressStatus: false,
     loginFailedStatus: true,
-    errorMsg: "Something went wrong, please try again",
+    errorMsg: data.payload,
   }),
   [loginProgress]: (state) => ({
     ...state,
