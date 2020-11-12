@@ -57,7 +57,6 @@ const deliveryAgentReducer = createReducer(initialValue, {
     fetchProgress: true,
   }),
   [fetchDeliveryAgentListSuccess]: (state, data) => {
-    console.log("fetchDeliveryAgentListSuccess", data.payload)
     return {
       ...state,
       deliveryAgentList: data.payload,
@@ -65,7 +64,7 @@ const deliveryAgentReducer = createReducer(initialValue, {
       daListFail: false,
       daListProgress: false,
       message: data.payload.message,
-    }
+    };
   },
   [fetchDeliveryAgentListFailed]: (state, data) => ({
     ...state,
