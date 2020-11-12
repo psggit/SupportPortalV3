@@ -149,6 +149,9 @@ const LoginComponent = (props) => {
       {successState && (
         <ErrorMsg show={true} message={successMsgData} type="success" />
       )}
+      {props.loginFailedStatus && (
+        <ErrorMsg show={true} message={props.errorMsg.message} type="error" />
+      )}
     </Container>
   );
 };
@@ -159,6 +162,7 @@ LoginComponent.propTypes = {
   loginSuccessStatus: PropTypes.bool,
   loginFailedStatus: PropTypes.bool,
   successMsg: PropTypes.any,
+  errorMsg: PropTypes.any,
 };
 
 export { LoginComponent };

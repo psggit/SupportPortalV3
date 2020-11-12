@@ -32,7 +32,6 @@ const onError = (dispatch) => {
 const fetchOrderDetails = (reqBody) => {
   return (dispatch) => {
     dispatch(fetchOrderProgress(reqBody));
-    console.log("completeOrderAPI ", reqBody);
     completeOrderAPI(
       reqBody,
       processResponse(dispatch),
