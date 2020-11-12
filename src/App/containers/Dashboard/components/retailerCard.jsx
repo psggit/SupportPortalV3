@@ -64,7 +64,7 @@ const RetailerCard = (props) => {
     <Card className={classes.root}>
       <CardContent>
         <Typography variant="h5" className={classes.heading} gutterBottom>
-          RETAILER DETAILS
+          RETAILER ORDER SEARCH
         </Typography>
         <TextField
           fullWidth
@@ -147,7 +147,7 @@ const RetailerCard = (props) => {
           }
           onClick={() => props.handleSubmit("retailer_details")}
         >
-          Fetch Details
+          Fetch Orders
         </Button>
       </CardActions>
     </Card>

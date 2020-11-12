@@ -56,7 +56,7 @@ const DeliveryOrderStatusCard = (props) => {
     <Card className={classes.root}>
       <CardContent>
         <Typography variant="h5" className={classes.heading} gutterBottom>
-          DELIVER ORDER STATUS
+          DELIVER ORDER SEARCH
         </Typography>
         <FormControl className={classes.formControl}>
           <InputLabel id="demo-simple-select-label">Order Status</InputLabel>
@@ -99,7 +99,7 @@ const DeliveryOrderStatusCard = (props) => {
           }
           onClick={() => props.handleSubmit("delivery_status")}
         >
-          Fetch Details
+          Fetch Orders
         </Button>
       </CardActions>
     </Card>

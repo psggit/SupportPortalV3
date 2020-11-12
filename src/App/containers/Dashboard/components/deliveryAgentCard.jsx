@@ -60,7 +60,7 @@ const DeliveryAgentCard = (props) => {
     <Card className={classes.root}>
       <CardContent>
         <Typography variant="h5" className={classes.heading} gutterBottom>
-          DELIVERY AGENT DETAILS
+          DELIVERY AGENT SEARCH
         </Typography>
         <TextField
           fullWidth
@@ -127,7 +127,7 @@ const DeliveryAgentCard = (props) => {
           }
           onClick={() => props.handleSubmit("delivery_agent_details")}
         >
-          Fetch Details
+          Fetch Orders
         </Button>
       </CardActions>
     </Card>
