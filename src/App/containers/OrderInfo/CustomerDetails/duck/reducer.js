@@ -24,7 +24,6 @@ const initialValue = {
 
 const customerReducer = createReducer(initialValue, {
   [fetchNotesSuccess]: (state, data) => {
-    //console.log("customer-reducer", data.payload);
     return {
       ...state,
       notesProgress: false,
@@ -48,7 +47,6 @@ const customerReducer = createReducer(initialValue, {
     };
   },
   [consumerNoteListSuccess]: (state, data) => {
-    console.log("consumerNoteListSuccess-reducer", data.payload);
     return {
       ...state,
       NoteListProgress: false,
@@ -59,7 +57,6 @@ const customerReducer = createReducer(initialValue, {
     };
   },
   [consumerNoteListFailed]: (state, data) => {
-    // console.log("consumerNoteFailed");
     return {
       ...state,
       NoteListProgress: false,
@@ -69,7 +66,6 @@ const customerReducer = createReducer(initialValue, {
     };
   },
   [consumerNoteListProgress]: (state) => {
-    // console.log("consumerNoteListProgress");
     return {
       ...state,
       NoteListProgress: true,

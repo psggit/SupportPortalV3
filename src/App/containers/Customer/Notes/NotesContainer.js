@@ -6,7 +6,6 @@ import { createNotes } from "../../OrderInfo/duck";
 import { resetOnUnmount } from "../../OrderInfo/CustomerDetails/duck";
 
 const mapStateToProps = (state) => {
-  console.log("notesContainer", state.order.customer.noteListData);
   return {
     orderInfo: state.order.orderInfo.orderInfo,
     customerNotes: state.order.customer.customerNotesData,
@@ -17,9 +16,9 @@ const mapStateToProps = (state) => {
     errorMsg: state.order.customer.errorMsg,
     createNotesSuccess: state.order.orderInfo.createNotesSuccess,
     successMsg: state.order.orderInfo.successMsg,
-    consumerNoteListSuccess: state.order.customer.consumerNoteListSuccess,
-    consumerNoteListFailed: state.order.customer.consumerNoteListFailed,
-    consumerNoteListProgress: state.order.customer.consumerNoteListProgress,
+    NoteListSuccess: state.order.customer.NoteListSuccess,
+    NoteListFailed: state.order.customer.NoteListFailed,
+    NoteListProgress: state.order.customer.NoteListProgress,
     noteListData: state.order.customer.noteListData,
   };
 };

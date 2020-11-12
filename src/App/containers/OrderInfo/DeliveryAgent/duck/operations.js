@@ -45,6 +45,7 @@ const onError = (dispatch) => {
 const daListSuccess = (dispatch) => {
   return (data) => {
     dispatch(fetchDeliveryAgentListSuccess(data));
+    console.log("dalistSuccess", data);
   };
 };
 

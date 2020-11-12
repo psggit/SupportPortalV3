@@ -9,7 +9,7 @@ const headers = {
   "hasura-id": `${localStorage.getItem("hasura-id")}`,
 };
 
-const retailerTypeNotesAPI = (reqBody, process, onSuccess, onError) => {
+const retailerTypeNotesAPI = (process, onSuccess, onError) => {
   const URL = `https://${apiUrl}/supportman/api/1/notes/retailer/types`;
   fetch(URL, {
     method: "GET",

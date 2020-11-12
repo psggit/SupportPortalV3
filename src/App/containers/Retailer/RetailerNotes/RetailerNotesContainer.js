@@ -5,7 +5,6 @@ import { createNotes } from "../../OrderInfo/duck";
 import { resetOnUnmount } from "../../OrderInfo/duck";
 
 const mapStateToProps = (state) => {
-  //console.log("[retailerNoteContainer]", state.note.retailerTypeNoteList);
   return {
     notesList: state.notes.retailerNotesList,
     orderId: state.order.orderInfo.orderDetails,
@@ -17,10 +16,10 @@ const mapStateToProps = (state) => {
     successMsg: state.order.orderInfo.successMsg,
     createNotesSuccess: state.order.orderInfo.createNotesSuccess,
     createNotesFailure: state.order.orderInfo.createNotesFailure,
-    // retailerTypeNoteList: state.note.retailerTypeNoteList,
-    // fetchRetailerNotesListSuccess: state.note.fetchRetailerNotesListSuccess,
-    // fetchRetailerNotesListFailure: state.note.fetchRetailerNotesListFailure,
-    // fetchRetailerNotesListProgress: state.note.fetchRetailerNotesListProgress,
+    issueListProgress: state.notes.issueListProgress,
+    issueListFailure: state.notes.issueListFailure,
+    issueListSuccess: state.notes.issueListSuccess,
+    issueListData: state.notes.issueListData,
   };
 };
 

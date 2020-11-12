@@ -106,7 +106,7 @@ function Notes(props) {
 
   const mountAddNote = () => {
     setShowAddNoteDialog(true);
-   // props.fetchConsumerNotesList();
+    props.fetchConsumerNotesList();
   };
 
   const UnmountAddNote = () => {
@@ -118,12 +118,14 @@ function Notes(props) {
       order_id: orderId,
       type: "customer",
       notes: noteData,
+      issue_type: "",
+      consumer_issue_type: selectedValue.toString(),
+      retailer_issue_type: "",
     };
     props.createNotes(payload);
     setShowAddNoteDialog(false);
     fetchNote();
   };
-
   return (
     <>
       <TopBar />
@@ -167,9 +169,40 @@ function Notes(props) {
                 ]}
               >
                 <>
-                  <Grid>
+                  {/* <Grid>
                     <p className={classes.orderId}>Order ID: {orderId}</p>
-                  </Grid>
+                  </Grid> */}
+                  <InputLabel id="demo-simple-select-label">
+                    Issue Type
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    className={classes.selectBox}
+                    onChange={(event) => handleChange(event)}
+                  >
+                    {props.NoteListSuccess &&
+                      props.noteListData !== null &&
+                      props.noteListData.map((value, index) => {
+                        if (selectedValue === value) {
+                          return (
+                            <MenuItem
+                              value={value.id}
+                              key={index}
+                              selected={true}
+                            >
+                              {value.code}
+                            </MenuItem>
+                          );
+                        } else {
+                          return (
+                            <MenuItem value={value.id} key={index}>
+                              {value.code}
+                            </MenuItem>
+                          );
+                        }
+                      })}
+                  </Select>
                   <TextField
                     id="outlined-multiline-static"
                     onChange={handleTextChange}
@@ -261,6 +294,9 @@ Notes.propTypes = {
   successMsg: PropTypes.string,
   resetOnUnmount: PropTypes.func,
   createNotesSuccess: PropTypes.bool,
+  NoteListSuccess: PropTypes.bool,
+  noteListData: PropTypes.bool,
+  fetchConsumerNotesList: PropTypes.func,
 };
 
 export { Notes };
@@ -278,5 +314,8 @@ const useStyles = makeStyles((theme) => ({
   orderId: {
     fontSize: "16px",
     color: "rgba(0, 0, 0, 0.54)",
+  },
+  selectBox: {
+    width: "100%",
   },
 }));

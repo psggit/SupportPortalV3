@@ -6,7 +6,6 @@ import {
 } from "./duck/CustomerOperations";
 
 const mapStateToProps = (state) => {
-  console.log("[customerContainer]", state.order.customer.noteListData);
   return {
     orderInfo: state.order.orderInfo.orderInfo,
     customerNotes: state.order.customer.customerNotesData,

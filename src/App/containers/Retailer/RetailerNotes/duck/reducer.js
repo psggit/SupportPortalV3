@@ -3,9 +3,9 @@ import {
   fetchNotesSuccessfull,
   fetchNotesFailure,
   fetchNotesInProgress,
-  fetchRetailerNotesListSuccess,
-  fetchRetailerNotesListFailure,
-  fetchRetailerNotesListProgress,
+  fetchIssueListSuccess,
+  fetchIssueListFailure,
+  fetchIssueListProgress,
 } from "./action";
 
 const initialState = {
@@ -14,15 +14,14 @@ const initialState = {
   notesFail: false,
   notesSuccess: false,
   errorMsg: "",
-  retailerTypeNoteList: null,
-  fetchRetailerNotesListSuccess: false,
-  fetchRetailerNotesListFailure: false,
-  fetchRetailerNotesListProgress: false,
+  issueListData: null,
+  issueListSuccess: false,
+  issueListProgress: false,
+  issueListFail: false,
 };
 
 const retailerNotesListReducer = createReducer(initialState, {
   [fetchNotesSuccessfull]: (state, data) => {
-    console.log("retailerNotesListSuccess", data);
     return {
       ...state,
       notesProgress: false,
@@ -47,30 +46,30 @@ const retailerNotesListReducer = createReducer(initialState, {
       notesSuccess: false,
     };
   },
-  [fetchRetailerNotesListSuccess]: (state, data) => {
-    console.log("fetchRetailerNotesListSuccess", data.payload);
+  [fetchIssueListSuccess]: (state, data) => {
+    console.log("fetchRetailerNotesListSuccess-reducer", data.payload);
     return {
       ...state,
-      fetchRetailerNotesListProgress: false,
-      fetchRetailerNotesListFailure: false,
-      fetchRetailerNotesListSuccess: true,
+      issueListProgress: false,
+      issueListFailure: false,
+      issueListSuccess: true,
       errorMsg: "",
-      retailerTypeNoteList: data.payload,
+      issueListData: data.payload,
     };
   },
-  [fetchRetailerNotesListFailure]: (state) => ({
+  [fetchIssueListFailure]: (state, data) => ({
     ...state,
-    fetchRetailerNotesListProgress: false,
-    fetchRetailerNotesListFailure: true,
-    fetchRetailerNotesListSuccess: false,
-    errorMsg: "Something went wrong, please try again",
+    issueListProgress: false,
+    issueListFailure: true,
+    issueListSuccess: false,
+    errorMsg: data.payload.message,
   }),
-  [fetchRetailerNotesListProgress]: (state) => {
+  [fetchIssueListProgress]: (state) => {
     return {
       ...state,
-      fetchRetailerNotesListProgress: true,
-      fetchRetailerNotesListFailure: false,
-      fetchRetailerNotesListSuccess: false,
+      issueListProgress: true,
+      issueListFailure: false,
+      issueListSuccess: false,
     };
   },
 });
