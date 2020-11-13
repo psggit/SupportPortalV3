@@ -19,10 +19,21 @@ import {
 import Moment from "moment";
 
 const placesLib = ["places"];
+const mapStyle = require("./styles.json");
 
 const useStyles = makeStyles(() => ({
   root: {
+    paddingBottom: 20,
+    paddingTop: 20,
+  },
+  card: {
     padding: 24,
+    paddingBottom: 12,
+  },
+  cardHeader: {
+    fontSize: 16,
+    fontWeight: 600,
+    textTransform: "uppercase",
   },
   overlayView: {
     background: "#606060",
@@ -92,6 +103,7 @@ const MapComponent = (props) => {
         <GoogleMap
           id="gmap"
           options={{
+            styles: mapStyle,
             streetViewControl: false,
             keyboardShortcuts: false, // disable keyboard shortcuts
             mapTypeControl: false,
@@ -198,10 +210,13 @@ function OrderTrackingComponent(props) {
       <Grid container>
         {show && (
           <Grid item xs={12}>
-            <Box>
+            <Paper className={classes.card} elevation={2}>
+              <Typography variant="body1" className={classes.cardHeader}>
+                ORDER TRACKING
+              </Typography>
               <Grid container spacing={4} className={classes.containerBox}>
                 <Grid item xs={4}>
-                  <Paper className={classes.root} elevation={2}>
+                  <Paper className={classes.root} elevation={0}>
                     <Box
                       display="flex"
                       alignContent="flex-start"
@@ -209,14 +224,14 @@ function OrderTrackingComponent(props) {
                     >
                       <img src={mapMarkerIcon} />
                       <Box ml={2}>
-                        <Typography variant="body2">Customer name:</Typography>
+                        <Typography variant="body1">Customer name:</Typography>
                         <Typography variant="body2">
                           {details.customer_name.length > 0
                             ? details.customer_name
                             : "-"}
                         </Typography>
                         <br />
-                        <Typography variant="body2">
+                        <Typography variant="body1">
                           Customer phone number:
                         </Typography>
                         <Typography variant="body2">
@@ -229,7 +244,7 @@ function OrderTrackingComponent(props) {
                   </Paper>
                 </Grid>
                 <Grid item xs={4}>
-                  <Paper className={classes.root} elevation={2}>
+                  <Paper className={classes.root} elevation={0}>
                     <Box
                       display="flex"
                       alignContent="flex-start"
@@ -237,14 +252,14 @@ function OrderTrackingComponent(props) {
                     >
                       <img src={mapMarkerIcon} />
                       <Box ml={2}>
-                        <Typography variant="body2">Retailer name:</Typography>
+                        <Typography variant="body1">Retailer name:</Typography>
                         <Typography variant="body2">
                           {details.retailer_name.length > 0
                             ? details.retailer_name
                             : "-"}
                         </Typography>
                         <br />
-                        <Typography variant="body2">
+                        <Typography variant="body1">
                           Retailer phone number:
                         </Typography>
                         <Typography variant="body2">
@@ -257,7 +272,7 @@ function OrderTrackingComponent(props) {
                   </Paper>
                 </Grid>
                 <Grid item xs={4}>
-                  <Paper className={classes.root} elevation={2}>
+                  <Paper className={classes.root} elevation={0}>
                     <Box
                       display="flex"
                       alignContent="flex-start"
@@ -265,7 +280,7 @@ function OrderTrackingComponent(props) {
                     >
                       <img src={markerIconDA} />
                       <Box ml={2}>
-                        <Typography variant="body2">
+                        <Typography variant="body1">
                           Delivery Agent name:
                         </Typography>
                         <Typography variant="body2">
@@ -274,7 +289,7 @@ function OrderTrackingComponent(props) {
                             : "-"}
                         </Typography>
                         <br />
-                        <Typography variant="body2">
+                        <Typography variant="body1">
                           Delivery Agent phone number:
                         </Typography>
                         <Typography variant="body2">
@@ -287,7 +302,7 @@ function OrderTrackingComponent(props) {
                   </Paper>
                 </Grid>
               </Grid>
-            </Box>
+            </Paper>
           </Grid>
         )}
         {props.fetchLiveDataSuccess && (

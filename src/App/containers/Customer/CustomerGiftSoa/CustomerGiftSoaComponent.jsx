@@ -108,7 +108,9 @@ function CustomerGiftSoa(props) {
     <>
       <TopBar />
       <FullWidthTabs
-        value={2}
+        value={
+          localStorage.getItem("x-hasura-role") !== "support_person" ? 2 : 1
+        }
         orderId={history.location.state.orderId}
         customerId={history.location.state.customerId}
         customerNumber={customerNumber}

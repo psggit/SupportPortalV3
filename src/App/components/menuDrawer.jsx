@@ -41,7 +41,13 @@ export default function MenuDrawer() {
     setState({ ...state, [anchor]: open });
   };
 
-  const anchors = ["/dashboard", "/issues", "/logout"];
+  let anchors = ["/dashboard", "/issues", "/logout"];
+  let links = ["Home", "Issues", "Logout"];
+
+  if (localStorage.getItem("x-hasura-role") === "ops_delivery_manager") {
+    anchors = ["/dashboard", "/logout"];
+    links = ["Home", "Logout"];
+  }
 
   const list = (anchor) => (
     <div
@@ -53,7 +59,7 @@ export default function MenuDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["Home", "Issues", "Logout"].map((text, index) => (
+        {links.map((text, index) => (
           <ListItem button key={text}>
             <Link className={classes.anchor} href={anchors[index]}>
               <ListItemText primary={text} />

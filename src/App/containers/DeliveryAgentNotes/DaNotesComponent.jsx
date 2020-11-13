@@ -54,7 +54,9 @@ function DaNotes(props) {
   const orderId = history.location.state.orderId;
 
   const fetchNote = () => {
-    props.fetchDeliveryAgentNotes(orderId);
+    if (localStorage.getItem("x-hasura-role") !== "ops_delivery_manager") {
+      props.fetchDeliveryAgentNotes(orderId);
+    }
   };
 
   useEffect(() => {

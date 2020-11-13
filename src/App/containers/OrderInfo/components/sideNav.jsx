@@ -80,6 +80,22 @@ const useStyles = makeStyles((theme) => ({
       color: "#fff",
     },
   },
+  sideNavBtnT: {
+    backgroundColor: "#49b235",
+    color: "#fff",
+    height: 30,
+    width: 30,
+    minWidth: 30,
+    fontSize: 18,
+    margin: 5,
+    lineHeight: "1em",
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: "#49b235",
+      textDecoration: "underline",
+      color: "#fff",
+    },
+  },
 }));
 
 SideNav.propTypes = {
@@ -101,14 +117,16 @@ export default function SideNav(props) {
         >
           O
         </Button>
-        <Button
-          title="Customer"
-          className={activeSection === "section2" ? "active" : null}
-          classes={{ root: classes.sideNavBtnC }}
-          onClick={() => handleScroll("section2")}
-        >
-          C
-        </Button>
+        {localStorage.getItem("x-hasura-role") !== "ops_delivery_manager" && (
+          <Button
+            title="Customer"
+            className={activeSection === "section2" ? "active" : null}
+            classes={{ root: classes.sideNavBtnC }}
+            onClick={() => handleScroll("section2")}
+          >
+            C
+          </Button>
+        )}
         <Button
           title="Retailer"
           className={activeSection === "section3" ? "active" : null}
@@ -125,17 +143,29 @@ export default function SideNav(props) {
         >
           D
         </Button>
-        <Box>
-          <Fab
-            size="small"
-            color="primary"
-            className={classes.fabBtn}
-            aria-label="add"
-            onClick={() => handleAddIssue()}
+        {localStorage.getItem("x-hasura-role") !== "ops_delivery_manager" && (
+          <Button
+            title="Track Order"
+            className={activeSection === "section5" ? "active" : null}
+            classes={{ root: classes.sideNavBtnT }}
+            onClick={() => handleScroll("section5")}
           >
-            <AddIcon />
-          </Fab>
-        </Box>
+            T
+          </Button>
+        )}
+        {localStorage.getItem("x-hasura-role") !== "ops_delivery_manager" && (
+          <Box>
+            <Fab
+              size="small"
+              color="primary"
+              className={classes.fabBtn}
+              aria-label="add"
+              onClick={() => handleAddIssue()}
+            >
+              <AddIcon />
+            </Fab>
+          </Box>
+        )}
       </Box>
     </Paper>
   );

@@ -47,7 +47,9 @@ const useStyles = makeStyles((theme) => ({
 const DashboardComponent = (props) => {
   useEffect(() => {
     // console.log("useEffect", props);
-    props.fetchDeliveryStatus();
+    if (localStorage.getItem("x-hasura-role") !== "ops_delivery_manager") {
+      props.fetchDeliveryStatus();
+    }
   }, []);
   const classes = useStyles();
   const [payload, setPayload] = useState({
@@ -184,18 +186,20 @@ const DashboardComponent = (props) => {
       )}
       <Box maxWidth="80%" className={classes.boxContainer} ref={reference}>
         <Grid container spacing={4} justify="center">
-          <Grid item xs={4}>
-            <ConsumerCard
-              errorString={errorString}
-              handleChange={handleChange}
-              isResetDisabled={isResetDisabled}
-              isFetchDisabled={isFetchDisabled}
-              handleSubmit={handleSubmit}
-              reset={reset}
-              payload={payload}
-              filterType={filterType}
-            />
-          </Grid>
+          {localStorage.getItem("x-hasura-role") !== "ops_delivery_manager" && (
+            <Grid item xs={4}>
+              <ConsumerCard
+                errorString={errorString}
+                handleChange={handleChange}
+                isResetDisabled={isResetDisabled}
+                isFetchDisabled={isFetchDisabled}
+                handleSubmit={handleSubmit}
+                reset={reset}
+                payload={payload}
+                filterType={filterType}
+              />
+            </Grid>
+          )}
           <Grid item xs={4}>
             <RetailerCard
               errorString={errorString}
@@ -232,8 +236,8 @@ const DashboardComponent = (props) => {
               filterType={filterType}
             />
           </Grid> */}
-          <Grid item xs={4}>
-            {props.fetchDeliverySuccess && (
+          {localStorage.getItem("x-hasura-role") !== "ops_delivery_manager" && (
+            <Grid item xs={4}>
               <DeliveryOrderStatusCard
                 errorString={errorString}
                 handleChange={handleChange}
@@ -244,10 +248,15 @@ const DashboardComponent = (props) => {
                 payload={payload}
                 filterType={filterType}
                 data={props.deliveryStatus}
+                fetchDeliveryStatus={props.fetchDeliveryStatus}
+                fetchDeliveryFailed={props.fetchDeliveryFailed}
               />
-            )}
-          </Grid>
+            </Grid>
+          )}
         </Grid>
+        {props.fetchDeliveryFailed && (
+          <ErrorMsg show={true} message={props.errorMsg} type="error" />
+        )}
       </Box>
     </Container>
   );
@@ -258,9 +267,8 @@ DashboardComponent.propTypes = {
   fetchDeliveryStatus: PropTypes.func,
   preponeOrder: PropTypes.func,
   orderData: PropTypes.object,
-  fetchDetailsSuccess: PropTypes.bool,
-  preponeOrderSuccess: PropTypes.bool,
   fetchDetailsProgress: PropTypes.bool,
+  fetchDeliveryFailed: PropTypes.bool,
   fetchDetailsFail: PropTypes.bool,
   errorMsg: PropTypes.string,
   successMsg: PropTypes.string,

@@ -150,7 +150,12 @@ const RenderIssues = (props) => {
   const [activeIndex, setActiveIndex] = useState();
 
   useEffect(() => {
-    props.fetchSupportPerson();
+    const payload = {
+      limit: 10,
+      offset: 0,
+      is_resolved: false,
+    };
+    props.fetchSupportPerson(payload);
   }, []);
 
   useEffect(() => {

@@ -27,6 +27,7 @@ import { ActivityListContainer } from "./containers/ActivityList";
 import { DaNotesContainer } from "./containers/DeliveryAgentNotes";
 import { OrderTrackingContainer } from "./containers/OrderTracking";
 import { OrderModificationContainer } from "./containers/OrderModification";
+import { createSession } from "./utils";
 
 function App(props) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -36,6 +37,8 @@ function App(props) {
     }
     if (props.authenticateSuccess) {
       setIsLoggedIn(true);
+      // console.log("authenticateSuccess", props.authData);
+      createSession(props.authData);
     }
   }, [props.authenticateSuccess]);
 
