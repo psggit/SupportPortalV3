@@ -39,8 +39,8 @@ const useStyles = makeStyles(() => ({
     background: "#606060",
     color: "#fff",
     padding: 5,
-    top: "-60px",
-    left: "-45px",
+    top: "-75px",
+    left: "-42px",
     position: "absolute",
     width: 80,
     textAlign: "center",
@@ -305,14 +305,14 @@ function OrderTrackingComponent(props) {
             </Paper>
           </Grid>
         )}
-        {props.fetchLiveDataSuccess && (
+        {show && (
           <Grid item xs={12}>
             <Box mt={4}>
               <Alert severity="error" show={true}>{props.message}</Alert>
             </Box>
           </Grid>
         )}
-        {props.fetchLiveDataSuccess && (
+        {show && (
           <Grid item xs={12}>
             <Box mt={2}>
               <Alert severity="info" show={true}>
