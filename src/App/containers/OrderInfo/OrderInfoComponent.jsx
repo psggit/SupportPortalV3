@@ -211,7 +211,7 @@ const OrderInfoComponent = (props) => {
     props.createNotes(payload);
     setOpen(false);
     setIssueDesc("");
-    // props.fetchOrderInfo(orderId);
+    props.fetchOrderInfo(orderId);
     // props.fetchCancelReason(payload);
   };
 
