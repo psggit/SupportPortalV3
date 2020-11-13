@@ -52,7 +52,7 @@ const OrderDetailsComponent = (props) => {
     return formattedDate;
   };
   let savedPayload = JSON.parse(
-    window.localStorage.getItem("dashboardPayload")
+    window.sessionStorage.getItem("dashboardPayload")
   );
   // console.log("OrderDetailsComponent ", props.payloadInfo);
   useEffect(() => {
@@ -62,7 +62,7 @@ const OrderDetailsComponent = (props) => {
       pagination: { limit: rowsPerPage, offset: page * rowsPerPage },
       ...savedPayload,
     };
-    if (payload === undefined) {
+    if (savedPayload === null) {
       history.push("/dashboard");
     } else {
       props.fetchOrderDetails(payload);

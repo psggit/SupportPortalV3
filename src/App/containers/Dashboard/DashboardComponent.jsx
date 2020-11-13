@@ -160,7 +160,7 @@ const DashboardComponent = (props) => {
       props.preponeOrder(sendPayload);
     } else {
       props.fetchOrderDetails(sendPayload);
-      window.localStorage.setItem(
+      window.sessionStorage.setItem(
         "dashboardPayload",
         JSON.stringify({ filter: sendPayload.filter })
       );
