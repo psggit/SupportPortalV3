@@ -140,6 +140,12 @@ const RenderIssues = (props) => {
   const [orderId, setOrderId] = useState("");
   const [supportPersonId, setSupportPersonId] = useState();
   const [issueId, setIssueId] = useState();
+  const [data, setData] = useState([]);
+
+  const PAGE_OPTIONS = [25, 30, 45];
+  const currentPage = getQueryParamByName("pageSize") || PAGE_OPTIONS[0];
+  const pageSize = getQueryParamByName("activePage") || 0;
+
 
   const [activeIndex, setActiveIndex] = useState();
 

@@ -56,14 +56,16 @@ const deliveryAgentReducer = createReducer(initialValue, {
     ...state,
     fetchProgress: true,
   }),
-  [fetchDeliveryAgentListSuccess]: (state, data) => ({
-    ...state,
-    deliveryAgentList: data.payload,
-    daListSuccess: true,
-    daListFail: false,
-    daListProgress: false,
-    message: data.payload.message,
-  }),
+  [fetchDeliveryAgentListSuccess]: (state, data) => {
+    return {
+      ...state,
+      deliveryAgentList: data.payload,
+      daListSuccess: true,
+      daListFail: false,
+      daListProgress: false,
+      message: data.payload.message,
+    };
+  },
   [fetchDeliveryAgentListFailed]: (state, data) => ({
     ...state,
     daListSuccess: false,

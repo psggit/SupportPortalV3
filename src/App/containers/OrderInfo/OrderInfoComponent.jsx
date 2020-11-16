@@ -58,6 +58,12 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
     minWidth: 200,
   },
+  selectBox: {
+    width: "100%",
+  },
+  textField: {
+    marginTop: "16px",
+  },
 }));
 
 const OrderInfoComponent = (props) => {
@@ -107,6 +113,7 @@ const OrderInfoComponent = (props) => {
   const [createDisabledBtn, setDisabledBtn] = useState(true);
   const [activeSection, setActiveSection] = useState("");
   const [disableBtn, setDisableBtn] = useState(false);
+  const [valueSelected, setValue] = useState("");
 
   const validateIssue = (event, type) => {
     if (type === "select") {
@@ -149,6 +156,10 @@ const OrderInfoComponent = (props) => {
     setShowError(!showError);
   };
 
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  };
+
   const openDialog = (type) => {
     setIssueType(type);
     if (type == null) {
@@ -169,16 +180,39 @@ const OrderInfoComponent = (props) => {
   };
 
   const updateNotes = () => {
-    let payload = {
-      order_id: orderId,
-      type: issueType,
-      notes: issueDesc,
-    };
+    var payload = null;
+    if (issueType === "retailer") {
+      payload = {
+        order_id: orderId,
+        type: issueType,
+        notes: issueDesc,
+        issue_type: "",
+        consumer_issue_type: "",
+        retailer_issue_type: valueSelected.toString(),
+      };
+    } else {
+      payload = {
+        order_id: orderId,
+        type: issueType,
+        notes: issueDesc,
+        issue_type: "",
+        consumer_issue_type: valueSelected.toString(),
+        retailer_issue_type: "",
+      };
+    }
+    // let payload = {
+    //   order_id: orderId,
+    //   type: issueType,
+    //   notes: issueDesc,
+    //   issue_type: "",
+    //   consumer_issue_type: valueSelected.toString(),
+    //   retailer_issue_type: "",
+    // };
     props.createNotes(payload);
     setOpen(false);
-    props.fetchOrderInfo(orderId);
-    props.fetchCancelReason(payload);
     setIssueDesc("");
+    props.fetchOrderInfo(orderId);
+    // props.fetchCancelReason(payload);
   };
 
   const updateIssue = () => {
@@ -256,6 +290,31 @@ const OrderInfoComponent = (props) => {
           actions={dialogActions}
           openDialog={openDialog}
         >
+          <InputLabel id="demo-simple-select-label">Issue Type</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            className={classes.selectBox}
+            onChange={(event) => handleChange(event)}
+          >
+            {props.NoteListSuccess &&
+              props.noteListData !== null &&
+              props.noteListData.map((value, index) => {
+                if (valueSelected === value) {
+                  return (
+                    <MenuItem value={value.id} key={index} selected={true}>
+                      {value.code}
+                    </MenuItem>
+                  );
+                } else {
+                  return (
+                    <MenuItem value={value.id} key={index}>
+                      {value.code}
+                    </MenuItem>
+                  );
+                }
+              })}
+          </Select>
           <TextField
             id="outlined-textarea"
             placeholder="Add note here"
@@ -265,6 +324,7 @@ const OrderInfoComponent = (props) => {
             size="small"
             value={issueDesc}
             fullWidth
+            className={classes.textField}
             //onChange={(event) => setIssueDesc(event.target.value)}
             onChange={textFieldChange}
           />
@@ -491,6 +551,8 @@ OrderInfoComponent.propTypes = {
   submitIssueSuccess: PropTypes.bool,
   createNotesSuccess: PropTypes.bool,
   resetOnUnmount: PropTypes.func,
+  NoteListSuccess: PropTypes.bool,
+  noteListData: PropTypes.any,
 };
 
 export { OrderInfoComponent };

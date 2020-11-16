@@ -7,3 +7,4 @@ export const sendIcon = require("./sendIcon.svg");
 export const markerIcon = require("./markerIcon.svg");
 export const markerIconConsumer = require("./markerIconConsumer.svg");
 export const markerIconDA = require("./markerIconDA.svg");
+export const mapMarkerIcon = require("./map_marker.svg");

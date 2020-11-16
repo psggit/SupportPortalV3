@@ -23,6 +23,9 @@ const useStyles = makeStyles(() => ({
       padding: 0,
       flex: 0,
     },
+    // "& .MuiTypography-body1": {
+    //   fontWeight: "bolder",
+    // },
     "& .MuiTimelineDot-root": {
       width: 16,
       height: 16,

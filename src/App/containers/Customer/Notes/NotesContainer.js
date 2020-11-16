@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { Notes } from "./NotesComponent";
 import { fetchConsumerNotes } from "../../OrderInfo/CustomerDetails/duck/CustomerOperations";
+import { fetchConsumerNotesList } from "../../OrderInfo/CustomerDetails/duck/CustomerOperations";
 import { createNotes } from "../../OrderInfo/duck";
 import { resetOnUnmount } from "../../OrderInfo/CustomerDetails/duck";
 
@@ -15,12 +16,17 @@ const mapStateToProps = (state) => {
     errorMsg: state.order.customer.errorMsg,
     createNotesSuccess: state.order.orderInfo.createNotesSuccess,
     successMsg: state.order.orderInfo.successMsg,
+    NoteListSuccess: state.order.customer.NoteListSuccess,
+    NoteListFailed: state.order.customer.NoteListFailed,
+    NoteListProgress: state.order.customer.NoteListProgress,
+    noteListData: state.order.customer.noteListData,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchConsumerNotes: (payload) => dispatch(fetchConsumerNotes(payload)),
+    fetchConsumerNotesList: () => dispatch(fetchConsumerNotesList()),
     createNotes: (type) => dispatch(createNotes(type)),
     resetOnUnmount: () => dispatch(resetOnUnmount()),
   };

@@ -130,7 +130,7 @@ const DeliveryAgentComponent = (props) => {
       color="primary"
       key={uuid()}
       onClick={mountUnassignDA}
-      disabled={!props.orderInfo.cancel_order_button}
+      disabled={!props.orderInfo.change_retailer_button}
     >
       Unassign
     </Button>,
@@ -139,7 +139,7 @@ const DeliveryAgentComponent = (props) => {
       color="primary"
       key={uuid()}
       onClick={mountDialogBox}
-      disabled={!props.orderInfo.cancel_order_button}
+      disabled={!props.orderInfo.change_retailer_button}
     >
       Reserve Order
     </Button>,
@@ -156,6 +156,9 @@ const DeliveryAgentComponent = (props) => {
   ];
 
   const keysToRenderInNotesCard = ["notes", "created_at"];
+
+  console.log("[DA-component]", props.daList)
+
   return (
     <Grid container spacing={4}>
       <Grid item xs={6}>

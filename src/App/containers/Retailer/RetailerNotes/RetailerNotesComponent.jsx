@@ -27,6 +27,7 @@ import {
 import { Typography } from "@material-ui/core";
 import { Tab } from "@material-ui/core";
 import { propTypes } from "react-bootstrap/esm/Image";
+import { Select, MenuItem, InputLabel } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   row1: {
@@ -44,6 +45,9 @@ const useStyles = makeStyles((theme) => ({
   orderId: {
     fontSize: "16px",
     color: "rgba(0, 0, 0, 0.54)",
+  },
+  selectBox: {
+    width: "100%",
   },
 }));
 
@@ -64,13 +68,18 @@ function RetailerNotesComponent(props) {
   const orderId = history.location.state.orderId;
   const customerId = history.location.state.customerId;
   const [rows, setRowsData] = useState(null);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(25);
   const [page, setPage] = useState(0);
   const [showData, setShowData] = useState(false);
   const [value, setValue] = React.useState(0);
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
   const [noteData, setNoteData] = useState("");
   const [disableBtn, setDisableBtn] = useState(false);
+  const [selectedValue, setSelectedValue] = useState("");
+
+  const handleChange = (e) => {
+    setSelectedValue(e.target.value);
+  };
 
   const fetchNotes = () => {
     const payload = {
@@ -132,6 +141,7 @@ function RetailerNotesComponent(props) {
   };
   const mountAddNote = () => {
     setShowAddNoteDialog(true);
+    props.fetchNoteList();
   };
   const UnmountAddNote = () => {
     setShowAddNoteDialog(false);
@@ -141,6 +151,9 @@ function RetailerNotesComponent(props) {
       order_id: orderId,
       type: "retailer",
       notes: noteData,
+      issue_type: "",
+      consumer_issue_type: "",
+      retailer_issue_type: selectedValue.toString(),
     };
     props.createNotes(payload);
     fetchNotes();
@@ -207,9 +220,40 @@ function RetailerNotesComponent(props) {
                 ]}
               >
                 <>
-                  <Grid>
+                  {/* <Grid>
                     <p className={classes.orderId}>Order ID: {orderId}</p>
-                  </Grid>
+                  </Grid> */}
+                  <InputLabel id="demo-simple-select-label">
+                    Issue Type
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    className={classes.selectBox}
+                    onChange={(event) => handleChange(event)}
+                  >
+                    {props.issueListSuccess &&
+                      props.issueListData !== null &&
+                      props.issueListData.map((value, index) => {
+                        if (selectedValue === value) {
+                          return (
+                            <MenuItem
+                              value={value.id}
+                              key={index}
+                              selected={true}
+                            >
+                              {value.code}
+                            </MenuItem>
+                          );
+                        } else {
+                          return (
+                            <MenuItem value={value.id} key={index}>
+                              {value.code}
+                            </MenuItem>
+                          );
+                        }
+                      })}
+                  </Select>
                   <TextField
                     id="outlined-multiline-static"
                     onChange={handleTextChange}
@@ -301,6 +345,9 @@ RetailerNotesComponent.propTypes = {
   createNotesFailure: PropTypes.bool,
   successMsg: PropTypes.any,
   resetOnUnmount: PropTypes.func,
+  issueListSuccess: PropTypes.bool,
+  issueListData: PropTypes.object,
+  fetchNoteList: PropTypes.func,
 };
 
 export { RetailerNotesComponent };

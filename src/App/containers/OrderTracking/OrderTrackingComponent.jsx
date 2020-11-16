@@ -14,7 +14,9 @@ import {
   markerIcon,
   markerIconDA,
   markerIconConsumer,
+  mapMarkerIcon,
 } from "../../assets/images";
+import Moment from "moment";
 
 const placesLib = ["places"];
 const mapStyle = require("./styles.json");
@@ -37,8 +39,8 @@ const useStyles = makeStyles(() => ({
     background: "#606060",
     color: "#fff",
     padding: 5,
-    top: "-60px",
-    left: "-45px",
+    top: "-75px",
+    left: "-42px",
     position: "absolute",
     width: 80,
     textAlign: "center",
@@ -138,12 +140,12 @@ const MapComponent = (props) => {
           />
           <Marker
             position={positionConsumer}
-            icon={markerIconConsumer}
+            icon={mapMarkerIcon}
             title={"Customer"}
           />
           <Marker
             position={positionRetailer}
-            icon={markerIcon}
+            icon={mapMarkerIcon}
             title={"Retailer"}
           />
           <OverlayView
@@ -220,7 +222,7 @@ function OrderTrackingComponent(props) {
                       alignContent="flex-start"
                       alignItems="flex-start"
                     >
-                      <img src={markerIconConsumer} />
+                      <img src={mapMarkerIcon} />
                       <Box ml={2}>
                         <Typography variant="body1">Customer name:</Typography>
                         <Typography variant="body2">
@@ -248,7 +250,7 @@ function OrderTrackingComponent(props) {
                       alignContent="flex-start"
                       alignItems="flex-start"
                     >
-                      <img src={markerIcon} />
+                      <img src={mapMarkerIcon} />
                       <Box ml={2}>
                         <Typography variant="body1">Retailer name:</Typography>
                         <Typography variant="body2">
@@ -303,10 +305,26 @@ function OrderTrackingComponent(props) {
             </Paper>
           </Grid>
         )}
-        {showError && show && (
+        {show && (
           <Grid item xs={12}>
             <Box mt={4}>
-              <Alert severity="error">{message}</Alert>
+              <Alert severity="error" show={true}>{props.message}</Alert>
+            </Box>
+          </Grid>
+        )}
+        {show && (
+          <Grid item xs={12}>
+            <Box mt={2}>
+              <Alert severity="info" show={true}>
+                Last Updated at:
+                {props.trackData.last_updated_at}
+                {/* {props.trackData.last_updated_at
+                  ? Moment(props.trackData.last_updated_at).format(
+                      "D MMM hh:mm A"
+                    )
+                  : "-"} */}
+                {/* {Moment("2020-11-06 17:40:53.042002432 +0530 IST").format('h:mm A')} */}
+              </Alert>
             </Box>
           </Grid>
         )}

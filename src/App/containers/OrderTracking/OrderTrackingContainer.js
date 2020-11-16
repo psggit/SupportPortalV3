@@ -10,6 +10,7 @@ const mapStateToProps = (state) => {
     successMsg: state.orderTracking.successMsg,
     errorMsg: state.orderTracking.errorMsg,
     trackData: state.orderTracking.trackData,
+    message: state.orderTracking.message,
   };
 };
 

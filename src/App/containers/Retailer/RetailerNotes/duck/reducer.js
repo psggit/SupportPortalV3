@@ -3,6 +3,9 @@ import {
   fetchNotesSuccessfull,
   fetchNotesFailure,
   fetchNotesInProgress,
+  fetchIssueListSuccess,
+  fetchIssueListFailure,
+  fetchIssueListProgress,
 } from "./action";
 
 const initialState = {
@@ -11,11 +14,14 @@ const initialState = {
   notesFail: false,
   notesSuccess: false,
   errorMsg: "",
+  issueListData: null,
+  issueListSuccess: false,
+  issueListProgress: false,
+  issueListFail: false,
 };
 
 const retailerNotesListReducer = createReducer(initialState, {
   [fetchNotesSuccessfull]: (state, data) => {
-    console.log("retailerNotesListSuccess", data);
     return {
       ...state,
       notesProgress: false,
@@ -33,12 +39,36 @@ const retailerNotesListReducer = createReducer(initialState, {
     errorMsg: "Something went wrong, please try again",
   }),
   [fetchNotesInProgress]: (state) => {
-    console.log("retailerNotes");
     return {
       ...state,
       notesProgress: true,
       notesFail: false,
       notesSuccess: false,
+    };
+  },
+  [fetchIssueListSuccess]: (state, data) => {
+    return {
+      ...state,
+      issueListProgress: false,
+      issueListFailure: false,
+      issueListSuccess: true,
+      errorMsg: "",
+      issueListData: data.payload,
+    };
+  },
+  [fetchIssueListFailure]: (state, data) => ({
+    ...state,
+    issueListProgress: false,
+    issueListFailure: true,
+    issueListSuccess: false,
+    errorMsg: data.payload.message,
+  }),
+  [fetchIssueListProgress]: (state) => {
+    return {
+      ...state,
+      issueListProgress: true,
+      issueListFailure: false,
+      issueListSuccess: false,
     };
   },
 });

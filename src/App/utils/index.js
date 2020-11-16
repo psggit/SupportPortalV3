@@ -46,3 +46,5 @@ export { restockOTPAPI } from "./restockOTPAPI";
 export { restockOrderAPI } from "./restockOrderAPI";
 export { pushOrderAPI } from "./pushOrderAPI";
 export { cancelOrderDSPAPI } from "./cancelOrderDSPAPI";
+export { consumerTypeNotesAPI } from "./consumerTypeNotesAPI";
+export { retailerTypeNotesAPI } from "./retailerTypeNotesAPI";

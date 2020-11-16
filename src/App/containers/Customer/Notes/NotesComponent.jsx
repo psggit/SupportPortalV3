@@ -15,6 +15,7 @@ import { useHistory } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import ErrorMsg from "../../../components/errorMsg";
 import { Typography } from "@material-ui/core";
+import { Select, MenuItem, InputLabel } from "@material-ui/core";
 import uuid from "react-uuid";
 import {
   Table,
@@ -40,12 +41,13 @@ function Notes(props) {
   const classes = useStyles();
   const history = useHistory();
   const [rows, setRowsData] = useState(null);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(25);
   const [page, setPage] = useState(0);
   const [showData, setShowData] = useState(false);
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
   const [noteData, setNoteData] = useState("");
   const [disableBtn, setDisableBtn] = useState(false);
+  const [selectedValue, setValue] = useState("");
   const orderInfos = history.location.state.orderInfos;
   const customerId = history.location.state.customerId;
   const orderId = history.location.state.orderId;
@@ -98,8 +100,13 @@ function Notes(props) {
     }
   };
 
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  };
+
   const mountAddNote = () => {
     setShowAddNoteDialog(true);
+    props.fetchConsumerNotesList();
   };
 
   const UnmountAddNote = () => {
@@ -111,12 +118,14 @@ function Notes(props) {
       order_id: orderId,
       type: "customer",
       notes: noteData,
+      issue_type: "",
+      consumer_issue_type: selectedValue.toString(),
+      retailer_issue_type: "",
     };
     props.createNotes(payload);
     setShowAddNoteDialog(false);
     fetchNote();
   };
-
   return (
     <>
       <TopBar />
@@ -162,9 +171,40 @@ function Notes(props) {
                 ]}
               >
                 <>
-                  <Grid>
+                  {/* <Grid>
                     <p className={classes.orderId}>Order ID: {orderId}</p>
-                  </Grid>
+                  </Grid> */}
+                  <InputLabel id="demo-simple-select-label">
+                    Issue Type
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    className={classes.selectBox}
+                    onChange={(event) => handleChange(event)}
+                  >
+                    {props.NoteListSuccess &&
+                      props.noteListData !== null &&
+                      props.noteListData.map((value, index) => {
+                        if (selectedValue === value) {
+                          return (
+                            <MenuItem
+                              value={value.id}
+                              key={index}
+                              selected={true}
+                            >
+                              {value.code}
+                            </MenuItem>
+                          );
+                        } else {
+                          return (
+                            <MenuItem value={value.id} key={index}>
+                              {value.code}
+                            </MenuItem>
+                          );
+                        }
+                      })}
+                  </Select>
                   <TextField
                     id="outlined-multiline-static"
                     onChange={handleTextChange}
@@ -256,6 +296,9 @@ Notes.propTypes = {
   successMsg: PropTypes.string,
   resetOnUnmount: PropTypes.func,
   createNotesSuccess: PropTypes.bool,
+  NoteListSuccess: PropTypes.bool,
+  noteListData: PropTypes.bool,
+  fetchConsumerNotesList: PropTypes.func,
 };
 
 export { Notes };
@@ -273,5 +316,8 @@ const useStyles = makeStyles((theme) => ({
   orderId: {
     fontSize: "16px",
     color: "rgba(0, 0, 0, 0.54)",
+  },
+  selectBox: {
+    width: "100%",
   },
 }));
