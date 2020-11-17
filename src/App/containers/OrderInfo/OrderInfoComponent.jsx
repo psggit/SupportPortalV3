@@ -219,7 +219,9 @@ const OrderInfoComponent = (props) => {
     const payload = {
       order_id: props.orderId,
       reason: selectedValue,
+      description: newIssueDesc,
     };
+    // console.log(payload);
     props.submitIssue(payload);
     handleAddIssue();
   };
