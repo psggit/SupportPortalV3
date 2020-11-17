@@ -293,6 +293,9 @@ const DeliveryAgentComponent = (props) => {
           />
         )}
       </div>
+      {props.daListFail && (
+        <ErrorMsg show={true} message={props.message} type="error" />
+      )}
     </Grid>
   );
 };
@@ -314,6 +317,7 @@ DeliveryAgentComponent.propTypes = {
   reserveDaSuccess: PropTypes.bool,
   message: PropTypes.any,
   daList: PropTypes.object,
+  daListFail: PropTypes.bool,
   unassignDASuccess: PropTypes.bool,
   errorMsg: PropTypes.string,
   resetOnUnmount: PropTypes.func,
