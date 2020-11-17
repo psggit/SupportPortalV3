@@ -214,6 +214,7 @@ const RenderIssues = (props) => {
   };
 
   const handleAssignIssue = (e, issue) => {
+    e.stopPropagation();
     setAssignIssue(true);
     setOrderId(issue.order_id);
     setIssueId(issue.id);
@@ -304,7 +305,7 @@ const RenderIssues = (props) => {
                     edge="end"
                     aria-label="delete"
                     onClick={(e) => handleResolveIssue(e, issue)}
-                    disabled={true}
+                    disabled={!issue.to_show_resolve || props.assignIssueInProgress}
                     //resolveIconDisabled
                     startIcon={
                       <img
