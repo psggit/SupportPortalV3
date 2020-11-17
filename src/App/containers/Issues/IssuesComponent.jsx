@@ -60,9 +60,7 @@ const useStyles = makeStyles((theme) => ({
       maxHeight: "56px",
     },
   },
-  accordion: {
-    marginBottom: 16,
-  },
+  accordion: {},
   accordionHead: {
     marginBottom: 16,
     backgroundColor: "#E5E5E5",
@@ -70,7 +68,6 @@ const useStyles = makeStyles((theme) => ({
     color: "rgba(0, 0, 0, 0.87)",
   },
   paper: {
-    marginBottom: 16,
     padding: "12px 22px",
     //textAlign: 'center'
   },
