@@ -18,6 +18,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import { resolveIcon } from "./../../assets/images/index";
+import { resolveIconDisabled } from "../../assets/images";
 import ErrorMsg from "./../../components/errorMsg";
 import uuid from "react-uuid";
 // import {
@@ -59,11 +60,14 @@ const useStyles = makeStyles((theme) => ({
       maxHeight: "56px",
     },
   },
-  accordion: {
+  accordion: {},
+  accordionHead: {
     marginBottom: 16,
+    backgroundColor: "#E5E5E5",
+    fontWeight: 700,
+    color: "rgba(0, 0, 0, 0.87)",
   },
   paper: {
-    marginBottom: 16,
     padding: "12px 22px",
     //textAlign: 'center'
   },
@@ -113,6 +117,8 @@ const useStyles = makeStyles((theme) => ({
   resolveIcon: {
     width: 28,
     height: 32,
+    color: "orange",
+    fill: "orange",
   },
   resolveContainer: {
     cursor: "pointer",
@@ -145,7 +151,7 @@ const RenderIssues = (props) => {
   const PAGE_OPTIONS = [25, 30, 45];
   const currentPage = getQueryParamByName("pageSize") || PAGE_OPTIONS[0];
   const pageSize = getQueryParamByName("activePage") || 0;
-
+  const history = useHistory();
 
   const [activeIndex, setActiveIndex] = useState();
 
@@ -200,6 +206,7 @@ const RenderIssues = (props) => {
   };
 
   const handleResolveIssue = (e, issue) => {
+    e.stopPropagation();
     setResolveIssue(true);
     setOrderId(issue.order_id);
     setIssueId(issue.id);
@@ -217,12 +224,13 @@ const RenderIssues = (props) => {
     setSupportPersonId(event.target.value);
   };
 
-  const handleClick = (orderId) => {
-    const history = useHistory();
+  const handleClick = (event, orderId) => {
+    event.stopPropagation();
     history.push(`/order-info/${orderId}`);
   };
 
-  const handleAccordionChange = (activeId) => {
+  const handleAccordionChange = (event, activeId) => {
+    event.preventDefault();
     if (activeIndex !== activeId) setActiveIndex(activeId);
     else setActiveIndex("");
   };
@@ -236,7 +244,7 @@ const RenderIssues = (props) => {
           <Accordion
             key={`accordian${index}`}
             className={classes.accordion}
-            onChange={() => handleAccordionChange(issue.id)}
+            onChange={(event) => handleAccordionChange(event, issue.id)}
             expanded={activeIndex === issue.id ? true : false}
           >
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -245,7 +253,7 @@ const RenderIssues = (props) => {
                   <ListItemText
                     className={classes.title}
                     primary={issue.order_id}
-                    onClick={() => handleClick(issue.order_id)}
+                    onClick={(event) => handleClick(event, issue.order_id)}
                   />
                 </Grid>
                 <Grid item xs={2}>
@@ -292,16 +300,23 @@ const RenderIssues = (props) => {
                   </Button>
                 </Grid>
                 <Grid item xs={1} className={classes.assignBtnDiv}>
-                  <IconButton
+                  <Button
                     edge="end"
                     aria-label="delete"
                     onClick={(e) => handleResolveIssue(e, issue)}
-                    disabled={
-                      !issue.to_show_resolve || props.resolveIssueInProgress
+                    disabled={true}
+                    //resolveIconDisabled
+                    startIcon={
+                      <img
+                        src={
+                          !issue.to_show_resolve || props.assignIssueInProgress
+                            ? resolveIconDisabled
+                            : resolveIcon
+                        }
+                        className={classes.resolveIcon}
+                      />
                     }
-                  >
-                    <img src={resolveIcon} className={classes.resolveIcon} />
-                  </IconButton>
+                  ></Button>
                 </Grid>
               </Grid>
             </AccordionSummary>
@@ -310,31 +325,13 @@ const RenderIssues = (props) => {
                 <Grid item xs={2}>
                   <ListItemText
                     className={classes.subtitle}
-                    primary={"Assigned To"}
+                    primary="Description"
                   />
                 </Grid>
-                <Grid item xs={3}>
-                  <div className={classes.avatarContainer}>
-                    <Avatar
-                      classes={{ root: classes.avatar }}
-                      className={avatarColor}
-                    >
-                      {checkIsLetter(issue.assigned_to_name.charAt(0))
-                        ? issue.assigned_to_name.charAt(0).toUpperCase()
-                        : ""}
-                    </Avatar>
-                    <ListItemText
-                      className={classes.subtitle}
-                      primary={issue.assigned_to_name}
-                    />
-                  </div>
-                </Grid>
-                <Grid item xs={7}>
+                <Grid item xs={10}>
                   <ListItemText
-                    className={classes.datePlacement}
-                    primary={`${Moment(issue.issue_raised_time).format(
-                      "D MMM"
-                    )} at ${Moment(issue.issue_raised_time).format("hh:mm A")}`}
+                    className={classes.subtitle}
+                    primary={issue.description}
                   />
                 </Grid>
               </Grid>
@@ -501,6 +498,38 @@ const IssuesComponent = (props) => {
             >
               {props.fetchIssuesSuccess && props.issueList !== null && (
                 <>
+                  <Accordion
+                    key={`accordianHead`}
+                    className={classes.accordionHead}
+                  >
+                    <AccordionSummary>
+                      <Grid
+                        container
+                        item
+                        xs={12}
+                        classes={{ root: classes.grid }}
+                      >
+                        <Grid item xs={2}>
+                          <ListItemText primary={"ORDER ID"} />
+                        </Grid>
+                        <Grid item xs={2}>
+                          <ListItemText primary={"ISSUE TYPE"} />
+                        </Grid>
+                        <Grid item xs={3}>
+                          <div className={classes.avatarContainer}>
+                            <ListItemText primary={"ASSIGNED TO"} />
+                          </div>
+                        </Grid>
+                        <Grid item xs={2}>
+                          <ListItemText primary={`ASSIGNED AT`} />
+                        </Grid>
+                        <Grid item xs={3} className={classes.assignBtnDiv}>
+                          <ListItemText primary={`ACTIONS`} />
+                        </Grid>
+                      </Grid>
+                    </AccordionSummary>
+                  </Accordion>
+                  <></>
                   <RenderIssues {...props} />
                 </>
               )}
@@ -513,12 +542,14 @@ const IssuesComponent = (props) => {
                 )}
               {props.fetchIssuesFailed && (
                 <>
-                  <Paper className={classes.paper}>Unable to fetch issues. Please try again!</Paper>
+                  <Paper className={classes.paper}>
+                    Unable to fetch issues. Please try again!
+                  </Paper>
                 </>
               )}
               {props.fetchIssuesSuccess &&
-                (props.issueList !== null &&
-                props.issueList.issues.length > 0) && (
+                props.issueList !== null &&
+                props.issueList.issues.length > 0 && (
                   <TablePagination
                     component="div"
                     count={props.issueList.count}
@@ -527,7 +558,7 @@ const IssuesComponent = (props) => {
                     rowsPerPage={parseInt(pageLimit)}
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                   />
-              )}
+                )}
               {/* {!props.fetchIssuesInProgress && props.issueList !== null && (
                 <>
                   <RenderIssues {...props} />

@@ -202,6 +202,8 @@ function OrderTrackingComponent(props) {
         }
         setShowError(true);
       }
+    }else{
+      setShowError(true);
     }
   }, [props.fetchLiveDataSuccess]);
 
