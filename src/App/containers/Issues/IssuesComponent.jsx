@@ -334,7 +334,7 @@ const RenderIssues = (props) => {
                 <Grid item xs={10}>
                   <ListItemText
                     className={classes.subtitle}
-                    primary={`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis dolor malesuada diam pretium mattis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis leo magna, pretium a dictum a, venenatis ac neque. Maecenas vulputate tempus ipsum, sed mattis ipsum maximus molestie. Mauris sit amet orci ipsum. Suspendisse vehicula sapien mauris, id placerat augue tristique eget. Sed congue varius magna, eget scelerisque magna aliquet in. Mauris tincidunt risus quis mollis ullamcorper. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris luctus sem nec lacinia dictum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nullam laoreet mauris sed leo congue dignissim. Proin lacinia tellus eget quam gravida, vitae scelerisque mauris porta. Suspendisse dignissim aliquet urna eget pharetra. `}
+                    primary={issue.description}
                   />
                 </Grid>
               </Grid>
