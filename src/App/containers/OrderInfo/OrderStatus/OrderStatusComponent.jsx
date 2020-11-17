@@ -36,9 +36,13 @@ const useStyles = makeStyles(() => ({
     fontSize: 16,
     paddingBottom: 24,
   },
+  distinguish: {
+    fontWeight: 700,
+  },
 }));
 
 const RenderTimeline = (props) => {
+  const classes = useStyles();
   return (
     <>
       {props.steps.map((item, index) => {
@@ -49,7 +53,13 @@ const RenderTimeline = (props) => {
               {props.steps.length !== index + 1 ? <TimelineConnector /> : ""}
             </TimelineSeparator>
             <TimelineContent>
-              <Typography>{item.order_status}</Typography>
+              {index === 0 ? (
+                <Typography className={classes.distinguish}>
+                  {item.order_status}
+                </Typography>
+              ) : (
+                <Typography>{item.order_status}</Typography>
+              )}
               <Typography variant="subtitle1">
                 {Moment(item.time).format("D MMM hh:mm A")} <br />
                 {item.message}
