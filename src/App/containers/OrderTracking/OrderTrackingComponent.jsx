@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   GoogleMap,
@@ -53,6 +53,8 @@ const MapComponent = (props) => {
   const gpsAgent = props.trackData.agent_gps.split(",");
   const gpsConsumer = props.trackData.consumer_gps.split(",");
   const gpsRetailer = props.trackData.retailer_gps.split(",");
+  const [center, setCenter] = useState(null);
+
   const mapRef = useRef(null);
   const [positionAgent] = useState({
     lat: parseFloat(gpsAgent[0]),
@@ -68,11 +70,103 @@ const MapComponent = (props) => {
   });
   const [current] = useState(null);
 
+
+  function rad2degr(rad) { return rad * 180 / Math.PI; }
+  function degr2rad(degr) { return degr * Math.PI / 180; }
+
+  function getLatLngCenter(latLngInDegr) {
+    var LATIDX = 0;
+    var LNGIDX = 1;
+    var sumX = 0;
+    var sumY = 0;
+    var sumZ = 0;
+
+    for (var i = 0; i < latLngInDegr.length; i++) {
+      var lat = degr2rad(latLngInDegr[i][LATIDX]);
+      var lng = degr2rad(latLngInDegr[i][LNGIDX]);
+      // sum of cartesian coordinates
+      sumX += Math.cos(lat) * Math.cos(lng);
+      sumY += Math.cos(lat) * Math.sin(lng);
+      sumZ += Math.sin(lat);
+    }
+
+    var avgX = sumX / latLngInDegr.length;
+    var avgY = sumY / latLngInDegr.length;
+    var avgZ = sumZ / latLngInDegr.length;
+
+    // convert average x, y, z coordinate to latitude and longtitude
+    var lng = Math.atan2(avgY, avgX);
+    var hyp = Math.sqrt(avgX * avgX + avgY * avgY);
+    var lat = Math.atan2(avgZ, hyp);
+
+    //return ([parseFloat(rad2degr(lat)), parseFloat(rad2degr(lng))]);
+    return { lat: parseFloat(rad2degr(lat)), lng: parseFloat(rad2degr(lng)) } 
+  }
+
+  function GetCenterFromDegrees(data) {
+    if (!(data.length > 0)) {
+      return false;
+    }
+
+    var num_coords = data.length;
+
+    var X = 0.0;
+    var Y = 0.0;
+    var Z = 0.0;
+
+    for (var i = 0; i < data.length; i++) {
+      var lat = data[i][0] * Math.PI / 180;
+      var lon = data[i][1] * Math.PI / 180;
+
+      var a = Math.cos(lat) * Math.cos(lon);
+      var b = Math.cos(lat) * Math.sin(lon);
+      var c = Math.sin(lat);
+
+      X += a;
+      Y += b;
+      Z += c;
+    }
+
+    X /= num_coords;
+    Y /= num_coords;
+    Z /= num_coords;
+
+    var lon = Math.atan2(Y, X);
+    var hyp = Math.sqrt(X * X + Y * Y);
+    var lat = Math.atan2(Z, hyp);
+
+    var newX = (lat * 180 / Math.PI);
+    var newY = (lon * 180 / Math.PI);
+
+    //return new Array(newX, newY);
+    return { lat: parseFloat((newX)), lng: parseFloat((newY)) } 
+  }
+
+  const centerData = GetCenterFromDegrees([
+    // [
+    //   parseFloat(gpsAgent[0]),
+    //   parseFloat(gpsAgent[1]),
+    // ],
+    [
+      parseFloat(gpsConsumer[0]),
+      parseFloat(gpsConsumer[1]),
+    ],
+    [
+      parseFloat(gpsRetailer[0]),
+      parseFloat(gpsRetailer[1]),
+    ],
+  ])
+
+  console.log("cneter", centerData)
+  //setCenterConsumer(centerData)
+
+
   useEffect(() => {
     if (mapRef.current && current) {
       mapRef.current.setCenter(current);
       setCenterConsumer(current);
     }
+    setCenter(centerData)
   }, [current]);
 
   const onLoad = (map) => {
@@ -82,6 +176,12 @@ const MapComponent = (props) => {
   const onUnmount = () => {
     mapRef.current = null;
     return null;
+  };
+
+  const handleBoundsChanged = () => {
+    console.log("hhh")
+    const mapCenter = mapRef.current.getCenter(); //get map center
+    setCenter(mapCenter);
   };
 
   const onCenterChanged = () => {
@@ -119,7 +219,9 @@ const MapComponent = (props) => {
             top: "60px",
             height: "65vh",
           }}
-          center={positionConsumer}
+          //position={center}
+          //onBoundsChanged={useCallback(handleBoundsChanged)}
+          center={center}
           zoom={16}
           onLoad={onLoad}
           onDragEnd={onCenterChanged}

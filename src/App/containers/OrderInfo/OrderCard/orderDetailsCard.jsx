@@ -74,10 +74,10 @@ const OrderDetailsCard = (props) => {
     const payload = {
       city_id: props.order.city_id.toString(),
     };
-    if (localStorage.getItem("x-hasura-role") !== "ops_delivery_manager") {
+    //if (localStorage.getItem("x-hasura-role") !== "ops_delivery_manager") {
       props.deliverOrderReasons(payload);
       props.fetchKycList();
-    }
+    //}
 
     return () => {
       props.resetOnUnmount();
@@ -400,10 +400,10 @@ const OrderDetailsCard = (props) => {
                 type="button"
               >
                 <OrderSummaryItem title="Refund Amount" />
-                <OrderSummaryItem
+                {/* <OrderSummaryItem
                   title="Wallet:"
                   value={props.cancelOrderSummaryData.refund_amount.wallet}
-                />
+                /> */}
                 <OrderSummaryItem
                   title="HipBar Wallet:"
                   value={
