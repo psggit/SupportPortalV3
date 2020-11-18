@@ -61,6 +61,12 @@ function Notes(props) {
     fetchNote();
   }, []);
 
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     location.reload();
+  //   }, 2500);
+  // }, [props.createNotesSuccess]);
+
   useEffect(() => {
     if (props.notesSuccess) {
       if (props.customerNotes.orderNotes !== null) {

@@ -128,14 +128,11 @@ const ChangeRetailerComponent = (props) => {
               textColor="primary"
               centered
             >
-              <Tab label={<Button color="primary">Change Retailer</Button>} />,
+              <Tab label={<Button color="primary">Change Retailer</Button>} />
             </Tabs>
           </Grid>
         </Grid>
       </Paper>
-      {props.listRetailerFailed && (
-        <ErrorMsg show={true} message={props.errorMsg} type={"error"} />
-      )}
       <Box className={classes.boxContainer}>
         <Grid container spacing={4} className={classes.containerBox}>
           {props.listRetailerSuccess &&
@@ -151,6 +148,9 @@ const ChangeRetailerComponent = (props) => {
             ))}
         </Grid>
       </Box>
+      {props.listRetailerFailed && (
+        <ErrorMsg show={true} message={props.errorMsg} type={"error"} />
+      )}
     </div>
   );
 };

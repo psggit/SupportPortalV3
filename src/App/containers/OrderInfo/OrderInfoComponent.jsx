@@ -98,7 +98,7 @@ const OrderInfoComponent = (props) => {
       if (props.order.cancel_order_button) {
         props.fetchCancelReason(payload);
       }
-      // props.fetchIssueTypes();
+      props.fetchIssueTypes();
     }
   }, [props.fetchOrderInfoSuccess]);
 
@@ -195,7 +195,7 @@ const OrderInfoComponent = (props) => {
         notes: issueDesc,
         consumer_issue_type: parseInt(valueSelected),
       };
-    } else if (issueType === "consumer") {
+    } else {
       payload = {
         order_id: orderId,
         type: issueType,
@@ -274,6 +274,7 @@ const OrderInfoComponent = (props) => {
   }
 
   if (props.fetchOrderInfoFailure) {
+    console.log("[orderinfo]", props);
     return (
       <ErrorMsg
         show={true}

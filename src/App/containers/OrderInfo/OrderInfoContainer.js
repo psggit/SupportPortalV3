@@ -28,6 +28,7 @@ const mapStateToProps = (state) => {
     customerDetails: state.order.customerDetails,
     from: state.login.authData.mobile,
     successMsg: state.order.orderInfo.successMsg,
+    errorMsg: state.order.orderInfo.errorMsg,
     connectCallSuccess: state.order.orderInfo.connectCallSuccess,
     fetchIssueTypesSuccess: state.order.orderInfo.fetchIssueTypesSuccess,
     fetchIssueTypesProgress: state.order.orderInfo.fetchIssueTypesProgress,

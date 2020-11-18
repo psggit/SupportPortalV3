@@ -1,16 +1,15 @@
 import { apiUrl } from "./config";
 
-const headers = {
-  Accept: "application/json",
-  "Content-Type": "application/json",
-  "App-Name": "HipBar-Drinks",
-  "x-hasura-role": `${localStorage.getItem("x-hasura-role")}`,
-  "hasura-id": `${localStorage.getItem("hasura-id")}`,
-};
-
 const fetchIssuesAPI = (reqBody, process, onSuccess, onError) => {
   const URL = ` https://${apiUrl}/deliveryman/api/1/support/issue/fetch-v2`;
-  console.log(URL);
+  const headers = {
+    // eslint-disable-next-line prettier/prettier
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "App-Name": "HipBar-Drinks",
+    "x-hasura-role": `${localStorage.getItem("x-hasura-role")}`,
+    "hasura-id": `${localStorage.getItem("hasura-id")}`,
+  };
   fetch(URL, {
     method: "POST",
     headers: headers,

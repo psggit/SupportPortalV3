@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 const DashboardComponent = (props) => {
   useEffect(() => {
-    // console.log("useEffect", props);
+    console.log("useEffect - Dashboard", localStorage.getItem("x-hasura-role"));
     if (localStorage.getItem("x-hasura-role") !== "ops_delivery_manager") {
       props.fetchDeliveryStatus();
     }

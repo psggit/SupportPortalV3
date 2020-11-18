@@ -212,7 +212,6 @@ const RenderIssues = (props) => {
 
   const handleConfirmation = () => {
     let payload;
-
     if (assignIssue) {
       payload = {
         orderId: orderId,
@@ -375,7 +374,7 @@ const RenderIssues = (props) => {
         <Dialog
           title={resolveIssue ? `RESOLVE ISSUE` : `REASSIGN ISSUE`}
           subtitle={
-            resolveIssue ? "Are you sure want to ressolve the issue?" : ""
+            resolveIssue ? "Are you sure want to resolve the issue?" : ""
           }
           actions={[
             <Button
@@ -473,7 +472,7 @@ const IssuesComponent = (props) => {
     const payload = {
       limit: parseInt(currentPage),
       offset: activePage * pageLimit,
-      is_resolved: status === "resolved" ? true : false,
+      is_resolved: selectedStatus === "resolved" ? true : false,
     };
     props.fetchIssueList(payload);
   }, [pageLimit, activePage]);
@@ -482,7 +481,7 @@ const IssuesComponent = (props) => {
     if (props.assignIssueSuccess || props.resolveIssueSuccess) {
       setTimeout(() => {
         location.reload();
-      }, 1500);
+      }, 2500);
     }
   }, [props.assignIssueSuccess, props.resolveIssueSuccess]);
 
