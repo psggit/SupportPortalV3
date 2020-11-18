@@ -186,18 +186,21 @@ const OrderInfoComponent = (props) => {
         order_id: orderId,
         type: issueType,
         notes: issueDesc,
-        issue_type: "",
-        consumer_issue_type: "",
         retailer_issue_type: valueSelected.toString(),
       };
-    } else {
+    } else if (issueType === "consumer") {
       payload = {
         order_id: orderId,
         type: issueType,
         notes: issueDesc,
-        issue_type: "",
         consumer_issue_type: valueSelected.toString(),
-        retailer_issue_type: "",
+      };
+    } else if (issueType === "delivery_agent") {
+      payload = {
+        order_id: orderId,
+        type: issueType,
+        notes: issueDesc,
+        delivery_agent_issue_type: valueSelected.toString(),
       };
     }
     // let payload = {

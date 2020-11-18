@@ -42,10 +42,10 @@ const useStyles = makeStyles((theme) => ({
     color: "#606060",
   },
   ListItemTextLabel: {
-    width: "70%",
+    width: "60%",
   },
   ListItemTextValue: {
-    width: "30%",
+    width: "40%",
     textAlign: "right",
   },
   nested: {

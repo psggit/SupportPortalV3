@@ -157,7 +157,7 @@ const DeliveryAgentComponent = (props) => {
 
   const keysToRenderInNotesCard = ["notes", "created_at"];
 
-  console.log("[DA-component]", props.daList)
+  // console.log("[DA-component]", props.daList)
 
   return (
     <Grid container spacing={4}>

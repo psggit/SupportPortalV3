@@ -9,7 +9,7 @@ import {
 import { resetOnUnmount } from "./duck/index";
 
 const mapStateToProps = (state) => {
-  console.log("[DaList]", state.order.deliveryAgent.deliveryAgentList);
+  // console.log("[DaList]", state.order.deliveryAgent.deliveryAgentList);
   return {
     orderInfo: state.order.orderInfo.orderDetails,
     deliveryAgentNotes: state.order.deliveryAgent.deliveryAgentNotesData,

@@ -17,6 +17,7 @@ import {
   mapMarkerIcon,
 } from "../../assets/images";
 import Moment from "moment";
+import ErrorMsg from "../../components/errorMsg";
 
 const placesLib = ["places"];
 const mapStyle = require("./styles.json");
@@ -169,14 +170,15 @@ MapComponent.propTypes = {
 function OrderTrackingComponent(props) {
   let orderID = props.orderId;
   const classes = useStyles();
+  const [interval, setIntervalState] = useState(0);
+  // let intervalValue = 0;
   useEffect(() => {
     props.fetchDeliveryStatus(orderID);
-    // let count = 0;
-    let interval = setInterval(function () {
+    let intervalValue = setInterval(function () {
       // console.log("update location", count);
-      // count++;
       props.fetchDeliveryStatus(orderID);
     }, 10000);
+    setIntervalState(intervalValue);
     return () => {
       clearInterval(interval);
       props.resetOnUnmountFunction();
@@ -202,29 +204,39 @@ function OrderTrackingComponent(props) {
         }
         setShowError(true);
       }
-    }else{
-      setShowError(true);
     }
   }, [props.fetchLiveDataSuccess]);
+
+  useEffect(() => {
+    if (props.fetchLiveDataFailure) {
+      setShowError(true);
+      clearInterval(interval);
+    }
+  }, [props.fetchLiveDataFailure]);
+
+  // console.log("fetchLiveDataFailure ", props);
+  if (props.fetchLiveDataFailure) {
+    clearInterval(interval);
+  }
 
   return (
     <>
       <Grid container>
-        {show && (
-          <Grid item xs={12}>
-            <Paper className={classes.card} elevation={2}>
-              <Typography variant="body1" className={classes.cardHeader}>
-                ORDER TRACKING
-              </Typography>
-              <Grid container spacing={4} className={classes.containerBox}>
-                <Grid item xs={4}>
-                  <Paper className={classes.root} elevation={0}>
-                    <Box
-                      display="flex"
-                      alignContent="flex-start"
-                      alignItems="flex-start"
-                    >
-                      <img src={mapMarkerIcon} />
+        <Grid item xs={12}>
+          <Paper className={classes.card} elevation={2}>
+            <Typography variant="body1" className={classes.cardHeader}>
+              ORDER TRACKING
+            </Typography>
+            <Grid container spacing={4} className={classes.containerBox}>
+              <Grid item xs={4}>
+                <Paper className={classes.root} elevation={0}>
+                  <Box
+                    display="flex"
+                    alignContent="flex-start"
+                    alignItems="flex-start"
+                  >
+                    <img src={mapMarkerIcon} />
+                    {show && (
                       <Box ml={2}>
                         <Typography variant="body1">Customer name:</Typography>
                         <Typography variant="body2">
@@ -242,17 +254,19 @@ function OrderTrackingComponent(props) {
                             : "-"}
                         </Typography>
                       </Box>
-                    </Box>
-                  </Paper>
-                </Grid>
-                <Grid item xs={4}>
-                  <Paper className={classes.root} elevation={0}>
-                    <Box
-                      display="flex"
-                      alignContent="flex-start"
-                      alignItems="flex-start"
-                    >
-                      <img src={mapMarkerIcon} />
+                    )}
+                  </Box>
+                </Paper>
+              </Grid>
+              <Grid item xs={4}>
+                <Paper className={classes.root} elevation={0}>
+                  <Box
+                    display="flex"
+                    alignContent="flex-start"
+                    alignItems="flex-start"
+                  >
+                    <img src={mapMarkerIcon} />
+                    {show && (
                       <Box ml={2}>
                         <Typography variant="body1">Retailer name:</Typography>
                         <Typography variant="body2">
@@ -270,17 +284,19 @@ function OrderTrackingComponent(props) {
                             : "-"}
                         </Typography>
                       </Box>
-                    </Box>
-                  </Paper>
-                </Grid>
-                <Grid item xs={4}>
-                  <Paper className={classes.root} elevation={0}>
-                    <Box
-                      display="flex"
-                      alignContent="flex-start"
-                      alignItems="flex-start"
-                    >
-                      <img src={markerIconDA} />
+                    )}
+                  </Box>
+                </Paper>
+              </Grid>
+              <Grid item xs={4}>
+                <Paper className={classes.root} elevation={0}>
+                  <Box
+                    display="flex"
+                    alignContent="flex-start"
+                    alignItems="flex-start"
+                  >
+                    <img src={markerIconDA} />
+                    {show && (
                       <Box ml={2}>
                         <Typography variant="body1">
                           Delivery Agent name:
@@ -300,17 +316,20 @@ function OrderTrackingComponent(props) {
                             : "-"}
                         </Typography>
                       </Box>
-                    </Box>
-                  </Paper>
-                </Grid>
+                    )}
+                  </Box>
+                </Paper>
               </Grid>
-            </Paper>
-          </Grid>
-        )}
+            </Grid>
+          </Paper>
+        </Grid>
+
         {show && (
           <Grid item xs={12}>
             <Box mt={4}>
-              <Alert severity="error" show={true}>{props.message}</Alert>
+              <Alert severity="error" show={true}>
+                {props.message}
+              </Alert>
             </Box>
           </Grid>
         )}
@@ -333,6 +352,9 @@ function OrderTrackingComponent(props) {
         <Grid item xs={12}>
           <Box mb={10}>{show && <MapComponent {...props} />}</Box>
         </Grid>
+        {showError && (
+          <ErrorMsg show={true} message={props.message} type="error" />
+        )}
       </Grid>
     </>
   );
