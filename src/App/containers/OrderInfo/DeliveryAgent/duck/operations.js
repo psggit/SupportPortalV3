@@ -11,12 +11,16 @@ import {
   fetchReserveDASuccess,
   fetchReserveDAFailed,
   fetchReserveDAProgress,
+  fetchDaIssueListProgress,
+  fetchDaIssueListSuccess,
+  fetchDaIssueListFailure,
 } from "./action";
 // import { createSession } from "../../../utils";
 import { fetchRetailerNotesAPI } from "../../../../utils/fetchRetailerNotesAPI";
 import { daListAPI } from "../../../../utils/daListAPI";
 import { unassignDaAPI } from "../../../../utils/unassignDaAPI";
 import { reserveOrderAPI } from "../../../../utils";
+import { daTypeNotesAPI } from "../../../../utils/daTypeNotesAPI";
 
 const processResponse = () => {
   return (res) => {
@@ -34,10 +38,24 @@ const onSuccess = (dispatch) => {
   };
 };
 
+const onSuccessIssue = (dispatch) => {
+  return (data) => {
+    dispatch(fetchDaIssueListSuccess(data));
+  };
+};
+
 const onError = (dispatch) => {
   return (data) => {
     data.json().then((json) => {
       dispatch(fetchDeliveryAgentNotesFailed(json));
+    });
+  };
+};
+
+const onErrorIssue = (dispatch) => {
+  return (data) => {
+    data.json().then((json) => {
+      dispatch(fetchDaIssueListFailure(json));
     });
   };
 };
@@ -144,9 +162,21 @@ const reserveDeliveryAgent = (reqBody) => {
   };
 };
 
+const fetchDaIssueList = () => {
+  return (dispatch) => {
+    dispatch(fetchDaIssueListProgress());
+    daTypeNotesAPI(
+      processResponse(dispatch),
+      onSuccessIssue(dispatch),
+      onErrorIssue(dispatch)
+    );
+  };
+};
+
 export {
   fetchDeliveryAgentNotes,
   fetchDAList,
   unassignDeliveryAgent,
   reserveDeliveryAgent,
+  fetchDaIssueList,
 };

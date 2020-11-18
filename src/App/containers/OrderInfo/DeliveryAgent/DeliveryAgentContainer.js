@@ -5,6 +5,7 @@ import {
   fetchDAList,
   unassignDeliveryAgent,
   reserveDeliveryAgent,
+  fetchDaIssueList,
 } from "./duck/operations";
 import { resetOnUnmount } from "./duck/index";
 
@@ -28,6 +29,11 @@ const mapStateToProps = (state) => {
     reserveDaFail: state.order.deliveryAgent.reserveDaFail,
     orderId: state.home.orderId,
     customerId: state.order.orderInfo.customerId,
+    fetchDaIssueListProgress:
+      state.order.deliveryAgent.fetchDaIssueListProgress,
+    fetchDaIssueListSuccess: state.order.deliveryAgent.fetchDaIssueListSuccess,
+    fetchDaIssueListFailure: state.order.deliveryAgent.fetchDaIssueListFailure,
+    daIssueList: state.order.deliveryAgent.daIssueList,
   };
 };
 
@@ -40,6 +46,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(fetchDAList(orderId, retailerId)),
     reserveDeliveryAgent: (payload) => dispatch(reserveDeliveryAgent(payload)),
     resetOnUnmount: () => dispatch(resetOnUnmount()),
+    fetchDaIssueList: () => dispatch(fetchDaIssueList()),
   };
 };
 

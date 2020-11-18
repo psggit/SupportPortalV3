@@ -118,9 +118,7 @@ function Notes(props) {
       order_id: orderId,
       type: "customer",
       notes: noteData,
-      issue_type: "",
-      consumer_issue_type: selectedValue.toString(),
-      retailer_issue_type: "",
+      consumer_issue_type: parseInt(selectedValue),
     };
     props.createNotes(payload);
     setShowAddNoteDialog(false);

@@ -440,13 +440,11 @@ function OrderTrackingComponent(props) {
             <Box mt={2}>
               <Alert severity="info" show={true}>
                 Last Updated at:
-                {props.trackData.last_updated_at}
-                {/* {props.trackData.last_updated_at
-                  ? Moment(props.trackData.last_updated_at).format(
-                      "D MMM hh:mm A"
+                {props.trackData.last_updated_at
+                  ? Moment(props.trackData.last_updated_at.slice(0,35)).format(
+                      "DD/MM/YYYY hh:mm A"
                     )
-                  : "-"} */}
-                {/* {Moment("2020-11-06 17:40:53.042002432 +0530 IST").format('h:mm A')} */}
+                  : "-"}
               </Alert>
             </Box>
           </Grid>

@@ -2,9 +2,13 @@ import {
   fetchRetailerNotesSuccess,
   fetchRetailerNotesFailed,
   fetchRetailerNotesProgress,
+  fetchRetailerIssueListSuccess,
+  fetchRetailerIssueListFailure,
+  fetchRetailerIssueListProgress,
 } from "./action";
 // import { createSession } from "../../../utils";
 import { fetchRetailerNotesAPI } from "../../../../utils/fetchRetailerNotesAPI";
+import { retailerTypeNotesAPI } from "../../../../utils/retailerTypeNotesAPI";
 
 const processResponse = () => {
   // console.log("[processResponse]");
@@ -28,10 +32,22 @@ const onSuccess = (dispatch) => {
   };
 };
 
+const onSuccessIssue = (dispatch) => {
+  return (data) => {
+    dispatch(fetchRetailerIssueListSuccess(data));
+  };
+};
+
 const onError = (dispatch) => {
   return (err) => {
     // console.log("[onError]", err);
     dispatch(fetchRetailerNotesFailed(err));
+  };
+};
+
+const onErrorIssue = (dispatch) => {
+  return (error) => {
+    dispatch(fetchRetailerIssueListFailure(error));
   };
 };
 
@@ -51,4 +67,15 @@ const fetchRetailerNotes = (orderId) => {
   };
 };
 
-export { fetchRetailerNotes };
+const fetchRetailerIssueList = () => {
+  return (dispatch) => {
+    dispatch(fetchRetailerIssueListProgress());
+    retailerTypeNotesAPI(
+      processResponse(dispatch),
+      onSuccessIssue(dispatch),
+      onErrorIssue(dispatch)
+    );
+  };
+};
+
+export { fetchRetailerNotes, fetchRetailerIssueList };

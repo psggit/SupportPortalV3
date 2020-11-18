@@ -40,6 +40,11 @@ const mapStateToProps = (state) => {
     consumerNoteListFailed: state.order.customer.consumerNoteListFailed,
     consumerNoteListProgress: state.order.customer.consumerNoteListProgress,
     NoteListSuccess: state.order.customer.NoteListSuccess,
+    retailerIssueListData: state.order.retailer.retailerIssueList,
+    fetchRetailerIssueListSuccess:
+      state.order.retailer.fetchRetailerIssueListSuccess,
+    fetchDaIssueListSuccess: state.order.deliveryAgent.fetchDaIssueListSuccess,
+    daIssueList: state.order.deliveryAgent.daIssueList,
   };
 };
 
