@@ -100,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
 
 SideNav.propTypes = {
   activeSection: PropTypes.string,
-  delivery_state: PropTypes.string,
+  delivery_state: PropTypes.any,
   handleAddIssue: PropTypes.any,
   handleScroll: PropTypes.any,
 };

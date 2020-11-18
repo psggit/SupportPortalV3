@@ -95,8 +95,9 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600,
   },
   dateStyle: {
-    fontSize: 12,
+    fontSize: 14,
     color: "#696969",
+    marginLeft: 10,
   },
   datePlacement: {
     fontSize: 12,
@@ -146,11 +147,16 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     marginBottom: 10,
     textAlign: "left",
+    fontWeight: 400,
   },
   btnSelected: {
     width: "100%",
     marginBottom: 10,
     background: "#e5f3f7",
+    fontWeight: 600,
+  },
+  filterHeading: {
+    marginBottom: 10,
   },
 }));
 
@@ -306,6 +312,7 @@ const RenderIssues = (props) => {
                     primary={`${Moment(issue.issue_raised_time).format(
                       "D MMM"
                     )} at ${Moment(issue.issue_raised_time).format("hh:mm A")}`}
+                    disableTypography
                   />
                 </Grid>
                 <Grid item xs={2} className={classes.assignBtnDiv}>
@@ -543,7 +550,7 @@ const IssuesComponent = (props) => {
                 ISSUES
               </Typography>
               <br />
-              <Typography variant="body2">Status</Typography>
+              <Typography variant="body2" className={classes.filterHeading}>Status</Typography>
               <Button
                 size="small"
                 className={
