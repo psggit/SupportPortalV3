@@ -66,6 +66,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#E5E5E5",
     fontWeight: 700,
     color: "rgba(0, 0, 0, 0.87)",
+    "& .Mui-disabled": {
+      opacity: 1,
+    },
   },
   paper: {
     padding: "12px 22px",
@@ -84,6 +87,12 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 14,
     color: "#606060",
     wordBreak: "break-word",
+  },
+  subtitle1: {
+    fontSize: 16,
+    color: "#606060",
+    wordBreak: "break-word",
+    fontWeight: 600,
   },
   dateStyle: {
     fontSize: 12,
@@ -132,6 +141,16 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     marginLeft: "16px",
     minWidth: 120,
+  },
+  btn: {
+    width: "100%",
+    marginBottom: 10,
+    textAlign: "left",
+  },
+  btnSelected: {
+    width: "100%",
+    marginBottom: 10,
+    background: "#e5f3f7",
   },
 }));
 
@@ -261,6 +280,7 @@ const RenderIssues = (props) => {
                   <ListItemText
                     className={classes.subtitle}
                     primary={issue.reason}
+                    disableTypography
                   />
                 </Grid>
                 <Grid item xs={3}>
@@ -276,6 +296,7 @@ const RenderIssues = (props) => {
                     <ListItemText
                       className={classes.subtitle}
                       primary={issue.assigned_to_name}
+                      disableTypography
                     />
                   </div>
                 </Grid>
@@ -305,7 +326,9 @@ const RenderIssues = (props) => {
                     edge="end"
                     aria-label="delete"
                     onClick={(e) => handleResolveIssue(e, issue)}
-                    disabled={!issue.to_show_resolve || props.assignIssueInProgress}
+                    disabled={
+                      !issue.to_show_resolve || props.assignIssueInProgress
+                    }
                     //resolveIconDisabled
                     startIcon={
                       <img
@@ -325,8 +348,9 @@ const RenderIssues = (props) => {
               <Grid container item xs={12} classes={{ root: classes.grid }}>
                 <Grid item xs={2}>
                   <ListItemText
-                    className={classes.subtitle}
+                    classes={{ root: classes.subtitle1 }}
                     primary="Description"
+                    disableTypography
                   />
                 </Grid>
                 <Grid item xs={10}>
@@ -412,6 +436,22 @@ const RenderIssues = (props) => {
   );
 };
 
+RenderIssues.propTypes = {
+  fetchIssuesInProgress: PropTypes.bool,
+  fetchIssuesSuccess: PropTypes.bool,
+  fetchIssuesFailed: PropTypes.bool,
+  issueList: PropTypes.any,
+  fetchSupportPersonListInProgress: PropTypes.any,
+  fetchSupportPerson: PropTypes.func,
+  supportPersonList: PropTypes.any,
+  fetchSupportPersonListSuccess: PropTypes.bool,
+  resolveIssue: PropTypes.func,
+  assignIssue: PropTypes.func,
+  assignIssueInProgress: PropTypes.bool,
+  assignIssueSuccess: PropTypes.bool,
+  resolveIssueSuccess: PropTypes.bool,
+};
+
 const IssuesComponent = (props) => {
   const classes = useStyles();
   const PAGE_OPTIONS = [10, 25, 30];
@@ -420,12 +460,13 @@ const IssuesComponent = (props) => {
 
   const [pageLimit, setPageLimit] = useState(currentPage);
   const [activePage, setActivePage] = useState(pageSize);
+  const [selectedStatus, setSelectedStatus] = useState("pending");
 
   useEffect(() => {
     const payload = {
       limit: parseInt(currentPage),
       offset: activePage * pageLimit,
-      is_resolved: false,
+      is_resolved: status === "resolved" ? true : false,
     };
     props.fetchIssueList(payload);
   }, [pageLimit, activePage]);
@@ -471,10 +512,24 @@ const IssuesComponent = (props) => {
     );
   };
 
-  RenderIssues.propTypes = {
-    fetchIssuesInProgress: PropTypes.bool,
-    fetchIssuesSuccess: PropTypes.bool,
-    fetchIssuesFailed: PropTypes.bool,
+  const handleStatusClick = (status) => {
+    setSelectedStatus(status);
+    setActivePage(0);
+    const payload = {
+      limit: parseInt(currentPage),
+      offset: activePage * pageLimit,
+      is_resolved: status === "resolved" ? true : false,
+    };
+    props.fetchIssueList(payload);
+    const queryParamsObj = {
+      activePage: 0,
+      pageSize: pageLimit,
+    };
+    history.pushState(
+      queryParamsObj,
+      "issues listing",
+      `/issues${getQueryUri(queryParamsObj)}`
+    );
   };
 
   return (
@@ -487,6 +542,30 @@ const IssuesComponent = (props) => {
               <Typography classes={{ root: classes.typography }}>
                 ISSUES
               </Typography>
+              <br />
+              <Typography variant="body2">Status</Typography>
+              <Button
+                size="small"
+                className={
+                  selectedStatus === "pending"
+                    ? classes.btnSelected
+                    : classes.btn
+                }
+                onClick={() => handleStatusClick("pending")}
+              >
+                Pending
+              </Button>
+              <Button
+                size="small"
+                className={
+                  selectedStatus === "resolved"
+                    ? classes.btnSelected
+                    : classes.btn
+                }
+                onClick={() => handleStatusClick("resolved")}
+              >
+                Resolved
+              </Button>
             </Paper>
           </Grid>
           <Grid item xs={10}>
@@ -502,6 +581,7 @@ const IssuesComponent = (props) => {
                   <Accordion
                     key={`accordianHead`}
                     className={classes.accordionHead}
+                    disabled
                   >
                     <AccordionSummary>
                       <Grid
@@ -530,7 +610,6 @@ const IssuesComponent = (props) => {
                       </Grid>
                     </AccordionSummary>
                   </Accordion>
-                  <></>
                   <RenderIssues {...props} />
                 </>
               )}
@@ -580,6 +659,10 @@ IssuesComponent.propTypes = {
   fetchIssuesInProgress: PropTypes.bool,
   fetchIssuesSuccess: PropTypes.bool,
   fetchIssuesFailed: PropTypes.bool,
+  fetchIssueList: PropTypes.func,
+  assignIssueSuccess: PropTypes.bool,
+  resolveIssueSuccess: PropTypes.bool,
+  issueList: PropTypes.any,
 };
 
 export { IssuesComponent };

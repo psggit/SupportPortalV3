@@ -100,11 +100,13 @@ const useStyles = makeStyles((theme) => ({
 
 SideNav.propTypes = {
   activeSection: PropTypes.string,
+  delivery_state: PropTypes.string,
   handleAddIssue: PropTypes.any,
   handleScroll: PropTypes.any,
 };
 export default function SideNav(props) {
   const { handleAddIssue, activeSection, handleScroll } = props;
+  // console.log(props.delivery_state);
   const classes = useStyles();
   return (
     <Paper elevation={4} className={classes.fixedSideBar}>
@@ -143,16 +145,17 @@ export default function SideNav(props) {
         >
           D
         </Button>
-        {localStorage.getItem("x-hasura-role") !== "ops_delivery_manager" && (
-          <Button
-            title="Track Order"
-            className={activeSection === "section5" ? "active" : null}
-            classes={{ root: classes.sideNavBtnT }}
-            onClick={() => handleScroll("section5")}
-          >
-            T
-          </Button>
-        )}
+        {localStorage.getItem("x-hasura-role") !== "ops_delivery_manager" &&
+          props.delivery_state === "Out for Delivery" && (
+            <Button
+              title="Track Order"
+              className={activeSection === "section5" ? "active" : null}
+              classes={{ root: classes.sideNavBtnT }}
+              onClick={() => handleScroll("section5")}
+            >
+              T
+            </Button>
+          )}
         {localStorage.getItem("x-hasura-role") !== "ops_delivery_manager" && (
           <Box>
             <Fab

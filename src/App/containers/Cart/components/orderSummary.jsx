@@ -234,11 +234,7 @@ const OrderSummary = (props) => {
         </OrderSummaryItem>
         <OrderSummaryItem
           title="UPI"
-          value={
-            orderInfo.consumer_upi.length === 1
-              ? orderInfo.consumer_upi[0].upi_id
-              : "-"
-          }
+          value={orderInfo.upi_id ? orderInfo.upi_id : "-"}
         />
         {props.cartSummary !== null && (
           <Box>

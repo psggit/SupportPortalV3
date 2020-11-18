@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
     customerNotes: state.order.customer.customerNotesData,
     fetchSuccess: state.order.customer.notesSuccess,
     fetchProgress: state.order.customer.notesProgress,
+    fetchFailed: state.order.customer.notesFail,
     noteListData: state.order.customer.noteListData,
     orderId: state.home.orderId,
     customerId: state.order.orderInfo.customerId,
