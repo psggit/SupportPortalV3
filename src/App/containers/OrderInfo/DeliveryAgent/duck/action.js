@@ -19,6 +19,9 @@ const fetchDeliveryAgentListFailed = createAction(
 const fetchDeliveryAgentListProgress = createAction(
   "fetchDeliveryAgentListProgress"
 );
+const fetchDaIssueListSuccess = createAction("fetchDaIssueListSuccess");
+const fetchDaIssueListFailure = createAction("fetchDaIssueListFailure");
+const fetchDaIssueListProgress = createAction("fetchDaIssueListProgress");
 
 const fetchUnassignDASuccess = createAction("fetchUnassignDASuccess");
 const fetchUnassignDAFailed = createAction("fetchUnassignDAFailed");
@@ -43,5 +46,8 @@ export {
   fetchReserveDASuccess,
   fetchReserveDAFailed,
   fetchReserveDAProgress,
+  fetchDaIssueListProgress,
+  fetchDaIssueListSuccess,
+  fetchDaIssueListFailure,
   resetOnUnmount,
 };

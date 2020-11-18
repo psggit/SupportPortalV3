@@ -151,9 +151,7 @@ function RetailerNotesComponent(props) {
       order_id: orderId,
       type: "retailer",
       notes: noteData,
-      issue_type: "",
-      consumer_issue_type: "",
-      retailer_issue_type: selectedValue.toString(),
+      retailer_issue_type: parseInt(selectedValue),
     };
     props.createNotes(payload);
     fetchNotes();

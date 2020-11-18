@@ -28,6 +28,7 @@ import {
 import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
 import TextField from "@material-ui/core/TextField";
+import { Select, MenuItem, InputLabel } from "@material-ui/core";
 
 const createData = ({ order_id, type, notes, created_at, created_by }) => {
   return {
@@ -48,6 +49,7 @@ function DaNotes(props) {
   const [showData, setShowData] = useState(false);
   const [showAddNoteDilog, setShowAddNoteDialog] = useState(false);
   const [value, setValue] = React.useState(0);
+  const [selectedValue, setSelectedValue] = useState("");
   const [noteData, setNoteData] = useState("");
   const [disableBtn, setDisableBtn] = useState(false);
   const customerId = history.location.state.customerId;
@@ -110,8 +112,13 @@ function DaNotes(props) {
     }
   };
 
+  const handleChange = (e) => {
+    setSelectedValue(e.target.value);
+  };
+
   const mountAddNote = () => {
     setShowAddNoteDialog(true);
+    props.fetchDaIssueList();
   };
 
   const UnmountAddNote = () => {
@@ -123,6 +130,7 @@ function DaNotes(props) {
       order_id: orderId,
       type: "delivery_agent",
       notes: noteData,
+      da_note_type: parseInt(selectedValue),
     };
     props.createNotes(payload);
     fetchNote();
@@ -189,9 +197,40 @@ function DaNotes(props) {
                 ]}
               >
                 <>
-                  <Grid>
+                  {/* <Grid>
                     <p className={classes.orderId}>Order ID: {orderId}</p>
-                  </Grid>
+                  </Grid> */}
+                  <InputLabel id="demo-simple-select-label">
+                    Issue Type
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    className={classes.selectBox}
+                    onChange={(event) => handleChange(event)}
+                  >
+                    {props.fetchDaIssueListSuccess &&
+                      props.daIssueList !== null &&
+                      props.daIssueList.map((value, index) => {
+                        if (selectedValue === value) {
+                          return (
+                            <MenuItem
+                              value={value.id}
+                              key={index}
+                              selected={true}
+                            >
+                              {value.code}
+                            </MenuItem>
+                          );
+                        } else {
+                          return (
+                            <MenuItem value={value.id} key={index}>
+                              {value.code}
+                            </MenuItem>
+                          );
+                        }
+                      })}
+                  </Select>
                   <TextField
                     id="outlined-multiline-static"
                     onChange={handleTextChange}
@@ -283,6 +322,9 @@ DaNotes.propTypes = {
   resetOnUnmount: PropTypes.func,
   successMsg: PropTypes.string,
   createNotesSuccess: PropTypes.bool,
+  fetchDaIssueListSuccess: PropTypes.bool,
+  daIssueList: PropTypes.any,
+  fetchDaIssueList: PropTypes.func,
 };
 
 export { DaNotes };
@@ -305,5 +347,8 @@ const useStyles = makeStyles((theme) => ({
   orderId: {
     fontSize: "16px",
     color: "rgba(0, 0, 0, 0.54)",
+  },
+  selectBox: {
+    width: "100%",
   },
 }));

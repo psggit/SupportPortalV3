@@ -83,7 +83,7 @@ const CustomerDetails = (props) => {
   const history = useHistory();
 
   useEffect(() => {
-    props.fetchConsumerNotesList();
+    // props.fetchConsumerNotesList();
   }, []);
 
   const handleChange = () => {
@@ -116,6 +116,7 @@ const CustomerDetails = (props) => {
     const details = getListOfDataObjects(props.orderInfo, keysToRender);
     setData(details);
     props.fetchConsumerNotes(props.orderInfo.order_id);
+    props.fetchConsumerNotesList();
   }, []);
 
   const customerAction = [

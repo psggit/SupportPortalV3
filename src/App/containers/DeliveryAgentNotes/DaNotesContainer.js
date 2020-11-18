@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { DaNotes } from "./DaNotesComponent";
 import { fetchDeliveryAgentNotes } from "../OrderInfo/DeliveryAgent/duck/operations";
+import { fetchDaIssueList } from "../OrderInfo/DeliveryAgent/duck/operations";
 import { createNotes } from "../OrderInfo/duck";
 import { resetOnUnmount } from "../OrderInfo/DeliveryAgent/duck";
 
@@ -15,6 +16,11 @@ const mapStateToProps = (state) => {
     errorMsg: state.order.deliveryAgent.errorMsg,
     createNotesSuccess: state.order.orderInfo.createNotesSuccess,
     successMsg: state.order.orderInfo.successMsg,
+    fetchDaIssueListProgress:
+      state.order.deliveryAgent.fetchDaIssueListProgress,
+    fetchDaIssueListSuccess: state.order.deliveryAgent.fetchDaIssueListSuccess,
+    fetchDaIssueListFailure: state.order.deliveryAgent.fetchDaIssueListFailure,
+    daIssueList: state.order.deliveryAgent.daIssueList,
   };
 };
 
@@ -23,6 +29,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchDeliveryAgentNotes: (payload) =>
       dispatch(fetchDeliveryAgentNotes(payload)),
     createNotes: (type) => dispatch(createNotes(type)),
+    fetchDaIssueList: () => dispatch(fetchDaIssueList()),
     resetOnUnmount: () => dispatch(resetOnUnmount()),
   };
 };

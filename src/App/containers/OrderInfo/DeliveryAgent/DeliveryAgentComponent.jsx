@@ -47,6 +47,7 @@ const DeliveryAgentComponent = (props) => {
     setData(details);
     if (localStorage.getItem("x-hasura-role") !== "ops_delivery_manager") {
       props.fetchNotes(props.orderInfo.order_id);
+      props.fetchDaIssueList();
     }
 
     return () => {
@@ -317,6 +318,8 @@ DeliveryAgentComponent.propTypes = {
   unassignDASuccess: PropTypes.bool,
   errorMsg: PropTypes.string,
   resetOnUnmount: PropTypes.func,
+  fetchDaIssueListSuccess: PropTypes.bool,
+  fetchDaIssueList: PropTypes.func,
 };
 
 const useStyles = makeStyles(() => ({
