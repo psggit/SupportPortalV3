@@ -492,7 +492,8 @@ const OrderInfoComponent = (props) => {
               <Grid item xs={12}>
                 {localStorage.getItem("x-hasura-role") !==
                   "ops_delivery_manager" &&
-                  props.fetchOrderInfoSuccess && (
+                  props.fetchOrderInfoSuccess &&
+                  props.order.delivery_status === "Out for Delivery" && (
                     <OrderTrackingContainer
                       orderId={props.orderId}
                       orderInfo={props.order}
@@ -506,6 +507,9 @@ const OrderInfoComponent = (props) => {
               handleScroll={handleScroll}
               handleAddIssue={handleAddIssue}
               activeSection={activeSection}
+              delivery_state={
+                props.fetchOrderInfoSuccess && props.order.delivery_status
+              }
             />
           </Grid>
         </Grid>

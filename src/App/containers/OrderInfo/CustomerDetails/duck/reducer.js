@@ -38,7 +38,7 @@ const customerReducer = createReducer(initialValue, {
     notesProgress: false,
     notesFail: true,
     notesSuccess: false,
-    errorMsg: data.payload.message,
+    errorMsg: data.payload ? data.payload.message : "Something went wrong!",
   }),
   [fetchNotesProgress]: (state) => {
     return {

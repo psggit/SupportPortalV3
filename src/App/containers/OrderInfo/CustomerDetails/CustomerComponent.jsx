@@ -174,17 +174,17 @@ const CustomerDetails = (props) => {
       </Grid>
       <Grid item xs={6}>
         <>
-          {props.fetchSuccess && (
-            <ActivityItem
-              arr={props.customerNotes.orderNotes}
-              keysToRender={keysToRenderInNotesCard}
-              title={"CUSTOMER NOTES"}
-              subtitle={subheadNotesAction}
-              issueType={"customer"}
-              click={props.openDialog}
-              cardActions={false}
-            />
-          )}
+          <ActivityItem
+            arr={props.customerNotes ? props.customerNotes.orderNotes : []}
+            keysToRender={keysToRenderInNotesCard}
+            title={"CUSTOMER NOTES"}
+            subtitle={subheadNotesAction}
+            issueType={"customer"}
+            click={props.openDialog}
+            cardActions={true}
+            success={props.fetchSuccess}
+            fail={props.fetchFailed}
+          />
           {props.fetchProgress && <CircularProgress />}
         </>
       </Grid>
@@ -198,6 +198,7 @@ CustomerDetails.propTypes = {
   orderInfo: PropTypes.object,
   fetchSuccess: PropTypes.bool,
   fetchProgress: PropTypes.bool,
+  fetchFailed: PropTypes.bool,
   openDialog: PropTypes.any,
   handleCall: PropTypes.func,
 };
