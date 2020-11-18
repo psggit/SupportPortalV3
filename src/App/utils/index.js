@@ -48,3 +48,4 @@ export { pushOrderAPI } from "./pushOrderAPI";
 export { cancelOrderDSPAPI } from "./cancelOrderDSPAPI";
 export { consumerTypeNotesAPI } from "./consumerTypeNotesAPI";
 export { retailerTypeNotesAPI } from "./retailerTypeNotesAPI";
+export { daTypeNotesAPI } from "./daTypeNotesAPI";

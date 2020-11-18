@@ -3,14 +3,21 @@ import {
   fetchRetailerNotesSuccess,
   fetchRetailerNotesFailed,
   fetchRetailerNotesProgress,
+  fetchRetailerIssueListSuccess,
+  fetchRetailerIssueListFailure,
+  fetchRetailerIssueListProgress,
 } from "./action";
 
 const initialValue = {
   retailerNotesData: null,
+  retailerIssueList: null,
   orderId: null,
   fetchSuccess: false,
   fetchFailed: false,
   fetchProgress: false,
+  fetchRetailerIssueListSuccess: false,
+  fetchRetailerIssueListFailure: false,
+  fetchRetailerIssueListProgress: false,
   errorMsg: "",
 };
 const retailerNotesReducer = createReducer(initialValue, {
@@ -32,6 +39,26 @@ const retailerNotesReducer = createReducer(initialValue, {
   [fetchRetailerNotesProgress]: (state) => ({
     ...state,
     fetchProgress: true,
+  }),
+
+  [fetchRetailerIssueListSuccess]: (state, data) => ({
+    ...state,
+    retailerIssueList: data.payload,
+    fetchRetailerIssueListSuccess: true,
+    fetchRetailerIssueListFailure: false,
+    fetchRetailerIssueListProgress: false,
+    errorMsg: "",
+  }),
+  [fetchRetailerIssueListFailure]: (state) => ({
+    ...state,
+    fetchRetailerIssueListSuccess: false,
+    fetchRetailerIssueListFailure: true,
+    fetchRetailerIssueListProgress: false,
+    errorMsg: "Something went wrong Please try again!",
+  }),
+  [fetchRetailerIssueListProgress]: (state) => ({
+    ...state,
+    fetchRetailerIssueListProgress: true,
   }),
 });
 export { retailerNotesReducer };

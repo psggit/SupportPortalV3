@@ -12,12 +12,16 @@ import {
   fetchReserveDASuccess,
   fetchReserveDAFailed,
   fetchReserveDAProgress,
+  fetchDaIssueListProgress,
+  fetchDaIssueListSuccess,
+  fetchDaIssueListFailure,
   resetOnUnmount,
 } from "./action";
 
 const initialValue = {
   deliveryAgentNotesData: null,
   orderId: null,
+  daIssueList: null,
   fetchSuccess: false,
   fetchFailed: false,
   fetchProgress: false,
@@ -33,6 +37,9 @@ const initialValue = {
   reserveDaSuccess: false,
   reserveDaFail: false,
   reserveDaProgress: false,
+  fetchDaIssueListProgress: false,
+  fetchDaIssueListSuccess: false,
+  fetchDaIssueListFailure: false,
 };
 const deliveryAgentReducer = createReducer(initialValue, {
   [fetchDeliveryAgentNotesSuccess]: (state, data) => {
@@ -56,6 +63,29 @@ const deliveryAgentReducer = createReducer(initialValue, {
     ...state,
     fetchProgress: true,
   }),
+
+  [fetchDaIssueListSuccess]: (state, data) => {
+    return {
+      ...state,
+      daIssueList: data.payload,
+      fetchDaIssueListSuccess: true,
+      fetchDaIssueListFailure: false,
+      fetchDaIssueListProgress: false,
+      errorMsg: "",
+    };
+  },
+  [fetchDaIssueListFailure]: (state, error) => ({
+    ...state,
+    fetchDaIssueListSuccess: false,
+    fetchDaIssueListFailure: true,
+    fetchDaIssueListProgress: false,
+    errorMsg: error.payload.message,
+  }),
+  [fetchDaIssueListProgress]: (state) => ({
+    ...state,
+    fetchDaIssueListProgress: true,
+  }),
+
   [fetchDeliveryAgentListSuccess]: (state, data) => {
     return {
       ...state,
@@ -129,6 +159,9 @@ const deliveryAgentReducer = createReducer(initialValue, {
     reserveDaSuccess: false,
     reserveDaFail: false,
     reserveDaProgress: false,
+    fetchDaIssueListProgress: false,
+    fetchDaIssueListSuccess: false,
+    fetchDaIssueListFailure: false,
   }),
 });
 export { deliveryAgentReducer };

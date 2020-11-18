@@ -73,7 +73,7 @@ const OrderInfoComponent = (props) => {
   const [modifyCart, setModifyCart] = useState("");
 
   useEffect(() => {
-    // console.log("ORDERINFO COmponenet", props);
+    console.log("OrderInfoComponent", props.retailerIssueListData);
     if (orderId === null || orderId == "") {
       history.push("/dashboard");
     } else {
@@ -98,7 +98,7 @@ const OrderInfoComponent = (props) => {
       if (props.order.cancel_order_button) {
         props.fetchCancelReason(payload);
       }
-      props.fetchIssueTypes();
+      // props.fetchIssueTypes();
     }
   }, [props.fetchOrderInfoSuccess]);
 
@@ -186,21 +186,21 @@ const OrderInfoComponent = (props) => {
         order_id: orderId,
         type: issueType,
         notes: issueDesc,
-        retailer_issue_type: valueSelected.toString(),
+        retailer_issue_type: parseInt(valueSelected),
+      };
+    } else if (issueType === "customer") {
+      payload = {
+        order_id: orderId,
+        type: issueType,
+        notes: issueDesc,
+        consumer_issue_type: parseInt(valueSelected),
       };
     } else if (issueType === "consumer") {
       payload = {
         order_id: orderId,
         type: issueType,
         notes: issueDesc,
-        consumer_issue_type: valueSelected.toString(),
-      };
-    } else if (issueType === "delivery_agent") {
-      payload = {
-        order_id: orderId,
-        type: issueType,
-        notes: issueDesc,
-        delivery_agent_issue_type: valueSelected.toString(),
+        da_note_type: parseInt(valueSelected),
       };
     }
     // let payload = {
@@ -302,9 +302,46 @@ const OrderInfoComponent = (props) => {
             className={classes.selectBox}
             onChange={(event) => handleChange(event)}
           >
+            {props.fetchRetailerIssueListSuccess &&
+              issueType === "retailer" &&
+              props.retailerIssueListData !== null &&
+              props.retailerIssueListData.map((value, index) => {
+                if (valueSelected === value) {
+                  return (
+                    <MenuItem value={value.id} key={index} selected={true}>
+                      {value.code}
+                    </MenuItem>
+                  );
+                } else {
+                  return (
+                    <MenuItem value={value.id} key={index}>
+                      {value.code}
+                    </MenuItem>
+                  );
+                }
+              })}
             {props.NoteListSuccess &&
+              issueType === "customer" &&
               props.noteListData !== null &&
               props.noteListData.map((value, index) => {
+                if (valueSelected === value) {
+                  return (
+                    <MenuItem value={value.id} key={index} selected={true}>
+                      {value.code}
+                    </MenuItem>
+                  );
+                } else {
+                  return (
+                    <MenuItem value={value.id} key={index}>
+                      {value.code}
+                    </MenuItem>
+                  );
+                }
+              })}
+            {props.fetchDaIssueListSuccess &&
+              issueType === "delivery_agent" &&
+              props.daIssueList !== null &&
+              props.daIssueList.map((value, index) => {
                 if (valueSelected === value) {
                   return (
                     <MenuItem value={value.id} key={index} selected={true}>
@@ -562,6 +599,10 @@ OrderInfoComponent.propTypes = {
   resetOnUnmount: PropTypes.func,
   NoteListSuccess: PropTypes.bool,
   noteListData: PropTypes.any,
+  retailerIssueListData: PropTypes.any,
+  fetchRetailerIssueListSuccess: PropTypes.bool,
+  fetchDaIssueListSuccess: PropTypes.bool,
+  daIssueList: PropTypes.any,
 };
 
 export { OrderInfoComponent };

@@ -30,10 +30,12 @@ const keyMap = {
 const RetailerDetails = (props) => {
   const [data, setData] = useState([]);
   useEffect(() => {
+    console.log("RetailerDetailsCard");
     const details = getListOfDataObjects(props.orderInfo, keysToRender);
     setData(details);
     if (localStorage.getItem("x-hasura-role") !== "ops_delivery_manager") {
       props.fetchNotes(props.orderInfo.order_id);
+      props.fetchRetailerIssueList();
     }
   }, []);
 
@@ -136,5 +138,6 @@ RetailerDetails.propTypes = {
   fetchProgress: PropTypes.bool,
   openDialog: PropTypes.any,
   handleCall: PropTypes.func,
+  fetchRetailerIssueList: PropTypes.func,
 };
 export { RetailerDetails };
