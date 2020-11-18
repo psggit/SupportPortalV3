@@ -131,14 +131,6 @@ const OrderSummary = (props) => {
 
   // console.log("Order summary props", props.cartSummary);
 
-  let upi_ids = [];
-  if (orderInfo.consumer_upi.length > 0) {
-    orderInfo.consumer_upi.map((value) => {
-      upi_ids.push(value.upi_id);
-    });
-  }
-  console.log("consumer_upi ", upi_ids);
-
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
@@ -242,7 +234,7 @@ const OrderSummary = (props) => {
         </OrderSummaryItem>
         <OrderSummaryItem
           title="UPI"
-          value={upi_ids.length > 0 ? upi_ids.toString() : "-"}
+          value={orderInfo.upi_id ? orderInfo.upi_id : "-"}
         />
         {props.cartSummary !== null && (
           <Box>

@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import PropTypes from "prop-types";
 import Moment from "moment";
+import Alert from "@material-ui/lab/Alert";
 
 const getTimestamp = (timestamp) => {
   return Moment(timestamp).format("D MMM h:mm A");
@@ -173,37 +174,41 @@ export default function ActivityItem(props) {
             ""
           )}
         </Box>
-        {mapArray.map((value, index) => {
-          let data = value;
-          return (
-            <ListItem
-              dense
-              disableGutters={true}
-              className={classes.ListItemRow}
-              classes={{ root: classes.ListItemRoot }}
-              key={index}
-            >
-              {keysToRender.map((keyValue, ind) => {
-                let primaryValue =
-                  keyValue == "created_at"
-                    ? getTimestamp(data[keyValue])
-                    : data[keyValue];
-                let listClass =
-                  keyValue == "created_at"
-                    ? classes.ListItemRootTitle
-                    : classes.ListItemTextRoot;
-                return (
-                  <ListItemText
-                    key={ind + "." + keyValue}
-                    primary={primaryValue}
-                    className={listClass}
-                    classes={{ root: classes.ListItemTextValue }}
-                  />
-                );
-              })}
-            </ListItem>
-          );
-        })}
+        {mapArray.length > 0 &&
+          mapArray.map((value, index) => {
+            let data = value;
+            return (
+              <ListItem
+                dense
+                disableGutters={true}
+                className={classes.ListItemRow}
+                classes={{ root: classes.ListItemRoot }}
+                key={index}
+              >
+                {keysToRender.map((keyValue, ind) => {
+                  let primaryValue =
+                    keyValue == "created_at"
+                      ? getTimestamp(data[keyValue])
+                      : data[keyValue];
+                  let listClass =
+                    keyValue == "created_at"
+                      ? classes.ListItemRootTitle
+                      : classes.ListItemTextRoot;
+                  return (
+                    <ListItemText
+                      key={ind + "." + keyValue}
+                      primary={primaryValue}
+                      className={listClass}
+                      classes={{ root: classes.ListItemTextValue }}
+                    />
+                  );
+                })}
+              </ListItem>
+            );
+          })}
+        {mapArray.length === 0 && (
+          <Alert severity="error">This is an error alert — check it out!</Alert>
+        )}
       </CardContent>
       {cardActions && (
         <CardActions className={classes.cardActions}>
