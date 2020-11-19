@@ -1,6 +1,5 @@
 import { connect } from "react-redux";
 import { RetailerCardComponent } from "./RetailerCardComponent";
-import { reassignRetailer } from "./duck/operations";
 import { resetOnUnmount } from "./duck/action";
 
 const mapStateToProps = (state) => {
@@ -8,9 +7,6 @@ const mapStateToProps = (state) => {
     orderInfo: state.order.orderInfo.orderDetails,
     listRetailerData: state.listRetailer.listRetailerData,
     listRetailerSuccess: state.listRetailer.listRetailerSuccess,
-    reassignRetailerProgress: state.listRetailer.reassignRetailerProgress,
-    reassignRetailerFailed: state.listRetailer.reassignRetailerFailed,
-    reassignRetailerSuccess: state.listRetailer.reassignRetailerSuccess,
     reassignRetailerData: state.listRetailer.reassignRetailerData,
     errorMessage: state.listRetailer.errorMessage,
     successMsg: state.listRetailer.successMsg,
@@ -19,7 +15,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    reassignRetailer: (payload) => dispatch(reassignRetailer(payload)),
     resetOnUnmount: () => dispatch(resetOnUnmount()),
   };
 };

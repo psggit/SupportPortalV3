@@ -5,8 +5,10 @@ const processResponseLogs = () => {
   return (res) => {
     if (res.status === 200) {
       return res.json();
+    } else if (res.status === 400) {
+      throw new Error("invalid params");
     } else {
-      throw new Error("Something went wrong, try again");
+      throw res;
     }
   };
 };

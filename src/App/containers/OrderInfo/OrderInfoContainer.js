@@ -3,7 +3,6 @@ import { OrderInfoComponent } from "./OrderInfoComponent";
 import { fetchConsumerNotesList } from "./CustomerDetails/duck/CustomerOperations";
 import {
   fetchOrder,
-  fetchCancelReason,
   createNotes,
   connectCall,
   fetchIssueTypes,
@@ -22,9 +21,6 @@ const mapStateToProps = (state) => {
     fetchOrderInfoSuccess: state.order.orderInfo.fetchOrderInfoSuccess,
     fetchOrderInfoProgress: state.order.orderInfo.fetchOrderInfoProgress,
     fetchOrderInfoFailure: state.order.orderInfo.fetchOrderInfoFailure,
-    cancelReasons: state.order.orderInfo.cancelReasons,
-    fetchCancelReasonSuccess: state.order.orderInfo.fetchCancelReasonSuccess,
-    fetchCancelReasonFailure: state.order.orderInfo.fetchCancelReasonFailure,
     customerDetails: state.order.customerDetails,
     from: state.login.authData.mobile,
     successMsg: state.order.orderInfo.successMsg,
@@ -52,7 +48,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchOrderInfo: (orderId) => dispatch(fetchOrder(orderId)),
-    fetchCancelReason: (orderId) => dispatch(fetchCancelReason(orderId)),
     createNotes: (type) => dispatch(createNotes(type)),
     connectCall: (payload) => dispatch(connectCall(payload)),
     fetchIssueTypes: () => dispatch(fetchIssueTypes()),

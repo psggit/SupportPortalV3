@@ -1,14 +1,11 @@
-/* eslint-disable react/jsx-key */
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import { OrderDetails } from "./components/orderDetails";
-import Dialog from "../../../components/dialog";
-import { Button, Typography } from "@material-ui/core";
-import ErrorMsg from "../../../components/errorMsg";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,39 +63,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RetailerCardComponent = (props) => {
-  useEffect(() => {
-    console.dir(props);
-    return () => {
-      props.resetOnUnmount();
-    };
-  }, []);
-
   const classes = useStyles();
-  const [mountDialog, setMountDialog] = useState(false);
-
-  const handleSelect = () => {
-    setMountDialog(true);
-  };
-
-  const handleCancel = () => {
-    setMountDialog(false);
-  };
-
-  const handleConfirm = () => {
-    const payload = {
-      order_id: props.orderInfos.order_id,
-      retailer_id: parseInt(props.value.retailer_id),
-      retailer_name: props.value.retailer_name,
-      warehouse_id: parseInt(props.orderInfos.warehouse_id),
-      delivery_status: props.orderInfos.delivery_status,
-      assigned_delivery_agent: parseInt(props.orderInfos.delivery_agent_id),
-      reserved_for_da_id: parseInt(props.orderInfos.delivery_agent_id),
-      cancellation_reason: "",
-    };
-    props.reassignRetailer(payload);
-    // console.log("RetailerCardComponent", props.errorMessage.message);
-    setMountDialog(false);
-  };
 
   return (
     <Card className={classes.RetailerCardComponent} variant="outlined">
@@ -116,57 +81,16 @@ const RetailerCardComponent = (props) => {
             variant="contained"
             color="primary"
             className={classes.marginLeft}
-            onClick={handleSelect}
+            onClick={() =>
+              props.handleSelect(
+                props.value.retailer_name,
+                props.value.retailer_id
+              )
+            }
           >
             Select
           </Button>
         </CardActions>
-        {mountDialog && (
-          <Dialog
-            title={"Change Retailer"}
-            actions={[
-              <Button
-                variant="outlined"
-                color="primary"
-                className={classes.marginLeft}
-                onClick={handleCancel}
-              >
-                Cancel
-              </Button>,
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleConfirm}
-              >
-                Confirm
-              </Button>,
-            ]}
-          >
-            <Typography>
-              {
-                "Delivery Agent not mapped to retailer. Do you still want to change retailer?"
-              }
-            </Typography>
-          </Dialog>
-        )}
-        {props.reassignRetailerFailed && (
-          <ErrorMsg
-            show={true}
-            message={
-              props.errorMessage !== ""
-                ? props.errorMessage
-                : "Something went wrong"
-            }
-            type={"error"}
-          />
-        )}
-        {props.reassignRetailerSuccess && (
-          <ErrorMsg
-            show={true}
-            message={props.successMsg.message}
-            type={"success"}
-          />
-        )}
       </CardContent>
     </Card>
   );
@@ -174,6 +98,7 @@ const RetailerCardComponent = (props) => {
 
 RetailerCardComponent.propTypes = {
   fetchOrderDetails: PropTypes.func,
+  handleSelect: PropTypes.func,
   orderInfos: PropTypes.object,
   totalDa: PropTypes.string,
   freeDa: PropTypes.string,
@@ -182,8 +107,10 @@ RetailerCardComponent.propTypes = {
   reassignRetailerFailed: PropTypes.bool,
   errorMessage: PropTypes.any,
   reassignRetailerSuccess: PropTypes.bool,
+  reassignRetailerProgress: PropTypes.bool,
   successMsg: PropTypes.any,
   resetOnUnmount: PropTypes.func,
+  show: PropTypes.func,
 };
 
 export { RetailerCardComponent };

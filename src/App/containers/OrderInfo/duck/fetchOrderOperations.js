@@ -2,9 +2,6 @@ import {
   fetchOrderInfoProgress,
   fetchOrderInfoFailure,
   fetchOrderInfoSuccess,
-  fetchCancelReasonProgress,
-  fetchCancelReasonFailure,
-  fetchCancelReasonSuccess,
   createNotesProgress,
   createNotesFailure,
   createNotesSuccess,
@@ -22,7 +19,6 @@ import {
 import { selectOrder } from "../../Dashboard/duck";
 import {
   orderInfoAPI,
-  cancelReasonAPI,
   createNotesAPI,
   callAPI,
   listIssueAPI,
@@ -57,22 +53,9 @@ const onSuccess = (dispatch) => {
   };
 };
 
-const onSuccessCancel = (dispatch) => {
-  return (data) => {
-    dispatch(fetchCancelReasonSuccess(data));
-  };
-};
-
 const onError = (dispatch) => {
-  console.log("ONERROR");
   return (err) => {
     dispatch(fetchOrderInfoFailure(err));
-  };
-};
-
-const onErrorCancel = (dispatch) => {
-  return (err) => {
-    dispatch(fetchCancelReasonFailure(err));
   };
 };
 
@@ -85,18 +68,6 @@ const fetchOrder = (payload) => {
       processResponse(dispatch),
       onSuccess(dispatch),
       onError(dispatch)
-    );
-  };
-};
-
-const fetchCancelReason = (payload) => {
-  return (dispatch) => {
-    dispatch(fetchCancelReasonProgress());
-    cancelReasonAPI(
-      payload,
-      processResponse(dispatch),
-      onSuccessCancel(dispatch),
-      onErrorCancel(dispatch)
     );
   };
 };
@@ -198,11 +169,4 @@ const submitIssue = (payload) => {
   };
 };
 
-export {
-  fetchOrder,
-  fetchCancelReason,
-  createNotes,
-  connectCall,
-  fetchIssueTypes,
-  submitIssue,
-};
+export { fetchOrder, createNotes, connectCall, fetchIssueTypes, submitIssue };

@@ -13,6 +13,7 @@ import { useHistory } from "react-router-dom";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ErrorMsg from "../../../components/errorMsg";
 import uuid from "react-uuid";
+import Alert from "@material-ui/lab/Alert";
 
 const keysToRender = [
   "delivery_agent_id",
@@ -40,12 +41,14 @@ const DeliveryAgentComponent = (props) => {
   const [showDialogBox, setShowDialogBox] = useState(false);
   const [showUnassignDADialog, setShowUnassignDADialog] = useState(false);
   const [cancelReasonNote, setCancelReasonNote] = useState("");
+  const [showError, setShowError] = useState(false);
   //const [disableBtn, setDisableBtn] = useState(false);
 
   useEffect(() => {
     const details = getListOfDataObjects(props.orderInfo, keysToRender);
     setData(details);
     if (localStorage.getItem("x-hasura-role") !== "ops_delivery_manager") {
+      console.log("fetchDaIssueList");
       props.fetchNotes(props.orderInfo.order_id);
       props.fetchDaIssueList();
     }
@@ -54,6 +57,14 @@ const DeliveryAgentComponent = (props) => {
       props.resetOnUnmount();
     };
   }, []);
+
+  useEffect(() => {
+    if (props.daListSuccess && props.daList.data === null) {
+      setShowError(true);
+    } else {
+      setShowError(false);
+    }
+  }, [props.daListSuccess]);
 
   const handleTextChange = (e) => {
     setCancelReasonNote(e.target.value);
@@ -157,6 +168,27 @@ const DeliveryAgentComponent = (props) => {
   ];
 
   const keysToRenderInNotesCard = ["notes", "created_at"];
+  let actionBtns = [
+    <Button variant="outlined" color="primary" onClick={unmountDialogBox}>
+      {!showError ? "No" : "Close"}
+    </Button>,
+  ];
+
+  if (!showError && !props.daListProgress) {
+    actionBtns = [
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleReserveOrder}
+        // disabled={!disableBtn}
+      >
+        Yes
+      </Button>,
+      <Button variant="outlined" color="primary" onClick={unmountDialogBox}>
+        No
+      </Button>,
+    ];
+  }
 
   // console.log("[DA-component]", props.daList)
 
@@ -177,17 +209,22 @@ const DeliveryAgentComponent = (props) => {
       </Grid>
       <Grid item xs={6}>
         <>
-          {props.fetchSuccess && (
-            <ActivityItem
-              arr={props.deliveryAgentNotes.orderNotes}
-              keysToRender={keysToRenderInNotesCard}
-              title={"Delivery Agent Notes"}
-              issueType={"delivery_agent"}
-              subtitle={subheadNotesAction}
-              click={props.openDialog}
-              cardActions={true}
-            />
-          )}
+          <ActivityItem
+            arr={
+              props.deliveryAgentNotes
+                ? props.deliveryAgentNotes.orderNotes
+                : []
+            }
+            keysToRender={keysToRenderInNotesCard}
+            title={"Delivery Agent Notes"}
+            issueType={"delivery_agent"}
+            subtitle={subheadNotesAction}
+            click={props.openDialog}
+            cardActions={true}
+            success={props.fetchSuccess}
+            fail={props.fetchFailed}
+            errorMsg={props.errorMsg}
+          />
           {props.fetchProgress && <CircularProgress />}
         </>
       </Grid>
@@ -198,46 +235,42 @@ const DeliveryAgentComponent = (props) => {
         <ErrorMsg show={true} message={props.message} type="success" />
       )}
       {props.reserveDaFail && (
-        <ErrorMsg show={true} message={props.errorMsg} type="error" />
+        <ErrorMsg
+          show={true}
+          message={props.errorMessageReserve}
+          type="error"
+        />
       )}
       {props.unassignDAFail && (
-        <ErrorMsg show={true} message={props.errorMsg} type="error" />
+        <ErrorMsg
+          show={true}
+          message={props.errorMessageUnassign}
+          type="error"
+        />
       )}
       <div>
         {showDialogBox && (
           <Dialog
             title="Reserve Orders"
-            actions={[
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleReserveOrder}
-                // disabled={!disableBtn}
-              >
-                Yes
-              </Button>,
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={unmountDialogBox}
-              >
-                No
-              </Button>,
-            ]}
+            actions={actionBtns}
+            className={classes.minHeightDiv}
           >
-            <>
-              <InputLabel id="demo-simple-select-label">
-                Delivery Agent List
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                className={classes.selectBox}
-                onChange={(event) => handleChange(event)}
-              >
-                {props.daListSuccess &&
-                  props.daList.data !== null &&
-                  props.daList.data.map((value, index) => {
+            {props.daListProgress && (
+              <Alert severity="info">{"Fetching details..."}</Alert>
+            )}
+            {showError && <Alert severity="error">{props.message}</Alert>}
+            {props.daListSuccess && props.daList.data !== null && (
+              <>
+                <InputLabel id="demo-simple-select-label">
+                  Delivery Agent List
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  className={classes.selectBox}
+                  onChange={(event) => handleChange(event)}
+                >
+                  {props.daList.data.map((value, index) => {
                     if (selectedValue === value) {
                       return (
                         <MenuItem value={value.id} key={index} selected={true}>
@@ -252,21 +285,22 @@ const DeliveryAgentComponent = (props) => {
                       );
                     }
                   })}
-              </Select>
-              <TextField
-                id="outlined-multiline-static"
-                className={classes.textBox}
-                onChange={handleTextChange}
-                multiline
-                rows={4}
-                fullWidth
-                variant="outlined"
-                autoComplete="off"
-                margin="normal"
-                size="small"
-                placeholder="Add reserve reason"
-              />
-            </>
+                </Select>
+                <TextField
+                  id="outlined-multiline-static"
+                  className={classes.textBox}
+                  onChange={handleTextChange}
+                  multiline
+                  rows={4}
+                  fullWidth
+                  variant="outlined"
+                  autoComplete="off"
+                  margin="normal"
+                  size="small"
+                  placeholder="Add reserve reason"
+                />
+              </>
+            )}
           </Dialog>
         )}
       </div>
@@ -274,7 +308,7 @@ const DeliveryAgentComponent = (props) => {
         {showUnassignDADialog && (
           <Dialog
             title="Unassign Delivery Agent"
-            subtitle="Are you sure you want to un-assign the delivery agent for this order ?"
+            subtitle="Are you sure you want to un-assign the delivery agent for this order?"
             actions={[
               <Button
                 variant="contained"
@@ -324,6 +358,10 @@ DeliveryAgentComponent.propTypes = {
   resetOnUnmount: PropTypes.func,
   fetchDaIssueListSuccess: PropTypes.bool,
   fetchDaIssueList: PropTypes.func,
+  fetchFailed: PropTypes.bool,
+  errorMessageUnassign: PropTypes.string,
+  errorMessageReserve: PropTypes.string,
+  daListProgress: PropTypes.bool,
 };
 
 const useStyles = makeStyles(() => ({
@@ -333,7 +371,9 @@ const useStyles = makeStyles(() => ({
   selectBox: {
     width: "100%",
   },
-  textBox: {},
+  minHeightDiv: {
+    minHeight: 200,
+  },
 }));
 
 export { DeliveryAgentComponent };

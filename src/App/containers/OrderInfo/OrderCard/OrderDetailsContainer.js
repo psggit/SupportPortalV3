@@ -6,6 +6,7 @@ import {
   fetchKycList,
   deliverOrder,
   cancelOrder,
+  fetchCancelReason,
 } from "./duck/operations";
 import { resetOnUnmount } from "./duck";
 
@@ -16,6 +17,7 @@ const mapStateToProps = (state) => {
     cancelOrderFailure: state.order.orderCard.cancelOrderFailure,
     cancelOrderProgress: state.order.orderCard.cancelOrderProgress,
     errorMsg: state.order.orderCard.errorMsg,
+    errorMsgCancel: state.order.orderCard.errorMsgCancel,
     successMsg: state.order.orderCard.successMsg,
     cancelOrderSummaryData: state.order.orderCard.cancelOrderSummaryData,
     deliverOrderData: state.order.orderCard.deliverOrderData,
@@ -35,6 +37,11 @@ const mapStateToProps = (state) => {
       state.order.orderCard.fetchCancellationSummaryFailed,
     fetchCancellationSummaryProgress:
       state.order.orderCard.fetchCancellationSummaryProgress,
+    cancelReasons: state.order.orderCard.cancelReasons,
+    fetchCancelReasonSuccess: state.order.orderCard.fetchCancelReasonSuccess,
+    fetchCancelReasonFailure: state.order.orderCard.fetchCancelReasonFailure,
+    fetchCancelReasonProgress: state.order.orderCard.fetchCancelReasonProgress,
+    errorMsgSummary: state.orderCard.orderCard.errorMsgSummary,
   };
 };
 
@@ -46,6 +53,7 @@ const mapDispatchToProps = (dispatch) => {
     deliverOrder: (payload) => dispatch(deliverOrder(payload)),
     cancelOrder: (payload) => dispatch(cancelOrder(payload)),
     resetOnUnmount: () => dispatch(resetOnUnmount()),
+    fetchCancelReason: (orderId) => dispatch(fetchCancelReason(orderId)),
   };
 };
 

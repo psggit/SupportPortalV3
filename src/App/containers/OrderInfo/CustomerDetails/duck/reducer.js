@@ -1,8 +1,8 @@
 import { createReducer } from "@reduxjs/toolkit";
 import {
-  fetchNotesSuccess,
-  fetchNotesFailed,
-  fetchNotesProgress,
+  fetchCustomerNotesSuccess,
+  fetchCustomerNotesFailed,
+  fetchCustomerNotesProgress,
   resetOnUnmount,
   consumerNoteListSuccess,
   consumerNoteListFailed,
@@ -11,10 +11,11 @@ import {
 
 const initialValue = {
   customerNotesData: null,
-  notesProgress: false,
-  notesFail: false,
-  notesSuccess: false,
+  fetchCustomerNotesSuccess: false,
+  fetchCustomerNotesFailed: false,
+  fetchCustomerNotesProgress: false,
   errorMsg: "",
+  errorMessage: "",
   succMsg: "",
   noteListData: null,
   NoteListSuccess: false,
@@ -23,27 +24,35 @@ const initialValue = {
 };
 
 const customerReducer = createReducer(initialValue, {
-  [fetchNotesSuccess]: (state, data) => {
+  [fetchCustomerNotesSuccess]: (state, data) => {
     return {
       ...state,
-      notesProgress: false,
-      notesFail: false,
-      notesSuccess: true,
+      fetchCustomerNotesSuccess: true,
+      fetchCustomerNotesFailed: false,
+      fetchCustomerNotesProgress: false,
       errorMsg: "",
       customerNotesData: data.payload,
     };
   },
-  [fetchNotesFailed]: (state, data) => ({
-    ...state,
-    notesProgress: false,
-    notesFail: true,
-    notesSuccess: false,
-    errorMsg: data.payload ? data.payload.message : "Something went wrong!",
-  }),
-  [fetchNotesProgress]: (state) => {
+  [fetchCustomerNotesFailed]: (state, data) => {
+    let errorMessage =
+      data.payload.message !== undefined
+        ? data.payload.message
+        : "Something went wrong. Try again later.";
     return {
       ...state,
-      notesProgress: true,
+      fetchCustomerNotesSuccess: false,
+      fetchCustomerNotesFailed: true,
+      fetchCustomerNotesProgress: false,
+      errorMsg: errorMessage,
+    };
+  },
+  [fetchCustomerNotesProgress]: (state) => {
+    return {
+      ...state,
+      fetchCustomerNotesSuccess: false,
+      fetchCustomerNotesFailed: false,
+      fetchCustomerNotesProgress: true,
     };
   },
   [consumerNoteListSuccess]: (state, data) => {
@@ -52,7 +61,7 @@ const customerReducer = createReducer(initialValue, {
       NoteListProgress: false,
       NoteListFailed: false,
       NoteListSuccess: true,
-      errorMsg: "",
+      errorMessage: "",
       noteListData: data.payload,
     };
   },
@@ -62,13 +71,15 @@ const customerReducer = createReducer(initialValue, {
       NoteListProgress: false,
       NoteListFailed: true,
       NoteListSuccess: false,
-      errorMsg: data.payload.message,
+      errorMessage: data.payload.message,
     };
   },
   [consumerNoteListProgress]: (state) => {
     return {
       ...state,
       NoteListProgress: true,
+      NoteListFailed: false,
+      NoteListSuccess: false,
     };
   },
   [resetOnUnmount]: () => {
@@ -78,6 +89,7 @@ const customerReducer = createReducer(initialValue, {
       notesSuccess: false,
       errorMsg: "",
       succMsg: "",
+      errorMessage: "",
     };
   },
 });

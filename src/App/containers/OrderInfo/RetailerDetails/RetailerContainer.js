@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
     retailerNotes: state.order.retailer.retailerNotesData,
     fetchSuccess: state.order.retailer.fetchSuccess,
     fetchProgress: state.order.retailer.fetchProgress,
+    fetchFailed: state.order.retailer.fetchFailed,
     fetchRetailerIssueListSuccess:
       state.order.retailer.fetchRetailerIssueListSuccess,
     fetchRetailerIssueListFailure:
@@ -18,6 +19,8 @@ const mapStateToProps = (state) => {
     fetchRetailerIssueListProgress:
       state.order.retailer.fetchRetailerIssueListProgress,
     retailerIssueList: state.order.retailer.retailerIssueList,
+    errorMsg: state.order.retailer.errorMsg,
+    errorMessage: state.order.retailer.errorMessage,
   };
 };
 

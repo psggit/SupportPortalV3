@@ -25,6 +25,10 @@ const useStyles = makeStyles(() => ({
     color: "#696969",
     fontWeight: "bold",
   },
+  giftCell: {
+    maxWidth: 200,
+    wordBreak: "break-word",
+  },
 }));
 
 const createData = ({
@@ -151,7 +155,7 @@ function CustomerGiftSoa(props) {
                       <TableCell align="center">
                         {data.transaction_amount}
                       </TableCell>
-                      <TableCell align="center">
+                      <TableCell align="center" className={classes.giftCell}>
                         {data.gift_cards_and_value}
                       </TableCell>
                       <TableCell align="center">

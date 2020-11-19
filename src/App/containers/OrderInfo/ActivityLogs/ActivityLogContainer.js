@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
     fetchLogProgress: state.order.activityLog.fetchLogProgress,
     fetchLogFailed: state.order.activityLog.fetchLogFailed,
     fetchLogSuccess: state.order.activityLog.fetchLogSuccess,
+    errorMsg: state.order.activityLog.errorMsg,
   };
 };
 

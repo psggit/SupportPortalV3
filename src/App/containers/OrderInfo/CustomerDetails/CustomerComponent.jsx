@@ -81,10 +81,7 @@ const keyMap = {
 
 const CustomerDetails = (props) => {
   const history = useHistory();
-
-  useEffect(() => {
-    // props.fetchConsumerNotesList();
-  }, []);
+  const [show, setShow] = useState(false);
 
   const handleChange = () => {
     history.push({
@@ -118,6 +115,13 @@ const CustomerDetails = (props) => {
     props.fetchConsumerNotes(props.orderInfo.order_id);
     props.fetchConsumerNotesList();
   }, []);
+
+  useEffect(() => {
+    if (props.fetchFailed || props.fetchSuccess) {
+      console.log("[CustomerComponent]");
+      setShow(true);
+    }
+  }, [props.fetchFailed, props.fetchSuccess]);
 
   const customerAction = [
     // <Button variant="outlined" color="primary">
@@ -156,9 +160,10 @@ const CustomerDetails = (props) => {
   const keysToRenderInNotesCard = ["notes", "created_at"];
 
   if (props.notesSuccess) {
-    // console.log("[CustomerComponent]");
     // console.log(props.customerNotes);
   }
+
+  // console.log("[CustomerComponent]");
 
   return (
     <Grid container spacing={4}>
@@ -175,17 +180,20 @@ const CustomerDetails = (props) => {
       </Grid>
       <Grid item xs={6}>
         <>
-          <ActivityItem
-            arr={props.customerNotes ? props.customerNotes.orderNotes : []}
-            keysToRender={keysToRenderInNotesCard}
-            title={"CUSTOMER NOTES"}
-            subtitle={subheadNotesAction}
-            issueType={"customer"}
-            click={props.openDialog}
-            cardActions={true}
-            success={props.fetchSuccess}
-            fail={props.fetchFailed}
-          />
+          {show && (
+            <ActivityItem
+              arr={props.customerNotes ? props.customerNotes.orderNotes : []}
+              keysToRender={keysToRenderInNotesCard}
+              title={"CUSTOMER NOTES"}
+              subtitle={subheadNotesAction}
+              issueType={"customer"}
+              click={props.openDialog}
+              cardActions={true}
+              success={props.fetchSuccess}
+              fail={props.fetchFailed}
+              errorMsg={props.errorMsg}
+            />
+          )}
           {props.fetchProgress && <CircularProgress />}
         </>
       </Grid>

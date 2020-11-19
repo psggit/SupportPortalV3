@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { createReducer } from "@reduxjs/toolkit";
 import {
   fetchCancellationSummarySuccess,
@@ -20,8 +19,10 @@ import {
   deliverOrderFailed,
   deliverOrderSuccess,
   resetOnUnmount,
+  fetchCancelReasonProgress,
+  fetchCancelReasonFailure,
+  fetchCancelReasonSuccess,
 } from "./actions";
-import { cancelOrder } from "./operations";
 
 const initialValue = {
   cancelReasons: null,
@@ -47,6 +48,11 @@ const initialValue = {
   deliverOrderSuccess: false,
   errorMsg: "",
   successMsg: "",
+  errorMsgCancel: "",
+  errorMsgSummary: "",
+  fetchCancelReasonProgress: false,
+  fetchCancelReasonFailure: false,
+  fetchCancelReasonSuccess: false,
 };
 const orderDataReducer = createReducer(initialValue, {
   [fetchCancelReasonsSuccess]: (state, data) => ({
@@ -62,7 +68,7 @@ const orderDataReducer = createReducer(initialValue, {
     fetchSuccess: false,
     fetchFailed: true,
     fetchProgress: false,
-    errorMsg: "Something went wrong Please try again!",
+    errorMsgCancel: "Something went wrong. Please try again!",
   }),
   [fetchCancelReasonsProgress]: (state) => ({
     ...state,
@@ -83,7 +89,7 @@ const orderDataReducer = createReducer(initialValue, {
     fetchDeliverOrderSuccess: false,
     fetchDeliverOrderFailed: true,
     fetchDeliverOrderProgress: false,
-    errorMsg: "Something went wrong Please try again!",
+    errorMsg: "Something went wrong. Please try again!",
   }),
   [fetchDeliverOrderProgress]: (state) => ({
     ...state,
@@ -105,7 +111,7 @@ const orderDataReducer = createReducer(initialValue, {
     fetchKycListSuccess: false,
     fetchKycListFailed: true,
     fetchKycListProgress: false,
-    errorMsg: "Something went wrong Please try again!",
+    errorMsg: "Something went wrong. Please try again!",
   }),
   [fetchKycListProgress]: (state) => ({
     ...state,
@@ -126,7 +132,7 @@ const orderDataReducer = createReducer(initialValue, {
     fetchCancellationSummarySuccess: false,
     fetchCancellationSummaryFailed: true,
     cancelOrderProgress: false,
-    errorMsg: data.payload.message,
+    errorMsgSummary: data.payload.message,
   }),
   [fetchCancellationSummaryProgress]: (state) => ({
     ...state,
@@ -179,25 +185,30 @@ const orderDataReducer = createReducer(initialValue, {
     cancelOrderSuccess: false,
     cancelOrderFailure: false,
   }),
-  [resetOnUnmount]: (state) => ({
+  [fetchCancelReasonProgress]: (state) => ({
     ...state,
-    fetchCancellationSummarySuccess: false,
-    fetchCancellationSummaryFailed: false,
-    fetchCancellationSummaryProgress: false,
-    fetchKycListSuccess: false,
-    fetchKycListFailed: false,
-    fetchKycListProgress: false,
-    fetchCancelReasonsSuccess: false,
-    fetchCancelReasonsFailed: false,
-    fetchCancelReasonsProgress: false,
-    cancelOrderProgress: false,
-    cancelOrderFailure: false,
-    cancelOrderSuccess: false,
-    deliverOrderProgress: false,
-    deliverOrderFailed: false,
-    deliverOrderSuccess: false,
-    errorMsg: "",
-    successMsg: "",
+    fetchCancelReasonProgress: true,
+    fetchCancelReasonFailure: false,
+    fetchCancelReasonSuccess: false,
+  }),
+  [fetchCancelReasonFailure]: (state, err) => ({
+    ...state,
+    fetchCancelReasonProgress: false,
+    fetchCancelReasonFailure: true,
+    fetchCancelReasonSuccess: false,
+    errorMsg: err,
+  }),
+  [fetchCancelReasonSuccess]: (state, data) => {
+    return {
+      ...state,
+      fetchCancelReasonProgress: false,
+      fetchCancelReasonFailure: false,
+      fetchCancelReasonSuccess: true,
+      cancelReasons: data.payload,
+    };
+  },
+  [resetOnUnmount]: () => ({
+    ...initialValue,
   }),
 });
 export { orderDataReducer };

@@ -1,7 +1,7 @@
 import {
-  fetchNotesSuccess,
-  fetchNotesFailed,
-  fetchNotesProgress,
+  fetchCustomerNotesSuccess,
+  fetchCustomerNotesFailed,
+  fetchCustomerNotesProgress,
   consumerNoteListSuccess,
   consumerNoteListFailed,
   consumerNoteListProgress,
@@ -13,6 +13,8 @@ const processResponse = () => {
   return (res) => {
     if (res.status === 200) {
       return res.json();
+    } else if (res.status === 400) {
+      throw new Error("invalid params");
     } else {
       throw res;
     }
@@ -21,13 +23,13 @@ const processResponse = () => {
 
 const onSuccess = (dispatch) => {
   return (data) => {
-    dispatch(fetchNotesSuccess(data));
+    dispatch(fetchCustomerNotesSuccess(data));
   };
 };
 
 const onError = (dispatch) => {
   return (err) => {
-    dispatch(fetchNotesFailed(err));
+    dispatch(fetchCustomerNotesFailed(err));
   };
 };
 
@@ -51,7 +53,7 @@ const fetchConsumerNotes = (orderId) => {
     type: "customer",
   };
   return (dispatch) => {
-    dispatch(fetchNotesProgress());
+    dispatch(fetchCustomerNotesProgress());
     fetchNotesAPI(
       reqBody,
       processResponse(dispatch),

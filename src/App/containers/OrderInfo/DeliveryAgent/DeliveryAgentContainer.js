@@ -24,6 +24,8 @@ const mapStateToProps = (state) => {
     unassignDAFail: state.order.deliveryAgent.unassignDAFail,
     successMsg: state.order.deliveryAgent.successMsg,
     errorMsg: state.order.deliveryAgent.errorMsg,
+    errorMessageUnassign: state.order.deliveryAgent.errorMessageUnassign,
+    errorMessageReserve: state.order.deliveryAgent.errorMessageReserve,
     message: state.order.deliveryAgent.message,
     reserveDaSuccess: state.order.deliveryAgent.reserveDaSuccess,
     reserveDaFail: state.order.deliveryAgent.reserveDaFail,

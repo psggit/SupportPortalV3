@@ -14,12 +14,16 @@ import {
   fetchCancellationSummarySuccess,
   fetchCancellationSummaryFailed,
   fetchCancellationSummaryProgress,
+  fetchCancelReasonProgress,
+  fetchCancelReasonFailure,
+  fetchCancelReasonSuccess,
 } from "./actions";
 import { cancelOrderSummaryAPI } from "../../../../utils/cancelOrderSummaryAPI";
 import { cancelOrderAPI } from "../../../../utils/cancelOrderAPI";
 import { deliverOrderReasonAPI } from "../../../../utils/deliverOrderReasonAPI";
 import { kycListAPI } from "../../../../utils/kycListAPI";
 import { deliverOrderAPI } from "../../../../utils/deliverOrderAPI";
+import { cancelReasonAPI } from "../../../../utils";
 
 const processResponse = () => {
   return (res) => {
@@ -156,10 +160,35 @@ const deliverOrder = (payload) => {
   };
 };
 
+const onErrorCancelReason = (dispatch) => {
+  return (err) => {
+    dispatch(fetchCancelReasonFailure(err));
+  };
+};
+
+const onSuccessCancelReason = (dispatch) => {
+  return (data) => {
+    dispatch(fetchCancelReasonSuccess(data));
+  };
+};
+
+const fetchCancelReason = (payload) => {
+  return (dispatch) => {
+    dispatch(fetchCancelReasonProgress());
+    cancelReasonAPI(
+      payload,
+      processResponse(dispatch),
+      onSuccessCancelReason(dispatch),
+      onErrorCancelReason(dispatch)
+    );
+  };
+};
+
 export {
   cancelOrderSummary,
   deliverOrderReasons,
   fetchKycList,
   deliverOrder,
   cancelOrder,
+  fetchCancelReason,
 };

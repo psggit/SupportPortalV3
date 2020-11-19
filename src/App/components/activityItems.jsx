@@ -101,6 +101,7 @@ ActivityItem.propTypes = {
   title: PropTypes.string,
   subtitle: PropTypes.array,
   cardActions: PropTypes.bool,
+  errorMsg: PropTypes.string,
 };
 
 export default function ActivityItem(props) {
@@ -114,6 +115,9 @@ export default function ActivityItem(props) {
   const subtitle = props.subtitle;
   const titleText = props.title;
   const cardActions = props.cardActions;
+  // console.log("---", props.errorMsg, type);
+  // const errorMsg = props.errorMsg || "Something went wrong. Try again later.";
+  const errorMessage = props.errorMsg;
 
   if (mapArray === null) {
     return (
@@ -207,7 +211,7 @@ export default function ActivityItem(props) {
             );
           })}
         {mapArray.length === 0 && (
-          <Alert severity="error">This is an error alert — check it out!</Alert>
+          <Alert severity="error">{errorMessage}</Alert>
         )}
       </CardContent>
       {cardActions && (
