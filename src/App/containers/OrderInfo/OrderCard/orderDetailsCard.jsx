@@ -21,6 +21,7 @@ import { OrderSummaryItem } from "../../Cart/components/orderSummaryItem";
 import { fetchDeliverOrderSuccess, fetchKycListSuccess } from "./duck/actions";
 import ErrorMsg from "../../../components/errorMsg";
 import uuid from "react-uuid";
+import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,13 +72,19 @@ const OrderDetailsCard = (props) => {
   const classes = useStyles();
 
   useEffect(() => {
-    const payload = {
+    let payload = {
       city_id: props.order.city_id.toString(),
     };
     //if (localStorage.getItem("x-hasura-role") !== "ops_delivery_manager") {
-      props.deliverOrderReasons(payload);
-      props.fetchKycList();
+    props.deliverOrderReasons(payload);
+    props.fetchKycList();
     //}
+    payload = {
+      order_id: props.orderInfo.order_id,
+    };
+    if (props.order.cancel_order_button) {
+      props.fetchCancelReason(payload);
+    }
 
     return () => {
       props.resetOnUnmount();
@@ -319,7 +326,9 @@ const OrderDetailsCard = (props) => {
         <ErrorMsg
           show={true}
           message={
-            props.errorMsg !== "" ? props.errorMsg : "Something went wrong"
+            props.errorMsgSummary !== ""
+              ? props.errorMsgSummary
+              : "Something went wrong"
           }
           type={"error"}
         />
@@ -366,31 +375,41 @@ const OrderDetailsCard = (props) => {
           {`Do you want to cancel order? Select reason for cancelling order and click Confirm to proceed.`}
         </DialogTitle>
         <DialogContent>
-          <FormControl className={classes.formControl}>
-            <InputLabel id="demo-simple-select-label">Select Reason</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              onChange={(event) => handleChange(event)}
-            >
-              {props.fetchCancelReasonSuccess &&
-                props.cancelReasons.map((value, index) => {
-                  if (selectedValue === value) {
-                    return (
-                      <MenuItem value={value.id} key={index} selected={true}>
-                        {value.reason}
-                      </MenuItem>
-                    );
-                  } else {
-                    return (
-                      <MenuItem value={value.id} key={index}>
-                        {value.reason}
-                      </MenuItem>
-                    );
-                  }
-                })}
-            </Select>
-          </FormControl>
+          {props.fetchCancelReasonProgress && (
+            <Alert severity="info">{"Fetching details..."}</Alert>
+          )}
+          {props.fetchCancelReasonFailure && (
+            <Alert severity="error">{props.errorMsgCancel}</Alert>
+          )}
+          {props.fetchCancelReasonSuccess && (
+            <FormControl className={classes.formControl}>
+              <InputLabel id="demo-simple-select-label">
+                Select Reason
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                onChange={(event) => handleChange(event)}
+              >
+                {props.fetchCancelReasonSuccess &&
+                  props.cancelReasons.map((value, index) => {
+                    if (selectedValue === value) {
+                      return (
+                        <MenuItem value={value.id} key={index} selected={true}>
+                          {value.reason}
+                        </MenuItem>
+                      );
+                    } else {
+                      return (
+                        <MenuItem value={value.id} key={index}>
+                          {value.reason}
+                        </MenuItem>
+                      );
+                    }
+                  })}
+              </Select>
+            </FormControl>
+          )}
           {props.fetchCancellationSummarySuccess && cancellationSummary && (
             <div>
               <OrderSummaryItem title="Cancellation charges" />
@@ -418,6 +437,13 @@ const OrderDetailsCard = (props) => {
                   title="Nodal Amount:"
                   value={
                     props.cancelOrderSummaryData.refund_amount.nodal_amount
+                  }
+                />
+                <OrderSummaryItem
+                  title="Total Refund Amount:"
+                  value={
+                    props.cancelOrderSummaryData.refund_amount
+                      .total_refund_amount
                   }
                 />
               </OrderSummaryItem>
@@ -613,6 +639,9 @@ OrderDetailsCard.propTypes = {
   deliverOrderSuccess: PropTypes.bool,
   resetOnUnmount: PropTypes.func,
   orderInfo: PropTypes.any,
+  fetchCancelReason: PropTypes.func,
+  fetchCancelReasonProgress: PropTypes.bool,
+  errorMsgSummary: PropTypes.any,
 };
 
 export { OrderDetailsCard };

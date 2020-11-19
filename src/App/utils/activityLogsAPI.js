@@ -1,13 +1,12 @@
 import { apiUrl } from "./config";
 
-const headers = {
-  Accept: "application/json",
-  "Content-Type": "application/json",
-  "x-hasura-role": `${localStorage.getItem("x-hasura-role")}`,
-};
-
 const acitivityLogsAPI = (reqBody, process, onSuccess, onError) => {
   const URL = `https://${apiUrl}/supportman/api/1/activitylogs`;
+  const headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    "x-hasura-role": `${localStorage.getItem("x-hasura-role")}`,
+  };
   fetch(URL, {
     method: "POST",
     headers: headers,

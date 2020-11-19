@@ -18,13 +18,19 @@ const activityLogReducer = createReducer(initialValue, {
     fetchLogProgress: false,
     errorMsg: "",
   }),
-  [fetchLogFailed]: (state) => ({
-    ...state,
-    fetchLogSuccess: false,
-    fetchLogFailed: true,
-    fetchLogProgress: false,
-    errorMsg: "Something went wrong. Please try again!",
-  }),
+  [fetchLogFailed]: (state, data) => {
+    let errorMessage =
+      data.payload.message !== undefined
+        ? data.payload.message
+        : "Something went wrong. Try again later.";
+    return {
+      ...state,
+      fetchLogSuccess: false,
+      fetchLogFailed: true,
+      fetchLogProgress: false,
+      errorMsg: errorMessage,
+    };
+  },
   [fetchLogProgress]: (state) => ({
     ...state,
     fetchLogProgress: true,

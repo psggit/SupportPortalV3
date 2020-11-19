@@ -26,6 +26,8 @@ const processResponse = () => {
   return (res) => {
     if (res.status === 200) {
       return res.json();
+    } else if (res.status === 400) {
+      throw new Error("invalid params");
     } else {
       throw res;
     }
@@ -45,10 +47,8 @@ const onSuccessIssue = (dispatch) => {
 };
 
 const onError = (dispatch) => {
-  return (data) => {
-    data.json().then((json) => {
-      dispatch(fetchDeliveryAgentNotesFailed(json));
-    });
+  return (err) => {
+    dispatch(fetchDeliveryAgentNotesFailed(err));
   };
 };
 

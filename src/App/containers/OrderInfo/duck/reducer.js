@@ -52,13 +52,13 @@ const initialValue = {
 };
 
 const orderInfoReducer = createReducer(initialValue, {
-  [fetchOrderInfoFailure]: (state, message) => {
+  [fetchOrderInfoFailure]: (state) => {
     return {
       ...state,
       fetchOrderInfoProgress: false,
       fetchOrderInfoFailure: true,
       fetchOrderInfoSuccess: false,
-      errorMsg: message,
+      errorMsg: "Something went wrong, please try again!",
     };
   },
   [fetchOrderInfoProgress]: (state) => {
@@ -82,29 +82,6 @@ const orderInfoReducer = createReducer(initialValue, {
       fetchOrderInfoFailure: false,
       fetchOrderInfoSuccess: true,
       errorMsg: "",
-    };
-  },
-  [fetchCancelReasonProgress]: (state) => ({
-    ...state,
-    fetchCancelReasonProgress: true,
-    fetchCancelReasonFailure: false,
-    fetchCancelReasonSuccess: false,
-  }),
-  [fetchCancelReasonFailure]: (state, err) => ({
-    ...state,
-    fetchCancelReasonProgress: false,
-    fetchCancelReasonFailure: true,
-    fetchCancelReasonSuccess: false,
-    errorMsg: err,
-  }),
-  [fetchCancelReasonSuccess]: (state, data) => {
-    return {
-      ...state,
-      fetchCancelReasonProgress: false,
-      fetchCancelReasonFailure: false,
-      fetchCancelReasonSuccess: true,
-      errorMsg: "",
-      cancelReasons: data.payload,
     };
   },
   [createNotesProgress]: (state) => ({

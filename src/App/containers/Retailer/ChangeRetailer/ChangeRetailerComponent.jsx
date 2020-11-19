@@ -1,12 +1,12 @@
-/* eslint-disable react/jsx-key */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import uuid from "react-uuid";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import TopBar from "../../../components/topBar";
 import { RetailerCardContainer } from "./RetailerCardContainer";
-import { Tab } from "@material-ui/core";
+import { Tab, Typography } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
@@ -14,6 +14,7 @@ import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router-dom";
 import Loading from "../../../components/loading";
 import ErrorMsg from "../../../components/errorMsg";
+import Dialog from "../../../components/dialog";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -77,7 +78,10 @@ const ChangeRetailerComponent = (props) => {
   const orderId = history.location.state.orderId;
   const orderInfo = history.location.state.orderInfo;
 
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+  const [mountDialog, setMountDialog] = useState(false);
+  const [selectedRetailer, setSelectedRetailer] = useState("");
+  const [selectedID, setSelectedID] = useState("");
 
   useEffect(() => {
     const payload = {
@@ -86,11 +90,38 @@ const ChangeRetailerComponent = (props) => {
       state_id: stateId,
       city_id: cityId,
     };
+    // console.log(history.location.state);
     props.listRetailer(payload);
     return () => {
       props.resetOnUnmount();
     };
   }, []);
+
+  const handleSelect = (value, id) => {
+    setSelectedRetailer(value);
+    setSelectedID(id);
+    setMountDialog(true);
+  };
+
+  const handleCancel = () => {
+    setMountDialog(false);
+  };
+
+  const handleConfirm = () => {
+    const payload = {
+      order_id: props.orderId,
+      retailer_id: parseInt(selectedID),
+      retailer_name: selectedRetailer,
+      warehouse_id: parseInt(orderInfo.warehouse_id),
+      delivery_status: orderInfo.delivery_status,
+      assigned_delivery_agent: parseInt(orderInfo.delivery_agent_id),
+      reserved_for_da_id: parseInt(orderInfo.delivery_agent_id),
+      cancellation_reason: "",
+    };
+    props.reassignRetailer(payload);
+    // console.log("RetailerCardComponent", props.errorMessage.message);
+    setMountDialog(false);
+  };
 
   const handleBack = () => {
     history.push(`/order-info/${orderId}`);
@@ -128,29 +159,69 @@ const ChangeRetailerComponent = (props) => {
               textColor="primary"
               centered
             >
-              <Tab label={<Button color="primary">Change Retailer</Button>} />,
+              <Tab label={<Button color="primary">Change Retailer</Button>} />
             </Tabs>
           </Grid>
         </Grid>
       </Paper>
-      {props.listRetailerFailed && (
-        <ErrorMsg show={true} message={props.errorMsg} type={"error"} />
-      )}
       <Box className={classes.boxContainer}>
         <Grid container spacing={4} className={classes.containerBox}>
           {props.listRetailerSuccess &&
             props.listRetailerData.da_info.map((value) => (
-              <Grid item xs={4}>
+              <Grid item xs={4} key={uuid()}>
                 <RetailerCardContainer
                   retailerName={value.retailer_name}
                   retailer_id={value.retailer_id}
                   value={value}
                   orderInfos={orderInfo}
+                  handleSelect={handleSelect}
+                  handleCancel={handleCancel}
+                  handleConfirm={handleConfirm}
+                  {...props}
                 />
               </Grid>
             ))}
         </Grid>
       </Box>
+      {props.listRetailerFailed && (
+        <ErrorMsg show={true} message={props.errorMsg} type={"error"} />
+      )}
+      {props.reassignRetailerFailed && (
+        <ErrorMsg show={true} message={props.errorMessage} type={"error"} />
+      )}
+      {props.reassignRetailerSuccess && (
+        <ErrorMsg show={true} message={props.successMsg} type={"success"} />
+      )}
+      {mountDialog && (
+        <Dialog
+          title={"Change Retailer"}
+          actions={[
+            <Button
+              variant="outlined"
+              color="primary"
+              className={classes.marginLeft}
+              onClick={handleCancel}
+              key={uuid()}
+            >
+              Cancel
+            </Button>,
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleConfirm}
+              key={uuid()}
+            >
+              Confirm
+            </Button>,
+          ]}
+        >
+          <Typography>
+            {
+              "Delivery Agent not mapped to retailer. Do you still want to change retailer?"
+            }
+          </Typography>
+        </Dialog>
+      )}
     </div>
   );
 };
@@ -163,8 +234,13 @@ ChangeRetailerComponent.propTypes = {
   listRetailerProgress: PropTypes.bool,
   orderDetails: PropTypes.object,
   orderId: PropTypes.string,
-  errorMsg: PropTypes.any,
+  errorMsg: PropTypes.string,
+  successMsg: PropTypes.string,
+  errorMessage: PropTypes.string,
   resetOnUnmount: PropTypes.func,
+  reassignRetailer: PropTypes.func,
+  reassignRetailerFailed: PropTypes.bool,
+  reassignRetailerSuccess: PropTypes.bool,
 };
 
 export { ChangeRetailerComponent };

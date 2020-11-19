@@ -43,6 +43,8 @@ const listRetailerReducer = createReducer(initialValue, {
   [listRetailerProgress]: (state) => ({
     ...state,
     listRetailerProgress: true,
+    listRetailerFailed: false,
+    listRetailerSuccess: false,
   }),
 
   [reassignRetailerSuccess]: (state, data) => ({
@@ -66,6 +68,8 @@ const listRetailerReducer = createReducer(initialValue, {
   [reassignRetailerProgress]: (state) => ({
     ...state,
     reassignRetailerProgress: true,
+    reassignRetailerFailed: false,
+    reassignRetailerSuccess: false,
   }),
   [resetOnUnmount]: (state) => ({
     ...state,

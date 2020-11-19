@@ -2,9 +2,6 @@ import {
   fetchOrderInfoProgress,
   fetchOrderInfoFailure,
   fetchOrderInfoSuccess,
-  fetchCancelReasonProgress,
-  fetchCancelReasonFailure,
-  fetchCancelReasonSuccess,
   createNotesProgress,
   createNotesFailure,
   createNotesSuccess,
@@ -22,7 +19,6 @@ import {
 import { selectOrder } from "../../Dashboard/duck";
 import {
   orderInfoAPI,
-  cancelReasonAPI,
   createNotesAPI,
   callAPI,
   listIssueAPI,
@@ -33,8 +29,10 @@ const processResponse = () => {
   return (res) => {
     if (res.status === 200) {
       return res.json();
+    } else if (res.status === 400) {
+      throw new Error("invalid params");
     } else {
-      throw res;
+      throw new Error("Something went wrong, try again");
     }
   };
 };
@@ -55,23 +53,9 @@ const onSuccess = (dispatch) => {
   };
 };
 
-const onSuccessCancel = (dispatch) => {
-  return (data) => {
-    dispatch(fetchCancelReasonSuccess(data));
-  };
-};
-
 const onError = (dispatch) => {
-  return (data) => {
-    data.json().then((json) => {
-      dispatch(fetchOrderInfoFailure(json));
-    });
-  };
-};
-
-const onErrorCancel = (dispatch) => {
   return (err) => {
-    dispatch(fetchCancelReasonFailure(err));
+    dispatch(fetchOrderInfoFailure(err));
   };
 };
 
@@ -84,18 +68,6 @@ const fetchOrder = (payload) => {
       processResponse(dispatch),
       onSuccess(dispatch),
       onError(dispatch)
-    );
-  };
-};
-
-const fetchCancelReason = (payload) => {
-  return (dispatch) => {
-    dispatch(fetchCancelReasonProgress());
-    cancelReasonAPI(
-      payload,
-      processResponse(dispatch),
-      onSuccessCancel(dispatch),
-      onErrorCancel(dispatch)
     );
   };
 };
@@ -197,11 +169,4 @@ const submitIssue = (payload) => {
   };
 };
 
-export {
-  fetchOrder,
-  fetchCancelReason,
-  createNotes,
-  connectCall,
-  fetchIssueTypes,
-  submitIssue,
-};
+export { fetchOrder, createNotes, connectCall, fetchIssueTypes, submitIssue };

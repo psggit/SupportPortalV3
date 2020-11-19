@@ -47,6 +47,9 @@ const useStyles = makeStyles(() => ({
     textAlign: "center",
     display: "block",
   },
+  mt: {
+    marginTop: 20,
+  },
 }));
 
 const MapComponent = (props) => {
@@ -71,9 +74,12 @@ const MapComponent = (props) => {
   });
   const [current] = useState(null);
 
-
-  function rad2degr(rad) { return rad * 180 / Math.PI; }
-  function degr2rad(degr) { return degr * Math.PI / 180; }
+  function rad2degr(rad) {
+    return (rad * 180) / Math.PI;
+  }
+  function degr2rad(degr) {
+    return (degr * Math.PI) / 180;
+  }
 
   function getLatLngCenter(latLngInDegr) {
     var LATIDX = 0;
@@ -101,7 +107,7 @@ const MapComponent = (props) => {
     var lat = Math.atan2(avgZ, hyp);
 
     //return ([parseFloat(rad2degr(lat)), parseFloat(rad2degr(lng))]);
-    return { lat: parseFloat(rad2degr(lat)), lng: parseFloat(rad2degr(lng)) } 
+    return { lat: parseFloat(rad2degr(lat)), lng: parseFloat(rad2degr(lng)) };
   }
 
   function GetCenterFromDegrees(data) {
@@ -116,8 +122,8 @@ const MapComponent = (props) => {
     var Z = 0.0;
 
     for (var i = 0; i < data.length; i++) {
-      var lat = data[i][0] * Math.PI / 180;
-      var lon = data[i][1] * Math.PI / 180;
+      var lat = (data[i][0] * Math.PI) / 180;
+      var lon = (data[i][1] * Math.PI) / 180;
 
       var a = Math.cos(lat) * Math.cos(lon);
       var b = Math.cos(lat) * Math.sin(lon);
@@ -136,11 +142,11 @@ const MapComponent = (props) => {
     var hyp = Math.sqrt(X * X + Y * Y);
     var lat = Math.atan2(Z, hyp);
 
-    var newX = (lat * 180 / Math.PI);
-    var newY = (lon * 180 / Math.PI);
+    var newX = (lat * 180) / Math.PI;
+    var newY = (lon * 180) / Math.PI;
 
     //return new Array(newX, newY);
-    return { lat: parseFloat((newX)), lng: parseFloat((newY)) } 
+    return { lat: parseFloat(newX), lng: parseFloat(newY) };
   }
 
   const centerData = GetCenterFromDegrees([
@@ -148,26 +154,19 @@ const MapComponent = (props) => {
     //   parseFloat(gpsAgent[0]),
     //   parseFloat(gpsAgent[1]),
     // ],
-    [
-      parseFloat(gpsConsumer[0]),
-      parseFloat(gpsConsumer[1]),
-    ],
-    [
-      parseFloat(gpsRetailer[0]),
-      parseFloat(gpsRetailer[1]),
-    ],
-  ])
+    [parseFloat(gpsConsumer[0]), parseFloat(gpsConsumer[1])],
+    [parseFloat(gpsRetailer[0]), parseFloat(gpsRetailer[1])],
+  ]);
 
-  console.log("cneter", centerData)
+  console.log("cneter", centerData);
   //setCenterConsumer(centerData)
-
 
   useEffect(() => {
     if (mapRef.current && current) {
       mapRef.current.setCenter(current);
       setCenterConsumer(current);
     }
-    setCenter(centerData)
+    setCenter(centerData);
   }, [current]);
 
   const onLoad = (map) => {
@@ -180,7 +179,7 @@ const MapComponent = (props) => {
   };
 
   const handleBoundsChanged = () => {
-    console.log("hhh")
+    console.log("hhh");
     const mapCenter = mapRef.current.getCenter(); //get map center
     setCenter(mapCenter);
   };
@@ -329,16 +328,21 @@ function OrderTrackingComponent(props) {
             <Typography variant="body1" className={classes.cardHeader}>
               ORDER TRACKING
             </Typography>
-            <Grid container spacing={4} className={classes.containerBox}>
-              <Grid item xs={4}>
-                <Paper className={classes.root} elevation={0}>
-                  <Box
-                    display="flex"
-                    alignContent="flex-start"
-                    alignItems="flex-start"
-                  >
-                    <img src={mapMarkerIcon} />
-                    {show && (
+            {showError && (
+              <Alert severity="error" className={classes.mt}>
+                {props.message}
+              </Alert>
+            )}
+            {show && (
+              <Grid container spacing={4} className={classes.containerBox}>
+                <Grid item xs={4}>
+                  <Paper className={classes.root} elevation={0}>
+                    <Box
+                      display="flex"
+                      alignContent="flex-start"
+                      alignItems="flex-start"
+                    >
+                      <img src={mapMarkerIcon} />
                       <Box ml={2}>
                         <Typography variant="body1">Customer name:</Typography>
                         <Typography variant="body2">
@@ -356,19 +360,17 @@ function OrderTrackingComponent(props) {
                             : "-"}
                         </Typography>
                       </Box>
-                    )}
-                  </Box>
-                </Paper>
-              </Grid>
-              <Grid item xs={4}>
-                <Paper className={classes.root} elevation={0}>
-                  <Box
-                    display="flex"
-                    alignContent="flex-start"
-                    alignItems="flex-start"
-                  >
-                    <img src={mapMarkerIcon} />
-                    {show && (
+                    </Box>
+                  </Paper>
+                </Grid>
+                <Grid item xs={4}>
+                  <Paper className={classes.root} elevation={0}>
+                    <Box
+                      display="flex"
+                      alignContent="flex-start"
+                      alignItems="flex-start"
+                    >
+                      <img src={mapMarkerIcon} />
                       <Box ml={2}>
                         <Typography variant="body1">Retailer name:</Typography>
                         <Typography variant="body2">
@@ -386,19 +388,17 @@ function OrderTrackingComponent(props) {
                             : "-"}
                         </Typography>
                       </Box>
-                    )}
-                  </Box>
-                </Paper>
-              </Grid>
-              <Grid item xs={4}>
-                <Paper className={classes.root} elevation={0}>
-                  <Box
-                    display="flex"
-                    alignContent="flex-start"
-                    alignItems="flex-start"
-                  >
-                    <img src={markerIconDA} />
-                    {show && (
+                    </Box>
+                  </Paper>
+                </Grid>
+                <Grid item xs={4}>
+                  <Paper className={classes.root} elevation={0}>
+                    <Box
+                      display="flex"
+                      alignContent="flex-start"
+                      alignItems="flex-start"
+                    >
+                      <img src={markerIconDA} />
                       <Box ml={2}>
                         <Typography variant="body1">
                           Delivery Agent name:
@@ -418,14 +418,13 @@ function OrderTrackingComponent(props) {
                             : "-"}
                         </Typography>
                       </Box>
-                    )}
-                  </Box>
-                </Paper>
+                    </Box>
+                  </Paper>
+                </Grid>
               </Grid>
-            </Grid>
+            )}
           </Paper>
         </Grid>
-
         {show && (
           <Grid item xs={12}>
             <Box mt={4}>
@@ -449,11 +448,12 @@ function OrderTrackingComponent(props) {
             </Box>
           </Grid>
         )}
-        <Grid item xs={12}>
-          <Box mb={10}>{show && <MapComponent {...props} />}</Box>
-        </Grid>
-        {showError && (
-          <ErrorMsg show={true} message={props.message} type="error" />
+        {show && (
+          <Grid item xs={12}>
+            <Box mb={10}>
+              <MapComponent {...props} />
+            </Box>
+          </Grid>
         )}
       </Grid>
     </>
@@ -470,6 +470,7 @@ OrderTrackingComponent.propTypes = {
   trackData: PropTypes.object,
   errorMsg: PropTypes.string,
   orderInfo: PropTypes.any,
+  message: PropTypes.any,
 };
 
 export { OrderTrackingComponent };

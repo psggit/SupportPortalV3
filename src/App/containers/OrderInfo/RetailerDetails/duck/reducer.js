@@ -19,6 +19,7 @@ const initialValue = {
   fetchRetailerIssueListFailure: false,
   fetchRetailerIssueListProgress: false,
   errorMsg: "",
+  errorMessage: "",
 };
 const retailerNotesReducer = createReducer(initialValue, {
   [fetchRetailerNotesSuccess]: (state, data) => ({
@@ -29,16 +30,24 @@ const retailerNotesReducer = createReducer(initialValue, {
     fetchProgress: false,
     errorMsg: "",
   }),
-  [fetchRetailerNotesFailed]: (state) => ({
-    ...state,
-    fetchSuccess: false,
-    fetchFailed: true,
-    fetchProgress: false,
-    errorMsg: "Something went wrong Please try again!",
-  }),
+  [fetchRetailerNotesFailed]: (state, data) => {
+    let errorMessage =
+      data.payload.message !== undefined
+        ? data.payload.message
+        : "Something went wrong. Try again later.";
+    return {
+      ...state,
+      fetchSuccess: false,
+      fetchFailed: true,
+      fetchProgress: false,
+      errorMsg: errorMessage,
+    };
+  },
   [fetchRetailerNotesProgress]: (state) => ({
     ...state,
     fetchProgress: true,
+    fetchSuccess: false,
+    fetchFailed: false,
   }),
 
   [fetchRetailerIssueListSuccess]: (state, data) => ({
@@ -47,18 +56,20 @@ const retailerNotesReducer = createReducer(initialValue, {
     fetchRetailerIssueListSuccess: true,
     fetchRetailerIssueListFailure: false,
     fetchRetailerIssueListProgress: false,
-    errorMsg: "",
+    errorMessage: "",
   }),
   [fetchRetailerIssueListFailure]: (state) => ({
     ...state,
     fetchRetailerIssueListSuccess: false,
     fetchRetailerIssueListFailure: true,
     fetchRetailerIssueListProgress: false,
-    errorMsg: "Something went wrong Please try again!",
+    errorMessage: "Something went wrong. Please try again!",
   }),
   [fetchRetailerIssueListProgress]: (state) => ({
     ...state,
     fetchRetailerIssueListProgress: true,
+    fetchRetailerIssueListSuccess: false,
+    fetchRetailerIssueListFailure: false,
   }),
 });
 export { retailerNotesReducer };

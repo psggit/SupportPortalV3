@@ -30,7 +30,7 @@ const keyMap = {
 const RetailerDetails = (props) => {
   const [data, setData] = useState([]);
   useEffect(() => {
-    console.log("RetailerDetailsCard");
+    // console.log("RetailerDetailsCard");
     const details = getListOfDataObjects(props.orderInfo, keysToRender);
     setData(details);
     if (localStorage.getItem("x-hasura-role") !== "ops_delivery_manager") {
@@ -113,17 +113,18 @@ const RetailerDetails = (props) => {
       </Grid>
       <Grid item xs={6}>
         <>
-          {props.fetchSuccess && (
-            <ActivityItem
-              arr={props.retailerNotes.orderNotes}
-              keysToRender={keysToRenderInNotesCard}
-              title={"RETAILER NOTES"}
-              subtitle={retailerNotes}
-              issueType={"retailer"}
-              click={props.openDialog}
-              cardActions={true}
-            />
-          )}
+          <ActivityItem
+            arr={props.retailerNotes ? props.retailerNotes.orderNotes : []}
+            keysToRender={keysToRenderInNotesCard}
+            title={"RETAILER NOTES"}
+            subtitle={retailerNotes}
+            issueType={"retailer"}
+            click={props.openDialog}
+            cardActions={true}
+            success={props.fetchSuccess}
+            fail={props.fetchFailed}
+            errorMsg={props.errorMsg}
+          />
           {props.fetchProgress && <CircularProgress />}
         </>
       </Grid>
@@ -139,5 +140,7 @@ RetailerDetails.propTypes = {
   openDialog: PropTypes.any,
   handleCall: PropTypes.func,
   fetchRetailerIssueList: PropTypes.func,
+  fetchFailed: PropTypes.bool,
+  errorMsg: PropTypes.string,
 };
 export { RetailerDetails };

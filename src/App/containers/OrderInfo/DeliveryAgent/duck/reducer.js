@@ -26,6 +26,8 @@ const initialValue = {
   fetchFailed: false,
   fetchProgress: false,
   errorMsg: "",
+  errorMessageReserve: "",
+  errorMessageUnassign: "",
   deliveryAgentList: null,
   daListSuccess: false,
   daListFail: false,
@@ -52,16 +54,24 @@ const deliveryAgentReducer = createReducer(initialValue, {
       errorMsg: "",
     };
   },
-  [fetchDeliveryAgentNotesFailed]: (state, error) => ({
-    ...state,
-    fetchSuccess: false,
-    fetchFailed: true,
-    fetchProgress: false,
-    errorMsg: error.payload.message,
-  }),
+  [fetchDeliveryAgentNotesFailed]: (state, data) => {
+    let errorMessage =
+      data.payload.message !== undefined
+        ? data.payload.message
+        : "Something went wrong. Try again later.";
+    return {
+      ...state,
+      fetchSuccess: false,
+      fetchFailed: true,
+      fetchProgress: false,
+      errorMsg: errorMessage,
+    };
+  },
   [fetchDeliveryAgentNotesProgress]: (state) => ({
     ...state,
     fetchProgress: true,
+    fetchSuccess: false,
+    fetchFailed: false,
   }),
 
   [fetchDaIssueListSuccess]: (state, data) => {
@@ -71,7 +81,6 @@ const deliveryAgentReducer = createReducer(initialValue, {
       fetchDaIssueListSuccess: true,
       fetchDaIssueListFailure: false,
       fetchDaIssueListProgress: false,
-      errorMsg: "",
     };
   },
   [fetchDaIssueListFailure]: (state, error) => ({
@@ -79,11 +88,13 @@ const deliveryAgentReducer = createReducer(initialValue, {
     fetchDaIssueListSuccess: false,
     fetchDaIssueListFailure: true,
     fetchDaIssueListProgress: false,
-    errorMsg: error.payload.message,
+    errorMessageUnassign: error.payload.message,
   }),
   [fetchDaIssueListProgress]: (state) => ({
     ...state,
     fetchDaIssueListProgress: true,
+    fetchDaIssueListFailure: false,
+    fetchDaIssueListSuccess: false,
   }),
 
   [fetchDeliveryAgentListSuccess]: (state, data) => {
@@ -106,6 +117,8 @@ const deliveryAgentReducer = createReducer(initialValue, {
   [fetchDeliveryAgentListProgress]: (state) => ({
     ...state,
     daListProgress: true,
+    daListSuccess: false,
+    daListFail: false,
   }),
   [fetchUnassignDASuccess]: (state, data) => ({
     ...state,
@@ -119,11 +132,13 @@ const deliveryAgentReducer = createReducer(initialValue, {
     unassignDASuccess: false,
     unassignDAFail: true,
     unassignDAProgress: false,
-    errorMsg: error.payload.message,
+    errorMessage: error.payload.message,
   }),
   [fetchUnassignDAProgress]: (state) => ({
     ...state,
     unassignDAProgress: true,
+    unassignDAFail: false,
+    unassignDASuccess: false,
   }),
   [fetchReserveDASuccess]: (state, data) => ({
     ...state,
@@ -137,17 +152,21 @@ const deliveryAgentReducer = createReducer(initialValue, {
     reserveDaSuccess: false,
     reserveDaFail: true,
     reserveDAProgress: false,
-    errorMsg: error.payload.message,
+    errorMessageReserve: error.payload.message,
   }),
   [fetchReserveDAProgress]: (state) => ({
     ...state,
     reserveDAProgress: true,
+    reserveDaSuccess: false,
+    reserveDaFail: false,
   }),
   [resetOnUnmount]: () => ({
     fetchSuccess: false,
     fetchFailed: false,
     fetchProgress: false,
     errorMsg: "",
+    errorMessageReserve: "",
+    errorMessageUnassign: "",
     deliveryAgentList: null,
     daListSuccess: false,
     daListFail: false,

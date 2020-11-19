@@ -1,6 +1,5 @@
 export {
   fetchOrder,
-  fetchCancelReason,
   createNotes,
   connectCall,
   fetchIssueTypes,

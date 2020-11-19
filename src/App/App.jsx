@@ -42,7 +42,6 @@ function App(props) {
     }
   }, [props.authenticateSuccess]);
 
-  let success = props.authenticateSuccess;
   if (props.authenticateProgress) {
     return (
       <ThemeProvider theme={newTheme}>
@@ -54,7 +53,7 @@ function App(props) {
   // console.log("success ", success);
   return (
     <div>
-      {success === true ? (
+      {isLoggedIn === true ? (
         <ThemeProvider theme={newTheme}>
           <Router>
             <Switch>
@@ -101,11 +100,12 @@ function App(props) {
               />
 
               <Route path="/login" component={LoginContainer} />
+              <Route path="/logout" component={LogoutContainer} />
 
               <Route
                 path="/"
                 component={
-                  success
+                  isLoggedIn
                     ? function () {
                         return <Redirect to="/dashboard" />;
                       }

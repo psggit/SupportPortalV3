@@ -92,13 +92,7 @@ const OrderInfoComponent = (props) => {
 
   useEffect(() => {
     if (props.fetchOrderInfoSuccess) {
-      let payload = {
-        order_id: orderId,
-      };
-      if (props.order.cancel_order_button) {
-        props.fetchCancelReason(payload);
-      }
-      // props.fetchIssueTypes();
+      props.fetchIssueTypes();
     }
   }, [props.fetchOrderInfoSuccess]);
 
@@ -195,7 +189,7 @@ const OrderInfoComponent = (props) => {
         notes: issueDesc,
         consumer_issue_type: parseInt(valueSelected),
       };
-    } else if (issueType === "consumer") {
+    } else {
       payload = {
         order_id: orderId,
         type: issueType,
@@ -215,7 +209,6 @@ const OrderInfoComponent = (props) => {
     setOpen(false);
     setIssueDesc("");
     props.fetchOrderInfo(orderId);
-    // props.fetchCancelReason(payload);
   };
 
   const updateIssue = () => {
@@ -274,6 +267,7 @@ const OrderInfoComponent = (props) => {
   }
 
   if (props.fetchOrderInfoFailure) {
+    console.log("[orderinfo]", props);
     return (
       <ErrorMsg
         show={true}
@@ -574,15 +568,10 @@ const OrderInfoComponent = (props) => {
 
 OrderInfoComponent.propTypes = {
   fetchOrderInfo: PropTypes.func,
-  fetchCancelReason: PropTypes.func,
   fetchIssueTypes: PropTypes.func,
-  cancelReasons: PropTypes.array,
   fetchOrderInfoSuccess: PropTypes.bool,
   fetchOrderInfoFailure: PropTypes.bool,
-  fetchCancelReasonSuccess: PropTypes.bool,
   fetchOrderInfoProgress: PropTypes.bool,
-  fetchCancelReasonProgress: PropTypes.bool,
-  fetchCancelReasonFailure: PropTypes.bool,
   orderId: PropTypes.any,
   order: PropTypes.object,
   createNotes: PropTypes.func,

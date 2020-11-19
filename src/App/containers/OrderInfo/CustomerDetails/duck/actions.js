@@ -1,8 +1,8 @@
 import { createAction } from "@reduxjs/toolkit";
 
-const fetchNotesSuccess = createAction("fetchNotesSuccess");
-const fetchNotesFailed = createAction("fetchNotesFailed");
-const fetchNotesProgress = createAction("fetchNotesProgress");
+const fetchCustomerNotesSuccess = createAction("fetchCustomerNotesSuccess");
+const fetchCustomerNotesFailed = createAction("fetchCustomerNotesFailed");
+const fetchCustomerNotesProgress = createAction("fetchCustomerNotesProgress");
 const consumerNoteListSuccess = createAction("consumerNoteListSuccess");
 const consumerNoteListFailed = createAction("consumerNoteListFailed");
 const consumerNoteListProgress = createAction("consumerNoteListProgress");
@@ -10,9 +10,9 @@ const consumerNoteListProgress = createAction("consumerNoteListProgress");
 const resetOnUnmount = createAction("resetOnUnmount");
 
 export {
-  fetchNotesSuccess,
-  fetchNotesFailed,
-  fetchNotesProgress,
+  fetchCustomerNotesSuccess,
+  fetchCustomerNotesFailed,
+  fetchCustomerNotesProgress,
   resetOnUnmount,
   consumerNoteListSuccess,
   consumerNoteListFailed,

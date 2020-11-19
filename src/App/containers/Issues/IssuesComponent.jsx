@@ -95,8 +95,9 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600,
   },
   dateStyle: {
-    fontSize: 12,
+    fontSize: 14,
     color: "#696969",
+    marginLeft: 10,
   },
   datePlacement: {
     fontSize: 12,
@@ -146,11 +147,16 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     marginBottom: 10,
     textAlign: "left",
+    fontWeight: 400,
   },
   btnSelected: {
     width: "100%",
     marginBottom: 10,
     background: "#e5f3f7",
+    fontWeight: 600,
+  },
+  filterHeading: {
+    marginBottom: 10,
   },
 }));
 
@@ -165,11 +171,12 @@ const RenderIssues = (props) => {
   const [orderId, setOrderId] = useState("");
   const [supportPersonId, setSupportPersonId] = useState();
   const [issueId, setIssueId] = useState();
-  const [data, setData] = useState([]);
+  // const [confirmedIssue, setConfirmIssue] = useState([]);
+  // const [data, setData] = useState([]);
 
   const PAGE_OPTIONS = [25, 30, 45];
-  const currentPage = getQueryParamByName("pageSize") || PAGE_OPTIONS[0];
-  const pageSize = getQueryParamByName("activePage") || 0;
+  // const currentPage = getQueryParamByName("pageSize") || PAGE_OPTIONS[0];
+  // const pageSize = getQueryParamByName("activePage") || 0;
   const history = useHistory();
 
   const [activeIndex, setActiveIndex] = useState();
@@ -206,13 +213,13 @@ const RenderIssues = (props) => {
 
   const handleConfirmation = () => {
     let payload;
-
     if (assignIssue) {
       payload = {
         orderId: orderId,
         issueId: issueId,
         supportPersonId: supportPersonId,
       };
+      // setConfirmIssue([...confirmedIssue, orderId]);
       props.assignIssue(payload);
     } else {
       payload = {
@@ -306,6 +313,7 @@ const RenderIssues = (props) => {
                     primary={`${Moment(issue.issue_raised_time).format(
                       "D MMM"
                     )} at ${Moment(issue.issue_raised_time).format("hh:mm A")}`}
+                    disableTypography
                   />
                 </Grid>
                 <Grid item xs={2} className={classes.assignBtnDiv}>
@@ -368,7 +376,7 @@ const RenderIssues = (props) => {
         <Dialog
           title={resolveIssue ? `RESOLVE ISSUE` : `REASSIGN ISSUE`}
           subtitle={
-            resolveIssue ? "Are you sure want to ressolve the issue?" : ""
+            resolveIssue ? "Are you sure want to resolve the issue?" : ""
           }
           actions={[
             <Button
@@ -466,7 +474,7 @@ const IssuesComponent = (props) => {
     const payload = {
       limit: parseInt(currentPage),
       offset: activePage * pageLimit,
-      is_resolved: status === "resolved" ? true : false,
+      is_resolved: selectedStatus === "resolved" ? false : true,
     };
     props.fetchIssueList(payload);
   }, [pageLimit, activePage]);
@@ -518,7 +526,7 @@ const IssuesComponent = (props) => {
     const payload = {
       limit: parseInt(currentPage),
       offset: activePage * pageLimit,
-      is_resolved: status === "resolved" ? true : false,
+      is_resolved: status === "resolved" ? false : true,
     };
     props.fetchIssueList(payload);
     const queryParamsObj = {
@@ -543,7 +551,9 @@ const IssuesComponent = (props) => {
                 ISSUES
               </Typography>
               <br />
-              <Typography variant="body2">Status</Typography>
+              <Typography variant="body2" className={classes.filterHeading}>
+                Status
+              </Typography>
               <Button
                 size="small"
                 className={
