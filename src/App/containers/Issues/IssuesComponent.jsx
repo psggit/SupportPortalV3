@@ -240,11 +240,11 @@ const RenderIssues = (props) => {
   };
 
   const handleAssignIssue = (e, issue) => {
-    e.stopPropagation();
     setAssignIssue(true);
     setOrderId(issue.order_id);
     setIssueId(issue.id);
     mountConfirmationDialog();
+    e.stopPropagation();
   };
 
   const handleSupportPersonChange = (event) => {

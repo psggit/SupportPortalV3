@@ -54,7 +54,7 @@ const listRetailerReducer = createReducer(initialValue, {
     reassignRetailerFailed: false,
     reassignRetailerSuccess: true,
     errorMessage: "",
-    successMsg: data.payload,
+    successMsg: data.payload.message,
   }),
   [reassignRetailerFailed]: (state, data) => {
     return {

@@ -137,6 +137,8 @@ const ChangeRetailerComponent = (props) => {
     return <Loading message="Loading..." />;
   }
 
+  // console.log(props);
+
   return (
     <div component="main" className={classes.root}>
       <TopBar />

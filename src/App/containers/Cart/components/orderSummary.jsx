@@ -17,6 +17,7 @@ import { OrderSummaryItem } from "./orderSummaryItem";
 import { CartItem } from "./cartItem";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
+import uuid from "react-uuid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -185,17 +186,17 @@ const OrderSummary = (props) => {
           value={orderInfo.total_additional_fee}
           type="button"
         >
-          {orderInfo.fee_details_struct &&
-            orderInfo.fee_details_struct.map((value) => {
+          {orderInfo.fee_details_v1 &&
+            orderInfo.fee_details_v1.map((value) => {
               return (
                 <OrderSummaryItem
-                  title={value.fee_title}
-                  value={value.fee_value_without_taxes}
-                  key={value.fee_type}
+                  title={value.display_name}
+                  value={value.display_value}
+                  key={uuid()}
                 />
               );
             })}
-          {orderInfo.taxes && (
+          {/* {orderInfo.taxes && (
             <>
               <OrderSummaryItem
                 title={"CGST (" + orderInfo.cgst_percentage + "%)"}
@@ -210,7 +211,7 @@ const OrderSummary = (props) => {
                 value={orderInfo.taxes.igst_total}
               />
             </>
-          )}
+          )} */}
         </OrderSummaryItem>
       </List>
       <Divider />

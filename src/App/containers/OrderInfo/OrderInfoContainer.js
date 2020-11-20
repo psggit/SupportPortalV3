@@ -11,7 +11,7 @@ import {
 } from "../OrderInfo/duck";
 
 const mapStateToProps = (state) => {
-  // console.log("mapStateToProps ", state.home);
+  console.log("mapStateToProps ", state.order.customer);
   return {
     orderId: state.home.orderId,
     order: state.order.orderInfo.orderDetails,
@@ -33,9 +33,9 @@ const mapStateToProps = (state) => {
     submitIssueSuccess: state.order.orderInfo.submitIssueSuccess,
     createNotesSuccess: state.order.orderInfo.createNotesSuccess,
     noteListData: state.order.customer.noteListData,
-    consumerNoteListSuccess: state.order.customer.consumerNoteListSuccess,
-    consumerNoteListFailed: state.order.customer.consumerNoteListFailed,
-    consumerNoteListProgress: state.order.customer.consumerNoteListProgress,
+    fetchCustomerNotesFailed: state.order.customer.fetchCustomerNotesFailed,
+    fetchCustomerNotesProgress: state.order.customer.fetchCustomerNotesProgress,
+    fetchCustomerNotesSuccess: state.order.customer.fetchCustomerNotesSuccess,
     NoteListSuccess: state.order.customer.NoteListSuccess,
     retailerIssueListData: state.order.retailer.retailerIssueList,
     fetchRetailerIssueListSuccess:

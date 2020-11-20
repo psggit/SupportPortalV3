@@ -118,7 +118,7 @@ const CustomerDetails = (props) => {
 
   useEffect(() => {
     if (props.fetchFailed || props.fetchSuccess) {
-      console.log("[CustomerComponent]");
+      // console.log("[CustomerComponent]");
       setShow(true);
     }
   }, [props.fetchFailed, props.fetchSuccess]);

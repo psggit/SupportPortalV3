@@ -418,7 +418,7 @@ const OrderDetailsCard = (props) => {
                 value={props.cancelOrderSummaryData.total_cancellation_charges}
                 type="button"
               >
-                <OrderSummaryItem title="Refund Amount" />
+                {/* <OrderSummaryItem title="Refund Amount" /> */}
                 {/* <OrderSummaryItem
                   title="Wallet:"
                   value={props.cancelOrderSummaryData.refund_amount.wallet}

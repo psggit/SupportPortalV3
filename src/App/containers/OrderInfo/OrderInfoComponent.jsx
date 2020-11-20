@@ -21,6 +21,7 @@ import { ActivityLogContainer } from "./ActivityLogs";
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import SideNav from "./components/sideNav";
 import uuid from "react-uuid";
+import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -266,8 +267,9 @@ const OrderInfoComponent = (props) => {
     return <Loading message="Loading..." />;
   }
 
+  console.log("[orderinfo]", props);
+
   if (props.fetchOrderInfoFailure) {
-    console.log("[orderinfo]", props);
     return (
       <ErrorMsg
         show={true}
@@ -332,6 +334,9 @@ const OrderInfoComponent = (props) => {
                   );
                 }
               })}
+            {props.fetchCustomerNotesFailed && (
+              <Alert severity="error">{"Something went wrong."}</Alert>
+            )}
             {props.fetchDaIssueListSuccess &&
               issueType === "delivery_agent" &&
               props.daIssueList !== null &&
