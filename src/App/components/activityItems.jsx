@@ -102,6 +102,8 @@ ActivityItem.propTypes = {
   subtitle: PropTypes.array,
   cardActions: PropTypes.bool,
   errorMsg: PropTypes.string,
+  fail: PropTypes.bool,
+  success: PropTypes.bool,
 };
 
 export default function ActivityItem(props) {
@@ -119,7 +121,7 @@ export default function ActivityItem(props) {
   // const errorMsg = props.errorMsg || "Something went wrong. Try again later.";
   const errorMessage = props.errorMsg;
 
-  if (mapArray === null) {
+  if (mapArray === null || (mapArray.length === 0 && props.success)) {
     return (
       <Card className={classes.root}>
         <Box className={classes.header}>
@@ -210,7 +212,7 @@ export default function ActivityItem(props) {
               </ListItem>
             );
           })}
-        {mapArray.length === 0 && (
+        {mapArray.length === 0 && props.fail && (
           <Alert severity="error">{errorMessage}</Alert>
         )}
       </CardContent>
