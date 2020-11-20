@@ -1,9 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
 
-const fetchCancelReasonsSuccess = createAction("fetchCancelReasonsSuccess");
-const fetchCancelReasonsFailed = createAction("fetchCancelReasonsFailed");
-const fetchCancelReasonsProgress = createAction("fetchCancelReasonsProgress");
-
 const fetchKycListSuccess = createAction("fetchKycListSuccess");
 const fetchKycListFailed = createAction("fetchKycListFailed");
 const fetchKycListProgress = createAction("fetchKycListProgress");
@@ -43,9 +39,6 @@ export {
   fetchKycListSuccess,
   fetchKycListFailed,
   fetchKycListProgress,
-  fetchCancelReasonsSuccess,
-  fetchCancelReasonsFailed,
-  fetchCancelReasonsProgress,
   cancelOrderProgress,
   cancelOrderFailure,
   cancelOrderSuccess,
