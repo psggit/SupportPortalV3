@@ -185,13 +185,20 @@ const orderDataReducer = createReducer(initialValue, {
     fetchCancelReasonFailure: false,
     fetchCancelReasonSuccess: false,
   }),
-  [fetchCancelReasonFailure]: (state, err) => ({
-    ...state,
-    fetchCancelReasonProgress: false,
-    fetchCancelReasonFailure: true,
-    fetchCancelReasonSuccess: false,
-    errorMsg: err,
-  }),
+  [fetchCancelReasonFailure]: (state, data) => {
+    const errorMessage =
+      typeof data.payload.message === undefined ||
+      typeof data.payload.message === "undefined"
+        ? "Something went wrong. Try again later."
+        : data.payload.message;
+    return {
+      ...state,
+      fetchCancelReasonProgress: false,
+      fetchCancelReasonFailure: true,
+      fetchCancelReasonSuccess: false,
+      errorMsgCancel: errorMessage,
+    };
+  },
   [fetchCancelReasonSuccess]: (state, data) => {
     return {
       ...state,

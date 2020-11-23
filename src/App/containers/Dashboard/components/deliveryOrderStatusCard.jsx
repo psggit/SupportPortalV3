@@ -8,6 +8,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
+import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
 
 const DeliveryOrderStatusCard = (props) => {
   const classes = useStyles();
-  const errorString = props.errorString;
   let defValueRetailerNo = "restocked";
   // const disabled = true;
   // const [age, setAge] = useState(defValueRetailerNo);
@@ -58,9 +58,10 @@ const DeliveryOrderStatusCard = (props) => {
         <Typography variant="h5" className={classes.heading} gutterBottom>
           DELIVER ORDER SEARCH
         </Typography>
-        <FormControl className={classes.formControl}>
-          <InputLabel id="demo-simple-select-label">Order Status</InputLabel>
-          {!props.fetchDeliveryFailed && (
+        {props.fetchDeliverySuccess && (
+          <FormControl className={classes.formControl}>
+            <InputLabel id="demo-simple-select-label">Order Status</InputLabel>
+
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -89,16 +90,20 @@ const DeliveryOrderStatusCard = (props) => {
                 }
               })}
             </Select>
-          )}
-        </FormControl>
+          </FormControl>
+        )}
+        {props.fetchDeliveryProgress && (
+          <Alert severity="info">{"Fetching delivery status..."}</Alert>
+        )}
+        {props.fetchDeliveryFailed && (
+          <Alert severity="error">{props.errorMessageDeliveryStatus}</Alert>
+        )}
       </CardContent>
       <CardActions className={classes.actionContainer}>
         <Button
           variant="contained"
           color="primary"
-          disabled={
-            errorString.filterType === "orderStatus" && props.isFetchDisabled
-          }
+          disabled={props.fetchDeliveryProgress || props.fetchDeliveryFailed}
           onClick={() => props.handleSubmit("delivery_status")}
         >
           Fetch Orders
@@ -119,6 +124,9 @@ DeliveryOrderStatusCard.propTypes = {
   filterType: PropTypes.string,
   data: PropTypes.array,
   fetchDeliveryFailed: PropTypes.bool,
+  fetchDeliverySuccess: PropTypes.bool,
+  fetchDeliveryProgress: PropTypes.bool,
+  errorMessageDeliveryStatus: PropTypes.string,
 };
 
 export { DeliveryOrderStatusCard };

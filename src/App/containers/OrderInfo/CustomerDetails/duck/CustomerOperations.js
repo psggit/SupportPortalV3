@@ -28,8 +28,13 @@ const onSuccess = (dispatch) => {
 };
 
 const onError = (dispatch) => {
-  return (err) => {
-    dispatch(fetchCustomerNotesFailed(err));
+  // return (err) => {
+  //   dispatch(fetchCustomerNotesFailed(err));
+  // };
+  return (data) => {
+    data.json().then((json) => {
+      dispatch(fetchCustomerNotesFailed(json));
+    });
   };
 };
 

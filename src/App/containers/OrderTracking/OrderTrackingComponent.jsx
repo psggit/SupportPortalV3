@@ -158,7 +158,7 @@ const MapComponent = (props) => {
     [parseFloat(gpsRetailer[0]), parseFloat(gpsRetailer[1])],
   ]);
 
-  console.log("cneter", centerData);
+  // console.log("cneter", centerData);
   //setCenterConsumer(centerData)
 
   useEffect(() => {

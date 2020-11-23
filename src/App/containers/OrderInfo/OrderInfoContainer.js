@@ -11,7 +11,7 @@ import {
 } from "../OrderInfo/duck";
 
 const mapStateToProps = (state) => {
-  console.log("mapStateToProps ", state.order.customer);
+  // console.log("mapStateToProps ", state.order.customer);
   return {
     orderId: state.home.orderId,
     order: state.order.orderInfo.orderDetails,

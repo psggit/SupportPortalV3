@@ -74,7 +74,7 @@ const OrderInfoComponent = (props) => {
   const [modifyCart, setModifyCart] = useState("");
 
   useEffect(() => {
-    console.log("OrderInfoComponent", props.retailerIssueListData);
+    // console.log("OrderInfoComponent", props.retailerIssueListData);
     if (orderId === null || orderId == "") {
       history.push("/dashboard");
     } else {
@@ -108,7 +108,7 @@ const OrderInfoComponent = (props) => {
   const [createDisabledBtn, setDisabledBtn] = useState(true);
   const [activeSection, setActiveSection] = useState("");
   const [disableBtn, setDisableBtn] = useState(false);
-  const [valueSelected, setValue] = useState("");
+  const [valueSelected, setValue] = useState(null);
 
   const validateIssue = (event, type) => {
     if (type === "select") {
@@ -128,7 +128,8 @@ const OrderInfoComponent = (props) => {
   const textFieldChange = (e) => {
     setIssueDesc(e.target.value);
     setDisableBtn(false);
-    if (e.target.value.trim().length > 0) {
+    // console.log("valueSelected", valueSelected);
+    if (e.target.value.trim().length > 0 && valueSelected !== null) {
       setDisableBtn(true);
     }
   };
@@ -148,7 +149,7 @@ const OrderInfoComponent = (props) => {
 
   const handleError = () => {
     // alert("");
-    setShowError(!showError);
+    // setShowError(!showError);
   };
 
   const handleChange = (e) => {
@@ -267,7 +268,7 @@ const OrderInfoComponent = (props) => {
     return <Loading message="Loading..." />;
   }
 
-  console.log("[orderinfo]", props);
+  // console.log("[orderinfo]", props);
 
   if (props.fetchOrderInfoFailure) {
     return (
@@ -335,6 +336,9 @@ const OrderInfoComponent = (props) => {
                 }
               })}
             {props.fetchCustomerNotesFailed && (
+              <Alert severity="error">{"Something went wrong."}</Alert>
+            )}
+            {props.fetchDaIssueListFailure && (
               <Alert severity="error">{"Something went wrong."}</Alert>
             )}
             {props.fetchDaIssueListSuccess &&
@@ -590,6 +594,7 @@ OrderInfoComponent.propTypes = {
   submitIssue: PropTypes.func,
   submitIssueSuccess: PropTypes.bool,
   createNotesSuccess: PropTypes.bool,
+  fetchDaIssueListFailure: PropTypes.bool,
   resetOnUnmount: PropTypes.func,
   NoteListSuccess: PropTypes.bool,
   noteListData: PropTypes.any,
@@ -597,6 +602,7 @@ OrderInfoComponent.propTypes = {
   fetchRetailerIssueListSuccess: PropTypes.bool,
   fetchDaIssueListSuccess: PropTypes.bool,
   daIssueList: PropTypes.any,
+  fetchCustomerNotesFailed: PropTypes.bool,
 };
 
 export { OrderInfoComponent };

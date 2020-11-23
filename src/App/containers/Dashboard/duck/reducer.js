@@ -26,6 +26,7 @@ const initialValue = {
   fetchDeliveryFailed: false,
   fetchDeliveryProgress: false,
   errorMsg: "",
+  errorMessageDeliveryStatus: "",
   successMsg: "",
   deliveryStatus: [],
 };
@@ -89,7 +90,7 @@ const dashboardReducer = createReducer(initialValue, {
     fetchDeliveryProgress: false,
     fetchDeliveryFailed: true,
     fetchDeliverySuccess: false,
-    errorMsg: data.payload.message,
+    errorMessageDeliveryStatus: data.payload.message,
   }),
   [fetchDeliveryProgress]: (state) => ({
     ...state,
