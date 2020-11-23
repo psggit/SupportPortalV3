@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 const DashboardComponent = (props) => {
   useEffect(() => {
-    console.log("useEffect - Dashboard", localStorage.getItem("x-hasura-role"));
+    // console.log("useEffect - Dashboard", localStorage.getItem("x-hasura-role"));
     if (localStorage.getItem("x-hasura-role") !== "ops_delivery_manager") {
       props.fetchDeliveryStatus();
     }
@@ -242,21 +242,20 @@ const DashboardComponent = (props) => {
                 errorString={errorString}
                 handleChange={handleChange}
                 isResetDisabled={isResetDisabled}
-                isFetchDisabled={isFetchDisabled}
+                isFetchDisabled={props.fetchDeliveryFailed}
                 handleSubmit={handleSubmit}
                 reset={reset}
                 payload={payload}
                 filterType={filterType}
                 data={props.deliveryStatus}
-                fetchDeliveryStatus={props.fetchDeliveryStatus}
+                fetchDeliverySuccess={props.fetchDeliverySuccess}
                 fetchDeliveryFailed={props.fetchDeliveryFailed}
+                fetchDeliveryProgress={props.fetchDeliveryProgress}
+                errorMessageDeliveryStatus={props.errorMessageDeliveryStatus}
               />
             </Grid>
           )}
         </Grid>
-        {props.fetchDeliveryFailed && (
-          <ErrorMsg show={true} message={props.errorMsg} type="error" />
-        )}
       </Box>
     </Container>
   );
@@ -269,11 +268,14 @@ DashboardComponent.propTypes = {
   orderData: PropTypes.object,
   fetchDetailsProgress: PropTypes.bool,
   fetchDeliveryFailed: PropTypes.bool,
+  fetchDeliveryProgress: PropTypes.bool,
   fetchDetailsFail: PropTypes.bool,
   errorMsg: PropTypes.string,
   successMsg: PropTypes.string,
   fetchDeliverySuccess: PropTypes.bool,
   deliveryStatus: PropTypes.array,
+  preponeOrderSuccess: PropTypes.bool,
+  errorMessageDeliveryStatus: PropTypes.string,
 };
 
 export { DashboardComponent };

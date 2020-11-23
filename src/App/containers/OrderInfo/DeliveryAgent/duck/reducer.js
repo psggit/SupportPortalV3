@@ -55,10 +55,13 @@ const deliveryAgentReducer = createReducer(initialValue, {
     };
   },
   [fetchDeliveryAgentNotesFailed]: (state, data) => {
-    let errorMessage =
-      data.payload.message !== undefined
-        ? data.payload.message
-        : "Something went wrong. Try again later.";
+    const errorMessage =
+      typeof data.payload.message === undefined ||
+      typeof data.payload.message === "undefined"
+        ? "Something went wrong. Try again later."
+        : data.payload.message;
+
+    // alert(data.payload.message);
     return {
       ...state,
       fetchSuccess: false,

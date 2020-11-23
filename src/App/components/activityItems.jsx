@@ -212,7 +212,7 @@ export default function ActivityItem(props) {
               </ListItem>
             );
           })}
-        {mapArray.length === 0 && props.fail && (
+        {(mapArray.length === 0 || props.fail) && (
           <Alert severity="error">{errorMessage}</Alert>
         )}
       </CardContent>

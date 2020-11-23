@@ -161,8 +161,13 @@ const deliverOrder = (payload) => {
 };
 
 const onErrorCancelReason = (dispatch) => {
-  return (err) => {
-    dispatch(fetchCancelReasonFailure(err));
+  // return (err) => {
+  //   dispatch(fetchCancelReasonFailure(err));
+  // };
+  return (data) => {
+    data.json().then((json) => {
+      dispatch(fetchCancelReasonFailure(json));
+    });
   };
 };
 

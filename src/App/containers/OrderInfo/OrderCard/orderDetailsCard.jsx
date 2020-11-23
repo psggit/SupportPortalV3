@@ -125,11 +125,11 @@ const OrderDetailsCard = (props) => {
 
   const handleClickOpen = (type) => {
     if (type == "cancel") {
-      if (props.fetchCancelReasonFailure) {
-        props.handleError();
-      } else {
-        setOpenCancel(true);
-      }
+      // if (props.fetchCancelReasonFailure) {
+      // props.handleError();
+      // } else {
+      setOpenCancel(true);
+      // }
     } else {
       setOpenDeliver(true);
     }
