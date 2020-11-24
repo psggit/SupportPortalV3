@@ -78,13 +78,16 @@ const orderDataReducer = createReducer(initialValue, {
     fetchDeliverOrderProgress: false,
     errorMsg: "",
   }),
-  [fetchDeliverOrderFailed]: (state) => ({
-    ...state,
-    fetchDeliverOrderSuccess: false,
-    fetchDeliverOrderFailed: true,
-    fetchDeliverOrderProgress: false,
-    errorMsg: "Something went wrong. Please try again!",
-  }),
+  [fetchDeliverOrderFailed]: (state, data) => {
+    console.log("fetchDeliverOrderFailed", data.payload.status);
+    return {
+      ...state,
+      fetchDeliverOrderSuccess: false,
+      fetchDeliverOrderFailed: true,
+      fetchDeliverOrderProgress: false,
+      errorMsg: data.payload.status,
+    };
+  },
   [fetchDeliverOrderProgress]: (state) => ({
     ...state,
     fetchDeliverOrderProgress: true,
@@ -143,13 +146,15 @@ const orderDataReducer = createReducer(initialValue, {
     errorMsg: "",
     successMsg: data.payload,
   }),
-  [deliverOrderFailed]: (state, data) => ({
-    ...state,
-    deliverOrderSuccess: false,
-    deliverOrderFailed: true,
-    deliverOrderProgress: false,
-    errorMsg: data.payload.message,
-  }),
+  [deliverOrderFailed]: (state, data) => {
+    return {
+      ...state,
+      deliverOrderSuccess: false,
+      deliverOrderFailed: true,
+      deliverOrderProgress: false,
+      errorMsg: data.payload.message,
+    };
+  },
   [deliverOrderProgress]: (state) => ({
     ...state,
     deliverOrderProgress: true,

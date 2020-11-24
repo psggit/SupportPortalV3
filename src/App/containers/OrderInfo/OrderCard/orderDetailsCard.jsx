@@ -563,6 +563,9 @@ const OrderDetailsCard = (props) => {
                   id="demo-simple-select"
                   onChange={(event) => handleReasonChange(event)}
                 >
+                  {props.fetchDeliverOrderFailed && (
+                    <Alert severity="error">{props.errorMsg}</Alert>
+                  )}
                   {fetchDeliverOrderSuccess &&
                     props.deliverOrderData !== null &&
                     props.deliverOrderData.map((value, index) => {
@@ -642,6 +645,8 @@ OrderDetailsCard.propTypes = {
   fetchCancelReason: PropTypes.func,
   fetchCancelReasonProgress: PropTypes.bool,
   errorMsgSummary: PropTypes.any,
+  errorMsgCancel: PropTypes.bool,
+  fetchDeliverOrderFailed: PropTypes.bool,
 };
 
 export { OrderDetailsCard };

@@ -42,7 +42,7 @@ const processResponseCall = () => {
     if (res.status === 204) {
       return res.json();
     } else {
-      throw new Error("Something went wrong, try again");
+      throw res;
     }
   };
 };
@@ -127,8 +127,13 @@ const onSuccessIssueTypes = (dispatch) => {
 };
 
 const onErrorIssueTypes = (dispatch) => {
-  return (err) => {
-    dispatch(fetchIssueTypesFailed(err));
+  // return (err) => {
+  //   dispatch(fetchIssueTypesFailed(err));
+  // };
+  return (data) => {
+    data.json().then((json) => {
+      dispatch(fetchIssueTypesFailed(json));
+    });
   };
 };
 

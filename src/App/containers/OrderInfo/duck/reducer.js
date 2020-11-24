@@ -129,13 +129,16 @@ const orderInfoReducer = createReducer(initialValue, {
     fetchIssueTypesSuccess: false,
     errorMsg: "",
   }),
-  [fetchIssueTypesFailed]: (state) => ({
-    ...state,
-    fetchIssueTypesProgress: false,
-    fetchIssueTypesFailed: true,
-    fetchIssueTypesSuccess: false,
-    errorMsg: "Something went wrong, please try again",
-  }),
+  [fetchIssueTypesFailed]: (state, data) => {
+    console.log("uu", data.payload);
+    return {
+      ...state,
+      fetchIssueTypesProgress: false,
+      fetchIssueTypesFailed: true,
+      fetchIssueTypesSuccess: false,
+      errorMsg: data.payload.message,
+    };
+  },
   [fetchIssueTypesSuccess]: (state, data) => {
     return {
       ...state,

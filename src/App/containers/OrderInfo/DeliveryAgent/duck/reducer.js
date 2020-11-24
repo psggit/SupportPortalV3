@@ -135,7 +135,7 @@ const deliveryAgentReducer = createReducer(initialValue, {
     unassignDASuccess: false,
     unassignDAFail: true,
     unassignDAProgress: false,
-    errorMessage: error.payload.message,
+    errorMessageUnassign: error.payload.message,
   }),
   [fetchUnassignDAProgress]: (state) => ({
     ...state,
