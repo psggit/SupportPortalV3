@@ -101,7 +101,7 @@ function Notes(props) {
   const handleTextChange = (e) => {
     setNoteData(e.target.value);
     setDisableBtn(false);
-    if (e.target.value.trim().length > 0) {
+    if (e.target.value.trim().length > 0 && selectedValue !== null) {
       setDisableBtn(true);
     }
   };

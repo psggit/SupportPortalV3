@@ -33,6 +33,7 @@ import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -632,9 +633,9 @@ const IssuesComponent = (props) => {
                 )}
               {props.fetchIssuesFailed && (
                 <>
-                  <Paper className={classes.paper}>
+                  <Alert severity="error" show={true}>
                     Unable to fetch issues. Please try again!
-                  </Paper>
+                  </Alert>
                 </>
               )}
               {props.fetchIssuesSuccess &&
