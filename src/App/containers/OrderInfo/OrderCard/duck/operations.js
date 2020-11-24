@@ -82,8 +82,13 @@ const onErrorCancel = (dispatch) => {
 };
 
 const onErrorDeliver = (dispatch) => {
-  return (err) => {
-    dispatch(fetchDeliverOrderFailed(err));
+  // return (err) => {
+  //   dispatch(fetchDeliverOrderFailed(err));
+  // };
+  return (data) => {
+    data.json().then((json) => {
+      dispatch(fetchDeliverOrderFailed(json));
+    });
   };
 };
 

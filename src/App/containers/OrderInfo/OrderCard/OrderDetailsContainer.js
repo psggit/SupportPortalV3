@@ -11,7 +11,7 @@ import {
 import { resetOnUnmount } from "./duck";
 
 const mapStateToProps = (state) => {
-  // console.log("mapStateToProps ", state.order.orderCard);
+  //console.log("mapStateToProps ", state.order.orderCard.errorMsg);
   return {
     orderInfo: state.order.orderInfo.orderDetails,
     cancelOrderSuccess: state.order.orderCard.cancelOrderSuccess,
