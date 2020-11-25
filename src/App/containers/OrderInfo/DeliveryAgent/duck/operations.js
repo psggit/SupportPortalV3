@@ -45,33 +45,26 @@ const onSuccessIssue = (dispatch) => {
 };
 
 const onError = (dispatch) => {
-  return (data) => {
-    data.json().then((json) => {
-      dispatch(fetchDeliveryAgentNotesFailed(json));
-    });
+  return (error) => {
+    dispatch(fetchDeliveryAgentNotesFailed(error));
   };
 };
 
 const onErrorIssue = (dispatch) => {
-  return (data) => {
-    data.json().then((json) => {
-      dispatch(fetchDaIssueListFailure(json));
-    });
+  return (error) => {
+    dispatch(fetchDaIssueListFailure(error));
   };
 };
 
 const daListSuccess = (dispatch) => {
   return (data) => {
     dispatch(fetchDeliveryAgentListSuccess(data));
-    console.log("dalistSuccess", data);
   };
 };
 
 const daListError = (dispatch) => {
-  return (data) => {
-    data.json().then((json) => {
-      dispatch(fetchDeliveryAgentListFailed(json));
-    });
+  return (error) => {
+    dispatch(fetchDeliveryAgentListFailed(error));
   };
 };
 
@@ -82,10 +75,8 @@ const unassignDaSuccess = (dispatch) => {
 };
 
 const unassignDaError = (dispatch) => {
-  return (data) => {
-    data.json().then((json) => {
-      dispatch(fetchUnassignDAFailed(json));
-    });
+  return (error) => {
+    dispatch(fetchUnassignDAFailed(error));
   };
 };
 
@@ -96,15 +87,13 @@ const reserveOrderSuccess = (dispatch) => {
 };
 
 const reserveOrderError = (dispatch) => {
-  return (data) => {
-    data.json().then((json) => {
-      dispatch(fetchReserveDAFailed(json));
-    });
+  return (error) => {
+    dispatch(fetchReserveDAFailed(error));
   };
 };
 
 const fetchDeliveryAgentNotes = (orderId) => {
-  let reqBody = {
+  const reqBody = {
     order_id: orderId,
     type: "delivery_agent",
   };

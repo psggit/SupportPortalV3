@@ -4,6 +4,7 @@ import {
   fetchActLogsFailure,
   fetchActLogsInProgress,
 } from "./action";
+import { setErrorMessage } from "../../../utils/errorMessages";
 
 const initialState = {
   activityLogs: null,
@@ -24,12 +25,12 @@ const acitivityListReducer = createReducer(initialState, {
       activityLogs: data.payload,
     };
   },
-  [fetchActLogsFailure]: (state, data) => ({
+  [fetchActLogsFailure]: (state, error) => ({
     ...state,
     notesProgress: false,
     notesFail: true,
     notesSuccess: false,
-    errorMsg: data.payload.message,
+    errorMsg: setErrorMessage(error),
   }),
   [fetchActLogsInProgress]: (state) => {
     return {

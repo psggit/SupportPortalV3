@@ -17,6 +17,7 @@ import {
   submitIssueSuccess,
   resetOnUnmount,
 } from "./actions";
+import { setErrorMessage } from "../../../utils/errorMessages";
 
 const initialValue = {
   fetchOrderInfoProgress: false,
@@ -46,13 +47,13 @@ const initialValue = {
 };
 
 const orderInfoReducer = createReducer(initialValue, {
-  [fetchOrderInfoFailure]: (state) => {
+  [fetchOrderInfoFailure]: (state, error) => {
     return {
       ...state,
       fetchOrderInfoProgress: false,
       fetchOrderInfoFailure: true,
       fetchOrderInfoSuccess: false,
-      errorMsg: "Something went wrong, please try again!",
+      errorMsg: setErrorMessage(error),
     };
   },
   [fetchOrderInfoProgress]: (state) => {
@@ -89,7 +90,7 @@ const orderInfoReducer = createReducer(initialValue, {
     createNotesProgress: false,
     createNotesFailure: true,
     createNotesSuccess: false,
-    errorMsg: err.payload.message,
+    errorMsg: setErrorMessage(err),
   }),
   [createNotesSuccess]: (state, data) => {
     return {
@@ -107,12 +108,12 @@ const orderInfoReducer = createReducer(initialValue, {
     connectCallSuccess: false,
     errorMsg: "",
   }),
-  [connectCallFailed]: (state) => ({
+  [connectCallFailed]: (state, error) => ({
     ...state,
     connectCallProgress: false,
     connectCallFailed: true,
     connectCallSuccess: false,
-    errorMsg: "Something went wrong, please try again",
+    errorMsg: setErrorMessage(error),
   }),
   [connectCallSuccess]: (state, payload) => ({
     ...state,
@@ -130,13 +131,12 @@ const orderInfoReducer = createReducer(initialValue, {
     errorMsg: "",
   }),
   [fetchIssueTypesFailed]: (state, data) => {
-    console.log("uu", data.payload);
     return {
       ...state,
       fetchIssueTypesProgress: false,
       fetchIssueTypesFailed: true,
       fetchIssueTypesSuccess: false,
-      errorMsg: data.payload.message,
+      errorMsg: setErrorMessage(data),
     };
   },
   [fetchIssueTypesSuccess]: (state, data) => {
@@ -156,12 +156,12 @@ const orderInfoReducer = createReducer(initialValue, {
     submitIssueSuccess: false,
     errorMsg: "",
   }),
-  [submitIssueFailed]: (state) => ({
+  [submitIssueFailed]: (state, data) => ({
     ...state,
     submitIssueProgress: false,
     submitIssueFailed: true,
     submitIssueSuccess: false,
-    errorMsg: "Something went wrong, please try again",
+    errorMsg: setErrorMessage(data),
   }),
   [submitIssueSuccess]: (state, data) => {
     return {
@@ -174,23 +174,7 @@ const orderInfoReducer = createReducer(initialValue, {
     };
   },
   [resetOnUnmount]: () => ({
-    fetchOrderInfoProgress: true,
-    fetchOrderInfoFailure: false,
-    fetchOrderInfoSuccess: false,
-    createNotesProgress: false,
-    createNotesFailure: false,
-    createNotesSuccess: false,
-    connectCallProgress: false,
-    connectCallFailed: false,
-    connectCallSuccess: false,
-    fetchIssueTypesProgress: false,
-    fetchIssueTypesFailed: false,
-    fetchIssueTypesSuccess: false,
-    submitIssueProgress: false,
-    submitIssueFailed: false,
-    submitIssueSuccess: false,
-    errorMsg: "",
-    successMsg: "",
+    ...initialValue,
   }),
 });
 

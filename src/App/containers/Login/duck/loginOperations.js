@@ -21,10 +21,8 @@ const onSuccess = (dispatch) => {
 };
 
 const onError = (dispatch) => {
-  return (data) => {
-    data.json().then((json) => {
-      dispatch(loginFailed(json));
-    });
+  return (error) => {
+    dispatch(loginFailed(error));
   };
 };
 // console.log(ARGS_BUILD_ENV);

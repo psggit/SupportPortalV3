@@ -23,11 +23,8 @@ const processResponse = () => {
   return (res) => {
     if (res.ok) {
       return res.json();
-    }
-    if (res.status === 400) {
-      throw new Error("invalid params");
     } else {
-      throw new Error("Something went wrong, try again");
+      throw res;
     }
   };
 };
@@ -94,7 +91,6 @@ const onResolveIssueSuccess = (dispatch) => {
 
 const onResolveIssueError = (dispatch) => {
   return (err) => {
-    console.log("[onError]", err);
     dispatch(resolveIssueFailed(err));
   };
 };
@@ -121,7 +117,6 @@ const onFetchSupportListSuccess = (dispatch) => {
 
 const onFetchSupportListError = (dispatch) => {
   return (err) => {
-    console.log("[onError]", err);
     dispatch(fetchSupportPersonListFailed(err));
   };
 };

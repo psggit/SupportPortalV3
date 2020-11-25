@@ -5,6 +5,7 @@ import {
   fetchGiftSoaProgress,
   resetOnUnmount,
 } from "./actions";
+import { setErrorMessage } from "../../../../utils/errorMessages";
 
 const initialState = {
   customerGiftSoaList: null,
@@ -25,12 +26,12 @@ const customerGiftSOAReducer = createReducer(initialState, {
       customerGiftSoaList: data.payload,
     };
   },
-  [fetchGiftSoaFailure]: (state) => ({
+  [fetchGiftSoaFailure]: (state, error) => ({
     ...state,
     giftSoaProgress: false,
     giftSoaFail: true,
     giftSoaSuccess: false,
-    errorMsg: "Something went wrong, please try again",
+    errorMsg: setErrorMessage(error),
   }),
   [fetchGiftSoaProgress]: (state) => {
     return {
@@ -41,11 +42,7 @@ const customerGiftSOAReducer = createReducer(initialState, {
   },
   [resetOnUnmount]: () => {
     return {
-      customerGiftSoaList: null,
-      giftSoaProgress: false,
-      giftSoaFail: false,
-      giftSoaSuccess: false,
-      errorMsg: "",
+      ...initialState,
     };
   },
 });

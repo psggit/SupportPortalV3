@@ -5,6 +5,7 @@ import {
   fetchRewardProgress,
   resetOnUnmount,
 } from "./actions";
+import { setErrorMessage } from "../../../../utils/errorMessages";
 
 const initialState = {
   rewardsList: null,
@@ -30,7 +31,7 @@ const rewardsReducer = createReducer(initialState, {
     rewardsProgress: false,
     rewardsFail: true,
     rewardsSuccess: false,
-    errorMsg: data.payload.message,
+    errorMsg: setErrorMessage(data),
   }),
   [fetchRewardProgress]: (state) => {
     return {
@@ -41,10 +42,7 @@ const rewardsReducer = createReducer(initialState, {
   },
   [resetOnUnmount]: () => {
     return {
-      rewardsProgress: false,
-      rewardsFail: false,
-      rewardsSuccess: false,
-      errorMsg: "",
+      ...initialState,
     };
   },
 });

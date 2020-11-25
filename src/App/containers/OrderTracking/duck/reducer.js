@@ -5,6 +5,7 @@ import {
   fetchLiveDataFailure,
   resetOnUnmount,
 } from "./actions";
+import { setErrorMessage } from "../../../utils/errorMessages";
 
 const initialValue = {
   fetchLiveDataProgress: false,
@@ -36,8 +37,8 @@ const orderTrackingReducer = createReducer(initialValue, {
     fetchLiveDataProgress: false,
     fetchLiveDataSuccess: false,
     fetchLiveDataFailure: true,
-    errorMsg: err,
-    message: err.payload.message,
+    errorMsg: setErrorMessage(err),
+    message: setErrorMessage(err),
   }),
   [resetOnUnmount]: () => ({
     ...initialValue,

@@ -8,6 +8,7 @@ import {
   reassignRetailerSuccess,
   resetOnUnmount,
 } from "./action";
+import { setErrorMessage } from "../../../../utils/errorMessages";
 
 const initialValue = {
   listRetailerData: null,
@@ -38,7 +39,7 @@ const listRetailerReducer = createReducer(initialValue, {
     listRetailerProgress: false,
     listRetailerFailed: true,
     listRetailerSuccess: false,
-    errorMsg: data.payload.message,
+    errorMsg: setErrorMessage(data),
   }),
   [listRetailerProgress]: (state) => ({
     ...state,
@@ -62,7 +63,7 @@ const listRetailerReducer = createReducer(initialValue, {
       reassignRetailerProgress: false,
       reassignRetailerFailed: true,
       reassignRetailerSuccess: false,
-      errorMessage: data.payload.message,
+      errorMessage: setErrorMessage(data),
     };
   },
   [reassignRetailerProgress]: (state) => ({
@@ -71,19 +72,8 @@ const listRetailerReducer = createReducer(initialValue, {
     reassignRetailerFailed: false,
     reassignRetailerSuccess: false,
   }),
-  [resetOnUnmount]: (state) => ({
-    ...state,
-    // listRetailerData: null,
-    // reassignRetailerData: null,
-    listRetailerSuccess: false,
-    listRetailerFailed: false,
-    listRetailerProgress: false,
-    reassignRetailerProgress: false,
-    reassignRetailerFailed: false,
-    reassignRetailerSuccess: false,
-    errorMsg: "",
-    errorMessage: "",
-    successMsg: "",
+  [resetOnUnmount]: () => ({
+    ...initialValue,
   }),
 });
 export { listRetailerReducer };

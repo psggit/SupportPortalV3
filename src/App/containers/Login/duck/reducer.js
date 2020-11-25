@@ -7,6 +7,7 @@ import {
   authorizationSuccess,
   authorizationProgress,
 } from "./actions";
+import { setErrorMessage } from "../../../utils/errorMessages";
 
 const initialValue = {
   isAuthenticated: false,
@@ -38,7 +39,7 @@ const loginReducer = createReducer(initialValue, {
     isAuthenticated: false,
     loginProgressStatus: false,
     loginFailedStatus: true,
-    errorMsg: data.payload,
+    errorMsg: setErrorMessage(data),
   }),
   [loginProgress]: (state) => ({
     ...state,

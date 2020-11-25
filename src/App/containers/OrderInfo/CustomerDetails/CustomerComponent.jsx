@@ -112,7 +112,11 @@ const CustomerDetails = (props) => {
   useEffect(() => {
     const details = getListOfDataObjects(props.orderInfo, keysToRender);
     setData(details);
-    props.fetchConsumerNotes(props.orderInfo.order_id);
+    const payload = {
+      order_id: props.orderInfo.order_id,
+      type: "customer",
+    };
+    props.fetchConsumerNotes(payload);
     props.fetchConsumerNotesList();
   }, []);
 

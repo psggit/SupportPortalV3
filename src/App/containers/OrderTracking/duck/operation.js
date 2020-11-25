@@ -23,10 +23,8 @@ const onSuccess = (dispatch) => {
 };
 
 const onError = (dispatch) => {
-  return (data) => {
-    data.json().then((json) => {
-      dispatch(fetchLiveDataFailure(json));
-    });
+  return (error) => {
+    dispatch(fetchLiveDataFailure(error));
   };
 };
 

@@ -20,6 +20,7 @@ import {
   fetchUpdatedStatusProgress,
   resetOnUnmount,
 } from "./action";
+import { setErrorMessage } from "../../../utils/errorMessages";
 
 const initialState = {
   fetchOrderSuccess: false,
@@ -156,12 +157,12 @@ const orderModificationReducer = createReducer(initialState, {
     fetchCancelCartSuccess: true,
     errorMsg: "",
   }),
-  [fetchCancelCartProgress]: (state) => ({
+  [fetchCancelCartProgress]: (state, data) => ({
     ...state,
     fetchCancelCartFailed: false,
     fetchCancelCartProgress: true,
     fetchCancelCartSuccess: false,
-    errorMsg: "Something went wrong, please try again",
+    errorMsg: setErrorMessage(data),
   }),
   [fetchCancelCartFailed]: (state) => ({
     ...state,

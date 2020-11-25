@@ -8,6 +8,7 @@ import {
   consumerNoteListFailed,
   consumerNoteListProgress,
 } from "./actions";
+import { setErrorMessage } from "../../../../utils/errorMessages";
 
 const initialValue = {
   customerNotesData: null,
@@ -35,16 +36,12 @@ const customerReducer = createReducer(initialValue, {
     };
   },
   [fetchCustomerNotesFailed]: (state, data) => {
-    let errorMessage =
-      data.payload.message !== undefined
-        ? data.payload.message
-        : "Something went wrong. Try again later.";
     return {
       ...state,
       fetchCustomerNotesSuccess: false,
       fetchCustomerNotesFailed: true,
       fetchCustomerNotesProgress: false,
-      errorMsg: errorMessage,
+      errorMsg: setErrorMessage(data),
     };
   },
   [fetchCustomerNotesProgress]: (state) => {
@@ -71,7 +68,7 @@ const customerReducer = createReducer(initialValue, {
       NoteListProgress: false,
       NoteListFailed: true,
       NoteListSuccess: false,
-      errorMessage: data.payload.message,
+      errorMessage: setErrorMessage(data),
     };
   },
   [consumerNoteListProgress]: (state) => {
@@ -84,12 +81,7 @@ const customerReducer = createReducer(initialValue, {
   },
   [resetOnUnmount]: () => {
     return {
-      notesProgress: false,
-      notesFail: false,
-      notesSuccess: false,
-      errorMsg: "",
-      succMsg: "",
-      errorMessage: "",
+      ...initialValue,
     };
   },
 });

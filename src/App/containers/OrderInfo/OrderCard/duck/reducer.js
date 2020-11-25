@@ -20,6 +20,7 @@ import {
   fetchCancelReasonFailure,
   fetchCancelReasonSuccess,
 } from "./actions";
+import { setErrorMessage } from "../../../../utils/errorMessages";
 
 const initialValue = {
   cancelReasons: null,
@@ -79,13 +80,12 @@ const orderDataReducer = createReducer(initialValue, {
     errorMsg: "",
   }),
   [fetchDeliverOrderFailed]: (state, data) => {
-    console.log("fetchDeliverOrderFailed", data.payload.status);
     return {
       ...state,
       fetchDeliverOrderSuccess: false,
       fetchDeliverOrderFailed: true,
       fetchDeliverOrderProgress: false,
-      errorMsg: data.payload.status,
+      errorMsg: setErrorMessage(data),
     };
   },
   [fetchDeliverOrderProgress]: (state) => ({
@@ -103,12 +103,12 @@ const orderDataReducer = createReducer(initialValue, {
     fetchKycListProgress: false,
     errorMsg: "",
   }),
-  [fetchKycListFailed]: (state) => ({
+  [fetchKycListFailed]: (state, data) => ({
     ...state,
     fetchKycListSuccess: false,
     fetchKycListFailed: true,
     fetchKycListProgress: false,
-    errorMsg: "Something went wrong. Please try again!",
+    errorMsg: setErrorMessage(data),
   }),
   [fetchKycListProgress]: (state) => ({
     ...state,
@@ -129,7 +129,7 @@ const orderDataReducer = createReducer(initialValue, {
     fetchCancellationSummarySuccess: false,
     fetchCancellationSummaryFailed: true,
     cancelOrderProgress: false,
-    errorMsgSummary: data.payload.message,
+    errorMsgSummary: setErrorMessage(data),
   }),
   [fetchCancellationSummaryProgress]: (state) => ({
     ...state,
@@ -152,7 +152,7 @@ const orderDataReducer = createReducer(initialValue, {
       deliverOrderSuccess: false,
       deliverOrderFailed: true,
       deliverOrderProgress: false,
-      errorMsg: data.payload.message,
+      errorMsg: setErrorMessage(data),
     };
   },
   [deliverOrderProgress]: (state) => ({
@@ -176,7 +176,7 @@ const orderDataReducer = createReducer(initialValue, {
     cancelOrderSuccess: false,
     cancelOrderFailure: true,
     cancelOrderProgress: false,
-    errorMsg: data.payload.message,
+    errorMsg: setErrorMessage(data),
   }),
   [cancelOrderProgress]: (state) => ({
     ...state,
@@ -191,17 +191,12 @@ const orderDataReducer = createReducer(initialValue, {
     fetchCancelReasonSuccess: false,
   }),
   [fetchCancelReasonFailure]: (state, data) => {
-    const errorMessage =
-      typeof data.payload.message === undefined ||
-      typeof data.payload.message === "undefined"
-        ? "Something went wrong. Try again later."
-        : data.payload.message;
     return {
       ...state,
       fetchCancelReasonProgress: false,
       fetchCancelReasonFailure: true,
       fetchCancelReasonSuccess: false,
-      errorMsgCancel: errorMessage,
+      errorMsgCancel: setErrorMessage(data),
     };
   },
   [fetchCancelReasonSuccess]: (state, data) => {

@@ -35,10 +35,8 @@ const onSuccess = (dispatch) => {
 };
 
 const onError = (dispatch) => {
-  return (data) => {
-    data.json().then((json) => {
-      dispatch(pushOrderFailed(json));
-    });
+  return (error) => {
+    dispatch(pushOrderFailed(error));
   };
 };
 
@@ -49,10 +47,8 @@ const restockSuccess = (dispatch) => {
 };
 
 const restockError = (dispatch) => {
-  return (data) => {
-    data.json().then((json) => {
-      dispatch(restockOrderFailed(json));
-    });
+  return (error) => {
+    dispatch(restockOrderFailed(error));
   };
 };
 
@@ -63,10 +59,8 @@ const OTPSuccess = (dispatch) => {
 };
 
 const OTPError = (dispatch) => {
-  return (data) => {
-    data.json().then((json) => {
-      dispatch(fetchOTPFailed(json));
-    });
+  return (error) => {
+    dispatch(fetchOTPFailed(error));
   };
 };
 
@@ -77,10 +71,8 @@ const cancelOrderSuccess = (dispatch) => {
 };
 
 const cancelOrderError = (dispatch) => {
-  return (data) => {
-    data.json().then((json) => {
-      dispatch(cancelOrderDSPFailed(json));
-    });
+  return (error) => {
+    dispatch(cancelOrderDSPFailed(error));
   };
 };
 

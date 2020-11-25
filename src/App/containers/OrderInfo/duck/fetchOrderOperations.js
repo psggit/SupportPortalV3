@@ -29,10 +29,8 @@ const processResponse = () => {
   return (res) => {
     if (res.status === 200) {
       return res.json();
-    } else if (res.status === 400) {
-      throw new Error("invalid params");
     } else {
-      throw new Error("Something went wrong, try again");
+      throw res;
     }
   };
 };
@@ -79,10 +77,8 @@ const onSuccessNotes = (dispatch) => {
 };
 
 const onErrorNotes = (dispatch) => {
-  return (data) => {
-    data.json().then((json) => {
-      dispatch(createNotesFailure(json));
-    });
+  return (error) => {
+    dispatch(createNotesFailure(error));
   };
 };
 
@@ -127,13 +123,8 @@ const onSuccessIssueTypes = (dispatch) => {
 };
 
 const onErrorIssueTypes = (dispatch) => {
-  // return (err) => {
-  //   dispatch(fetchIssueTypesFailed(err));
-  // };
-  return (data) => {
-    data.json().then((json) => {
-      dispatch(fetchIssueTypesFailed(json));
-    });
+  return (err) => {
+    dispatch(fetchIssueTypesFailed(err));
   };
 };
 

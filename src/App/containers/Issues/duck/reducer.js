@@ -13,6 +13,7 @@ import {
   fetchSupportPersonListSuccess,
   fetchSupportPersonListFailed,
 } from "./action";
+import { setErrorMessage } from "../../../utils/errorMessages";
 
 const initialState = {
   fetchIssuesInProgress: false,
@@ -29,6 +30,10 @@ const initialState = {
   fetchSupportPersonListFailed: false,
   issueList: null,
   supportPersonList: null,
+  errorMsg: "",
+  errorMsgAssign: "",
+  errorMsgResolve: "",
+  errorMsgSupportList: "",
 };
 
 const issuesReducer = createReducer(initialState, {
@@ -38,11 +43,12 @@ const issuesReducer = createReducer(initialState, {
     fetchIssuesFailed: false,
     fetchIssuesSuccess: false,
   }),
-  [fetchIssuesFailed]: (state) => ({
+  [fetchIssuesFailed]: (state, error) => ({
     ...state,
     fetchIssuesInProgress: false,
     fetchIssuesFailed: true,
     fetchIssuesSuccess: false,
+    errorMsg: setErrorMessage(error),
   }),
   [fetchIssuesSuccess]: (state, data) => {
     return {
@@ -69,12 +75,13 @@ const issuesReducer = createReducer(initialState, {
       assignIssueSuccess: true,
     };
   },
-  [assignIssueFailed]: (state) => {
+  [assignIssueFailed]: (state, data) => {
     return {
       ...state,
       assignIssueInProgress: false,
       assignIssueFailed: true,
       assignIssueSuccess: false,
+      errorMsgAssign: setErrorMessage(data),
     };
   },
   [resolveIssueInProgress]: (state) => {
@@ -93,12 +100,13 @@ const issuesReducer = createReducer(initialState, {
       resolveIssueSuccess: true,
     };
   },
-  [resolveIssueFailed]: (state) => {
+  [resolveIssueFailed]: (state, error) => {
     return {
       ...state,
       resolveIssueInProgress: false,
       resolveIssueFailed: true,
       resolveIssueSuccess: false,
+      errorMsgResolve: setErrorMessage(error),
     };
   },
   [fetchSupportPersonListInProgress]: (state) => {
@@ -118,12 +126,13 @@ const issuesReducer = createReducer(initialState, {
       supportPersonList: data.payload,
     };
   },
-  [fetchSupportPersonListFailed]: (state) => {
+  [fetchSupportPersonListFailed]: (state, data) => {
     return {
       ...state,
       fetchSupportPersonListInProgress: false,
       fetchSupportPersonListFailed: true,
       fetchSupportPersonListSuccess: false,
+      errorMsgSupportList: setErrorMessage(data),
     };
   },
 });

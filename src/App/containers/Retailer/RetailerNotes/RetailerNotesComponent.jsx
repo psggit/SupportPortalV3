@@ -83,7 +83,7 @@ function RetailerNotesComponent(props) {
 
   const fetchNotes = () => {
     const payload = {
-      order_id: orderId,
+      order_id: parseInt(orderId),
       type: "retailer",
     };
     props.fetchRetailerNotesList(payload);

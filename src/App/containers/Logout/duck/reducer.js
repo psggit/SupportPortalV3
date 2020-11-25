@@ -5,6 +5,7 @@ import {
   logoutProgress,
   resetOnUnmount,
 } from "./action";
+import { setErrorMessage } from "../../../utils/errorMessages";
 
 const initialValue = {
   logoutSuccess,
@@ -27,7 +28,7 @@ const logoutReducer = createReducer(initialValue, {
       logoutProgress: false,
       logoutFailed: true,
       logoutSuccess: false,
-      errorMsg: data.payload.message,
+      errorMsg: setErrorMessage(data),
     };
   },
   [logoutProgress]: (state) => ({
