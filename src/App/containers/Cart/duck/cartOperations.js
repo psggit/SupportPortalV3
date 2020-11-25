@@ -21,7 +21,7 @@ const processResponse = () => {
     if (res.status === 200) {
       return res.json();
     } else {
-      throw new Error("Something went wrong, try again");
+      throw res;
     }
   };
 };
@@ -33,8 +33,8 @@ const onSuccess = (dispatch) => {
 };
 
 const onError = (dispatch) => {
-  return (err) => {
-    dispatch(fetchCartSummaryFailed(err));
+  return (error) => {
+    dispatch(fetchCartSummaryFailed(error));
   };
 };
 
@@ -45,14 +45,18 @@ const onSuccessValidate = (dispatch) => {
 };
 
 const onErrorValidate = (dispatch) => {
-  return (err) => {
-    dispatch(validateOrderFailed(err));
+  return (error) => {
+    dispatch(validateOrderFailed(error));
   };
 };
 
 const processResponseConfirm = () => {
   return (res) => {
-    return res.json();
+    if (res.status === 200) {
+      return res.json();
+    } else {
+      throw res;
+    }
   };
 };
 
@@ -63,8 +67,8 @@ const onSuccessConfirm = (dispatch) => {
 };
 
 const onErrorConfirm = (dispatch) => {
-  return (err) => {
-    dispatch(fetchUpdateCartFailed(err));
+  return (error) => {
+    dispatch(fetchUpdateCartFailed(error));
   };
 };
 

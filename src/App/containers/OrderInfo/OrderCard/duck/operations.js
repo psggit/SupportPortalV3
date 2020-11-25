@@ -66,29 +66,20 @@ const onSuccessDeliverOrder = (dispatch) => {
 };
 
 const onErrorCancelOrder = (dispatch) => {
-  return (data) => {
-    data.json().then((json) => {
-      dispatch(fetchCancellationSummaryFailed(json));
-    });
+  return (error) => {
+    dispatch(fetchCancellationSummaryFailed(error));
   };
 };
 
 const onErrorCancel = (dispatch) => {
-  return (data) => {
-    data.json().then((json) => {
-      dispatch(cancelOrderFailure(json));
-    });
+  return (error) => {
+    dispatch(cancelOrderFailure(error));
   };
 };
 
 const onErrorDeliver = (dispatch) => {
-  // return (err) => {
-  //   dispatch(fetchDeliverOrderFailed(err));
-  // };
-  return (data) => {
-    data.json().then((json) => {
-      dispatch(fetchDeliverOrderFailed(json));
-    });
+  return (err) => {
+    dispatch(fetchDeliverOrderFailed(err));
   };
 };
 
@@ -99,10 +90,8 @@ const onErrorKyc = (dispatch) => {
 };
 
 const onErrorDeliverOrder = (dispatch) => {
-  return (data) => {
-    data.json().then((json) => {
-      dispatch(deliverOrderFailed(json));
-    });
+  return (error) => {
+    dispatch(deliverOrderFailed(error));
   };
 };
 
@@ -166,13 +155,8 @@ const deliverOrder = (payload) => {
 };
 
 const onErrorCancelReason = (dispatch) => {
-  // return (err) => {
-  //   dispatch(fetchCancelReasonFailure(err));
-  // };
-  return (data) => {
-    data.json().then((json) => {
-      dispatch(fetchCancelReasonFailure(json));
-    });
+  return (err) => {
+    dispatch(fetchCancelReasonFailure(err));
   };
 };
 

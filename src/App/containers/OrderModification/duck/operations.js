@@ -26,11 +26,8 @@ const processResponse = () => {
   return (res) => {
     if (res.ok) {
       return res.json();
-    }
-    if (res.status === 400) {
-      throw new Error("invalid params");
     } else {
-      throw new Error("Something went wrong, try again");
+      throw res;
     }
   };
 };

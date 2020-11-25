@@ -9,8 +9,6 @@ const processResponse = () => {
   return (res) => {
     if (res.status === 200) {
       return res.json();
-    } else if (res.status === 400) {
-      throw res;
     } else {
       throw res;
     }
@@ -25,9 +23,7 @@ const onSuccess = (dispatch) => {
 
 const onError = (dispatch) => {
   return (data) => {
-    data.json().then((json) => {
-      dispatch(fetchOrderFailed(json));
-    });
+    dispatch(fetchOrderFailed(data));
   };
 };
 

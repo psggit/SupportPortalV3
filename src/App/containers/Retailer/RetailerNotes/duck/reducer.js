@@ -7,6 +7,7 @@ import {
   fetchIssueListFailure,
   fetchIssueListProgress,
 } from "./action";
+import { setErrorMessage } from "../../../../utils/errorMessages";
 
 const initialState = {
   retailerNotesList: null,
@@ -31,12 +32,12 @@ const retailerNotesListReducer = createReducer(initialState, {
       retailerNotesList: data.payload,
     };
   },
-  [fetchNotesFailure]: (state) => ({
+  [fetchNotesFailure]: (state, data) => ({
     ...state,
     notesProgress: false,
     notesFail: true,
     notesSuccess: false,
-    errorMsg: "Something went wrong, please try again",
+    errorMsg: setErrorMessage(data),
   }),
   [fetchNotesInProgress]: (state) => {
     return {
@@ -61,7 +62,7 @@ const retailerNotesListReducer = createReducer(initialState, {
     issueListProgress: false,
     issueListFailure: true,
     issueListSuccess: false,
-    errorMsg: data.payload.message,
+    errorMsg: setErrorMessage(data),
   }),
   [fetchIssueListProgress]: (state) => {
     return {

@@ -5,6 +5,7 @@ import {
   consumerUpdateProgress,
   resetOnUnmount,
 } from "./actions";
+import { setErrorMessage } from "../../../../utils/errorMessages";
 
 const initialState = {
   updateConsumerData: null,
@@ -32,7 +33,7 @@ const customerUpdateReducer = createReducer(initialState, {
     updateProgress: false,
     updateFail: true,
     updateSuccess: false,
-    errorMsg: error.payload.message,
+    errorMsg: setErrorMessage(error),
   }),
   [consumerUpdateProgress]: (state) => {
     return {
@@ -41,12 +42,7 @@ const customerUpdateReducer = createReducer(initialState, {
     };
   },
   [resetOnUnmount]: () => ({
-    updateConsumerData: null,
-    updateProgress: false,
-    updateFail: false,
-    updateSuccess: false,
-    errorMsg: "",
-    updateSuccessMsg: "",
+    ...initialState,
   }),
 });
 

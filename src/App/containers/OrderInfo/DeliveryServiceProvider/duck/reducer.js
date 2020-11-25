@@ -14,6 +14,7 @@ import {
   cancelOrderDSPProgress,
   resetOnUnmount,
 } from "./action";
+import { setErrorMessage } from "../../../../utils/errorMessages";
 
 const initialValue = {
   pushOrderSuccess: false,
@@ -47,7 +48,7 @@ const dspReducer = createReducer(initialValue, {
     pushOrderSuccess: false,
     pushOrderFailed: true,
     pushOrderProgress: false,
-    errorMsg: error.payload.message,
+    errorMsg: setErrorMessage(error),
     message: "",
   }),
   [pushOrderProgress]: (state) => ({
@@ -95,7 +96,7 @@ const dspReducer = createReducer(initialValue, {
     fetchOTPSuccess: false,
     fetchOTPFailed: true,
     fetchOTPProgress: false,
-    errorMsg: error.payload.message,
+    errorMsg: setErrorMessage(error),
     message: "",
   }),
   [fetchOTPProgress]: (state) => ({
@@ -119,7 +120,7 @@ const dspReducer = createReducer(initialValue, {
     cancelOrderDSPSuccess: false,
     cancelOrderDSPFailed: true,
     cancelOrderDSPProgress: false,
-    errorMsg: error.payload.message,
+    errorMsg: setErrorMessage(error),
     message: "",
   }),
   [cancelOrderDSPProgress]: (state) => ({

@@ -22,10 +22,8 @@ const onSuccess = (dispatch) => {
 };
 
 const onError = (dispatch) => {
-  return (data) => {
-    data.json().then((json) => {
-      dispatch(consumerUpdateFailed(json));
-    });
+  return (error) => {
+    dispatch(consumerUpdateFailed(error));
   };
 };
 

@@ -17,7 +17,11 @@ const resolveIssueAPI = (reqBody, process, onSuccess, onError) => {
   })
     .then((res) => process(res))
     .then((data) => onSuccess(data))
-    .catch((err) => onError(err));
+    .catch((err) => {
+      err.json().then((json) => {
+        onError(json);
+      });
+    });
 };
 
 export { resolveIssueAPI };

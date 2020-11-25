@@ -5,6 +5,7 @@ import {
   fetchOrderProgress,
   selectOrder,
 } from "./actions";
+import { setErrorMessage } from "../../../utils/errorMessages";
 
 const initialValue = {
   orderData: null,
@@ -26,7 +27,7 @@ const homeReducer = createReducer(initialValue, {
     ...state,
     fetchDetailsProgress: false,
     fetchDetailsFail: true,
-    errorMsg: data.payload.message,
+    errorMsg: setErrorMessage(data),
   }),
   [fetchOrderProgress]: (state, data) => ({
     ...state,

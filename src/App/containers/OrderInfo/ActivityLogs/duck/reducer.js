@@ -1,5 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { fetchLogProgress, fetchLogFailed, fetchLogSuccess } from "./actions";
+import { setErrorMessage } from "../../../../utils/errorMessages";
 
 const initialValue = {
   activityData: null,
@@ -19,16 +20,12 @@ const activityLogReducer = createReducer(initialValue, {
     errorMsg: "",
   }),
   [fetchLogFailed]: (state, data) => {
-    let errorMessage =
-      data.payload.message !== undefined
-        ? data.payload.message
-        : "Something went wrong. Try again later.";
     return {
       ...state,
       fetchLogSuccess: false,
       fetchLogFailed: true,
       fetchLogProgress: false,
-      errorMsg: errorMessage,
+      errorMsg: setErrorMessage(data),
     };
   },
   [fetchLogProgress]: (state) => ({

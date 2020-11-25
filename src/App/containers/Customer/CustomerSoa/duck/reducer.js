@@ -5,6 +5,7 @@ import {
   fetchCustomerSoaInProgress,
   resetOnUnmount,
 } from "./actions";
+import { setErrorMessage } from "../../../../utils/errorMessages";
 
 const initialState = {
   customerSoaList: null,
@@ -25,13 +26,13 @@ const customerSOAReducer = createReducer(initialState, {
       customerSoaList: data.payload,
     };
   },
-  [fetchCustomerSoaFailure]: (state, data) => {
+  [fetchCustomerSoaFailure]: (state, error) => {
     return {
       ...state,
       soaProgress: false,
       soaFail: true,
       soaSuccess: false,
-      errorMsg: data.payload,
+      errorMsg: setErrorMessage(error),
     };
   },
   [fetchCustomerSoaInProgress]: (state) => {
@@ -43,10 +44,7 @@ const customerSOAReducer = createReducer(initialState, {
   },
   [resetOnUnmount]: () => {
     return {
-      soaProgress: false,
-      soaFail: false,
-      soaSuccess: false,
-      errorMsg: "",
+      ...initialState,
     };
   },
 });

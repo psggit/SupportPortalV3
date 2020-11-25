@@ -48,7 +48,6 @@ const DeliveryAgentComponent = (props) => {
     const details = getListOfDataObjects(props.orderInfo, keysToRender);
     setData(details);
     if (localStorage.getItem("x-hasura-role") !== "ops_delivery_manager") {
-      console.log("fetchDaIssueList");
       props.fetchNotes(props.orderInfo.order_id);
       props.fetchDaIssueList();
     }

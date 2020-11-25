@@ -28,13 +28,8 @@ const onSuccess = (dispatch) => {
 };
 
 const onError = (dispatch) => {
-  // return (err) => {
-  //   dispatch(fetchCustomerNotesFailed(err));
-  // };
-  return (data) => {
-    data.json().then((json) => {
-      dispatch(fetchCustomerNotesFailed(json));
-    });
+  return (err) => {
+    dispatch(fetchCustomerNotesFailed(err));
   };
 };
 
@@ -45,18 +40,12 @@ const onNoteSuccess = (dispatch) => {
 };
 
 const onNoteError = (dispatch) => {
-  return (data) => {
-    data.json().then((json) => {
-      dispatch(consumerNoteListFailed(json));
-    });
+  return (error) => {
+    dispatch(consumerNoteListFailed(error));
   };
 };
 
-const fetchConsumerNotes = (orderId) => {
-  let reqBody = {
-    order_id: orderId,
-    type: "customer",
-  };
+const fetchConsumerNotes = (reqBody) => {
   return (dispatch) => {
     dispatch(fetchCustomerNotesProgress());
     fetchNotesAPI(

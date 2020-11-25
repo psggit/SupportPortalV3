@@ -329,7 +329,7 @@ DaNotes.propTypes = {
 
 export { DaNotes };
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   row1: {
     display: "flex",
     justifyContent: "space-between",

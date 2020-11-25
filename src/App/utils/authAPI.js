@@ -11,7 +11,11 @@ const authAPI = (reqBody, process, onSuccess, onError) => {
   fetch(URL, fetchOptions)
     .then((res) => process(res))
     .then((data) => onSuccess(data))
-    .catch((err) => onError(err));
+    .catch((err) => {
+      err.json().then((json) => {
+        onError(json);
+      });
+    });
 };
 
 export { authAPI };

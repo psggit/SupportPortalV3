@@ -7,6 +7,7 @@ import {
   fetchRetailerIssueListFailure,
   fetchRetailerIssueListProgress,
 } from "./action";
+import { setErrorMessage } from "../../../../utils/errorMessages";
 
 const initialValue = {
   retailerNotesData: null,
@@ -31,16 +32,12 @@ const retailerNotesReducer = createReducer(initialValue, {
     errorMsg: "",
   }),
   [fetchRetailerNotesFailed]: (state, data) => {
-    let errorMessage =
-      data.payload.message !== undefined
-        ? data.payload.message
-        : "Something went wrong. Try again later.";
     return {
       ...state,
       fetchSuccess: false,
       fetchFailed: true,
       fetchProgress: false,
-      errorMsg: errorMessage,
+      errorMsg: setErrorMessage(data),
     };
   },
   [fetchRetailerNotesProgress]: (state) => ({
@@ -58,12 +55,12 @@ const retailerNotesReducer = createReducer(initialValue, {
     fetchRetailerIssueListProgress: false,
     errorMessage: "",
   }),
-  [fetchRetailerIssueListFailure]: (state) => ({
+  [fetchRetailerIssueListFailure]: (state, data) => ({
     ...state,
     fetchRetailerIssueListSuccess: false,
     fetchRetailerIssueListFailure: true,
     fetchRetailerIssueListProgress: false,
-    errorMessage: "Something went wrong. Please try again!",
+    errorMessage: setErrorMessage(data),
   }),
   [fetchRetailerIssueListProgress]: (state) => ({
     ...state,

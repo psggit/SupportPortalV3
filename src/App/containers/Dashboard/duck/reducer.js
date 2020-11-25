@@ -11,6 +11,7 @@ import {
   fetchDeliveryFailed,
   fetchDeliveryProgress,
 } from "./actions";
+import { setErrorMessage } from "../../../utils/errorMessages";
 
 const initialValue = {
   orderData: null,
@@ -36,14 +37,16 @@ const dashboardReducer = createReducer(initialValue, {
     ...state,
     fetchDetailsProgress: false,
     fetchDetailsSuccess: true,
+    fetchDetailsFail: false,
     errorMsg: "",
     orderData: data.payload,
   }),
-  [fetchOrderFailed]: (state) => ({
+  [fetchOrderFailed]: (state, data) => ({
     ...state,
     fetchDetailsProgress: false,
     fetchDetailsFail: true,
-    errorMsg: "Something went wrong, please try again",
+    fetchDetailsSuccess: false,
+    errorMsg: setErrorMessage(data),
   }),
   [fetchOrderProgress]: (state, data) => ({
     ...state,
@@ -62,14 +65,15 @@ const dashboardReducer = createReducer(initialValue, {
     ...state,
     preponeOrderProgress: false,
     preponeOrderSuccess: true,
+    preponeOrderFailed: false,
     errorMsg: "",
     successMsg: data.payload,
   }),
-  [preponeOrderFailed]: (state) => ({
+  [preponeOrderFailed]: (state, data) => ({
     ...state,
     preponeOrderProgress: false,
     preponeOrderFailed: true,
-    errorMsg: "Something went wrong, please try again",
+    errorMsg: setErrorMessage(data),
   }),
   [preponeOrderProgress]: (state) => ({
     ...state,
@@ -90,7 +94,7 @@ const dashboardReducer = createReducer(initialValue, {
     fetchDeliveryProgress: false,
     fetchDeliveryFailed: true,
     fetchDeliverySuccess: false,
-    errorMessageDeliveryStatus: data.payload.message,
+    errorMessageDeliveryStatus: setErrorMessage(data),
   }),
   [fetchDeliveryProgress]: (state) => ({
     ...state,

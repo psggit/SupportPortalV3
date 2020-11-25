@@ -11,6 +11,7 @@ import {
   fetchUpdateCartProgress,
   resetOnUnmount,
 } from "./actions";
+import { setErrorMessage } from "../../../utils/errorMessages";
 
 const initialValue = {
   cartSummary: null,
@@ -41,12 +42,12 @@ const cartReducer = createReducer(initialValue, {
     errorMsg: "",
     cartSummary: data.payload,
   }),
-  [fetchCartSummaryFailed]: (state) => ({
+  [fetchCartSummaryFailed]: (state, error) => ({
     ...state,
     fetchCartSummaryProgress: false,
     fetchCartSummaryFailed: true,
     fetchCartSummarySuccess: false,
-    errorMsg: "Something went wrong, please try again",
+    errorMsg: setErrorMessage(error),
   }),
   [fetchCartSummaryProgress]: (state) => ({
     ...state,
@@ -82,12 +83,12 @@ const cartReducer = createReducer(initialValue, {
     errorMsg: "",
     validateInfo: data.payload,
   }),
-  [validateOrderFailed]: (state) => ({
+  [validateOrderFailed]: (state, error) => ({
     ...state,
     validateOrderProgress: false,
     validateOrderFailed: true,
     validateOrderSuccess: false,
-    errorMsg: "Something went wrong, please try again",
+    errorMsg: setErrorMessage(error),
   }),
   [validateOrderProgress]: (state) => ({
     ...state,
