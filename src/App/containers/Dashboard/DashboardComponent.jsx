@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 const DashboardComponent = (props) => {
   useEffect(() => {
     // console.log("useEffect - Dashboard", localStorage.getItem("x-hasura-role"));
-    if (localStorage.getItem("x-hasura-role") !== "ops_delivery_manager") {
+    if (localStorage.getItem("x-hasura-role") === "support_admin") {
       props.fetchDeliveryStatus();
     }
   }, []);
@@ -236,7 +236,7 @@ const DashboardComponent = (props) => {
               filterType={filterType}
             />
           </Grid> */}
-          {localStorage.getItem("x-hasura-role") !== "ops_delivery_manager" && (
+          {localStorage.getItem("x-hasura-role") === "support_admin" && (
             <Grid item xs={4}>
               <DeliveryOrderStatusCard
                 errorString={errorString}
