@@ -427,11 +427,12 @@ const RenderIssues = (props) => {
                           {"No support person available."}
                         </Alert>
                       )}
-                      {props.fetchSupportPersonListFailed === 0 && (
-                        <Alert severity="error" show={true}>
-                          {props.errorMsgSupportList}
-                        </Alert>
-                      )}
+                      {props.fetchSupportPersonListFailed &&
+                        props.supportPersonList.support_person.length === 0 && (
+                          <Alert severity="error" show={true}>
+                            {props.errorMsgSupportList}
+                          </Alert>
+                        )}
                     </Select>
                   </FormControl>
                 </div>
@@ -447,12 +448,18 @@ const RenderIssues = (props) => {
           type={"success"}
         />
       )}
+      {props.assignIssueFailed && (
+        <ErrorMsg show={true} message={props.errorMsgAssign} type={"error"} />
+      )}
       {props.resolveIssueSuccess && (
         <ErrorMsg
           show={true}
           message={"Successfully resolved the issue"}
           type={"success"}
         />
+      )}
+      {props.resolveIssueFailed && (
+        <ErrorMsg show={true} message={props.errorMsgResolve} type={"error"} />
       )}
     </>
   );
@@ -472,6 +479,12 @@ RenderIssues.propTypes = {
   assignIssueInProgress: PropTypes.bool,
   assignIssueSuccess: PropTypes.bool,
   resolveIssueSuccess: PropTypes.bool,
+  assignIssueFailed: PropTypes.bool,
+  resolveIssueFailed: PropTypes.bool,
+  errorMsgResolve: PropTypes.string,
+  errorMsgAssign: PropTypes.string,
+  fetchSupportPersonListFailed: PropTypes.bool,
+  errorMsgSupportList: PropTypes.string,
 };
 
 const IssuesComponent = (props) => {
@@ -647,7 +660,7 @@ const IssuesComponent = (props) => {
               {props.fetchIssuesFailed && (
                 <>
                   <Alert severity="error" show={true}>
-                    Unable to fetch issues. Please try again!
+                    {props.errorMsg}
                   </Alert>
                 </>
               )}
@@ -686,7 +699,12 @@ IssuesComponent.propTypes = {
   fetchIssueList: PropTypes.func,
   assignIssueSuccess: PropTypes.bool,
   resolveIssueSuccess: PropTypes.bool,
+  assignIssueFailed: PropTypes.bool,
   issueList: PropTypes.any,
+  errorMsg: PropTypes.any,
+  resolveIssueFailed: PropTypes.bool,
+  fetchSupportPersonListFailed: PropTypes.bool,
+  errorMsgSupportList: PropTypes.any,
 };
 
 export { IssuesComponent };

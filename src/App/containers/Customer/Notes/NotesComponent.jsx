@@ -58,7 +58,7 @@ function Notes(props) {
     const payload = {
       order_id: orderId,
       type: "customer",
-    }
+    };
     props.fetchConsumerNotes(payload);
   };
 
