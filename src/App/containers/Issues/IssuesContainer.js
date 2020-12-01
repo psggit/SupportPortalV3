@@ -23,6 +23,11 @@ const mapStateToProps = (state) => {
     resolveIssueInProgress: state.issues.resolveIssueInProgress,
     resolveIssueSuccess: state.issues.resolveIssueInProgress,
     errorMsgSupportList: state.issues.errorMsgSupportList,
+    errorMsg: state.issues.errorMsg,
+    assignIssueFailed: state.issues.assignIssueFailed,
+    errorMsgAssign: state.issues.errorMsgAssign,
+    errorMsgResolve: state.issues.errorMsgResolve,
+    resolveIssueFailed: state.issues.resolveIssueFailed,
   };
 };
 
