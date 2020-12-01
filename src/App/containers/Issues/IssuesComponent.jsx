@@ -201,6 +201,8 @@ const RenderIssues = (props) => {
   }, [props.fetchSupportPersonListSuccess]);
 
   const unmountConfirmationDialog = () => {
+    setAssignIssue(false);
+    setResolveIssue(false);
     setShowDialog(false);
   };
 
@@ -233,11 +235,11 @@ const RenderIssues = (props) => {
   };
 
   const handleResolveIssue = (e, issue) => {
-    e.stopPropagation();
     setResolveIssue(true);
     setOrderId(issue.order_id);
     setIssueId(issue.id);
     mountConfirmationDialog();
+    e.stopPropagation();
   };
 
   const handleAssignIssue = (e, issue) => {
@@ -258,7 +260,7 @@ const RenderIssues = (props) => {
   };
 
   const handleAccordionChange = (event, activeId) => {
-    event.preventDefault();
+    event.stopPropagation();
     if (activeIndex !== activeId) setActiveIndex(activeId);
     else setActiveIndex("");
   };
@@ -412,6 +414,7 @@ const RenderIssues = (props) => {
                     >
                       {!props.fetchSupportPersonListInProgress &&
                         props.supportPersonList !== null &&
+                        props.supportPersonList.support_person.length > 0 &&
                         props.supportPersonList.support_person.map((item) => {
                           return (
                             <MenuItem value={item.id} key={item.id}>
@@ -419,6 +422,16 @@ const RenderIssues = (props) => {
                             </MenuItem>
                           );
                         })}
+                      {props.supportPersonList.support_person.length === 0 && (
+                        <Alert severity="error" show={true}>
+                          {"No support person available."}
+                        </Alert>
+                      )}
+                      {props.fetchSupportPersonListFailed === 0 && (
+                        <Alert severity="error" show={true}>
+                          {props.errorMsgSupportList}
+                        </Alert>
+                      )}
                     </Select>
                   </FormControl>
                 </div>
