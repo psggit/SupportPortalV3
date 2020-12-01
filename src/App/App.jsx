@@ -94,10 +94,10 @@ function App(props) {
                 component={OrderTrackingContainer}
               />
 
-              <Route
+              {/* <Route
                 path="/order-modification"
                 component={OrderModificationContainer}
-              />
+              /> */}
 
               <Route path="/login" component={LoginContainer} />
               <Route path="/logout" component={LogoutContainer} />
