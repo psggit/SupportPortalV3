@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TopBar from "../../../components/topBar";
-import Notification from "../../../components/notification";
 import Moment from "moment";
 import Paper from "@material-ui/core/Paper";
 import FullWidthTabs from "../customerMenuBar";
@@ -24,6 +23,7 @@ import {
   TableBody,
   TablePagination,
 } from "@material-ui/core";
+import ErrorMsg from "../../../components/errorMsg";
 
 const useStyles = makeStyles(() => ({
   row1: {
@@ -240,10 +240,17 @@ function CustomerSoa(props) {
                       </TableRow>
                     );
                   })}
-                {!showData && (
+                {!showData && !props.soaFail && (
                   <TableRow>
                     <TableCell colSpan={10} align="center">
                       No data available
+                    </TableCell>
+                  </TableRow>
+                )}
+                {props.soaFail && (
+                  <TableRow>
+                    <TableCell colSpan={10} align="center">
+                      -
                     </TableCell>
                   </TableRow>
                 )}
@@ -263,12 +270,7 @@ function CustomerSoa(props) {
           )}
         </Box>
         {errorMessage && (
-          <Notification
-            message={props.errorMsg}
-            messageType="error"
-            open={errorMessage}
-            handleClose={handleClose}
-          />
+          <ErrorMsg message={props.errorMsg} show={true} type={"error"} />
         )}
       </div>
     </>

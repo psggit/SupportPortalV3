@@ -17,6 +17,7 @@ const initialValue = {
   fetchCustomerNotesProgress: false,
   errorMsg: "",
   errorMessage: "",
+  errorMessageCustomerNotes: "",
   succMsg: "",
   noteListData: null,
   NoteListSuccess: false,
@@ -41,7 +42,7 @@ const customerReducer = createReducer(initialValue, {
       fetchCustomerNotesSuccess: false,
       fetchCustomerNotesFailed: true,
       fetchCustomerNotesProgress: false,
-      errorMsg: setErrorMessage(data),
+      errorMessageCustomerNotes: setErrorMessage(data),
     };
   },
   [fetchCustomerNotesProgress]: (state) => {

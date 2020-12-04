@@ -39,8 +39,16 @@ const mapStateToProps = (state) => {
     retailerIssueListData: state.order.retailer.retailerIssueList,
     fetchRetailerIssueListSuccess:
       state.order.retailer.fetchRetailerIssueListSuccess,
+    fetchRetailerIssueListFailure:
+      state.order.retailer.fetchRetailerIssueListFailure,
+    errorMessageRetailerList: state.order.retailer.errorMessage,
     fetchDaIssueListSuccess: state.order.deliveryAgent.fetchDaIssueListSuccess,
+    fetchDaIssueListFailure: state.order.deliveryAgent.fetchDaIssueListFailure,
     daIssueList: state.order.deliveryAgent.daIssueList,
+    errorMessageList: state.order.deliveryAgent.errorMessageList,
+    errorMessageCustomerNotes: state.order.customer.errorMessageCustomerNotes,
+    errorMsgIssueTypes: state.order.orderInfo.errorMsgIssueTypes,
+    errorDAList: state.order.deliveryAgent.errorDAList,
   };
 };
 

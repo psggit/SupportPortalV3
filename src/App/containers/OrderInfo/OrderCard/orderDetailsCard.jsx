@@ -93,7 +93,9 @@ const OrderDetailsCard = (props) => {
 
   useEffect(() => {
     if (props.cancelOrderSuccess === true) {
-      location.reload();
+      setTimeout(() => {
+        location.reload();
+      }, 1500);
     }
   }, [props.cancelOrderSuccess]);
 
@@ -405,24 +407,10 @@ const OrderDetailsCard = (props) => {
         </ListItem> */}
       </OrderCard>
       {props.fetchCancellationSummaryFailed && (
-        <ErrorMsg
-          show={true}
-          message={
-            props.errorMsgSummary !== ""
-              ? props.errorMsgSummary
-              : "Something went wrong"
-          }
-          type={"error"}
-        />
+        <Alert show={true} message={props.errorMsgSummary} type={"error"} />
       )}
       {props.cancelOrderFailure && (
-        <ErrorMsg
-          show={true}
-          message={
-            props.errorMsg !== "" ? props.errorMsg : "Something went wrong"
-          }
-          type={"error"}
-        />
+        <ErrorMsg show={true} message={props.errorMsg} type={"error"} />
       )}
       {props.cancelOrderSuccess && (
         <ErrorMsg
@@ -432,13 +420,7 @@ const OrderDetailsCard = (props) => {
         />
       )}
       {props.deliverOrderFailed && (
-        <ErrorMsg
-          show={true}
-          message={
-            props.errorMsg !== "" ? props.errorMsg : "Something went wrong"
-          }
-          type={"error"}
-        />
+        <ErrorMsg show={true} message={props.errorMsg} type={"error"} />
       )}
       {props.deliverOrderSuccess && (
         <ErrorMsg

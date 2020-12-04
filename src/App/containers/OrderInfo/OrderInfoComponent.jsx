@@ -285,94 +285,163 @@ const OrderInfoComponent = (props) => {
   return (
     <div className={classes.root}>
       <TopBar />
-      {open && (
+      {open && issueType === "retailer" && (
         <DialogComponent
           title="ADD NOTE"
           subtitle={`Order ID: ` + orderId}
           actions={dialogActions}
           openDialog={openDialog}
         >
-          <InputLabel id="demo-simple-select-label">Issue Type</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            className={classes.selectBox}
-            onChange={(event) => handleChange(event)}
-          >
-            {props.fetchRetailerIssueListSuccess &&
-              issueType === "retailer" &&
-              props.retailerIssueListData !== null &&
-              props.retailerIssueListData.map((value, index) => {
-                if (valueSelected === value) {
-                  return (
-                    <MenuItem value={value.id} key={index} selected={true}>
-                      {value.code}
-                    </MenuItem>
-                  );
-                } else {
-                  return (
-                    <MenuItem value={value.id} key={index}>
-                      {value.code}
-                    </MenuItem>
-                  );
-                }
-              })}
-            {props.NoteListSuccess &&
-              issueType === "customer" &&
-              props.noteListData !== null &&
-              props.noteListData.map((value, index) => {
-                if (valueSelected === value) {
-                  return (
-                    <MenuItem value={value.id} key={index} selected={true}>
-                      {value.code}
-                    </MenuItem>
-                  );
-                } else {
-                  return (
-                    <MenuItem value={value.id} key={index}>
-                      {value.code}
-                    </MenuItem>
-                  );
-                }
-              })}
-            {props.fetchCustomerNotesFailed && (
-              <Alert severity="error">{"Something went wrong."}</Alert>
-            )}
-            {props.fetchDaIssueListFailure && (
-              <Alert severity="error">{"Something went wrong."}</Alert>
-            )}
-            {props.fetchDaIssueListSuccess &&
-              issueType === "delivery_agent" &&
-              props.daIssueList !== null &&
-              props.daIssueList.map((value, index) => {
-                if (valueSelected === value) {
-                  return (
-                    <MenuItem value={value.id} key={index} selected={true}>
-                      {value.code}
-                    </MenuItem>
-                  );
-                } else {
-                  return (
-                    <MenuItem value={value.id} key={index}>
-                      {value.code}
-                    </MenuItem>
-                  );
-                }
-              })}
-          </Select>
-          <TextField
-            id="outlined-textarea"
-            placeholder="Add note here"
-            multiline
-            rows={4}
-            variant="outlined"
-            size="small"
-            value={issueDesc}
-            fullWidth
-            className={classes.textField}
-            //onChange={(event) => setIssueDesc(event.target.value)}
-            onChange={textFieldChange}
-          />
+          {props.fetchRetailerIssueListSuccess && issueType === "retailer" && (
+            <>
+              <InputLabel id="demo-simple-select-label">Issue Type</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                className={classes.selectBox}
+                onChange={(event) => handleChange(event)}
+              >
+                {props.retailerIssueListData !== null &&
+                  props.retailerIssueListData.map((value, index) => {
+                    if (valueSelected === value) {
+                      return (
+                        <MenuItem value={value.id} key={index} selected={true}>
+                          {value.code}
+                        </MenuItem>
+                      );
+                    } else {
+                      return (
+                        <MenuItem value={value.id} key={index}>
+                          {value.code}
+                        </MenuItem>
+                      );
+                    }
+                  })}
+              </Select>
+              <TextField
+                id="outlined-textarea"
+                placeholder="Add note here"
+                multiline
+                rows={4}
+                variant="outlined"
+                size="small"
+                value={issueDesc}
+                fullWidth
+                className={classes.textField}
+                //onChange={(event) => setIssueDesc(event.target.value)}
+                onChange={textFieldChange}
+              />
+            </>
+          )}
+          {props.fetchRetailerIssueListFailure && (
+            <Alert severity="error">{props.errorMessageRetailerList}</Alert>
+          )}
+        </DialogComponent>
+      )}
+      {open && issueType === "customer" && (
+        <DialogComponent
+          title="ADD NOTE"
+          subtitle={`Order ID: ` + orderId}
+          actions={dialogActions}
+          openDialog={openDialog}
+        >
+          {props.NoteListSuccess && issueType === "customer" && (
+            <>
+              <InputLabel id="demo-simple-select-label">Issue Type</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                className={classes.selectBox}
+                onChange={(event) => handleChange(event)}
+              >
+                {props.noteListData !== null &&
+                  props.noteListData.map((value, index) => {
+                    if (valueSelected === value) {
+                      return (
+                        <MenuItem value={value.id} key={index} selected={true}>
+                          {value.code}
+                        </MenuItem>
+                      );
+                    } else {
+                      return (
+                        <MenuItem value={value.id} key={index}>
+                          {value.code}
+                        </MenuItem>
+                      );
+                    }
+                  })}
+              </Select>
+              <TextField
+                id="outlined-textarea"
+                placeholder="Add note here"
+                multiline
+                rows={4}
+                variant="outlined"
+                size="small"
+                value={issueDesc}
+                fullWidth
+                className={classes.textField}
+                //onChange={(event) => setIssueDesc(event.target.value)}
+                onChange={textFieldChange}
+              />
+            </>
+          )}
+          {props.fetchCustomerNotesFailed && (
+            <Alert severity="error">{props.errorMessageCustomerNotes}</Alert>
+          )}
+        </DialogComponent>
+      )}
+      {open && issueType === "delivery_agent" && (
+        <DialogComponent
+          title="ADD NOTE"
+          subtitle={`Order ID: ` + orderId}
+          actions={dialogActions}
+          openDialog={openDialog}
+        >
+          {props.fetchDaIssueListSuccess && issueType === "delivery_agent" && (
+            <>
+              <InputLabel id="demo-simple-select-label">Issue Type</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                className={classes.selectBox}
+                onChange={(event) => handleChange(event)}
+              >
+                {props.daIssueList !== null &&
+                  props.daIssueList.map((value, index) => {
+                    if (valueSelected === value) {
+                      return (
+                        <MenuItem value={value.id} key={index} selected={true}>
+                          {value.code}
+                        </MenuItem>
+                      );
+                    } else {
+                      return (
+                        <MenuItem value={value.id} key={index}>
+                          {value.code}
+                        </MenuItem>
+                      );
+                    }
+                  })}
+              </Select>
+              <TextField
+                id="outlined-textarea"
+                placeholder="Add note here"
+                multiline
+                rows={4}
+                variant="outlined"
+                size="small"
+                value={issueDesc}
+                fullWidth
+                className={classes.textField}
+                //onChange={(event) => setIssueDesc(event.target.value)}
+                onChange={textFieldChange}
+              />
+            </>
+          )}
+          {props.fetchDaIssueListFailure && (
+            <Alert severity="error">{props.errorDAList}</Alert>
+          )}
         </DialogComponent>
       )}
       {openIssueDialog && (
@@ -382,18 +451,18 @@ const OrderInfoComponent = (props) => {
           actions={dialogActionsIssue}
           openDialog={handleAddIssue}
         >
-          {props.fetchOrderInfoSuccess && (
-            <FormControl className={classes.formControl}>
-              <InputLabel id="demo-simple-select-label">
-                Select Reason
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                onChange={(event) => validateIssue(event, "select")}
-              >
-                {props.fetchOrderInfoSuccess &&
-                  props.issueTypes.issue_types.map((value) => {
+          {props.fetchOrderInfoSuccess && props.fetchIssueTypesSuccess && (
+            <>
+              <FormControl className={classes.formControl}>
+                <InputLabel id="demo-simple-select-label">
+                  Select Reason
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  onChange={(event) => validateIssue(event, "select")}
+                >
+                  {props.issueTypes.issue_types.map((value) => {
                     if (selectedValue === value) {
                       return (
                         <MenuItem
@@ -412,21 +481,25 @@ const OrderInfoComponent = (props) => {
                       );
                     }
                   })}
-              </Select>
-            </FormControl>
+                </Select>
+              </FormControl>
+              <TextField
+                id="outlined-textarea"
+                placeholder="Add issue description"
+                multiline
+                rows={4}
+                variant="outlined"
+                size="small"
+                value={newIssueDesc}
+                fullWidth
+                onKeyUp={(event) => validateIssue(event, "text")}
+                onChange={(event) => setNewIssueDesc(event.target.value)}
+              />
+            </>
           )}
-          <TextField
-            id="outlined-textarea"
-            placeholder="Add issue description"
-            multiline
-            rows={4}
-            variant="outlined"
-            size="small"
-            value={newIssueDesc}
-            fullWidth
-            onKeyUp={(event) => validateIssue(event, "text")}
-            onChange={(event) => setNewIssueDesc(event.target.value)}
-          />
+          {props.fetchIssueTypesFailed && (
+            <Alert severity="error">{props.errorMsgIssueTypes}</Alert>
+          )}
         </DialogComponent>
       )}
       <Box className={classes.boxContainer}>
@@ -603,6 +676,9 @@ OrderInfoComponent.propTypes = {
   fetchDaIssueListSuccess: PropTypes.bool,
   daIssueList: PropTypes.any,
   fetchCustomerNotesFailed: PropTypes.bool,
+  fetchIssueTypesSuccess: PropTypes.bool,
+  fetchIssueTypesFailed: PropTypes.bool,
+  errorMsgIssueTypes: PropTypes.string,
 };
 
 export { OrderInfoComponent };
