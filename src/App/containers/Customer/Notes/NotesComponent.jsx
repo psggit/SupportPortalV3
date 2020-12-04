@@ -26,6 +26,7 @@ import {
   TablePagination,
   Grid,
 } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 
 const createData = ({ order_id, type, notes, created_at, created_by }) => {
   return {
@@ -54,7 +55,11 @@ function Notes(props) {
   const customerNumber = history.location.state.customerNumber;
 
   const fetchNote = () => {
-    props.fetchConsumerNotes(orderId);
+    const payload = {
+      order_id: orderId,
+      type: "customer",
+    };
+    props.fetchConsumerNotes(payload);
   };
 
   useEffect(() => {
@@ -130,6 +135,9 @@ function Notes(props) {
     setShowAddNoteDialog(false);
     fetchNote();
   };
+
+  console.log(props.errorMsg, props.notesFail);
+
   return (
     <>
       <TopBar />
@@ -254,10 +262,17 @@ function Notes(props) {
                         <TableCell align="center">{data.created_by}</TableCell>
                       </TableRow>
                     ))}
-                {!showData && (
+                {!showData && !props.notesFail && (
                   <TableRow>
                     <TableCell colSpan={10} align="center">
                       No data available
+                    </TableCell>
+                  </TableRow>
+                )}
+                {props.notesFail && (
+                  <TableRow>
+                    <TableCell colSpan={10} align="center">
+                      -
                     </TableCell>
                   </TableRow>
                 )}
@@ -277,7 +292,7 @@ function Notes(props) {
           )}
         </Box>
         {props.notesFail && (
-          <ErrorMsg show={true} message={props.errorMsg} type={"error"} />
+          <ErrorMsg show={true} message={props.errorMsg} type="error" />
         )}
         {props.createNotesSuccess && (
           <ErrorMsg show={true} message={props.successMsg} type="success" />
