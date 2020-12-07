@@ -60,10 +60,10 @@ const MapComponent = (props) => {
   const [center, setCenter] = useState(null);
 
   const mapRef = useRef(null);
-  const [positionAgent] = useState({
+  const positionAgent = {
     lat: parseFloat(gpsAgent[0]),
     lng: parseFloat(gpsAgent[1]),
-  });
+  };
   const [positionConsumer, setCenterConsumer] = useState({
     lat: parseFloat(gpsConsumer[0]),
     lng: parseFloat(gpsConsumer[1]),
@@ -238,7 +238,7 @@ const MapComponent = (props) => {
           <Marker
             position={positionAgent}
             icon={markerIconDA}
-            title={"DeliveryAgent"}
+            title={"Delivery Agent"}
           />
           <Marker
             position={positionConsumer}
@@ -288,7 +288,6 @@ function OrderTrackingComponent(props) {
   }, []);
 
   const [show, setShow] = useState(false);
-  const [updateMap, setMapShow] = useState(false);
   const [showError, setShowError] = useState(false);
   const [details, setDetails] = useState("");
   const [agentDetails, setAgentDetails] = useState(null);
@@ -297,7 +296,6 @@ function OrderTrackingComponent(props) {
   useEffect(() => {
     if (props.fetchLiveDataSuccess) {
       setShow(true);
-      setMapShow(true);
       setDetails(props.orderInfo);
       if (
         props.trackData.agent_gps.trim().length == 0 &&
@@ -311,8 +309,6 @@ function OrderTrackingComponent(props) {
       } else {
         setAgentDetails(props.trackData.agent_gps);
       }
-    } else {
-      setMapShow(false);
     }
   }, [props.fetchLiveDataSuccess]);
 
@@ -323,7 +319,6 @@ function OrderTrackingComponent(props) {
     }
   }, [props.fetchLiveDataFailure]);
 
-  // console.log("fetchLiveDataFailure ", props);
   if (props.fetchLiveDataFailure) {
     clearInterval(interval);
   }
@@ -456,7 +451,7 @@ function OrderTrackingComponent(props) {
             </Box>
           </Grid>
         )}
-        {updateMap && (
+        {show && (
           <Grid item xs={12}>
             <Box mb={10}>
               <MapComponent {...props} agentDetails={agentDetails} />
