@@ -413,7 +413,7 @@ const RenderIssues = (props) => {
                       className={classes.selectEmpty}
                     >
                       {!props.fetchSupportPersonListInProgress &&
-                        props.supportPersonList.support_person !== null &&
+                        props.supportPersonList !== null &&
                         props.supportPersonList.support_person.length > 0 &&
                         props.supportPersonList.support_person.map((item) => {
                           return (
@@ -448,7 +448,11 @@ const RenderIssues = (props) => {
         <ErrorMsg show={true} message={props.errorMsgAssign} type={"error"} />
       )}
       {props.resolveIssueSuccess && (
-        <ErrorMsg show={true} message={props.successMsg} type={"success"} />
+        <ErrorMsg
+          show={true}
+          message={"Successfully resolved the issue"}
+          type={"success"}
+        />
       )}
       {props.resolveIssueFailed && (
         <ErrorMsg show={true} message={props.errorMsgResolve} type={"error"} />
