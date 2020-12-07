@@ -1,7 +1,7 @@
 import { apiUrl } from "./config";
 
 const daListAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://${apiUrl}/supportman/api/1/deliveryagent/list/${reqBody.retailer_id}`;
+  const URL = `https://${apiUrl}/supportman/api/1/deliveryagent/list/${reqBody.order_id}`;
   const headers = {
     // eslint-disable-next-line prettier/prettier
     "Accept": "application/json",
