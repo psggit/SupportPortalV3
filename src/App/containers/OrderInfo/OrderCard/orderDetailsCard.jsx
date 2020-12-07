@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "flex-start",
   },
   ListItemRootTitle: {
-    width: "30%",
+    width: "50%",
     fontSize: 16,
     fontWeight: "bold",
     color: "#606060",
@@ -105,7 +105,14 @@ const OrderDetailsCard = (props) => {
     }
   }, [props.deliverOrderSuccess]);
 
-  let { platform, customer_address, delivery_status, delivery_rating, feedback, consumer_concern } = {
+  let {
+    platform,
+    customer_address,
+    delivery_status,
+    delivery_rating,
+    feedback,
+    consumer_concern,
+  } = {
     ...props.order,
   };
   platform = platform === "hb" ? "Hipbar Web" : "Flipkart";
@@ -331,7 +338,7 @@ const OrderDetailsCard = (props) => {
               classes={{ root: classes.ListItemRootTitle }}
             />
             <ListItemText
-              primary={delivery_rating}
+              primary={delivery_rating ? delivery_rating : "-"}
               className={classes.ListItemTextRoot}
               classes={{ root: classes.ListItemTextRoot }}
             />
@@ -347,7 +354,7 @@ const OrderDetailsCard = (props) => {
               classes={{ root: classes.ListItemRootTitle }}
             />
             <ListItemText
-              primary={feedback}
+              primary={feedback ? feedback : "-"}
               className={classes.ListItemTextRoot}
               classes={{ root: classes.ListItemTextRoot }}
             />
@@ -363,7 +370,7 @@ const OrderDetailsCard = (props) => {
               classes={{ root: classes.ListItemRootTitle }}
             />
             <ListItemText
-              primary={consumer_concern}
+              primary={consumer_concern ? consumer_concern : "-"}
               className={classes.ListItemTextRoot}
               classes={{ root: classes.ListItemTextRoot }}
             />
