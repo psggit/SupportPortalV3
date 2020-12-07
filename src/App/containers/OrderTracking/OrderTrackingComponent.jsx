@@ -288,6 +288,7 @@ function OrderTrackingComponent(props) {
   }, []);
 
   const [show, setShow] = useState(false);
+  const [updateMap, setMapShow] = useState(false);
   const [showError, setShowError] = useState(false);
   const [details, setDetails] = useState("");
   const [agentDetails, setAgentDetails] = useState(null);
@@ -296,6 +297,7 @@ function OrderTrackingComponent(props) {
   useEffect(() => {
     if (props.fetchLiveDataSuccess) {
       setShow(true);
+      setMapShow(true);
       setDetails(props.orderInfo);
       if (
         props.trackData.agent_gps.trim().length == 0 &&
@@ -309,6 +311,8 @@ function OrderTrackingComponent(props) {
       } else {
         setAgentDetails(props.trackData.agent_gps);
       }
+    } else {
+      setMapShow(false);
     }
   }, [props.fetchLiveDataSuccess]);
 
@@ -452,10 +456,10 @@ function OrderTrackingComponent(props) {
             </Box>
           </Grid>
         )}
-        {show && (
+        {updateMap && (
           <Grid item xs={12}>
             <Box mb={10}>
-              <MapComponent {...props} agentDetails={agentDetails}/>
+              <MapComponent {...props} agentDetails={agentDetails} />
             </Box>
           </Grid>
         )}

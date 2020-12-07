@@ -413,7 +413,7 @@ const RenderIssues = (props) => {
                       className={classes.selectEmpty}
                     >
                       {!props.fetchSupportPersonListInProgress &&
-                        props.supportPersonList !== null &&
+                        props.supportPersonList.support_person !== null &&
                         props.supportPersonList.support_person.length > 0 &&
                         props.supportPersonList.support_person.map((item) => {
                           return (
@@ -442,21 +442,13 @@ const RenderIssues = (props) => {
         </Dialog>
       )}
       {props.assignIssueSuccess && (
-        <ErrorMsg
-          show={true}
-          message={"Successfully assigned the issue"}
-          type={"success"}
-        />
+        <ErrorMsg show={true} message={props.successMsg} type={"success"} />
       )}
       {props.assignIssueFailed && (
         <ErrorMsg show={true} message={props.errorMsgAssign} type={"error"} />
       )}
       {props.resolveIssueSuccess && (
-        <ErrorMsg
-          show={true}
-          message={"Successfully resolved the issue"}
-          type={"success"}
-        />
+        <ErrorMsg show={true} message={props.successMsg} type={"success"} />
       )}
       {props.resolveIssueFailed && (
         <ErrorMsg show={true} message={props.errorMsgResolve} type={"error"} />
@@ -485,6 +477,7 @@ RenderIssues.propTypes = {
   errorMsgAssign: PropTypes.string,
   fetchSupportPersonListFailed: PropTypes.bool,
   errorMsgSupportList: PropTypes.string,
+  successMsg: PropTypes.string,
 };
 
 const IssuesComponent = (props) => {
@@ -504,6 +497,9 @@ const IssuesComponent = (props) => {
       is_resolved: selectedStatus === "resolved" ? false : true,
     };
     props.fetchIssueList(payload);
+    return () => {
+      props.resetOnUnmount();
+    };
   }, [pageLimit, activePage]);
 
   useEffect(() => {
@@ -705,6 +701,7 @@ IssuesComponent.propTypes = {
   resolveIssueFailed: PropTypes.bool,
   fetchSupportPersonListFailed: PropTypes.bool,
   errorMsgSupportList: PropTypes.any,
+  resetOnUnmount: PropTypes.func,
 };
 
 export { IssuesComponent };

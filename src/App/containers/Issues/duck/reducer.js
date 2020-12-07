@@ -12,6 +12,7 @@ import {
   fetchSupportPersonListInProgress,
   fetchSupportPersonListSuccess,
   fetchSupportPersonListFailed,
+  resetOnUnmount,
 } from "./action";
 import { setErrorMessage } from "../../../utils/errorMessages";
 
@@ -34,6 +35,7 @@ const initialState = {
   errorMsgAssign: "",
   errorMsgResolve: "",
   errorMsgSupportList: "",
+  successMsg: "",
 };
 
 const issuesReducer = createReducer(initialState, {
@@ -67,12 +69,13 @@ const issuesReducer = createReducer(initialState, {
       assignIssueSuccess: false,
     };
   },
-  [assignIssueSuccess]: (state) => {
+  [assignIssueSuccess]: (state, data) => {
     return {
       ...state,
       assignIssueInProgress: false,
       assignIssueFailed: false,
       assignIssueSuccess: true,
+      successMsg: data.payload.message,
     };
   },
   [assignIssueFailed]: (state, data) => {
@@ -92,12 +95,13 @@ const issuesReducer = createReducer(initialState, {
       resolveIssueSuccess: false,
     };
   },
-  [resolveIssueSuccess]: (state) => {
+  [resolveIssueSuccess]: (state, data) => {
     return {
       ...state,
       resolveIssueInProgress: false,
       resolveIssueFailed: false,
       resolveIssueSuccess: true,
+      successMsg: data.payload.message,
     };
   },
   [resolveIssueFailed]: (state, error) => {

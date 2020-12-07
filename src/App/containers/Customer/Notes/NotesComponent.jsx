@@ -297,6 +297,9 @@ function Notes(props) {
         {props.createNotesSuccess && (
           <ErrorMsg show={true} message={props.successMsg} type="success" />
         )}
+        {props.NoteListFailed && (
+          <ErrorMsg show={true} message={props.errorMessage} type="error" />
+        )}
       </div>
     </>
   );
@@ -318,6 +321,8 @@ Notes.propTypes = {
   NoteListSuccess: PropTypes.bool,
   noteListData: PropTypes.bool,
   fetchConsumerNotesList: PropTypes.func,
+  NoteListFailed: PropTypes.bool,
+  errorMessage: PropTypes.string,
 };
 
 export { Notes };

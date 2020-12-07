@@ -124,6 +124,7 @@ const OrderDetailsCard = (props) => {
   const [kycDigits, setKycDigits] = useState("");
   // eslint-disable-next-line no-unused-vars
   const [disabled, setDisabled] = useState(false);
+  const [disableBtn, setDisableBtn] = useState(false);
 
   const handleClickOpen = (type) => {
     if (type == "cancel") {
@@ -157,6 +158,10 @@ const OrderDetailsCard = (props) => {
   const handleChange = (event) => {
     setValue(event.target.value);
     setCancellationSummary(true);
+    setDisableBtn(false);
+    if (selectedValue !== null) {
+      setDisableBtn(true);
+    }
     const payload = {
       order_id: props.order.order_id,
       cancellation_reason_id: parseInt(event.target.value),
@@ -437,6 +442,7 @@ const OrderDetailsCard = (props) => {
             onClick={handleCancelOrder}
             color="primary"
             variant="outlined"
+            disabled={!disableBtn}
           >
             Confirm
           </Button>

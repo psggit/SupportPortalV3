@@ -400,43 +400,57 @@ const OrderInfoComponent = (props) => {
         >
           {props.fetchDaIssueListSuccess && issueType === "delivery_agent" && (
             <>
-              <InputLabel id="demo-simple-select-label">Issue Type</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                className={classes.selectBox}
-                onChange={(event) => handleChange(event)}
-              >
-                {props.daIssueList !== null &&
-                  props.daIssueList.map((value, index) => {
-                    if (valueSelected === value) {
-                      return (
-                        <MenuItem value={value.id} key={index} selected={true}>
-                          {value.code}
-                        </MenuItem>
-                      );
-                    } else {
-                      return (
-                        <MenuItem value={value.id} key={index}>
-                          {value.code}
-                        </MenuItem>
-                      );
-                    }
-                  })}
-              </Select>
-              <TextField
-                id="outlined-textarea"
-                placeholder="Add note here"
-                multiline
-                rows={4}
-                variant="outlined"
-                size="small"
-                value={issueDesc}
-                fullWidth
-                className={classes.textField}
-                //onChange={(event) => setIssueDesc(event.target.value)}
-                onChange={textFieldChange}
-              />
+              {props.daIssueList !== null && (
+                <>
+                  <InputLabel id="demo-simple-select-label">
+                    Issue Type
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    className={classes.selectBox}
+                    onChange={(event) => handleChange(event)}
+                  >
+                    {props.daIssueList.map((value, index) => {
+                      if (valueSelected === value) {
+                        return (
+                          <MenuItem
+                            value={value.id}
+                            key={index}
+                            selected={true}
+                          >
+                            {value.code}
+                          </MenuItem>
+                        );
+                      } else {
+                        return (
+                          <MenuItem value={value.id} key={index}>
+                            {value.code}
+                          </MenuItem>
+                        );
+                      }
+                    })}
+                  </Select>
+                  <TextField
+                    id="outlined-textarea"
+                    placeholder="Add note here"
+                    multiline
+                    rows={4}
+                    variant="outlined"
+                    size="small"
+                    value={issueDesc}
+                    fullWidth
+                    className={classes.textField}
+                    //onChange={(event) => setIssueDesc(event.target.value)}
+                    onChange={textFieldChange}
+                  />
+                </>
+              )}
+              {props.daIssueList === null && (
+                <Alert severity="error">
+                  {"Server Error. Contact Tech. Team for support."}
+                </Alert>
+              )}
             </>
           )}
           {props.fetchDaIssueListFailure && (
@@ -641,6 +655,9 @@ const OrderInfoComponent = (props) => {
       {props.submitIssueSuccess && (
         <ErrorMsg show={true} message={props.successMsg} type="success" />
       )}
+      {props.submitIssueFailed && (
+        <ErrorMsg show={true} message={props.errorMsg} type="error" />
+      )}
       {props.createNotesSuccess && (
         <ErrorMsg show={true} message={props.successMsg} type="success" />
       )}
@@ -679,6 +696,8 @@ OrderInfoComponent.propTypes = {
   fetchIssueTypesSuccess: PropTypes.bool,
   fetchIssueTypesFailed: PropTypes.bool,
   errorMsgIssueTypes: PropTypes.string,
+  submitIssueFailed: PropTypes.bool,
+  errorDAList: PropTypes.string,
 };
 
 export { OrderInfoComponent };
