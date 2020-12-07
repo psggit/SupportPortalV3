@@ -60,10 +60,10 @@ const MapComponent = (props) => {
   const [center, setCenter] = useState(null);
 
   const mapRef = useRef(null);
-  const [positionAgent] = useState({
+  const positionAgent = {
     lat: parseFloat(gpsAgent[0]),
     lng: parseFloat(gpsAgent[1]),
-  });
+  };
   const [positionConsumer, setCenterConsumer] = useState({
     lat: parseFloat(gpsConsumer[0]),
     lng: parseFloat(gpsConsumer[1]),
@@ -238,7 +238,7 @@ const MapComponent = (props) => {
           <Marker
             position={positionAgent}
             icon={markerIconDA}
-            title={"DeliveryAgent"}
+            title={"Delivery Agent"}
           />
           <Marker
             position={positionConsumer}
