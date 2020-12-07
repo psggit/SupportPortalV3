@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiIconButton-root.disabled": {
       cursor: "not-allowed",
     },
+    fontFamily: "Open Sans",
   },
   assignBtnDiv: {
     textAlign: "center",
@@ -83,27 +84,32 @@ const useStyles = makeStyles((theme) => ({
     color: "#0086AD",
     cursor: "pointer",
     textDecoration: "underline",
+    fontFamily: "Open Sans",
   },
   subtitle: {
     fontSize: 14,
     color: "#606060",
     wordBreak: "break-word",
+    fontFamily: "Open Sans",
   },
   subtitle1: {
     fontSize: 16,
     color: "#606060",
     wordBreak: "break-word",
     fontWeight: 600,
+    fontFamily: "Open Sans",
   },
   dateStyle: {
     fontSize: 14,
     color: "#696969",
     marginLeft: 10,
+    fontFamily: "Open Sans",
   },
   datePlacement: {
     fontSize: 12,
     color: "#696969",
     textAlign: "right",
+    fontFamily: "Open Sans",
   },
   buttonStyke: {
     fontSize: 14,
@@ -143,6 +149,7 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     marginLeft: "16px",
     minWidth: 120,
+    fontFamily: "Open Sans",
   },
   btn: {
     width: "100%",
@@ -325,9 +332,7 @@ const RenderIssues = (props) => {
                     color="primary"
                     className={classes.buttonStyle}
                     onClick={(e) => handleAssignIssue(e, issue)}
-                    disabled={
-                      !issue.to_show_resolve || props.assignIssueInProgress
-                    }
+                    disabled={issue.is_resolved}
                   >
                     ASSIGN TO
                   </Button>
@@ -337,14 +342,12 @@ const RenderIssues = (props) => {
                     edge="end"
                     aria-label="delete"
                     onClick={(e) => handleResolveIssue(e, issue)}
-                    disabled={
-                      !issue.to_show_resolve || props.assignIssueInProgress
-                    }
+                    disabled={issue.is_resolved}
                     //resolveIconDisabled
                     startIcon={
                       <img
                         src={
-                          !issue.to_show_resolve || props.assignIssueInProgress
+                          issue.is_resolved || props.assignIssueInProgress
                             ? resolveIconDisabled
                             : resolveIcon
                         }
@@ -501,7 +504,7 @@ const IssuesComponent = (props) => {
     const payload = {
       limit: parseInt(currentPage),
       offset: activePage * pageLimit,
-      is_resolved: selectedStatus === "resolved" ? false : true,
+      is_resolved: selectedStatus === "resolved" ? true : false,
     };
     props.fetchIssueList(payload);
   }, [pageLimit, activePage]);
@@ -553,7 +556,7 @@ const IssuesComponent = (props) => {
     const payload = {
       limit: parseInt(currentPage),
       offset: activePage * pageLimit,
-      is_resolved: status === "resolved" ? false : true,
+      is_resolved: status === "resolved" ? true : false,
     };
     props.fetchIssueList(payload);
     const queryParamsObj = {
