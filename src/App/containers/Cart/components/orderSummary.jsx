@@ -131,6 +131,7 @@ const OrderSummary = (props) => {
   };
 
   // console.log("Order summary props", props.cartSummary);
+  console.log("hello", orderInfo.hipcoin_details.earned);
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -181,6 +182,22 @@ const OrderSummary = (props) => {
           title="Cart Total"
           value={orderInfo.original_cart_total}
         />
+        <OrderSummaryItem
+          title="Hipcoins Redeemed"
+          value={orderInfo.hipcoin_details.redeemed}
+        />
+        {/* {orderInfo.hipcoin_details.earned.length > 0 && (
+          <>
+            <OrderSummaryItem
+              title="Hipcoins Earned"
+              value={orderInfo.hipcoin_details.earned.value}
+            />
+            <OrderSummaryItem
+              title="Will Expire on:"
+              value={orderInfo.hipcoin_details.earned.expiry_at}
+            />
+          </>
+        )} */}
         <OrderSummaryItem
           title="Additional Charges:"
           value={orderInfo.total_additional_fee}
