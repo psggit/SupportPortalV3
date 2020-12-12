@@ -1,7 +1,6 @@
 import { apiUrl } from "./config";
 
 const triggerEmailAPI = (reqBody, process, onSuccess, onError) => {
-  console.log("req payload", reqBody)
   const URL = ` https://${apiUrl}/supportman/api/1/loyalty_points/trigger_email/${reqBody.consumerId}`;
   const headers = {
     // eslint-disable-next-line prettier/prettier

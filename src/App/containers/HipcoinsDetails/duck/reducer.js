@@ -11,7 +11,7 @@ const initialState = {
   triggerEmailFailed: false,
   triggerEmailInProgress: false,
   errorMsg: "",
-  successMsg: ""
+  successMsg: "",
 };
 
 const hipcoinsDetailsReducer = createReducer(initialState, {
@@ -29,7 +29,6 @@ const hipcoinsDetailsReducer = createReducer(initialState, {
     errorMsg: setErrorMessage(error),
   }),
   [triggerEmailSuccess]: (state, data) => {
-    console.log("success", data.payload)
     return {
       ...state,
       triggerEmailInProgress: false,
