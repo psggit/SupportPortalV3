@@ -3,7 +3,6 @@ import {
   fetchLoyalityPointsSuccess,
   fetchLoyalityPointsFailed,
   fetchLoyalityPointsInProgress,
-  resetDefaultState,
 } from "./action";
 import { setErrorMessage } from "../../../utils/errorMessages";
 
@@ -30,7 +29,6 @@ const hipcoinsReducer = createReducer(initialState, {
     errorMsg: setErrorMessage(error),
   }),
   [fetchLoyalityPointsSuccess]: (state, data) => {
-    console.log("success", data.payload)
     return {
       ...state,
       fetchLoyalityPointsInProgress: false,
@@ -38,13 +36,6 @@ const hipcoinsReducer = createReducer(initialState, {
       fetchLoyalityPointsSuccess: true,
       loyalityPoints: data.payload,
     };
-  },
-  [resetDefaultState]: (state) => {
-    console.log("reset")
-    return {
-      ...state,
-      initialState
-    }
   },
 });
 

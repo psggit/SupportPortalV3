@@ -130,11 +130,13 @@ export default function CustomCard(props) {
                   classes={{ root: classes.ListItemTextLabel }}
                 />
 
-                {(keysToRender[index] === "customer_dob" ||
-                  keysToRender[index] === "created_at" ||
-                  keysToRender[index] === "customer_sign_up_date" ||
-                  keysToRender[index] ===
-                    "delivery_service_provider_accepted_time") && (
+                {
+                // (keysToRender[index] === "customer_dob" ||
+                //   keysToRender[index] === "created_at" ||
+                //   keysToRender[index] === "customer_sign_up_date" ||
+                //   keysToRender[index] ===
+                //     "delivery_service_provider_accepted_time") && 
+                    
                   <ListItemText
                     primary={
                       Date.parse(item[keysToRender[index]]) > 0
@@ -146,8 +148,8 @@ export default function CustomCard(props) {
                     className={classes.ListItemTextRoot}
                     classes={{ root: classes.ListItemTextLabel }}
                   />
-                )}
-                {keysToRender[index] !== "customer_dob" &&
+                }
+                {/* {keysToRender[index] !== "customer_dob" &&
                   keysToRender[index] !== "created_at" &&
                   keysToRender[index] !== "customer_sign_up_date" &&
                   keysToRender[index] !==
@@ -161,7 +163,7 @@ export default function CustomCard(props) {
                       className={classes.ListItemTextRoot}
                       classes={{ root: classes.ListItemTextLabel }}
                     />
-                  )}
+                  )} */}
               </ListItem>
             );
           })}
