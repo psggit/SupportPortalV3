@@ -18,6 +18,7 @@ import { CartItem } from "./cartItem";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import uuid from "react-uuid";
+import Moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -199,17 +200,30 @@ const OrderSummary = (props) => {
             title="Hipcoins Redeemed"
             value={orderInfo.hipcoin_details.redeemed}
           />
-          {orderInfo.hipcoin_details.earned != null &&
-            orderInfo.hipcoin_details.earned.map((value) => {
-              return (
-                <OrderSummaryItem
-                  title={"Earned"}
-                  type="button"
-                  value={value.value}
-                  key={uuid()}
-                />
-              );
-            })}
+          {orderInfo.hipcoin_details.earned != null && (
+            <OrderSummaryItem title="Earned" type="button">
+              {orderInfo.hipcoin_details.earned.map((value) => {
+                return (
+                  <>
+                    <OrderSummaryItem
+                      title={"Type"}
+                      value={value.type}
+                      key={uuid()}
+                    />
+                    <OrderSummaryItem title="Value" value={value.value} />
+                    <OrderSummaryItem
+                      title="Expiry at"
+                      value={
+                        value.expiry_at
+                          ? Moment(value.expiry_at).format("D MMM hh:mm A")
+                          : "-"
+                      }
+                    />
+                  </>
+                );
+              })}
+            </OrderSummaryItem>
+          )}
         </OrderSummaryItem>
         <OrderSummaryItem
           title="Additional Charges:"
