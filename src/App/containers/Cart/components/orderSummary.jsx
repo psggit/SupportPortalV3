@@ -182,11 +182,7 @@ const OrderSummary = (props) => {
           title="Cart Total"
           value={orderInfo.original_cart_total}
         />
-        <OrderSummaryItem
-          title="Hipcoins Redeemed"
-          value={orderInfo.hipcoin_details.redeemed}
-        />
-        {/* {orderInfo.hipcoin_details.earned.length > 0 && (
+        {/* {orderInfo.hipcoin_details.earned != null && (
           <>
             <OrderSummaryItem
               title="Hipcoins Earned"
@@ -198,6 +194,23 @@ const OrderSummary = (props) => {
             />
           </>
         )} */}
+        <OrderSummaryItem title="Hipcoin Details" type="button">
+          <OrderSummaryItem
+            title="Hipcoins Redeemed"
+            value={orderInfo.hipcoin_details.redeemed}
+          />
+          {orderInfo.hipcoin_details.earned != null &&
+            orderInfo.hipcoin_details.earned.map((value) => {
+              return (
+                <OrderSummaryItem
+                  title={"Earned"}
+                  type="button"
+                  value={value.value}
+                  key={uuid()}
+                />
+              );
+            })}
+        </OrderSummaryItem>
         <OrderSummaryItem
           title="Additional Charges:"
           value={orderInfo.total_additional_fee}

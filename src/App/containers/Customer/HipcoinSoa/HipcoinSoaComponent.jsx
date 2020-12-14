@@ -58,8 +58,7 @@ function HipcoinSoa(props) {
 
   useEffect(() => {
     const payload = {
-      // consumer_id: history.location.state.customerId,
-      consumer_id: "515879",
+      consumer_id: history.location.state.customerId,
       limit: rowsPerPage,
       offset: page * rowsPerPage,
     };
@@ -110,7 +109,7 @@ function HipcoinSoa(props) {
       <TopBar />
       <FullWidthTabs
         value={
-          localStorage.getItem("x-hasura-role") !== "support_person" ? 2 : 1
+          localStorage.getItem("x-hasura-role") !== "support_person" ? 3 : 2
         }
         orderId={history.location.state.orderId}
         customerId={history.location.state.customerId}

@@ -127,7 +127,7 @@ function Rewards(props) {
       <TopBar />
       <div className={classes.formContainer}>
         <FullWidthTabs
-          value={3}
+          value={4}
           orderId={orderId}
           customerId={customerId}
           customerNumber={customerNumber}
