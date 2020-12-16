@@ -48,7 +48,6 @@ function App(props) {
     }
     if (props.authenticateSuccess) {
       setIsLoggedIn(true);
-      // console.log("authenticateSuccess", props.authData);
       createSession(props.authData);
     }
     const interval = setInterval(() => {
