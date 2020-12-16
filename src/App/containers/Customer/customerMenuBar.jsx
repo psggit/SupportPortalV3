@@ -51,6 +51,18 @@ export default function FullWidthTabs(props) {
     });
   };
 
+  const handleHipcoinSoaChange = () => {
+    history.push({
+      pathname: "/hipcoin-soa",
+      state: {
+        customerId: props.customerId,
+        orderId: props.orderId,
+        customerNumber: props.customerNumber,
+        orderInfos: props.orderInfos,
+      },
+    });
+  };
+
   const handleRewardChange = () => {
     history.push({
       pathname: "/rewards",
@@ -134,6 +146,11 @@ export default function FullWidthTabs(props) {
                 label="Gift SOA"
                 key="giftBtn"
                 onClick={handleGiftSoaChange}
+              />
+              <Tab
+                label="HipCoin SOA"
+                key="hipcoinSoaBtn"
+                onClick={handleHipcoinSoaChange}
               />
               {localStorage.getItem("x-hasura-role") !== "support_person" && (
                 <Tab

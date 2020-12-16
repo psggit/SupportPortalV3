@@ -18,6 +18,7 @@ import { CartItem } from "./cartItem";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import uuid from "react-uuid";
+import Moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -131,6 +132,7 @@ const OrderSummary = (props) => {
   };
 
   // console.log("Order summary props", props.cartSummary);
+  console.log("hello", orderInfo.hipcoin_details.earned);
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -181,6 +183,48 @@ const OrderSummary = (props) => {
           title="Cart Total"
           value={orderInfo.original_cart_total}
         />
+        {/* {orderInfo.hipcoin_details.earned != null && (
+          <>
+            <OrderSummaryItem
+              title="Hipcoins Earned"
+              value={orderInfo.hipcoin_details.earned.value}
+            />
+            <OrderSummaryItem
+              title="Will Expire on:"
+              value={orderInfo.hipcoin_details.earned.expiry_at}
+            />
+          </>
+        )} */}
+        <OrderSummaryItem title="Hipcoin Details" type="button">
+          <OrderSummaryItem
+            title="Hipcoins Redeemed"
+            value={orderInfo.hipcoin_details.redeemed}
+          />
+          {orderInfo.hipcoin_details.earned != null && (
+            <OrderSummaryItem title="Earned" type="button">
+              {orderInfo.hipcoin_details.earned.map((value) => {
+                return (
+                  <>
+                    <OrderSummaryItem
+                      title={"Type"}
+                      value={value.type}
+                      key={uuid()}
+                    />
+                    <OrderSummaryItem title="Value" value={value.value} />
+                    <OrderSummaryItem
+                      title="Expiry at"
+                      value={
+                        value.expiry_at
+                          ? Moment(value.expiry_at).format("D MMM hh:mm A")
+                          : "-"
+                      }
+                    />
+                  </>
+                );
+              })}
+            </OrderSummaryItem>
+          )}
+        </OrderSummaryItem>
         <OrderSummaryItem
           title="Additional Charges:"
           value={orderInfo.total_additional_fee}
