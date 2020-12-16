@@ -28,7 +28,6 @@ import { DaNotesContainer } from "./containers/DeliveryAgentNotes";
 import { OrderTrackingContainer } from "./containers/OrderTracking";
 import { OrderModificationContainer } from "./containers/OrderModification";
 import { createSession } from "./utils";
-import { markActivityAPI } from "./utils/markActivityAPI";
 
 function App(props) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -46,8 +45,6 @@ function App(props) {
 
   const markLastActivity = () => {
     props.markActivity();
-    // setTimeInterval(parseInt(response.interval) * 1000),
-    // console.log(response.count),
   };
 
   useEffect(() => {
@@ -58,7 +55,9 @@ function App(props) {
   }, [timeInterval]);
 
   function pollRequest() {
+    console.log("from poll request");
     if (!document.hidden && isLoggedIn) {
+      console.log("poll", !document.hidden && isLoggedIn)
       markLastActivity();
     }
   }
