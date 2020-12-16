@@ -136,7 +136,7 @@ const orderInfoReducer = createReducer(initialValue, {
       fetchIssueTypesProgress: false,
       fetchIssueTypesFailed: true,
       fetchIssueTypesSuccess: false,
-      errorMsg: setErrorMessage(data),
+      errorMsgIssueTypes: setErrorMessage(data),
     };
   },
   [fetchIssueTypesSuccess]: (state, data) => {

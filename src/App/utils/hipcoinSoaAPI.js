@@ -1,7 +1,7 @@
 import { apiUrl } from "./config";
 
-const daListAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://${apiUrl}/supportman/api/1/deliveryagent/list/${reqBody.order_id}`;
+const hipcoinSoaAPI = (reqBody, process, onSuccess, onError) => {
+  const URL = `https://${apiUrl}/supportman/api/1/soa/hipcoin`;
   const headers = {
     // eslint-disable-next-line prettier/prettier
     "Accept": "application/json",
@@ -11,9 +11,10 @@ const daListAPI = (reqBody, process, onSuccess, onError) => {
     "hasura-id": `${localStorage.getItem("hasura-id")}`,
   };
   fetch(URL, {
-    method: "GET",
+    method: "POST",
     headers: headers,
     credentials: "include",
+    body: JSON.stringify(reqBody),
   })
     .then((res) => process(res))
     .then((data) => onSuccess(data))
@@ -24,4 +25,4 @@ const daListAPI = (reqBody, process, onSuccess, onError) => {
     });
 };
 
-export { daListAPI };
+export { hipcoinSoaAPI };

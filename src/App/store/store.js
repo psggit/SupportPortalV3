@@ -20,6 +20,7 @@ import { logoutReducer } from "../containers/Logout/duck";
 import { acitivityListReducer } from "../containers/ActivityList";
 import { orderTrackingReducer } from "../containers/OrderTracking";
 import { orderModificationReducer } from "../containers/OrderModification";
+import { hipcoinSOAReducer } from "../containers/Customer/HipcoinSoa/duck";
 
 const store = configureStore({
   reducer: combineReducers({
@@ -32,6 +33,7 @@ const store = configureStore({
     notes: retailerNotesListReducer,
     soa: customerSOAReducer,
     giftSoa: customerGiftSOAReducer,
+    hipcoinSoa: hipcoinSOAReducer,
     rewards: rewardsReducer,
     update: customerUpdateReducer,
     listRetailer: listRetailerReducer,

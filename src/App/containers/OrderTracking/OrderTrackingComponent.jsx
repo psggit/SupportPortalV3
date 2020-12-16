@@ -54,16 +54,16 @@ const useStyles = makeStyles(() => ({
 
 const MapComponent = (props) => {
   const classes = useStyles();
-  const gpsAgent = props.trackData.agent_gps.split(",");
+  const gpsAgent = props.agentDetails.split(",");
   const gpsConsumer = props.trackData.consumer_gps.split(",");
   const gpsRetailer = props.trackData.retailer_gps.split(",");
   const [center, setCenter] = useState(null);
 
   const mapRef = useRef(null);
-  const [positionAgent] = useState({
+  const positionAgent = {
     lat: parseFloat(gpsAgent[0]),
     lng: parseFloat(gpsAgent[1]),
-  });
+  };
   const [positionConsumer, setCenterConsumer] = useState({
     lat: parseFloat(gpsConsumer[0]),
     lng: parseFloat(gpsConsumer[1]),
@@ -179,7 +179,7 @@ const MapComponent = (props) => {
   };
 
   const handleBoundsChanged = () => {
-    console.log("hhh");
+    // console.log("hhh");
     const mapCenter = mapRef.current.getCenter(); //get map center
     setCenter(mapCenter);
   };
@@ -238,7 +238,7 @@ const MapComponent = (props) => {
           <Marker
             position={positionAgent}
             icon={markerIconDA}
-            title={"DeliveryAgent"}
+            title={"Delivery Agent"}
           />
           <Marker
             position={positionConsumer}
@@ -266,6 +266,7 @@ const MapComponent = (props) => {
 
 MapComponent.propTypes = {
   trackData: PropTypes.any,
+  agentDetails: PropTypes.any,
 };
 
 function OrderTrackingComponent(props) {
@@ -289,6 +290,7 @@ function OrderTrackingComponent(props) {
   const [show, setShow] = useState(false);
   const [showError, setShowError] = useState(false);
   const [details, setDetails] = useState("");
+  const [agentDetails, setAgentDetails] = useState(null);
   let message = "";
 
   useEffect(() => {
@@ -304,6 +306,8 @@ function OrderTrackingComponent(props) {
           message = props.trackData.message;
         }
         setShowError(true);
+      } else {
+        setAgentDetails(props.trackData.agent_gps);
       }
     }
   }, [props.fetchLiveDataSuccess]);
@@ -440,7 +444,7 @@ function OrderTrackingComponent(props) {
               <Alert severity="info" show={true}>
                 Last Updated at:
                 {props.trackData.last_updated_at
-                  ? Moment(props.trackData.last_updated_at.slice(0,35)).format(
+                  ? Moment(props.trackData.last_updated_at.slice(0, 35)).format(
                       "DD/MM/YYYY hh:mm A"
                     )
                   : "-"}
@@ -451,7 +455,7 @@ function OrderTrackingComponent(props) {
         {show && (
           <Grid item xs={12}>
             <Box mb={10}>
-              <MapComponent {...props} />
+              <MapComponent {...props} agentDetails={agentDetails}/>
             </Box>
           </Grid>
         )}

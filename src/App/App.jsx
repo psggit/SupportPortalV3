@@ -30,6 +30,7 @@ import { DaNotesContainer } from "./containers/DeliveryAgentNotes";
 import { OrderTrackingContainer } from "./containers/OrderTracking";
 import { OrderModificationContainer } from "./containers/OrderModification";
 import { createSession } from "./utils";
+import { HipcoinSoaContainer } from "./containers/Customer/HipcoinSoa";
 
 function App(props) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -85,6 +86,7 @@ function App(props) {
               />
               <Route path="/soa" component={CustomerSoaContainer} />
               <Route path="/gift-soa" component={CustomerGiftSoaContainer} />
+              <Route path="/hipcoin-soa" component={HipcoinSoaContainer} />
               <Route path="/rewards" component={RewardsContainer} />
               <Route path="/notes" component={NotesContainer} />
 
@@ -102,10 +104,10 @@ function App(props) {
                 component={OrderTrackingContainer}
               />
 
-              <Route
+              {/* <Route
                 path="/order-modification"
                 component={OrderModificationContainer}
-              />
+              /> */}
 
               <Route path="/login" component={LoginContainer} />
               <Route path="/logout" component={LogoutContainer} />

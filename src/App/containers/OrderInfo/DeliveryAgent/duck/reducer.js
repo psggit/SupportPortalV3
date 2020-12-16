@@ -29,6 +29,7 @@ const initialValue = {
   errorMsg: "",
   errorMessageReserve: "",
   errorMessageUnassign: "",
+  errorDAList: "",
   deliveryAgentList: null,
   daListSuccess: false,
   daListFail: false,
@@ -85,7 +86,7 @@ const deliveryAgentReducer = createReducer(initialValue, {
     fetchDaIssueListSuccess: false,
     fetchDaIssueListFailure: true,
     fetchDaIssueListProgress: false,
-    errorMessageUnassign: setErrorMessage(data),
+    errorDAList: setErrorMessage(data),
   }),
   [fetchDaIssueListProgress]: (state) => ({
     ...state,

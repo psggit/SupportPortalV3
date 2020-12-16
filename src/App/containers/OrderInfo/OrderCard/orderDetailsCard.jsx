@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "flex-start",
   },
   ListItemRootTitle: {
-    width: "30%",
+    width: "50%",
     fontSize: 16,
     fontWeight: "bold",
     color: "#606060",
@@ -93,7 +93,9 @@ const OrderDetailsCard = (props) => {
 
   useEffect(() => {
     if (props.cancelOrderSuccess === true) {
-      location.reload();
+      setTimeout(() => {
+        location.reload();
+      }, 1500);
     }
   }, [props.cancelOrderSuccess]);
 
@@ -103,7 +105,14 @@ const OrderDetailsCard = (props) => {
     }
   }, [props.deliverOrderSuccess]);
 
-  let { platform, customer_address, delivery_status } = {
+  let {
+    platform,
+    customer_address,
+    delivery_status,
+    delivery_rating,
+    feedback,
+    consumer_concern,
+  } = {
     ...props.order,
   };
   platform = platform === "hb" ? "Hipbar Web" : "Flipkart";
@@ -321,26 +330,94 @@ const OrderDetailsCard = (props) => {
             />
           </ListItem>
         </List>
+        <List dense disablePadding>
+          <ListItem dense disableGutters={true}>
+            <ListItemText
+              primary="Delivery Rating"
+              className={classes.ListItemRootTitle}
+              classes={{ root: classes.ListItemRootTitle }}
+            />
+            <ListItemText
+              primary={delivery_rating ? delivery_rating : "-"}
+              className={classes.ListItemTextRoot}
+              classes={{ root: classes.ListItemTextRoot }}
+            />
+          </ListItem>
+          <ListItem
+            dense
+            disableGutters={true}
+            className={classes.ListItemRoot}
+          >
+            <ListItemText
+              primary="Feedback"
+              className={classes.ListItemRootTitle}
+              classes={{ root: classes.ListItemRootTitle }}
+            />
+            <ListItemText
+              primary={feedback ? feedback : "-"}
+              className={classes.ListItemTextRoot}
+              classes={{ root: classes.ListItemTextRoot }}
+            />
+          </ListItem>
+          <ListItem
+            dense
+            disableGutters={true}
+            className={classes.ListItemRoot}
+          >
+            <ListItemText
+              primary="Consumer Concern"
+              className={classes.ListItemRootTitle}
+              classes={{ root: classes.ListItemRootTitle }}
+            />
+            <ListItemText
+              primary={consumer_concern ? consumer_concern : "-"}
+              className={classes.ListItemTextRoot}
+              classes={{ root: classes.ListItemTextRoot }}
+            />
+          </ListItem>
+        </List>
+        {/* <ListItemText
+              primary="FeedBack"
+              className={classes.ListItemRootTitle}
+              classes={{ root: classes.ListItemRootTitle }}
+            />
+            <ListItemText
+              primary={feedback}
+              className={classes.ListItemTextRoot}
+              classes={{ root: classes.ListItemTextRoot }}
+            /> */}
+        {/* <ListItemText
+              primary="Consumer Concern"
+              className={classes.ListItemRootTitle}
+              classes={{ root: classes.ListItemRootTitle }}
+            />
+            <ListItemText
+              primary={consumer_concern}
+              className={classes.ListItemTextRoot}
+              classes={{ root: classes.ListItemTextRoot }}
+            /> */}
+        {/* <ListItem
+          dense
+          disableGutters={true}
+          className={classes.ListItemRoot}
+        >
+          <ListItemText
+            primary="Delivery Rating"
+            className={classes.ListItemRootTitle}
+            classes={{ root: classes.ListItemRootTitle }}
+          />
+          <ListItemText
+            primary={delivery_rating}
+            className={classes.ListItemTextRoot}
+            classes={{ root: classes.ListItemTextRoot }}
+          />
+        </ListItem> */}
       </OrderCard>
       {props.fetchCancellationSummaryFailed && (
-        <ErrorMsg
-          show={true}
-          message={
-            props.errorMsgSummary !== ""
-              ? props.errorMsgSummary
-              : "Something went wrong"
-          }
-          type={"error"}
-        />
+        <Alert show={true} message={props.errorMsgSummary} type={"error"} />
       )}
       {props.cancelOrderFailure && (
-        <ErrorMsg
-          show={true}
-          message={
-            props.errorMsg !== "" ? props.errorMsg : "Something went wrong"
-          }
-          type={"error"}
-        />
+        <ErrorMsg show={true} message={props.errorMsg} type={"error"} />
       )}
       {props.cancelOrderSuccess && (
         <ErrorMsg
@@ -350,13 +427,7 @@ const OrderDetailsCard = (props) => {
         />
       )}
       {props.deliverOrderFailed && (
-        <ErrorMsg
-          show={true}
-          message={
-            props.errorMsg !== "" ? props.errorMsg : "Something went wrong"
-          }
-          type={"error"}
-        />
+        <ErrorMsg show={true} message={props.errorMsg} type={"error"} />
       )}
       {props.deliverOrderSuccess && (
         <ErrorMsg

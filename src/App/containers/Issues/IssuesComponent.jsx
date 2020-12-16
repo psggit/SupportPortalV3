@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiIconButton-root.disabled": {
       cursor: "not-allowed",
     },
+    fontFamily: "Open Sans",
   },
   assignBtnDiv: {
     textAlign: "center",
@@ -83,27 +84,32 @@ const useStyles = makeStyles((theme) => ({
     color: "#0086AD",
     cursor: "pointer",
     textDecoration: "underline",
+    fontFamily: "Open Sans",
   },
   subtitle: {
     fontSize: 14,
     color: "#606060",
     wordBreak: "break-word",
+    fontFamily: "Open Sans",
   },
   subtitle1: {
     fontSize: 16,
     color: "#606060",
     wordBreak: "break-word",
     fontWeight: 600,
+    fontFamily: "Open Sans",
   },
   dateStyle: {
     fontSize: 14,
     color: "#696969",
     marginLeft: 10,
+    fontFamily: "Open Sans",
   },
   datePlacement: {
     fontSize: 12,
     color: "#696969",
     textAlign: "right",
+    fontFamily: "Open Sans",
   },
   buttonStyke: {
     fontSize: 14,
@@ -143,6 +149,7 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     marginLeft: "16px",
     minWidth: 120,
+    fontFamily: "Open Sans",
   },
   btn: {
     width: "100%",
@@ -201,6 +208,8 @@ const RenderIssues = (props) => {
   }, [props.fetchSupportPersonListSuccess]);
 
   const unmountConfirmationDialog = () => {
+    setAssignIssue(false);
+    setResolveIssue(false);
     setShowDialog(false);
   };
 
@@ -233,11 +242,11 @@ const RenderIssues = (props) => {
   };
 
   const handleResolveIssue = (e, issue) => {
-    e.stopPropagation();
     setResolveIssue(true);
     setOrderId(issue.order_id);
     setIssueId(issue.id);
     mountConfirmationDialog();
+    e.stopPropagation();
   };
 
   const handleAssignIssue = (e, issue) => {
@@ -258,7 +267,7 @@ const RenderIssues = (props) => {
   };
 
   const handleAccordionChange = (event, activeId) => {
-    event.preventDefault();
+    event.stopPropagation();
     if (activeIndex !== activeId) setActiveIndex(activeId);
     else setActiveIndex("");
   };
@@ -323,9 +332,7 @@ const RenderIssues = (props) => {
                     color="primary"
                     className={classes.buttonStyle}
                     onClick={(e) => handleAssignIssue(e, issue)}
-                    disabled={
-                      !issue.to_show_resolve || props.assignIssueInProgress
-                    }
+                    disabled={issue.is_resolved}
                   >
                     ASSIGN TO
                   </Button>
@@ -335,14 +342,12 @@ const RenderIssues = (props) => {
                     edge="end"
                     aria-label="delete"
                     onClick={(e) => handleResolveIssue(e, issue)}
-                    disabled={
-                      !issue.to_show_resolve || props.assignIssueInProgress
-                    }
+                    disabled={issue.is_resolved}
                     //resolveIconDisabled
                     startIcon={
                       <img
                         src={
-                          !issue.to_show_resolve || props.assignIssueInProgress
+                          issue.is_resolved || props.assignIssueInProgress
                             ? resolveIconDisabled
                             : resolveIcon
                         }
@@ -412,6 +417,7 @@ const RenderIssues = (props) => {
                     >
                       {!props.fetchSupportPersonListInProgress &&
                         props.supportPersonList !== null &&
+                        props.supportPersonList.support_person.length > 0 &&
                         props.supportPersonList.support_person.map((item) => {
                           return (
                             <MenuItem value={item.id} key={item.id}>
@@ -419,6 +425,17 @@ const RenderIssues = (props) => {
                             </MenuItem>
                           );
                         })}
+                      {props.supportPersonList.support_person.length === 0 && (
+                        <Alert severity="error" show={true}>
+                          {"No support person available."}
+                        </Alert>
+                      )}
+                      {props.fetchSupportPersonListFailed &&
+                        props.supportPersonList.support_person.length === 0 && (
+                          <Alert severity="error" show={true}>
+                            {props.errorMsgSupportList}
+                          </Alert>
+                        )}
                     </Select>
                   </FormControl>
                 </div>
@@ -434,12 +451,18 @@ const RenderIssues = (props) => {
           type={"success"}
         />
       )}
+      {props.assignIssueFailed && (
+        <ErrorMsg show={true} message={props.errorMsgAssign} type={"error"} />
+      )}
       {props.resolveIssueSuccess && (
         <ErrorMsg
           show={true}
           message={"Successfully resolved the issue"}
           type={"success"}
         />
+      )}
+      {props.resolveIssueFailed && (
+        <ErrorMsg show={true} message={props.errorMsgResolve} type={"error"} />
       )}
     </>
   );
@@ -459,6 +482,12 @@ RenderIssues.propTypes = {
   assignIssueInProgress: PropTypes.bool,
   assignIssueSuccess: PropTypes.bool,
   resolveIssueSuccess: PropTypes.bool,
+  assignIssueFailed: PropTypes.bool,
+  resolveIssueFailed: PropTypes.bool,
+  errorMsgResolve: PropTypes.string,
+  errorMsgAssign: PropTypes.string,
+  fetchSupportPersonListFailed: PropTypes.bool,
+  errorMsgSupportList: PropTypes.string,
 };
 
 const IssuesComponent = (props) => {
@@ -475,7 +504,7 @@ const IssuesComponent = (props) => {
     const payload = {
       limit: parseInt(currentPage),
       offset: activePage * pageLimit,
-      is_resolved: selectedStatus === "resolved" ? false : true,
+      is_resolved: selectedStatus === "resolved" ? true : false,
     };
     props.fetchIssueList(payload);
   }, [pageLimit, activePage]);
@@ -527,7 +556,7 @@ const IssuesComponent = (props) => {
     const payload = {
       limit: parseInt(currentPage),
       offset: activePage * pageLimit,
-      is_resolved: status === "resolved" ? false : true,
+      is_resolved: status === "resolved" ? true : false,
     };
     props.fetchIssueList(payload);
     const queryParamsObj = {
@@ -634,7 +663,7 @@ const IssuesComponent = (props) => {
               {props.fetchIssuesFailed && (
                 <>
                   <Alert severity="error" show={true}>
-                    Unable to fetch issues. Please try again!
+                    {props.errorMsg}
                   </Alert>
                 </>
               )}
@@ -673,7 +702,12 @@ IssuesComponent.propTypes = {
   fetchIssueList: PropTypes.func,
   assignIssueSuccess: PropTypes.bool,
   resolveIssueSuccess: PropTypes.bool,
+  assignIssueFailed: PropTypes.bool,
   issueList: PropTypes.any,
+  errorMsg: PropTypes.any,
+  resolveIssueFailed: PropTypes.bool,
+  fetchSupportPersonListFailed: PropTypes.bool,
+  errorMsgSupportList: PropTypes.any,
 };
 
 export { IssuesComponent };
