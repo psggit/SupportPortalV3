@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { validateAuth } from "./duck/authOperation";
+import { validateAuth, markActivity } from "./duck/authOperation";
 import { hot } from "react-hot-loader/root";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { LoginContainer } from "./containers/Login";
@@ -28,9 +28,11 @@ import { DaNotesContainer } from "./containers/DeliveryAgentNotes";
 import { OrderTrackingContainer } from "./containers/OrderTracking";
 import { OrderModificationContainer } from "./containers/OrderModification";
 import { createSession } from "./utils";
+import { markActivityAPI } from "./utils/markActivityAPI";
 
 function App(props) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [timeInterval, setTimeInterval] = useState(5000);
   useEffect(() => {
     if (!isLoggedIn) {
       props.validateAuth();
@@ -41,6 +43,25 @@ function App(props) {
       createSession(props.authData);
     }
   }, [props.authenticateSuccess]);
+
+  const markLastActivity = () => {
+    props.markActivity();
+    // setTimeInterval(parseInt(response.interval) * 1000),
+    // console.log(response.count),
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      pollRequest();
+    }, timeInterval);
+    return () => clearInterval(interval);
+  }, [timeInterval]);
+
+  function pollRequest() {
+    if (!document.hidden && isLoggedIn) {
+      markLastActivity();
+    }
+  }
 
   if (props.authenticateProgress) {
     return (
@@ -145,6 +166,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     validateAuth: () => dispatch(validateAuth()),
+    markActivity: () => dispatch(markActivity()),
   };
 };
 
@@ -154,6 +176,7 @@ App.propTypes = {
   authenticateFailed: PropTypes.bool,
   authenticateSuccess: PropTypes.bool,
   validateAuth: PropTypes.func,
+  markActivity: PropTypes.func,
   authData: PropTypes.any,
 };
 
