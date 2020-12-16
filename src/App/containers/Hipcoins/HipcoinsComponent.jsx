@@ -95,6 +95,10 @@ const useStyles = makeStyles((theme) => ({
   primaryBtn: {
     width: "100%",
   },
+  btn2: {
+    textDecoration: "underline",
+    color: "inherit",
+  },
 }));
 
 const rowsPerPageOptions = [5, 10, 25];
@@ -107,7 +111,7 @@ const filterOptions = [
 function HipcoinsComponent(props) {
   const classes = useStyles();
   const [rowsPerPage, setRowsPerPage] = useState(25);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [mountFilterDialog, setMountFilterDialog] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState("pending");
   const [filterBy, setFilterBy] = useState("");
@@ -124,7 +128,7 @@ function HipcoinsComponent(props) {
       filter_by: filterBy ? filterBy : selectedStatus,
       filter_value: filterValue,
       limit: rowsPerPage,
-      offset: (page - 1) * parseInt(rowsPerPage),
+      offset: page * parseInt(rowsPerPage),
     };
     props.fetchLoyalityPointsList(payload);
   };
@@ -143,8 +147,13 @@ function HipcoinsComponent(props) {
     resetFilter();
   };
 
-  const handleRowClick = (data) => {
-    history.push(`/hipcoins/order-details/${data.order_id}`);
+  const handleRowClick = (data, orderData) => {
+    history.push({
+      pathname: `/hipcoins/order-details/${data.order_id}`,
+      state: {
+        orderData: orderData,
+      },
+    });
   };
 
   const mountFilter = () => {
@@ -230,12 +239,16 @@ function HipcoinsComponent(props) {
               props.loyalityPoints &&
               props.loyalityPoints.order_details.map((data, index) => {
                 return (
-                  <TableRow
-                    key={index}
-                    className={classes.tableRow}
-                    onClick={(e) => handleRowClick(data)}
-                  >
-                    <TableCell align="center">{data.order_id}</TableCell>
+                  <TableRow key={index} className={classes.tableRow}>
+                    <TableCell align="center">
+                      <Button
+                        color="primary"
+                        className={classes.btn2}
+                        onClick={() => handleRowClick(data, props.loyalityPoints.order_details)}
+                      >
+                        {data.order_id}
+                      </Button>
+                    </TableCell>
                     <TableCell align="center">{data.consumer_id}</TableCell>
                     <TableCell align="center">{data.partner}</TableCell>
                     <TableCell align="center">

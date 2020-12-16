@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import DetailsCard from "../../components/orderInfoCard";
 import { getListOfDataObjects } from "../../utils/helpers";
@@ -19,11 +19,16 @@ const useStyles = makeStyles((theme) => ({
   },
   row2: {
     padding: "16px",
+    maxWidth: "80%",
+    margin: "0 auto",
   },
   root: {
     cursor: "pointer",
     alignItems: "center",
     paddingBottom: "5px",
+  },
+  header: {
+    minHeight: 50,
   },
   boxContainer: {
     padding: 40,
@@ -34,7 +39,15 @@ function HipcoinsDetailsComponent(props) {
   const classes = useStyles();
   const history = useHistory();
 
-  const details = props.loyalityPoints.order_details.filter(
+  const order_details =
+    props.loyalityPoints !== null
+      ? props.loyalityPoints.order_details
+      : history.location.state.orderData;
+  const [orderData, setOrderData] = useState(order_details);
+  // console.log("props.loyalityPoints.order_details");
+  // console.log(props.loyalityPoints.order_details, history.location.state, orderData);
+
+  const details = orderData.filter(
     (item) => item.order_id === props.match.params.orderId
   );
 
@@ -138,7 +151,7 @@ function HipcoinsDetailsComponent(props) {
       <TopBar />
       <div className={classes.formContainer}>
         <Paper className={classes.root}>
-          <Grid alignItems="center" container>
+          <Grid alignItems="center" container className={classes.header}>
             <Grid item xs={1}>
               <Button
                 color="primary"
