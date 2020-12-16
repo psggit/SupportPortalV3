@@ -41,26 +41,27 @@ function App(props) {
       // console.log("authenticateSuccess", props.authData);
       createSession(props.authData);
     }
+    markLastActivity();
   }, [props.authenticateSuccess]);
 
   const markLastActivity = () => {
     props.markActivity();
   };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      pollRequest();
-    }, timeInterval);
-    return () => clearInterval(interval);
-  }, [timeInterval]);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     pollRequest();
+  //   }, timeInterval);
+  //   return () => clearInterval(interval);
+  // }, [timeInterval]);
 
-  function pollRequest() {
-    console.log("from poll request");
-    if (!document.hidden && isLoggedIn) {
-      console.log("poll", !document.hidden && isLoggedIn)
-      markLastActivity();
-    }
-  }
+  // function pollRequest() {
+  //   console.log("from poll request");
+  //   if (!document.hidden && isLoggedIn) {
+  //     console.log("isLoggedIn", isLoggedIn);
+  //     markLastActivity();
+  //   }
+  // }
 
   if (props.authenticateProgress) {
     return (
@@ -153,12 +154,14 @@ function App(props) {
 }
 
 const mapStateToProps = (state) => {
+  console.log("[mark]", state.login.markActivityData);
   return {
     isAuthenticated: state.login.isAuthenticated,
     authenticateProgress: state.login.authenticateProgress,
     authenticateSuccess: state.login.authenticateSuccess,
     authenticateFailed: state.login.authenticateFailed,
     authData: state.login.authData,
+    markActivityData: state.login.markActivityData,
   };
 };
 

@@ -28,6 +28,7 @@ const initialValue = {
   xHasuraRole: null,
   hasuraId: null,
   authData: null,
+  markActivityData: null,
 };
 
 const loginReducer = createReducer(initialValue, {
@@ -87,11 +88,12 @@ const loginReducer = createReducer(initialValue, {
     markActivityFailed: true,
     markActivitySuccess: false,
   }),
-  [markActivitySuccess]: (state) => ({
+  [markActivitySuccess]: (state, data) => ({
     ...state,
     markActivityProgress: false,
     markActivityFailed: false,
     markActivitySuccess: true,
+    markActivityData: data.payload,
   }),
 });
 
