@@ -30,8 +30,18 @@ import { OrderModificationContainer } from "./containers/OrderModification";
 import { createSession } from "./utils";
 
 function App(props) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("hasura-id") ? true : false
+  );
   const [timeInterval, setTimeInterval] = useState(5000);
+
+  const markLastActivity = () => {
+    props.markActivity();
+    if (props.markActivitySuccess) {
+      setTimeInterval(parseInt(props.markActivityData.interval) * 1000);
+    }
+  };
   useEffect(() => {
     if (!isLoggedIn) {
       props.validateAuth();
@@ -41,27 +51,17 @@ function App(props) {
       // console.log("authenticateSuccess", props.authData);
       createSession(props.authData);
     }
-    markLastActivity();
-  }, [props.authenticateSuccess]);
+    const interval = setInterval(() => {
+      pollRequest();
+    }, timeInterval);
+    return () => clearInterval(interval);
+  }, [props.authenticateSuccess, timeInterval]);
 
-  const markLastActivity = () => {
-    props.markActivity();
-  };
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     pollRequest();
-  //   }, timeInterval);
-  //   return () => clearInterval(interval);
-  // }, [timeInterval]);
-
-  // function pollRequest() {
-  //   console.log("from poll request");
-  //   if (!document.hidden && isLoggedIn) {
-  //     console.log("isLoggedIn", isLoggedIn);
-  //     markLastActivity();
-  //   }
-  // }
+  function pollRequest() {
+    if (!document.hidden && isLoggedIn) {
+      markLastActivity();
+    }
+  }
 
   if (props.authenticateProgress) {
     return (
@@ -70,7 +70,7 @@ function App(props) {
       </ThemeProvider>
     );
   }
-
+  console.log("user", isLoggedIn);
   // console.log("success ", success);
   return (
     <div>
@@ -83,7 +83,11 @@ function App(props) {
                 path="/order-info/:orderId"
                 component={OrderInfoContainer}
               />
-              <Route path="/dashboard" component={DashboardContainer} />
+              <Route
+                path="/dashboard"
+                component={DashboardContainer}
+                //timer={timeInterval}
+              />
               <Route
                 path="/cart-modify"
                 component={CartModificationContainer}
@@ -154,13 +158,15 @@ function App(props) {
 }
 
 const mapStateToProps = (state) => {
-  console.log("[mark]", state.login.markActivityData);
   return {
     isAuthenticated: state.login.isAuthenticated,
     authenticateProgress: state.login.authenticateProgress,
     authenticateSuccess: state.login.authenticateSuccess,
     authenticateFailed: state.login.authenticateFailed,
     authData: state.login.authData,
+    markActivitySuccess: state.login.markActivitySuccess,
+    markActivityFailed: state.login.markActivityFailed,
+    markActivityProgress: state.login.markActivityProgress,
     markActivityData: state.login.markActivityData,
   };
 };
@@ -179,6 +185,8 @@ App.propTypes = {
   authenticateSuccess: PropTypes.bool,
   validateAuth: PropTypes.func,
   markActivity: PropTypes.func,
+  markActivitySuccess: PropTypes.bool,
+  markActivityData: PropTypes.bool,
   authData: PropTypes.any,
 };
 

@@ -61,6 +61,7 @@ const markActivity = () => {
   return (dispatch) => {
     dispatch(markActivityProgress());
     markActivityAPI(
+      null,
       processResponse(dispatch),
       markActivityOnSuccess(dispatch),
       markActivityOnError(dispatch)
