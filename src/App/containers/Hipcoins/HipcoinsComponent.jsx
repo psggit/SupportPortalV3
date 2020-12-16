@@ -106,7 +106,7 @@ const filterOptions = [
 
 function HipcoinsComponent(props) {
   const classes = useStyles();
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(25);
   const [page, setPage] = useState(1);
   const [mountFilterDialog, setMountFilterDialog] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState("pending");
