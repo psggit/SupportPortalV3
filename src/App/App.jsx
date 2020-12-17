@@ -9,6 +9,8 @@ import { LoginContainer } from "./containers/Login";
 import { LogoutContainer } from "./containers/Logout";
 import { DashboardContainer } from "./containers/Dashboard";
 import { IssuesContainer } from "./containers/Issues";
+import { HipcoinsContainer } from "./containers/Hipcoins";
+import { HipcoinsDetailsContainer } from "./containers/HipcoinsDetails";
 import { OrderDetailsContainer } from "./containers/OrderDetails";
 import { CartModificationContainer } from "./containers/CartModification";
 import { OrderInfoContainer } from "./containers/OrderInfo";
@@ -114,6 +116,12 @@ function App(props) {
 
               <Route path="/da-notes" component={DaNotesContainer} />
               <Route path="/issues" component={IssuesContainer} />
+              <Route exact path="/hipcoins" component={HipcoinsContainer} />
+              <Route
+                exact
+                path="/hipcoins/order-details/:orderId"
+                component={HipcoinsDetailsContainer}
+              />
 
               <Route
                 path="/order-tracking"
