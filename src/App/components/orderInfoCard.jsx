@@ -84,7 +84,7 @@ CustomCard.propTypes = {
 };
 
 const getTimestamp = (timestamp) => {
-  return Moment(timestamp).format("DD/MM/YYYY");
+  return Moment(timestamp).format("DD/MM/YYYY  hh:mm A");
 };
 
 export default function CustomCard(props) {
@@ -131,12 +131,12 @@ export default function CustomCard(props) {
                 />
 
                 {
-                // (keysToRender[index] === "customer_dob" ||
-                //   keysToRender[index] === "created_at" ||
-                //   keysToRender[index] === "customer_sign_up_date" ||
-                //   keysToRender[index] ===
-                //     "delivery_service_provider_accepted_time") && 
-                    
+                  // (keysToRender[index] === "customer_dob" ||
+                  //   keysToRender[index] === "created_at" ||
+                  //   keysToRender[index] === "customer_sign_up_date" ||
+                  //   keysToRender[index] ===
+                  //     "delivery_service_provider_accepted_time") &&
+
                   <ListItemText
                     primary={
                       Date.parse(item[keysToRender[index]]) > 0
