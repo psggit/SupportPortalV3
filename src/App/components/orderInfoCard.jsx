@@ -118,6 +118,7 @@ export default function CustomCard(props) {
       <CardContent className={classes.cardContent}>
         <List>
           {renderArray.map((item, index) => {
+            console.log(keyMap[keysToRender[index]]);
             return (
               <ListItem
                 key={index}
@@ -139,7 +140,9 @@ export default function CustomCard(props) {
 
                   <ListItemText
                     primary={
-                      Date.parse(item[keysToRender[index]]) > 0
+                      keyMap[keysToRender[index]] === "Product Quantity"
+                        ? item[keysToRender[index]] :
+                        Date.parse(item[keysToRender[index]]) > 0
                         ? getTimestamp(item[keysToRender[index]])
                         : item[keysToRender[index]]
                         ? item[keysToRender[index]]
