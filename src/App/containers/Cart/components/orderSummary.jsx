@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React, { useState, createRef } from "react";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -219,6 +220,9 @@ const OrderSummary = (props) => {
                           : "-"
                       }
                     />
+                    <div
+                      style={{ borderBottom: "1px solid", marginTop: "6px" }}
+                    ></div>
                   </>
                 );
               })}
