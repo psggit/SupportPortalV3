@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-// import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import CartDetailsCard from "../../components/card";
 import { OrderSummary } from "../Cart/components/orderSummary";
-// import Alert from "@material-ui/lab/Alert";
+import Alert from "@material-ui/lab/Alert";
 import ErrorMsg from "../../components/errorMsg";
 import uuid from "react-uuid";
 import { Button } from "@material-ui/core";
@@ -62,12 +62,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CartComponent = (props) => {
-  // const history = useHistory();
+  const history = useHistory();
   const classes = useStyles();
-  // const orderInfo = props.orderInfo;
+  const orderInfo = props.orderInfo;
   const [modify, setModify] = useState(false);
   // eslint-disable-next-line no-unused-vars
-  const [disableModify, setDisableModify] = useState(!props.buttonState);
+  const [disableModify, setDisableModify] = useState(props.buttonState);
   const [confirm, setConfirm] = useState(false);
   const [cancel, setCancel] = useState(false);
   useEffect(() => {
@@ -94,7 +94,7 @@ const CartComponent = (props) => {
   useEffect(() => {
     if (props.validateOrderSuccess) {
       if (!cancel) {
-        // props.fetchSummary(props.modifyCart);
+        props.fetchSummary(props.modifyCart);
       }
 
       if (props.validateInfo.count !== 0) {
@@ -111,21 +111,21 @@ const CartComponent = (props) => {
     }
   }, [props.fetchCartSummarySuccess]);
 
-  // const handleModify = () => {
-  //   history.push({
-  //     pathname: "/cart-modify",
-  //     state: {
-  //       retailerId: orderInfo.retailer_id,
-  //       retailer_name: orderInfo.retailer_name,
-  //       city_id: orderInfo.city_id,
-  //       state_id: orderInfo.state_id,
-  //       gps: orderInfo.gps,
-  //       orderId: orderInfo.order_id,
-  //       products: orderInfo.cart_items,
-  //     },
-  //   });
-  //   // history.replaceState(props.location.pathname, null);
-  // };
+  const handleModify = () => {
+    history.push({
+      pathname: "/cart-modify",
+      state: {
+        retailerId: orderInfo.retailer_id,
+        retailer_name: orderInfo.retailer_name,
+        city_id: orderInfo.city_id,
+        state_id: orderInfo.state_id,
+        gps: orderInfo.gps,
+        orderId: orderInfo.order_id,
+        products: orderInfo.cart_items,
+      },
+    });
+    // history.replaceState(props.location.pathname, null);
+  };
 
   const handleCancel = () => {
     setModify(false);
@@ -142,20 +142,20 @@ const CartComponent = (props) => {
   // console.log(modify, props.validateInfo);
 
   let actionButtons = [
-    // <Button
-    //   variant="contained"
-    //   color="primary"
-    //   onClick={handleModify}
-    //   key={uuid()}
-    //   disabled={disableModify}
-    // >
-    //   Modify
-    // </Button>,
+    <Button
+      variant="contained"
+      color="primary"
+      onClick={handleModify}
+      key={uuid()}
+      disabled={disableModify}
+    >
+      Modify
+    </Button>,
   ];
 
   let cardFooter = "";
   // console.log("cart component", props.fetchCartSummarySuccess, props.validateOrderSuccess, props.validateInfo.count);
-  /*if (
+  if (
     (props.fetchCartSummarySuccess && props.cartSummary === null) ||
     (props.validateOrderSuccess && props.validateInfo.count !== 0)
   ) {
@@ -168,7 +168,7 @@ const CartComponent = (props) => {
         cancel the previous request.
       </Alert>
     );
-  }*/
+  }
 
   if (props.cartSummary !== null) {
     actionButtons = [
