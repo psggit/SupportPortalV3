@@ -22,6 +22,7 @@ import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import SideNav from "./components/sideNav";
 import uuid from "react-uuid";
 import Alert from "@material-ui/lab/Alert";
+import { CancellationSummaryContainer} from "./../CancellationSummary"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -518,6 +519,12 @@ const OrderInfoComponent = (props) => {
                     buttonState={props.order.order_status_button}
                   />
                 )}
+                {props.fetchOrderInfoSuccess &&
+                  props.order.cancellation_summary !== null && (
+                    <Box className={classes.marginTop}>
+                      <CancellationSummaryContainer />
+                    </Box>
+                  )}
               </Grid>
               <Grid item xs={6} id="section1">
                 {props.fetchOrderInfoSuccess && (

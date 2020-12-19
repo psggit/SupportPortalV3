@@ -9,6 +9,7 @@ import { hipcoinsReducer } from "../containers/Hipcoins";
 import { hipcoinsDetailsReducer } from "../containers/HipcoinsDetails";
 import { cartReducer } from "../containers/Cart";
 import { orderReducer } from "../containers/OrderInfo/reducer";
+import { cancellationSummaryReducer } from "../containers/CancellationSummary/duck";
 import { cartModifyReducer } from "../containers/CartModification";
 import { retailerNotesListReducer } from "../containers/Retailer/RetailerNotes";
 import { customerSOAReducer } from "../containers/Customer/CustomerSoa";
@@ -44,6 +45,7 @@ const store = configureStore({
     orderModify: orderModificationReducer,
     hipcoins: hipcoinsReducer,
     hipcoinsDetails: hipcoinsDetailsReducer,
+    cancellationSummary: cancellationSummaryReducer,
   }),
   middleware: [thunk],
 });
