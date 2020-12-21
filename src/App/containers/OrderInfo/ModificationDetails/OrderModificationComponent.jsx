@@ -44,6 +44,7 @@ const OrderModificationComponent = (props) => {
 
   useEffect(() => {
     if(props.fetchOrderSuccess){
+      console.log("modify", props.orderList.order_modification[0].order_id);
       const details = getListOfDataObjects(
         props.orderList.order_modification[0],
         keysToRender
@@ -53,12 +54,14 @@ const OrderModificationComponent = (props) => {
   }, []);
 
   const history = useHistory();
-  // const handleChange = () => {
-  //   history.push({
-  //     pathname: "/customer-detail",
-  //     state: {},
-  //   });
-  // };
+  const handleChange = () => {
+    history.push({
+      pathname: "/modification-list",
+      state: {
+        orderId: props.orderId,
+      },
+    });
+  };
 
   // const sendSMS = (event, orderId) => {
   //   props.sendSMSOperation(orderId);
@@ -109,7 +112,7 @@ const OrderModificationComponent = (props) => {
     <Button
       color="primary"
       endIcon={<ChevronRightIcon />}
-      //onClick={handleChange}
+      onClick={handleChange}
     >
       More
     </Button>,

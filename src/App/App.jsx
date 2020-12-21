@@ -31,6 +31,7 @@ import { OrderTrackingContainer } from "./containers/OrderTracking";
 import { OrderModificationContainer } from "./containers/OrderModification";
 import { createSession } from "./utils";
 import { HipcoinSoaContainer } from "./containers/Customer/HipcoinSoa";
+import { ModificationListContainer } from "./containers/ModificationList/ModificationListContainer";
 
 function App(props) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -107,6 +108,11 @@ function App(props) {
               <Route
                 path="/order-modification"
                 component={OrderModificationContainer}
+              />
+
+              <Route
+                path="/modification-list"
+                component={ModificationListContainer}
               />
 
               <Route path="/login" component={LoginContainer} />

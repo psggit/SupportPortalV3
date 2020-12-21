@@ -1,17 +1,14 @@
 import { connect } from "react-redux";
-import { OrderModificationComponent } from "./OrderModificationComponent";
+import { ModificationListComponent } from "./ModificationListComponent";
 import {
   fetchListOrderModification,
   sendSMSOperation,
   cancelOrderRequest,
   fetchUpdatedStatus,
-} from "./duck/operations";
-import { resetOnUnmount } from "./duck/action";
+} from "../OrderInfo/ModificationDetails/duck/operations";
 
 const mapStateToProps = (state) => {
-   console.log("[modification-list", state.home.orderId);
   return {
-    orderId: state.home.orderId,
     orderList: state.orderModify.orderList,
     fetchOrderSuccess: state.orderModify.fetchOrderSuccess,
     fetchOrderFailed: state.orderModify.fetchOrderFailed,
@@ -33,13 +30,12 @@ const mapDispatchToProps = (dispatch) => {
     sendSMSOperation: (orderId) => dispatch(sendSMSOperation(orderId)),
     cancelOrderRequest: (orderId) => dispatch(cancelOrderRequest(orderId)),
     fetchUpdatedStatus: (payload) => dispatch(fetchUpdatedStatus(payload)),
-    resetOnUnmount: () => dispatch(resetOnUnmount()),
   };
 };
 
-const OrderModificationContainer = connect(
+const ModificationListContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(OrderModificationComponent);
+)(ModificationListComponent);
 
-export { OrderModificationContainer };
+export { ModificationListContainer };
