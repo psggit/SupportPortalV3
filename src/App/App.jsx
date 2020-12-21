@@ -195,7 +195,7 @@ App.propTypes = {
   validateAuth: PropTypes.func,
   markActivity: PropTypes.func,
   markActivitySuccess: PropTypes.bool,
-  markActivityData: PropTypes.bool,
+  markActivityData: PropTypes.any,
   authData: PropTypes.any,
 };
 
