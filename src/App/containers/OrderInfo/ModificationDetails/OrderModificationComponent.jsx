@@ -12,6 +12,7 @@ import SendIcon from "@material-ui/icons/Send";
 import ClearIcon from "@material-ui/icons/Clear";
 import AutorenewIcon from "@material-ui/icons/Autorenew";
 import { IconButton } from "@material-ui/core";
+import ErrorMsg from "../../../components/errorMsg";
 
 const keysToRender = [
   "order_id",
@@ -41,14 +42,20 @@ const keyMap = {
 const OrderModificationComponent = (props) => {
   const [data, setData] = useState([]);
   const [disableClear, setDisableClear] = useState("");
+  const [orderIds, setOrderIds] = useState();
 
   useEffect(() => {
-    if (props.fetchOrderSuccess) {
+    if (
+      props.fetchOrderSuccess &&
+      props.orderList.order_modification.length > 0
+    ) {
+      const orderId = props.orderList.order_modification[0].order_id;
       const details = getListOfDataObjects(
-        props.orderList.order_modification,
+        props.orderList.order_modification[0],
         keysToRender
       );
       setData(details);
+      setOrderIds(orderId);
     }
   }, []);
 
@@ -63,45 +70,41 @@ const OrderModificationComponent = (props) => {
   };
 
   const sendSMS = () => {
-    props.sendSMSOperation(props.orderId);
+    props.sendSMSOperation(orderIds);
   };
 
   const refreshOrder = () => {
     console.log("refreshOrder");
     const payload = {
-      order_id: props.orderId,
+      order_id: orderIds,
     };
     props.fetchUpdatedStatus(payload);
   };
 
   const cancelOrder = () => {
     console.log("cancelOrder");
-    setDisableClear(props.orderId);
-    props.cancelOrderRequest(props.orderId);
+    setDisableClear(orderIds);
+    props.cancelOrderRequest(orderIds);
   };
 
   const actionButtons = [
-    <IconButton
-      variant="outlined"
-      color="primary"
-      onClick={(event) => sendSMS()}
-    >
-      <SendIcon />
-    </IconButton>,
-    <IconButton
+    <Button variant="outlined" color="primary" onClick={(event) => sendSMS()}>
+      Send SMS
+    </Button>,
+    <Button
       variant="outlined"
       color="primary"
       onClick={(event) => refreshOrder()}
     >
-      <AutorenewIcon />
-    </IconButton>,
-    <IconButton
+      Update Status
+    </Button>,
+    <Button
       variant="outlined"
       color="primary"
       onClick={(event) => cancelOrder()}
     >
-      <ClearIcon />
-    </IconButton>,
+      Cancel Request
+    </Button>,
   ];
 
   const subheadAction = [
@@ -113,12 +116,10 @@ const OrderModificationComponent = (props) => {
       More
     </Button>,
   ];
-
   return (
     <Grid container spacing={4}>
       <Grid item xs={6}>
         {props.fetchOrderSuccess &&
-          props.orderList.order_modification.length !== null &&
           props.orderList.order_modification.length > 0 && (
             <DetailsCard
               title="LATEST MODIFICATION DETAILS"
@@ -133,18 +134,24 @@ const OrderModificationComponent = (props) => {
               id="modification-details"
             />
           )}
-        {/* <DetailsCard
-          title="LATEST MODIFICATION DETAILS"
-          // actions={
-          //   localStorage.getItem("x-hasura-role") !== "support_person" &&
-          //   actionButtons
-          // }
-          subheader={subheadAction}
-          renderArray={data}
-          keyMap={keyMap}
-          keysToRender={keysToRender}
-          id="modification-details"
-        /> */}
+        {(props.sendSMSSuccess || props.sendSMSFailed) && (
+          <ErrorMsg show={true} message={props.msg.message} type={"info"} />
+        )}
+        {(props.fetchUpdatedStatusSuccess ||
+          props.fetchUpdatedStatusFailed) && (
+          <ErrorMsg
+            show={true}
+            message={props.msg.payload.message}
+            type={"info"}
+          />
+        )}
+        {props.fetchCancelCartSuccess && (
+          <ErrorMsg
+            show={true}
+            message={"Order cancelled successfully."}
+            type="success"
+          />
+        )}
       </Grid>
     </Grid>
   );
@@ -152,6 +159,10 @@ const OrderModificationComponent = (props) => {
 
 OrderModificationComponent.propTypes = {
   fetchOrderSuccess: PropTypes.bool,
+  fetchCancelCartSuccess: PropTypes.bool,
+  fetchUpdatedStatusFailed: PropTypes.bool,
+  sendSMSSuccess: PropTypes.bool,
+  sendSMSFailed: PropTypes.bool,
 };
 
 export { OrderModificationComponent };

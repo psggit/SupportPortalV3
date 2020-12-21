@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable react/jsx-key */
+import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import DetailsCard from "../../components/orderInfoCard";
 import { getListOfDataObjects } from "../../utils/helpers";
@@ -12,6 +13,7 @@ import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import Paper from "@material-ui/core/Paper";
 import { Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import Dialog from "../../components/dialog";
 
 const useStyles = makeStyles((theme) => ({
   row1: {
@@ -38,12 +40,19 @@ const useStyles = makeStyles((theme) => ({
 function HipcoinsDetailsComponent(props) {
   const classes = useStyles();
   const history = useHistory();
+  const [mountDialog, setMountDialog] = useState(false);
 
   const order_details =
     props.loyalityPoints !== null
       ? props.loyalityPoints.order_details
       : history.location.state.orderData;
   const [orderData, setOrderData] = useState(order_details);
+
+  useEffect(() => {
+    return () => {
+      props.resetOnUnmount();
+    };
+  }, []);
   // console.log("props.loyalityPoints.order_details");
   // console.log(props.loyalityPoints.order_details, history.location.state, orderData);
 
@@ -51,18 +60,30 @@ function HipcoinsDetailsComponent(props) {
     (item) => item.order_id === props.match.params.orderId
   );
 
+  const handleTrigger = () => {
+    setMountDialog(true);
+  };
+
+  const handleCancel = () => {
+    setMountDialog(false);
+  };
+
   const OrderDetailsCard = () => {
     const keyMap = {
       order_id: "Order ID",
       consumer_id: "Customer ID",
+      consumer_email: "Customer Email",
       partner: "Partner",
+      partner_order_status: "Partner Order Status",
       order_status: "Order Status",
       order_generated_time: "Order Generated Time",
     };
     const keysToRender = [
       "order_id",
       "consumer_id",
+      "consumer_email",
       "partner",
+      "partner_order_status",
       "order_status",
       "order_generated_time",
     ];
@@ -72,9 +93,10 @@ function HipcoinsDetailsComponent(props) {
         color="primary"
         key="unassignBtn"
         disabled={props.triggerEmailInProgress}
-        onClick={() =>
-          props.triggerEmail({ consumerId: details[0].consumer_id })
-        }
+        onClick={handleTrigger}
+        // onClick={() =>
+        //   props.triggerEmail({ consumerId: details[0].consumer_id })
+        // }
       >
         Trigger
       </Button>,
@@ -181,6 +203,36 @@ function HipcoinsDetailsComponent(props) {
             </Grid>
           </Grid>
         </div>
+        {mountDialog && (
+          <Dialog
+            title={"Trigger Email"}
+            actions={[
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleCancel}
+              >
+                Cancel
+              </Button>,
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() =>
+                  props.triggerEmail(
+                    { consumerId: details[0].consumer_id },
+                    setMountDialog(false)
+                  )
+                }
+              >
+                Confirm
+              </Button>,
+            ]}
+          >
+            <Typography>
+              {"Are you sure you want to trigger this email?"}
+            </Typography>
+          </Dialog>
+        )}
         {props.triggerEmailFailed && (
           <ErrorMsg show={true} message={props.errorMsg} type={"error"} />
         )}
@@ -199,6 +251,7 @@ HipcoinsDetailsComponent.propTypes = {
   errorMsg: PropTypes.string,
   successMsg: PropTypes.string,
   loyalityPoints: PropTypes.object,
+  resetOnUnmount: PropTypes.func,
 };
 
 export { HipcoinsDetailsComponent };

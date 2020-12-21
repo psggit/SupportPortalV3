@@ -1,24 +1,35 @@
+/* eslint-disable react/jsx-key */
 import React, { useState, createRef } from "react";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
+import { makeStyles } from "@material-ui/core/styles";
+// import Box from "@material-ui/core/Box";
 import Collapse from "@material-ui/core/Collapse";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 import { Divider } from "@material-ui/core";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+// import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import { OrderSummaryItem } from "./orderSummaryItem";
 import { CartItem } from "./cartItem";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import uuid from "react-uuid";
 import Moment from "moment";
+import Paper from "@material-ui/core/Paper";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+import {
+  Table,
+  Box,
+  TableHead,
+  TableContainer,
+  TableBody,
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -116,20 +127,20 @@ const OrderSummary = (props) => {
     setOpen(!open);
   };
 
-  const handleClickAdd = () => {
-    history.push({
-      pathname: "/cart-modify",
-      state: {
-        retailerId: orderInfo.retailer_id,
-        retailer_name: orderInfo.retailer_name,
-        city_id: orderInfo.city_id,
-        state_id: orderInfo.state_id,
-        gps: orderInfo.gps,
-        orderId: orderInfo.order_id,
-        products: orderInfo.cart_items,
-      },
-    });
-  };
+  // const handleClickAdd = () => {
+  //   history.push({
+  //     pathname: "/cart-modify",
+  //     state: {
+  //       retailerId: orderInfo.retailer_id,
+  //       retailer_name: orderInfo.retailer_name,
+  //       city_id: orderInfo.city_id,
+  //       state_id: orderInfo.state_id,
+  //       gps: orderInfo.gps,
+  //       orderId: orderInfo.order_id,
+  //       products: orderInfo.cart_items,
+  //     },
+  //   });
+  // };
 
   // console.log("Order summary props", props.cartSummary);
   console.log("hello", orderInfo.hipcoin_details.earned);
@@ -183,45 +194,43 @@ const OrderSummary = (props) => {
           title="Cart Total"
           value={orderInfo.original_cart_total}
         />
-        {/* {orderInfo.hipcoin_details.earned != null && (
-          <>
-            <OrderSummaryItem
-              title="Hipcoins Earned"
-              value={orderInfo.hipcoin_details.earned.value}
-            />
-            <OrderSummaryItem
-              title="Will Expire on:"
-              value={orderInfo.hipcoin_details.earned.expiry_at}
-            />
-          </>
-        )} */}
         <OrderSummaryItem title="Hipcoin Details" type="button">
           <OrderSummaryItem
             title="Hipcoins Redeemed"
             value={orderInfo.hipcoin_details.redeemed}
           />
           {orderInfo.hipcoin_details.earned != null && (
-            <OrderSummaryItem title="Earned" type="button">
-              {orderInfo.hipcoin_details.earned.map((value) => {
-                return (
-                  <>
-                    <OrderSummaryItem
-                      title={"Type"}
-                      value={value.type}
-                      key={uuid()}
-                    />
-                    <OrderSummaryItem title="Value" value={value.value} />
-                    <OrderSummaryItem
-                      title="Expiry at"
-                      value={
-                        value.expiry_at
-                          ? Moment(value.expiry_at).format("D MMM hh:mm A")
-                          : "-"
-                      }
-                    />
-                  </>
-                );
-              })}
+            <OrderSummaryItem title="To Be Generated" type="button">
+              <Box width="100%" mx="auto">
+                <TableContainer component={Paper}>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell align="center">Type</TableCell>
+                        <TableCell align="center">Value</TableCell>
+                        <TableCell align="center">Expiry At</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {orderInfo.hipcoin_details.earned.map((value) => {
+                        return (
+                          <TableRow>
+                            <TableCell align="center">{value.type}</TableCell>
+                            <TableCell align="center">{value.value}</TableCell>
+                            <TableCell align="center">
+                              {value.expiry_at
+                                ? Moment(value.expiry_at).format(
+                                    "D MMM hh:mm A"
+                                  )
+                                : "-"}
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Box>
             </OrderSummaryItem>
           )}
         </OrderSummaryItem>
