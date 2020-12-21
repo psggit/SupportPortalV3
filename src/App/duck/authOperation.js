@@ -2,9 +2,13 @@ import {
   authorizationProgress,
   authorizationFailed,
   authorizationSuccess,
+  markActivityProgress,
+  markActivityFailed,
+  markActivitySuccess,
 } from "../containers/Login/duck/actions";
 import { authAPI } from "../utils";
 import { createSession } from "../utils";
+import { markActivityAPI } from "../utils";
 
 const processResponse = () => {
   return (res) => {
@@ -29,6 +33,18 @@ const onError = (dispatch) => {
   };
 };
 
+const markActivityOnSuccess = (dispatch) => {
+  return (data) => {
+    dispatch(markActivitySuccess(data));
+  };
+};
+
+const markActivityOnError = (dispatch) => {
+  return (err) => {
+    dispatch(markActivityFailed(err));
+  };
+};
+
 const validateAuth = () => {
   return (dispatch) => {
     dispatch(authorizationProgress());
@@ -41,4 +57,16 @@ const validateAuth = () => {
   };
 };
 
-export { validateAuth };
+const markActivity = () => {
+  return (dispatch) => {
+    dispatch(markActivityProgress());
+    markActivityAPI(
+      null,
+      processResponse(dispatch),
+      markActivityOnSuccess(dispatch),
+      markActivityOnError(dispatch)
+    );
+  };
+};
+
+export { validateAuth, markActivity };

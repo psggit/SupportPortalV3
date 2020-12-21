@@ -6,6 +6,9 @@ import {
   authorizationFailed,
   authorizationSuccess,
   authorizationProgress,
+  markActivityProgress,
+  markActivityFailed,
+  markActivitySuccess,
 } from "./actions";
 import { setErrorMessage } from "../../../utils/errorMessages";
 
@@ -17,11 +20,15 @@ const initialValue = {
   loginProgressStatus: false,
   loginFailedStatus: false,
   loginSuccessStatus: null,
+  markActivityProgress: false,
+  markActivityFailed: false,
+  markActivitySuccess: false,
   errorMsg: "",
   successMsg: null,
   xHasuraRole: null,
   hasuraId: null,
   authData: null,
+  markActivityData: null,
 };
 
 const loginReducer = createReducer(initialValue, {
@@ -69,6 +76,28 @@ const loginReducer = createReducer(initialValue, {
     authenticateFailed: false,
     authenticateSuccess: false,
   }),
+  [markActivityProgress]: (state) => ({
+    ...state,
+    markActivityProgress: true,
+    markActivityFailed: false,
+    markActivitySuccess: false,
+  }),
+  [markActivityFailed]: (state) => ({
+    ...state,
+    markActivityProgress: false,
+    markActivityFailed: true,
+    markActivitySuccess: false,
+  }),
+  [markActivitySuccess]: (state, data) => {
+    console.log("markActivitysuccess");
+    return {
+      ...state,
+      markActivityProgress: false,
+      markActivityFailed: false,
+      markActivitySuccess: true,
+      markActivityData: data.payload,
+    };
+  },
 });
 
 export { loginReducer };

@@ -49,4 +49,5 @@ export { cancelOrderDSPAPI } from "./cancelOrderDSPAPI";
 export { consumerTypeNotesAPI } from "./consumerTypeNotesAPI";
 export { retailerTypeNotesAPI } from "./retailerTypeNotesAPI";
 export { daTypeNotesAPI } from "./daTypeNotesAPI";
+export { markActivityAPI } from "./markActivityAPI";
 export { hipcoinSoaAPI } from "./hipcoinSoaAPI";
