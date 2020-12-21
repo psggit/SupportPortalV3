@@ -128,6 +128,7 @@ const CartComponent = (props) => {
   };
 
   const handleCancel = () => {
+    console.log("from cancel");
     setModify(false);
     setCancel(true);
   };
@@ -135,6 +136,15 @@ const CartComponent = (props) => {
   const handleConfirm = () => {
     props.updateCart(props.modifyCart);
     setConfirm(!confirm);
+  };
+
+  const routePage = () => {
+    history.push({
+      pathname: "/modification-list",
+      state: {
+        orderId: orderInfo.order_id,
+      },
+    });
   };
 
   // console.log(disableModify);
@@ -164,8 +174,16 @@ const CartComponent = (props) => {
         This order already has an <b>Order Modification</b> request.
         <br />
         <br />
-        Go to <Link to="/order-modification">Order Modificaton</Link> page to
-        cancel the previous request.
+        Go to{" "}
+        {/* <Link to={{ pathname: `/modification-list/${props.orderInfo.order_id}` }}>
+          Order Modificaton
+        </Link>{" "}
+        page to cancel the previous request. */}
+        Go to{" "}
+        <u style={{ color: "blue", cursor: "pointer" }}>
+          <div onClick={routePage}>Order Modificaton</div>
+        </u>{" "}
+        page to cancel the previous request.
       </Alert>
     );
   }

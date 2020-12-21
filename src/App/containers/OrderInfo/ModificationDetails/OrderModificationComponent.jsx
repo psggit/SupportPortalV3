@@ -116,6 +116,7 @@ const OrderModificationComponent = (props) => {
       More
     </Button>,
   ];
+
   return (
     <Grid container spacing={4}>
       <Grid item xs={6}>

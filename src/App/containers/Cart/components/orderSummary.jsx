@@ -143,7 +143,7 @@ const OrderSummary = (props) => {
   // };
 
   // console.log("Order summary props", props.cartSummary);
-  console.log("hello", orderInfo.hipcoin_details.earned);
+  // console.log("hello", orderInfo.hipcoin_details.earned);
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
