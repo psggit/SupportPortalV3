@@ -3,6 +3,7 @@ import {
   triggerEmailInProgress,
   triggerEmailSuccess,
   triggerEmailFailed,
+  resetOnUnmount,
 } from "./action";
 import { setErrorMessage } from "../../../utils/errorMessages";
 
@@ -37,6 +38,9 @@ const hipcoinsDetailsReducer = createReducer(initialState, {
       successMsg: data.payload.message,
     };
   },
+  [resetOnUnmount]: () => ({
+    ...initialState,
+  }),
 });
 
 export { hipcoinsDetailsReducer };
