@@ -1,10 +1,3 @@
-// import React from "react";
-
-// function ModificationListComponent() {
-//   return <div>Hellooooo</div>;
-// }
-
-// export { ModificationListComponent };
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
@@ -134,7 +127,7 @@ const ModificationListComponent = (props) => {
   }
 
   const handleBack = () => {
-     history.push(`/order-info/${orderId}`);
+    history.push(`/order-info/${orderId}`);
   };
 
   return (
