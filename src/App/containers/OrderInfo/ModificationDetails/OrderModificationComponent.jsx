@@ -43,10 +43,9 @@ const OrderModificationComponent = (props) => {
   const [disableClear, setDisableClear] = useState("");
 
   useEffect(() => {
-    if(props.fetchOrderSuccess){
-      console.log("modify", props.orderList.order_modification[0].order_id);
+    if (props.fetchOrderSuccess) {
       const details = getListOfDataObjects(
-        props.orderList.order_modification[0],
+        props.orderList.order_modification,
         keysToRender
       );
       setData(details);
@@ -63,49 +62,46 @@ const OrderModificationComponent = (props) => {
     });
   };
 
-  // const sendSMS = (event, orderId) => {
-  //   props.sendSMSOperation(orderId);
-  // };
+  const sendSMS = () => {
+    props.sendSMSOperation(props.orderId);
+  };
 
-  // const refreshOrder = (event, orderId) => {
-  //   console.log("refreshOrder");
-  //   const payload = {
-  //     order_id: orderId,
-  //   };
-  //   props.fetchUpdatedStatus(payload);
-  // };
+  const refreshOrder = () => {
+    console.log("refreshOrder");
+    const payload = {
+      order_id: props.orderId,
+    };
+    props.fetchUpdatedStatus(payload);
+  };
 
-  // const cancelOrder = (event, orderId) => {
-  //   console.log("cancelOrder");
-  //   setDisableClear(orderId);
-  //   props.cancelOrderRequest(orderId);
-  // };
+  const cancelOrder = () => {
+    console.log("cancelOrder");
+    setDisableClear(props.orderId);
+    props.cancelOrderRequest(props.orderId);
+  };
 
   const actionButtons = [
     <IconButton
       variant="outlined"
       color="primary"
-      //onClick={(event) => sendSMS(event, data.order_id)}
-      //disabled={!(data.status == "pending")}
+      onClick={(event) => sendSMS()}
     >
       <SendIcon />
     </IconButton>,
     <IconButton
       variant="outlined"
       color="primary"
-     // onClick={(event) => refreshOrder(event, data.order_id)}
-      //disabled={!(data.status == "pending")}
+      onClick={(event) => refreshOrder()}
     >
       <AutorenewIcon />
     </IconButton>,
     <IconButton
       variant="outlined"
       color="primary"
-      //onClick={(event) => cancelOrder(event, data.order_id)}
-     // disabled={!(data.status == "pending") || disableClear === data.order_id}
+      onClick={(event) => cancelOrder()}
     >
       <ClearIcon />
-    </IconButton>
+    </IconButton>,
   ];
 
   const subheadAction = [
@@ -117,10 +113,27 @@ const OrderModificationComponent = (props) => {
       More
     </Button>,
   ];
+
   return (
     <Grid container spacing={4}>
       <Grid item xs={6}>
-        <DetailsCard
+        {props.fetchOrderSuccess &&
+          props.orderList.order_modification.length !== null &&
+          props.orderList.order_modification.length > 0 && (
+            <DetailsCard
+              title="LATEST MODIFICATION DETAILS"
+              actions={
+                localStorage.getItem("x-hasura-role") !== "support_person" &&
+                actionButtons
+              }
+              subheader={subheadAction}
+              renderArray={data}
+              keyMap={keyMap}
+              keysToRender={keysToRender}
+              id="modification-details"
+            />
+          )}
+        {/* <DetailsCard
           title="LATEST MODIFICATION DETAILS"
           // actions={
           //   localStorage.getItem("x-hasura-role") !== "support_person" &&
@@ -131,7 +144,7 @@ const OrderModificationComponent = (props) => {
           keyMap={keyMap}
           keysToRender={keysToRender}
           id="modification-details"
-        />
+        /> */}
       </Grid>
     </Grid>
   );

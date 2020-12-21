@@ -61,7 +61,7 @@ const ModificationListComponent = (props) => {
   const [page, setPage] = useState(0);
   const [disableClear, setDisableClear] = useState("");
   const orderId = history.location.state.orderId;
-  console.log("orderId", history.location.state.orderId);
+  // console.log("orderId", history.location.state.orderId);
 
   useEffect(() => {
     const payload = {
