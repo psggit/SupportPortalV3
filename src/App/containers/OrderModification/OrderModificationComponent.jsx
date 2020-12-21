@@ -87,7 +87,7 @@ const OrderModificationComponent = (props) => {
       localStorage.getItem("x-hasura-role") !== "ops_delivery_manager" ||
       localStorage.getItem("x-hasura-role") !== "support_person"
     ) {
-       props.fetchListOrderModification(payload);
+      props.fetchListOrderModification(payload);
     }
   }, [rowsPerPage, page]);
 

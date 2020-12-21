@@ -6,6 +6,7 @@ import { orderInfoReducer } from "./duck";
 import { activityLogReducer } from "./ActivityLogs";
 import { orderDataReducer } from "./OrderCard";
 import { dspReducer } from "./DeliveryServiceProvider";
+import { orderModificationReducer } from "./ModificationDetails";
 
 const orderReducer = combineReducers({
   orderInfo: orderInfoReducer,
@@ -15,6 +16,7 @@ const orderReducer = combineReducers({
   activityLog: activityLogReducer,
   orderCard: orderDataReducer,
   dsp: dspReducer,
+  orderModify: orderModificationReducer,
 });
 
 export { orderReducer };

@@ -8,6 +8,7 @@ import TopBar from "../../components/topBar";
 import { useHistory } from "react-router-dom";
 import { CartContainer } from "../Cart/CartContainer";
 import { OrderDetailsContainer } from "./OrderCard/OrderDetailsContainer";
+import { OrderModificationContainer } from "./ModificationDetails/OrderModificationContainer";
 import { CustomerContainer } from "./CustomerDetails/CustomerContainer";
 import { RetailerContainer } from "./RetailerDetails/RetailerContainer";
 import { OrderStatusContainer } from "./OrderStatus";
@@ -124,6 +125,24 @@ const OrderInfoComponent = (props) => {
       setDisabledBtn(true);
     }
   };
+
+  useEffect(() => {
+    const payload = {
+      pending_request: true,
+      completed_request: true,
+      order_id: orderId,
+      limit: 1000,
+      offset: 0,
+    };
+    props.fetchListOrderModification(payload);
+    // if (
+    //   localStorage.getItem("x-hasura-role") !== "ops_delivery_manager" ||
+    //   localStorage.getItem("x-hasura-role") !== "support_person"
+    // ) {
+    //   props.fetchListOrderModification(payload);
+    // }
+    console.log("iii", props.fetchListOrderModification(payload));
+  }, []);
 
   const textFieldChange = (e) => {
     setIssueDesc(e.target.value);
@@ -548,6 +567,9 @@ const OrderInfoComponent = (props) => {
                 id="section2"
                 className={classes.marginTop}
               >
+                <Grid item xs={12}>
+                  <OrderModificationContainer />
+                </Grid>
                 <Grid item xs={12}>
                   {props.fetchOrderInfoSuccess && (
                     <CustomerContainer
