@@ -97,38 +97,57 @@ const CartItem = (props) => {
   const classes = useStyles();
   const value = props.value;
   return (
-    <ListItem dense disableGutters>
-      <ListItemText
-        className={classes.ListItems}
-        primary={value.brand_name}
-        secondary={`${value.volume} ML | ${value.sku_price}`}
-      />
+    <>
+      <ListItem dense disableGutters>
+        <ListItemText
+          className={classes.ListItems}
+          primary={value.brand_name}
+          secondary={`${value.volume} ML | ${value.sku_price}`}
+        />
+        <Box className={classes.addComponentLeft}>
+          <IconButton style={{ color: "#010B13" }}>
+            {props.modify && <RemoveIcon />}
+          </IconButton>
+        </Box>
 
-      <Box className={classes.addComponentLeft}>
-        <IconButton style={{ color: "#010B13" }}>
-          {props.modify && <RemoveIcon />}
-        </IconButton>
-      </Box>
+        <Box className={classes.addComponentCenter}>
+          <Typography>{value.ordered_count}</Typography>
+        </Box>
 
-      <Box className={classes.addComponentCenter}>
-        <Typography>{value.ordered_count}</Typography>
-      </Box>
+        <Box className={classes.addComponentRight}>
+          <IconButton style={{ color: "#010B13" }}>
+            {props.modify && <AddIcon />}
+          </IconButton>
+        </Box>
+        {props.modify && (
+          <IconButton
+            aria-label="delete"
+            color="primary"
+            className={classes.deleteButton}
+          >
+            <DeleteOutlineIcon size="small" />
+          </IconButton>
+        )}
+      </ListItem>
 
-      <Box className={classes.addComponentRight}>
-        <IconButton style={{ color: "#010B13" }}>
-          {props.modify && <AddIcon />}
-        </IconButton>
-      </Box>
-      {props.modify && (
-        <IconButton
-          aria-label="delete"
-          color="primary"
-          className={classes.deleteButton}
-        >
-          <DeleteOutlineIcon size="small" />
-        </IconButton>
-      )}
-    </ListItem>
+      <ListItem dense disableGutters>
+        <ListItemText className={classes.ListItems} primary={value.message} />
+      </ListItem>
+
+      <ListItem dense disableGutters>
+        <ListItemText className={classes.ListItems} primary={"Revised Count"} />
+
+        <Box className={classes.addComponentLeft}>
+          <IconButton style={{ color: "#010B13" }}></IconButton>
+        </Box>
+        <Box className={classes.addComponentCenter}>
+          <Typography>{value.revised_count}</Typography>
+        </Box>
+        <Box className={classes.addComponentRight}>
+          <IconButton style={{ color: "#010B13" }}></IconButton>
+        </Box>
+      </ListItem>
+    </>
   );
 };
 
