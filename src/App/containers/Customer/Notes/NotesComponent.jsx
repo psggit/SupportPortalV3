@@ -136,7 +136,7 @@ function Notes(props) {
     fetchNote();
   };
 
-  console.log(props.errorMsg, props.notesFail);
+  // console.log(props.errorMsg, props.notesFail);
 
   return (
     <>

@@ -72,7 +72,7 @@ function App(props) {
       </ThemeProvider>
     );
   }
-  console.log("user", isLoggedIn);
+  // console.log("user", isLoggedIn);
   // console.log("success ", success);
   return (
     <div>
@@ -195,7 +195,7 @@ App.propTypes = {
   validateAuth: PropTypes.func,
   markActivity: PropTypes.func,
   markActivitySuccess: PropTypes.bool,
-  markActivityData: PropTypes.bool,
+  markActivityData: PropTypes.any,
   authData: PropTypes.any,
 };
 
