@@ -72,7 +72,7 @@ function App(props) {
       </ThemeProvider>
     );
   }
-  console.log("user", isLoggedIn);
+  // console.log("user", isLoggedIn);
   // console.log("success ", success);
   return (
     <div>

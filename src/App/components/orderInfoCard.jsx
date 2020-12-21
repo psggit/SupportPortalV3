@@ -118,7 +118,7 @@ export default function CustomCard(props) {
       <CardContent className={classes.cardContent}>
         <List>
           {renderArray.map((item, index) => {
-            console.log(keyMap[keysToRender[index]]);
+            // console.log(keyMap[keysToRender[index]]);
             return (
               <ListItem
                 key={index}
