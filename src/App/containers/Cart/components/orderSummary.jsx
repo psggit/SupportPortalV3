@@ -188,11 +188,21 @@ const OrderSummary = (props) => {
         />
         <OrderSummaryItem
           title="Order Total"
-          value={orderInfo.revised_order_total}
+          //value={orderInfo.revised_order_total}
+          value={
+            props.cartSummary
+              ? props.cartSummary.display_details[0].display_value
+              : "-"
+          }
         />
         <OrderSummaryItem
           title="Cart Total"
-          value={orderInfo.original_cart_total}
+          //value={orderInfo.original_cart_total}
+          value={
+            props.cartSummary
+              ? props.cartSummary.display_details[1].display_value
+              : "-"
+          }
         />
         <OrderSummaryItem title="Hipcoin Details" type="button">
           <OrderSummaryItem

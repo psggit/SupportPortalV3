@@ -41,14 +41,8 @@ export default function MenuDrawer() {
     setState({ ...state, [anchor]: open });
   };
 
-  let anchors = [
-    "/dashboard",
-    "/issues",
-    "/hipcoins",
-    "/order-modification",
-    "/logout",
-  ];
-  let links = ["Home", "Issues", "Hipcoins", "Order Modification", "Logout"];
+  let anchors = ["/dashboard", "/issues", "/hipcoins", "/logout"];
+  let links = ["Home", "Issues", "Hipcoins", "Logout"];
 
   if (localStorage.getItem("x-hasura-role") === "ops_delivery_manager") {
     anchors = ["/dashboard", "/logout"];
