@@ -745,7 +745,7 @@ OrderDetailsCard.propTypes = {
   fetchCancelReason: PropTypes.func,
   fetchCancelReasonProgress: PropTypes.bool,
   errorMsgSummary: PropTypes.any,
-  errorMsgCancel: PropTypes.bool,
+  errorMsgCancel: PropTypes.any,
   fetchDeliverOrderFailed: PropTypes.bool,
 };
 
