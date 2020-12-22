@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import {
-  fetchOrderSuccess,
+  fetchModificationSuccess,
   fetchOrderFailed,
   fetchOrderInProgress,
   sendSMSInProgress,
@@ -64,7 +64,7 @@ const sendSMSOperation = (payload) => {
 
 const onSuccess = (dispatch) => {
   return (data) => {
-    dispatch(fetchOrderSuccess(data));
+    dispatch(fetchModificationSuccess(data));
   };
 };
 

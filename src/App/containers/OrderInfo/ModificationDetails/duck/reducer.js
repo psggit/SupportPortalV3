@@ -1,6 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
 import {
-  fetchOrderSuccess,
+  fetchModificationSuccess,
   fetchOrderFailed,
   fetchOrderInProgress,
   sendSMSInProgress,
@@ -23,7 +23,7 @@ import {
 import { setErrorMessage } from "../../../../utils/errorMessages";
 
 const initialState = {
-  fetchOrderSuccess: false,
+  fetchModificationSuccess: false,
   fetchOrderFailed: false,
   fetchOrderInProgress: false,
   sendSMSInProgress: false,
@@ -52,7 +52,7 @@ const orderModificationReducer = createReducer(initialState, {
     ...state,
     fetchOrderInProgress: true,
     fetchOrderFailed: false,
-    fetchOrderSuccess: false,
+    fetchModificationSuccess: false,
     sendSMSInProgress: false,
     sendSMSSuccess: false,
     sendSMSFailed: false,
@@ -61,14 +61,14 @@ const orderModificationReducer = createReducer(initialState, {
     ...state,
     fetchOrderInProgress: false,
     fetchOrderFailed: true,
-    fetchOrderSuccess: false,
+    fetchModificationSuccess: false,
   }),
-  [fetchOrderSuccess]: (state, data) => {
+  [fetchModificationSuccess]: (state, data) => {
     return {
       ...state,
       fetchOrderInProgress: false,
       fetchOrderFailed: false,
-      fetchOrderSuccess: true,
+      fetchModificationSuccess: true,
       fetchUpdatedStatusFailed: false,
       fetchUpdatedStatusProgress: false,
       fetchUpdatedStatusSuccess: false,

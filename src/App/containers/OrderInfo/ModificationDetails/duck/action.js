@@ -1,6 +1,6 @@
 import { createAction } from "@reduxjs/toolkit";
 
-const fetchOrderSuccess = createAction("fetchOrderSuccess");
+const fetchModificationSuccess = createAction("fetchModificationSuccess");
 const fetchOrderFailed = createAction("fetchOrderFailed");
 const fetchOrderInProgress = createAction("fetchOrderInProgress");
 
@@ -32,7 +32,7 @@ const fetchUpdatedStatusProgress = createAction("fetchUpdatedStatusProgress");
 const resetOnUnmount = createAction("resetOnUnmount");
 
 export {
-  fetchOrderSuccess,
+  fetchModificationSuccess,
   fetchOrderFailed,
   fetchOrderInProgress,
   sendSMSInProgress,

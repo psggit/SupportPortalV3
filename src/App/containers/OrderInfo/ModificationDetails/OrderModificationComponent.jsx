@@ -46,7 +46,7 @@ const OrderModificationComponent = (props) => {
 
   useEffect(() => {
     if (
-      props.fetchOrderSuccess &&
+      props.fetchModificationSuccess &&
       props.orderList.order_modification.length > 0
     ) {
       const orderId = props.orderList.order_modification[0].order_id;
@@ -120,7 +120,7 @@ const OrderModificationComponent = (props) => {
   return (
     <Grid container spacing={4}>
       <Grid item xs={6}>
-        {props.fetchOrderSuccess &&
+        {props.fetchModificationSuccess &&
           props.orderList.order_modification.length > 0 && (
             <DetailsCard
               title="LATEST MODIFICATION DETAILS"
@@ -159,7 +159,7 @@ const OrderModificationComponent = (props) => {
 };
 
 OrderModificationComponent.propTypes = {
-  fetchOrderSuccess: PropTypes.bool,
+  fetchModificationSuccess: PropTypes.bool,
   fetchCancelCartSuccess: PropTypes.bool,
   fetchUpdatedStatusFailed: PropTypes.bool,
   sendSMSSuccess: PropTypes.bool,

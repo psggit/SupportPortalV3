@@ -9,17 +9,19 @@ import {
 
 const mapStateToProps = (state) => {
   return {
-    orderList: state.orderModify.orderList,
-    fetchOrderSuccess: state.orderModify.fetchOrderSuccess,
-    fetchOrderFailed: state.orderModify.fetchOrderFailed,
-    fetchOrderInProgress: state.orderModify.fetchOrderInProgress,
-    sendSMSInProgress: state.orderModify.sendSMSInProgress,
-    sendSMSSuccess: state.orderModify.sendSMSSuccess,
-    sendSMSFailed: state.orderModify.sendSMSFailed,
-    fetchCancelCartSuccess: state.orderModify.fetchCancelCartSuccess,
-    fetchUpdatedStatusSuccess: state.orderModify.fetchUpdatedStatusSuccess,
-    fetchUpdatedStatusFailed: state.orderModify.fetchUpdatedStatusFailed,
-    msg: state.orderModify.msg,
+    orderId: state.home.orderId,
+    orderList: state.order.orderModify.orderList,
+    fetchModificationSuccess: state.order.orderModify.fetchModificationSuccess,
+    fetchOrderFailed: state.order.orderModify.fetchOrderFailed,
+    fetchOrderInProgress: state.order.orderModify.fetchOrderInProgress,
+    sendSMSInProgress: state.order.orderModify.sendSMSInProgress,
+    sendSMSSuccess: state.order.orderModify.sendSMSSuccess,
+    sendSMSFailed: state.order.orderModify.sendSMSFailed,
+    fetchCancelCartSuccess: state.order.orderModify.fetchCancelCartSuccess,
+    fetchUpdatedStatusSuccess:
+      state.order.orderModify.fetchUpdatedStatusSuccess,
+    fetchUpdatedStatusFailed: state.order.orderModify.fetchUpdatedStatusFailed,
+    msg: state.order.orderModify.msg,
   };
 };
 

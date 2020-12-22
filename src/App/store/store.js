@@ -41,7 +41,7 @@ const store = configureStore({
     acitivityLog: acitivityListReducer,
     issues: issuesReducer,
     orderTracking: orderTrackingReducer,
-    orderModify: orderModificationReducer,
+    //orderModify: orderModificationReducer,
     hipcoins: hipcoinsReducer,
     hipcoinsDetails: hipcoinsDetailsReducer,
   }),

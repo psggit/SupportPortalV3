@@ -50,8 +50,8 @@ const mapStateToProps = (state) => {
     errorMessageCustomerNotes: state.order.customer.errorMessageCustomerNotes,
     errorMsgIssueTypes: state.order.orderInfo.errorMsgIssueTypes,
     errorDAList: state.order.deliveryAgent.errorDAList,
-    orderList: state.orderModify.orderList,
-    fetchOrderSuccess: state.orderModify.fetchOrderSuccess,
+    orderList: state.order.orderModify.orderList,
+    fetchOrderSuccess: state.order.orderModify.fetchOrderSuccess,
   };
 };
 

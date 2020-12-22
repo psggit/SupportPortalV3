@@ -80,7 +80,7 @@ const ModificationListComponent = (props) => {
   }, [rowsPerPage, page]);
 
   useEffect(() => {
-    if (props.fetchOrderSuccess) {
+    if (props.fetchModificationSuccess) {
       if (props.orderList.order_modification !== null) {
         loopData(props.orderList.order_modification);
         setShowData(true);
@@ -88,7 +88,7 @@ const ModificationListComponent = (props) => {
         setShowData(false);
       }
     }
-  }, [page, props.fetchOrderSuccess]);
+  }, [page, props.fetchModificationSuccess]);
 
   const filledRows = [];
   const loopData = (data) => {
@@ -147,7 +147,13 @@ const ModificationListComponent = (props) => {
             </Grid>
           </Grid>
         </Paper>
-        <Box width="95%" mx="auto" className={classes.table} mt={4}>
+        <Box
+          width="95%"
+          mx="auto"
+          className={classes.table}
+          mt={4}
+          component={Paper}
+        >
           <TableContainer className={classes.TableContainer}>
             <Table size="small">
               <TableHead>
@@ -167,7 +173,7 @@ const ModificationListComponent = (props) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {props.fetchOrderSuccess &&
+                {props.fetchModificationSuccess &&
                   rows &&
                   rows.map((data, index) => {
                     return (
@@ -289,7 +295,7 @@ ModificationListComponent.propTypes = {
   fetchListOrderModification: PropTypes.func,
   sendSMSOperation: PropTypes.func,
   cancelOrderRequest: PropTypes.func,
-  fetchOrderSuccess: PropTypes.bool,
+  fetchModificationSuccess: PropTypes.bool,
   fetchOrderInProgress: PropTypes.bool,
   sendSMSInProgress: PropTypes.bool,
   sendSMSSuccess: PropTypes.bool,
