@@ -344,7 +344,7 @@ const OrderSummary = (props) => {
           title="UPI"
           value={orderInfo.upi_id ? orderInfo.upi_id : "-"}
         />
-        {props.cartSummary !== null && (
+        {props.cartSummary !== null && props.show === true && (
           <Box>
             <Divider />
             <OrderSummaryItem
@@ -510,6 +510,7 @@ OrderSummary.propTypes = {
   modify: PropTypes.bool,
   products: PropTypes.array,
   cartSummary: PropTypes.object,
+  show: PropTypes.bool,
 };
 
 export { OrderSummary };

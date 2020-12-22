@@ -70,6 +70,8 @@ const CartComponent = (props) => {
   const [disableModify, setDisableModify] = useState(props.buttonState);
   const [confirm, setConfirm] = useState(false);
   const [cancel, setCancel] = useState(false);
+  const [show, setShow] = useState(true);
+
   useEffect(() => {
     // check pending modify request
     let payload = {
@@ -129,8 +131,9 @@ const CartComponent = (props) => {
 
   const handleCancel = () => {
     console.log("from cancel");
-    setModify(false);
+    setModify(true);
     setCancel(true);
+    setShow(false);
   };
 
   const handleConfirm = () => {
@@ -189,7 +192,7 @@ const CartComponent = (props) => {
     );
   }
 
-  if (props.cartSummary !== null) {
+  if (props.cartSummary !== null && show === true) {
     actionButtons = [
       <Button
         variant="outlined"
@@ -226,6 +229,7 @@ const CartComponent = (props) => {
           modify={modifyState}
           cartSummary={props.cartSummary}
           confirm={confirm}
+          show={show}
         />
       </CartDetailsCard>
       {(props.fetchUpdateCartSuccess || props.fetchUpdateCartFailed) && (
