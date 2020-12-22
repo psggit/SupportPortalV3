@@ -29,6 +29,11 @@ const useStyles = makeStyles((theme) => ({
   ListItems: {
     color: "#010B13",
   },
+  Message: {
+    "& .MuiTypography-displayBlock": {
+      color: "red",
+    },
+  },
   ListItemRoot: {
     width: "100%",
   },
@@ -131,21 +136,7 @@ const CartItem = (props) => {
       </ListItem>
 
       <ListItem dense disableGutters>
-        <ListItemText className={classes.ListItems} primary={value.message} />
-      </ListItem>
-
-      <ListItem dense disableGutters>
-        <ListItemText className={classes.ListItems} primary={"Revised Count"} />
-
-        <Box className={classes.addComponentLeft}>
-          <IconButton style={{ color: "#010B13" }}></IconButton>
-        </Box>
-        <Box className={classes.addComponentCenter}>
-          <Typography>{value.revised_count}</Typography>
-        </Box>
-        <Box className={classes.addComponentRight}>
-          <IconButton style={{ color: "#010B13" }}></IconButton>
-        </Box>
+        <ListItemText className={classes.Message} primary={value.message} />
       </ListItem>
     </>
   );
