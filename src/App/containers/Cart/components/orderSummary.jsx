@@ -239,6 +239,22 @@ const OrderSummary = (props) => {
           value={orderInfo.total_additional_fee}
           type="button"
         >
+          <OrderSummaryItem
+            title="Delivery Charges:"
+            value={
+              props.cartSummary
+                ? props.cartSummary.display_details[2].display_value
+                : "-"
+            }
+          />
+          <OrderSummaryItem
+            title="Other Charges:"
+            value={
+              props.cartSummary
+                ? props.cartSummary.display_details[3].display_value
+                : "-"
+            }
+          />
           {orderInfo.fee_details_v1 &&
             orderInfo.fee_details_v1.map((value) => {
               return (
@@ -269,23 +285,61 @@ const OrderSummary = (props) => {
       </List>
       <Divider />
       <List>
-        <OrderSummaryItem title="Payment Details" value={""} type="button">
-          <OrderSummaryItem title="Mode of Payment:" value="-" />
-          <OrderSummaryItem
-            title="Wallet:"
-            value={orderInfo.payment_total}
-            type="button"
-          >
+        {props.cartSummary !== null && props.cartSummary.action === "toRefund" && (
+          <OrderSummaryItem title="Payment Details" value={""} type="button">
+            <OrderSummaryItem title="Mode of Payment:" value="-" />
             <OrderSummaryItem
-              title="HipBar Wallet:"
-              value={orderInfo.hipbar_wallet ? orderInfo.hipbar_wallet : "-"}
-            />
-            <OrderSummaryItem
-              title="Gift Wallet:"
-              value={orderInfo.gift_wallet ? orderInfo.gift_wallet : "-"}
-            />
+              title="Wallet:"
+              value={orderInfo.payment_total}
+              type="button"
+            >
+              {/* <OrderSummaryItem
+                title="HipBar Wallet:"
+                value={orderInfo.hipbar_wallet ? orderInfo.hipbar_wallet : "-"}
+              /> */}
+              {/* <OrderSummaryItem
+                title="Gift Wallet:"
+                value={orderInfo.gift_wallet ? orderInfo.gift_wallet : "-"}
+              /> */}
+              <OrderSummaryItem
+                title="Hipbar Wallet:"
+                value={
+                  props.cartSummary
+                    ? props.cartSummary.display_details[4].display_value
+                    : "-"
+                }
+              />
+              <OrderSummaryItem
+                title="Gift Wallet:"
+                value={
+                  props.cartSummary
+                    ? props.cartSummary.display_details[5].display_value
+                    : "-"
+                }
+              />
+              <OrderSummaryItem
+                title="Nodel Amount:"
+                value={
+                  props.cartSummary
+                    ? props.cartSummary.display_details[6].display_value
+                    : "-"
+                }
+              />
+              <OrderSummaryItem
+                title="Note:"
+                value={
+                  props.cartSummary
+                    ? props.cartSummary.display_details[7].display_value
+                    : "-"
+                }
+              />
+              {/* <OrderSummaryItem
+                title="Note:"
+                value={orderInfo.gift_wallet ? orderInfo.gift_wallet : "-"}
+              /> */}
+            </OrderSummaryItem>
           </OrderSummaryItem>
-        </OrderSummaryItem>
+        )}
         <OrderSummaryItem
           title="UPI"
           value={orderInfo.upi_id ? orderInfo.upi_id : "-"}

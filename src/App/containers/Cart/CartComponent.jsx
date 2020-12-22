@@ -157,7 +157,8 @@ const CartComponent = (props) => {
       color="primary"
       onClick={handleModify}
       key={uuid()}
-      disabled={disableModify}
+      //disabled={disableModify}
+      disabled={!props.orderInfo.change_retailer_button}
     >
       Modify
     </Button>,
