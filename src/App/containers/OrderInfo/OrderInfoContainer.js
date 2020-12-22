@@ -22,7 +22,7 @@ const mapStateToProps = (state) => {
     fetchOrderInfoProgress: state.order.orderInfo.fetchOrderInfoProgress,
     fetchOrderInfoFailure: state.order.orderInfo.fetchOrderInfoFailure,
     customerDetails: state.order.customerDetails,
-    from: state.login.authData.mobile,
+    // from: state.login.authData.mobile,
     successMsg: state.order.orderInfo.successMsg,
     errorMsg: state.order.orderInfo.errorMsg,
     connectCallSuccess: state.order.orderInfo.connectCallSuccess,

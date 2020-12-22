@@ -187,11 +187,11 @@ const OrderInfoComponent = (props) => {
   const handleCall = (to) => {
     //to
     //from
-    const payload = {
-      to: to,
-      from: props.from,
-    };
-    props.connectCall(payload);
+    // const payload = {
+    //   to: to,
+    //   from: props.from,
+    // };
+    // props.connectCall(payload);
   };
 
   const updateNotes = () => {
