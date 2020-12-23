@@ -9,7 +9,6 @@ import {
 import { resetOnUnmount } from "./duck/action";
 
 const mapStateToProps = (state) => {
-  console.log("state", state.order.orderModify.orderList);
   return {
     orderId: state.home.orderId,
     orderList: state.order.orderModify.orderList,

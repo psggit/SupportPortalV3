@@ -150,25 +150,29 @@ const orderModificationReducer = createReducer(initialState, {
       fetchSupportPersonListSuccess: false,
     };
   },
-  [fetchCancelCartSuccess]: (state) => ({
-    ...state,
-    fetchCancelCartFailed: false,
-    fetchCancelCartProgress: false,
-    fetchCancelCartSuccess: true,
-    errorMsg: "",
-  }),
-  [fetchCancelCartProgress]: (state, data) => ({
+  [fetchCancelCartSuccess]: (state, data) => {
+    console.log("[reducerrr]", data);
+    return {
+      ...state,
+      fetchCancelCartFailed: false,
+      fetchCancelCartProgress: false,
+      fetchCancelCartSuccess: true,
+      errorMsg: "",
+    }
+  },
+  [fetchCancelCartProgress]: (state) => ({
     ...state,
     fetchCancelCartFailed: false,
     fetchCancelCartProgress: true,
     fetchCancelCartSuccess: false,
-    errorMsg: setErrorMessage(data),
+    //errorMsg: setErrorMessage(data),
   }),
-  [fetchCancelCartFailed]: (state) => ({
+  [fetchCancelCartFailed]: (state, data) => ({
     ...state,
     fetchCancelCartFailed: true,
     fetchCancelCartProgress: false,
     fetchCancelCartSuccess: false,
+    errorMsg: setErrorMessage(data),
   }),
   [fetchUpdatedStatusSuccess]: (state, data) => ({
     ...state,
