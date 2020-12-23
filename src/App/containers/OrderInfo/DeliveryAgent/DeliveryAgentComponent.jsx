@@ -15,7 +15,7 @@ import ErrorMsg from "../../../components/errorMsg";
 import uuid from "react-uuid";
 import Alert from "@material-ui/lab/Alert";
 
-const keysToRender = [
+let keysToRender = [
   "delivery_agent_id",
   "delivery_agent_name",
   "delivery_agent_contact_number",
@@ -23,7 +23,7 @@ const keysToRender = [
   "delivery_agent_locality_name",
   "delivery_agent_limit",
 ];
-const keyMap = {
+let keyMap = {
   delivery_agent_id: "Agent ID",
   delivery_agent_name: "Agent Name",
   delivery_agent_contact_number: "Mobile Number",
@@ -40,12 +40,40 @@ const DeliveryAgentComponent = (props) => {
   const [selectedValue, setValue] = useState("");
   const [showDialogBox, setShowDialogBox] = useState(false);
   const [showUnassignDADialog, setShowUnassignDADialog] = useState(false);
+  const [showUnreserveDADialog, setShowUnreserveDADialog] = useState(false);
   const [cancelReasonNote, setCancelReasonNote] = useState("");
   const [showError, setShowError] = useState(false);
+  let [heading, setHeading] = useState("Delivery Agent Details");
   //const [disableBtn, setDisableBtn] = useState(false);
 
   useEffect(() => {
-    const details = getListOfDataObjects(props.orderInfo, keysToRender);
+    let details = {};
+    if (props.orderInfo.reserved_for_da_id === null) {
+      details = getListOfDataObjects(props.orderInfo, keysToRender);
+    } else {
+      keysToRender = [
+        "id",
+        "name",
+        "mobile_number",
+        "city",
+        "address",
+        "agent_limit",
+      ];
+      keyMap = {
+        id: "Agent ID",
+        name: "Agent Name",
+        mobile_number: "Mobile Number",
+        city: "City",
+        address: "Address",
+        agent_limit: "Agent Limit",
+      };
+      setHeading("Delivery Agent Details (Reserve)");
+      details = getListOfDataObjects(
+        props.orderInfo.reserved_da_info,
+        keysToRender
+      );
+    }
+
     setData(details);
     if (localStorage.getItem("x-hasura-role") !== "ops_delivery_manager") {
       props.fetchNotes(props.orderInfo.order_id);
@@ -64,6 +92,19 @@ const DeliveryAgentComponent = (props) => {
       setShowError(false);
     }
   }, [props.daListSuccess]);
+
+  useEffect(() => {
+    if(props.reserveDaSuccess){
+      setTimeout(() => {
+        location.reload();
+      }, 2500);
+    }
+    if(props.fetchUnreserveDASuccess){
+      setTimeout(() => {
+        location.reload();
+      }, 2500);
+    }
+  }, [props.reserveDaSuccess, props.fetchUnreserveDASuccess]);
 
   const handleTextChange = (e) => {
     setCancelReasonNote(e.target.value);
@@ -97,6 +138,20 @@ const DeliveryAgentComponent = (props) => {
   const handleUnassignDA = () => {
     props.unassignDeliveryAgent(props.orderInfo.order_id);
     setShowUnassignDADialog(false);
+  };
+
+  const mountUnreserveDialogBox = () => {
+    setShowUnreserveDADialog(true);
+  };
+
+  const handleUnreserveDA = () => {
+    console.log("props.orderInfo.order_id", props.orderInfo.order_id);
+    props.unreserveDeliveryAgent(props.orderInfo.order_id);
+    setShowUnreserveDADialog(false);
+  };
+
+  const unmountUnreserveDA = () => {
+    setShowUnreserveDADialog(false);
   };
 
   const handleReserveOrder = () => {
@@ -135,7 +190,7 @@ const DeliveryAgentComponent = (props) => {
     </Button>,
   ];
 
-  const actionButtons = [
+  let actionButtons = [
     <Button
       variant="outlined"
       color="primary"
@@ -166,6 +221,39 @@ const DeliveryAgentComponent = (props) => {
     // </Button>,
   ];
 
+  if (props.orderInfo.is_reserve_da) {
+    actionButtons = [
+      <Button
+        variant="outlined"
+        color="primary"
+        key={uuid()}
+        onClick={mountUnassignDA}
+        disabled={!props.orderInfo.change_retailer_button}
+      >
+        Unassign
+      </Button>,
+      <Button
+        variant="outlined"
+        color="primary"
+        key={uuid()}
+        onClick={mountUnreserveDialogBox}
+        disabled={!props.orderInfo.is_reserve_da}
+      >
+        Unreserve Order
+      </Button>,
+      // <Button
+      //   variant="contained"
+      //   color="primary"
+      //   key={uuid()}
+      //   onClick={() =>
+      //     props.handleCall(props.orderInfo.delivery_agent_contact_number)
+      //   }
+      // >
+      //   Call
+      // </Button>,
+    ];
+  }
+
   const keysToRenderInNotesCard = ["notes", "created_at"];
   let actionBtns = [
     <Button variant="outlined" color="primary" onClick={unmountDialogBox}>
@@ -195,7 +283,7 @@ const DeliveryAgentComponent = (props) => {
     <Grid container spacing={4}>
       <Grid item xs={6}>
         <DeliveryAgentDetailsCard
-          title="Delivery Agent Details"
+          title={heading}
           actions={
             localStorage.getItem("x-hasura-role") !== "support_person" &&
             actionButtons
@@ -250,7 +338,7 @@ const DeliveryAgentComponent = (props) => {
       <div>
         {showDialogBox && (
           <Dialog
-            title="Reserve Orders"
+            title="Reserve Order"
             actions={actionBtns}
             className={classes.minHeightDiv}
           >
@@ -330,6 +418,40 @@ const DeliveryAgentComponent = (props) => {
       {props.daListFail && (
         <ErrorMsg show={true} message={props.message} type="error" />
       )}
+      {props.fetchUnreserveDASuccess && (
+        <ErrorMsg show={true} message={props.message} type="success" />
+      )}
+      {props.fetchUnreserveDAFailed && (
+        <ErrorMsg
+          show={true}
+          message={props.errorMessageUnreserve}
+          type="error"
+        />
+      )}
+      <div>
+        {showUnreserveDADialog && (
+          <Dialog
+            title="Unreserve Delivery Agent"
+            subtitle="Are you sure you want to unreserve the delivery agent for this order?"
+            actions={[
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleUnreserveDA}
+              >
+                Yes
+              </Button>,
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={unmountUnreserveDA}
+              >
+                No
+              </Button>,
+            ]}
+          />
+        )}
+      </div>
     </Grid>
   );
 };
@@ -361,6 +483,8 @@ DeliveryAgentComponent.propTypes = {
   errorMessageUnassign: PropTypes.string,
   errorMessageReserve: PropTypes.string,
   daListProgress: PropTypes.bool,
+  unreserveDeliveryAgent: PropTypes.func,
+  errorMessageUnreserve: PropTypes.string,
 };
 
 const useStyles = makeStyles(() => ({

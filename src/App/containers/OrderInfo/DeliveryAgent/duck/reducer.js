@@ -15,6 +15,9 @@ import {
   fetchDaIssueListProgress,
   fetchDaIssueListSuccess,
   fetchDaIssueListFailure,
+  fetchUnreserveDASuccess,
+  fetchUnreserveDAFailed,
+  fetchUnreserveDAProgress,
   resetOnUnmount,
 } from "./action";
 import { setErrorMessage } from "../../../../utils/errorMessages";
@@ -29,6 +32,7 @@ const initialValue = {
   errorMsg: "",
   errorMessageReserve: "",
   errorMessageUnassign: "",
+  errorMessageUnreserve: "",
   errorDAList: "",
   deliveryAgentList: null,
   daListSuccess: false,
@@ -44,6 +48,9 @@ const initialValue = {
   fetchDaIssueListProgress: false,
   fetchDaIssueListSuccess: false,
   fetchDaIssueListFailure: false,
+  fetchUnreserveDASuccess: false,
+  fetchUnreserveDAFailed: false,
+  fetchUnreserveDAProgress: false,
 };
 const deliveryAgentReducer = createReducer(initialValue, {
   [fetchDeliveryAgentNotesSuccess]: (state, data) => {
@@ -157,6 +164,26 @@ const deliveryAgentReducer = createReducer(initialValue, {
     reserveDAProgress: true,
     reserveDaSuccess: false,
     reserveDaFail: false,
+  }),
+  [fetchUnreserveDASuccess]: (state, data) => ({
+    ...state,
+    fetchUnreserveDASuccess: true,
+    fetchUnreserveDAFailed: false,
+    fetchUnreserveDAProgress: false,
+    message: data.payload.message,
+  }),
+  [fetchUnreserveDAFailed]: (state, data) => ({
+    ...state,
+    fetchUnreserveDASuccess: false,
+    fetchUnreserveDAFailed: true,
+    fetchUnreserveDAProgress: false,
+    errorMessageUnreserve: setErrorMessage(data),
+  }),
+  [fetchUnreserveDAProgress]: (state) => ({
+    ...state,
+    fetchUnreserveDASuccess: false,
+    fetchUnreserveDAFailed: false,
+    fetchUnreserveDAProgress: true,
   }),
   [resetOnUnmount]: () => ({
     ...initialValue,

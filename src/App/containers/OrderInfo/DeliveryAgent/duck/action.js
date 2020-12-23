@@ -31,6 +31,10 @@ const fetchReserveDASuccess = createAction("fetchReserveDASuccess");
 const fetchReserveDAFailed = createAction("fetchReserveDAFailed");
 const fetchReserveDAProgress = createAction("fetchReserveDAProgress");
 
+const fetchUnreserveDASuccess = createAction("fetchUnreserveDASuccess");
+const fetchUnreserveDAFailed = createAction("fetchUnreserveDAFailed");
+const fetchUnreserveDAProgress = createAction("fetchUnreserveDAProgress");
+
 const resetOnUnmount = createAction("resetOnUnmount");
 
 export {
@@ -49,5 +53,8 @@ export {
   fetchDaIssueListProgress,
   fetchDaIssueListSuccess,
   fetchDaIssueListFailure,
+  fetchUnreserveDASuccess,
+  fetchUnreserveDAFailed,
+  fetchUnreserveDAProgress,
   resetOnUnmount,
 };

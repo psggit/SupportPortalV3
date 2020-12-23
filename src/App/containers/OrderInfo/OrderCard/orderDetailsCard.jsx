@@ -210,7 +210,7 @@ const OrderDetailsCard = (props) => {
     const payload = {
       order_id: props.order.order_id,
       id_proof: kyc,
-      slot_id: "",
+      slot_id: props.order.lot_id === null ? "" : `${props.order.lot_id}`,
       // digits: kycArray.toString().split(",").join(""),
       // year_of_birth: dobArray.toString().split(",").join(""),
       digits: kycDigits,
@@ -228,7 +228,7 @@ const OrderDetailsCard = (props) => {
     const payload = {
       reason_id: parseInt(selectedValue),
       order_id: props.order.order_id,
-      slot_id: "",
+      slot_id: props.order.lot_id === null ? "" : `${props.order.lot_id}`,
       notes: notes,
     };
     props.cancelOrder(payload);
