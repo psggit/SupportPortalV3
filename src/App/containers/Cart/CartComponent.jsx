@@ -182,7 +182,6 @@ const CartComponent = (props) => {
         This order already has an <b>Order Modification</b> request.
         <br />
         <br />
-        Go to{" "}
         {/* <Link to={{ pathname: `/modification-list/${props.orderInfo.order_id}` }}>
           Order Modificaton
         </Link>{" "}
@@ -196,7 +195,11 @@ const CartComponent = (props) => {
     );
   }
 
-  if (props.cartSummary !== null && props.cartSummary.action === "nothing") {
+  if (
+    props.cartSummary !== null &&
+    props.cartSummary.action === "nothing" &&
+    show === true
+  ) {
     cardFooter = <Alert severity="info">{message}</Alert>;
   }
 
@@ -247,7 +250,7 @@ const CartComponent = (props) => {
           type={props.fetchUpdateCartSuccess ? "success" : "info"}
         />
       )}
-      <ErrorMsg message={message} show={true} type="info" />
+      {/* <ErrorMsg message={message} show={true} type="info" /> */}
     </>
   );
 };
