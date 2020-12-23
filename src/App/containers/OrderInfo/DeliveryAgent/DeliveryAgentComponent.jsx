@@ -195,33 +195,28 @@ const DeliveryAgentComponent = (props) => {
       variant="outlined"
       color="primary"
       key={uuid()}
-      onClick={mountUnassignDA}
-      disabled={!props.orderInfo.change_retailer_button}
-    >
-      Unassign
-    </Button>,
-    <Button
-      variant="outlined"
-      color="primary"
-      key={uuid()}
       onClick={mountDialogBox}
       disabled={!props.orderInfo.change_retailer_button}
     >
       Reserve Order
     </Button>,
-    // <Button
-    //   variant="contained"
-    //   color="primary"
-    //   key={uuid()}
-    //   onClick={() =>
-    //     props.handleCall(props.orderInfo.delivery_agent_contact_number)
-    //   }
-    // >
-    //   Call
-    // </Button>,
   ];
 
   if (props.orderInfo.is_reserve_da) {
+    actionButtons = [
+      <Button
+        variant="outlined"
+        color="primary"
+        key={uuid()}
+        onClick={mountUnreserveDialogBox}
+        disabled={!props.orderInfo.is_reserve_da}
+      >
+        Unreserve Order
+      </Button>
+    ];
+  }
+
+  if (props.orderInfo.delivery_agent_id !== null) {
     actionButtons = [
       <Button
         variant="outlined"
@@ -232,25 +227,6 @@ const DeliveryAgentComponent = (props) => {
       >
         Unassign
       </Button>,
-      <Button
-        variant="outlined"
-        color="primary"
-        key={uuid()}
-        onClick={mountUnreserveDialogBox}
-        disabled={!props.orderInfo.is_reserve_da}
-      >
-        Unreserve Order
-      </Button>,
-      // <Button
-      //   variant="contained"
-      //   color="primary"
-      //   key={uuid()}
-      //   onClick={() =>
-      //     props.handleCall(props.orderInfo.delivery_agent_contact_number)
-      //   }
-      // >
-      //   Call
-      // </Button>,
     ];
   }
 
