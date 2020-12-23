@@ -71,6 +71,7 @@ const CartComponent = (props) => {
   const [confirm, setConfirm] = useState(false);
   const [cancel, setCancel] = useState(false);
   const [show, setShow] = useState(true);
+  const [message, showMessage] = useState();
 
   useEffect(() => {
     // check pending modify request
@@ -107,7 +108,10 @@ const CartComponent = (props) => {
 
   useEffect(() => {
     if (props.fetchCartSummarySuccess) {
+      //console.log("pujaaaa", props.cartSummary.action_title);
       modifyState = props.cartSummary.to_show_confirm;
+      //msg = props.cartSummary.action_title;
+      showMessage(props.cartSummary.action_title);
       setModify(!modify);
       setDisableModify(modifyState);
     }
@@ -192,6 +196,10 @@ const CartComponent = (props) => {
     );
   }
 
+  if (props.cartSummary !== null && props.cartSummary.action === "nothing") {
+    cardFooter = <Alert severity="info">{message}</Alert>;
+  }
+
   if (props.cartSummary !== null && show === true) {
     actionButtons = [
       <Button
@@ -239,6 +247,7 @@ const CartComponent = (props) => {
           type={props.fetchUpdateCartSuccess ? "success" : "info"}
         />
       )}
+      <ErrorMsg message={message} show={true} type="info" />
     </>
   );
 };
