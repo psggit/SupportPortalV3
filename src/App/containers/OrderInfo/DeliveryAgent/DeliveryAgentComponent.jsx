@@ -94,12 +94,12 @@ const DeliveryAgentComponent = (props) => {
   }, [props.daListSuccess]);
 
   useEffect(() => {
-    if(props.reserveDaSuccess){
+    if (props.reserveDaSuccess) {
       setTimeout(() => {
         location.reload();
       }, 2500);
     }
-    if(props.fetchUnreserveDASuccess){
+    if (props.fetchUnreserveDASuccess) {
       setTimeout(() => {
         location.reload();
       }, 2500);
@@ -195,33 +195,28 @@ const DeliveryAgentComponent = (props) => {
       variant="outlined"
       color="primary"
       key={uuid()}
-      onClick={mountUnassignDA}
-      disabled={!props.orderInfo.change_retailer_button}
-    >
-      Unassign
-    </Button>,
-    <Button
-      variant="outlined"
-      color="primary"
-      key={uuid()}
       onClick={mountDialogBox}
       disabled={!props.orderInfo.change_retailer_button}
     >
       Reserve Order
     </Button>,
-    // <Button
-    //   variant="contained"
-    //   color="primary"
-    //   key={uuid()}
-    //   onClick={() =>
-    //     props.handleCall(props.orderInfo.delivery_agent_contact_number)
-    //   }
-    // >
-    //   Call
-    // </Button>,
   ];
 
   if (props.orderInfo.is_reserve_da) {
+    actionButtons = [
+      <Button
+        variant="outlined"
+        color="primary"
+        key={uuid()}
+        onClick={mountUnreserveDialogBox}
+        disabled={!props.orderInfo.is_reserve_da}
+      >
+        Unreserve Order
+      </Button>,
+    ];
+  }
+
+  if (props.orderInfo.delivery_agent_id !== null) {
     actionButtons = [
       <Button
         variant="outlined"
@@ -232,25 +227,6 @@ const DeliveryAgentComponent = (props) => {
       >
         Unassign
       </Button>,
-      <Button
-        variant="outlined"
-        color="primary"
-        key={uuid()}
-        onClick={mountUnreserveDialogBox}
-        disabled={!props.orderInfo.is_reserve_da}
-      >
-        Unreserve Order
-      </Button>,
-      // <Button
-      //   variant="contained"
-      //   color="primary"
-      //   key={uuid()}
-      //   onClick={() =>
-      //     props.handleCall(props.orderInfo.delivery_agent_contact_number)
-      //   }
-      // >
-      //   Call
-      // </Button>,
     ];
   }
 
@@ -277,13 +253,24 @@ const DeliveryAgentComponent = (props) => {
     ];
   }
 
+  let cardTitle = heading;
+
+  if (
+    props.orderInfo.delivery_agent_id === props.orderInfo.reserved_da_info.id
+  ) {
+    // setHeading("Delivery Agent Details");
+    cardTitle = "Delivery Agent Details";
+  }
+
+  
+
   // console.log("[DA-component]", props.daList)
 
   return (
     <Grid container spacing={4}>
       <Grid item xs={6}>
         <DeliveryAgentDetailsCard
-          title={heading}
+          title={cardTitle}
           actions={
             localStorage.getItem("x-hasura-role") !== "support_person" &&
             actionButtons
