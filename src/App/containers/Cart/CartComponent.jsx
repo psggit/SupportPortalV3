@@ -108,9 +108,7 @@ const CartComponent = (props) => {
 
   useEffect(() => {
     if (props.fetchCartSummarySuccess) {
-      //console.log("pujaaaa", props.cartSummary.action_title);
       modifyState = props.cartSummary.to_show_confirm;
-      //msg = props.cartSummary.action_title;
       showMessage(props.cartSummary.action_title);
       setModify(!modify);
       setDisableModify(modifyState);
