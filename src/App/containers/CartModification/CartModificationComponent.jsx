@@ -122,6 +122,7 @@ const CartModificationComponent = (props) => {
   const [state, setState] = useState({ right: false });
   const [searchQueryText, setSearchQueryText] = useState("");
   const [searchList, setSearchList] = useState("brand");
+  const orderId = history.location.state.orderId;
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -168,7 +169,7 @@ const CartModificationComponent = (props) => {
   }, [props.fetchGenreSuccess]);
 
   const goBack = () => {
-    history.push("/order-info/" + props.orderId);
+    history.push("/order-info/" + orderId);
   };
 
   const addItems = () => {
