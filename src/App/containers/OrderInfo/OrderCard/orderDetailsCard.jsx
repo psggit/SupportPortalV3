@@ -109,6 +109,7 @@ const OrderDetailsCard = (props) => {
     platform,
     customer_address,
     delivery_status,
+    promo_details,
     delivery_rating,
     feedback,
     consumer_concern,
@@ -209,7 +210,7 @@ const OrderDetailsCard = (props) => {
     const payload = {
       order_id: props.order.order_id,
       id_proof: kyc,
-      slot_id: "",
+      slot_id: props.order.lot_id === null ? "" : `${props.order.lot_id}`,
       // digits: kycArray.toString().split(",").join(""),
       // year_of_birth: dobArray.toString().split(",").join(""),
       digits: kycDigits,
@@ -227,7 +228,7 @@ const OrderDetailsCard = (props) => {
     const payload = {
       reason_id: parseInt(selectedValue),
       order_id: props.order.order_id,
-      slot_id: "",
+      slot_id: props.order.lot_id === null ? "" : `${props.order.lot_id}`,
       notes: notes,
     };
     props.cancelOrder(payload);
@@ -330,6 +331,34 @@ const OrderDetailsCard = (props) => {
             />
           </ListItem>
         </List>
+        <ListItem dense disableGutters={true} className={classes.ListItemRoot}>
+          <ListItemText
+            primary="Promo Code"
+            className={classes.ListItemRootTitle}
+            classes={{ root: classes.ListItemRootTitle }}
+          />
+          <ListItemText
+            primary={promo_details.promo_code ? promo_details.promo_code : "-"}
+            className={classes.ListItemTextRoot}
+            classes={{ root: classes.ListItemTextRoot }}
+          />
+        </ListItem>
+        <ListItem dense disableGutters={true} className={classes.ListItemRoot}>
+          <ListItemText
+            primary="Cashback"
+            className={classes.ListItemRootTitle}
+            classes={{ root: classes.ListItemRootTitle }}
+          />
+          <ListItemText
+            primary={
+              promo_details.display_cashback
+                ? promo_details.display_cashback
+                : "-"
+            }
+            className={classes.ListItemTextRoot}
+            classes={{ root: classes.ListItemTextRoot }}
+          />
+        </ListItem>
         <List dense disablePadding>
           <ListItem dense disableGutters={true}>
             <ListItemText

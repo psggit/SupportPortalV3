@@ -14,6 +14,9 @@ import {
   fetchDaIssueListProgress,
   fetchDaIssueListSuccess,
   fetchDaIssueListFailure,
+  fetchUnreserveDASuccess,
+  fetchUnreserveDAFailed,
+  fetchUnreserveDAProgress,
 } from "./action";
 // import { createSession } from "../../../utils";
 import { fetchRetailerNotesAPI } from "../../../../utils/fetchRetailerNotesAPI";
@@ -21,6 +24,7 @@ import { daListAPI } from "../../../../utils/daListAPI";
 import { unassignDaAPI } from "../../../../utils/unassignDaAPI";
 import { reserveOrderAPI } from "../../../../utils";
 import { daTypeNotesAPI } from "../../../../utils/daTypeNotesAPI";
+import { unreserveOrderAPI } from "../../../../utils";
 
 const processResponse = () => {
   return (res) => {
@@ -89,6 +93,18 @@ const reserveOrderSuccess = (dispatch) => {
 const reserveOrderError = (dispatch) => {
   return (error) => {
     dispatch(fetchReserveDAFailed(error));
+  };
+};
+
+const unreserveOrderSuccess = (dispatch) => {
+  return (data) => {
+    dispatch(fetchUnreserveDASuccess(data));
+  };
+};
+
+const unreserveOrderError = (dispatch) => {
+  return (error) => {
+    dispatch(fetchUnreserveDAFailed(error));
   };
 };
 
@@ -162,10 +178,23 @@ const fetchDaIssueList = () => {
   };
 };
 
+const unreserveDeliveryAgent = (reqBody) => {
+  return (dispatch) => {
+    dispatch(fetchUnreserveDAProgress());
+    unreserveOrderAPI(
+      reqBody,
+      processResponse(dispatch),
+      unreserveOrderSuccess(dispatch),
+      unreserveOrderError(dispatch)
+    );
+  };
+};
+
 export {
   fetchDeliveryAgentNotes,
   fetchDAList,
   unassignDeliveryAgent,
   reserveDeliveryAgent,
   fetchDaIssueList,
+  unreserveDeliveryAgent,
 };
