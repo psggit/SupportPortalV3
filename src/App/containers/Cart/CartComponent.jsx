@@ -131,6 +131,11 @@ const CartComponent = (props) => {
     // history.replaceState(props.location.pathname, null);
   };
 
+  if (props.fetchCartSummarySuccess) {
+    const modifyState = props.cartSummary.display_details[0].display_value;
+    localStorage.setItem("mode", modifyState);
+  }
+
   const handleCancel = () => {
     console.log("from cancel");
     setModify(true);
@@ -201,7 +206,11 @@ const CartComponent = (props) => {
     cardFooter = <Alert severity="info">{message}</Alert>;
   }
 
-  if (props.cartSummary !== null && show === true && props.cartSummary.action !== "nothing") {
+  if (
+    props.cartSummary !== null &&
+    show === true &&
+    props.cartSummary.action !== "nothing"
+  ) {
     actionButtons = [
       <Button
         variant="outlined"

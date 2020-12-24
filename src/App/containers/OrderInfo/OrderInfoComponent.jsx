@@ -23,7 +23,7 @@ import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import SideNav from "./components/sideNav";
 import uuid from "react-uuid";
 import Alert from "@material-ui/lab/Alert";
-import { CancellationSummaryContainer} from "./../CancellationSummary"
+import { CancellationSummaryContainer } from "./../CancellationSummary";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -142,7 +142,6 @@ const OrderInfoComponent = (props) => {
     // ) {
     //   props.fetchListOrderModification(payload);
     // }
-    console.log("iii", props.fetchListOrderModification(payload));
   }, []);
 
   const textFieldChange = (e) => {
@@ -574,9 +573,12 @@ const OrderInfoComponent = (props) => {
                 id="section2"
                 className={classes.marginTop}
               >
-                <Grid item xs={12}>
-                  <OrderModificationContainer />
-                </Grid>
+                {props.fetchModificationSuccess &&
+                  props.orderList.order_modification.length > 0 && (
+                    <Grid item xs={12}>
+                      <OrderModificationContainer />
+                    </Grid>
+                  )}
                 <Grid item xs={12}>
                   {props.fetchOrderInfoSuccess && (
                     <CustomerContainer
@@ -708,6 +710,8 @@ OrderInfoComponent.propTypes = {
   fetchIssueTypesSuccess: PropTypes.bool,
   fetchIssueTypesFailed: PropTypes.bool,
   errorMsgIssueTypes: PropTypes.string,
+  fetchModificationSuccess: PropTypes.bool,
+  orderList: PropTypes.any,
 };
 
 export { OrderInfoComponent };

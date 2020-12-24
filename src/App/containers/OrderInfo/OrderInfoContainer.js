@@ -51,6 +51,7 @@ const mapStateToProps = (state) => {
     errorMsgIssueTypes: state.order.orderInfo.errorMsgIssueTypes,
     errorDAList: state.order.deliveryAgent.errorDAList,
     orderList: state.order.orderModify.orderList,
+    fetchModificationSuccess: state.order.orderModify.fetchModificationSuccess,
     fetchOrderSuccess: state.order.orderModify.fetchOrderSuccess,
   };
 };
