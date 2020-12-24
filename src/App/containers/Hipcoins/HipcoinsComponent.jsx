@@ -171,7 +171,7 @@ function HipcoinsComponent(props) {
   const handleApplyFilter = () => {
     setSelectedStatus("");
     setIsFilterApplied(true);
-    setPage(1);
+    setPage(0);
     setMountFilterDialog(false);
   };
 
@@ -203,11 +203,11 @@ function HipcoinsComponent(props) {
         <Button
           size="small"
           className={
-            selectedStatus === "resolved" ? classes.btnSelected : classes.btn
+            selectedStatus === "completed" ? classes.btnSelected : classes.btn
           }
-          onClick={() => handleStatusClick("resolved")}
+          onClick={() => handleStatusClick("completed")}
         >
-          Resolved
+          Completed
         </Button>
         <Button
           size="small"
