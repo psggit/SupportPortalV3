@@ -201,7 +201,7 @@ const CartComponent = (props) => {
     cardFooter = <Alert severity="info">{message}</Alert>;
   }
 
-  if (props.cartSummary !== null && show === true) {
+  if (props.cartSummary !== null && show === true && props.cartSummary.action !== "nothing") {
     actionButtons = [
       <Button
         variant="outlined"
