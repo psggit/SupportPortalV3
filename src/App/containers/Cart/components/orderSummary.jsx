@@ -186,17 +186,6 @@ const OrderSummary = (props) => {
           primary="Order Summary"
           classes={{ primary: classes.listItemTextHead }}
         />
-        {/* {props.cartSummary !== null && props.cartSummary.action !== "nothing" && (
-          <OrderSummaryItem
-            title="Order Total"
-            //value={orderInfo.revised_order_total}
-            value={
-              props.cartSummary
-                ? props.cartSummary.display_details[0].display_value
-                : "-"
-            }
-          />
-        )} */}
         <OrderSummaryItem
           title="Order Total"
           value={
@@ -218,17 +207,6 @@ const OrderSummary = (props) => {
           }
           //value={orderInfo.original_cart_total}
         />
-        {/* {props.cartSummary !== null && props.cartSummary.action !== "nothing" && (
-          <OrderSummaryItem
-            title="Cart Total"
-            //value={orderInfo.original_cart_total}
-            value={
-              props.cartSummary
-                ? props.cartSummary.display_details[1].display_value
-                : "-"
-            }
-          />
-        )} */}
         <OrderSummaryItem title="Hipcoin Details" type="button">
           <OrderSummaryItem
             title="Hipcoins Redeemed"
