@@ -248,7 +248,7 @@ const CartComponent = (props) => {
           type={props.fetchUpdateCartSuccess ? "success" : "info"}
         />
       )}
-      {/* <ErrorMsg message={message} show={true} type="info" /> */}
+      {/* <ErrorMsg message={props.errorMsg} show={true} type="error" /> */}
     </>
   );
 };
@@ -270,6 +270,7 @@ CartComponent.propTypes = {
   cancelCart: PropTypes.func,
   resetOnUnmount: PropTypes.func,
   msg: PropTypes.string,
+  errorMsg: PropTypes.string,
 };
 
 export { CartComponent };
