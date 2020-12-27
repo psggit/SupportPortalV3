@@ -191,10 +191,11 @@ const CartModificationComponent = (props) => {
     };
     history.push({
       pathname: "/order-info/" + history.location.state.orderId,
-      state: {
-        modifyCartInfo: payload,
-      },
+      // state: {
+      //   modifyCartInfo: payload,
+      // },
     });
+    localStorage.setItem("modifyCartInfo", JSON.stringify(payload));
   };
 
   const addItem = (event, value) => {
@@ -329,7 +330,7 @@ const CartModificationComponent = (props) => {
             </Button>
           </Grid>
           <Grid item xs={7}>
-            <p>RETAILER NAME: {history.location.state.retailer_name}</p>
+            <Typography>RETAILER NAME: {history.location.state.retailer_name}</Typography>
           </Grid>
           <Grid item xs={3}>
             <Grid container spacing={1} alignItems="flex-end">

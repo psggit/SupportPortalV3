@@ -138,6 +138,7 @@ const CartComponent = (props) => {
 
   const handleCancel = () => {
     console.log("from cancel");
+    localStorage.setItem("modifyCartInfo", null);
     setModify(true);
     setCancel(true);
     setShow(false);

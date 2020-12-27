@@ -83,11 +83,12 @@ const OrderInfoComponent = (props) => {
       props.fetchOrderInfo(orderId);
     }
 
-    if (history.location.state !== undefined) {
-      if ("modifyCartInfo" in history.location.state) {
-        setModifyCart(history.location.state.modifyCartInfo);
-      }
+    if (localStorage.getItem("modifyCartInfo") !== null) {
+      // if ("modifyCartInfo" in history.location.state) {
+      setModifyCart(JSON.parse(localStorage.getItem("modifyCartInfo")));
+      // }
     }
+    // console.log(JSON.parse(localStorage.getItem("modifyCartInfo")));
     return () => {
       props.resetOnUnmount();
     };
