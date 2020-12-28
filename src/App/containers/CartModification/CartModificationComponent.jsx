@@ -453,6 +453,7 @@ CartModificationComponent.propTypes = {
   fetchBrandPagination: PropTypes.func,
   searchItems: PropTypes.func,
   resetOnUnmount: PropTypes.func,
+  fetchSummary: PropTypes.func,
 };
 
 export { CartModificationComponent };

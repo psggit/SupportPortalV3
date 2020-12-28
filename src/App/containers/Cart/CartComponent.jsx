@@ -148,6 +148,9 @@ const CartComponent = (props) => {
   const handleConfirm = () => {
     props.updateCart(props.modifyCart);
     setConfirm(!confirm);
+    setTimeout(() => {
+      location.reload();
+    }, 2500);
   };
 
   const routePage = () => {
