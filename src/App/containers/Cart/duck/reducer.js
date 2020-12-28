@@ -42,13 +42,15 @@ const cartReducer = createReducer(initialValue, {
     errorMsg: "",
     cartSummary: data.payload,
   }),
-  [fetchCartSummaryFailed]: (state, error) => ({
-    ...state,
-    fetchCartSummaryProgress: false,
-    fetchCartSummaryFailed: true,
-    fetchCartSummarySuccess: false,
-    errorMsg: setErrorMessage(error),
-  }),
+  [fetchCartSummaryFailed]: (state, error) => {
+    return {
+      ...state,
+      fetchCartSummaryProgress: false,
+      fetchCartSummaryFailed: true,
+      fetchCartSummarySuccess: false,
+      errorMsg: setErrorMessage(error),
+    };
+  },
   [fetchCartSummaryProgress]: (state) => ({
     ...state,
     fetchCartSummaryProgress: true,

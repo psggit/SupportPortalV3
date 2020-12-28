@@ -206,7 +206,9 @@ const CartComponent = (props) => {
   ) {
     cardFooter = <Alert severity="info">{message}</Alert>;
   }
-
+  // if (props.fetchCartSummaryFailed){
+  //   cardFooter = <Alert severity="error">{props.errorMsg}</Alert>;
+  // }
   if (
     props.cartSummary !== null &&
     show === true &&
@@ -258,7 +260,9 @@ const CartComponent = (props) => {
           type={props.fetchUpdateCartSuccess ? "success" : "info"}
         />
       )}
-      {/* <ErrorMsg message={props.errorMsg} show={true} type="error" /> */}
+      {props.fetchCartSummaryFailed && (
+        <ErrorMsg message={props.errorMsg} show={true} type="error" />
+      )}
     </>
   );
 };
@@ -281,6 +285,7 @@ CartComponent.propTypes = {
   resetOnUnmount: PropTypes.func,
   msg: PropTypes.string,
   errorMsg: PropTypes.string,
+  fetchCartSummaryFailed: PropTypes.bool,
 };
 
 export { CartComponent };
