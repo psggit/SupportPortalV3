@@ -94,17 +94,18 @@ const CartComponent = (props) => {
     };
   }, []);
 
-  useEffect(() => {
-    if (props.validateOrderSuccess) {
-      if (!cancel) {
-        props.fetchSummary(props.modifyCart);
-      }
+  // useEffect(() => {
+  //   if (props.validateOrderSuccess) {
+  //     console.log("summary", props.modifyCart);
+  //     if (!cancel) {
+  //       props.fetchSummary(props.modifyCart);
+  //     }
 
-      if (props.validateInfo.count !== 0) {
-        setDisableModify(true);
-      }
-    }
-  }, [props.validateOrderSuccess]);
+  //     if (props.validateInfo.count !== 0) {
+  //       setDisableModify(true);
+  //     }
+  //   }
+  // }, [props.validateOrderSuccess]);
 
   useEffect(() => {
     if (props.fetchCartSummarySuccess) {

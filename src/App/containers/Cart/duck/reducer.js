@@ -43,6 +43,7 @@ const cartReducer = createReducer(initialValue, {
     cartSummary: data.payload,
   }),
   [fetchCartSummaryFailed]: (state, error) => {
+    console.log("fail");
     return {
       ...state,
       fetchCartSummaryProgress: false,

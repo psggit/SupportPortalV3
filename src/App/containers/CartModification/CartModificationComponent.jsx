@@ -189,6 +189,7 @@ const CartModificationComponent = (props) => {
       is_gw_enabled: false,
       items: cartItem,
     };
+    props.fetchSummary(payload);
     history.push({
       pathname: "/order-info/" + history.location.state.orderId,
       // state: {
