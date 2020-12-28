@@ -104,7 +104,9 @@ export default function CustomCard(props) {
       ) : (
         ""
       )}
-      <Box mt={2}>{cardFooter}</Box>
+      <Box mt={2} textAlign={"right"}>
+        {cardFooter}
+      </Box>
     </Card>
   );
 }
