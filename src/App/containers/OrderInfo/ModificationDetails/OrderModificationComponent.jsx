@@ -99,7 +99,7 @@ const OrderModificationComponent = (props) => {
       Update Status
     </Button>,
     <Button
-      variant="outlined"
+      variant="contained"
       color="primary"
       onClick={(event) => cancelOrder()}
     >

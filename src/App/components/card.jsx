@@ -76,6 +76,7 @@ CustomCard.propTypes = {
 };
 export default function CustomCard(props) {
   const { title, actions, children, subheader, cardFooter } = props;
+  console.log("cardFooter ", cardFooter);
   const classes = useStyles();
   return (
     <Card className={classes.root}>
@@ -104,9 +105,7 @@ export default function CustomCard(props) {
       ) : (
         ""
       )}
-      <Box mt={2} textAlign={"right"}>
-        {cardFooter}
-      </Box>
+      {cardFooter !== undefined && <Box mt={2}>{cardFooter}</Box>}
     </Card>
   );
 }
