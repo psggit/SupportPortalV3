@@ -43,7 +43,7 @@ function CancellationSummaryComponent(props) {
   return (
     <CancellationSummaryCard
       title="Cancellation Summary"
-      actions={trigger_refund_button ? actionButtons : []}
+      cardFooter={trigger_refund_button ? actionButtons : []}
       id="cancellation-summary"
     >
       <List disablePadding>
@@ -91,6 +91,7 @@ function CancellationSummaryComponent(props) {
                 refunded_amount,
                 status,
                 rrn,
+                reference_no,
                 updated_at,
               } = item;
               return (
@@ -110,6 +111,10 @@ function CancellationSummaryComponent(props) {
                   <CancellationSummaryItem
                     title="RRN:"
                     value={rrn ? rrn : "-"}
+                  />
+                  <CancellationSummaryItem
+                    title="Reference Number:"
+                    value={reference_no ? reference_no : "-"}
                   />
                   <CancellationSummaryItem
                     title="Updated At:"
