@@ -14,6 +14,7 @@ function CancellationSummaryComponent(props) {
     total_cancellation_charges,
     trigger_refund_button,
     refund_details,
+    refund_amount,
   } = orderInfo.cancellation_summary;
 
   const handleTriggerRefund = () => {
@@ -58,26 +59,24 @@ function CancellationSummaryComponent(props) {
         <CancellationSummaryItem
           title="Total Refund Amount"
           value={
-            refund_details.total_refund_amount
-              ? refund_details.total_refund_amount
+            refund_amount.total_refund_amount
+              ? refund_amount.total_refund_amount
               : "-"
           }
         />
         <CancellationSummaryItem
           title="Hipbar Wallet"
           value={
-            refund_details.hipbar_wallet ? refund_details.hipbar_wallet : "-"
+            refund_amount.hipbar_wallet ? refund_amount.hipbar_wallet : "-"
           }
         />
         <CancellationSummaryItem
           title="Gift Wallet"
-          value={refund_details.gift_wallet ? refund_details.gift_wallet : "-"}
+          value={refund_amount.gift_wallet ? refund_amount.gift_wallet : "-"}
         />
         <CancellationSummaryItem
           title="Nodal Amount"
-          value={
-            refund_details.nodal_amount ? refund_details.nodal_amount : "-"
-          }
+          value={refund_amount.nodal_amount ? refund_amount.nodal_amount : "-"}
         />
         {refund_details && refund_details.length > 0 && (
           <CancellationSummaryItem
