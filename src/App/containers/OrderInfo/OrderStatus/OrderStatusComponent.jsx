@@ -62,6 +62,7 @@ const RenderTimeline = (props) => {
               )}
               <Typography variant="subtitle1">
                 {Moment(item.time).format("D MMM hh:mm A")} <br />
+                <p>{item.description}</p>
                 {item.message}
               </Typography>
             </TimelineContent>
