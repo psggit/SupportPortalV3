@@ -141,9 +141,11 @@ export default function CustomCard(props) {
                   <ListItemText
                     primary={
                       keyMap[keysToRender[index]] === "Product Quantity" ||
-                      keyMap[keysToRender[index]] === "Conversion Rate" || keyMap[keysToRender[index]] === "Agent ID"
-                        ? item[keysToRender[index]]
-                        : Date.parse(item[keysToRender[index]]) > 0
+                      keyMap[keysToRender[index]] === "Hipbar Wallet" ||
+                      keyMap[keysToRender[index]] === "Gift Wallet" ||
+                      keyMap[keysToRender[index]] === "Nodal Amount"
+                        ? item[keysToRender[index]] :
+                        Date.parse(item[keysToRender[index]]) > 0
                         ? getTimestamp(item[keysToRender[index]])
                         : item[keysToRender[index]]
                         ? item[keysToRender[index]]

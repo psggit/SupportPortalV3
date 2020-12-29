@@ -216,14 +216,19 @@ const DeliveryAgentComponent = (props) => {
     ];
   }
 
-  if (props.orderInfo.delivery_agent_id !== null) {
+  if (
+    props.orderInfo.delivery_status === "Assigned to Delivery Agent" &&
+    props.orderInfo.delivery_agent_id !== null
+  ) {
     actionButtons = [
       <Button
         variant="outlined"
         color="primary"
         key={uuid()}
         onClick={mountUnassignDA}
-        disabled={!props.orderInfo.change_retailer_button}
+        disabled={
+          props.orderInfo.delivery_status !== "Assigned to Delivery Agent"
+        }
       >
         Unassign
       </Button>,

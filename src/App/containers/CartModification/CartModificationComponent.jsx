@@ -122,6 +122,7 @@ const CartModificationComponent = (props) => {
   const [state, setState] = useState({ right: false });
   const [searchQueryText, setSearchQueryText] = useState("");
   const [searchList, setSearchList] = useState("brand");
+  const orderId = history.location.state.orderId;
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -168,7 +169,7 @@ const CartModificationComponent = (props) => {
   }, [props.fetchGenreSuccess]);
 
   const goBack = () => {
-    history.push("/order-info/" + props.orderId);
+    history.push("/order-info/" + orderId);
   };
 
   const addItems = () => {
@@ -188,12 +189,14 @@ const CartModificationComponent = (props) => {
       is_gw_enabled: false,
       items: cartItem,
     };
+    props.fetchSummary(payload);
     history.push({
       pathname: "/order-info/" + history.location.state.orderId,
-      state: {
-        modifyCartInfo: payload,
-      },
+      // state: {
+      //   modifyCartInfo: payload,
+      // },
     });
+    localStorage.setItem("modifyCartInfo", JSON.stringify(payload));
   };
 
   const addItem = (event, value) => {
@@ -328,7 +331,7 @@ const CartModificationComponent = (props) => {
             </Button>
           </Grid>
           <Grid item xs={7}>
-            <p>RETAILER NAME: {history.location.state.retailer_name}</p>
+            <Typography>RETAILER NAME: {history.location.state.retailer_name}</Typography>
           </Grid>
           <Grid item xs={3}>
             <Grid container spacing={1} alignItems="flex-end">
@@ -450,6 +453,7 @@ CartModificationComponent.propTypes = {
   fetchBrandPagination: PropTypes.func,
   searchItems: PropTypes.func,
   resetOnUnmount: PropTypes.func,
+  fetchSummary: PropTypes.func,
 };
 
 export { CartModificationComponent };

@@ -10,6 +10,7 @@ import {
   searchItems,
   resetOnUnmount,
 } from "./duck";
+import { fetchSummary } from "./../Cart/duck";
 
 const mapStateToProps = (state) => {
   return {
@@ -40,6 +41,7 @@ const mapDispatchToProps = (dispatch) => {
     removeSkuFromCart: (sku) => dispatch(removeSkuFromCart(sku)),
     fetchBrandPagination: (payload) => dispatch(fetchBrandPagination(payload)),
     searchItems: (payload) => dispatch(searchItems(payload)),
+    fetchSummary: (payload) => dispatch(fetchSummary(payload)),
     resetOnUnmount: () => dispatch(resetOnUnmount()),
   };
 };
