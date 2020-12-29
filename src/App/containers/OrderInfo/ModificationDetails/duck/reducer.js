@@ -158,7 +158,7 @@ const orderModificationReducer = createReducer(initialState, {
       fetchCancelCartProgress: false,
       fetchCancelCartSuccess: true,
       errorMsg: "",
-    }
+    };
   },
   [fetchCancelCartProgress]: (state) => ({
     ...state,
