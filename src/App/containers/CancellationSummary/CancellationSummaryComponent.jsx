@@ -91,6 +91,7 @@ function CancellationSummaryComponent(props) {
                 refunded_amount,
                 status,
                 rrn,
+                reference_no,
                 updated_at,
               } = item;
               return (
@@ -110,6 +111,10 @@ function CancellationSummaryComponent(props) {
                   <CancellationSummaryItem
                     title="RRN:"
                     value={rrn ? rrn : "-"}
+                  />
+                  <CancellationSummaryItem
+                    title="Reference Number:"
+                    value={reference_no ? reference_no : "-"}
                   />
                   <CancellationSummaryItem
                     title="Updated At:"
