@@ -43,7 +43,7 @@ function CancellationSummaryComponent(props) {
   return (
     <CancellationSummaryCard
       title="Cancellation Summary"
-      cardFooter={trigger_refund_button ? actionButtons : []}
+      actions={trigger_refund_button ? actionButtons : []}
       id="cancellation-summary"
     >
       <List disablePadding>

@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { OrderInfoComponent } from "./OrderInfoComponent";
 import { fetchConsumerNotesList } from "./CustomerDetails/duck/CustomerOperations";
+import { fetchListOrderModification } from "./ModificationDetails/duck/operations";
 import {
   fetchOrder,
   createNotes,
@@ -49,6 +50,9 @@ const mapStateToProps = (state) => {
     errorMessageCustomerNotes: state.order.customer.errorMessageCustomerNotes,
     errorMsgIssueTypes: state.order.orderInfo.errorMsgIssueTypes,
     errorDAList: state.order.deliveryAgent.errorDAList,
+    orderList: state.order.orderModify.orderList,
+    fetchModificationSuccess: state.order.orderModify.fetchModificationSuccess,
+    fetchOrderSuccess: state.order.orderModify.fetchOrderSuccess,
   };
 };
 
@@ -61,6 +65,8 @@ const mapDispatchToProps = (dispatch) => {
     submitIssue: (payload) => dispatch(submitIssue(payload)),
     resetOnUnmount: () => dispatch(resetOnUnmount()),
     fetchConsumerNotesList: () => dispatch(fetchConsumerNotesList()),
+    fetchListOrderModification: (payload) =>
+      dispatch(fetchListOrderModification(payload)),
   };
 };
 
