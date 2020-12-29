@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { HipcoinsDetailsComponent } from "./HipcoinsDetailsComponent";
 import { triggerEmail } from "./duck/operations";
+import { resetOnUnmount } from "./duck";
 // import { resetDefaultState } from "./duck/action";
 
 const mapStateToProps = (state) => {
@@ -17,6 +18,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     triggerEmail: (payload) => dispatch(triggerEmail(payload)),
+    resetOnUnmount: () => dispatch(resetOnUnmount()),
   };
 };
 

@@ -8,6 +8,10 @@ const authorizationProgress = createAction("authorizationProgress");
 const authorizationFailed = createAction("authorizationFailed");
 const authorizationSuccess = createAction("authorizationSuccess");
 
+const markActivityProgress = createAction("markActivityProgress");
+const markActivityFailed = createAction("markActivityFailed");
+const markActivitySuccess = createAction("markActivitySuccess");
+
 export {
   loginSuccess,
   loginFailed,
@@ -15,4 +19,7 @@ export {
   authorizationProgress,
   authorizationFailed,
   authorizationSuccess,
+  markActivityProgress,
+  markActivityFailed,
+  markActivitySuccess,
 };
