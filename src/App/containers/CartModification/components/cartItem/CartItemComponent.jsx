@@ -46,6 +46,7 @@ CartItemComponent.propTypes = {
 };
 
 function CartItemComponent(props) {
+  // console.log("iii", props.productName, props.productCount)
   const classes = useStyles();
   const { product, removeItem, addItem, ordered_count } = props;
 
@@ -66,6 +67,8 @@ function CartItemComponent(props) {
             removeItem={removeItem}
             addItem={addItem}
             cartProducts={props.cartProducts}
+            // productName={productName}
+            // productCount={productCount}
           />
         );
       })}

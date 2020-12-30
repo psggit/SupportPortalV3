@@ -123,8 +123,6 @@ const CartModificationComponent = (props) => {
   const [searchQueryText, setSearchQueryText] = useState("");
   const [searchList, setSearchList] = useState("brand");
   const orderId = history.location.state.orderId;
-  // const [name, setName] = useState();
-  // const [count, setCount] = useState();
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -174,7 +172,6 @@ const CartModificationComponent = (props) => {
     history.push("/order-info/" + orderId);
   };
 
-  // let productItem = [];
   const addItems = () => {
     //call fetch summary API
     let cartItem = [];
@@ -184,24 +181,7 @@ const CartModificationComponent = (props) => {
         sku_id: parseInt(value),
         count: props.cartProducts[value].ordered_count,
       });
-      // console.log(
-      //   "products",
-      //   props.cartProducts[value].ordered_count,
-      //   props.cartProducts[value].brand_name
-      // );
-      //   setName(props.cartProducts[value].brand_name)
     });
-
-    // Object.keys(props.cartProducts).forEach((value) => {
-    //   productItem.push({
-    //     name: parseInt(value),
-    //     count: props.cartProducts[value].ordered_count,
-    //   });
-    //   setName(props.cartProducts[value].brand_name)
-    //   let name = props.cartProducts[value].ordered_count
-    //   setName(name)
-    // });
-    // console.log("productName", name);
 
     let payload = {
       order_id: props.orderId,
@@ -218,10 +198,10 @@ const CartModificationComponent = (props) => {
     });
     localStorage.setItem("modifyCartInfo", JSON.stringify(payload));
   };
+
   const addItem = (event, value) => {
     props.addSkuToCart(value);
   };
-
   const removeItem = (event, value) => {
     props.removeSkuFromCart(value);
   };
@@ -298,9 +278,30 @@ const CartModificationComponent = (props) => {
     disableAddBtn = Object.keys(props.cartProducts).length == 0 ? true : false;
   }
 
+  if (props.fetchGenreSuccess) {
+    productName = Object.keys(props.cartProducts).map(
+      (value) => props.cartProducts[value].brand_name
+    );
+    productCount = Object.keys(props.cartProducts).map(
+      (value) => props.cartProducts[value].ordered_count
+    );
+    productVolume = Object.keys(props.cartProducts).map(
+      (value) => props.cartProducts[value].volume
+    );
+    skuId = Object.keys(props.cartProducts).map(
+      (value) => props.cartProducts[value].sku_id
+    );
+  }
+  var productName;
+  var productCount;
+  var productVolume;
+  var skuId;
+  console.log("product-value", productName, productCount, productVolume, skuId);
+
   if (props.searchSuccess) {
     // console.log(props.brandData);
   }
+  // console.log("prod", props.cartProducts.map((value) => props.cartProducts[value].brand_name));
   return (
     <Container component="main">
       <TopBar />
@@ -416,6 +417,8 @@ const CartModificationComponent = (props) => {
                   // name={name}
                   // count={count}
                   cartProducts={props.cartProducts}
+                  productName={productName}
+                  productCount={productCount}
                 />
               );
             })}

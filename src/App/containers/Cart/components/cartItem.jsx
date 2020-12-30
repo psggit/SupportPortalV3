@@ -101,7 +101,6 @@ const useStyles = makeStyles((theme) => ({
 const CartItem = (props) => {
   const classes = useStyles();
   const value = props.value;
-  // console.log("data", props.productItem, props.name, props.count)
   return (
     <>
       <ListItem dense disableGutters>
