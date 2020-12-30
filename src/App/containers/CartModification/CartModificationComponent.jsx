@@ -413,9 +413,6 @@ const CartModificationComponent = (props) => {
                   product={k[1]}
                   addItem={addItem}
                   removeItem={removeItem}
-                  //productItem={productItem}
-                  // name={name}
-                  // count={count}
                   cartProducts={props.cartProducts}
                   productName={productName}
                   productCount={productCount}
