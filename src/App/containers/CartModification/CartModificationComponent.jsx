@@ -123,6 +123,8 @@ const CartModificationComponent = (props) => {
   const [searchQueryText, setSearchQueryText] = useState("");
   const [searchList, setSearchList] = useState("brand");
   const orderId = history.location.state.orderId;
+  // const [name, setName] = useState();
+  // const [count, setCount] = useState();
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -172,6 +174,7 @@ const CartModificationComponent = (props) => {
     history.push("/order-info/" + orderId);
   };
 
+  // let productItem = [];
   const addItems = () => {
     //call fetch summary API
     let cartItem = [];
@@ -181,7 +184,24 @@ const CartModificationComponent = (props) => {
         sku_id: parseInt(value),
         count: props.cartProducts[value].ordered_count,
       });
+      // console.log(
+      //   "products",
+      //   props.cartProducts[value].ordered_count,
+      //   props.cartProducts[value].brand_name
+      // );
+      //   setName(props.cartProducts[value].brand_name)
     });
+
+    // Object.keys(props.cartProducts).forEach((value) => {
+    //   productItem.push({
+    //     name: parseInt(value),
+    //     count: props.cartProducts[value].ordered_count,
+    //   });
+    //   setName(props.cartProducts[value].brand_name)
+    //   let name = props.cartProducts[value].ordered_count
+    //   setName(name)
+    // });
+    // console.log("productName", name);
 
     let payload = {
       order_id: props.orderId,
@@ -198,7 +218,6 @@ const CartModificationComponent = (props) => {
     });
     localStorage.setItem("modifyCartInfo", JSON.stringify(payload));
   };
-
   const addItem = (event, value) => {
     props.addSkuToCart(value);
   };
@@ -282,7 +301,6 @@ const CartModificationComponent = (props) => {
   if (props.searchSuccess) {
     // console.log(props.brandData);
   }
-
   return (
     <Container component="main">
       <TopBar />
@@ -331,7 +349,9 @@ const CartModificationComponent = (props) => {
             </Button>
           </Grid>
           <Grid item xs={7}>
-            <Typography>RETAILER NAME: {history.location.state.retailer_name}</Typography>
+            <Typography>
+              RETAILER NAME: {history.location.state.retailer_name}
+            </Typography>
           </Grid>
           <Grid item xs={3}>
             <Grid container spacing={1} alignItems="flex-end">
@@ -392,6 +412,9 @@ const CartModificationComponent = (props) => {
                   product={k[1]}
                   addItem={addItem}
                   removeItem={removeItem}
+                  //productItem={productItem}
+                  // name={name}
+                  // count={count}
                   cartProducts={props.cartProducts}
                 />
               );

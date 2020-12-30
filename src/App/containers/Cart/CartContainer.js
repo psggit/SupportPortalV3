@@ -25,6 +25,7 @@ const mapStateToProps = (state) => {
     successMsg: state.cart.successMsg,
     validateInfo: state.cart.validateInfo,
     msg: state.cart.msg,
+    cartProducts: state.cartModify.cartProducts,
   };
 };
 
