@@ -127,24 +127,6 @@ const OrderSummary = (props) => {
     setOpen(!open);
   };
 
-  // const handleClickAdd = () => {
-  //   history.push({
-  //     pathname: "/cart-modify",
-  //     state: {
-  //       retailerId: orderInfo.retailer_id,
-  //       retailer_name: orderInfo.retailer_name,
-  //       city_id: orderInfo.city_id,
-  //       state_id: orderInfo.state_id,
-  //       gps: orderInfo.gps,
-  //       orderId: orderInfo.order_id,
-  //       products: orderInfo.cart_items,
-  //     },
-  //   });
-  // };
-
-  // console.log("Order summary props", props.cartSummary);
-  // console.log("hello", orderInfo.hipcoin_details.earned);
-
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
@@ -161,22 +143,6 @@ const OrderSummary = (props) => {
   return (
     <Box>
       <List dense disablePadding>
-        {/* <ListItem dense disableGutters>
-          <ListItemText
-            primary="Order Items"
-            classes={{ primary: classes.listItemTextHead }}
-          />
-          {props.modify && (
-            <Button
-              color="primary"
-              endIcon={<ChevronRightIcon />}
-              onClick={handleClickAdd}
-              disabled={props.confirm}
-            >
-              Add more
-            </Button>
-          )}
-        </ListItem> */}
         {cartItems.map((value) => {
           return <CartItem value={value} key={value.sku_id} modify={false} />;
         })}

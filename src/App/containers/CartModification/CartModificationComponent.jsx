@@ -190,13 +190,11 @@ const CartModificationComponent = (props) => {
       items: cartItem,
     };
     props.fetchSummary(payload);
+    localStorage.setItem("modifiedCart", JSON.stringify(props.cartProducts));
+    localStorage.setItem("modifyCartInfo", JSON.stringify(payload));
     history.push({
       pathname: "/order-info/" + history.location.state.orderId,
-      // state: {
-      //   modifyCartInfo: payload,
-      // },
     });
-    localStorage.setItem("modifyCartInfo", JSON.stringify(payload));
   };
 
   const addItem = (event, value) => {
@@ -278,6 +276,8 @@ const CartModificationComponent = (props) => {
     disableAddBtn = Object.keys(props.cartProducts).length == 0 ? true : false;
   }
 
+  var productName;
+  var productCount;
   if (props.fetchGenreSuccess) {
     productName = Object.keys(props.cartProducts).map(
       (value) => props.cartProducts[value].brand_name
@@ -285,18 +285,7 @@ const CartModificationComponent = (props) => {
     productCount = Object.keys(props.cartProducts).map(
       (value) => props.cartProducts[value].ordered_count
     );
-    productVolume = Object.keys(props.cartProducts).map(
-      (value) => props.cartProducts[value].volume
-    );
-    skuId = Object.keys(props.cartProducts).map(
-      (value) => props.cartProducts[value].sku_id
-    );
   }
-  var productName;
-  var productCount;
-  var productVolume;
-  var skuId;
-  console.log("product-value", productName, productCount, productVolume, skuId);
 
   if (props.searchSuccess) {
     // console.log(props.brandData);
