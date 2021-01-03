@@ -97,10 +97,15 @@ const CartComponent = (props) => {
 
   useEffect(() => {
     if (props.fetchCartSummarySuccess) {
+      localStorage.setItem("mode", "cartModified");
       modifyState = props.cartSummary.to_show_confirm;
       showMessage(props.cartSummary.action_title);
       setModify(!modify);
       setDisableModify(modifyState);
+    }else{
+      localStorage.setItem("mode", null);
+      localStorage.setItem("modifyCartInfo", null);
+      localStorage.setItem("modifiedCart", null);
     }
   }, [props.fetchCartSummarySuccess]);
 
@@ -121,18 +126,10 @@ const CartComponent = (props) => {
     localStorage.setItem("modifiedCart", null);
   };
 
-  if (props.fetchCartSummarySuccess) {
-    localStorage.setItem("mode", "cartModified");
-  } else {
-    localStorage.setItem("mode", null);
-    localStorage.setItem("modifyCartInfo", null);
-    localStorage.setItem("modifiedCart", null);
-  }
-
   const handleCancel = () => {
+    localStorage.setItem("mode", null);
     localStorage.setItem("modifyCartInfo", null);
     localStorage.setItem("modifiedCart", null);
-    localStorage.setItem("mode", null);
     setModify(true);
     setCancel(true);
     setShow(false);
