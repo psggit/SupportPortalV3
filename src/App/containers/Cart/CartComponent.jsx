@@ -91,6 +91,9 @@ const CartComponent = (props) => {
     }
 
     return () => {
+      localStorage.setItem("mode", null);
+      localStorage.setItem("modifyCartInfo", null);
+      localStorage.setItem("modifiedCart", null);
       props.resetOnUnmount();
     };
   }, []);
