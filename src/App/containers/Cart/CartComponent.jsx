@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-// import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import CartDetailsCard from "../../components/card";
 import { OrderSummary } from "../Cart/components/orderSummary";
-// import Alert from "@material-ui/lab/Alert";
+import Alert from "@material-ui/lab/Alert";
 import ErrorMsg from "../../components/errorMsg";
 import uuid from "react-uuid";
 import { Button } from "@material-ui/core";
@@ -62,14 +62,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CartComponent = (props) => {
-  // const history = useHistory();
+  const history = useHistory();
   const classes = useStyles();
-  // const orderInfo = props.orderInfo;
+  const orderInfo = props.orderInfo;
+  let cardFooter = "";
   const [modify, setModify] = useState(false);
   // eslint-disable-next-line no-unused-vars
-  const [disableModify, setDisableModify] = useState(!props.buttonState);
+  const [disableModify, setDisableModify] = useState(props.buttonState);
   const [confirm, setConfirm] = useState(false);
   const [cancel, setCancel] = useState(false);
+  const [show, setShow] = useState(true);
+  const [message, showMessage] = useState();
+  const cartProducts = JSON.parse(localStorage.getItem("modifiedCart"));
   useEffect(() => {
     // check pending modify request
     let payload = {
@@ -87,75 +91,107 @@ const CartComponent = (props) => {
     }
 
     return () => {
+      localStorage.setItem("mode", null);
+      localStorage.setItem("modifyCartInfo", null);
+      localStorage.setItem("modifiedCart", null);
       props.resetOnUnmount();
     };
   }, []);
 
   useEffect(() => {
-    if (props.validateOrderSuccess) {
-      if (!cancel) {
-        // props.fetchSummary(props.modifyCart);
-      }
-
-      if (props.validateInfo.count !== 0) {
-        setDisableModify(true);
-      }
-    }
-  }, [props.validateOrderSuccess]);
-
-  useEffect(() => {
     if (props.fetchCartSummarySuccess) {
+      localStorage.setItem("mode", "cartModified");
       modifyState = props.cartSummary.to_show_confirm;
+      showMessage(props.cartSummary.action_title);
       setModify(!modify);
       setDisableModify(modifyState);
+    }else{
+      localStorage.setItem("mode", null);
+      localStorage.setItem("modifyCartInfo", null);
+      localStorage.setItem("modifiedCart", null);
     }
   }, [props.fetchCartSummarySuccess]);
 
-  // const handleModify = () => {
-  //   history.push({
-  //     pathname: "/cart-modify",
-  //     state: {
-  //       retailerId: orderInfo.retailer_id,
-  //       retailer_name: orderInfo.retailer_name,
-  //       city_id: orderInfo.city_id,
-  //       state_id: orderInfo.state_id,
-  //       gps: orderInfo.gps,
-  //       orderId: orderInfo.order_id,
-  //       products: orderInfo.cart_items,
-  //     },
-  //   });
-  //   // history.replaceState(props.location.pathname, null);
-  // };
+  const handleModify = () => {
+    history.push({
+      pathname: "/cart-modify",
+      state: {
+        retailerId: orderInfo.retailer_id,
+        retailer_name: orderInfo.retailer_name,
+        city_id: orderInfo.city_id,
+        state_id: orderInfo.state_id,
+        gps: orderInfo.gps,
+        orderId: orderInfo.order_id,
+        products: orderInfo.cart_items,
+      },
+    });
+    localStorage.setItem("modifyCartInfo", null);
+    localStorage.setItem("modifiedCart", null);
+  };
 
   const handleCancel = () => {
-    setModify(false);
+    localStorage.setItem("mode", null);
+    localStorage.setItem("modifyCartInfo", null);
+    localStorage.setItem("modifiedCart", null);
+    setModify(true);
     setCancel(true);
+    setShow(false);
   };
 
   const handleConfirm = () => {
     props.updateCart(props.modifyCart);
     setConfirm(!confirm);
+    setTimeout(() => {
+      location.reload();
+    }, 2500);
   };
 
-  // console.log(disableModify);
-  // console.log(props.buttonState);
-  // console.log(modify, props.validateInfo);
+  const routePage = () => {
+    history.push({
+      pathname: "/modification-list",
+      state: {
+        orderId: orderInfo.order_id,
+      },
+    });
+  };
 
   let actionButtons = [
-    // <Button
-    //   variant="contained"
-    //   color="primary"
-    //   onClick={handleModify}
-    //   key={uuid()}
-    //   disabled={disableModify}
-    // >
-    //   Modify
-    // </Button>,
+    <Button
+      variant="contained"
+      color="primary"
+      onClick={handleModify}
+      key={uuid()}
+      //disabled={disableModify}
+      disabled={!props.orderInfo.change_retailer_button}
+    >
+      Modify
+    </Button>,
   ];
 
-  let cardFooter = "";
-  // console.log("cart component", props.fetchCartSummarySuccess, props.validateOrderSuccess, props.validateInfo.count);
-  /*if (
+  const returnModifiedCartItems = () => {
+    let newArray = [];
+    for (const key in cartProducts) {
+      const item = cartProducts[key];
+      const revised_item = {
+        brand_id: item.brand_id,
+        brand_name: item.brand_name,
+        deliverable_count: item.ordered_count,
+        message: item.message !== undefined ? item.message : "",
+        ordered_count: item.ordered_count,
+        revised_count: item.revised_count,
+        revised_total_price: item.revised_total_price,
+        sku_id: item.sku_id,
+        sku_price: item.sku_price,
+        total_price: item.total_price,
+        volume: item.volume,
+      };
+      newArray.push(revised_item);
+    }
+
+    return newArray;
+  };
+
+  if (
     (props.fetchCartSummarySuccess && props.cartSummary === null) ||
     (props.validateOrderSuccess && props.validateInfo.count !== 0)
   ) {
@@ -164,13 +200,27 @@ const CartComponent = (props) => {
         This order already has an <b>Order Modification</b> request.
         <br />
         <br />
-        Go to <Link to="/order-modification">Order Modificaton</Link> page to
-        cancel the previous request.
+        Go to{" "}
+        <u style={{ color: "blue", cursor: "pointer" }}>
+          <div onClick={routePage}>Order Modificaton</div>
+        </u>{" "}
+        page to cancel the previous request.
       </Alert>
     );
-  }*/
+  }
 
-  if (props.cartSummary !== null) {
+  if (
+    props.cartSummary !== null &&
+    props.cartSummary.action === "nothing" &&
+    show === true
+  ) {
+    cardFooter = <Alert severity="info">{message}</Alert>;
+  }
+  if (
+    props.cartSummary !== null &&
+    show === true &&
+    props.cartSummary.action !== "nothing"
+  ) {
     actionButtons = [
       <Button
         variant="outlined"
@@ -194,6 +244,12 @@ const CartComponent = (props) => {
     ];
   }
   let modifyState = modify;
+  let cartItems = props.products;
+  console.log(localStorage.getItem("mode"), modify);
+  if (localStorage.getItem("mode") === "cartModified") {
+    cartItems = returnModifiedCartItems();
+    console.log("modify ", modify, cartItems);
+  }
   return (
     <>
       <CartDetailsCard
@@ -204,9 +260,11 @@ const CartComponent = (props) => {
       >
         <OrderSummary
           {...props}
+          products={cartItems}
           modify={modifyState}
           cartSummary={props.cartSummary}
           confirm={confirm}
+          show={show}
         />
       </CartDetailsCard>
       {(props.fetchUpdateCartSuccess || props.fetchUpdateCartFailed) && (
@@ -215,6 +273,9 @@ const CartComponent = (props) => {
           show={true}
           type={props.fetchUpdateCartSuccess ? "success" : "info"}
         />
+      )}
+      {props.fetchCartSummaryFailed && (
+        <ErrorMsg message={props.errorMsg} show={true} type="error" />
       )}
     </>
   );
@@ -237,6 +298,8 @@ CartComponent.propTypes = {
   cancelCart: PropTypes.func,
   resetOnUnmount: PropTypes.func,
   msg: PropTypes.string,
+  errorMsg: PropTypes.string,
+  fetchCartSummaryFailed: PropTypes.bool,
 };
 
 export { CartComponent };

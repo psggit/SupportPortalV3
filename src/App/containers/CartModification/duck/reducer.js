@@ -87,6 +87,7 @@ let getProductFromSku = (sku: Sku): Product => {
     brand_name: sku.brand_name,
     brand_id: sku.brand_id,
     price: sku.price,
+    sku_price: sku.price,
     volume: sku.volume,
     ordered_count: 1,
     available: true,

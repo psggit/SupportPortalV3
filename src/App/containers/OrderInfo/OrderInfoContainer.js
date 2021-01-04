@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { OrderInfoComponent } from "./OrderInfoComponent";
 import { fetchConsumerNotesList } from "./CustomerDetails/duck/CustomerOperations";
+import { fetchListOrderModification } from "./ModificationDetails/duck/operations";
 import {
   fetchOrder,
   createNotes,
@@ -21,7 +22,7 @@ const mapStateToProps = (state) => {
     fetchOrderInfoProgress: state.order.orderInfo.fetchOrderInfoProgress,
     fetchOrderInfoFailure: state.order.orderInfo.fetchOrderInfoFailure,
     customerDetails: state.order.customerDetails,
-    from: state.login.authData.mobile,
+    // from: state.login.authData.mobile,
     successMsg: state.order.orderInfo.successMsg,
     errorMsg: state.order.orderInfo.errorMsg,
     connectCallSuccess: state.order.orderInfo.connectCallSuccess,
@@ -49,6 +50,9 @@ const mapStateToProps = (state) => {
     errorMessageCustomerNotes: state.order.customer.errorMessageCustomerNotes,
     errorMsgIssueTypes: state.order.orderInfo.errorMsgIssueTypes,
     errorDAList: state.order.deliveryAgent.errorDAList,
+    orderList: state.order.orderModify.orderList,
+    fetchModificationSuccess: state.order.orderModify.fetchModificationSuccess,
+    fetchOrderSuccess: state.order.orderModify.fetchOrderSuccess,
   };
 };
 
@@ -61,6 +65,8 @@ const mapDispatchToProps = (dispatch) => {
     submitIssue: (payload) => dispatch(submitIssue(payload)),
     resetOnUnmount: () => dispatch(resetOnUnmount()),
     fetchConsumerNotesList: () => dispatch(fetchConsumerNotesList()),
+    fetchListOrderModification: (payload) =>
+      dispatch(fetchListOrderModification(payload)),
   };
 };
 

@@ -136,7 +136,7 @@ function Notes(props) {
     fetchNote();
   };
 
-  console.log(props.errorMsg, props.notesFail);
+  // console.log(props.errorMsg, props.notesFail);
 
   return (
     <>
@@ -144,7 +144,7 @@ function Notes(props) {
       <div className={classes.formContainer}>
         <FullWidthTabs
           value={
-            localStorage.getItem("x-hasura-role") !== "support_person" ? 4 : 2
+            localStorage.getItem("x-hasura-role") !== "support_person" ? 5 : 3
           }
           orderId={orderId}
           customerId={customerId}

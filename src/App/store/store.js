@@ -5,8 +5,11 @@ import { loginReducer } from "../containers/Login";
 import { dashboardReducer } from "../containers/Dashboard";
 import { homeReducer } from "../containers/OrderDetails";
 import { issuesReducer } from "../containers/Issues";
+import { hipcoinsReducer } from "../containers/Hipcoins";
+import { hipcoinsDetailsReducer } from "../containers/HipcoinsDetails";
 import { cartReducer } from "../containers/Cart";
 import { orderReducer } from "../containers/OrderInfo/reducer";
+import { cancellationSummaryReducer } from "../containers/CancellationSummary/duck";
 import { cartModifyReducer } from "../containers/CartModification";
 import { retailerNotesListReducer } from "../containers/Retailer/RetailerNotes";
 import { customerSOAReducer } from "../containers/Customer/CustomerSoa";
@@ -18,6 +21,7 @@ import { logoutReducer } from "../containers/Logout/duck";
 import { acitivityListReducer } from "../containers/ActivityList";
 import { orderTrackingReducer } from "../containers/OrderTracking";
 import { orderModificationReducer } from "../containers/OrderModification";
+import { hipcoinSOAReducer } from "../containers/Customer/HipcoinSoa/duck";
 
 const store = configureStore({
   reducer: combineReducers({
@@ -30,6 +34,7 @@ const store = configureStore({
     notes: retailerNotesListReducer,
     soa: customerSOAReducer,
     giftSoa: customerGiftSOAReducer,
+    hipcoinSoa: hipcoinSOAReducer,
     rewards: rewardsReducer,
     update: customerUpdateReducer,
     listRetailer: listRetailerReducer,
@@ -37,7 +42,10 @@ const store = configureStore({
     acitivityLog: acitivityListReducer,
     issues: issuesReducer,
     orderTracking: orderTrackingReducer,
-    orderModify: orderModificationReducer,
+    //orderModify: orderModificationReducer,
+    hipcoins: hipcoinsReducer,
+    hipcoinsDetails: hipcoinsDetailsReducer,
+    cancellationSummary: cancellationSummaryReducer,
   }),
   middleware: [thunk],
 });

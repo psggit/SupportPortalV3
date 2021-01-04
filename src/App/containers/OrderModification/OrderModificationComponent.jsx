@@ -87,7 +87,7 @@ const OrderModificationComponent = (props) => {
       localStorage.getItem("x-hasura-role") !== "ops_delivery_manager" ||
       localStorage.getItem("x-hasura-role") !== "support_person"
     ) {
-      // props.fetchListOrderModification(payload);
+      props.fetchListOrderModification(payload);
     }
   }, [rowsPerPage, page]);
 
@@ -129,7 +129,7 @@ const OrderModificationComponent = (props) => {
   };
 
   const refreshOrder = (event, orderId) => {
-    console.log("refreshOrder");
+    // console.log("refreshOrder");
     const payload = {
       order_id: orderId,
     };
@@ -137,7 +137,7 @@ const OrderModificationComponent = (props) => {
   };
 
   const cancelOrder = (event, orderId) => {
-    console.log("cancelOrder");
+    // console.log("cancelOrder");
     setDisableClear(orderId);
     props.cancelOrderRequest(orderId);
   };
@@ -147,7 +147,7 @@ const OrderModificationComponent = (props) => {
     return <Loading message="Loading..." />;
   }
 
-  console.log(props);
+  // console.log(props);
 
   return (
     <div className={classes.formContainer}>
