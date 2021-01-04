@@ -31,6 +31,7 @@ import { OrderTrackingContainer } from "./containers/OrderTracking";
 import { OrderModificationContainer } from "./containers/OrderModification";
 import { createSession } from "./utils";
 import { HipcoinSoaContainer } from "./containers/Customer/HipcoinSoa";
+import { ModificationListContainer } from "./containers/ModificationList/ModificationListContainer";
 
 function App(props) {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -72,7 +73,7 @@ function App(props) {
       </ThemeProvider>
     );
   }
-  console.log("user", isLoggedIn);
+  // console.log("user", isLoggedIn);
   // console.log("success ", success);
   return (
     <div>
@@ -128,10 +129,15 @@ function App(props) {
                 component={OrderTrackingContainer}
               />
 
-              {/* <Route
+              <Route
                 path="/order-modification"
                 component={OrderModificationContainer}
-              /> */}
+              />
+
+              <Route
+                path="/modification-list"
+                component={ModificationListContainer}
+              />
 
               <Route path="/login" component={LoginContainer} />
               <Route path="/logout" component={LogoutContainer} />
@@ -195,7 +201,7 @@ App.propTypes = {
   validateAuth: PropTypes.func,
   markActivity: PropTypes.func,
   markActivitySuccess: PropTypes.bool,
-  markActivityData: PropTypes.bool,
+  markActivityData: PropTypes.any,
   authData: PropTypes.any,
 };
 

@@ -89,7 +89,7 @@ const loginReducer = createReducer(initialValue, {
     markActivitySuccess: false,
   }),
   [markActivitySuccess]: (state, data) => {
-    console.log("markActivitysuccess");
+    // console.log("markActivitysuccess");
     return {
       ...state,
       markActivityProgress: false,

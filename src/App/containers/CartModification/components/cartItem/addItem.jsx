@@ -91,6 +91,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "7px 10px",
   },
   cartCounter: {
+    fontFamily: theme.typography.fontFamily,
     backgroundColor: "#fff",
     border: "1px solid #0086AD",
     color: "#0086AD",
