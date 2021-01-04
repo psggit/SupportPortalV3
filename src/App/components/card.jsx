@@ -76,7 +76,7 @@ CustomCard.propTypes = {
 };
 export default function CustomCard(props) {
   const { title, actions, children, subheader, cardFooter } = props;
-  console.log("cardFooter ", cardFooter);
+  //console.log("cardFooter ", cardFooter);
   const classes = useStyles();
   return (
     <Card className={classes.root}>

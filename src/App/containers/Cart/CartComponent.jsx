@@ -65,6 +65,7 @@ const CartComponent = (props) => {
   const history = useHistory();
   const classes = useStyles();
   const orderInfo = props.orderInfo;
+  let cardFooter = "";
   const [modify, setModify] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [disableModify, setDisableModify] = useState(props.buttonState);
@@ -72,7 +73,7 @@ const CartComponent = (props) => {
   const [cancel, setCancel] = useState(false);
   const [show, setShow] = useState(true);
   const [message, showMessage] = useState();
-
+  const cartProducts = JSON.parse(localStorage.getItem("modifiedCart"));
   useEffect(() => {
     // check pending modify request
     let payload = {
@@ -90,29 +91,24 @@ const CartComponent = (props) => {
     }
 
     return () => {
+      localStorage.setItem("mode", null);
+      localStorage.setItem("modifyCartInfo", null);
+      localStorage.setItem("modifiedCart", null);
       props.resetOnUnmount();
     };
   }, []);
 
-  // useEffect(() => {
-  //   if (props.validateOrderSuccess) {
-  //     console.log("summary", props.modifyCart);
-  //     if (!cancel) {
-  //       props.fetchSummary(props.modifyCart);
-  //     }
-
-  //     if (props.validateInfo.count !== 0) {
-  //       setDisableModify(true);
-  //     }
-  //   }
-  // }, [props.validateOrderSuccess]);
-
   useEffect(() => {
     if (props.fetchCartSummarySuccess) {
+      localStorage.setItem("mode", "cartModified");
       modifyState = props.cartSummary.to_show_confirm;
       showMessage(props.cartSummary.action_title);
       setModify(!modify);
       setDisableModify(modifyState);
+    }else{
+      localStorage.setItem("mode", null);
+      localStorage.setItem("modifyCartInfo", null);
+      localStorage.setItem("modifiedCart", null);
     }
   }, [props.fetchCartSummarySuccess]);
 
@@ -129,17 +125,14 @@ const CartComponent = (props) => {
         products: orderInfo.cart_items,
       },
     });
-    // history.replaceState(props.location.pathname, null);
+    localStorage.setItem("modifyCartInfo", null);
+    localStorage.setItem("modifiedCart", null);
   };
 
-  if (props.fetchCartSummarySuccess) {
-    const modifyState = props.cartSummary.display_details[0].display_value;
-    localStorage.setItem("mode", modifyState);
-  }
-
   const handleCancel = () => {
-    console.log("from cancel");
+    localStorage.setItem("mode", null);
     localStorage.setItem("modifyCartInfo", null);
+    localStorage.setItem("modifiedCart", null);
     setModify(true);
     setCancel(true);
     setShow(false);
@@ -162,10 +155,6 @@ const CartComponent = (props) => {
     });
   };
 
-  // console.log(disableModify);
-  // console.log(props.buttonState);
-  // console.log(modify, props.validateInfo);
-
   let actionButtons = [
     <Button
       variant="contained"
@@ -179,8 +168,29 @@ const CartComponent = (props) => {
     </Button>,
   ];
 
-  let cardFooter = "";
-  // console.log("cart component", props.fetchCartSummarySuccess, props.validateOrderSuccess, props.validateInfo.count);
+  const returnModifiedCartItems = () => {
+    let newArray = [];
+    for (const key in cartProducts) {
+      const item = cartProducts[key];
+      const revised_item = {
+        brand_id: item.brand_id,
+        brand_name: item.brand_name,
+        deliverable_count: item.ordered_count,
+        message: item.message !== undefined ? item.message : "",
+        ordered_count: item.ordered_count,
+        revised_count: item.revised_count,
+        revised_total_price: item.revised_total_price,
+        sku_id: item.sku_id,
+        sku_price: item.sku_price,
+        total_price: item.total_price,
+        volume: item.volume,
+      };
+      newArray.push(revised_item);
+    }
+
+    return newArray;
+  };
+
   if (
     (props.fetchCartSummarySuccess && props.cartSummary === null) ||
     (props.validateOrderSuccess && props.validateInfo.count !== 0)
@@ -190,10 +200,6 @@ const CartComponent = (props) => {
         This order already has an <b>Order Modification</b> request.
         <br />
         <br />
-        {/* <Link to={{ pathname: `/modification-list/${props.orderInfo.order_id}` }}>
-          Order Modificaton
-        </Link>{" "}
-        page to cancel the previous request. */}
         Go to{" "}
         <u style={{ color: "blue", cursor: "pointer" }}>
           <div onClick={routePage}>Order Modificaton</div>
@@ -210,9 +216,6 @@ const CartComponent = (props) => {
   ) {
     cardFooter = <Alert severity="info">{message}</Alert>;
   }
-  // if (props.fetchCartSummaryFailed){
-  //   cardFooter = <Alert severity="error">{props.errorMsg}</Alert>;
-  // }
   if (
     props.cartSummary !== null &&
     show === true &&
@@ -241,6 +244,12 @@ const CartComponent = (props) => {
     ];
   }
   let modifyState = modify;
+  let cartItems = props.products;
+  console.log(localStorage.getItem("mode"), modify);
+  if (localStorage.getItem("mode") === "cartModified") {
+    cartItems = returnModifiedCartItems();
+    console.log("modify ", modify, cartItems);
+  }
   return (
     <>
       <CartDetailsCard
@@ -251,6 +260,7 @@ const CartComponent = (props) => {
       >
         <OrderSummary
           {...props}
+          products={cartItems}
           modify={modifyState}
           cartSummary={props.cartSummary}
           confirm={confirm}
