@@ -192,6 +192,7 @@ const CartModificationComponent = (props) => {
     props.fetchSummary(payload);
     localStorage.setItem("modifiedCart", JSON.stringify(props.cartProducts));
     localStorage.setItem("modifyCartInfo", JSON.stringify(payload));
+    localStorage.setItem("mode", "cartModified");
     history.push({
       pathname: "/order-info/" + history.location.state.orderId,
     });

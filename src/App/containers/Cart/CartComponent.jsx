@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import CartDetailsCard from "../../components/card";
@@ -67,13 +67,13 @@ const CartComponent = (props) => {
   const orderInfo = props.orderInfo;
   let cardFooter = "";
   const [modify, setModify] = useState(false);
-  // eslint-disable-next-line no-unused-vars
   const [disableModify, setDisableModify] = useState(props.buttonState);
   const [confirm, setConfirm] = useState(false);
   const [cancel, setCancel] = useState(false);
   const [show, setShow] = useState(true);
   const [message, showMessage] = useState();
   const cartProducts = JSON.parse(localStorage.getItem("modifiedCart"));
+  const [cartModifyStatus, setCartModifyStatus] = useState(localStorage.getItem("mode"));
   useEffect(() => {
     // check pending modify request
     let payload = {
@@ -94,21 +94,24 @@ const CartComponent = (props) => {
       localStorage.setItem("mode", null);
       localStorage.setItem("modifyCartInfo", null);
       localStorage.setItem("modifiedCart", null);
+      setCartModifyStatus(null);
       props.resetOnUnmount();
     };
   }, []);
 
   useEffect(() => {
     if (props.fetchCartSummarySuccess) {
-      localStorage.setItem("mode", "cartModified");
+      // localStorage.setItem("mode", "cartModified");
+      setCartModifyStatus("cartModified");
       modifyState = props.cartSummary.to_show_confirm;
       showMessage(props.cartSummary.action_title);
       setModify(!modify);
       setDisableModify(modifyState);
-    }else{
+    } else {
       localStorage.setItem("mode", null);
       localStorage.setItem("modifyCartInfo", null);
       localStorage.setItem("modifiedCart", null);
+      setCartModifyStatus(null);
     }
   }, [props.fetchCartSummarySuccess]);
 
@@ -133,6 +136,7 @@ const CartComponent = (props) => {
     localStorage.setItem("mode", null);
     localStorage.setItem("modifyCartInfo", null);
     localStorage.setItem("modifiedCart", null);
+    setCartModifyStatus(null);
     setModify(true);
     setCancel(true);
     setShow(false);
@@ -245,10 +249,11 @@ const CartComponent = (props) => {
   }
   let modifyState = modify;
   let cartItems = props.products;
-  console.log(localStorage.getItem("mode"), modify);
-  if (localStorage.getItem("mode") === "cartModified") {
+  // console.log(localStorage.getItem("mode"), modify);
+  // console.log("cartModifyStatus ", cartModifyStatus);
+  if (cartModifyStatus === "cartModified") {
     cartItems = returnModifiedCartItems();
-    console.log("modify ", modify, cartItems);
+    // console.log("modify ", modify, cartItems);
   }
   return (
     <>
@@ -260,7 +265,7 @@ const CartComponent = (props) => {
       >
         <OrderSummary
           {...props}
-          products={cartItems}
+          modifiedProducts={cartItems}
           modify={modifyState}
           cartSummary={props.cartSummary}
           confirm={confirm}

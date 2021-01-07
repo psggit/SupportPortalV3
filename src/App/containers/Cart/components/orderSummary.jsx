@@ -119,7 +119,7 @@ const OrderSummary = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const orderInfo = props.orderInfo;
-  const [cartItems] = useState(props.products);
+  const cartItems = props.modifiedProducts;
   const [checked, setChecked] = useState([0]);
   const ref = createRef();
   const [open, setOpen] = useState(false);

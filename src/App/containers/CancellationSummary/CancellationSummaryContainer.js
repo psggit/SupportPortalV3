@@ -5,11 +5,7 @@ import { triggerRefund } from "./duck";
 const mapStateToProps = (state) => {
   return {
     orderInfo: state.order.orderInfo.orderDetails,
-    triggerRefundSuccess: state.cancellationSummary.triggerRefundSuccess,
-    triggerRefundFailed: state.cancellationSummary.triggerRefundFailed,
-    triggerRefundProgress: state.cancellationSummary.triggerRefundProgress,
-    errorMsg: state.cancellationSummary.errorMsg,
-    successMsg: state.cancellationSummary.successMsg,
+    cancellationSummary: state.cancellationSummary,
   };
 };
 
