@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
   return {
     orderInfo: state.order.orderInfo.orderDetails,
     products: state.order.orderInfo.products,
+    cart: state.cart,
     cartSummary: state.cart.cartSummary,
     validateOrderSuccess: state.cart.validateOrderSuccess,
     validateOrderFailed: state.cart.validateOrderFailed,

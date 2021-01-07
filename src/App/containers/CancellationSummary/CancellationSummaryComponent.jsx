@@ -8,7 +8,14 @@ import { Divider, Button } from "@material-ui/core";
 import ErrorMsg from "../../components/errorMsg";
 
 function CancellationSummaryComponent(props) {
-  const { orderInfo, triggerRefundProgress, triggerRefund } = props;
+  const { orderInfo, triggerRefund } = props;
+  const {
+    triggerRefundSuccess,
+    triggerRefundFailed,
+    triggerRefundProgress,
+    errorMsg,
+    successMsg,
+  } = props.cancellationSummary;
   const {
     cancellation_reason,
     total_cancellation_charges,
@@ -36,10 +43,10 @@ function CancellationSummaryComponent(props) {
   ];
 
   useEffect(() => {
-    if (props.triggerRefundSuccess === true) {
+    if (triggerRefundSuccess === true) {
       location.reload();
     }
-  }, [props.triggerRefundSuccess]);
+  }, [triggerRefundSuccess]);
 
   return (
     <CancellationSummaryCard
@@ -130,17 +137,16 @@ function CancellationSummaryComponent(props) {
           </CancellationSummaryItem>
         )}
       </List>
-      {props.triggerRefundFailed && (
-        <ErrorMsg show={true} message={props.errorMsg} type={"error"} />
+      {triggerRefundFailed && (
+        <ErrorMsg show={true} message={errorMsg} type={"error"} />
       )}
-      {props.triggerRefundSuccess && (
-        <ErrorMsg show={true} message={props.successMsg.message} type={"success"} />
+      {triggerRefundSuccess && (
+        <ErrorMsg show={true} message={successMsg.message} type={"success"} />
       )}
       <Divider />
     </CancellationSummaryCard>
   );
-};
-
+}
 
 CancellationSummaryComponent.propTypes = {
   orderInfo: PropTypes.object,
@@ -150,6 +156,7 @@ CancellationSummaryComponent.propTypes = {
   triggerRefundFailed: PropTypes.bool,
   errorMsg: PropTypes.string,
   successMsg: PropTypes.object,
+  cancellationSummary: PropTypes.object,
 };
 
 export { CancellationSummaryComponent };
