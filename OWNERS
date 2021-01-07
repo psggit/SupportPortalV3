@@ -1,0 +1,7 @@
+filters:
+  ".*":
+    approvers:
+      - syedHipbar
+      - hl05
+      - PurvaSawant16123
+      - puja-agrawal
