@@ -74,32 +74,6 @@ const OrderInfoComponent = (props) => {
   const classes = useStyles();
   let { orderId } = useParams();
   const [modifyCart, setModifyCart] = useState("");
-
-  useEffect(() => {
-    // console.log("OrderInfoComponent", props.retailerIssueListData);
-    if (orderId === null || orderId == "") {
-      history.push("/dashboard");
-    } else {
-      props.fetchOrderInfo(orderId);
-    }
-
-    if (localStorage.getItem("modifyCartInfo") !== null) {
-      // if ("modifyCartInfo" in history.location.state) {
-      setModifyCart(JSON.parse(localStorage.getItem("modifyCartInfo")));
-      // }
-    }
-    // console.log(JSON.parse(localStorage.getItem("modifyCartInfo")));
-    return () => {
-      props.resetOnUnmount();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (props.fetchOrderInfoSuccess) {
-      props.fetchIssueTypes();
-    }
-  }, [props.fetchOrderInfoSuccess]);
-
   let loading = props.fetchOrderInfoProgress;
   const [selectedValue, handleSelect] = useState("");
   const [issueType, setIssueType] = useState(null);
@@ -112,6 +86,28 @@ const OrderInfoComponent = (props) => {
   const [activeSection, setActiveSection] = useState("");
   const [disableBtn, setDisableBtn] = useState(false);
   const [valueSelected, setValue] = useState(null);
+
+  useEffect(() => {
+    // console.log("OrderInfoComponent", props.retailerIssueListData);
+    if (orderId === null || orderId == "") {
+      history.push("/dashboard");
+    } else {
+      props.fetchOrderInfo(orderId);
+    }
+
+    if (localStorage.getItem("modifyCartInfo") !== null) {
+      setModifyCart(JSON.parse(localStorage.getItem("modifyCartInfo")));
+    }
+    return () => {
+      props.resetOnUnmount();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (props.fetchOrderInfoSuccess) {
+      props.fetchIssueTypes();
+    }
+  }, [props.fetchOrderInfoSuccess]);
 
   const validateIssue = (event, type) => {
     if (type === "select") {
@@ -137,18 +133,11 @@ const OrderInfoComponent = (props) => {
       offset: 0,
     };
     props.fetchListOrderModification(payload);
-    // if (
-    //   localStorage.getItem("x-hasura-role") !== "ops_delivery_manager" ||
-    //   localStorage.getItem("x-hasura-role") !== "support_person"
-    // ) {
-    //   props.fetchListOrderModification(payload);
-    // }
   }, []);
 
   const textFieldChange = (e) => {
     setIssueDesc(e.target.value);
     setDisableBtn(false);
-    // console.log("valueSelected", valueSelected);
     if (e.target.value.trim().length > 0 && valueSelected !== null) {
       setDisableBtn(true);
     }
