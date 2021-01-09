@@ -73,7 +73,9 @@ const CartComponent = (props) => {
   const [show, setShow] = useState(true);
   const [message, showMessage] = useState();
   const cartProducts = JSON.parse(localStorage.getItem("modifiedCart"));
-  const [cartModifyStatus, setCartModifyStatus] = useState(localStorage.getItem("mode"));
+  const [cartModifyStatus, setCartModifyStatus] = useState(null);
+  const [checkedHBWallet, setCheckedHBWallet] = useState(false);
+  const [checkedGiftWallet, setCheckedGiftWallet] = useState(false);
   useEffect(() => {
     // check pending modify request
     let payload = {
@@ -90,6 +92,37 @@ const CartComponent = (props) => {
       props.validateCart(payload);
     }
 
+    if (JSON.parse(localStorage.getItem("modifyCartInfo")) !== null) {
+      let cartItem = [];
+      let modifiedCartProducts = JSON.parse(
+        localStorage.getItem("modifiedCart")
+      );
+
+      Object.keys(modifiedCartProducts).forEach((value) => {
+        cartItem.push({
+          sku_id: parseInt(value),
+          count: modifiedCartProducts[value].ordered_count,
+        });
+      });
+
+      let summaryPayload = {
+        order_id: orderInfo.order_id,
+        is_hw_enabled: false,
+        is_gw_enabled: false,
+        items: cartItem,
+      };
+      props.fetchSummary(summaryPayload);
+    }
+
+    if(typeof history.location.state !== "undefined"){
+      setCartModifyStatus(history.location.state.mode);
+    } else {
+      localStorage.setItem("mode", null);
+      localStorage.setItem("modifyCartInfo", null);
+      localStorage.setItem("modifiedCart", null);
+      setCartModifyStatus(null);
+    }
+
     return () => {
       localStorage.setItem("mode", null);
       localStorage.setItem("modifyCartInfo", null);
@@ -101,16 +134,12 @@ const CartComponent = (props) => {
 
   useEffect(() => {
     if (props.fetchCartSummarySuccess) {
-      // localStorage.setItem("mode", "cartModified");
       setCartModifyStatus("cartModified");
       modifyState = props.cartSummary.to_show_confirm;
       showMessage(props.cartSummary.action_title);
       setModify(!modify);
       setDisableModify(modifyState);
     } else {
-      localStorage.setItem("mode", null);
-      localStorage.setItem("modifyCartInfo", null);
-      localStorage.setItem("modifiedCart", null);
       setCartModifyStatus(null);
     }
   }, [props.fetchCartSummarySuccess]);
@@ -143,7 +172,14 @@ const CartComponent = (props) => {
   };
 
   const handleConfirm = () => {
-    props.updateCart(props.modifyCart);
+    let summaryPayload = {
+      ...props.modifyCart,
+      is_hw_enabled: checkedHBWallet,
+      is_gw_enabled: checkedGiftWallet,
+      order_id: orderInfo.order_id,
+    };
+    // console.log("summaryPayload", summaryPayload);
+    props.updateCart(summaryPayload);
     setConfirm(!confirm);
     setTimeout(() => {
       location.reload();
@@ -249,12 +285,10 @@ const CartComponent = (props) => {
   }
   let modifyState = modify;
   let cartItems = props.products;
-  // console.log(localStorage.getItem("mode"), modify);
-  // console.log("cartModifyStatus ", cartModifyStatus);
   if (cartModifyStatus === "cartModified") {
     cartItems = returnModifiedCartItems();
-    // console.log("modify ", modify, cartItems);
   }
+
   return (
     <>
       <CartDetailsCard
@@ -270,6 +304,10 @@ const CartComponent = (props) => {
           cartSummary={props.cartSummary}
           confirm={confirm}
           show={show}
+          checkedHBWallet={checkedHBWallet}
+          checkedGiftWallet={checkedGiftWallet}
+          setCheckedHBWallet={setCheckedHBWallet}
+          setCheckedGiftWallet={setCheckedGiftWallet}
         />
       </CartDetailsCard>
       {(props.fetchUpdateCartSuccess || props.fetchUpdateCartFailed) && (

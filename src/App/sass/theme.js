@@ -14,6 +14,9 @@ const newTheme = createMuiTheme({
     secondary2: {
       main: "#010B13",
     },
+    disabledColor: {
+      main: "#606060",
+    },
   },
   typography: {
     fontFamily: font,

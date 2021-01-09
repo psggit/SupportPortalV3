@@ -17,7 +17,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import { OrderSummaryItem } from "./orderSummaryItem";
 import { CartItem } from "./cartItem";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@material-ui/icons/CheckBox";
+import Checkbox from "@material-ui/core/Checkbox";
 import uuid from "react-uuid";
 import Moment from "moment";
 import Paper from "@material-ui/core/Paper";
@@ -121,10 +121,19 @@ const OrderSummary = (props) => {
   const orderInfo = props.orderInfo;
   const cartItems = props.modifiedProducts;
   const [checked, setChecked] = useState([0]);
+  
   const ref = createRef();
   const [open, setOpen] = useState(false);
   const handleClick = () => {
     setOpen(!open);
+  };
+
+  const handleChangeHipbarWallet = (event) => {
+    props.setCheckedHBWallet(event.target.checked);
+  };
+
+  const handleChangeGiftWallet = (event) => {
+    props.setCheckedGiftWallet(event.target.checked);
   };
 
   const handleToggle = (value) => () => {
@@ -407,14 +416,31 @@ const OrderSummary = (props) => {
                 >
                   {props.modify && (
                     <ListItemIcon>
-                      {props.cartSummary ? (
+                      {props.cartSummary.hipbar_wallet.is_wallet_enabled ? (
                         props.cartSummary.hipbar_wallet.is_wallet_enabled ? (
-                          <CheckBoxIcon color="primary" />
+                          <Checkbox
+                            color="primary"
+                            onChange={handleChangeHipbarWallet}
+                            value={props.checkedHBWallet}
+                            inputProps={{ "aria-label": "secondary checkbox" }}
+                          />
                         ) : (
-                          <CheckBoxOutlineBlankIcon color="primary" />
+                          <Checkbox
+                            disabled
+                            color="disabledColor"
+                            onChange={handleChangeHipbarWallet}
+                            value={props.checkedHBWallet}
+                            inputProps={{ "aria-label": "secondary checkbox" }}
+                          />
                         )
                       ) : (
-                        <CheckBoxOutlineBlankIcon color="primary" />
+                        <Checkbox
+                          disabled
+                          color="disabledColor"
+                          onChange={handleChangeHipbarWallet}
+                          value={props.checkedHBWallet}
+                          inputProps={{ "aria-label": "secondary checkbox" }}
+                        />
                       )}
                     </ListItemIcon>
                   )}
@@ -426,13 +452,13 @@ const OrderSummary = (props) => {
                   />
                   <ListItemText
                     primary={
-                      props.cartSummary
+                      props.cartSummary.hipbar_wallet.display_charged_credits
                         ? props.cartSummary.hipbar_wallet
                             .display_charged_credits
                         : "-"
                     }
                     secondary={
-                      props.cartSummary
+                      props.cartSummary.hipbar_wallet.display_available_credits
                         ? props.cartSummary.hipbar_wallet
                             .display_available_credits
                         : "-"
@@ -448,14 +474,31 @@ const OrderSummary = (props) => {
                 >
                   {props.modify && (
                     <ListItemIcon>
-                      {props.cartSummary ? (
+                      {props.cartSummary.gift_wallet.is_wallet_enabled ? (
                         props.cartSummary.gift_wallet.is_wallet_enabled ? (
-                          <CheckBoxIcon color="primary" />
+                          <Checkbox
+                            color="primary"
+                            onChange={handleChangeGiftWallet}
+                            value={props.checkedGiftWallet}
+                            inputProps={{ "aria-label": "secondary checkbox" }}
+                          />
                         ) : (
-                          <CheckBoxOutlineBlankIcon color="primary" />
+                          <Checkbox
+                            disabled
+                            onChange={handleChangeGiftWallet}
+                            value={props.checkedGiftWallet}
+                            color="disabledColor"
+                            inputProps={{ "aria-label": "secondary checkbox" }}
+                          />
                         )
                       ) : (
-                        <CheckBoxOutlineBlankIcon color="primary" />
+                        <Checkbox
+                          disabled
+                          onChange={handleChangeGiftWallet}
+                          value={props.checkedGiftWallet}
+                          color="disabledColor"
+                          inputProps={{ "aria-label": "secondary checkbox" }}
+                        />
                       )}
                     </ListItemIcon>
                   )}
@@ -467,12 +510,12 @@ const OrderSummary = (props) => {
                   />
                   <ListItemText
                     primary={
-                      props.cartSummary
+                      props.cartSummary.gift_wallet.display_charged_credits
                         ? props.cartSummary.gift_wallet.display_charged_credits
                         : "-"
                     }
                     secondary={
-                      props.cartSummary
+                      props.cartSummary.gift_wallet.display_available_credits
                         ? props.cartSummary.gift_wallet
                             .display_available_credits
                         : "-"
@@ -504,6 +547,8 @@ OrderSummary.propTypes = {
   products: PropTypes.array,
   cartSummary: PropTypes.object,
   show: PropTypes.bool,
+  checkedGiftWallet: PropTypes.bool,
+  checkedHBWallet: PropTypes.bool,
 };
 
 export { OrderSummary };
