@@ -30,6 +30,7 @@ import {
   TableContainer,
   TableBody,
 } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -122,7 +123,7 @@ const OrderSummary = (props) => {
   const cartItems = props.modifiedProducts;
   const [checked, setChecked] = useState([0]);
 
-  console.log("order Summary ", props.modify);
+  console.log("order Summary ", props);
 
   const ref = createRef();
   const [open, setOpen] = useState(false);
@@ -337,15 +338,12 @@ const OrderSummary = (props) => {
                     >
                       {props.modify && (
                         <ListItemIcon>
-                          {props.cartSummary.hipbar_wallet.is_wallet_enabled ? (
+                          {props.cartSummary !== null ? (
                             props.cartSummary.hipbar_wallet
                               .is_wallet_enabled ? (
                               <Checkbox
                                 color="primary"
-                                checked={
-                                  props.cartSummary.hipbar_wallet
-                                    .is_wallet_enabled
-                                }
+                                checked={props.checkedHBWallet}
                                 onChange={handleChangeHipbarWallet}
                                 value={props.checkedHBWallet}
                                 inputProps={{
@@ -401,6 +399,14 @@ const OrderSummary = (props) => {
                         classes={{ root: classes.ListItemTextValue }}
                       />
                     </ListItem>
+                    {props.modify && props.hbError && props.checkedHBWallet && (
+                      <ListItem>
+                        <Alert
+                          variant="outlined"
+                          severity="error"
+                        >{`Only ${props.cartSummary.hipbar_wallet.display_available_limit} can be used from this wallet! Try changing amount.`}</Alert>
+                      </ListItem>
+                    )}
                     <ListItem
                       classes={{ root: classes.ListItemRoot }}
                       dense
@@ -408,14 +414,11 @@ const OrderSummary = (props) => {
                     >
                       {props.modify && (
                         <ListItemIcon>
-                          {props.cartSummary.gift_wallet.is_wallet_enabled ? (
+                          {props.cartSummary !== null ? (
                             props.cartSummary.gift_wallet.is_wallet_enabled ? (
                               <Checkbox
                                 color="primary"
-                                checked={
-                                  props.cartSummary.gift_wallet
-                                    .is_wallet_enabled
-                                }
+                                checked={props.checkedGiftWallet}
                                 onChange={handleChangeGiftWallet}
                                 value={props.checkedGiftWallet}
                                 inputProps={{
@@ -470,6 +473,14 @@ const OrderSummary = (props) => {
                         classes={{ root: classes.ListItemTextValue }}
                       />
                     </ListItem>
+                    {props.modify && props.gwError && props.checkedGiftWallet && (
+                      <ListItem>
+                        <Alert
+                          variant="outlined"
+                          severity="error"
+                        >{`Only ${props.cartSummary.gift_wallet.display_available_limit} can be used from this wallet! Try changing amount.`}</Alert>
+                      </ListItem>
+                    )}
                   </Collapse>
                 </>
               )}

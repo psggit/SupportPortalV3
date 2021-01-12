@@ -83,8 +83,8 @@ const CartComponent = (props) => {
     setCheckedGiftWallet(value);
     if (value === true) {
       if (
-        props.cartSummary.hipbar_wallet.available_limit >
-        props.cartSummary.hipbar_wallet.charged_credits
+        props.cartSummary.hipbar_wallet.available_credits >
+        props.cartSummary.hipbar_wallet.available_limit
       ) {
         setHBError(true);
       } else {
@@ -97,8 +97,8 @@ const CartComponent = (props) => {
     setCheckedHBWallet(value);
     if (value === true) {
       if (
-        props.cartSummary.gift_wallet.available_limit >
-        props.cartSummary.gift_wallet.charged_credits
+        props.cartSummary.gift_wallet.available_credits >
+        props.cartSummary.gift_wallet.available_limit
       ) {
         setHBError(true);
       } else {
@@ -170,6 +170,8 @@ const CartComponent = (props) => {
       showMessage(props.cartSummary.action_title);
       setModify(!modify);
       setDisableModify(modifyState);
+      setCheckedGiftWallet(props.cartSummary.gift_wallet.is_wallet_enabled);
+      setCheckedHBWallet(props.cartSummary.hipbar_wallet.is_wallet_enabled);
     } else {
       setCartModifyStatus(null);
     }
@@ -342,6 +344,8 @@ const CartComponent = (props) => {
           checkedGiftWallet={checkedGiftWallet}
           setCheckedHBWallet={setCheckedHBWallet}
           setCheckedGiftWallet={setCheckedGiftWallet}
+          handleGiftWallet={handleGiftWallet}
+          handleHBWallet={handleHBWallet}
         />
       </CartDetailsCard>
       {(props.fetchUpdateCartSuccess || props.fetchUpdateCartFailed) && (
