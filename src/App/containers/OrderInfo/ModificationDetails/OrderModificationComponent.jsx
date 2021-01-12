@@ -85,6 +85,12 @@ const OrderModificationComponent = (props) => {
     console.log("cancelOrder");
     setDisableClear(orderIds);
     props.cancelOrderRequest(orderIds);
+    setTimeout(() => {
+      localStorage.setItem("mode", null);
+      localStorage.setItem("modifyCartInfo", null);
+      localStorage.setItem("modifiedCart", null);
+      location.reload();
+    }, 1500);
   };
 
   const actionButtons = [
