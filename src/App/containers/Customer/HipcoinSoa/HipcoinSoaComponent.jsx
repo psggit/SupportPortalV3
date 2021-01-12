@@ -31,16 +31,11 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const createData = ({
-  transaction_type,
-  transaction_amount,
-  transaction_message,
-  created_at,
-}) => {
+const createData = ({ type, amount, display_name, created_at }) => {
   return {
-    transaction_type,
-    transaction_amount,
-    transaction_message,
+    type,
+    amount,
+    display_name,
     created_at,
   };
 };
@@ -140,15 +135,9 @@ function HipcoinSoa(props) {
                   return (
                     // eslint-disable-next-line react/jsx-key
                     <TableRow key={index}>
-                      <TableCell align="center">
-                        {data.transaction_type}
-                      </TableCell>
-                      <TableCell align="center">
-                        {data.transaction_amount}
-                      </TableCell>
-                      <TableCell align="center">
-                        {data.transaction_message}
-                      </TableCell>
+                      <TableCell align="center">{data.type}</TableCell>
+                      <TableCell align="center">{data.amount}</TableCell>
+                      <TableCell align="center">{data.display_name}</TableCell>
                       <TableCell align="center">
                         {Moment(data.created_at).format("DD/MM/YYYY h:mm A")}
                       </TableCell>

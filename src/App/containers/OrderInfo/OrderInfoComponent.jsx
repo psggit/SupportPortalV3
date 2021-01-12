@@ -554,6 +554,12 @@ const OrderInfoComponent = (props) => {
                     </Box>
                   )}
               </Grid>
+              {props.fetchModificationSuccess &&
+                props.orderList.order_modification.length > 0 && (
+                  <Grid item xs={12}>
+                    <OrderModificationContainer />
+                  </Grid>
+                )}
             </Grid>
             {localStorage.getItem("x-hasura-role") !==
               "ops_delivery_manager" && (
@@ -563,12 +569,6 @@ const OrderInfoComponent = (props) => {
                 id="section2"
                 className={classes.marginTop}
               >
-                {props.fetchModificationSuccess &&
-                  props.orderList.order_modification.length > 0 && (
-                    <Grid item xs={12}>
-                      <OrderModificationContainer />
-                    </Grid>
-                  )}
                 <Grid item xs={12}>
                   {props.fetchOrderInfoSuccess && (
                     <CustomerContainer
