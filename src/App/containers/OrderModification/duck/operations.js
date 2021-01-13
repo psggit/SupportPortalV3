@@ -46,7 +46,11 @@ const onsendSMSError = (dispatch) => {
 
 const processResponseSMS = () => {
   return (res) => {
-    return res.json();
+    if (res.status === 200) {
+      return res.json();
+    } else {
+      throw res;
+    }
   };
 };
 

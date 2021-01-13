@@ -267,14 +267,17 @@ const ModificationListComponent = (props) => {
               />
             )} */}
           </TableContainer>
-          {(props.sendSMSSuccess || props.sendSMSFailed) && (
-            <ErrorMsg show={true} message={props.msg.message} type={"info"} />
+          {props.sendSMSSuccess && (
+            <ErrorMsg show={true} message={props.msg} type={"info"} />
+          )}
+          {props.sendSMSFailed && (
+            <ErrorMsg show={true} message={props.msg} type={"info"} />
           )}
           {(props.fetchUpdatedStatusSuccess ||
             props.fetchUpdatedStatusFailed) && (
             <ErrorMsg
               show={true}
-              message={props.msg.payload.message}
+              message={props.updatedStatusMsg.payload.message}
               type={"info"}
             />
           )}
@@ -307,6 +310,7 @@ ModificationListComponent.propTypes = {
   fetchUpdatedStatus: PropTypes.func,
   fetchUpdatedStatusSuccess: PropTypes.bool,
   fetchUpdatedStatusFailed: PropTypes.bool,
+  updatedStatusMsg: PropTypes.any,
 };
 
 export { ModificationListComponent };

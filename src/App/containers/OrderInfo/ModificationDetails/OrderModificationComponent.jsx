@@ -74,7 +74,6 @@ const OrderModificationComponent = (props) => {
   };
 
   const refreshOrder = () => {
-    console.log("refreshOrder");
     const payload = {
       order_id: orderIds,
     };
@@ -82,7 +81,6 @@ const OrderModificationComponent = (props) => {
   };
 
   const cancelOrder = () => {
-    console.log("cancelOrder");
     setDisableClear(orderIds);
     props.cancelOrderRequest(orderIds);
     setTimeout(() => {
@@ -142,13 +140,13 @@ const OrderModificationComponent = (props) => {
             />
           )}
         {(props.sendSMSSuccess || props.sendSMSFailed) && (
-          <ErrorMsg show={true} message={props.msg.message} type={"info"} />
+          <ErrorMsg show={true} message={props.msg} type={"info"} />
         )}
         {(props.fetchUpdatedStatusSuccess ||
           props.fetchUpdatedStatusFailed) && (
           <ErrorMsg
             show={true}
-            message={props.msg.payload.message}
+            message={props.updatedStatusMsg.payload.message}
             type={"info"}
           />
         )}

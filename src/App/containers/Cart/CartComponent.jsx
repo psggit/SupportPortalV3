@@ -272,6 +272,7 @@ const CartComponent = (props) => {
     (props.fetchCartSummarySuccess && props.cartSummary === null) ||
     (props.validateOrderSuccess && props.validateInfo.count !== 0)
   ) {
+    actionButtons = null;
     cardFooter = (
       <Alert severity="warning">
         This order already has an <b>Order Modification</b> request.
@@ -281,7 +282,7 @@ const CartComponent = (props) => {
         <u style={{ color: "blue", cursor: "pointer" }}>
           <div onClick={routePage}>Order Modificaton</div>
         </u>{" "}
-        page to cancel the previous request.
+        page or Last Modification Details section below to cancel the previous request.
       </Alert>
     );
   }
