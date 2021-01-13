@@ -135,9 +135,13 @@ const CartModificationComponent = (props) => {
     setState({ ...state, [anchor]: open });
   };
 
-  let products = history.location.state.products;
   let anchor = "right";
   useEffect(() => {
+    console.log(history.location.state.previousCart);
+    let products =
+      history.location.state.previousCart !== null
+        ? history.location.state.previousCart
+        : history.location.state.products;
     let payload = {
       city_id: history.location.state.city_id,
       state_id: history.location.state.state_id,
@@ -191,8 +195,8 @@ const CartModificationComponent = (props) => {
     };
 
     sessionStorage.setItem("modifiedCart", JSON.stringify(props.cartProducts));
-    localStorage.setItem("modifyCartInfo", JSON.stringify(payload));
-    localStorage.setItem("mode", "cartModified");
+    sessionStorage.setItem("modifyCartInfo", JSON.stringify(payload));
+    sessionStorage.setItem("mode", "cartModified");
     history.push({
       pathname: "/order-info/" + history.location.state.orderId,
       state: {
@@ -316,6 +320,7 @@ const CartModificationComponent = (props) => {
             </div>
             <Divider />
             {props.fetchGenreSuccess &&
+              props.modifySuccess &&
               Object.keys(props.cartProducts).map((value) => {
                 return (
                   <div key={uuid()} className={classes.ListItem}>

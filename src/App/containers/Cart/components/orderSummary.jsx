@@ -123,8 +123,6 @@ const OrderSummary = (props) => {
   const cartItems = props.modifiedProducts;
   const [checked, setChecked] = useState([0]);
 
-  console.log("order Summary ", props);
-
   const ref = createRef();
   const [open, setOpen] = useState(false);
   const handleClick = () => {
@@ -330,7 +328,7 @@ const OrderSummary = (props) => {
                 })}
               </OrderSummaryItem>
               <Divider />
-              {props.modify && (
+              {props.modify && props.cartSummary.action !== "toRefund" && (
                 <>
                   <ListItem
                     classes={{ root: classes.ListItemRoot }}
@@ -341,11 +339,7 @@ const OrderSummary = (props) => {
                     ref={ref}
                   >
                     <ListItemText
-                      primary={
-                        props.cartSummary.action === "toRefund"
-                          ? "To Credit"
-                          : "To Debit"
-                      }
+                      primary={"To Debit"}
                       className={classes.ListItemRootTitle}
                       classes={{ root: classes.ListItemRootTitle }}
                     />
