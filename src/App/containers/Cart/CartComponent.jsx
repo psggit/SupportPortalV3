@@ -124,7 +124,7 @@ const CartComponent = (props) => {
       props.validateCart(payload);
     }
 
-    if (JSON.parse(localStorage.getItem("modifyCartInfo")) !== null) {
+    if (JSON.parse(sessionStorage.getItem("modifyCartInfo")) !== null) {
       let cartItem = [];
       let modifiedCartProducts = JSON.parse(
         sessionStorage.getItem("modifiedCart")
@@ -149,15 +149,15 @@ const CartComponent = (props) => {
     if (typeof history.location.state !== "undefined") {
       setCartModifyStatus(history.location.state.mode);
     } else {
-      localStorage.setItem("mode", null);
-      localStorage.setItem("modifyCartInfo", null);
+      sessionStorage.setItem("mode", null);
+      sessionStorage.setItem("modifyCartInfo", null);
       sessionStorage.setItem("modifiedCart", null);
       setCartModifyStatus(null);
     }
 
     return () => {
-      localStorage.setItem("mode", null);
-      localStorage.setItem("modifyCartInfo", null);
+      sessionStorage.setItem("mode", null);
+      sessionStorage.setItem("modifyCartInfo", null);
       sessionStorage.setItem("modifiedCart", null);
       setCartModifyStatus(null);
       props.resetOnUnmount();
@@ -179,6 +179,15 @@ const CartComponent = (props) => {
   }, [props.fetchCartSummarySuccess]);
 
   const handleModify = () => {
+    let sessionItems = JSON.parse(sessionStorage.getItem("modifiedCart"));
+    let cartItems = [];
+    if (sessionItems !== null) {
+      Object.keys(sessionItems).forEach((value) => {
+        cartItems.push(sessionItems[value]);
+      });
+    } else {
+      cartItems = null;
+    }
     history.push({
       pathname: "/cart-modify",
       state: {
@@ -189,15 +198,16 @@ const CartComponent = (props) => {
         gps: orderInfo.gps,
         orderId: orderInfo.order_id,
         products: orderInfo.cart_items,
+        previousCart: cartItems,
       },
     });
-    localStorage.setItem("modifyCartInfo", null);
+    sessionStorage.setItem("modifyCartInfo", null);
     sessionStorage.setItem("modifiedCart", null);
   };
 
   const handleCancel = () => {
-    localStorage.setItem("mode", null);
-    localStorage.setItem("modifyCartInfo", null);
+    sessionStorage.setItem("mode", null);
+    sessionStorage.setItem("modifyCartInfo", null);
     sessionStorage.setItem("modifiedCart", null);
     setCartModifyStatus(null);
     setModify(false);
@@ -216,8 +226,8 @@ const CartComponent = (props) => {
     props.updateCart(summaryPayload);
     setConfirm(!confirm);
     setTimeout(() => {
-      localStorage.setItem("mode", null);
-      localStorage.setItem("modifyCartInfo", null);
+      sessionStorage.setItem("mode", null);
+      sessionStorage.setItem("modifyCartInfo", null);
       sessionStorage.setItem("modifiedCart", null);
       location.reload();
     }, 2500);
@@ -282,7 +292,8 @@ const CartComponent = (props) => {
         <u style={{ color: "blue", cursor: "pointer" }}>
           <div onClick={routePage}>Order Modificaton</div>
         </u>{" "}
-        page or Last Modification Details section below to cancel the previous request.
+        page or Last Modification Details section below to cancel the previous
+        request.
       </Alert>
     );
   }
@@ -309,6 +320,16 @@ const CartComponent = (props) => {
         disabled={confirm}
       >
         Cancel
+      </Button>,
+      <Button
+        variant="outlined"
+        color="primary"
+        onClick={handleModify}
+        key={uuid()}
+        //disabled={disableModify}
+        disabled={!props.orderInfo.change_retailer_button}
+      >
+        Add More
       </Button>,
       <Button
         variant="contained"

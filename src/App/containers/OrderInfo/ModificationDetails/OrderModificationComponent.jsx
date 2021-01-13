@@ -84,8 +84,8 @@ const OrderModificationComponent = (props) => {
     setDisableClear(orderIds);
     props.cancelOrderRequest(orderIds);
     setTimeout(() => {
-      localStorage.setItem("mode", null);
-      localStorage.setItem("modifyCartInfo", null);
+      sessionStorage.setItem("mode", null);
+      sessionStorage.setItem("modifyCartInfo", null);
       sessionStorage.setItem("modifiedCart", null);
       location.reload();
     }, 1500);
