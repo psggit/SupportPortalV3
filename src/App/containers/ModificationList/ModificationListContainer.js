@@ -22,6 +22,7 @@ const mapStateToProps = (state) => {
       state.order.orderModify.fetchUpdatedStatusSuccess,
     fetchUpdatedStatusFailed: state.order.orderModify.fetchUpdatedStatusFailed,
     msg: state.order.orderModify.msg,
+    updatedStatusMsg: state.order.orderModify.updatedStatusMsg,
   };
 };
 

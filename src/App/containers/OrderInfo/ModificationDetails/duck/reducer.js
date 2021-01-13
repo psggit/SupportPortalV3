@@ -44,6 +44,7 @@ const initialState = {
   orderList: null,
   supportPersonList: null,
   msg: "",
+  updatedStatusMsg: "",
   errorMsg: "",
 };
 
@@ -81,6 +82,7 @@ const orderModificationReducer = createReducer(initialState, {
       sendSMSInProgress: true,
       sendSMSFailed: false,
       sendSMSSuccess: false,
+      msg: "",
     };
   },
   [sendSMSSuccess]: (state, data) => {
@@ -89,7 +91,7 @@ const orderModificationReducer = createReducer(initialState, {
       sendSMSInProgress: false,
       sendSMSFailed: false,
       sendSMSSuccess: true,
-      msg: data.payload,
+      msg: "SMS sent successfully",
     };
   },
   [sendSMSFailed]: (state, data) => {
@@ -98,7 +100,7 @@ const orderModificationReducer = createReducer(initialState, {
       sendSMSInProgress: false,
       sendSMSFailed: true,
       sendSMSSuccess: false,
-      msg: data.payload,
+      msg: "Sending SMS failed",
     };
   },
   [resolveOrderInProgress]: (state) => {
@@ -181,22 +183,23 @@ const orderModificationReducer = createReducer(initialState, {
     fetchUpdatedStatusSuccess: true,
     sendSMSFailed: false,
     sendSMSSuccess: false,
-    msg: data,
+    updatedStatusMsg: data,
   }),
   [fetchUpdatedStatusProgress]: (state) => ({
     ...state,
     fetchUpdatedStatusFailed: false,
     fetchUpdatedStatusProgress: true,
     fetchUpdatedStatusSuccess: false,
+    updatedStatusMsg: "",
   }),
-  [fetchUpdatedStatusFailed]: (state, err) => ({
+  [fetchUpdatedStatusFailed]: (state, data) => ({
     ...state,
     fetchUpdatedStatusFailed: true,
     fetchUpdatedStatusProgress: false,
     fetchUpdatedStatusSuccess: false,
     sendSMSFailed: false,
     sendSMSSuccess: false,
-    msg: err.payload,
+    updatedStatusMsg: data,
   }),
   [resetOnUnmount]: () => ({
     ...initialState,

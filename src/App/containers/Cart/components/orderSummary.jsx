@@ -130,12 +130,46 @@ const OrderSummary = (props) => {
   const handleClick = () => {
     setOpen(!open);
   };
+  
+  const returnCartItems = () =>{
+    let cartItem = [];
+    let modifiedCartProducts = JSON.parse(
+      sessionStorage.getItem("modifiedCart")
+    );
+
+    Object.keys(modifiedCartProducts).forEach((value) => {
+      cartItem.push({
+        sku_id: parseInt(value),
+        count: modifiedCartProducts[value].ordered_count,
+      });
+    });
+
+    return cartItem;
+  }
 
   const handleChangeHipbarWallet = (event) => {
+    let cartItem = returnCartItems();
+    let summaryPayload = {
+      order_id: orderInfo.order_id,
+      is_hw_enabled: event.target.checked,
+      is_gw_enabled: props.checkedGiftWallet,
+      items: cartItem,
+    };
+
+    props.fetchSummary(summaryPayload);
     props.setCheckedHBWallet(event.target.checked);
   };
 
   const handleChangeGiftWallet = (event) => {
+    let cartItem = returnCartItems();
+    let summaryPayload = {
+      order_id: orderInfo.order_id,
+      is_hw_enabled: props.checkedHBWallet,
+      is_gw_enabled: event.target.checked,
+      items: cartItem,
+    };
+
+    props.fetchSummary(summaryPayload);
     props.setCheckedGiftWallet(event.target.checked);
   };
 
@@ -166,23 +200,11 @@ const OrderSummary = (props) => {
         />
         <OrderSummaryItem
           title="Order Total"
-          value={
-            props.cartSummary && props.modify
-              ? props.cartSummary.display_details[0].display_value
-              : orderInfo
-              ? orderInfo.revised_order_total
-              : "-"
-          }
+          value={orderInfo.revised_order_total}
         />
         <OrderSummaryItem
           title="Cart Total"
-          value={
-            props.cartSummary && props.modify
-              ? props.cartSummary.display_details[0].display_value
-              : orderInfo
-              ? orderInfo.revised_cart_total
-              : "-"
-          }
+          value={orderInfo.revised_cart_total}
         />
         <OrderSummaryItem
           title="Additional Charges:"
@@ -338,33 +360,10 @@ const OrderSummary = (props) => {
                     >
                       {props.modify && (
                         <ListItemIcon>
-                          {props.cartSummary !== null ? (
-                            props.cartSummary.hipbar_wallet
-                              .is_wallet_enabled ? (
-                              <Checkbox
-                                color="primary"
-                                checked={props.checkedHBWallet}
-                                onChange={handleChangeHipbarWallet}
-                                value={props.checkedHBWallet}
-                                inputProps={{
-                                  "aria-label": "secondary checkbox",
-                                }}
-                              />
-                            ) : (
-                              <Checkbox
-                                disabled
-                                color="disabledColor"
-                                onChange={handleChangeHipbarWallet}
-                                value={props.checkedHBWallet}
-                                inputProps={{
-                                  "aria-label": "secondary checkbox",
-                                }}
-                              />
-                            )
-                          ) : (
+                          {props.cartSummary !== null && (
                             <Checkbox
-                              disabled
-                              color="disabledColor"
+                              color={"primary"}
+                              checked={props.checkedHBWallet}
                               onChange={handleChangeHipbarWallet}
                               value={props.checkedHBWallet}
                               inputProps={{
@@ -414,34 +413,12 @@ const OrderSummary = (props) => {
                     >
                       {props.modify && (
                         <ListItemIcon>
-                          {props.cartSummary !== null ? (
-                            props.cartSummary.gift_wallet.is_wallet_enabled ? (
-                              <Checkbox
-                                color="primary"
-                                checked={props.checkedGiftWallet}
-                                onChange={handleChangeGiftWallet}
-                                value={props.checkedGiftWallet}
-                                inputProps={{
-                                  "aria-label": "secondary checkbox",
-                                }}
-                              />
-                            ) : (
-                              <Checkbox
-                                disabled
-                                onChange={handleChangeGiftWallet}
-                                value={props.checkedGiftWallet}
-                                color="disabledColor"
-                                inputProps={{
-                                  "aria-label": "secondary checkbox",
-                                }}
-                              />
-                            )
-                          ) : (
+                          {props.cartSummary !== null && (
                             <Checkbox
-                              disabled
+                              color={"primary"}
+                              checked={props.checkedGiftWallet}
                               onChange={handleChangeGiftWallet}
                               value={props.checkedGiftWallet}
-                              color="disabledColor"
                               inputProps={{
                                 "aria-label": "secondary checkbox",
                               }}

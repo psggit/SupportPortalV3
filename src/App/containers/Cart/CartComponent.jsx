@@ -8,6 +8,7 @@ import Alert from "@material-ui/lab/Alert";
 import ErrorMsg from "../../components/errorMsg";
 import uuid from "react-uuid";
 import { Button } from "@material-ui/core";
+import Loading from "../../components/loading";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,7 +73,7 @@ const CartComponent = (props) => {
   const [cancel, setCancel] = useState(false);
   const [show, setShow] = useState(true);
   const [message, showMessage] = useState();
-  const cartProducts = JSON.parse(localStorage.getItem("modifiedCart"));
+  const cartProducts = JSON.parse(sessionStorage.getItem("modifiedCart"));
   const [cartModifyStatus, setCartModifyStatus] = useState(null);
   const [checkedHBWallet, setCheckedHBWallet] = useState(false);
   const [checkedGiftWallet, setCheckedGiftWallet] = useState(false);
@@ -126,7 +127,7 @@ const CartComponent = (props) => {
     if (JSON.parse(localStorage.getItem("modifyCartInfo")) !== null) {
       let cartItem = [];
       let modifiedCartProducts = JSON.parse(
-        localStorage.getItem("modifiedCart")
+        sessionStorage.getItem("modifiedCart")
       );
 
       Object.keys(modifiedCartProducts).forEach((value) => {
@@ -150,14 +151,14 @@ const CartComponent = (props) => {
     } else {
       localStorage.setItem("mode", null);
       localStorage.setItem("modifyCartInfo", null);
-      localStorage.setItem("modifiedCart", null);
+      sessionStorage.setItem("modifiedCart", null);
       setCartModifyStatus(null);
     }
 
     return () => {
       localStorage.setItem("mode", null);
       localStorage.setItem("modifyCartInfo", null);
-      localStorage.setItem("modifiedCart", null);
+      sessionStorage.setItem("modifiedCart", null);
       setCartModifyStatus(null);
       props.resetOnUnmount();
     };
@@ -168,7 +169,7 @@ const CartComponent = (props) => {
       setCartModifyStatus("cartModified");
       modifyState = props.cartSummary.to_show_confirm;
       showMessage(props.cartSummary.action_title);
-      setModify(!modify);
+      setModify(true);
       setDisableModify(modifyState);
       setCheckedGiftWallet(props.cartSummary.gift_wallet.is_wallet_enabled);
       setCheckedHBWallet(props.cartSummary.hipbar_wallet.is_wallet_enabled);
@@ -191,13 +192,13 @@ const CartComponent = (props) => {
       },
     });
     localStorage.setItem("modifyCartInfo", null);
-    localStorage.setItem("modifiedCart", null);
+    sessionStorage.setItem("modifiedCart", null);
   };
 
   const handleCancel = () => {
     localStorage.setItem("mode", null);
     localStorage.setItem("modifyCartInfo", null);
-    localStorage.setItem("modifiedCart", null);
+    sessionStorage.setItem("modifiedCart", null);
     setCartModifyStatus(null);
     setModify(false);
     setCancel(true);
@@ -217,7 +218,7 @@ const CartComponent = (props) => {
     setTimeout(() => {
       localStorage.setItem("mode", null);
       localStorage.setItem("modifyCartInfo", null);
-      localStorage.setItem("modifiedCart", null);
+      sessionStorage.setItem("modifiedCart", null);
       location.reload();
     }, 2500);
   };
@@ -271,6 +272,7 @@ const CartComponent = (props) => {
     (props.fetchCartSummarySuccess && props.cartSummary === null) ||
     (props.validateOrderSuccess && props.validateInfo.count !== 0)
   ) {
+    actionButtons = null;
     cardFooter = (
       <Alert severity="warning">
         This order already has an <b>Order Modification</b> request.
@@ -280,7 +282,7 @@ const CartComponent = (props) => {
         <u style={{ color: "blue", cursor: "pointer" }}>
           <div onClick={routePage}>Order Modificaton</div>
         </u>{" "}
-        page to cancel the previous request.
+        page or Last Modification Details section below to cancel the previous request.
       </Alert>
     );
   }
@@ -323,6 +325,10 @@ const CartComponent = (props) => {
   let cartItems = props.products;
   if (cartModifyStatus === "cartModified") {
     cartItems = returnModifiedCartItems();
+  }
+
+  if (props.fetchCartSummaryProgress) {
+    <Loading message="Fetching data..." />;
   }
 
   return (
