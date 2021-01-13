@@ -190,7 +190,7 @@ const CartModificationComponent = (props) => {
       items: cartItem,
     };
 
-    localStorage.setItem("modifiedCart", JSON.stringify(props.cartProducts));
+    sessionStorage.setItem("modifiedCart", JSON.stringify(props.cartProducts));
     localStorage.setItem("modifyCartInfo", JSON.stringify(payload));
     localStorage.setItem("mode", "cartModified");
     history.push({

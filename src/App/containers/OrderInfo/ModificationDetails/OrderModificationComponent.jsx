@@ -88,7 +88,7 @@ const OrderModificationComponent = (props) => {
     setTimeout(() => {
       localStorage.setItem("mode", null);
       localStorage.setItem("modifyCartInfo", null);
-      localStorage.setItem("modifiedCart", null);
+      sessionStorage.setItem("modifiedCart", null);
       location.reload();
     }, 1500);
   };
