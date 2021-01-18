@@ -216,13 +216,13 @@ const CartComponent = (props) => {
   };
 
   const handleConfirm = () => {
+    const cartData = JSON.parse(sessionStorage.getItem("modifyCartInfo"));
     let summaryPayload = {
-      ...props.modifyCart,
+      ...cartData,
       is_hw_enabled: checkedHBWallet,
       is_gw_enabled: checkedGiftWallet,
       order_id: orderInfo.order_id,
     };
-    // console.log("summaryPayload", summaryPayload);
     props.updateCart(summaryPayload);
     setConfirm(!confirm);
     setTimeout(() => {

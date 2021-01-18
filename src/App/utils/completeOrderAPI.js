@@ -1,7 +1,7 @@
 import { apiUrl } from "./config";
 
 const completeOrderAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = `https://${apiUrl}/deliveryman/api/1/fetch-order-details`;
+  const URL = `https://${apiUrl}/supportman/api/1/fetch-order-details`;
   const headers = {
     // eslint-disable-next-line prettier/prettier
     "Accept": "application/json",
