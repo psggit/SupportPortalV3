@@ -29,7 +29,7 @@ import {
 
 const createData = ({
   order_id,
-  ref_order_id,
+  // ref_order_id,
   status,
   hipbar_wallet,
   gift_wallet,
@@ -40,7 +40,7 @@ const createData = ({
 }) => {
   return {
     order_id,
-    ref_order_id,
+    // ref_order_id,
     status,
     hipbar_wallet,
     gift_wallet,
@@ -158,7 +158,7 @@ const ModificationListComponent = (props) => {
             <Table size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell align="center">ORDER ID</TableCell>
+                  {/* <TableCell align="center">ORDER ID</TableCell> */}
                   <TableCell align="center">MODIFICATION ORDER ID</TableCell>
                   <TableCell align="center">STATUS</TableCell>
                   <TableCell align="center">SEND SMS</TableCell>
@@ -178,7 +178,7 @@ const ModificationListComponent = (props) => {
                   rows.map((data, index) => {
                     return (
                       <TableRow key={index}>
-                        <TableCell>
+                        {/* <TableCell>
                           <Button
                             onClick={(event) =>
                               selectOrderId(event, data.ref_order_id)
@@ -187,8 +187,8 @@ const ModificationListComponent = (props) => {
                           >
                             {data.ref_order_id}
                           </Button>
-                        </TableCell>
-                        <TableCell>{data.order_id}</TableCell>
+                        </TableCell> */}
+                        <TableCell className={classes.orderDiv}>{data.order_id}</TableCell>
                         <TableCell>
                           {data.status == "success" && (
                             <Alert severity="success">{data.status}</Alert>

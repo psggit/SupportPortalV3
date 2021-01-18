@@ -307,8 +307,8 @@ const CartComponent = (props) => {
   }
   if (
     props.cartSummary !== null &&
-    show === true &&
-    props.cartSummary.action !== "nothing"
+    // props.cartSummary.action !== "nothing" &&
+    show === true
   ) {
     actionButtons = [
       <Button

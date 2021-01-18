@@ -98,7 +98,7 @@ const OrderSummaryItem = (props) => {
   const value = props.value;
   const classes = useStyles();
   const type = props.type;
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const handleClick = () => {
     setOpen(!open);
   };
