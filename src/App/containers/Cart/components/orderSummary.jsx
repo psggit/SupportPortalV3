@@ -124,7 +124,7 @@ const OrderSummary = (props) => {
   const [checked, setChecked] = useState([0]);
 
   const ref = createRef();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const handleClick = () => {
     setOpen(!open);
   };
