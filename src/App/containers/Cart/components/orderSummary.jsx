@@ -128,8 +128,8 @@ const OrderSummary = (props) => {
   const handleClick = () => {
     setOpen(!open);
   };
-  
-  const returnCartItems = () =>{
+
+  const returnCartItems = () => {
     let cartItem = [];
     let modifiedCartProducts = JSON.parse(
       sessionStorage.getItem("modifiedCart")
@@ -143,7 +143,7 @@ const OrderSummary = (props) => {
     });
 
     return cartItem;
-  }
+  };
 
   const handleChangeHipbarWallet = (event) => {
     let cartItem = returnCartItems();
@@ -209,30 +209,6 @@ const OrderSummary = (props) => {
           value={orderInfo.total_additional_fee}
           type="button"
         >
-          {props.cartSummary !== null &&
-            props.cartSummary.action !== "nothing" && (
-              <OrderSummaryItem
-                title="Delivery Charges:"
-                value={
-                  props.cartSummary
-                    ? props.cartSummary.display_details[2].display_value
-                    : "-"
-                }
-              />
-            )}
-
-          {props.cartSummary !== null &&
-            props.cartSummary.action !== "nothing" && (
-              <OrderSummaryItem
-                title="Other Charges:"
-                value={
-                  props.cartSummary
-                    ? props.cartSummary.display_details[3].display_value
-                    : "-"
-                }
-              />
-            )}
-
           {orderInfo.fee_details_v1 &&
             orderInfo.fee_details_v1.map((value) => {
               return (
@@ -300,17 +276,33 @@ const OrderSummary = (props) => {
             </OrderSummaryItem>
           )}
         </OrderSummaryItem>
+        <Divider />
+        <OrderSummaryItem title="Payment Details" value={""} type="button">
+          <OrderSummaryItem title="Mode of Payment:" value="-" />
+          <OrderSummaryItem
+            title="Wallet:"
+            value={orderInfo.payment_total}
+            type="button"
+          >
+            <OrderSummaryItem
+              title="HipBar Wallet:"
+              value={orderInfo.hipbar_wallet ? orderInfo.hipbar_wallet : "-"}
+            />
+            <OrderSummaryItem
+              title="Gift Wallet:"
+              value={orderInfo.gift_wallet ? orderInfo.gift_wallet : "-"}
+            />
+            <OrderSummaryItem
+              title="UPI"
+              value={orderInfo.upi_id ? orderInfo.upi_id : "-"}
+            />
+          </OrderSummaryItem>
+        </OrderSummaryItem>
       </List>
       <Divider />
       <List>
-        <OrderSummaryItem
-          title="UPI"
-          value={orderInfo.upi_id ? orderInfo.upi_id : "-"}
-        />
-      </List>
-      <List>
         {props.cartSummary !== null &&
-          props.cartSummary.action !== "nothing" &&
+          // props.cartSummary.action !== "nothing" &&
           props.modify && (
             <>
               <OrderSummaryItem

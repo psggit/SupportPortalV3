@@ -92,13 +92,19 @@ const OrderModificationComponent = (props) => {
   };
 
   const actionButtons = [
-    <Button variant="outlined" color="primary" onClick={(event) => sendSMS()}>
+    <Button
+      variant="outlined"
+      color="primary"
+      disabled={!(data.status == "pending")}
+      onClick={(event) => sendSMS()}
+    >
       Send SMS
     </Button>,
     <Button
       variant="outlined"
       color="primary"
       onClick={(event) => refreshOrder()}
+      disabled={!(data.status == "pending")}
     >
       Update Status
     </Button>,
@@ -106,6 +112,7 @@ const OrderModificationComponent = (props) => {
       variant="contained"
       color="primary"
       onClick={(event) => cancelOrder()}
+      disabled={!(data.status == "pending")}
     >
       Cancel Request
     </Button>,
