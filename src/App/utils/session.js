@@ -1,7 +1,7 @@
 function getHasuraRole(data) {
   const hasuraRoles = data.hasura_roles;
   const rolesMap = {
-    // admin: 8,
+    admin: 8,
     // account_manager: 8,
     // opadmin: 8,
     // dataadmin: 7,
