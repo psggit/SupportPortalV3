@@ -278,7 +278,10 @@ const OrderSummary = (props) => {
         </OrderSummaryItem>
         <Divider />
         <OrderSummaryItem title="Payment Details" value={""} type="button">
-          <OrderSummaryItem title="Mode of Payment:" value="-" />
+          <OrderSummaryItem
+            title="Mode of Payment:"
+            value={orderInfo.mode_of_payment ? orderInfo.mode_of_payment : "-"}
+          />
           <OrderSummaryItem
             title="Wallet:"
             value={orderInfo.payment_total}
@@ -293,7 +296,7 @@ const OrderSummary = (props) => {
               value={orderInfo.gift_wallet ? orderInfo.gift_wallet : "-"}
             />
             <OrderSummaryItem
-              title="UPI"
+              title="UPI amount"
               value={orderInfo.upi_id ? orderInfo.upi_id : "-"}
             />
           </OrderSummaryItem>

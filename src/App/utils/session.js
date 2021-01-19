@@ -5,7 +5,7 @@ function getHasuraRole(data) {
     // account_manager: 8,
     // opadmin: 8,
     // dataadmin: 7,
-    // opdataadmin: 7,
+    opdataadmin: 7,
     // dataentry: 6,
     // opdataentry: 6,
     // support_admin: 5,
