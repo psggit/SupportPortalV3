@@ -17,10 +17,12 @@ function getHasuraRole(data) {
     // business_team: 9,
     // product_team: 5,
     // delivery_support_person: 3,
-    user: 1,
+    // user: 1,
   };
-  let maxRole = rolesMap["support_person"];
-  let xHasuraRole = "support_person";
+  // let maxRole = rolesMap["support_person"];
+  // let xHasuraRole = "support_person";
+  let maxRole = rolesMap["support_admin"];
+  let xHasuraRole = "support_admin";
   //console.log("roles", hasuraRoles)
   for (let i = 0; i < hasuraRoles.length; i++) {
     if (maxRole <= rolesMap[hasuraRoles[i]]) {
@@ -30,7 +32,7 @@ function getHasuraRole(data) {
     }
   }
   // xHasuraRole = "support_person";
-  // console.log("xHasuraRole", xHasuraRole);
+  console.log("xHasuraRole", xHasuraRole);
   return xHasuraRole;
 }
 
