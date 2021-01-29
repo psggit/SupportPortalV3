@@ -8,6 +8,7 @@ import TopBar from "../../components/topBar";
 import { useHistory } from "react-router-dom";
 import { CartContainer } from "../Cart/CartContainer";
 import { OrderDetailsContainer } from "./OrderCard/OrderDetailsContainer";
+import { OrderModificationContainer } from "./ModificationDetails/OrderModificationContainer";
 import { CustomerContainer } from "./CustomerDetails/CustomerContainer";
 import { RetailerContainer } from "./RetailerDetails/RetailerContainer";
 import { OrderStatusContainer } from "./OrderStatus";
@@ -22,6 +23,7 @@ import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import SideNav from "./components/sideNav";
 import uuid from "react-uuid";
 import Alert from "@material-ui/lab/Alert";
+import { CancellationSummaryContainer } from "./../CancellationSummary";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,31 +74,6 @@ const OrderInfoComponent = (props) => {
   const classes = useStyles();
   let { orderId } = useParams();
   const [modifyCart, setModifyCart] = useState("");
-
-  useEffect(() => {
-    // console.log("OrderInfoComponent", props.retailerIssueListData);
-    if (orderId === null || orderId == "") {
-      history.push("/dashboard");
-    } else {
-      props.fetchOrderInfo(orderId);
-    }
-
-    if (history.location.state !== undefined) {
-      if ("modifyCartInfo" in history.location.state) {
-        setModifyCart(history.location.state.modifyCartInfo);
-      }
-    }
-    return () => {
-      props.resetOnUnmount();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (props.fetchOrderInfoSuccess) {
-      props.fetchIssueTypes();
-    }
-  }, [props.fetchOrderInfoSuccess]);
-
   let loading = props.fetchOrderInfoProgress;
   const [selectedValue, handleSelect] = useState("");
   const [issueType, setIssueType] = useState(null);
@@ -109,6 +86,28 @@ const OrderInfoComponent = (props) => {
   const [activeSection, setActiveSection] = useState("");
   const [disableBtn, setDisableBtn] = useState(false);
   const [valueSelected, setValue] = useState(null);
+
+  useEffect(() => {
+    // console.log("OrderInfoComponent", props.retailerIssueListData);
+    if (orderId === null || orderId == "") {
+      history.push("/dashboard");
+    } else {
+      props.fetchOrderInfo(orderId);
+    }
+
+    if (localStorage.getItem("modifyCartInfo") !== null) {
+      setModifyCart(JSON.parse(localStorage.getItem("modifyCartInfo")));
+    }
+    return () => {
+      props.resetOnUnmount();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (props.fetchOrderInfoSuccess) {
+      props.fetchIssueTypes();
+    }
+  }, [props.fetchOrderInfoSuccess]);
 
   const validateIssue = (event, type) => {
     if (type === "select") {
@@ -125,10 +124,20 @@ const OrderInfoComponent = (props) => {
     }
   };
 
+  useEffect(() => {
+    const payload = {
+      pending_request: true,
+      completed_request: true,
+      order_id: orderId,
+      limit: 1000,
+      offset: 0,
+    };
+    props.fetchListOrderModification(payload);
+  }, []);
+
   const textFieldChange = (e) => {
     setIssueDesc(e.target.value);
     setDisableBtn(false);
-    // console.log("valueSelected", valueSelected);
     if (e.target.value.trim().length > 0 && valueSelected !== null) {
       setDisableBtn(true);
     }
@@ -168,11 +177,11 @@ const OrderInfoComponent = (props) => {
   const handleCall = (to) => {
     //to
     //from
-    const payload = {
-      to: to,
-      from: props.from,
-    };
-    props.connectCall(payload);
+    // const payload = {
+    //   to: to,
+    //   from: props.from,
+    // };
+    // props.connectCall(payload);
   };
 
   const updateNotes = () => {
@@ -532,6 +541,12 @@ const OrderInfoComponent = (props) => {
                     buttonState={props.order.order_status_button}
                   />
                 )}
+                {props.fetchOrderInfoSuccess &&
+                  props.order.cancellation_summary !== null && (
+                    <Box className={classes.marginTop}>
+                      <CancellationSummaryContainer />
+                    </Box>
+                  )}
               </Grid>
               <Grid item xs={6} id="section1">
                 {props.fetchOrderInfoSuccess && (
@@ -553,6 +568,12 @@ const OrderInfoComponent = (props) => {
                     </Box>
                   )}
               </Grid>
+              {props.fetchModificationSuccess &&
+                props.orderList.order_modification.length > 0 && (
+                  <Grid item xs={12}>
+                    <OrderModificationContainer />
+                  </Grid>
+                )}
             </Grid>
             {localStorage.getItem("x-hasura-role") !==
               "ops_delivery_manager" && (
@@ -698,6 +719,8 @@ OrderInfoComponent.propTypes = {
   errorMsgIssueTypes: PropTypes.string,
   submitIssueFailed: PropTypes.bool,
   errorDAList: PropTypes.string,
+  fetchModificationSuccess: PropTypes.bool,
+  orderList: PropTypes.any,
 };
 
 export { OrderInfoComponent };

@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "flex-start",
   },
   ListItemRootTitle: {
-    width: "30%",
+    width: "50%",
     fontSize: 16,
     fontWeight: "bold",
     color: "#606060",
@@ -105,7 +105,15 @@ const OrderDetailsCard = (props) => {
     }
   }, [props.deliverOrderSuccess]);
 
-  let { platform, customer_address, delivery_status } = {
+  let {
+    platform,
+    customer_address,
+    delivery_status,
+    promo_details,
+    delivery_rating,
+    feedback,
+    consumer_concern,
+  } = {
     ...props.order,
   };
   platform = platform === "hb" ? "Hipbar Web" : "Flipkart";
@@ -207,7 +215,7 @@ const OrderDetailsCard = (props) => {
     const payload = {
       order_id: props.order.order_id,
       id_proof: kyc,
-      slot_id: "",
+      slot_id: props.order.lot_id === null ? "" : `${props.order.lot_id}`,
       // digits: kycArray.toString().split(",").join(""),
       // year_of_birth: dobArray.toString().split(",").join(""),
       digits: kycDigits,
@@ -225,7 +233,7 @@ const OrderDetailsCard = (props) => {
     const payload = {
       reason_id: parseInt(selectedValue),
       order_id: props.order.order_id,
-      slot_id: "",
+      slot_id: props.order.lot_id === null ? "" : `${props.order.lot_id}`,
       notes: notes,
     };
     props.cancelOrder(payload);
@@ -328,6 +336,116 @@ const OrderDetailsCard = (props) => {
             />
           </ListItem>
         </List>
+        <ListItem dense disableGutters={true} className={classes.ListItemRoot}>
+          <ListItemText
+            primary="Promo Code"
+            className={classes.ListItemRootTitle}
+            classes={{ root: classes.ListItemRootTitle }}
+          />
+          <ListItemText
+            primary={promo_details.promo_code ? promo_details.promo_code : "-"}
+            className={classes.ListItemTextRoot}
+            classes={{ root: classes.ListItemTextRoot }}
+          />
+        </ListItem>
+        <ListItem dense disableGutters={true} className={classes.ListItemRoot}>
+          <ListItemText
+            primary="Cashback"
+            className={classes.ListItemRootTitle}
+            classes={{ root: classes.ListItemRootTitle }}
+          />
+          <ListItemText
+            primary={
+              promo_details.display_cashback
+                ? promo_details.display_cashback
+                : "-"
+            }
+            className={classes.ListItemTextRoot}
+            classes={{ root: classes.ListItemTextRoot }}
+          />
+        </ListItem>
+        <List dense disablePadding>
+          <ListItem dense disableGutters={true}>
+            <ListItemText
+              primary="Delivery Rating"
+              className={classes.ListItemRootTitle}
+              classes={{ root: classes.ListItemRootTitle }}
+            />
+            <ListItemText
+              primary={delivery_rating ? delivery_rating : "-"}
+              className={classes.ListItemTextRoot}
+              classes={{ root: classes.ListItemTextRoot }}
+            />
+          </ListItem>
+          <ListItem
+            dense
+            disableGutters={true}
+            className={classes.ListItemRoot}
+          >
+            <ListItemText
+              primary="Feedback"
+              className={classes.ListItemRootTitle}
+              classes={{ root: classes.ListItemRootTitle }}
+            />
+            <ListItemText
+              primary={feedback ? feedback : "-"}
+              className={classes.ListItemTextRoot}
+              classes={{ root: classes.ListItemTextRoot }}
+            />
+          </ListItem>
+          <ListItem
+            dense
+            disableGutters={true}
+            className={classes.ListItemRoot}
+          >
+            <ListItemText
+              primary="Consumer Concern"
+              className={classes.ListItemRootTitle}
+              classes={{ root: classes.ListItemRootTitle }}
+            />
+            <ListItemText
+              primary={consumer_concern ? consumer_concern : "-"}
+              className={classes.ListItemTextRoot}
+              classes={{ root: classes.ListItemTextRoot }}
+            />
+          </ListItem>
+        </List>
+        {/* <ListItemText
+              primary="FeedBack"
+              className={classes.ListItemRootTitle}
+              classes={{ root: classes.ListItemRootTitle }}
+            />
+            <ListItemText
+              primary={feedback}
+              className={classes.ListItemTextRoot}
+              classes={{ root: classes.ListItemTextRoot }}
+            /> */}
+        {/* <ListItemText
+              primary="Consumer Concern"
+              className={classes.ListItemRootTitle}
+              classes={{ root: classes.ListItemRootTitle }}
+            />
+            <ListItemText
+              primary={consumer_concern}
+              className={classes.ListItemTextRoot}
+              classes={{ root: classes.ListItemTextRoot }}
+            /> */}
+        {/* <ListItem
+          dense
+          disableGutters={true}
+          className={classes.ListItemRoot}
+        >
+          <ListItemText
+            primary="Delivery Rating"
+            className={classes.ListItemRootTitle}
+            classes={{ root: classes.ListItemRootTitle }}
+          />
+          <ListItemText
+            primary={delivery_rating}
+            className={classes.ListItemTextRoot}
+            classes={{ root: classes.ListItemTextRoot }}
+          />
+        </ListItem> */}
       </OrderCard>
       {props.fetchCancellationSummaryFailed && (
         <Alert show={true} message={props.errorMsgSummary} type={"error"} />
@@ -633,7 +751,7 @@ OrderDetailsCard.propTypes = {
   fetchCancelReason: PropTypes.func,
   fetchCancelReasonProgress: PropTypes.bool,
   errorMsgSummary: PropTypes.any,
-  errorMsgCancel: PropTypes.bool,
+  errorMsgCancel: PropTypes.any,
   fetchDeliverOrderFailed: PropTypes.bool,
 };
 

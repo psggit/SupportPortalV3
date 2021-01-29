@@ -17,11 +17,7 @@ const sendSMSAPI = (reqBody, process, onSuccess, onError) => {
   })
     .then((res) => process(res))
     .then((data) => onSuccess(data))
-    .catch((err) => {
-      err.json().then((json) => {
-        onError(json);
-      });
-    });
+    .catch((err) => onError(err));
 };
 
 export { sendSMSAPI };

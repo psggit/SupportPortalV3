@@ -122,6 +122,7 @@ const CartModificationComponent = (props) => {
   const [state, setState] = useState({ right: false });
   const [searchQueryText, setSearchQueryText] = useState("");
   const [searchList, setSearchList] = useState("brand");
+  const orderId = history.location.state.orderId;
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -134,9 +135,13 @@ const CartModificationComponent = (props) => {
     setState({ ...state, [anchor]: open });
   };
 
-  let products = history.location.state.products;
   let anchor = "right";
   useEffect(() => {
+    console.log(history.location.state.previousCart);
+    let products =
+      history.location.state.previousCart !== null
+        ? history.location.state.previousCart
+        : history.location.state.products;
     let payload = {
       city_id: history.location.state.city_id,
       state_id: history.location.state.state_id,
@@ -168,7 +173,7 @@ const CartModificationComponent = (props) => {
   }, [props.fetchGenreSuccess]);
 
   const goBack = () => {
-    history.push("/order-info/" + props.orderId);
+    history.push("/order-info/" + orderId);
   };
 
   const addItems = () => {
@@ -183,15 +188,19 @@ const CartModificationComponent = (props) => {
     });
 
     let payload = {
-      order_id: props.orderId,
+      order_id: props.order_id,
       is_hw_enabled: false,
       is_gw_enabled: false,
       items: cartItem,
     };
+
+    sessionStorage.setItem("modifiedCart", JSON.stringify(props.cartProducts));
+    sessionStorage.setItem("modifyCartInfo", JSON.stringify(payload));
+    sessionStorage.setItem("mode", "cartModified");
     history.push({
       pathname: "/order-info/" + history.location.state.orderId,
       state: {
-        modifyCartInfo: payload,
+        mode: "cartModified",
       },
     });
   };
@@ -199,7 +208,6 @@ const CartModificationComponent = (props) => {
   const addItem = (event, value) => {
     props.addSkuToCart(value);
   };
-
   const removeItem = (event, value) => {
     props.removeSkuFromCart(value);
   };
@@ -276,10 +284,21 @@ const CartModificationComponent = (props) => {
     disableAddBtn = Object.keys(props.cartProducts).length == 0 ? true : false;
   }
 
+  var productName;
+  var productCount;
+  if (props.fetchGenreSuccess) {
+    productName = Object.keys(props.cartProducts).map(
+      (value) => props.cartProducts[value].brand_name
+    );
+    productCount = Object.keys(props.cartProducts).map(
+      (value) => props.cartProducts[value].ordered_count
+    );
+  }
+
   if (props.searchSuccess) {
     // console.log(props.brandData);
   }
-
+  // console.log("prod", props.cartProducts.map((value) => props.cartProducts[value].brand_name));
   return (
     <Container component="main">
       <TopBar />
@@ -301,6 +320,7 @@ const CartModificationComponent = (props) => {
             </div>
             <Divider />
             {props.fetchGenreSuccess &&
+              props.modifySuccess &&
               Object.keys(props.cartProducts).map((value) => {
                 return (
                   <div key={uuid()} className={classes.ListItem}>
@@ -328,7 +348,9 @@ const CartModificationComponent = (props) => {
             </Button>
           </Grid>
           <Grid item xs={7}>
-            <p>RETAILER NAME: {history.location.state.retailer_name}</p>
+            <Typography>
+              RETAILER NAME: {history.location.state.retailer_name}
+            </Typography>
           </Grid>
           <Grid item xs={3}>
             <Grid container spacing={1} alignItems="flex-end">
@@ -390,6 +412,8 @@ const CartModificationComponent = (props) => {
                   addItem={addItem}
                   removeItem={removeItem}
                   cartProducts={props.cartProducts}
+                  productName={productName}
+                  productCount={productCount}
                 />
               );
             })}
@@ -450,6 +474,7 @@ CartModificationComponent.propTypes = {
   fetchBrandPagination: PropTypes.func,
   searchItems: PropTypes.func,
   resetOnUnmount: PropTypes.func,
+  fetchSummary: PropTypes.func,
 };
 
 export { CartModificationComponent };

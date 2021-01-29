@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { validateAuth } from "./duck/authOperation";
+import { validateAuth, markActivity } from "./duck/authOperation";
 import { hot } from "react-hot-loader/root";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { LoginContainer } from "./containers/Login";
 import { LogoutContainer } from "./containers/Logout";
 import { DashboardContainer } from "./containers/Dashboard";
 import { IssuesContainer } from "./containers/Issues";
+import { HipcoinsContainer } from "./containers/Hipcoins";
+import { HipcoinsDetailsContainer } from "./containers/HipcoinsDetails";
 import { OrderDetailsContainer } from "./containers/OrderDetails";
 import { CartModificationContainer } from "./containers/CartModification";
 import { OrderInfoContainer } from "./containers/OrderInfo";
@@ -28,19 +30,41 @@ import { DaNotesContainer } from "./containers/DeliveryAgentNotes";
 import { OrderTrackingContainer } from "./containers/OrderTracking";
 import { OrderModificationContainer } from "./containers/OrderModification";
 import { createSession } from "./utils";
+import { HipcoinSoaContainer } from "./containers/Customer/HipcoinSoa";
+import { ModificationListContainer } from "./containers/ModificationList/ModificationListContainer";
 
 function App(props) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("hasura-id") ? true : false
+  );
+  const [timeInterval, setTimeInterval] = useState(5000);
+
+  const markLastActivity = () => {
+    props.markActivity();
+    if (props.markActivitySuccess) {
+      setTimeInterval(parseInt(props.markActivityData.interval) * 1000);
+    }
+  };
   useEffect(() => {
     if (!isLoggedIn) {
       props.validateAuth();
     }
     if (props.authenticateSuccess) {
       setIsLoggedIn(true);
-      // console.log("authenticateSuccess", props.authData);
       createSession(props.authData);
     }
-  }, [props.authenticateSuccess]);
+    const interval = setInterval(() => {
+      pollRequest();
+    }, timeInterval);
+    return () => clearInterval(interval);
+  }, [props.authenticateSuccess, timeInterval]);
+
+  function pollRequest() {
+    if (!document.hidden && isLoggedIn) {
+      markLastActivity();
+    }
+  }
 
   if (props.authenticateProgress) {
     return (
@@ -49,7 +73,7 @@ function App(props) {
       </ThemeProvider>
     );
   }
-
+  // console.log("user", isLoggedIn);
   // console.log("success ", success);
   return (
     <div>
@@ -62,7 +86,11 @@ function App(props) {
                 path="/order-info/:orderId"
                 component={OrderInfoContainer}
               />
-              <Route path="/dashboard" component={DashboardContainer} />
+              <Route
+                path="/dashboard"
+                component={DashboardContainer}
+                //timer={timeInterval}
+              />
               <Route
                 path="/cart-modify"
                 component={CartModificationContainer}
@@ -83,21 +111,33 @@ function App(props) {
               />
               <Route path="/soa" component={CustomerSoaContainer} />
               <Route path="/gift-soa" component={CustomerGiftSoaContainer} />
+              <Route path="/hipcoin-soa" component={HipcoinSoaContainer} />
               <Route path="/rewards" component={RewardsContainer} />
               <Route path="/notes" component={NotesContainer} />
 
               <Route path="/da-notes" component={DaNotesContainer} />
               <Route path="/issues" component={IssuesContainer} />
+              <Route exact path="/hipcoins" component={HipcoinsContainer} />
+              <Route
+                exact
+                path="/hipcoins/order-details/:orderId"
+                component={HipcoinsDetailsContainer}
+              />
 
               <Route
                 path="/order-tracking"
                 component={OrderTrackingContainer}
               />
 
-              {/* <Route
+              <Route
                 path="/order-modification"
                 component={OrderModificationContainer}
-              /> */}
+              />
+
+              <Route
+                path="/modification-list"
+                component={ModificationListContainer}
+              />
 
               <Route path="/login" component={LoginContainer} />
               <Route path="/logout" component={LogoutContainer} />
@@ -139,12 +179,17 @@ const mapStateToProps = (state) => {
     authenticateSuccess: state.login.authenticateSuccess,
     authenticateFailed: state.login.authenticateFailed,
     authData: state.login.authData,
+    markActivitySuccess: state.login.markActivitySuccess,
+    markActivityFailed: state.login.markActivityFailed,
+    markActivityProgress: state.login.markActivityProgress,
+    markActivityData: state.login.markActivityData,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     validateAuth: () => dispatch(validateAuth()),
+    markActivity: () => dispatch(markActivity()),
   };
 };
 
@@ -154,6 +199,9 @@ App.propTypes = {
   authenticateFailed: PropTypes.bool,
   authenticateSuccess: PropTypes.bool,
   validateAuth: PropTypes.func,
+  markActivity: PropTypes.func,
+  markActivitySuccess: PropTypes.bool,
+  markActivityData: PropTypes.any,
   authData: PropTypes.any,
 };
 

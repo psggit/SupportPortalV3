@@ -84,7 +84,7 @@ CustomCard.propTypes = {
 };
 
 const getTimestamp = (timestamp) => {
-  return Moment(timestamp).format("DD/MM/YYYY");
+  return Moment(timestamp).format("DD/MM/YYYY  hh:mm A");
 };
 
 export default function CustomCard(props) {
@@ -118,6 +118,7 @@ export default function CustomCard(props) {
       <CardContent className={classes.cardContent}>
         <List>
           {renderArray.map((item, index) => {
+            // console.log(keyMap[keysToRender[index]]);
             return (
               <ListItem
                 key={index}
@@ -130,14 +131,21 @@ export default function CustomCard(props) {
                   classes={{ root: classes.ListItemTextLabel }}
                 />
 
-                {(keysToRender[index] === "customer_dob" ||
-                  keysToRender[index] === "created_at" ||
-                  keysToRender[index] === "customer_sign_up_date" ||
-                  keysToRender[index] ===
-                    "delivery_service_provider_accepted_time") && (
+                {
+                  // (keysToRender[index] === "customer_dob" ||
+                  //   keysToRender[index] === "created_at" ||
+                  //   keysToRender[index] === "customer_sign_up_date" ||
+                  //   keysToRender[index] ===
+                  //     "delivery_service_provider_accepted_time") &&
+
                   <ListItemText
                     primary={
-                      Date.parse(item[keysToRender[index]]) > 0
+                      keyMap[keysToRender[index]] === "Product Quantity" ||
+                      keyMap[keysToRender[index]] === "Hipbar Wallet" ||
+                      keyMap[keysToRender[index]] === "Gift Wallet" ||
+                      keyMap[keysToRender[index]] === "Nodal Amount"
+                        ? item[keysToRender[index]] :
+                        Date.parse(item[keysToRender[index]]) > 0
                         ? getTimestamp(item[keysToRender[index]])
                         : item[keysToRender[index]]
                         ? item[keysToRender[index]]
@@ -146,8 +154,8 @@ export default function CustomCard(props) {
                     className={classes.ListItemTextRoot}
                     classes={{ root: classes.ListItemTextLabel }}
                   />
-                )}
-                {keysToRender[index] !== "customer_dob" &&
+                }
+                {/* {keysToRender[index] !== "customer_dob" &&
                   keysToRender[index] !== "created_at" &&
                   keysToRender[index] !== "customer_sign_up_date" &&
                   keysToRender[index] !==
@@ -161,7 +169,7 @@ export default function CustomCard(props) {
                       className={classes.ListItemTextRoot}
                       classes={{ root: classes.ListItemTextLabel }}
                     />
-                  )}
+                  )} */}
               </ListItem>
             );
           })}

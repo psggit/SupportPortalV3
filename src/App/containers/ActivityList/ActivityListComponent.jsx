@@ -60,42 +60,34 @@ const createData = ({ created_by, notes, created_at, description }) => {
 };
 
 function ActivityListComponent(props) {
-  // console.log("[ActivityListComponent]", prop);
   const classes = useStyles();
   const [showData, setShowData] = useState(false);
   const [rows, setRowsData] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
-  // const [errorMessage, setErrorMessage] = useState("");
   const history = useHistory();
   let orderId = history.location.state.orderId;
-  // console.log(orderId);
+  const activityLog = props.acitivityLog;
 
   useEffect(() => {
-    // console.log(orderId);
     const reqBody = {
       order_id: `${orderId}`,
       limit: rowsPerPage,
       offset: page * rowsPerPage,
     };
-    // const reqBody = {
-    //   order_id: "50011546022614",
-    //   limit: rowsPerPage,
-    //   offset: page * rowsPerPage,
-    // };
     props.fetchActLogsList(reqBody);
   }, [rowsPerPage, page]);
 
   useEffect(() => {
-    if (props.notesSuccess) {
-      if (props.acitivityLog.activityLogs !== null) {
-        loopData(props.acitivityLog.activityLogs.activity_logs);
+    if (activityLog.notesSuccess) {
+      if (activityLog.activityLogs !== null) {
+        loopData(activityLog.activityLogs.activity_logs);
         setShowData(true);
       } else {
         setShowData(false);
       }
     }
-  }, [page, props.notesSuccess]);
+  }, [page, activityLog.notesSuccess]);
 
   const filledRows = [];
   const loopData = (data) => {
@@ -119,10 +111,10 @@ function ActivityListComponent(props) {
       <TopBar />
       <SimpleMenuBar orderId={orderId}>
         <Typography>
-          {props.notesSuccess && <p>ACTIVITY LOGS-ORDER ID: {orderId}</p>}
+          {activityLog.notesSuccess && <p>ACTIVITY LOGS-ORDER ID: {orderId}</p>}
         </Typography>
       </SimpleMenuBar>
-      {props.notesProgress && <Loading message="Fetching data..." />}
+      {activityLog.notesProgress && <Loading message="Fetching data..." />}
       <Box className={classes.table} mt={4}>
         <TableContainer className={classes.TableContainer}>
           <Table>
@@ -135,7 +127,7 @@ function ActivityListComponent(props) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {props.notesSuccess &&
+              {activityLog.notesSuccess &&
                 rows &&
                 rows
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -164,7 +156,7 @@ function ActivityListComponent(props) {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={props.acitivityLog.activityLogs.count}
+              count={activityLog.activityLogs.count}
               rowsPerPage={rowsPerPage}
               page={page}
               onChangePage={handleChangePage}
@@ -173,8 +165,8 @@ function ActivityListComponent(props) {
           )}
         </TableContainer>
       </Box>
-      {props.notesFail && (
-        <ErrorMsg show={true} message={props.errorMsg} type={"error"} />
+      {activityLog.notesFail && (
+        <ErrorMsg show={true} message={activityLog.errorMsg} type={"error"} />
       )}
     </div>
   );
