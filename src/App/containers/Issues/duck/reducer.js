@@ -139,6 +139,11 @@ const issuesReducer = createReducer(initialState, {
       errorMsgSupportList: setErrorMessage(data),
     };
   },
+  [resetOnUnmount]: () => {
+    return {
+      ...initialState,
+    };
+  },
 });
 
 export { issuesReducer };
