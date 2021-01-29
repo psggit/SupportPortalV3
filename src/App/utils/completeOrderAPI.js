@@ -19,9 +19,13 @@ const completeOrderAPI = (reqBody, process, onSuccess, onError) => {
     .then((res) => process(res))
     .then((data) => onSuccess(data))
     .catch((err) => {
-      err.json().then((json) => {
-        onError(json);
-      });
+      if (typeof err !== "string") {
+        err.json().then((json) => {
+          onError(json);
+        });
+      } else {
+        onError(err);
+      }
     });
 };
 

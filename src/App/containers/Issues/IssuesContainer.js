@@ -6,6 +6,7 @@ import {
   resolveOrderIssue,
   fetchSupportPersonList,
 } from "./duck/operations";
+import { resetOnUnmount } from "./duck/index";
 
 const mapStateToProps = (state) => {
   return {
@@ -28,6 +29,7 @@ const mapStateToProps = (state) => {
     errorMsgAssign: state.issues.errorMsgAssign,
     errorMsgResolve: state.issues.errorMsgResolve,
     resolveIssueFailed: state.issues.resolveIssueFailed,
+    successMsg: state.issues.successMsg,
   };
 };
 
@@ -37,6 +39,7 @@ const mapDispatchToProps = (dispatch) => {
     assignIssue: (orderId) => dispatch(assignOrderIssue(orderId)),
     resolveIssue: (orderId) => dispatch(resolveOrderIssue(orderId)),
     fetchSupportPerson: () => dispatch(fetchSupportPersonList()),
+    resetOnUnmount: () => dispatch(resetOnUnmount()),
   };
 };
 

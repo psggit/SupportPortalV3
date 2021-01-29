@@ -108,7 +108,6 @@ const ModificationListComponent = (props) => {
   };
 
   const refreshOrder = (event, orderId) => {
-    console.log("refreshOrder");
     const payload = {
       order_id: orderId,
     };
@@ -116,7 +115,6 @@ const ModificationListComponent = (props) => {
   };
 
   const cancelOrder = (event, orderId) => {
-    console.log("cancelOrder");
     setDisableClear(orderId);
     props.cancelOrderRequest(orderId);
   };

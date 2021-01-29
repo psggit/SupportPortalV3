@@ -319,7 +319,6 @@ function OrderTrackingComponent(props) {
     }
   }, [props.fetchLiveDataFailure]);
 
-  // console.log("fetchLiveDataFailure ", props);
   if (props.fetchLiveDataFailure) {
     clearInterval(interval);
   }
@@ -455,7 +454,7 @@ function OrderTrackingComponent(props) {
         {show && (
           <Grid item xs={12}>
             <Box mb={10}>
-              <MapComponent {...props} agentDetails={agentDetails}/>
+              <MapComponent {...props} agentDetails={agentDetails} />
             </Box>
           </Grid>
         )}
