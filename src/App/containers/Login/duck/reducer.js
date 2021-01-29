@@ -19,7 +19,7 @@ const initialValue = {
   authenticateSuccess: false,
   loginProgressStatus: false,
   loginFailedStatus: false,
-  loginSuccessStatus: null,
+  loginSuccessStatus: false,
   markActivityProgress: false,
   markActivityFailed: false,
   markActivitySuccess: false,
@@ -46,7 +46,8 @@ const loginReducer = createReducer(initialValue, {
     isAuthenticated: false,
     loginProgressStatus: false,
     loginFailedStatus: true,
-    errorMsg: setErrorMessage(data),
+    loginSuccessStatus: false,
+    errorMsg: data.payload,
   }),
   [loginProgress]: (state) => ({
     ...state,

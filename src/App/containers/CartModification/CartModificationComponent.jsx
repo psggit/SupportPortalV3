@@ -137,7 +137,6 @@ const CartModificationComponent = (props) => {
 
   let anchor = "right";
   useEffect(() => {
-    console.log(history.location.state.previousCart);
     let products =
       history.location.state.previousCart !== null
         ? history.location.state.previousCart

@@ -1,16 +1,13 @@
 function getHasuraRole(data) {
   const hasuraRoles = data.hasura_roles;
   const rolesMap = {
-    admin: 8,
     // account_manager: 8,
     // opadmin: 8,
     // dataadmin: 7,
-    opdataadmin: 7,
     // dataentry: 6,
     // opdataentry: 6,
     // support_admin: 5,
     // support_master: 4,
-    support_admin: 4,
     // support_person: 3,
     // ops_delivery_manager: 2,
     // ops_delivery_manager: 5,
@@ -18,6 +15,9 @@ function getHasuraRole(data) {
     // product_team: 5,
     // delivery_support_person: 3,
     // user: 1,
+    support_admin: 3,
+    opdataadmin: 2,
+    admin: 1,
   };
   // let maxRole = rolesMap["support_person"];
   // let xHasuraRole = "support_person";
@@ -26,7 +26,7 @@ function getHasuraRole(data) {
   //console.log("roles", hasuraRoles)
   for (let i = 0; i < hasuraRoles.length; i++) {
     if (maxRole <= rolesMap[hasuraRoles[i]]) {
-      // console.log("data", rolesMap[hasuraRoles[i]], hasuraRoles[i]);
+      console.log("data", rolesMap[hasuraRoles[i]], hasuraRoles[i]);
       maxRole = rolesMap[hasuraRoles[i]];
       xHasuraRole = hasuraRoles[i];
     }

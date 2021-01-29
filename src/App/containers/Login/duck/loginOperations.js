@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 import { loginSuccess, loginFailed, loginProgress } from "./actions";
 import { loginAPI } from "../../../utils";
-import { createSession } from "../../../utils";
 
 const processResponse = () => {
   return (res) => {
@@ -16,13 +15,12 @@ const processResponse = () => {
 const onSuccess = (dispatch) => {
   return (data) => {
     dispatch(loginSuccess(data));
-    createSession(data);
   };
 };
 
 const onError = (dispatch) => {
-  return (error) => {
-    dispatch(loginFailed(error));
+  return (err) => {
+    dispatch(loginFailed(err));
   };
 };
 // console.log(ARGS_BUILD_ENV);
