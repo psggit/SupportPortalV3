@@ -284,16 +284,24 @@ const OrderSummary = (props) => {
           />
           <OrderSummaryItem
             title="Wallet:"
-            value={orderInfo.payment_total}
+            value={orderInfo.wallet_total ? orderInfo.wallet_total : "-"}
             type="button"
           >
             <OrderSummaryItem
               title="HipBar Wallet:"
-              value={orderInfo.hipbar_wallet ? orderInfo.hipbar_wallet : "-"}
+              value={
+                orderInfo.revised_hipbar_total
+                  ? orderInfo.revised_hipbar_total
+                  : "-"
+              }
             />
             <OrderSummaryItem
               title="Gift Wallet:"
-              value={orderInfo.gift_wallet ? orderInfo.gift_wallet : "-"}
+              value={
+                orderInfo.revised_gift_total
+                  ? orderInfo.revised_gift_total
+                  : "-"
+              }
             />
             <OrderSummaryItem
               title="Nodal amount:"
@@ -303,10 +311,10 @@ const OrderSummary = (props) => {
                   : "-"
               }
             />
-            <OrderSummaryItem
+            {/* <OrderSummaryItem
               title="UPI amount: "
               value={orderInfo.upi_amount ? orderInfo.upi_amount : "-"}
-            />
+            /> */}
             <OrderSummaryItem
               title="UPI: "
               value={orderInfo.upi_id ? orderInfo.upi_id : "-"}
