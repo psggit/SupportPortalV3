@@ -18,6 +18,7 @@ const mapStateToProps = (state) => {
     successMsg: state.order.orderInfo.successMsg,
     NoteListSuccess: state.order.customer.NoteListSuccess,
     NoteListFailed: state.order.customer.NoteListFailed,
+    errorMessage: state.order.customer.errorMessage,
     NoteListProgress: state.order.customer.NoteListProgress,
     noteListData: state.order.customer.noteListData,
   };

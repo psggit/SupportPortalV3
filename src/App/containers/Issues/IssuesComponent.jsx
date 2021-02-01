@@ -445,11 +445,7 @@ const RenderIssues = (props) => {
         </Dialog>
       )}
       {props.assignIssueSuccess && (
-        <ErrorMsg
-          show={true}
-          message={"Successfully assigned the issue"}
-          type={"success"}
-        />
+        <ErrorMsg show={true} message={props.successMsg} type={"success"} />
       )}
       {props.assignIssueFailed && (
         <ErrorMsg show={true} message={props.errorMsgAssign} type={"error"} />
@@ -488,6 +484,7 @@ RenderIssues.propTypes = {
   errorMsgAssign: PropTypes.string,
   fetchSupportPersonListFailed: PropTypes.bool,
   errorMsgSupportList: PropTypes.string,
+  successMsg: PropTypes.string,
 };
 
 const IssuesComponent = (props) => {
@@ -507,6 +504,9 @@ const IssuesComponent = (props) => {
       is_resolved: selectedStatus === "resolved" ? true : false,
     };
     props.fetchIssueList(payload);
+    return () => {
+      props.resetOnUnmount();
+    };
   }, [pageLimit, activePage]);
 
   useEffect(() => {
@@ -708,6 +708,7 @@ IssuesComponent.propTypes = {
   resolveIssueFailed: PropTypes.bool,
   fetchSupportPersonListFailed: PropTypes.bool,
   errorMsgSupportList: PropTypes.any,
+  resetOnUnmount: PropTypes.func,
 };
 
 export { IssuesComponent };

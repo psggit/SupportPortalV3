@@ -219,7 +219,7 @@ function HipcoinsDetailsComponent(props) {
                 color="primary"
                 onClick={() =>
                   props.triggerEmail(
-                    { consumerId: details[0].consumer_id },
+                    { order_id: props.match.params.orderId },
                     setMountDialog(false)
                   )
                 }

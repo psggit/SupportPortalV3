@@ -1,7 +1,7 @@
 import { apiUrl } from "./config";
 
 const triggerEmailAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = ` https://${apiUrl}/supportman/api/1/loyalty_points/trigger_email/${reqBody.consumerId}`;
+  const URL = ` https://${apiUrl}/supportman/api/1/loyalty_points/trigger_email/${reqBody.order_id}`;
   const headers = {
     // eslint-disable-next-line prettier/prettier
     "Accept": "application/json",

@@ -99,6 +99,9 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "underline",
     color: "inherit",
   },
+  formControl: {
+    marginTop: 5,
+  },
 }));
 
 const rowsPerPageOptions = [5, 10, 25];

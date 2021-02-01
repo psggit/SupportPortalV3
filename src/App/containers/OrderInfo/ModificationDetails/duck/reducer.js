@@ -153,7 +153,6 @@ const orderModificationReducer = createReducer(initialState, {
     };
   },
   [fetchCancelCartSuccess]: (state, data) => {
-    console.log("[reducerrr]", data);
     return {
       ...state,
       fetchCancelCartFailed: false,

@@ -6,9 +6,6 @@ import { logout } from "./duck/logoutOperations";
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.login.isAuthenticated,
-    loginProgressStatus: state.login.loginProgressStatus,
-    loginFailedStatus: state.login.loginFailedStatus,
-    loginSuccessStatus: state.login.loginSuccessStatus,
     successMsg: state.login.successMsg,
     logoutSuccess: state.logout.logoutSuccess,
     logoutFailed: state.logout.logoutFailed,

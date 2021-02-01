@@ -18,6 +18,7 @@ const fetchSupportPersonListSuccess = createAction(
 const fetchSupportPersonListFailed = createAction(
   "fetchSupportPersonListFailed"
 );
+const resetOnUnmount = createAction("resetOnUnmount");
 
 export {
   fetchIssuesSuccess,
@@ -32,4 +33,5 @@ export {
   fetchSupportPersonListInProgress,
   fetchSupportPersonListSuccess,
   fetchSupportPersonListFailed,
+  resetOnUnmount,
 };

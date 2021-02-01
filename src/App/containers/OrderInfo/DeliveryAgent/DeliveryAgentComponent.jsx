@@ -145,7 +145,6 @@ const DeliveryAgentComponent = (props) => {
   };
 
   const handleUnreserveDA = () => {
-    console.log("props.orderInfo.order_id", props.orderInfo.order_id);
     props.unreserveDeliveryAgent(props.orderInfo.order_id);
     setShowUnreserveDADialog(false);
   };

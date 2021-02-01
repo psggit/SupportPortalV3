@@ -1,4 +1,4 @@
-const defaultError = "Default Error: Something went wrong. Try again later.";
+const defaultError = "Something went wrong. Try again later.";
 // const defaultError400 =
 //   "Default Error 400: Invalid params. Something went wrong. Try again later.";
 // const defaultError500 =

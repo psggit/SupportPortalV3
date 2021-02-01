@@ -50,24 +50,6 @@ const LoginComponent = (props) => {
   const classes = useStyles();
   const [email, setEmailAddress] = useState("");
   const [isDisabled, setSubmitState] = useState(true);
-  // const [isLoggedIn] = useState(
-  //   localStorage.getItem("hasura-id") ? true : false
-  // );
-  // let open = null;
-  const [successMsgData, setMsg] = useState("");
-  const [successState, setSuccessState] = useState("");
-
-  useEffect(() => {
-    // console.log("-- loginProgressStatus ", props.loginProgressStatus);
-    // console.log("-- ", props.loginSuccessStatus);
-    if (props.loginSuccessStatus) {
-      setMsg(props.successMsg.message);
-      setSuccessState(true);
-    } else {
-      setSuccessState(false);
-    }
-    // successMsgData = props.successMsg.message;
-  }, [props.loginSuccessStatus]);
 
   const handleChange = (event) => {
     const validation = {
@@ -88,9 +70,12 @@ const LoginComponent = (props) => {
   };
 
   const sendEmail = () => {
+    console.log("sendEmail ", email);
     props.sendLoginEmail(email);
     setSubmitState(true);
   };
+
+  console.dir(props);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -146,8 +131,12 @@ const LoginComponent = (props) => {
       <Box mt={4}>
         <Copyright />
       </Box>
-      {successState && (
-        <ErrorMsg show={true} message={successMsgData} type="success" />
+      {props.loginSuccessStatus && (
+        <ErrorMsg
+          show={true}
+          message={props.successMsg.message}
+          type="success"
+        />
       )}
       {props.loginFailedStatus && (
         <ErrorMsg show={true} message={props.errorMsg.message} type="error" />
