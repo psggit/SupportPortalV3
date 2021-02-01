@@ -52,7 +52,6 @@ const LogoutComponent = (props) => {
   const classes = useStyles();
 
   useEffect(() => {
-    localStorage.clear();
     document.cookie.split(";").forEach(function (c) {
       document.cookie = c
         .replace(/^ +/, "")
@@ -66,6 +65,8 @@ const LogoutComponent = (props) => {
 
   if (props.logoutSuccess) {
     setTimeout(function () {
+      sessionStorage.clear();
+      localStorage.clear();
       return <Redirect to="/login" />;
     }, 3000);
   }
