@@ -172,6 +172,7 @@ function HipcoinsComponent(props) {
   };
 
   const handleApplyFilter = () => {
+    fetchLoyalityPointsOrderList();
     setSelectedStatus("");
     setIsFilterApplied(true);
     setPage(0);
