@@ -112,11 +112,17 @@ const ModificationListComponent = (props) => {
       order_id: orderId,
     };
     props.fetchUpdatedStatus(payload);
+    setTimeout(() => {
+      location.reload();
+    }, 2500);
   };
 
   const cancelOrder = (event, orderId) => {
     setDisableClear(orderId);
     props.cancelOrderRequest(orderId);
+    setTimeout(() => {
+      location.reload();
+    }, 2500);
   };
 
   let loading = props.fetchOrderInProgress;

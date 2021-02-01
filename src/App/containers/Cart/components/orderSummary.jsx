@@ -296,7 +296,19 @@ const OrderSummary = (props) => {
               value={orderInfo.gift_wallet ? orderInfo.gift_wallet : "-"}
             />
             <OrderSummaryItem
-              title="UPI amount"
+              title="Nodal amount:"
+              value={
+                orderInfo.revised_nodal_amount
+                  ? orderInfo.revised_nodal_amount
+                  : "-"
+              }
+            />
+            <OrderSummaryItem
+              title="UPI amount: "
+              value={orderInfo.upi_amount ? orderInfo.upi_amount : "-"}
+            />
+            <OrderSummaryItem
+              title="UPI: "
               value={orderInfo.upi_id ? orderInfo.upi_id : "-"}
             />
           </OrderSummaryItem>

@@ -55,6 +55,7 @@ const OrderModificationComponent = (props) => {
         keysToRender
       );
       setData(details);
+      console.log(props.orderList.order_modification);
       setOrderIds(orderId);
     }
   }, []);
@@ -95,7 +96,7 @@ const OrderModificationComponent = (props) => {
     <Button
       variant="outlined"
       color="primary"
-      disabled={!(data.status == "pending")}
+      disabled={!(props.orderList.order_modification[0].status == "pending")}
       onClick={(event) => sendSMS()}
     >
       Send SMS
@@ -104,7 +105,7 @@ const OrderModificationComponent = (props) => {
       variant="outlined"
       color="primary"
       onClick={(event) => refreshOrder()}
-      disabled={!(data.status == "pending")}
+      disabled={!(props.orderList.order_modification[0].status == "pending")}
     >
       Update Status
     </Button>,
@@ -112,7 +113,7 @@ const OrderModificationComponent = (props) => {
       variant="contained"
       color="primary"
       onClick={(event) => cancelOrder()}
-      disabled={!(data.status == "pending")}
+      disabled={!(props.orderList.order_modification[0].status == "pending")}
     >
       Cancel Request
     </Button>,
