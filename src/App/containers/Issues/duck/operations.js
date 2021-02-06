@@ -15,6 +15,7 @@ import {
 // import { createSession } from "../../../utils";
 import { fetchIssuesAPI } from "../../../utils/fetchIssuesAPI";
 import { assignIssueAPI } from "../../../utils/assignIssueAPI";
+import { resolveStockIssueAPI } from "../../../utils/resolveStockIssueAPI";
 import { resolveIssueAPI } from "../../../utils/resolveIssueAPI";
 import { supportPersonListAPI } from "./../../../utils/supportPersonListAPI";
 
@@ -85,7 +86,6 @@ const onResolveIssueSuccess = (dispatch) => {
   return (data) => {
     //console.log("[onSuccess] data", data);
     dispatch(resolveIssueSuccess(data));
-    // createSession(data);
   };
 };
 
@@ -98,12 +98,21 @@ const onResolveIssueError = (dispatch) => {
 const resolveOrderIssue = (payload) => {
   return (dispatch) => {
     dispatch(resolveIssueInProgress());
-    resolveIssueAPI(
-      payload,
-      processResponse(dispatch),
-      onResolveIssueSuccess(dispatch),
-      onResolveIssueError(dispatch)
-    );
+    if (payload.issueType === "stock_issue") {
+      resolveStockIssueAPI(
+        payload,
+        processResponse(dispatch),
+        onResolveIssueSuccess(dispatch),
+        onResolveIssueError(dispatch)
+      );
+    } else {
+      resolveIssueAPI(
+        payload,
+        processResponse(dispatch),
+        onResolveIssueSuccess(dispatch),
+        onResolveIssueError(dispatch)
+      );
+    }
   };
 };
 

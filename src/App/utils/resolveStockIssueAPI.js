@@ -1,7 +1,7 @@
 import { apiUrl } from "./config";
 
-const resolveIssueAPI = (reqBody, process, onSuccess, onError) => {
-  const URL = ` https://${apiUrl}/deliveryman/api/1/support/issue/markissueresolved/${reqBody.issueId}`;
+const resolveStockIssueAPI = (reqBody, process, onSuccess, onError) => {
+  const URL = ` https://${apiUrl}/deliveryman/api/1/support/issue/markresolved/${reqBody.orderId}`;
   const headers = {
     // eslint-disable-next-line prettier/prettier
     "Accept": "application/json",
@@ -24,4 +24,4 @@ const resolveIssueAPI = (reqBody, process, onSuccess, onError) => {
     });
 };
 
-export { resolveIssueAPI };
+export { resolveStockIssueAPI };
