@@ -9,3 +9,6 @@ export const markerIconConsumer = require("./markerIconConsumer.svg");
 export const markerIconDA = require("./markerIconDA.svg");
 export const mapMarkerIcon = require("./map_marker.svg");
 export const resolveIconDisabled = require("./resolveIconDisabled.svg");
+export const hipcoinIcon = require("./hipcoinIcon.svg");
+export const promoIcon = require("./promoIcon.svg");
+export const alertIcon = require("./alertIcon.svg");

@@ -26,6 +26,7 @@
     "@sentry/react": "^5.19.0",
     "@sentry/react-native": "^2.0.0",
     "bootstrap": "^4.5.0",
+    "clsx": "^1.1.1",
     "moment": "^2.29.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.2.0",

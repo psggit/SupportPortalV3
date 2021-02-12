@@ -22,6 +22,7 @@ import { fetchDeliverOrderSuccess, fetchKycListSuccess } from "./duck/actions";
 import ErrorMsg from "../../../components/errorMsg";
 import uuid from "react-uuid";
 import Alert from "@material-ui/lab/Alert";
+import { alertIcon } from "../../../assets/images"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,6 +67,9 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     width: 188,
   },
+  alertIcon: {
+    marginRight: "25px",
+  }
 }));
 
 const OrderDetailsCard = (props) => {
@@ -105,6 +109,12 @@ const OrderDetailsCard = (props) => {
     }
   }, [props.deliverOrderSuccess]);
 
+  useEffect(() => {
+    if (props.verifyPaymentSuccess === true) {
+      setOpenPayment(true);
+    }
+  }, [props.verifyPaymentSuccess]);
+
   let {
     platform,
     customer_address,
@@ -120,6 +130,7 @@ const OrderDetailsCard = (props) => {
 
   const [openCancel, setOpenCancel] = useState(false);
   const [openDeliver, setOpenDeliver] = useState(false);
+  const [openPayment, setOpenPayment] = useState(false);
   const [selectedValue, setValue] = useState("");
   const [cancellationSummary, setCancellationSummary] = useState(false);
   const [completeBtnDisabled, setCompleteBtnDisabled] = useState(true);
@@ -142,7 +153,9 @@ const OrderDetailsCard = (props) => {
       setOpenCancel(true);
       // }
     } else {
-      setOpenDeliver(true);
+      props.verifyPayment(props.orderInfo.order_id);
+      console.log("fromVerifyPayment", props.verifyPaymentSuccess)
+      // setOpenDeliver(true);
     }
   };
 
@@ -161,6 +174,11 @@ const OrderDetailsCard = (props) => {
     setCancellationSummary(false);
     setOpenCancel(false);
     setOpenDeliver(false);
+    setOpenPayment(false);
+  };
+
+  const handlePaymentReceived = () => {
+    setOpenDeliver(true);
   };
 
   const handleChange = (event) => {
@@ -566,6 +584,43 @@ const OrderDetailsCard = (props) => {
           </Button>
           <Button onClick={handleClose} color="primary" variant="contained">
             Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={openPayment}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {
+            "PAYMENT NOT RECEIVED."
+          }
+        </DialogTitle>
+        <DialogContent>
+          <List dense disablePadding>
+            <ListItem dense disableGutters={true}>
+              <div className={classes.alertIcon}>
+                <img src={alertIcon} />
+              </div>
+              <ListItemText
+                primary={"Please check with the delivery agent in " + props.orderInfo.retailer_contact_number + " to confirm payment."}
+              />
+            </ListItem>
+          </List>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCancel} color="primary" variant="outlined">
+            Payment pending
+          </Button>
+          <Button
+            onClick={handlePaymentReceived}
+            color="primary"
+            variant="contained"
+          >
+            Payment received
           </Button>
         </DialogActions>
       </Dialog>

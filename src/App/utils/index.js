@@ -53,3 +53,4 @@ export { daTypeNotesAPI } from "./daTypeNotesAPI";
 export { markActivityAPI } from "./markActivityAPI";
 export { hipcoinSoaAPI } from "./hipcoinSoaAPI";
 export { unreserveOrderAPI } from "./unreserveOrderAPI";
+export { verifyPaymentAPI } from "./verifyPaymentAPI";

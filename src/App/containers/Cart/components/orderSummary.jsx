@@ -6,6 +6,9 @@ import { makeStyles } from "@material-ui/core/styles";
 // import Box from "@material-ui/core/Box";
 import Collapse from "@material-ui/core/Collapse";
 import ExpandLess from "@material-ui/icons/ExpandLess";
+import {
+  hipcoinIcon,promoIcon
+} from "../../../assets/images";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -68,6 +71,7 @@ const useStyles = makeStyles((theme) => ({
   ListItemTextValue: {
     width: "30%",
     textAlign: "right",
+    textDecoration: "line-through",
   },
   nested: {
     paddingLeft: theme.spacing(4),
@@ -113,6 +117,38 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 16,
     fontWeight: 600,
     color: "#010B13",
+  },
+  hipcoinSection: {
+    marginTop: "16px",
+    display:"flex",
+    border: "1px dashed #606060",
+    borderRadius: "4px",
+    fontWeight: "normal",
+    fontSize: "14px",
+    lineHeight: "22px",
+    color: "#606060",
+  },
+  hipcoinIcon: {
+    marginLeft: "16px",
+    marginTop: "12px",
+    marginBottom: "11px",
+  },
+  hipcoinContent: {
+    marginLeft: "13px",
+    marginTop: "12px",
+    marginBottom: "11px",
+  },
+  hipcoinsGained: {
+    marginTop: "16px",
+    marginBottom: "24px",
+    display: "flex",
+    border: "1px dashed #02B133",
+    borderRadius: "4px",
+    fontWeight: "normal",
+    fontSize: "14px",
+    lineHeight: "22px",
+    color: "#606060",
+    backgroundColor: "rgba(2, 177, 51, 0.08)",
   },
 }));
 
@@ -191,6 +227,16 @@ const OrderSummary = (props) => {
           return <CartItem value={value} key={value.sku_id} modify={false} />;
         })}
       </List>
+      {orderInfo.hipcoin_details.total_earned_text.length > 0 &&
+        <div className={classes.hipcoinsGained}>
+          <div className={classes.hipcoinIcon}>
+            <img src={hipcoinIcon} />
+          </div>
+          <div className={classes.hipcoinContent}>
+            <p>{orderInfo.hipcoin_details.total_earned_text}</p>
+          </div>
+        </div>
+      }
       <List disablePadding>
         <ListItemText
           primary="Order Summary"
@@ -207,6 +253,7 @@ const OrderSummary = (props) => {
         <OrderSummaryItem
           title="Additional Charges:"
           value={orderInfo.total_additional_fee}
+          toStrike={orderInfo.hipcoin_details.to_strikeoff_charges}
           type="button"
         >
           {orderInfo.fee_details_v1 &&
@@ -235,6 +282,29 @@ const OrderSummary = (props) => {
               />
             </>
           )}
+
+          {orderInfo.promo_details.promo_code.length > 0 &&
+            <div className={classes.hipcoinSection}>
+              <div className={classes.hipcoinIcon}>
+                <img src={promoIcon} />
+              </div>
+              <div className={classes.hipcoinContent}>
+                <p>{orderInfo.promo_details.promo_code}</p>
+              </div>
+            </div>
+          }
+
+          {orderInfo.hipcoin_details.redeemed_text.length > 0 &&
+             <div className={classes.hipcoinSection}>
+               <div className={classes.hipcoinIcon}>
+                 <img src={hipcoinIcon} />
+               </div>
+               <div className={classes.hipcoinContent}>
+                 <p>{orderInfo.hipcoin_details.redeemed_text}</p>
+               </div>
+             </div>
+          }
+
         </OrderSummaryItem>
         <OrderSummaryItem title="Hipcoin Details" type="button">
           <OrderSummaryItem
@@ -281,6 +351,10 @@ const OrderSummary = (props) => {
           <OrderSummaryItem
             title="Mode of Payment:"
             value={orderInfo.mode_of_payment ? orderInfo.mode_of_payment : "-"}
+          />
+          <OrderSummaryItem
+            title="Amount received:"
+            value={orderInfo.display_amount_received ? orderInfo.display_amount_received : "-"}
           />
           <OrderSummaryItem
             title="Wallet:"
