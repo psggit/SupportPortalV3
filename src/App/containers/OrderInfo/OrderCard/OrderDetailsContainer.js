@@ -45,6 +45,7 @@ const mapStateToProps = (state) => {
     fetchCancelReasonProgress: state.order.orderCard.fetchCancelReasonProgress,
     errorMsgSummary: state.order.orderCard.errorMsgSummary,
     verifyPaymentSuccess: state.order.orderCard.verifyPaymentSuccess,
+    verifyPaymentFailed: state.order.orderCard.verifyPaymentFailed,
   };
 };
 

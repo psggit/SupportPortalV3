@@ -481,6 +481,9 @@ const OrderDetailsCard = (props) => {
       {props.deliverOrderFailed && (
         <ErrorMsg show={true} message={props.errorMsg} type={"error"} />
       )}
+      {props.verifyPaymentFailed && (
+        <ErrorMsg show={true} message={props.errorMsg} type={"error"} />
+      )}
       {props.deliverOrderSuccess && (
         <ErrorMsg
           show={true}

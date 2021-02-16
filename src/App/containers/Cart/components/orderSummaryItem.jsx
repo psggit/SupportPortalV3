@@ -162,7 +162,6 @@ OrderSummaryItem.propTypes = {
   value: PropTypes.any,
   type: PropTypes.string,
   children: PropTypes.any,
-  classname: PropTypes.any,
 };
 
 export { OrderSummaryItem };
