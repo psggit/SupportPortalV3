@@ -179,6 +179,7 @@ const RenderIssues = (props) => {
   const [orderId, setOrderId] = useState("");
   const [supportPersonId, setSupportPersonId] = useState();
   const [issueId, setIssueId] = useState();
+  const [issueType, setIssueType] = useState(null);
   // const [confirmedIssue, setConfirmIssue] = useState([]);
   // const [data, setData] = useState([]);
 
@@ -234,6 +235,8 @@ const RenderIssues = (props) => {
     } else {
       payload = {
         orderId: orderId,
+        issueType: issueType,
+        issueId: issueId,
       };
       props.resolveIssue(payload);
     }
@@ -245,6 +248,7 @@ const RenderIssues = (props) => {
     setResolveIssue(true);
     setOrderId(issue.order_id);
     setIssueId(issue.id);
+    setIssueType(issue.reason);
     mountConfirmationDialog();
     e.stopPropagation();
   };
@@ -453,7 +457,7 @@ const RenderIssues = (props) => {
       {props.resolveIssueSuccess && (
         <ErrorMsg
           show={true}
-          message={"Successfully resolved the issue"}
+          message={"Issue marked as resolved."}
           type={"success"}
         />
       )}
@@ -513,7 +517,7 @@ const IssuesComponent = (props) => {
     if (props.assignIssueSuccess || props.resolveIssueSuccess) {
       setTimeout(() => {
         location.reload();
-      }, 1500);
+      }, 2000);
     }
   }, [props.assignIssueSuccess, props.resolveIssueSuccess]);
 
