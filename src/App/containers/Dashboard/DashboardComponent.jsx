@@ -11,7 +11,6 @@ import { validateNumberField } from "../../utils/validators";
 import { ConsumerCard } from "./components/consumerCard";
 import { RetailerCard } from "./components/retailerCard";
 import { DeliveryAgentCard } from "./components/deliveryAgentCard";
-// import { PreponeDeliveryCard } from "./components/preponeCard";
 import { DeliveryOrderStatusCard } from "./components/deliveryOrderStatusCard";
 import Loading from "../../components/loading";
 
@@ -52,6 +51,7 @@ const DashboardComponent = (props) => {
     }
   }, []);
   const classes = useStyles();
+  const dashboard = props.dashboard;
   const [payload, setPayload] = useState({
     consumer: {},
     retailer_details: {},
@@ -173,14 +173,14 @@ const DashboardComponent = (props) => {
   return (
     <Container component="main">
       <TopBar />
-      {props.fetchDetailsProgress && <Loading message="Fetching data..." />}
-      {props.fetchDetailsFail && (
-        <ErrorMsg show={true} message={props.errorMsg} type={"error"} />
+      {dashboard.fetchDetailsProgress && <Loading message="Fetching data..." />}
+      {dashboard.fetchDetailsFail && (
+        <ErrorMsg show={true} message={dashboard.errorMsg} type={"error"} />
       )}
-      {props.preponeOrderSuccess && (
+      {dashboard.preponeOrderSuccess && (
         <ErrorMsg
           show={true}
-          message={props.successMsg.message}
+          message={dashboard.successMsg.message}
           type={"success"}
         />
       )}
@@ -242,16 +242,18 @@ const DashboardComponent = (props) => {
                 errorString={errorString}
                 handleChange={handleChange}
                 isResetDisabled={isResetDisabled}
-                isFetchDisabled={props.fetchDeliveryFailed}
+                isFetchDisabled={dashboard.fetchDeliveryFailed}
                 handleSubmit={handleSubmit}
                 reset={reset}
                 payload={payload}
                 filterType={filterType}
-                data={props.deliveryStatus}
-                fetchDeliverySuccess={props.fetchDeliverySuccess}
-                fetchDeliveryFailed={props.fetchDeliveryFailed}
-                fetchDeliveryProgress={props.fetchDeliveryProgress}
-                errorMessageDeliveryStatus={props.errorMessageDeliveryStatus}
+                data={dashboard.deliveryStatus}
+                fetchDeliverySuccess={dashboard.fetchDeliverySuccess}
+                fetchDeliveryFailed={dashboard.fetchDeliveryFailed}
+                fetchDeliveryProgress={dashboard.fetchDeliveryProgress}
+                errorMessageDeliveryStatus={
+                  dashboard.errorMessageDeliveryStatus
+                }
               />
             </Grid>
           )}
@@ -265,17 +267,7 @@ DashboardComponent.propTypes = {
   fetchOrderDetails: PropTypes.func,
   fetchDeliveryStatus: PropTypes.func,
   preponeOrder: PropTypes.func,
-  orderData: PropTypes.object,
-  fetchDetailsProgress: PropTypes.bool,
-  fetchDeliveryFailed: PropTypes.bool,
-  fetchDeliveryProgress: PropTypes.bool,
-  fetchDetailsFail: PropTypes.bool,
-  errorMsg: PropTypes.string,
-  successMsg: PropTypes.string,
-  fetchDeliverySuccess: PropTypes.bool,
-  deliveryStatus: PropTypes.array,
-  preponeOrderSuccess: PropTypes.bool,
-  errorMessageDeliveryStatus: PropTypes.string,
+  dashboard: PropTypes.object,
 };
 
 export { DashboardComponent };

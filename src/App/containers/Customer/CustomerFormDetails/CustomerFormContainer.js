@@ -5,14 +5,10 @@ import { resetOnUnmount } from "./duck/index";
 
 const mapStateToProps = (state) => {
   return {
-    orderInfo: state.order.orderInfo.orderInfo,
-    updateProgress: state.update.updateProgress,
-    updateFail: state.update.updateFail,
-    updateSuccess: state.update.updateSuccess,
-    updateSuccessMsg: state.update.updateSuccessMsg,
+    customerData: state.update,
     orderId: state.home.orderId,
+    orderInfo: state.order.orderInfo.orderInfo,
     customerId: state.order.orderInfo.customerId,
-    errorMsg: state.update.errorMsg,
   };
 };
 
