@@ -1,12 +1,10 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Radio from "@material-ui/core/Radio";
 import { Typography } from "@material-ui/core";
-import PropTypes from "prop-types";
 import TopBar from "../../../components/topBar";
 import { FormControlLabel, RadioGroup } from "@material-ui/core";
 import FullWidthTabs from "../customerMenuBar";
@@ -74,6 +72,7 @@ const useStyles = makeStyles((theme) => ({
 function CustomerForm(props) {
   const classes = useStyles();
   const history = useHistory();
+  const customerData = props.customerData;
   const [consumerDetail, setConsumerDetail] = useState("");
   const [customerName, setCustomerName] = useState("");
   const [dob, setDob] = useState("");
@@ -115,6 +114,9 @@ function CustomerForm(props) {
       name: customerName,
     };
     props.updateConsumer(payload);
+    setTimeout(() => {
+      location.reload();
+    }, 2000);
   };
 
   return (
@@ -328,23 +330,28 @@ function CustomerForm(props) {
             </div>
           )}
         </Grid>
-        {props.updateSuccess && (
+        {customerData.updateSuccess && (
           <ErrorMsg
             show={true}
-            message={props.updateSuccessMsg}
+            message={customerData.updateSuccessMsg}
             type={"success"}
           />
         )}
-        {props.updateFail && (
-          <ErrorMsg show={true} message={props.errorMsg} type={"error"} />
+        {customerData.updateFail && (
+          <ErrorMsg
+            show={true}
+            message={customerData.errorMsg}
+            type={"error"}
+          />
         )}
       </div>
     </>
   );
 }
 
-CustomerForm.prototype = {
+CustomerForm.propTypes = {
   orderInfo: PropTypes.object,
+  customerData: PropTypes.object,
   updateConsumer: PropTypes.func,
   resetOnUnmount: PropTypes.func,
 };
