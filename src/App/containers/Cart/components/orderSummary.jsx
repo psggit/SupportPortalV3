@@ -394,6 +394,13 @@ const OrderSummary = (props) => {
               value={orderInfo.upi_id ? orderInfo.upi_id : "-"}
             />
           </OrderSummaryItem>
+          {orderInfo.pending_amount !== null &&
+             <OrderSummaryItem
+              title={orderInfo.pending_amount.display_title}
+              value={orderInfo.pending_amount.display_value}
+             >
+             </OrderSummaryItem>
+          }
         </OrderSummaryItem>
       </List>
       <Divider />
