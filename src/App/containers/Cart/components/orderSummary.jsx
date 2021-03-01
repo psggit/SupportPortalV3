@@ -267,7 +267,7 @@ const OrderSummary = (props) => {
                 />
               );
             })}
-          {orderInfo.taxes && (
+          {/* {orderInfo.taxes && (
             <>
               <OrderSummaryItem
                 title={"CGST (" + orderInfo.cgst_percentage + "%)"}
@@ -282,7 +282,7 @@ const OrderSummary = (props) => {
                 value={orderInfo.taxes.igst_total}
               />
             </>
-          )}
+          )} */}
 
           {orderInfo.promo_details.promo_code.length > 0 &&
             <div className={classes.hipcoinSection}>

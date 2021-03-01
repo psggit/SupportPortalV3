@@ -92,9 +92,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 14,
     marginRight: 5,
   },
-  strikeThrough: {
-    textDecoration: "line-through",
-  },
+  // strikeThrough: {
+  //   textDecoration: "line-through",
+  // },
 }));
 
 const OrderSummaryItem = (props) => {
