@@ -354,7 +354,7 @@ const OrderDetailsCard = (props) => {
             />
           </ListItem>
         </List>
-        <ListItem dense disableGutters={true} className={classes.ListItemRoot}>
+        {/* <ListItem dense disableGutters={true} className={classes.ListItemRoot}>
           <ListItemText
             primary="Promo Code"
             className={classes.ListItemRootTitle}
@@ -365,8 +365,8 @@ const OrderDetailsCard = (props) => {
             className={classes.ListItemTextRoot}
             classes={{ root: classes.ListItemTextRoot }}
           />
-        </ListItem>
-        <ListItem dense disableGutters={true} className={classes.ListItemRoot}>
+        </ListItem> */}
+        {/* <ListItem dense disableGutters={true} className={classes.ListItemRoot}>
           <ListItemText
             primary="Cashback"
             className={classes.ListItemRootTitle}
@@ -381,7 +381,7 @@ const OrderDetailsCard = (props) => {
             className={classes.ListItemTextRoot}
             classes={{ root: classes.ListItemTextRoot }}
           />
-        </ListItem>
+        </ListItem> */}
         <List dense disablePadding>
           <ListItem dense disableGutters={true}>
             <ListItemText

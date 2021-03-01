@@ -252,8 +252,9 @@ const OrderSummary = (props) => {
         />
         <OrderSummaryItem
           title="Additional Charges:"
-          value={orderInfo.total_additional_fee}
-          toStrike={orderInfo.hipcoin_details.to_strikeoff_charges}
+          // value={orderInfo.total_additional_fee}
+          value={orderInfo.hipcoin_details.to_strikeoff_charges ? <strike>{orderInfo.total_additional_fee}</strike> : orderInfo.total_additional_fee}
+          // toStrike={orderInfo.hipcoin_details.to_strikeoff_charges}
           type="button"
         >
           {orderInfo.fee_details_v1 &&
@@ -261,8 +262,8 @@ const OrderSummary = (props) => {
               return (
                 <OrderSummaryItem
                   title={value.display_name}
-                  value={value.display_value}
                   key={uuid()}
+                  value={orderInfo.hipcoin_details.to_strikeoff_charges ? <strike>{value.display_value}</strike> : value.display_value}
                 />
               );
             })}

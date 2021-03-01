@@ -9,7 +9,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Collapse from "@material-ui/core/Collapse";
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import clsx from "clsx";
+// import clsx from "clsx";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -102,7 +102,7 @@ const OrderSummaryItem = (props) => {
   const value = props.value;
   const classes = useStyles();
   const type = props.type;
-  const toStrike = props.toStrike;
+  // const toStrike = props.toStrike;
   const [open, setOpen] = useState(true);
 
   const handleClick = () => {
@@ -128,7 +128,7 @@ const OrderSummaryItem = (props) => {
           {value !== "" ? (
             <ListItemText
               primary={value}
-              className={clsx(classes.ListItemRoot, toStrike && classes.strikeThrough)}
+              className={classes.ListItemRoot}
               classes={{ root: classes.ListItemTextValue }}
             />
           ) : null}
