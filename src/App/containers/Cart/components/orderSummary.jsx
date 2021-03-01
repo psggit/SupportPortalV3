@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
   ListItemTextValue: {
     width: "30%",
     textAlign: "right",
-    textDecoration: "line-through",
+    // textDecoration: "line-through",
   },
   nested: {
     paddingLeft: theme.spacing(4),
