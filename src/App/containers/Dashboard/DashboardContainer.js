@@ -4,13 +4,7 @@ import { fetchOrderDetails, preponeOrder, fetchDeliveryStatus } from "./duck";
 
 const mapStateToProps = (state) => {
   return {
-    fetchDeliverySuccess: state.dashboard.fetchDeliverySuccess,
-    fetchDeliveryFailed: state.dashboard.fetchDeliveryFailed,
-    fetchDeliveryProgress: state.dashboard.fetchDeliveryProgress,
-    errorMessageDeliveryStatus: state.dashboard.errorMessageDeliveryStatus,
-    errorMsg: state.dashboard.errorMsg,
-    successMsg: state.dashboard.successMsg,
-    deliveryStatus: state.dashboard.deliveryStatus,
+    dashboard: state.dashboard,
   };
 };
 const mapDispatchToProps = (dispatch) => {

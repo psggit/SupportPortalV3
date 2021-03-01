@@ -70,12 +70,12 @@ const LoginComponent = (props) => {
   };
 
   const sendEmail = () => {
-    console.log("sendEmail ", email);
+    // console.log("sendEmail ", email);
     props.sendLoginEmail(email);
     setSubmitState(true);
   };
 
-  console.dir(props);
+  // console.dir(props);
 
   return (
     <Container component="main" maxWidth="xs">
