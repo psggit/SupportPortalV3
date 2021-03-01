@@ -19,6 +19,9 @@ import {
   fetchCancelReasonProgress,
   fetchCancelReasonFailure,
   fetchCancelReasonSuccess,
+  verifyPaymentProgress,
+  verifyPaymentFailed,
+  verifyPaymentSuccess,
 } from "./actions";
 import { setErrorMessage } from "../../../../utils/errorMessages";
 
@@ -48,6 +51,9 @@ const initialValue = {
   fetchCancelReasonProgress: false,
   fetchCancelReasonFailure: false,
   fetchCancelReasonSuccess: false,
+  verifyPaymentProgress: false,
+  verifyPaymentFailed: false,
+  verifyPaymentSuccess: false,
 };
 const orderDataReducer = createReducer(initialValue, {
   // [fetchCancelReasonsSuccess]: (state, data) => ({
@@ -208,6 +214,28 @@ const orderDataReducer = createReducer(initialValue, {
       cancelReasons: data.payload,
     };
   },
+
+  [verifyPaymentSuccess]: (state, data) => ({
+    ...state,
+    verifyPaymentSuccess: true,
+    verifyPaymentFailed: false,
+    verifyPaymentProgress: false,
+    errorMsg: "",
+    successMsg: data.payload,
+  }),
+  [verifyPaymentFailed]: (state, data) => ({
+    ...state,
+    verifyPaymentSuccess: false,
+    verifyPaymentFailed: true,
+    verifyPaymentProgress: false,
+    errorMsg: setErrorMessage(data),
+  }),
+  [verifyPaymentProgress]: (state) => ({
+    ...state,
+    verifyPaymentProgress: true,
+    verifyPaymentSuccess: false,
+    verifyPaymentFailed: false,
+  }),
   [resetOnUnmount]: () => ({
     ...initialValue,
   }),

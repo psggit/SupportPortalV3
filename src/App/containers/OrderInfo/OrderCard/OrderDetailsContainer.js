@@ -7,6 +7,7 @@ import {
   deliverOrder,
   cancelOrder,
   fetchCancelReason,
+  verifyPayment,
 } from "./duck/operations";
 import { resetOnUnmount } from "./duck";
 
@@ -43,6 +44,8 @@ const mapStateToProps = (state) => {
     fetchCancelReasonFailure: state.order.orderCard.fetchCancelReasonFailure,
     fetchCancelReasonProgress: state.order.orderCard.fetchCancelReasonProgress,
     errorMsgSummary: state.order.orderCard.errorMsgSummary,
+    verifyPaymentSuccess: state.order.orderCard.verifyPaymentSuccess,
+    verifyPaymentFailed: state.order.orderCard.verifyPaymentFailed,
   };
 };
 
@@ -55,6 +58,7 @@ const mapDispatchToProps = (dispatch) => {
     cancelOrder: (payload) => dispatch(cancelOrder(payload)),
     resetOnUnmount: () => dispatch(resetOnUnmount()),
     fetchCancelReason: (orderId) => dispatch(fetchCancelReason(orderId)),
+    verifyPayment: (orderId) => dispatch(verifyPayment(orderId)),
   };
 };
 

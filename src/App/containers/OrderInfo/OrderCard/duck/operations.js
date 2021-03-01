@@ -17,6 +17,9 @@ import {
   fetchCancelReasonProgress,
   fetchCancelReasonFailure,
   fetchCancelReasonSuccess,
+  verifyPaymentProgress,
+  verifyPaymentFailed,
+  verifyPaymentSuccess,
 } from "./actions";
 import { cancelOrderSummaryAPI } from "../../../../utils/cancelOrderSummaryAPI";
 import { cancelOrderAPI } from "../../../../utils/cancelOrderAPI";
@@ -24,6 +27,7 @@ import { deliverOrderReasonAPI } from "../../../../utils/deliverOrderReasonAPI";
 import { kycListAPI } from "../../../../utils/kycListAPI";
 import { deliverOrderAPI } from "../../../../utils/deliverOrderAPI";
 import { cancelReasonAPI } from "../../../../utils";
+import { verifyPaymentAPI } from "../../../../utils/verifyPaymentAPI";
 
 const processResponse = () => {
   return (res) => {
@@ -178,6 +182,30 @@ const fetchCancelReason = (payload) => {
   };
 };
 
+const verifyPayment = (payload) => {
+  return (dispatch) => {
+    dispatch(verifyPaymentProgress());
+    verifyPaymentAPI(
+      payload,
+      processResponse(dispatch),
+      onSuccessPayment(dispatch),
+      onErrorPayment(dispatch)
+    );
+  };
+};
+
+const onSuccessPayment = (dispatch) => {
+  return (data) => {
+    dispatch(verifyPaymentSuccess(data));
+  };
+};
+
+const onErrorPayment = (dispatch) => {
+  return (err) => {
+    dispatch(verifyPaymentFailed(err));
+  };
+};
+
 export {
   cancelOrderSummary,
   deliverOrderReasons,
@@ -185,4 +213,5 @@ export {
   deliverOrder,
   cancelOrder,
   fetchCancelReason,
+  verifyPayment,
 };

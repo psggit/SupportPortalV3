@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
@@ -9,6 +9,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Collapse from "@material-ui/core/Collapse";
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+// import clsx from "clsx";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -91,6 +92,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 14,
     marginRight: 5,
   },
+  // strikeThrough: {
+  //   textDecoration: "line-through",
+  // },
 }));
 
 const OrderSummaryItem = (props) => {
@@ -98,7 +102,9 @@ const OrderSummaryItem = (props) => {
   const value = props.value;
   const classes = useStyles();
   const type = props.type;
+  // const toStrike = props.toStrike;
   const [open, setOpen] = useState(true);
+
   const handleClick = () => {
     setOpen(!open);
   };
@@ -122,7 +128,7 @@ const OrderSummaryItem = (props) => {
           {value !== "" ? (
             <ListItemText
               primary={value}
-              className={classes.ListItemTextRoot}
+              className={classes.ListItemRoot}
               classes={{ root: classes.ListItemTextValue }}
             />
           ) : null}

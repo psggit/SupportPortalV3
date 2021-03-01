@@ -20,6 +20,10 @@ const fetchCancelReasonProgress = createAction("fetchCancelReasonProgress");
 const fetchCancelReasonFailure = createAction("fetchCancelReasonFailure");
 const fetchCancelReasonSuccess = createAction("fetchCancelReasonSuccess");
 
+const verifyPaymentProgress = createAction("verifyPaymentProgress");
+const verifyPaymentFailed = createAction("verifyPaymentFailed");
+const verifyPaymentSuccess = createAction("verifyPaymentSuccess");
+
 const resetOnUnmount = createAction("resetOnUnmount");
 
 const fetchCancellationSummarySuccess = createAction(
@@ -52,4 +56,7 @@ export {
   fetchCancelReasonProgress,
   fetchCancelReasonFailure,
   fetchCancelReasonSuccess,
+  verifyPaymentProgress,
+  verifyPaymentFailed,
+  verifyPaymentSuccess,
 };
